@@ -3,7 +3,7 @@ __pycache__/
 # .ipynb_checkpoints/
 # .pytest_cache/
 # build/
-# dist/
+dist/
 # env/
 src/*.egg-info
 src/sdr/_version.py
