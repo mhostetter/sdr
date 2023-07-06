@@ -10,9 +10,9 @@ jobs:
     name: Build the package
     uses: ./.github/workflows/build.yaml
 
-  # docs:
-  #   name: Build the docs
-  #   uses: ./.github/workflows/docs.yaml
+  docs:
+    name: Build the docs
+    uses: ./.github/workflows/docs.yaml
 
   # release:
   #   name: Create GitHub release
