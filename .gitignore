@@ -1,0 +1,10 @@
+__pycache__/
+# .benchmarks/
+# .ipynb_checkpoints/
+# .pytest_cache/
+# build/
+# dist/
+# env/
+src/*.egg-info
+src/sdr/_version.py
+# .coverage
