@@ -75,7 +75,7 @@ Issues = "https://github.com/mhostetter/sdr/issues"
 Documentation = "https://mhostetter.github.io/sdr/latest/"
 Discuss = "https://github.com/mhostetter/sdr/discussions"
 # Changelog = "https://mhostetter.github.io/sdr/latest/release-notes/versioning/"
-# Twitter = "https://twitter.com/galois_py"
+Twitter = "https://twitter.com/sdr_py"
 
 [tool.setuptools_scm]
 write_to = "src/sdr/_version.py"
