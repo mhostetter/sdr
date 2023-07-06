@@ -1,0 +1,6 @@
+pylint >= 2.14
+black >= 22.8.0
+pytest
+pytest-cov[toml]
+pytest-xdist
+pytest-benchmark >= 4.0.0
