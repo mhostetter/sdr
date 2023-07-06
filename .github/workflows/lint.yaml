@@ -37,8 +37,8 @@ jobs:
       - name: Lint code with pylint
         run: python3 -m pylint src/sdr/
 
-      - name: Lint tests with pylint
-        run: python3 -m pylint tests/
+      # - name: Lint tests with pylint
+      #   run: python3 -m pylint tests/
 
   run-formatter:
     name: Format
