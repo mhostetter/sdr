@@ -1,0 +1,144 @@
+[build-system]
+requires = [
+    "setuptools >= 62",
+    "wheel",
+    "setuptools_scm[toml] >= 6.2"
+]
+
+[project]
+name = "sdr"
+authors = [
+  {name = "Matt Hostetter", email = "matthostetter@gmail.com"},
+]
+description = "A Python package for software-defined radio"
+readme = "README.md"
+license = {text = "MIT"}
+keywords = [
+    "software-defined radio",
+    "sdr",
+    "digital communications",
+    "wireless communications",
+    "digital signal processing",
+    "dsp",
+    "modulation",
+    "demodulation",
+    "modem",
+    "forward error correction",
+    "numpy",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Telecommunications Industry",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    # "Programming Language :: Python :: 3.7",
+    # "Programming Language :: Python :: 3.8",
+    # "Programming Language :: Python :: 3.9",
+    # "Programming Language :: Python :: 3.10",
+    # "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+requires-python = ">=3.7"
+dependencies = [
+    # "numpy >= 1.21.0, < 1.25",  # v1.21.0 is needed for dtype support of ufuncs, see https://numpy.org/devdocs/release/1.21.0-notes.html#ufunc-signature-and-dtype-generalization-and-casting
+    # "numba >= 0.55, < 0.58",  # v0.55 is needed for support of NumPy 1.21
+    # "typing_extensions >= 4.0.0",  # v4.0.0 is needed for use of Self (Python 3.11+) and Literal (Python 3.8+)
+]
+dynamic = ["version"]
+
+# [project.optional-dependencies]
+# dev = [
+#     "pylint >= 2.14",
+#     "black >= 22.8.0",
+#     "pytest",
+#     "pytest-cov[toml]",
+#     "pytest-xdist",
+#     "pytest-benchmark >= 4.0.0",
+#     "requests",
+#     "pdfminer.six"
+# ]
+
+[project.urls]
+Homepage = "https://github.com/mhostetter/sdr"
+Source = "https://github.com/mhostetter/sdr"
+Issues = "https://github.com/mhostetter/sdr/issues"
+Documentation = "https://mhostetter.github.io/sdr/latest/"
+Discuss = "https://github.com/mhostetter/sdr/discussions"
+# Changelog = "https://mhostetter.github.io/sdr/latest/release-notes/versioning/"
+# Twitter = "https://twitter.com/galois_py"
+
+[tool.setuptools_scm]
+write_to = "src/sdr/_version.py"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"sdr" = ["py.typed"]
+# "sdr._databases" = ["*.db"]
+
+[tool.distutils.bdist_wheel]
+universal = false
+
+[tool.pylint]
+ignore-paths = [
+    "src/sdr/_version.py",
+]
+disable = [
+    "comparison-with-callable",  # pylint doesn't understand metaclass properties
+    "fixme",
+    "global-statement",
+    "invalid-name",
+    "missing-function-docstring",
+    "protected-access",
+    "too-many-ancestors",
+    "too-many-arguments",
+    "too-many-branches",
+    "too-many-instance-attributes",
+    "too-many-lines",
+    "too-many-locals",
+    "unneeded-not",
+]
+min-similarity-lines = 100
+max-line-length = 120
+
+[tool.black]
+line-length = 120
+exclude = '''
+/(
+      build
+)/
+    | src/sdr/_version.py
+'''
+# NOTE: You must use single-quoted strings in TOML for regular expressions. It's the equivalent of r-strings in Python.
+# For some reason, this exclude line doesn't work when on a single line.
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+minversion = "6.2"
+addopts = "-s --showlocals"
+testpaths = [
+    "tests"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "@overload",
+    "if TYPE_CHECKING:",
+    "pragma: no cover",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "raise RuntimeError",
+]
