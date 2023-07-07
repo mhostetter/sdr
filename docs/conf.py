@@ -122,7 +122,6 @@ html_theme_options = {
     "site_url": "https://mhostetter.github.io/sdr/latest/",
     "repo_url": "https://github.com/mhostetter/sdr",
     "repo_name": "mhostetter/sdr",
-    "repo_type": "github",
     "social": [
         {
             "icon": "fontawesome/brands/github",
