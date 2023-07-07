@@ -4,7 +4,6 @@ A module containing a Farrow arbitrary resampler.
 from __future__ import annotations
 
 import numpy as np
-import numpy.typing as npt
 import scipy.signal
 
 
@@ -37,7 +36,7 @@ class FarrowResampler:
 
         self.reset()
 
-    def reset(self, state: npt.ArrayLike | None = None):
+    def reset(self, state: np.ndarray | None = None):
         """
         Resets the filter state and fractional sample index. Only useful for streaming mode.
         """
@@ -51,7 +50,7 @@ class FarrowResampler:
 
         self._mu_next = 0.0
 
-    def resample(self, x: npt.ArrayLike, rate: float, mode="full") -> np.ndarray:
+    def resample(self, x: np.ndarray, rate: float, mode="full") -> np.ndarray:
         """
         Resamples the input signal by the given arbitrary rate.
 
@@ -106,6 +105,11 @@ class FarrowResampler:
         Returns whether the filter is in streaming mode.
 
         In streaming mode, the filter state is preserved between calls to :obj:`resample()`.
+
+        .. ipython:: python
+
+            farrow = sdr.FarrowResampler()
+            farrow.streaming
         """
         return self._streaming
 
@@ -113,6 +117,11 @@ class FarrowResampler:
     def order(self) -> int:
         """
         Returns the order of the filter.
+
+        .. ipython:: python
+
+            farrow = sdr.FarrowResampler()
+            farrow.order
         """
         return self._taps.shape[1] - 1
 
@@ -120,5 +129,10 @@ class FarrowResampler:
     def taps(self) -> np.ndarray:
         """
         Returns the Farrow filter taps.
+
+        .. ipython:: python
+
+            farrow = sdr.FarrowResampler()
+            farrow.taps
         """
         return self._taps
