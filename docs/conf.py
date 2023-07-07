@@ -171,10 +171,10 @@ html_theme_options = {
             },
         },
     ],
-    # "analytics": {
-    #     "provider": "google",
-    #     "property": "G-4FW9NCNFZH",
-    # },
+    "analytics": {
+        "provider": "google",
+        "property": "G-PVMFVF4016",
+    },
     "version_dropdown": True,
     "version_json": "../versions.json",
 }
