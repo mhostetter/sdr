@@ -13,6 +13,9 @@ class FarrowResampler:
 
     References:
         - https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/
+
+    Group:
+        resampling
     """
 
     def __init__(self, streaming: bool = False):
