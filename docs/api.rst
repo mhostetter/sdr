@@ -2,3 +2,8 @@
 
 sdr
 ===
+
+Resampling
+----------
+
+.. python-apigen-group:: resampling
