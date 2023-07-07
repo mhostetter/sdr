@@ -54,7 +54,8 @@ extensions = [
     "sphinx_last_updated_by_git",
     "sphinx_immaterial",
     "sphinx_immaterial.apidoc.python.apigen",
-    "myst_parser",
+    # "myst_parser",
+    "myst_nb",
     "sphinx_design",
     "IPython.sphinxext.ipython_console_highlighting",
     "IPython.sphinxext.ipython_directive",
@@ -214,6 +215,8 @@ autodoc_type_aliases = {}
 ipython_execlines = ["import math", "import numpy as np", "import sdr"]
 
 myst_enable_extensions = ["dollarmath"]
+
+nb_execution_mode = "off"
 
 
 # -- Sphinx Immaterial configs -------------------------------------------------
