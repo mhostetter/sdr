@@ -12,3 +12,5 @@ except ModuleNotFoundError:  # pragma: no cover
         "An error occurred during package install where setuptools_scm failed to create a _version.py file. "
         "Defaulting version to 0.0.0."
     )
+
+from ._farrow import FarrowResampler
