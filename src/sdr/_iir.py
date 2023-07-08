@@ -88,13 +88,6 @@ class IIR:
         return self._a_taps
 
     @property
-    def order(self) -> int:
-        """
-        Returns the order of the IIR filter, $N - 1$.
-        """
-        return self._a_taps.size - 1
-
-    @property
     def streaming(self) -> bool:
         """
         Returns whether the filter is in streaming mode.
@@ -102,3 +95,31 @@ class IIR:
         In streaming mode, the filter state is preserved between calls to :meth:`filter()`.
         """
         return self._streaming
+
+    @property
+    def order(self) -> int:
+        """
+        Returns the order of the IIR filter, $N - 1$.
+        """
+        return self._a_taps.size - 1
+
+    @property
+    def zeros(self) -> np.ndarray:
+        """
+        Returns the zeros of the IIR filter.
+        """
+        return scipy.signal.tf2zpk(self.b_taps, self.a_taps)[0]
+
+    @property
+    def poles(self) -> np.ndarray:
+        """
+        Returns the poles of the IIR filter.
+        """
+        return scipy.signal.tf2zpk(self.b_taps, self.a_taps)[1]
+
+    @property
+    def gain(self) -> float:
+        """
+        Returns the gain of the IIR filter.
+        """
+        return scipy.signal.tf2zpk(self.b_taps, self.a_taps)[2]
