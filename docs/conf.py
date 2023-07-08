@@ -251,6 +251,7 @@ python_apigen_default_groups = [
     (r"method:.*\.__[A-Za-z,_]*__", "Special methods"),
     (r"method:.*\.__(init|new)__", "Constructors"),
     (r"method:.*\.__(str|repr)__", "String representation"),
+    (r"method:.*\.(plot).*", "Plotting"),
     ("property:.*", "Properties"),
     (r".*:.*\.is_[a-z,_]*", "Attributes"),
 ]
@@ -264,6 +265,7 @@ python_apigen_default_order = [
     (r"method:.*\.__[A-Za-z,_]*__", 28),
     (r"method:.*\.__(init|new)__", 20),
     (r"method:.*\.__(str|repr)__", 30),
+    (r"method:.*\.(plot).*", 51),
     ("property:.*", 60),
     (r".*:.*\.is_[a-z,_]*", 70),
 ]
