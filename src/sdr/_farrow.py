@@ -88,13 +88,17 @@ class FarrowResampler:
             y1 = scipy.signal.convolve(x_pad, self._taps[1, :], mode="valid")
             y2 = scipy.signal.convolve(x_pad, self._taps[2, :], mode="valid")
             y3 = scipy.signal.convolve(x_pad, self._taps[3, :], mode="valid")
+
+            # Compute the fractional sample indices for each output sample. We want to step from mu_next to
+            # y0.size in steps of 1 / rate. We configure the arange() such that the step is at least 1.
+            if rate > 1:
+                mu = np.arange(self._mu_next * rate, y0.size * rate) / rate
+            else:
+                mu = np.arange(self._mu_next, y0.size, 1 / rate)
+
+            # Store the previous inputs and next fractional sample index for the next call to resample()
             self._x_prev = x_pad[-(self._taps.shape[1] - 1) :]
-
-            # Compute the fractional sample indices for each output sample
-            mu = np.arange(self._mu_next, x.size, 1 / rate)
-
-            # Store the next fractional sample index for next call to resample()
-            self._mu_next = (mu[-1] + 1 / rate) % 1.0
+            self._mu_next = (mu[-1] + 1 / rate) - y0.size
         else:
             # Compute the four FIR filter outputs for the entire input signal
             y0 = scipy.signal.convolve(x, self._taps[0, :], mode="full")
