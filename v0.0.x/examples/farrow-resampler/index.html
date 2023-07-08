@@ -985,7 +985,7 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="farrow-arbitrary-resampler">Farrow arbitrary resampler<a class="headerlink" href="#farrow-arbitrary-resampler" title="Permalink to this heading">¶</a></h1>
+<h1 id="farrow-arbitrary-resampler"><span id="id1"></span>Farrow arbitrary resampler<a class="headerlink" href="#farrow-arbitrary-resampler" title="Permalink to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1037,15 +1037,16 @@ You're not viewing the latest version.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">resample_signal</span><span class="p">(</span><span class="n">rate</span><span class="p">):</span>
     <span class="n">farrow</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FarrowResampler</span><span class="p">()</span>
-    <span class="n">new_sample_rate</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">sample_rate</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">farrow</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
-    <span class="c1"># y = y[4:]  # Remove filter delay</span>
+    <span class="n">new_sample_rate</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">sample_rate</span>
     <span class="n">ty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">new_sample_rate</span>  <span class="c1"># Time axis for output signal</span>
 
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input signal length: </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output signal length: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-    <span class="c1"># Delay the original signal by 2 samples to align it with the resampled signal</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (real)&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (imag)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (real)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (imag)&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (real)&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (imag)&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
@@ -1067,7 +1068,11 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/11f218533fa0e7673baf75f666ab020e7f3ca551e58b9fa7d2952d43b8c5594d.png" src="../../_images/11f218533fa0e7673baf75f666ab020e7f3ca551e58b9fa7d2952d43b8c5594d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>Input signal length: 100
+Output signal length: 200
+</code></pre></div>
+</div>
+<img alt="../../_images/86f75bb61abc9f39a6fbf115a69de19d882d6d3abe4a94fa309c943529c4bb6a.png" src="../../_images/86f75bb61abc9f39a6fbf115a69de19d882d6d3abe4a94fa309c943529c4bb6a.png" />
 </div>
 </div>
 <p>When upsampling by 4, notice there are four output samples for every input sample.</p>
@@ -1078,7 +1083,11 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c3cc0908e67f61784c2a3ef0506d92da97c80e5a0ae149896b93fd030a1e1a76.png" src="../../_images/c3cc0908e67f61784c2a3ef0506d92da97c80e5a0ae149896b93fd030a1e1a76.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>Input signal length: 100
+Output signal length: 400
+</code></pre></div>
+</div>
+<img alt="../../_images/7e8ebea7ff2bf1504e19af543bc891659f57dbe020602c8f07efc96ff56948c5.png" src="../../_images/7e8ebea7ff2bf1504e19af543bc891659f57dbe020602c8f07efc96ff56948c5.png" />
 </div>
 </div>
 <h2 id="downsample-the-signal-by-an-integer-rate">Downsample the signal by an integer rate<a class="headerlink" href="#downsample-the-signal-by-an-integer-rate" title="Permalink to this heading">¶</a></h2>
@@ -1090,7 +1099,11 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b0023bde56695dc1ea6af94e9a28e8c3857815d6a8f37a09b25ee00198ae2a30.png" src="../../_images/b0023bde56695dc1ea6af94e9a28e8c3857815d6a8f37a09b25ee00198ae2a30.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>Input signal length: 100
+Output signal length: 50
+</code></pre></div>
+</div>
+<img alt="../../_images/0c54d4132437d3f3890181ac495527a4aed982788af1f134643c178bb92376f5.png" src="../../_images/0c54d4132437d3f3890181ac495527a4aed982788af1f134643c178bb92376f5.png" />
 </div>
 </div>
 <p>When downsampling by 4, notice every fourth sample of the input appears at the output.</p>
@@ -1101,7 +1114,11 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a49d76454dab3af2e63ff884e1a99d2ea6ad84b1cd1b5e147f44e87c7411fba6.png" src="../../_images/a49d76454dab3af2e63ff884e1a99d2ea6ad84b1cd1b5e147f44e87c7411fba6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>Input signal length: 100
+Output signal length: 25
+</code></pre></div>
+</div>
+<img alt="../../_images/0f46f5cdd31425f106e73ad934d356980e50631963960e9cd4f881cc1a70b141.png" src="../../_images/0f46f5cdd31425f106e73ad934d356980e50631963960e9cd4f881cc1a70b141.png" />
 </div>
 </div>
 <h2 id="upsample-by-an-irrational-rate">Upsample by an irrational rate<a class="headerlink" href="#upsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
@@ -1114,7 +1131,11 @@ However, these samples often do not align with the original input samples.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e4abee000b8d04234d90fe3d0bc8a5be90ea6a9eb5fb2ecccb21f2411e3dcd1d.png" src="../../_images/e4abee000b8d04234d90fe3d0bc8a5be90ea6a9eb5fb2ecccb21f2411e3dcd1d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>Input signal length: 100
+Output signal length: 315
+</code></pre></div>
+</div>
+<img alt="../../_images/bc4efe66eac13e55a9ff05b01327dcb6efdb62c2f46dddc71661ee69fe2c81ef.png" src="../../_images/bc4efe66eac13e55a9ff05b01327dcb6efdb62c2f46dddc71661ee69fe2c81ef.png" />
 </div>
 </div>
 <h2 id="downsample-by-an-irrational-rate">Downsample by an irrational rate<a class="headerlink" href="#downsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
@@ -1127,7 +1148,11 @@ However, these samples often do not align with the original input samples.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b6b111e6c8a760ce902834113bf89612412fd51fd82638da43b02be72cde7fb7.png" src="../../_images/b6b111e6c8a760ce902834113bf89612412fd51fd82638da43b02be72cde7fb7.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>Input signal length: 100
+Output signal length: 32
+</code></pre></div>
+</div>
+<img alt="../../_images/0e52ec62f7cf3419b0ceb8dd9b591858da8ab3ec6746746b1835e5bea3c726e2.png" src="../../_images/0e52ec62f7cf3419b0ceb8dd9b591858da8ab3ec6746746b1835e5bea3c726e2.png" />
 </div>
 </div>
 
@@ -1137,7 +1162,7 @@ However, these samples often do not align with the original input samples.</p>
   <small>
     
       Last update:
-      Jul 07, 2023
+      Jul 08, 2023
     
   </small>
 </div>
@@ -1268,7 +1293,8 @@ However, these samples often do not align with the original input samples.</p>
       
         <script src="../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
         <script src="../../_static/design-tabs.js"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>

@@ -76,6 +76,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#examples" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -683,9 +688,39 @@ You're not viewing the latest version.
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.streaming (Python property) — Returns whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="#" class="md-nav__link md-nav__link--active">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.streaming (Python property) — Returns whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">Examples</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -861,6 +896,21 @@ You're not viewing the latest version.
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">Examples</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -878,6 +928,7 @@ You're not viewing the latest version.
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">FarrowResampler.</span></span><span class="sig-name descname"><span class="pre">streaming</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></dt>
 <dd><p>Returns whether the filter is in streaming mode.</p>
 <p>In streaming mode, the filter state is preserved between calls to <a class="reference internal" href="../sdr.FarrowResampler.resample/" title="sdr.FarrowResampler.resample (Python method) — Resamples the input signal by the given arbitrary rate."><code class="xref py py-obj docutils literal notranslate"><span class="pre">resample()</span></code></a>.</p>
+<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">farrow</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FarrowResampler</span><span class="p">()</span>
 
 <span class="gp">In [2]: </span><span class="n">farrow</span><span class="o">.</span><span class="n">streaming</span>
