@@ -14,4 +14,4 @@ except ModuleNotFoundError:  # pragma: no cover
     )
 
 from ._farrow import FarrowResampler
-from ._iir import IIR
+from ._iir_filter import IIR
