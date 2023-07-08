@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal
+from typing_extensions import Self
 
 
 class IIR:
@@ -51,6 +52,25 @@ class IIR:
 
         # Compute the zeros and poles of the transfer function
         self._zeros, self._poles, self._gain = scipy.signal.tf2zpk(self.b_taps, self.a_taps)
+
+    @classmethod
+    def ZerosPoles(cls, zeros: np.ndarray, poles: np.ndarray, gain: float = 1.0, streaming: bool = False) -> Self:
+        """
+        Creates an IIR filter from its zeros, poles, and gain.
+
+        Arguments:
+            zeros: The zeros of the transfer function.
+            poles: The poles of the transfer function.
+            gain: The gain of the transfer function.
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`filter()`.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        b, a = scipy.signal.zpk2tf(zeros, poles, gain)
+
+        return cls(b, a, streaming=streaming)
 
     def reset(self):
         """
