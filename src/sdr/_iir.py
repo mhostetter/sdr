@@ -38,6 +38,9 @@ class IIR:
             a: Feedback coefficients, $a_j$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`filter()`.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         self._b_taps = np.asarray(b, dtype=np.complex64)
         self._a_taps = np.asarray(a, dtype=np.complex64)
@@ -52,6 +55,9 @@ class IIR:
     def reset(self):
         """
         *Streaming-mode only:* Resets the filter state.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
@@ -88,6 +94,9 @@ class IIR:
 
         Returns:
             The impulse response of the IIR filter, $h[n]$.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         x = np.zeros(N, dtype=np.float32)
         x[0] = 1
@@ -105,6 +114,9 @@ class IIR:
 
         Returns:
             The step response of the IIR filter, $s[n]$.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         x = np.ones(N, dtype=np.float32)
 
@@ -116,6 +128,9 @@ class IIR:
 
         Arguments:
             N: The number of samples in the impulse response.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         h = self.impulse_response(N)
 
@@ -133,6 +148,9 @@ class IIR:
 
         Arguments:
             N: The number of samples in the step response.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         u = self.step_response(N)
 
@@ -147,6 +165,9 @@ class IIR:
     def plot_zeros_poles(self):
         """
         Plots the zeros and poles of the IIR filter.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
         z = self.zeros
@@ -167,6 +188,9 @@ class IIR:
     def b_taps(self) -> np.ndarray:
         """
         Returns the feedforward filter taps, $b_i$.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._b_taps
 
@@ -174,6 +198,9 @@ class IIR:
     def a_taps(self) -> np.ndarray:
         """
         Returns the feedback filter taps, $a_j$.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._a_taps
 
@@ -183,6 +210,9 @@ class IIR:
         Returns whether the filter is in streaming mode.
 
         In streaming mode, the filter state is preserved between calls to :meth:`filter()`.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._streaming
 
@@ -190,6 +220,9 @@ class IIR:
     def order(self) -> int:
         """
         Returns the order of the IIR filter, $N - 1$.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._a_taps.size - 1
 
@@ -197,6 +230,9 @@ class IIR:
     def zeros(self) -> np.ndarray:
         """
         Returns the zeros of the IIR filter.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._zeros
 
@@ -204,6 +240,9 @@ class IIR:
     def poles(self) -> np.ndarray:
         """
         Returns the poles of the IIR filter.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._poles
 
@@ -211,5 +250,8 @@ class IIR:
     def gain(self) -> float:
         """
         Returns the gain of the IIR filter.
+
+        Examples:
+            See the :ref:`iir-filters` example.
         """
         return self._gain
