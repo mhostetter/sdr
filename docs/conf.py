@@ -191,6 +191,8 @@ html_domain_indices = True
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
+    "scipy": ("http://docs.scipy.org/doc/scipy/reference/", None),
+    "matplotlib": ("http://matplotlib.sourceforge.net/", None),
 }
 
 autodoc_default_options = {
