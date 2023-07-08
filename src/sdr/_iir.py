@@ -235,6 +235,26 @@ class IIR:
         plt.title(r"Frequency Response, $H(\omega)$")
         plt.tight_layout()
 
+    def plot_all(self, N_time: int = 100, N_freq: int = 1024):
+        """
+        Plots the ...
+
+        Arguments:
+            N_time: The number of samples in the impulse and step responses.
+            N_freq: The number of samples in the frequency response.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        plt.subplot2grid((4, 3), (0, 0), 2, 1)
+        self.plot_zeros_poles()
+        plt.subplot2grid((4, 3), (0, 1), 1, 2)
+        self.plot_impulse_response(N_time)
+        plt.subplot2grid((4, 3), (1, 1), 1, 2)
+        self.plot_step_response(N_time)
+        plt.subplot2grid((4, 3), (2, 0), 2, 3)
+        self.plot_frequency_response(N_freq)
+
     @property
     def b_taps(self) -> np.ndarray:
         """
