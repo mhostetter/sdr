@@ -13,6 +13,7 @@ Features
    :caption: Examples
    :hidden:
 
+   examples/iir-filters.ipynb
    examples/farrow-resampler.ipynb
 
 .. toctree::
