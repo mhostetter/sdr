@@ -7,6 +7,7 @@ The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR) ap
 Features
 --------
 
+- Filters: Infinite impulse response filters (:obj:`sdr.IIR`)
 - Arbitrary resamplers: Farrow resampler (:obj:`sdr.FarrowResampler`)
 
 .. toctree::
