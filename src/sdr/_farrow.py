@@ -14,6 +14,9 @@ class FarrowResampler:
     References:
         - https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/
 
+    Examples:
+        See the :ref:`farrow-arbitrary-resampler` example.
+
     Group:
         resampling
     """
@@ -63,6 +66,9 @@ class FarrowResampler:
 
         Returns:
             The resampled signal, $y[n] = x(n \frac{T_s}{r})$.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         if not rate > 0:
             raise ValueError("Argument 'rate' must be positive.")
@@ -115,10 +121,11 @@ class FarrowResampler:
 
         In streaming mode, the filter state is preserved between calls to :obj:`resample()`.
 
-        .. ipython:: python
+        Examples:
+            .. ipython:: python
 
-            farrow = sdr.FarrowResampler()
-            farrow.streaming
+                farrow = sdr.FarrowResampler()
+                farrow.streaming
         """
         return self._streaming
 
@@ -127,10 +134,11 @@ class FarrowResampler:
         """
         Returns the order of the filter.
 
-        .. ipython:: python
+        Examples:
+            .. ipython:: python
 
-            farrow = sdr.FarrowResampler()
-            farrow.order
+                farrow = sdr.FarrowResampler()
+                farrow.order
         """
         return self._taps.shape[1] - 1
 
@@ -139,9 +147,10 @@ class FarrowResampler:
         """
         Returns the Farrow filter taps.
 
-        .. ipython:: python
+        Examples:
+            .. ipython:: python
 
-            farrow = sdr.FarrowResampler()
-            farrow.taps
+                farrow = sdr.FarrowResampler()
+                farrow.taps
         """
         return self._taps
