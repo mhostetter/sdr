@@ -175,9 +175,7 @@ class IIR:
 
         plt.plot(unit_circle.real, unit_circle.imag, color="k", linestyle="--", label="Unit circle")
         plt.scatter(z.real, z.imag, color="b", marker="o", facecolor="none", label="Zeros")
-        plt.scatter(z.real, -z.imag, color="b", marker="o", facecolor="none")  # Conjugate zeros
         plt.scatter(p.real, p.imag, color="r", marker="x", label="Poles")
-        plt.scatter(p.real, -p.imag, color="r", marker="x")  # Conjugate poles
         plt.axis("equal")
         plt.legend()
         plt.xlabel("Real")
