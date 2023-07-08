@@ -78,8 +78,10 @@ class IIR:
         return y
 
     def impulse_response(self, N: int = 100) -> np.ndarray:
-        """
+        r"""
         Returns the impulse response $h[n]$ of the IIR filter.
+
+        The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
         Arguments:
             N: The number of samples to return.
@@ -94,13 +96,15 @@ class IIR:
 
     def step_response(self, N: int = 100) -> np.ndarray:
         """
-        Returns the step response $u[n]$ of the IIR filter.
+        Returns the step response $s[n]$ of the IIR filter.
+
+        The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
         Arguments:
             N: The number of samples to return.
 
         Returns:
-            The step response of the IIR filter, $u[n]$.
+            The step response of the IIR filter, $s[n]$.
         """
         x = np.ones(N, dtype=np.float32)
 
@@ -125,7 +129,7 @@ class IIR:
 
     def plot_step_response(self, N: int = 100):
         """
-        Plots the step response $u[n]$ of the IIR filter.
+        Plots the step response $s[n]$ of the IIR filter.
 
         Arguments:
             N: The number of samples in the step response.
@@ -138,7 +142,7 @@ class IIR:
         plt.legend()
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
-        plt.title("Step Response, $u[n]$")
+        plt.title("Step Response, $s[n]$")
 
     @property
     def b_taps(self) -> np.ndarray:
