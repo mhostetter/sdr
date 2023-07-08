@@ -54,6 +54,7 @@ extensions = [
     "sphinx_last_updated_by_git",
     "sphinx_immaterial",
     "sphinx_immaterial.apidoc.python.apigen",
+    "sphinx_math_dollar",
     # "myst_parser",
     "myst_nb",
     "sphinx_design",
@@ -218,6 +219,18 @@ myst_enable_extensions = ["dollarmath"]
 
 nb_execution_mode = "off"
 
+mathjax_config = {
+    "tex2jax": {
+        "inlineMath": [["\\(", "\\)"]],
+        "displayMath": [["\\[", "\\]"]],
+    },
+}
+mathjax3_config = {
+    "tex": {
+        "inlineMath": [["\\(", "\\)"]],
+        "displayMath": [["\\[", "\\]"]],
+    }
+}
 
 # -- Sphinx Immaterial configs -------------------------------------------------
 
