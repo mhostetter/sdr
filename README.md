@@ -18,3 +18,7 @@
 </div>
 
 A Python package for software-defined radio.
+
+## Features
+
+- Arbitrary resamplers: Farrow resampler (`sdr.FarrowResampler`)
