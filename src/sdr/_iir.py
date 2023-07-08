@@ -235,6 +235,30 @@ class IIR:
         plt.title(r"Frequency Response, $H(\omega)$")
         plt.tight_layout()
 
+    def plot_group_delay(self, sample_rate: float = 1.0, N: int = 1024):
+        r"""
+        Plots the group delay $\tau_g(\omega)$ of the IIR filter.
+
+        Arguments:
+            sample_rate: The sample rate of the filter in samples/s.
+            N: The number of samples in the frequency response.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        w, tau_g = scipy.signal.group_delay((self.b_taps, self.a_taps), w=N, whole=True, fs=sample_rate)
+
+        w[w >= 0.5 * sample_rate] -= sample_rate
+        w = np.fft.fftshift(w)
+        tau_g = np.fft.fftshift(tau_g)
+
+        plt.plot(w, tau_g, color="b")
+        plt.xlabel("Frequency (Hz), $f$")
+        plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
+        plt.title(r"Group Delay, $\tau_g(\omega)$")
+        plt.grid(which="both", linestyle="--")
+        plt.tight_layout()
+
     def plot_all(self, N_time: int = 100, N_freq: int = 1024):
         """
         Plots the ...
