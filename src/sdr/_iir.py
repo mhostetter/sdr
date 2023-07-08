@@ -144,6 +144,25 @@ class IIR:
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
 
+    def plot_zeros_poles(self):
+        """
+        Plots the zeros and poles of the IIR filter.
+        """
+        unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
+        z = self.zeros
+        p = self.poles
+
+        plt.plot(unit_circle.real, unit_circle.imag, color="k", linestyle="--", label="Unit circle")
+        plt.scatter(z.real, z.imag, color="b", marker="o", facecolor="none", label="Zeros")
+        plt.scatter(z.real, -z.imag, color="b", marker="o", facecolor="none")  # Conjugate zeros
+        plt.scatter(p.real, p.imag, color="r", marker="x", label="Poles")
+        plt.scatter(p.real, -p.imag, color="r", marker="x")  # Conjugate poles
+        plt.axis("equal")
+        plt.legend()
+        plt.xlabel("Real")
+        plt.ylabel("Imaginary")
+        plt.title("Zeros and Poles of $H(z)$")
+
     @property
     def b_taps(self) -> np.ndarray:
         """
