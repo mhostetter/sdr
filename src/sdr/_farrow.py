@@ -45,12 +45,16 @@ class FarrowResampler:
     def reset(self, state: np.ndarray | None = None):
         """
         Resets the filter state and fractional sample index. Only useful for streaming mode.
+
+        Arguments:
+            state: The filter state to reset to. The state vector should equal the previous three
+                inputs. If `None`, the filter state will be reset to zero.
         """
         if state is None:
-            self._x_prev = np.zeros(4, dtype=np.float32)
+            self._x_prev = np.zeros(self._taps.shape[1] - 1, dtype=np.float32)
         else:
             state = np.asarray(state, dtype=np.float32)
-            if not state.size == self._taps.shape[1]:
+            if not state.size == self._taps.shape[1] - 1:
                 raise ValueError(f"Argument 'state' must have {self._taps.shape[1]} elements, not {state.size}.")
             self._x_prev = state
 
