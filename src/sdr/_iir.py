@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal
 
@@ -101,6 +102,23 @@ class IIR:
         x = np.ones(N, dtype=np.float32)
 
         return self.filter(x)
+
+    def plot_impulse_response(self, N: int = 100):
+        """
+        Plots the impulse response $h[n]$ of the IIR filter.
+
+        Arguments:
+            N: The number of samples in the impulse response.
+        """
+        h = self.impulse_response(N)
+
+        # plt.stem(np.arange(h.size), h.real, linefmt="b-", markerfmt="bo")
+        plt.plot(np.arange(h.size), h.real, color="b", marker=".", label="Real")
+        plt.plot(np.arange(h.size), h.imag, color="r", marker=".", label="Imaginary")
+        plt.legend()
+        plt.xlabel("Sample")
+        plt.ylabel("Amplitude")
+        plt.title("Impulse Response, $h[n]$")
 
     @property
     def b_taps(self) -> np.ndarray:
