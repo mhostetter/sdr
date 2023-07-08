@@ -120,6 +120,23 @@ class IIR:
         plt.ylabel("Amplitude")
         plt.title("Impulse Response, $h[n]$")
 
+    def plot_step_response(self, N: int = 100):
+        """
+        Plots the step response $u[n]$ of the IIR filter.
+
+        Arguments:
+            N: The number of samples in the step response.
+        """
+        u = self.step_response(N)
+
+        # plt.stem(np.arange(u.size), u.real, linefmt="b-", markerfmt="bo")
+        plt.plot(np.arange(u.size), u.real, color="b", marker=".", label="Real")
+        plt.plot(np.arange(u.size), u.imag, color="r", marker=".", label="Imaginary")
+        plt.legend()
+        plt.xlabel("Sample")
+        plt.ylabel("Amplitude")
+        plt.title("Step Response, $u[n]$")
+
     @property
     def b_taps(self) -> np.ndarray:
         """
