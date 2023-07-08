@@ -184,6 +184,39 @@ class IIR:
         plt.ylabel("Imaginary")
         plt.title("Zeros and Poles of $H(z)$")
 
+    def plot_frequency_response(self, sample_rate: float = 1.0, N: int = 1024):
+        r"""
+        Plots the frequency response $H(\omega)$ of the IIR filter.
+
+        Arguments:
+            sample_rate: The sample rate of the filter in samples/s.
+            N: The number of samples in the frequency response.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)
+
+        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        w = np.fft.fftshift(w)
+        H = np.fft.fftshift(H)
+
+        ax1 = plt.gca()
+        ax1.plot(w, 10 * np.log10(np.abs(H)), color="b", label="Magnitude")
+        ax1.set_ylabel(r"Magnitude (dB), $|H(\omega)|$")
+        ax1.tick_params(axis="y", labelcolor="b")
+        ax1.grid(which="both", linestyle="--")
+        ax1.set_xlabel("Frequency (Hz), $f$")
+
+        ax2 = ax1.twinx()
+        ax2.plot(w, np.rad2deg(np.angle(H)), color="r", label="Phase")
+        ax2.set_ylabel(r"Phase (degrees), $\angle H(\omega)$")
+        ax2.tick_params(axis="y", labelcolor="r")
+        ax2.set_ylim(-180, 180)
+
+        plt.title(r"Frequency Response, $H(\omega)$")
+        plt.tight_layout()
+
     @property
     def b_taps(self) -> np.ndarray:
         """
