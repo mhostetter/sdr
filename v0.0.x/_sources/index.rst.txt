@@ -5,6 +5,12 @@ The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR) ap
 
 
 .. toctree::
+   :caption: Examples
+   :hidden:
+
+   examples/farrow-resampler.ipynb
+
+.. toctree::
    :caption: API Reference
    :hidden:
    :maxdepth: 2

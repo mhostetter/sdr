@@ -13,7 +13,7 @@
     
     
       
-        <title>Versioning - sdr</title>
+        <title>Farrow arbitrary resampler - sdr</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#alpha-releases" class="md-skip">
+        <a href="#construct-an-input-signal-x-n-x-n-t-s" class="md-skip">
           Skip to content
         </a>
       
@@ -146,7 +146,7 @@ You're not viewing the latest version.
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Versioning
+              Farrow arbitrary resampler
             
           </span>
         </div>
@@ -242,10 +242,12 @@ You're not viewing the latest version.
         
   
   
+    
+  
 
 
   <li class="md-tabs__item">
-    <a href="../../examples/farrow-resampler/" class="md-tabs__link">
+    <a href="#" class="md-tabs__link md-tabs__link--active">
       <span class="md-ellipsis">Examples</span>
     </a>
   </li>
@@ -266,12 +268,10 @@ You're not viewing the latest version.
         
   
   
-    
-  
 
 
   <li class="md-tabs__item">
-    <a href="#" class="md-tabs__link md-tabs__link--active">
+    <a href="../../release-notes/versioning/" class="md-tabs__link">
       <span class="md-ellipsis">Release Notes</span>
     </a>
   </li>
@@ -338,12 +338,14 @@ You're not viewing the latest version.
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
       
       
       
@@ -363,12 +365,85 @@ You're not viewing the latest version.
               
   
   
+    
+  
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../examples/farrow-resampler/" class="md-nav__link">
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span class="md-ellipsis">Farrow arbitrary resampler</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
         <span class="md-ellipsis">Farrow arbitrary resampler</span>
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#construct-an-input-signal-x-n-x-n-t-s" class="md-nav__link">
+    <span class="md-ellipsis">Construct an input signal, x<wbr>[n] = x<wbr>(n T_<wbr>s)</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" class="md-nav__link">
+    <span class="md-ellipsis">Resample the input signal with rate r, y<wbr>[n] = x<wbr>(n \frac<wbr>{T_<wbr>s}<wbr>{r})</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upsample-the-signal-by-an-integer-rate" class="md-nav__link">
+    <span class="md-ellipsis">Upsample the signal by an integer rate</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downsample-the-signal-by-an-integer-rate" class="md-nav__link">
+    <span class="md-ellipsis">Downsample the signal by an integer rate</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upsample-by-an-irrational-rate" class="md-nav__link">
+    <span class="md-ellipsis">Upsample by an irrational rate</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downsample-by-an-irrational-rate" class="md-nav__link">
+    <span class="md-ellipsis">Downsample by an irrational rate</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -739,14 +814,12 @@ You're not viewing the latest version.
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       
       
@@ -766,57 +839,12 @@ You're not viewing the latest version.
               
   
   
-    
-  
-    
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-ellipsis">Versioning</span>
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="#" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../release-notes/versioning/" class="md-nav__link">
         <span class="md-ellipsis">Versioning</span>
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#alpha-releases" class="md-nav__link">
-    <span class="md-ellipsis">Alpha releases</span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#beta-releases" class="md-nav__link">
-    <span class="md-ellipsis">Beta releases</span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -902,15 +930,43 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#alpha-releases" class="md-nav__link">
-    <span class="md-ellipsis">Alpha releases</span>
+  <a href="#construct-an-input-signal-x-n-x-n-t-s" class="md-nav__link">
+    <span class="md-ellipsis">Construct an input signal, x<wbr>[n] = x<wbr>(n T_<wbr>s)</span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#beta-releases" class="md-nav__link">
-    <span class="md-ellipsis">Beta releases</span>
+  <a href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" class="md-nav__link">
+    <span class="md-ellipsis">Resample the input signal with rate r, y<wbr>[n] = x<wbr>(n \frac<wbr>{T_<wbr>s}<wbr>{r})</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upsample-the-signal-by-an-integer-rate" class="md-nav__link">
+    <span class="md-ellipsis">Upsample the signal by an integer rate</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downsample-the-signal-by-an-integer-rate" class="md-nav__link">
+    <span class="md-ellipsis">Downsample the signal by an integer rate</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upsample-by-an-irrational-rate" class="md-nav__link">
+    <span class="md-ellipsis">Upsample by an irrational rate</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downsample-by-an-irrational-rate" class="md-nav__link">
+    <span class="md-ellipsis">Downsample by an irrational rate</span>
   </a>
   
 </li>
@@ -929,16 +985,151 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="versioning">Versioning<a class="headerlink" href="#versioning" title="Permalink to this heading">¶</a></h1>
-<p>The <a class="reference internal" href="../../api/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> library uses <a class="reference external" href="https://semver.org/">semantic versioning</a>. Releases are versioned <code class="code highlight python docutils literal highlight-python"><span class="n">major</span><span class="o">.</span><span class="n">minor</span><span class="o">.</span><span class="n">patch</span></code>.</p>
-<p>Major versions introduce API-changing features. Minor versions add features that are backwards-compatible with other releases.
-Patch versions make backwards-compatible bug fixes.</p>
-<h2 id="alpha-releases">Alpha releases<a class="headerlink" href="#alpha-releases" title="Permalink to this heading">¶</a></h2>
-<p>Versions before <code class="code highlight python docutils literal highlight-python"><span class="mf">0.1.0</span></code> are alpha releases. Alpha releases are versioned <code class="code highlight python docutils literal highlight-python"><span class="mf">0.0</span><span class="o">.</span><span class="n">alpha</span></code>. There is no API compatibility guarantee
-for them. They can be thought of as <code class="code highlight python docutils literal highlight-python"><span class="mf">0.0</span><span class="o">.</span><span class="n">alpha</span><span class="o">-</span><span class="n">major</span></code>.</p>
-<h2 id="beta-releases">Beta releases<a class="headerlink" href="#beta-releases" title="Permalink to this heading">¶</a></h2>
-<p>Versions before <code class="code highlight python docutils literal highlight-python"><span class="mf">1.0.0</span></code> are beta releases. Beta releases are versioned <code class="code highlight python docutils literal highlight-python"><span class="mf">0.</span><span class="n">beta</span><span class="o">.</span><span class="n">x</span></code> and are API-compatible. They can be thought
-of as <code class="code highlight python docutils literal highlight-python"><span class="mf">0.</span><span class="n">beta</span><span class="o">-</span><span class="n">major</span><span class="o">.</span><span class="n">beta</span><span class="o">-</span><span class="n">minor</span></code>.</p>
+<h1 id="farrow-arbitrary-resampler">Farrow arbitrary resampler<a class="headerlink" href="#farrow-arbitrary-resampler" title="Permalink to this heading">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">sdr</span>
+
+<span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
+<span class="c1"># %matplotlib widget</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.prop_cycle&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="construct-an-input-signal-x-n-x-n-t-s">Construct an input signal, <span class="math notranslate nohighlight">\(x[n] = x(n T_s)\)</span><a class="headerlink" href="#construct-an-input-signal-x-n-x-n-t-s" title="Permalink to this heading">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># samples/s</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># samples</span>
+<span class="n">freq</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># Hz</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>  <span class="c1"># Time axis for the input signal</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq</span> <span class="o">*</span> <span class="n">tx</span><span class="p">)</span>  <span class="c1"># Complex exponential input signal</span>
+<span class="n">x</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Exponential decay</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Real&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Imag&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original signal, $x(t)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1a51e8f9497f3132ccd7ad6c041fa0ae2974b8bdbdc23ea08b53f80b44c78bf9.png" src="../../_images/1a51e8f9497f3132ccd7ad6c041fa0ae2974b8bdbdc23ea08b53f80b44c78bf9.png" />
+</div>
+</div>
+<h2 id="resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r">Resample the input signal with rate <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(y[n] = x(n \frac{T_s}{r})\)</span><a class="headerlink" href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" title="Permalink to this heading">¶</a></h2>
+<p>In the <a class="reference internal" href="../../api/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> library, the Farrow arbitrary resampler is implemented in <a class="reference internal" href="../../api/sdr.FarrowResampler/" title="sdr.FarrowResampler (Python class) — A cubic Farrow arbitrary resampler."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.FarrowResampler</span></code></a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">resample_signal</span><span class="p">(</span><span class="n">rate</span><span class="p">):</span>
+    <span class="n">farrow</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FarrowResampler</span><span class="p">()</span>
+    <span class="n">new_sample_rate</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">sample_rate</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">farrow</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
+    <span class="c1"># y = y[4:]  # Remove filter delay</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">new_sample_rate</span>  <span class="c1"># Time axis for output signal</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+    <span class="c1"># Delay the original signal by 2 samples to align it with the resampled signal</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (real)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (imag)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (real)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (imag)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original $x(t)$ and resampled signal $y(t)$, rate = </span><span class="si">{</span><span class="n">rate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="upsample-the-signal-by-an-integer-rate">Upsample the signal by an integer rate<a class="headerlink" href="#upsample-the-signal-by-an-integer-rate" title="Permalink to this heading">¶</a></h2>
+<p>When upsampling by 2, notice there are two output samples for every input sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">resample_signal</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/11f218533fa0e7673baf75f666ab020e7f3ca551e58b9fa7d2952d43b8c5594d.png" src="../../_images/11f218533fa0e7673baf75f666ab020e7f3ca551e58b9fa7d2952d43b8c5594d.png" />
+</div>
+</div>
+<p>When upsampling by 4, notice there are four output samples for every input sample.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">resample_signal</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c3cc0908e67f61784c2a3ef0506d92da97c80e5a0ae149896b93fd030a1e1a76.png" src="../../_images/c3cc0908e67f61784c2a3ef0506d92da97c80e5a0ae149896b93fd030a1e1a76.png" />
+</div>
+</div>
+<h2 id="downsample-the-signal-by-an-integer-rate">Downsample the signal by an integer rate<a class="headerlink" href="#downsample-the-signal-by-an-integer-rate" title="Permalink to this heading">¶</a></h2>
+<p>When downsampling by 2, notice every other sample of the input appears at the output.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">resample_signal</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b0023bde56695dc1ea6af94e9a28e8c3857815d6a8f37a09b25ee00198ae2a30.png" src="../../_images/b0023bde56695dc1ea6af94e9a28e8c3857815d6a8f37a09b25ee00198ae2a30.png" />
+</div>
+</div>
+<p>When downsampling by 4, notice every fourth sample of the input appears at the output.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">resample_signal</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/a49d76454dab3af2e63ff884e1a99d2ea6ad84b1cd1b5e147f44e87c7411fba6.png" src="../../_images/a49d76454dab3af2e63ff884e1a99d2ea6ad84b1cd1b5e147f44e87c7411fba6.png" />
+</div>
+</div>
+<h2 id="upsample-by-an-irrational-rate">Upsample by an irrational rate<a class="headerlink" href="#upsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
+<p>When upsampling by <span class="math notranslate nohighlight">\(\pi\)</span>, notice there are roughly three output samples for every input sample.
+However, these samples often do not align with the original input samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">resample_signal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/e4abee000b8d04234d90fe3d0bc8a5be90ea6a9eb5fb2ecccb21f2411e3dcd1d.png" src="../../_images/e4abee000b8d04234d90fe3d0bc8a5be90ea6a9eb5fb2ecccb21f2411e3dcd1d.png" />
+</div>
+</div>
+<h2 id="downsample-by-an-irrational-rate">Downsample by an irrational rate<a class="headerlink" href="#downsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
+<p>When downsampling by <span class="math notranslate nohighlight">\(\pi\)</span>, notice there are roughly three input samples for every output sample.
+However, these samples often do not align with the original input samples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">resample_signal</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/b6b111e6c8a760ce902834113bf89612412fd51fd82638da43b02be72cde7fb7.png" src="../../_images/b6b111e6c8a760ce902834113bf89612412fd51fd82638da43b02be72cde7fb7.png" />
+</div>
+</div>
 
 
   <hr>
@@ -946,7 +1137,7 @@ of as <code class="code highlight python docutils literal highlight-python"><spa
   <small>
     
       Last update:
-      Jul 06, 2023
+      Jul 07, 2023
     
   </small>
 </div>
@@ -979,7 +1170,7 @@ of as <code class="code highlight python docutils literal highlight-python"><spa
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../../api/sdr.FarrowResampler.taps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.FarrowResampler.taps" rel="prev">
+        <a href="../../" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -988,11 +1179,26 @@ of as <code class="code highlight python docutils literal highlight-python"><spa
               <span class="md-footer__direction">
                 Previous
               </span>
-              sdr.FarrowResampler.taps
+              sdr
             </div>
           </div>
         </a>
       
+      
+        
+        <a href="../../api/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              sdr
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
       
     </nav>
   
@@ -1062,6 +1268,8 @@ of as <code class="code highlight python docutils literal highlight-python"><spa
       
         <script src="../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
         <script src="../../_static/design-tabs.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>
