@@ -264,7 +264,8 @@ class IIR:
 
     def plot_all(self, N_time: int = 100, N_freq: int = 1024):
         """
-        Plots the ...
+        Plots the zeros and poles, impulse response, step response, and frequency response of the IIR filter
+        in a single figure.
 
         Arguments:
             N_time: The number of samples in the impulse and step responses.
