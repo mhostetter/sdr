@@ -227,7 +227,7 @@ class IIR:
         ax1.set_xlabel("Frequency (Hz), $f$")
 
         ax2 = ax1.twinx()
-        ax2.plot(w, np.rad2deg(np.angle(H)), color="r", label="Phase")
+        ax2.plot(w, np.rad2deg(np.angle(H)), color="r", linestyle="--", label="Phase")
         ax2.set_ylabel(r"Phase (degrees), $\angle H(\omega)$")
         ax2.tick_params(axis="y", labelcolor="r")
         ax2.set_ylim(-180, 180)
