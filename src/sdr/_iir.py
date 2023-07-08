@@ -46,6 +46,9 @@ class IIR:
         self._zi: np.ndarray  # The filter state. Will be updated in reset().
         self.reset()
 
+        # Compute the zeros and poles of the transfer function
+        self._zeros, self._poles, self._gain = scipy.signal.tf2zpk(self.b_taps, self.a_taps)
+
     def reset(self):
         """
         *Streaming-mode only:* Resets the filter state.
@@ -172,18 +175,18 @@ class IIR:
         """
         Returns the zeros of the IIR filter.
         """
-        return scipy.signal.tf2zpk(self.b_taps, self.a_taps)[0]
+        return self._zeros
 
     @property
     def poles(self) -> np.ndarray:
         """
         Returns the poles of the IIR filter.
         """
-        return scipy.signal.tf2zpk(self.b_taps, self.a_taps)[1]
+        return self._poles
 
     @property
     def gain(self) -> float:
         """
         Returns the gain of the IIR filter.
         """
-        return scipy.signal.tf2zpk(self.b_taps, self.a_taps)[2]
+        return self._gain
