@@ -73,6 +73,21 @@ class IIR:
 
         return y
 
+    def impulse_response(self, N: int = 100) -> np.ndarray:
+        """
+        Returns the impulse response $h[n]$ of the IIR filter.
+
+        Arguments:
+            N: The number of samples to return.
+
+        Returns:
+            The impulse response of the IIR filter, $h[n]$.
+        """
+        x = np.zeros(N, dtype=np.float32)
+        x[0] = 1
+
+        return self.filter(x)
+
     @property
     def b_taps(self) -> np.ndarray:
         """
