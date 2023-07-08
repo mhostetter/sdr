@@ -1,3 +1,5 @@
+import math
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
@@ -7,10 +9,10 @@ import sdr
 
 
 def generate_signal():
-    N = 100  # samples
-    omega = 2 * np.pi / 20  # radians
+    N = 1_000  # samples
+    omega = 2 * np.pi / 40  # radians
     x = np.exp(1j * omega * np.arange(0, N))  # Complex exponential input signal
-    x *= np.exp(-np.arange(N) / 100)  # Exponential decay
+    x *= np.exp(-np.arange(N) / 300)  # Exponential decay
     tx = np.arange(0, N)  # Time axis for the input signal
     return tx, x
 
@@ -18,14 +20,10 @@ def generate_signal():
 @pytest.mark.parametrize("rate", [1 / 2, 1 / 3, 1 / np.pi, 2, 3, np.pi])
 def test_match_scipy(rate):
     _, x = generate_signal()
-    rate = 2
 
     farrow = sdr.FarrowResampler()
     y = farrow.resample(x, rate)
-    y_scipy = scipy.signal.resample(x, rate * x.size)
-
-    # Remove filter delay and trim end to match signal lengths
-    y = y[4 : 4 + y_scipy.size]
+    y_scipy = scipy.signal.resample(x, int(math.ceil(rate * x.size)))
 
     # Ignore edge effects
     y = y[10:-10]
