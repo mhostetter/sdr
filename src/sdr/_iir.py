@@ -88,6 +88,20 @@ class IIR:
 
         return self.filter(x)
 
+    def step_response(self, N: int = 100) -> np.ndarray:
+        """
+        Returns the step response $u[n]$ of the IIR filter.
+
+        Arguments:
+            N: The number of samples to return.
+
+        Returns:
+            The step response of the IIR filter, $u[n]$.
+        """
+        x = np.ones(N, dtype=np.float32)
+
+        return self.filter(x)
+
     @property
     def b_taps(self) -> np.ndarray:
         """
