@@ -17,7 +17,7 @@ def generate_signal():
     return tx, x
 
 
-@pytest.mark.parametrize("rate", [1 / 2, 1 / 3, 1 / np.pi, 2, 3, np.pi])
+@pytest.mark.parametrize("rate", [1 / 2, 1 / 3, 1 / np.pi, 1 / 11, 2, 3, np.pi, 11])
 def test_match_scipy(rate):
     _, x = generate_signal()
 
@@ -39,6 +39,41 @@ def test_match_scipy(rate):
         plt.plot(y.imag, label="y.imag")
         plt.plot(y_scipy.imag, label="y_scipy.imag")
         plt.legend()
+        plt.title(f"rate = {rate}")
         plt.show()
 
     np.testing.assert_array_almost_equal(y, y_scipy, decimal=1)
+
+
+@pytest.mark.parametrize("rate", [1 / 2, 1 / 3, 1 / np.pi, 1 / 11, 2, 3, np.pi, 11])
+def test_streaming_match_non_streaming(rate):
+    _, x = generate_signal()
+
+    farrow = sdr.FarrowResampler()
+    y_non_streaming = farrow.resample(x, rate)
+
+    farrow = sdr.FarrowResampler(streaming=True)
+    y_streaming = []
+    N = 50
+    assert x.size % N == 0
+    for i in range(0, x.size, N):
+        y_streaming.append(farrow.resample(x[i : i + N], rate))
+    y_streaming = np.concatenate(y_streaming)
+
+    # Match the lengths
+    y_non_streaming = y_non_streaming[0 : y_streaming.size]
+
+    if False:
+        plt.figure()
+        plt.subplot(2, 1, 1)
+        plt.plot(y_non_streaming.real, label="y_non_streaming.real")
+        plt.plot(y_streaming.real, label="y_streaming.real")
+        plt.legend()
+        plt.subplot(2, 1, 2)
+        plt.plot(y_non_streaming.imag, label="y_non_streaming.imag")
+        plt.plot(y_streaming.imag, label="y_streaming.imag")
+        plt.legend()
+        plt.suptitle(f"rate = {rate}")
+        plt.show()
+
+    np.testing.assert_array_almost_equal(y_streaming, y_non_streaming)
