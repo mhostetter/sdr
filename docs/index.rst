@@ -1,8 +1,13 @@
 sdr
----
+===
 
 The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR) applications.
 
+
+Features
+--------
+
+- Arbitrary resamplers: Farrow resampler (:obj:`sdr.FarrowResampler`)
 
 .. toctree::
    :caption: Examples
