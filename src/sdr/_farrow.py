@@ -58,7 +58,8 @@ class FarrowResampler:
                 raise ValueError(f"Argument 'state' must have {self._taps.shape[1]} elements, not {state.size}.")
             self._x_prev = state
 
-        self._mu_next = 0.0
+        # Initial fractional sample delay accounts for filter delay
+        self._mu_next = self._taps.shape[1] // 2
 
     def resample(self, x: np.ndarray, rate: float) -> np.ndarray:
         r"""
