@@ -24,6 +24,10 @@ class FarrowResampler:
     def __init__(self, streaming: bool = False):
         """
         Creates a new Farrow arbitrary resampler.
+
+        Arguments:
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`resample()`.
         """
         self._streaming = streaming
         self._x_prev: np.ndarray  # FIR filter state. Will be updated in reset().
@@ -44,7 +48,7 @@ class FarrowResampler:
 
     def reset(self, state: np.ndarray | None = None):
         """
-        Resets the filter state and fractional sample index. Only useful for streaming mode.
+        *Streaming-mode only:* Resets the filter state and fractional sample index.
 
         Arguments:
             state: The filter state to reset to. The state vector should equal the previous three
@@ -124,19 +128,17 @@ class FarrowResampler:
         return y
 
     @property
-    def streaming(self) -> bool:
+    def taps(self) -> np.ndarray:
         """
-        Returns whether the filter is in streaming mode.
-
-        In streaming mode, the filter state is preserved between calls to :obj:`resample()`.
+        Returns the Farrow filter taps.
 
         Examples:
             .. ipython:: python
 
                 farrow = sdr.FarrowResampler()
-                farrow.streaming
+                farrow.taps
         """
-        return self._streaming
+        return self._taps
 
     @property
     def order(self) -> int:
@@ -152,14 +154,16 @@ class FarrowResampler:
         return self._taps.shape[1] - 1
 
     @property
-    def taps(self) -> np.ndarray:
+    def streaming(self) -> bool:
         """
-        Returns the Farrow filter taps.
+        Returns whether the filter is in streaming mode.
+
+        In streaming mode, the filter state is preserved between calls to :meth:`resample()`.
 
         Examples:
             .. ipython:: python
 
                 farrow = sdr.FarrowResampler()
-                farrow.taps
+                farrow.streaming
         """
-        return self._taps
+        return self._streaming
