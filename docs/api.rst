@@ -3,6 +3,11 @@
 sdr
 ===
 
+Filtering
+---------
+
+.. python-apigen-group:: filtering
+
 Resampling
 ----------
 
