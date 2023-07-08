@@ -53,13 +53,16 @@ class FarrowResampler:
 
         self._mu_next = 0.0
 
-    def resample(self, x: np.ndarray, rate: float, mode="full") -> np.ndarray:
-        """
+    def resample(self, x: np.ndarray, rate: float) -> np.ndarray:
+        r"""
         Resamples the input signal by the given arbitrary rate.
 
         Arguments:
-            x: The input signal.
-            rate: The resampling rate.
+            x: The input signal, $x[n] = x(n T_s)$.
+            rate: The resampling rate, $r$.
+
+        Returns:
+            The resampled signal, $y[n] = x(n \frac{T_s}{r})$.
         """
         if not rate > 0:
             raise ValueError("Argument 'rate' must be positive.")
@@ -82,23 +85,26 @@ class FarrowResampler:
             # Store the next fractional sample index for next call to resample()
             self._mu_next = (mu[-1] + 1 / rate) % 1.0
         else:
-            # Compute the four FIR filter outputs for the entire input signal, using the specified
-            # convolution mode
-            y0 = scipy.signal.convolve(x, self._taps[0, :], mode=mode)
-            y1 = scipy.signal.convolve(x, self._taps[1, :], mode=mode)
-            y2 = scipy.signal.convolve(x, self._taps[2, :], mode=mode)
-            y3 = scipy.signal.convolve(x, self._taps[3, :], mode=mode)
+            # Compute the four FIR filter outputs for the entire input signal
+            y0 = scipy.signal.convolve(x, self._taps[0, :], mode="full")
+            y1 = scipy.signal.convolve(x, self._taps[1, :], mode="full")
+            y2 = scipy.signal.convolve(x, self._taps[2, :], mode="full")
+            y3 = scipy.signal.convolve(x, self._taps[3, :], mode="full")
 
             # Compute the fractional sample indices for each output sample
-            mu = np.arange(0, x.size + self._taps.shape[1] - 1, 1 / rate)
+            mu = np.arange(
+                self._taps.shape[1] // 2,  # Account for filter delay
+                self._taps.shape[1] // 2 + x.size,
+                1 / rate,
+            )
 
         # Convert the fractional indices to integer indices and fractional indices
-        idx = (mu // 1.0).astype(int)
-        mu = mu - idx
+        idxs = (mu // 1.0).astype(int)
+        mu = mu - idxs
         mu *= -1  # TODO: Why is this the case?
 
         # Interpolate the output samples using the Horner method
-        y = mu * (mu * (mu * y0[idx] + y1[idx]) + y2[idx]) + y3[idx]
+        y = mu * (mu * (mu * y0[idxs] + y1[idxs]) + y2[idxs]) + y3[idxs]
 
         return y
 
