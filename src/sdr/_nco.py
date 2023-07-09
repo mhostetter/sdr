@@ -3,7 +3,10 @@ A module for numerically-controlled oscillators (NCO).
 """
 import numpy as np
 
+from ._helper import export
 
+
+@export
 class NCO:
     r"""
     Implements a numerically-controlled oscillator (NCO).
@@ -156,6 +159,7 @@ class NCO:
         self._offset = value
 
 
+@export
 class DDS:
     r"""
     Implements a direct digital synthesizer (DDS).

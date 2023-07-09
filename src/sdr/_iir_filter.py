@@ -8,7 +8,10 @@ import numpy as np
 import scipy.signal
 from typing_extensions import Self
 
+from ._helper import export
 
+
+@export
 class IIR:
     r"""
     Implements an infinite impulse response (IIR) filter.
