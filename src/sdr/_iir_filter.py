@@ -222,7 +222,7 @@ class IIR:
         H = np.fft.fftshift(H)
 
         ax1 = plt.gca()
-        ax1.plot(w, 10 * np.log10(np.abs(H) ** 2), color="b", label="Magnitude")
+        ax1.plot(w, 10 * np.log10(np.abs(H) ** 2), color="b", label="Power")
         ax1.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
         ax1.tick_params(axis="y", labelcolor="b")
         ax1.grid(which="both", linestyle="--")
@@ -234,6 +234,44 @@ class IIR:
         if phase:
             ax2 = ax1.twinx()
             ax2.plot(w, np.rad2deg(np.angle(H)), color="r", linestyle="--", label="Phase")
+            ax2.set_ylabel(r"Phase (degrees), $\angle H(\omega)$")
+            ax2.tick_params(axis="y", labelcolor="r")
+            ax2.set_ylim(-180, 180)
+
+        plt.title(r"Frequency Response, $H(\omega)$")
+        plt.tight_layout()
+
+    def plot_frequency_response_log(
+        self, sample_rate: float = 1.0, N: int = 1024, phase: bool = True, decades: int = 4
+    ):
+        r"""
+        Plots the frequency response $H(\omega)$ of the IIR filter on a logarithmic frequency axis.
+
+        Arguments:
+            sample_rate: The sample rate of the filter in samples/s.
+            N: The number of samples in the frequency response.
+            phase: Indicates whether to plot the phase of $H(\omega)$.
+            decades: The number of frequency decades to plot.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
+
+        ax1 = plt.gca()
+        ax1.semilogx(w, 10 * np.log10(np.abs(H) ** 2), color="b", label="Power")
+        ax1.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
+        ax1.tick_params(axis="y", labelcolor="b")
+        ax1.grid(which="both", linestyle="--")
+        if sample_rate == 1.0:
+            ax1.set_xlabel("Normalized Frequency, $f /f_s$")
+        else:
+            ax1.set_xlabel("Frequency (Hz), $f$")
+
+        if phase:
+            ax2 = ax1.twinx()
+            ax2.semilogx(w, np.rad2deg(np.angle(H)), color="r", linestyle="--", label="Phase")
             ax2.set_ylabel(r"Phase (degrees), $\angle H(\omega)$")
             ax2.tick_params(axis="y", labelcolor="r")
             ax2.set_ylim(-180, 180)
