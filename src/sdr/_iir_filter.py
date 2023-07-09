@@ -1,6 +1,8 @@
 """
 A module for infinite impulse response (IIR) filters.
 """
+from typing import Tuple
+
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal
@@ -153,6 +155,52 @@ class IIR:
 
         return s
 
+    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> Tuple[np.ndarray, np.ndarray]:
+        r"""
+        Returns the frequency response $H(2 \pi f)$ of the IIR filter.
+
+        Arguments:
+            sample_rate: The sample rate of the filter in samples/s.
+            N: The number of samples in the frequency response.
+
+        Returns:
+            - The frequencies, $f$, from $-f_s$ to $f_s$ in Hz.
+            - The frequency response of the IIR filter, $H(e^{j2 \pi f})$.
+
+        Examples:
+            See the :ref:`iir-filter` example.
+        """
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)
+
+        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        w = np.fft.fftshift(w)
+        H = np.fft.fftshift(H)
+
+        return w, H
+
+    def frequency_response_log(
+        self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        r"""
+        Returns the frequency response $H(2 \pi f)$ of the IIR filter on a logarithmic frequency axis
+
+        Arguments:
+            sample_rate: The sample rate of the filter in samples/s.
+            N: The number of samples in the frequency response.
+            decades: The number of frequency decades to plot.
+
+        Returns:
+            - The frequencies, $f$, from $0$ to $f_s$ in Hz. The frequencies are logarithmically-spaced.
+            - The frequency response of the IIR filter, $H(e^{j2 \pi f})$.
+
+        Examples:
+            See the :ref:`iir-filter` example.
+        """
+        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
+
+        return w, H
+
     def plot_impulse_response(self, N: int = 100):
         """
         Plots the impulse response $h[n]$ of the IIR filter.
@@ -225,11 +273,7 @@ class IIR:
         Examples:
             See the :ref:`iir-filter` example.
         """
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)
-
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
-        H = np.fft.fftshift(H)
+        w, H = self.frequency_response(sample_rate, N)
 
         ax1 = plt.gca()
         ax1.plot(w, 10 * np.log10(np.abs(H) ** 2), color="b", label="Power")
@@ -266,8 +310,7 @@ class IIR:
         Examples:
             See the :ref:`iir-filter` example.
         """
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
+        w, H = self.frequency_response_log(sample_rate, N, decades)
 
         ax1 = plt.gca()
         ax1.semilogx(w, 10 * np.log10(np.abs(H) ** 2), color="b", label="Power")
