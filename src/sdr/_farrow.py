@@ -28,6 +28,9 @@ class FarrowResampler:
         Arguments:
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`resample()`.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         self._streaming = streaming
         self._x_prev: np.ndarray  # FIR filter state. Will be updated in reset().
@@ -53,6 +56,9 @@ class FarrowResampler:
         Arguments:
             state: The filter state to reset to. The state vector should equal the previous three
                 inputs. If `None`, the filter state will be reset to zero.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         if state is None:
             self._x_prev = np.zeros(self._taps.shape[1] - 1, dtype=np.float32)
@@ -133,10 +139,7 @@ class FarrowResampler:
         Returns the Farrow filter taps.
 
         Examples:
-            .. ipython:: python
-
-                farrow = sdr.FarrowResampler()
-                farrow.taps
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._taps
 
@@ -146,10 +149,7 @@ class FarrowResampler:
         Returns the order of the filter.
 
         Examples:
-            .. ipython:: python
-
-                farrow = sdr.FarrowResampler()
-                farrow.order
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._taps.shape[1] - 1
 
@@ -161,9 +161,6 @@ class FarrowResampler:
         In streaming mode, the filter state is preserved between calls to :meth:`resample()`.
 
         Examples:
-            .. ipython:: python
-
-                farrow = sdr.FarrowResampler()
-                farrow.streaming
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._streaming

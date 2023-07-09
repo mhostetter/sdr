@@ -70,6 +70,9 @@ class ClosedLoopPLL:
             K0: The NCO gain.
             Kp: The gain of the phase error detector (PED) or time error detector (TED).
             sample_rate: The sample rate of the PLL in Hz.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         lf = LoopFilter(noise_bandwidth, damping_factor, K0, Kp)
         K1 = lf.K1
