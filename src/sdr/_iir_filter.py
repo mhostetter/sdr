@@ -203,13 +203,14 @@ class IIR:
         plt.ylabel("Imaginary")
         plt.title("Zeros and Poles of $H(z)$")
 
-    def plot_frequency_response(self, sample_rate: float = 1.0, N: int = 1024):
+    def plot_frequency_response(self, sample_rate: float = 1.0, N: int = 1024, phase: bool = True):
         r"""
         Plots the frequency response $H(\omega)$ of the IIR filter.
 
         Arguments:
             sample_rate: The sample rate of the filter in samples/s.
             N: The number of samples in the frequency response.
+            phase: Indicates whether to plot the phase of $H(\omega)$.
 
         Examples:
             See the :ref:`iir-filters` example.
@@ -230,11 +231,12 @@ class IIR:
         else:
             ax1.set_xlabel("Frequency (Hz), $f$")
 
-        ax2 = ax1.twinx()
-        ax2.plot(w, np.rad2deg(np.angle(H)), color="r", linestyle="--", label="Phase")
-        ax2.set_ylabel(r"Phase (degrees), $\angle H(\omega)$")
-        ax2.tick_params(axis="y", labelcolor="r")
-        ax2.set_ylim(-180, 180)
+        if phase:
+            ax2 = ax1.twinx()
+            ax2.plot(w, np.rad2deg(np.angle(H)), color="r", linestyle="--", label="Phase")
+            ax2.set_ylabel(r"Phase (degrees), $\angle H(\omega)$")
+            ax2.tick_params(axis="y", labelcolor="r")
+            ax2.set_ylim(-180, 180)
 
         plt.title(r"Frequency Response, $H(\omega)$")
         plt.tight_layout()
