@@ -2,7 +2,6 @@
 A module containing various helper functions for the library.
 """
 import builtins
-import inspect
 import sys
 
 SPHINX_BUILD = hasattr(builtins, "__sphinx_build__")
