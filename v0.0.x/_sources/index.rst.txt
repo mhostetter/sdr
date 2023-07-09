@@ -38,6 +38,7 @@ Features
    :hidden:
 
    release-notes/versioning.rst
+   release-notes/v0.0.md
 
 .. toctree::
    :caption: Index
