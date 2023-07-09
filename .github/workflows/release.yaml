@@ -14,42 +14,42 @@ jobs:
     name: Build the docs
     uses: ./.github/workflows/docs.yaml
 
-  # release:
-  #   name: Create GitHub release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0  # Fetch all commits and tags
-  #         ref: ${{ github.ref }}
+  release:
+    name: Create GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all commits and tags
+          ref: ${{ github.ref }}
 
-  #     - name: Get current version
-  #       id: current
-  #       run: |
-  #         version=$(git tag --sort=-version:refname | head -n 1)
-  #         echo "version=${version}" >> $GITHUB_OUTPUT
+      - name: Get current version
+        id: current
+        run: |
+          version=$(git tag --sort=-version:refname | head -n 1)
+          echo "version=${version}" >> $GITHUB_OUTPUT
 
-  #     - name: Get previous version
-  #       id: previous
-  #       run: |
-  #         version=$(git tag --sort=-version:refname | head -n 2 | tail -1)
-  #         echo "version=${version}" >> $GITHUB_OUTPUT
+      - name: Get previous version
+        id: previous
+        run: |
+          version=$(git tag --sort=-version:refname | head -n 2 | tail -1)
+          echo "version=${version}" >> $GITHUB_OUTPUT
 
-  #     - name: Construct release notes
-  #       run: |
-  #         # cp docs/release-notes/${{ steps.current.outputs.version }}.md release_notes.md
-  #         echo -e "\n## Commits\n" > release_notes.md
-  #         git log --oneline ${{ steps.previous.outputs.version }}..${{ steps.current.outputs.version }} >> release_notes.md
+      - name: Construct release notes
+        run: |
+          # cp docs/release-notes/${{ steps.current.outputs.version }}.md release_notes.md
+          echo -e "\n## Commits\n" > release_notes.md
+          git log --oneline ${{ steps.previous.outputs.version }}..${{ steps.current.outputs.version }} >> release_notes.md
 
-  #     - name: Create GitHub release
-  #       uses: actions/create-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         tag_name: ${{ steps.current.outputs.version }}
-  #         release_name: galois ${{ steps.current.outputs.version }}
-  #         body_path: release_notes.md
-  #         draft: true
+      - name: Create GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.current.outputs.version }}
+          release_name: sdr ${{ steps.current.outputs.version }}
+          body_path: release_notes.md
+          draft: true
 
   publish:
     name: Publish on PyPI
