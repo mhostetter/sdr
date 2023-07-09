@@ -12,3 +12,8 @@ Resampling
 ----------
 
 .. python-apigen-group:: resampling
+
+Phase/time-locked loops
+-----------------------
+
+.. python-apigen-group:: pll
