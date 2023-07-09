@@ -157,7 +157,7 @@ class IIR:
 
     def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> Tuple[np.ndarray, np.ndarray]:
         r"""
-        Returns the frequency response $H(2 \pi f)$ of the IIR filter.
+        Returns the frequency response $H(e^{j2 \pi f})$ of the IIR filter.
 
         Arguments:
             sample_rate: The sample rate of the filter in samples/s.
@@ -182,7 +182,7 @@ class IIR:
         self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
     ) -> Tuple[np.ndarray, np.ndarray]:
         r"""
-        Returns the frequency response $H(2 \pi f)$ of the IIR filter on a logarithmic frequency axis
+        Returns the frequency response $H(e^{j2 \pi f})$ of the IIR filter on a logarithmic frequency axis
 
         Arguments:
             sample_rate: The sample rate of the filter in samples/s.
