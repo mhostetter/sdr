@@ -1,3 +1,6 @@
+"""
+A module for closed-loop phase-locked loops (PLLs) analysis.
+"""
 import numpy as np
 
 from ._iir_filter import IIR
