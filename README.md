@@ -21,5 +21,12 @@ A Python package for software-defined radio.
 
 ## Features
 
-- Filters: Infinite impulse response filters (`sdr.IIR`)
-- Arbitrary resamplers: Farrow resampler (`sdr.FarrowResampler`)
+- Filters:
+   - Infinite impulse response filter (`sdr.IIR`)
+- Arbitrary resamplers:
+   - Farrow resampler (`sdr.FarrowResampler`)
+- Signal generators:
+   - Numerically-controlled oscillator (`sdr.NCO`)
+   - Direct digital synthesizer (`sdr.DDS`)
+- Phase-locked loops:
+   - Loop filter (`sdr.LoopFilter`)
