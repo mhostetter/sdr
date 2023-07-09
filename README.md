@@ -30,3 +30,4 @@ A Python package for software-defined radio.
    - Direct digital synthesizer (`sdr.DDS`)
 - Phase-locked loops:
    - Loop filter (`sdr.LoopFilter`)
+   - Closed-loop PLL analysis (`sdr.ClosedLoopPLL`)
