@@ -16,6 +16,7 @@ Features
 
    examples/iir-filter.ipynb
    examples/farrow-resampler.ipynb
+   examples/phase-locked-loop.ipynb
 
 .. toctree::
    :caption: API Reference
