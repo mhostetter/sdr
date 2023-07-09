@@ -44,8 +44,8 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        self._b_taps = np.asarray(b, dtype=np.complex64)
-        self._a_taps = np.asarray(a, dtype=np.complex64)
+        self._b_taps = np.asarray(b)
+        self._a_taps = np.asarray(a)
         self._streaming = streaming
 
         self._zi: np.ndarray  # The filter state. Will be updated in reset().
