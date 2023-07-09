@@ -119,10 +119,15 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        x = np.zeros(N, dtype=np.float32)
-        x[0] = 1
+        # Delta impulse function
+        d = np.zeros(N, dtype=np.float32)
+        d[0] = 1
 
-        return self.filter(x)
+        zi = self._zi
+        h = self.filter(d)
+        self._zi = zi  # Restore the filter state
+
+        return h
 
     def step_response(self, N: int = 100) -> np.ndarray:
         """
@@ -139,9 +144,14 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        x = np.ones(N, dtype=np.float32)
+        # Unit step function
+        u = np.ones(N, dtype=np.float32)
 
-        return self.filter(x)
+        zi = self._zi
+        s = self.filter(u)
+        self._zi = zi  # Restore the filter state
+
+        return s
 
     def plot_impulse_response(self, N: int = 100):
         """
