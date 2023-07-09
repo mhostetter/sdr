@@ -74,7 +74,7 @@ class FarrowResampler:
             rate: The resampling rate, $r$.
 
         Returns:
-            The resampled signal, $y[n] = x(n \frac{T_s}{r})$.
+            The resampled signal, $y[n] = x(n T_s / r)$.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
