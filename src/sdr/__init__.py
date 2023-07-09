@@ -17,3 +17,4 @@ from ._farrow import FarrowResampler
 from ._iir_filter import IIR
 from ._loop_filter import LoopFilter
 from ._nco import DDS, NCO
+from ._pll import ClosedLoopPLL
