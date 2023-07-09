@@ -221,8 +221,8 @@ class IIR:
         H = np.fft.fftshift(H)
 
         ax1 = plt.gca()
-        ax1.plot(w, 10 * np.log10(np.abs(H)), color="b", label="Magnitude")
-        ax1.set_ylabel(r"Magnitude (dB), $|H(\omega)|$")
+        ax1.plot(w, 10 * np.log10(np.abs(H) ** 2), color="b", label="Magnitude")
+        ax1.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
         ax1.tick_params(axis="y", labelcolor="b")
         ax1.grid(which="both", linestyle="--")
         ax1.set_xlabel("Frequency (Hz), $f$")
