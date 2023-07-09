@@ -30,7 +30,9 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Construct an input signal, $x[n] = x(n T_s)$"
+    "## Construct an input signal, $x[n] = x(n T_s)$\n",
+    "\n",
+    "Create a discrete-time signal $x[n]$ that sample the continuous-time signal $x(t)$ at a sample rate $f_s = 1 / T_s$."
    ]
   },
   {
@@ -81,7 +83,12 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "## Resample the input signal with rate $r$, $y[n] = x(n \\frac{T_s}{r})$"
+    "## Resample the input signal with rate $r$, $y[n] = x(n \\frac{T_s}{r})$\n",
+    "\n",
+    "Now, resample $x[n]$ such that the output $y[n]$ is equivalent to sampling the continuous-time $x(t)$\n",
+    "at sample rate $f_s = r/T_s$.\n",
+    "This is equivalent to sampling $x[n]$ at $1/r$ fractional samples.\n",
+    "This is accomplished, for arbitrary $r$, with a Farrow arbitrary resampler."
    ]
   },
   {
