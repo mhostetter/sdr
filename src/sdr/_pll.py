@@ -49,6 +49,9 @@ class ClosedLoopPLL:
     References:
         - M. Rice, Digital Communications: A Discrete-Time Approach, Appendix C: Phase Locked Loops.
 
+    Examples:
+        See the :ref:`phase-locked-loop` example.
+
     Group:
         pll
     """
@@ -89,6 +92,9 @@ class ClosedLoopPLL:
 
         References:
             - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.40.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return 1.3 / self.Bn
 
@@ -104,6 +110,9 @@ class ClosedLoopPLL:
 
         References:
             - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.39.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return 4 * freq_offset**2 / self.Bn**3
 
@@ -119,6 +128,9 @@ class ClosedLoopPLL:
 
         References:
             - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.38.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self.phase_lock_time() * self.frequency_lock_time(freq_offset)
 
@@ -134,6 +146,9 @@ class ClosedLoopPLL:
 
         References:
             - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.43.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         cn0_linear = 10 ** (cn0 / 10)
         return self.Bn / cn0_linear
@@ -142,6 +157,9 @@ class ClosedLoopPLL:
     def sample_rate(self) -> float:
         """
         The sample rate of the PLL in samples/s.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._sample_rate
 
@@ -149,6 +167,9 @@ class ClosedLoopPLL:
     def BnT(self) -> float:
         """
         The normalized noise bandwidth of the PLL.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._BnT
 
@@ -156,6 +177,9 @@ class ClosedLoopPLL:
     def Bn(self) -> float:
         """
         The noise bandwidth of the PLL in Hz.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self.BnT * self.sample_rate
 
@@ -165,6 +189,9 @@ class ClosedLoopPLL:
         The damping factor of the PLL.
 
         A damping factor of 1 is critically damped, less than 1 is underdamped, and greater than 1 is overdamped.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._zeta
 
@@ -172,6 +199,9 @@ class ClosedLoopPLL:
     def K0(self) -> float:
         """
         The NCO gain.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._K0
 
@@ -179,6 +209,9 @@ class ClosedLoopPLL:
     def Kp(self) -> float:
         """
         The phase error detector (PED) gain.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._Kp
 
@@ -186,6 +219,9 @@ class ClosedLoopPLL:
     def K1(self) -> float:
         """
         The proportional gain of the loop filter.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._K1
 
@@ -193,6 +229,9 @@ class ClosedLoopPLL:
     def K2(self) -> float:
         """
         The integral gain of the loop filter.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._K2
 
@@ -200,6 +239,9 @@ class ClosedLoopPLL:
     def iir(self) -> IIR:
         """
         The IIR filter that represents the closed-loop transfer function of the PLL.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._iir
 
@@ -210,6 +252,9 @@ class ClosedLoopPLL:
 
         References:
             - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.33.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return np.sqrt(self.K0 * self.Kp * self.K2)
 
@@ -220,5 +265,8 @@ class ClosedLoopPLL:
 
         References:
             - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.34.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self.omega_n * np.sqrt(1 + 2 * self.zeta**2 + np.sqrt((1 + 2 * self.zeta**2) ** 2 + 1))
