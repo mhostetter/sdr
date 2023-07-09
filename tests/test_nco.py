@@ -1,5 +1,6 @@
-import sdr
 import numpy as np
+
+import sdr
 
 
 def test_constant_increment():
@@ -14,7 +15,7 @@ def test_constant_increment():
 
     N = 100
     y = nco.step(N)
-    y_truth = np.arange(1, N+1) * increment + offset
+    y_truth = np.arange(1, N + 1) * increment + offset
     assert np.allclose(y, y_truth)
 
 
@@ -30,5 +31,5 @@ def test_constant_increment_constant_offset():
 
     N = 100
     y = nco.step(N)
-    y_truth = np.arange(1, N+1) * increment + offset
+    y_truth = np.arange(1, N + 1) * increment + offset
     assert np.allclose(y, y_truth)
