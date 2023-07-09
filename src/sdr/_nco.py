@@ -29,6 +29,9 @@ class NCO:
             z^-1 = Unit delay
             @ = Adder
 
+    See Also:
+        sdr.DDS
+
     Group:
         pll
     """
@@ -127,3 +130,89 @@ class NCO:
     @offset.setter
     def offset(self, value: float):
         self._offset = value
+
+
+class DDS:
+    r"""
+    Implements a direct digital synthesizer (DDS).
+
+    Notes:
+        .. code-block:: text
+           :caption: Direct Digital Synthesizer Block Diagram
+
+                         increment           offset
+                             |                 |
+                    +----+   v                 v   +--------+
+            x[n] -->| K0 |-->@--------------+--@-->| e^(j.) |--> y[n]
+                    +----+   ^              |      +--------+
+                             |   +------+   |
+                             +---| z^-1 |---+
+                                 +------+
+
+            x[n] = Input signal (radians)
+            y[n] = Output signal (radians)
+            K0 = NCO gain
+            increment = Constant accumulation (radians/sample)
+            offset = Absolute offset (radians)
+            z^-1 = Unit delay
+            @ = Adder
+
+    See Also:
+        sdr.NCO
+
+    Group:
+        pll
+    """
+
+    def __init__(self, K0: float = 1.0, increment: float = 0.0, offset: float = 0.0):
+        """
+        Creates a direct digital synthesizer (DDS).
+
+        Arguments:
+            K0: The NCO gain.
+            increment: The constant accumulation of the NCO in radians/sample.
+            offset: The absolute offset of the NCO in radians.
+        """
+        self._nco = NCO(K0, increment, offset)
+        self.reset()
+
+    def reset(self):
+        """
+        Resets the DDS.
+        """
+        self.nco.reset()
+
+    def step(self, N: int) -> np.ndarray:
+        """
+        Steps the DDS forward by $N$ samples.
+
+        Arguments:
+            N: The number of samples to step the DDS forward.
+
+        Returns:
+            The output complex exponential, $y[n]$.
+        """
+        x = np.zeros(N)
+        y = self.process(x)
+        return y
+
+    def process(self, x: np.ndarray) -> np.ndarray:
+        """
+        Steps the DDS with the variable phase increment signal $x[n]$.
+
+        Arguments:
+            x: The input signal, $x[n]$. The input signal varies the per-sample phase increment of the DDS.
+
+        Returns:
+            The output complex exponential, $y[n]$.
+        """
+        phase = self.nco.process(x)
+        y = np.exp(1j * phase)
+        return y
+
+    @property
+    def nco(self) -> NCO:
+        """
+        The numerically-controlled oscillator (NCO) used by the DDS.
+        """
+        return self._nco
