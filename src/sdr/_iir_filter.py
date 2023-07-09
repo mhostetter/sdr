@@ -225,7 +225,10 @@ class IIR:
         ax1.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
         ax1.tick_params(axis="y", labelcolor="b")
         ax1.grid(which="both", linestyle="--")
-        ax1.set_xlabel("Frequency (Hz), $f$")
+        if sample_rate == 1.0:
+            ax1.set_xlabel("Normalized Frequency, $f /f_s$")
+        else:
+            ax1.set_xlabel("Frequency (Hz), $f$")
 
         ax2 = ax1.twinx()
         ax2.plot(w, np.rad2deg(np.angle(H)), color="r", linestyle="--", label="Phase")
@@ -254,7 +257,10 @@ class IIR:
         tau_g = np.fft.fftshift(tau_g)
 
         plt.plot(w, tau_g, color="b")
-        plt.xlabel("Frequency (Hz), $f$")
+        if sample_rate == 1.0:
+            plt.xlabel("Normalized Frequency, $f /f_s$")
+        else:
+            plt.xlabel("Frequency (Hz), $f$")
         plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
         plt.title(r"Group Delay, $\tau_g(\omega)$")
         plt.grid(which="both", linestyle="--")
