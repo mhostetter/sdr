@@ -19,6 +19,8 @@
 
 A Python package for software-defined radio.
 
+> Enjoying the library? Give us a :star: on [GitHub](https://github.com/mhostetter/sdr)!
+
 ## Features
 
 - Filters:
@@ -31,3 +33,20 @@ A Python package for software-defined radio.
 - Phase-locked loops:
    - Loop filter (`sdr.LoopFilter`)
    - Closed-loop PLL analysis (`sdr.ClosedLoopPLL`)
+
+## Documentation
+
+The documentation for `sdr` is located at https://mhostetter.github.io/sdr/latest/.
+
+## Install the package
+
+The latest version of `sdr` can be installed from [PyPI](https://pypi.org/project/sdr/) using `pip`.
+
+```console
+$ python3 -m pip install sdr
+```
+
+## Examples
+
+There are detailed examples published at https://mhostetter.github.io/sdr/latest/examples/iir-filter/.
+The Jupyter notebooks behind the examples are available for experimentation in `docs/examples/`.
