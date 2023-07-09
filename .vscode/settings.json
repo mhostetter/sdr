@@ -1,7 +1,6 @@
 {
     "python.testing.pytestArgs": [
         "-c=pyproject.toml",
-        "tests/"
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
