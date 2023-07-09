@@ -25,7 +25,7 @@ class IIR:
         $$H(z) = \frac{\sum_{i=0}^{M} b_i z^{-i}}{\sum_{j=0}^{N} a_j z^{-j}} .$$
 
     Examples:
-        See the :ref:`iir-filters` example.
+        See the :ref:`iir-filter` example.
 
     Group:
         filtering
@@ -42,7 +42,7 @@ class IIR:
                 preserved between calls to :meth:`filter()`.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         self._b_taps = np.asarray(b)
         self._a_taps = np.asarray(a)
@@ -67,7 +67,7 @@ class IIR:
                 preserved between calls to :meth:`filter()`.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         b, a = scipy.signal.zpk2tf(zeros, poles, gain)
 
@@ -78,7 +78,7 @@ class IIR:
         *Streaming-mode only:* Resets the filter state.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
@@ -93,7 +93,7 @@ class IIR:
             The filtered signal, $y[n]$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         x = np.atleast_1d(x)
 
@@ -117,7 +117,7 @@ class IIR:
             The impulse response of the IIR filter, $h[n]$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         # Delta impulse function
         d = np.zeros(N, dtype=np.float32)
@@ -142,7 +142,7 @@ class IIR:
             The step response of the IIR filter, $s[n]$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         # Unit step function
         u = np.ones(N, dtype=np.float32)
@@ -161,7 +161,7 @@ class IIR:
             N: The number of samples in the impulse response.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         h = self.impulse_response(N)
 
@@ -181,7 +181,7 @@ class IIR:
             N: The number of samples in the step response.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         u = self.step_response(N)
 
@@ -198,7 +198,7 @@ class IIR:
         Plots the zeros and poles of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
         z = self.zeros
@@ -223,7 +223,7 @@ class IIR:
             phase: Indicates whether to plot the phase of $H(\omega)$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)
 
@@ -264,7 +264,7 @@ class IIR:
             decades: The number of frequency decades to plot.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
@@ -298,7 +298,7 @@ class IIR:
             N: The number of samples in the frequency response.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         w, tau_g = scipy.signal.group_delay((self.b_taps, self.a_taps), w=N, whole=True, fs=sample_rate)
 
@@ -327,7 +327,7 @@ class IIR:
             N_freq: The number of samples in the frequency response.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         plt.subplot2grid((4, 3), (0, 0), 2, 1)
         self.plot_zeros_poles()
@@ -344,7 +344,7 @@ class IIR:
         Returns the feedforward filter taps, $b_i$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._b_taps
 
@@ -354,7 +354,7 @@ class IIR:
         Returns the feedback filter taps, $a_j$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._a_taps
 
@@ -366,7 +366,7 @@ class IIR:
         In streaming mode, the filter state is preserved between calls to :meth:`filter()`.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._streaming
 
@@ -376,7 +376,7 @@ class IIR:
         Returns the order of the IIR filter, $N - 1$.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._a_taps.size - 1
 
@@ -386,7 +386,7 @@ class IIR:
         Returns the zeros of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._zeros
 
@@ -396,7 +396,7 @@ class IIR:
         Returns the poles of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._poles
 
@@ -406,6 +406,6 @@ class IIR:
         Returns the gain of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filters` example.
+            See the :ref:`iir-filter` example.
         """
         return self._gain
