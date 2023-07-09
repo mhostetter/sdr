@@ -18,13 +18,11 @@ class IIR:
         An IIR filter is defined by its feedforward coefficients $b_i$ and feedback coefficients $a_j$.
         These coefficients define the difference equation
 
-        .. math::
-            y[n] = \frac{1}{a_0} \left( \sum_{i=0}^{M} b_i x[n-i] - \sum_{j=1}^{N} a_j y[n-j] \right).
+        $$y[n] = \frac{1}{a_0} \left( \sum_{i=0}^{M} b_i x[n-i] - \sum_{j=1}^{N} a_j y[n-j] \right) .$$
 
         The transfer function of the filter is
 
-        .. math::
-            H(z) = \frac{\sum_{i=0}^{M} b_i z^{-i}}{\sum_{j=0}^{N} a_j z^{-j}} .
+        $$H(z) = \frac{\sum_{i=0}^{M} b_i z^{-i}}{\sum_{j=0}^{N} a_j z^{-j}} .$$
 
     Examples:
         See the :ref:`iir-filters` example.
