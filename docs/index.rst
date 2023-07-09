@@ -16,6 +16,7 @@ Features
    - Direct digital synthesizer (:obj:`sdr.DDS`)
 - Phase-locked loops:
    - Loop filter (:obj:`sdr.LoopFilter`)
+   - Closed-loop PLL analysis (:obj:`sdr.ClosedLoopPLL`)
 
 .. toctree::
    :caption: Examples
