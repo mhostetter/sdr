@@ -59,6 +59,18 @@ class ClosedLoopPLL:
     def __init__(
         self, noise_bandwidth: float, damping_factor: float, K0: float = 1.0, Kp: float = 1.0, sample_rate: float = 1.0
     ):
+        """
+        Creates a closed-loop PLL analysis object.
+
+        Arguments:
+            noise_bandwidth: The normalized noise bandwidth $B_n T$ of the loop filter,
+                where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds.
+            damping_factor: The damping factor of the loop filter. A damping factor of 1 is critically damped,
+                less than 1 is underdamped, and greater than 1 is overdamped.
+            K0: The NCO gain.
+            Kp: The gain of the phase error detector (PED) or time error detector (TED).
+            sample_rate: The sample rate of the PLL in Hz.
+        """
         lf = LoopFilter(noise_bandwidth, damping_factor, K0, Kp)
         K1 = lf.K1
         K2 = lf.K2
