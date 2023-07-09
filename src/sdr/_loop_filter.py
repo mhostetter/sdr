@@ -3,9 +3,11 @@ A module for discrete-time loop filters.
 """
 import numpy as np
 
+from ._helper import export
 from ._iir_filter import IIR
 
 
+@export
 class LoopFilter:
     r"""
     Implements a 2nd order, proportional-plus-integrator (PPI) loop filter.

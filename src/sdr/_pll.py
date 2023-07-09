@@ -3,10 +3,12 @@ A module for closed-loop phase-locked loops (PLLs) analysis.
 """
 import numpy as np
 
+from ._helper import export
 from ._iir_filter import IIR
 from ._loop_filter import LoopFilter
 
 
+@export
 class ClosedLoopPLL:
     r"""
     A class that defines the performance of a closed-loop PLL.
