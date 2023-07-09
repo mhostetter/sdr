@@ -53,8 +53,7 @@ jobs:
 
   publish:
     name: Publish on PyPI
-    # needs: [build, release]
-    needs: build
+    needs: [build, release]
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifacts
