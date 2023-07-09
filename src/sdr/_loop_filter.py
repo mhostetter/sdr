@@ -43,6 +43,9 @@ class LoopFilter:
     References:
         - M. Rice, Digital Communications: A Discrete-Time Approach, Appendix C: Phase Locked Loops.
 
+    Examples:
+        See the :ref:`phase-locked-loop` example.
+
     Group:
         pll
     """
@@ -58,6 +61,9 @@ class LoopFilter:
                 less than 1 is underdamped, and greater than 1 is overdamped.
             K0: The NCO gain.
             Kp: The gain of the phase error detector (PED) or time error detector (TED).
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         BnT = noise_bandwidth
         zeta = damping_factor
@@ -83,6 +89,9 @@ class LoopFilter:
     def reset(self) -> None:
         """
         Resets the loop filter.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         self.iir.reset()
 
@@ -95,6 +104,9 @@ class LoopFilter:
 
         Returns:
             The filtered signal, $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self.iir.filter(x)
 
@@ -103,6 +115,9 @@ class LoopFilter:
         """
         The normalized noise bandwidth $B_n T$ of the loop filter,
         where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._BnT
 
@@ -111,6 +126,9 @@ class LoopFilter:
         """
         The damping factor of the loop filter. A damping factor of 1 is critically damped,
         less than 1 is underdamped, and greater than 1 is overdamped.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._zeta
 
@@ -118,6 +136,9 @@ class LoopFilter:
     def K1(self) -> float:
         """
         The proportional gain of the loop filter.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._K1
 
@@ -125,6 +146,9 @@ class LoopFilter:
     def K2(self) -> float:
         """
         The integral gain of the loop filter.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._K2
 
@@ -132,5 +156,8 @@ class LoopFilter:
     def iir(self) -> IIR:
         """
         The underlying IIR filter used to implement the loop filter.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._iir

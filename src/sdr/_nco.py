@@ -32,6 +32,9 @@ class NCO:
     See Also:
         sdr.DDS
 
+    Examples:
+        See the :ref:`phase-locked-loop` example.
+
     Group:
         pll
     """
@@ -44,6 +47,9 @@ class NCO:
             K0: The NCO gain.
             increment: The constant accumulation of the NCO in units/sample.
             offset: The absolute offset of the NCO in units.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         self._K0 = K0
         self._increment = increment
@@ -54,6 +60,9 @@ class NCO:
     def reset(self):
         """
         Resets the NCO.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         self._y_prev = 0.0
 
@@ -66,6 +75,9 @@ class NCO:
 
         Returns:
             The output signal, $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         x = np.zeros(N)
         y = self.process(x)
@@ -80,6 +92,9 @@ class NCO:
 
         Returns:
             The output signal, $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         x = np.atleast_1d(x)
 
@@ -102,6 +117,9 @@ class NCO:
     def K0(self) -> float:
         """
         The NCO gain.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._K0
 
@@ -113,6 +131,9 @@ class NCO:
     def increment(self) -> float:
         """
         The constant accumulation of the NCO in units/sample.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._increment
 
@@ -124,6 +145,9 @@ class NCO:
     def offset(self) -> float:
         """
         The absolute offset of the NCO in units.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._offset
 
@@ -160,6 +184,9 @@ class DDS:
     See Also:
         sdr.NCO
 
+    Examples:
+        See the :ref:`phase-locked-loop` example.
+
     Group:
         pll
     """
@@ -172,6 +199,9 @@ class DDS:
             K0: The NCO gain.
             increment: The constant accumulation of the NCO in radians/sample.
             offset: The absolute offset of the NCO in radians.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         self._nco = NCO(K0, increment, offset)
         self.reset()
@@ -179,6 +209,9 @@ class DDS:
     def reset(self):
         """
         Resets the DDS.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         self.nco.reset()
 
@@ -191,6 +224,9 @@ class DDS:
 
         Returns:
             The output complex exponential, $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         x = np.zeros(N)
         y = self.process(x)
@@ -205,6 +241,9 @@ class DDS:
 
         Returns:
             The output complex exponential, $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         phase = self.nco.process(x)
         y = np.exp(1j * phase)
@@ -214,5 +253,8 @@ class DDS:
     def nco(self) -> NCO:
         """
         The numerically-controlled oscillator (NCO) used by the DDS.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
         """
         return self._nco
