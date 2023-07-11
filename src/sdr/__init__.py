@@ -13,6 +13,7 @@ except ModuleNotFoundError:  # pragma: no cover
         "Defaulting version to 0.0.0."
     )
 
+from . import plot
 from ._farrow import *
 from ._iir_filter import *
 from ._loop_filter import *
