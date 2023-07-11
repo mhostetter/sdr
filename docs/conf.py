@@ -239,7 +239,7 @@ mathjax3_config = {
 # Python apigen configuration
 python_apigen_modules = {
     "sdr": "api/sdr.",
-    # "sdr.typing": "api/sdr.typing.",
+    "sdr.plot": "api/sdr.plot.",
 }
 python_apigen_default_groups = [
     ("class:.*", "Classes"),
