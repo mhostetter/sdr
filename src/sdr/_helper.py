@@ -19,9 +19,10 @@ def export(obj):
     module = sys.modules[obj.__module__]
 
     if not SPHINX_BUILD:
-        # Set the object's module to the package name. This way the REPL will display the object
-        # as sdr.obj and not sdr._private_module.obj
-        obj.__module__ = "sdr"
+        # Set the object's module to the first non-private module. This way the REPL will display the object
+        # as sdr.obj and not sdr._private_module.obj.
+        idx = obj.__module__.find("._")
+        obj.__module__ = obj.__module__[:idx]
 
     # Append this object to the private module's "all" list
     public_members = getattr(module, "__all__", [])
