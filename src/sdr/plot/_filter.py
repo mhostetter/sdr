@@ -132,3 +132,44 @@ def step_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, **k
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
+
+
+@export
+def zeros_and_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
+    r"""
+    Plots the zeros and poles of the filter.
+
+    Arguments:
+        b: The feedforward coefficients, $b_i$.
+        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
+        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    See Also:
+        sdr.IIR
+
+    Examples:
+        See the :ref:`iir-filter` example.
+
+    Group:
+        plotting
+    """
+    z, p, _ = scipy.signal.tf2zpk(b, a)
+    unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
+
+    label = kwargs.pop("label", None)
+    if label is None:
+        z_label = "Zeros"
+        p_label = "Poles"
+    else:
+        z_label = label + " (zeros)"
+        p_label = label + " (poles)"
+
+    with plt.rc_context(RC_PARAMS):
+        plt.plot(unit_circle.real, unit_circle.imag, color="k", linestyle="--", label="Unit circle")
+        plt.scatter(z.real, z.imag, marker="o", label=z_label)
+        plt.scatter(p.real, p.imag, marker="x", label=p_label)
+        plt.axis("equal")
+        plt.legend()
+        plt.xlabel("Real")
+        plt.ylabel("Imaginary")
+        plt.title("Zeros and Poles of $H(z)$")
