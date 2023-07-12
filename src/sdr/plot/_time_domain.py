@@ -25,24 +25,26 @@ def time_domain(x: np.ndarray, sample_rate: float = 1.0, **kwargs):
     x = np.asarray(x)
     t = np.arange(x.size) / sample_rate
 
-    label = kwargs.pop("label", None)
-
     # with plt.style.context(Path(__file__).parent / ".." / "presentation.mplstyle"):
     with plt.rc_context(RC_PARAMS):
+        label = kwargs.pop("label", None)
         if np.iscomplexobj(x):
-            x_label = y_label = label
-            if x_label is not None:
-                x_label += " (real)"
-                y_label += " (imag)"
-            plt.plot(t, x.real, label=x_label, **kwargs)
-            plt.plot(t, x.imag, label=y_label, **kwargs)
+            if label is None:
+                label = "real"
+                label2 = "imag"
+            else:
+                label = label + " (real)"
+                label2 = label + " (imag)"
+            plt.plot(t, x.real, label=label, **kwargs)
+            plt.plot(t, x.imag, label=label2, **kwargs)
         else:
             plt.plot(t, x, label=label, **kwargs)
+
+        if label:
+            plt.legend()
 
         if sample_rate == 1:
             plt.xlabel("Samples")
         else:
             plt.xlabel("Time (s)")
         plt.ylabel("Amplitude")
-        if label:
-            plt.legend()
