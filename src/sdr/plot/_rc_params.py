@@ -7,9 +7,9 @@ from .._helper import export
 
 RC_PARAMS = {
     "axes.grid": True,
-    "axes.xmargin": 0,
-    "axes.ymargin": 0,
-    "axes.zmargin": 0,
+    # "axes.xmargin": 0,
+    # "axes.ymargin": 0,
+    # "axes.zmargin": 0,
     "figure.autolayout": True,
     "figure.figsize": (8, 4),
     "figure.max_open_warning": 0,
