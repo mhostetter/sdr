@@ -6,6 +6,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal
+from typing_extensions import Literal
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
@@ -173,3 +174,62 @@ def zeros_and_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
         plt.xlabel("Real")
         plt.ylabel("Imaginary")
         plt.title("Zeros and Poles of $H(z)$")
+
+
+@export
+def frequency_response(
+    b: np.ndarray,
+    a: np.ndarray = 1,
+    sample_rate: float = 1.0,
+    N: int = 1024,
+    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    decades: int = 4,
+    **kwargs,
+):
+    r"""
+    Plots the frequency response $H(e^{j\omega})$ of the filter.
+
+    Arguments:
+        b: The feedforward coefficients, $b_i$.
+        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
+        sample_rate: The sample rate of the filter in samples/s.
+        N: The number of samples in the frequency response.
+        x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
+            one-sided spectrum with a logarithmic frequency axis.
+        decades: The number of decades to plot when `x_axis="log"`.
+        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    See Also:
+        sdr.IIR
+
+    Examples:
+        See the :ref:`iir-filter` example.
+
+    Group:
+        plotting
+    """
+    if x_axis == "log":
+        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
+    else:
+        w, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+
+    if x_axis == "two-sided":
+        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        w = np.fft.fftshift(w)
+        H = np.fft.fftshift(H)
+
+    with plt.rc_context(RC_PARAMS):
+        if x_axis == "log":
+            plt.semilogx(w, 10 * np.log10(np.abs(H) ** 2), **kwargs)
+        else:
+            plt.plot(w, 10 * np.log10(np.abs(H) ** 2), **kwargs)
+
+        plt.grid(True, which="both")
+
+        if sample_rate == 1.0:
+            plt.xlabel("Normalized Frequency, $f /f_s$")
+        else:
+            plt.xlabel("Frequency (Hz), $f$")
+        plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
+        plt.title(r"Frequency Response, $H(\omega)$")
