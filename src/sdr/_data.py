@@ -118,15 +118,15 @@ def _unsigned_dtype(bits: int) -> np.integer:
     """
     if bits <= 8:
         return np.uint8
-    elif bits <= 16:
+    if bits <= 16:
         return np.uint16
-    elif bits <= 32:
+    if bits <= 32:
         return np.uint32
-    elif bits <= 64:
+    if bits <= 64:
         return np.uint64
-    elif bits <= 128:
+    if bits <= 128:
         return np.uint128
-    elif bits <= 256:
+    if bits <= 256:
         return np.uint256
-    else:
-        raise ValueError(f"Cannot create unsigned integer dtype for {bits} bits.")
+
+    raise ValueError(f"Cannot create unsigned integer dtype for {bits} bits.")
