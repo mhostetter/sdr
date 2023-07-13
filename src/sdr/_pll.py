@@ -92,7 +92,8 @@ class ClosedLoopPLL:
         a2 = 1 - Kp * K0 * K1
 
         # Create an IIR filter that represents the closed-loop transfer function of the PLL
-        self._iir = IIR([b0, b1, b2], [a0, a1, a2])
+        # self._iir = IIR([b0, b1, b2], [a0, a1, a2])
+        self._iir = IIR([b1, b2], [a0, a1, a2])  # Suppress warning about leading zero
 
         self._sample_rate = sample_rate
         self._BnT = noise_bandwidth
