@@ -136,7 +136,7 @@ def step_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, **k
 
 
 @export
-def zeros_and_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
+def zeros_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
     r"""
     Plots the zeros and poles of the filter.
 
