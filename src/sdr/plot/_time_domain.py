@@ -1,15 +1,18 @@
 """
 A module containing time-domain plotting functions.
 """
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.typing as npt
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
 
 
 @export
-def time_domain(x: np.ndarray, sample_rate: float = 1.0, **kwargs):
+def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
     """
     Plots a time-domain signal $x[n]$.
 
