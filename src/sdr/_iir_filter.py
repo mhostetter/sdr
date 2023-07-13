@@ -1,9 +1,10 @@
 """
 A module for infinite impulse response (IIR) filters.
 """
-from typing import Tuple
+from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Self
 
@@ -35,7 +36,7 @@ class IIR:
         filtering
     """
 
-    def __init__(self, b: np.ndarray, a: np.ndarray, streaming: bool = False):
+    def __init__(self, b: npt.ArrayLike, a: npt.ArrayLike, streaming: bool = False):
         """
         Creates an IIR filter with feedforward coefficients $b_i$ and feedback coefficients $a_j$.
 
@@ -59,7 +60,7 @@ class IIR:
         self._zeros, self._poles, self._gain = scipy.signal.tf2zpk(self.b_taps, self.a_taps)
 
     @classmethod
-    def ZerosPoles(cls, zeros: np.ndarray, poles: np.ndarray, gain: float = 1.0, streaming: bool = False) -> Self:
+    def ZerosPoles(cls, zeros: npt.ArrayLike, poles: npt.ArrayLike, gain: float = 1.0, streaming: bool = False) -> Self:
         """
         Creates an IIR filter from its zeros, poles, and gain.
 
@@ -86,7 +87,7 @@ class IIR:
         """
         self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
-    def filter(self, x: np.ndarray) -> np.ndarray:
+    def filter(self, x: npt.ArrayLike) -> np.ndarray:
         r"""
         Filters the input signal $x[n]$ with the IIR filter.
 
@@ -157,7 +158,7 @@ class IIR:
 
         return s
 
-    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> Tuple[np.ndarray, np.ndarray]:
+    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[np.ndarray, np.ndarray]:
         r"""
         Returns the frequency response $H(e^{j2 \pi f})$ of the IIR filter.
 
@@ -182,7 +183,7 @@ class IIR:
 
     def frequency_response_log(
         self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
-    ) -> Tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray]:
         r"""
         Returns the frequency response $H(e^{j2 \pi f})$ of the IIR filter on a logarithmic frequency axis
 

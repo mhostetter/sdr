@@ -4,6 +4,7 @@ A module containing a Farrow arbitrary resampler.
 from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 import scipy.signal
 
 from ._helper import export
@@ -52,7 +53,7 @@ class FarrowResampler:
 
         self.reset()
 
-    def reset(self, state: np.ndarray | None = None):
+    def reset(self, state: npt.ArrayLike | None = None):
         """
         *Streaming-mode only:* Resets the filter state and fractional sample index.
 
@@ -64,9 +65,9 @@ class FarrowResampler:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         if state is None:
-            self._x_prev = np.zeros(self._taps.shape[1] - 1, dtype=np.float32)
+            self._x_prev = np.zeros(self._taps.shape[1] - 1)
         else:
-            state = np.asarray(state, dtype=np.float32)
+            state = np.asarray(state)
             if not state.size == self._taps.shape[1] - 1:
                 raise ValueError(f"Argument 'state' must have {self._taps.shape[1]} elements, not {state.size}.")
             self._x_prev = state
@@ -74,7 +75,7 @@ class FarrowResampler:
         # Initial fractional sample delay accounts for filter delay
         self._mu_next = self._taps.shape[1] // 2
 
-    def resample(self, x: np.ndarray, rate: float) -> np.ndarray:
+    def resample(self, x: npt.ArrayLike, rate: float) -> np.ndarray:
         r"""
         Resamples the input signal by the given arbitrary rate.
 
