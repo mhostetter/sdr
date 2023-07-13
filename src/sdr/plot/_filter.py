@@ -33,7 +33,7 @@ def impulse_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, 
         See the :ref:`iir-filter` example.
 
     Group:
-        plotting
+        plot-filter
     """
     b = np.atleast_1d(b)
     a = np.atleast_1d(a)
@@ -95,7 +95,7 @@ def step_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, **k
         See the :ref:`iir-filter` example.
 
     Group:
-        plotting
+        plot-filter
     """
     b = np.atleast_1d(b)
     a = np.atleast_1d(a)
@@ -152,7 +152,7 @@ def zeros_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
         See the :ref:`iir-filter` example.
 
     Group:
-        plotting
+        plot-filter
     """
     z, p, _ = scipy.signal.tf2zpk(b, a)
     unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
@@ -206,7 +206,7 @@ def frequency_response(
         See the :ref:`iir-filter` example.
 
     Group:
-        plotting
+        plot-filter
     """
     if x_axis == "log":
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -265,7 +265,7 @@ def group_delay(
         See the :ref:`iir-filter` example.
 
     Group:
-        plotting
+        plot-filter
     """
     if x_axis == "log":
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -326,7 +326,7 @@ def filter(  # pylint: disable=redefined-builtin
         See the :ref:`iir-filter` example.
 
     Group:
-        plotting
+        plot-filter
     """
     with plt.rc_context(RC_PARAMS):
         plt.subplot2grid((4, 3), (0, 0), 2, 3)
