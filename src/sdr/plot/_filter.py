@@ -292,3 +292,55 @@ def group_delay(
             plt.xlabel("Frequency (Hz), $f$")
         plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
         plt.title(r"Group Delay, $\tau_g(\omega)$")
+
+
+@export
+def filter(
+    b: np.ndarray,
+    a: np.ndarray = 1,
+    sample_rate: float = 1.0,
+    N_time: Optional[int] = None,
+    N_freq: int = 1024,
+    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    decades: int = 4,
+    **kwargs,
+):
+    r"""
+    Plots the frequency response $H(e^{j\omega})$, impulse response $h[n]$, step response $s[n]$,
+    and zeros and poles of the filter.
+
+    Arguments:
+        b: The feedforward coefficients, $b_i$.
+        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
+        sample_rate: The sample rate of the filter in samples/s.
+        N_time: The number of samples in the time domain. If `None`, the length of `b` is used
+            for FIR filters and 100 for IIR filters.
+        N_freq: The number of samples in the frequency response.
+        x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
+            one-sided spectrum with a logarithmic frequency axis.
+        decades: The number of decades to plot when `x_axis="log"`.
+        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    See Also:
+        sdr.IIR
+
+    Examples:
+        See the :ref:`iir-filter` example.
+
+    Group:
+        plotting
+    """
+    with plt.rc_context(RC_PARAMS):
+        plt.subplot2grid((4, 3), (0, 0), 2, 3)
+        frequency_response(b, a, sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
+
+        plt.subplot2grid((4, 3), (2, 0), 2, 1)
+        zeros_poles(b, a)
+
+        plt.subplot2grid((4, 3), (2, 1), 1, 2)
+        impulse_response(b, a, N=N_time)
+
+        plt.subplot2grid((4, 3), (3, 1), 1, 2)
+        step_response(b, a, N=N_time)
+
+        plt.tight_layout()
