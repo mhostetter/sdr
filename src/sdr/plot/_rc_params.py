@@ -1,6 +1,8 @@
 """
 A module containing :obj:`sdr`'s default matplotlib rcParams.
 """
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 
 from .._helper import export

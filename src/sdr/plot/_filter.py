@@ -1,10 +1,11 @@
 """
 A module containing filter-related plotting functions.
 """
-from typing import Optional
+from __future__ import annotations
 
 import matplotlib.pyplot as plt
 import numpy as np
+import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
@@ -13,7 +14,7 @@ from ._rc_params import RC_PARAMS
 
 
 @export
-def impulse_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, **kwargs):
+def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, **kwargs):
     r"""
     Plots the impulse response $h[n]$ of a filter.
 
@@ -75,7 +76,7 @@ def impulse_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, 
 
 
 @export
-def step_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, **kwargs):
+def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, **kwargs):
     r"""
     Plots the step response $s[n]$ of a filter.
 
@@ -136,7 +137,7 @@ def step_response(b: np.ndarray, a: np.ndarray = 1, N: Optional[int] = None, **k
 
 
 @export
-def zeros_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
+def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
     r"""
     Plots the zeros and poles of the filter.
 
@@ -178,8 +179,8 @@ def zeros_poles(b: np.ndarray, a: np.ndarray = 1, **kwargs):
 
 @export
 def frequency_response(
-    b: np.ndarray,
-    a: np.ndarray = 1,
+    b: npt.ArrayLike,
+    a: npt.ArrayLike = 1,
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -237,8 +238,8 @@ def frequency_response(
 
 @export
 def group_delay(
-    b: np.ndarray,
-    a: np.ndarray = 1,
+    b: npt.ArrayLike,
+    a: npt.ArrayLike = 1,
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -296,10 +297,10 @@ def group_delay(
 
 @export
 def filter(  # pylint: disable=redefined-builtin
-    b: np.ndarray,
-    a: np.ndarray = 1,
+    b: npt.ArrayLike,
+    a: npt.ArrayLike = 1,
     sample_rate: float = 1.0,
-    N_time: Optional[int] = None,
+    N_time: int | None = None,
     N_freq: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     decades: int = 4,
