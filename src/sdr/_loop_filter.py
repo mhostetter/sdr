@@ -1,7 +1,10 @@
 """
 A module for discrete-time loop filters.
 """
+from __future__ import annotations
+
 import numpy as np
+import numpy.typing as npt
 
 from ._helper import export
 from ._iir_filter import IIR
@@ -97,7 +100,7 @@ class LoopFilter:
         """
         self.iir.reset()
 
-    def filter(self, x: np.ndarray) -> np.ndarray:
+    def filter(self, x: npt.ArrayLike) -> np.ndarray:
         """
         Filters the input signal $x[n]$.
 

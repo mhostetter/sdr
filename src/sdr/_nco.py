@@ -1,7 +1,10 @@
 """
 A module for numerically-controlled oscillators (NCO).
 """
+from __future__ import annotations
+
 import numpy as np
+import numpy.typing as npt
 
 from ._helper import export
 
@@ -86,7 +89,7 @@ class NCO:
         y = self.process(x)
         return y
 
-    def process(self, x: np.ndarray) -> np.ndarray:
+    def process(self, x: npt.ArrayLike) -> np.ndarray:
         """
         Steps the NCO with the variable-increment signal $x[n]$.
 
@@ -236,7 +239,7 @@ class DDS:
         y = self.process(x)
         return y
 
-    def process(self, x: np.ndarray) -> np.ndarray:
+    def process(self, x: npt.ArrayLike) -> np.ndarray:
         """
         Steps the DDS with the variable phase increment signal $x[n]$.
 
