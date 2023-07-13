@@ -17,3 +17,8 @@ Phase/time-locked loops
 -----------------------
 
 .. python-apigen-group:: pll
+
+Plotting
+--------
+
+.. python-apigen-group:: plotting
