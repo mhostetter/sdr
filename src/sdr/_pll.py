@@ -83,7 +83,7 @@ class ClosedLoopPLL:
         K1 = lf.K1
         K2 = lf.K2
 
-        b0 = 0
+        # b0 = 0
         b1 = Kp * K0 * (K1 + K2)
         b2 = -Kp * K0 * K1
 
