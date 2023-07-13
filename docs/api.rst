@@ -18,6 +18,11 @@ Phase/time-locked loops
 
 .. python-apigen-group:: pll
 
+Data manipulation
+-----------------
+
+.. python-apigen-group:: data
+
 Plotting
 --------
 
