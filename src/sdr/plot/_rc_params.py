@@ -34,6 +34,6 @@ def use_style():
             sdr.plot._rc_params.RC_PARAMS
 
     Group:
-        plotting
+        plot-config
     """
     plt.rcParams.update(RC_PARAMS)
