@@ -3,7 +3,6 @@ A module for infinite impulse response (IIR) filters.
 """
 from typing import Tuple
 
-import matplotlib.pyplot as plt
 import numpy as np
 import scipy.signal
 from typing_extensions import Self
