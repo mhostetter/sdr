@@ -206,14 +206,10 @@ autodoc_typehints = "signature"
 autodoc_typehints_description_target = "documented"
 autodoc_typehints_format = "short"
 
-autodoc_type_aliases = {}
-#     "ElementLike": "~typing.ElementLike",
-#     "IterableLike": "~typing.IterableLike",
-#     "ArrayLike": "~typing.ArrayLike",
-#     "ShapeLike": "~typing.ShapeLike",
-#     "DTypeLike": "~typing.DTypeLike",
-#     "PolyLike": "~typing.PolyLike",
-# }
+autodoc_type_aliases = {
+    "npt.ArrayLike": "~numpy.typing.ArrayLike",
+    "npt.DTypeLike": "~numpy.typing.DTypeLike",
+}
 
 ipython_execlines = ["import math", "import numpy as np", "import sdr"]
 
