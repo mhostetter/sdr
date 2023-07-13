@@ -3,8 +3,6 @@ A module containing functions for data manipulation.
 """
 from __future__ import annotations
 
-from typing import Optional
-
 import numpy as np
 import numpy.typing as npt
 
@@ -12,7 +10,7 @@ from ._helper import export
 
 
 @export
-def pack(x: npt.ArrayLike, bpe: int, dtype: Optional[npt.DTypeLike] = None) -> np.ndarray:
+def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np.ndarray:
     """
     Packs a binary array into an array with multiple bits per element.
 
@@ -67,7 +65,7 @@ def pack(x: npt.ArrayLike, bpe: int, dtype: Optional[npt.DTypeLike] = None) -> n
 
 
 @export
-def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike = np.uint8) -> np.ndarray:
+def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np.ndarray:
     """
     Unpacks an array with multiple bits per element into a binary array.
 
@@ -76,7 +74,7 @@ def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike = np.uint8) -> np.nd
     Arguments:
         x: The input array with `bpe` bits per element.
         bpe: The number of bits per element in the input array.
-        dtype: The data type of the output array.
+        dtype: The data type of the output array. If `None`, :obj:`numpy.uint8` is used.
 
     Returns:
         The unpacked binary data with 1 bit per element.
