@@ -295,7 +295,7 @@ def group_delay(
 
 
 @export
-def filter(
+def filter(  # pylint: disable=redefined-builtin
     b: np.ndarray,
     a: np.ndarray = 1,
     sample_rate: float = 1.0,
@@ -303,7 +303,6 @@ def filter(
     N_freq: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     decades: int = 4,
-    **kwargs,
 ):
     r"""
     Plots the frequency response $H(e^{j\omega})$, impulse response $h[n]$, step response $s[n]$,
@@ -319,7 +318,6 @@ def filter(
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.IIR
