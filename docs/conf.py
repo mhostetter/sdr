@@ -424,23 +424,23 @@ sphinx_immaterial_custom_admonitions = [
 #     setattr(sdr._fields._meta.FieldArrayMeta, p, FieldArrayMeta_property)
 
 
-# def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
-#     signature = modify_type_hints(signature)
-#     return_annotation = modify_type_hints(return_annotation)
-#     return signature, return_annotation
+def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
+    signature = modify_type_hints(signature)
+    return_annotation = modify_type_hints(return_annotation)
+    return signature, return_annotation
 
 
-# def modify_type_hints(signature):
-#     """
-#     Fix shortening numpy type annotations in string annotations created with
-#     `from __future__ import annotations` that Sphinx can't process before Python
-#     3.10.
+def modify_type_hints(signature):
+    """
+    Fix shortening numpy type annotations in string annotations created with
+    `from __future__ import annotations` that Sphinx can't process before Python
+    3.10.
 
-#     See https://github.com/jbms/sphinx-immaterial/issues/161
-#     """
-#     if signature:
-#         signature = signature.replace("np", "~numpy")
-#     return signature
+    See https://github.com/jbms/sphinx-immaterial/issues/161
+    """
+    if signature:
+        signature = signature.replace("np", "~numpy")
+    return signature
 
 
 def monkey_patch_parse_see_also():
@@ -471,7 +471,6 @@ def monkey_patch_parse_see_also():
 def setup(app):
     monkey_patch_parse_see_also()
 
-
-#     app.connect("autodoc-skip-member", autodoc_skip_member)
-#     app.connect("autodoc-process-bases", autodoc_process_bases)
-#     app.connect("autodoc-process-signature", autodoc_process_signature)
+    #     app.connect("autodoc-skip-member", autodoc_skip_member)
+    #     app.connect("autodoc-process-bases", autodoc_process_bases)
+    app.connect("autodoc-process-signature", autodoc_process_signature)
