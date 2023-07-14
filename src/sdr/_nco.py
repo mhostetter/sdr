@@ -46,13 +46,13 @@ class NCO:
     """
 
     def __init__(self, K0: float = 1.0, increment: float = 0.0, offset: float = 0.0):
-        """
+        r"""
         Creates a numerically-controlled oscillator (NCO).
 
         Arguments:
-            K0: The NCO gain.
-            increment: The constant accumulation of the NCO in units/sample.
-            offset: The absolute offset of the NCO in units.
+            K0: The NCO gain $K_0$.
+            increment: The constant accumulation $\omega$ of the NCO in units/sample.
+            offset: The absolute offset $\theta$ of the NCO in units.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -77,10 +77,10 @@ class NCO:
         Steps the NCO forward by $N$ samples.
 
         Arguments:
-            N: The number of samples to step the NCO forward.
+            N: The number of samples $N$ to step the NCO forward.
 
         Returns:
-            The output signal, $y[n]$.
+            The output signal $y[n]$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -94,10 +94,10 @@ class NCO:
         Steps the NCO with the variable-increment signal $x[n]$.
 
         Arguments:
-            x: The input signal, $x[n]$. The input signal varies the per-sample increment of the NCO.
+            x: The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the NCO.
 
         Returns:
-            The output signal, $y[n]$.
+            The output signal $y[n]$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -122,7 +122,7 @@ class NCO:
     @property
     def K0(self) -> float:
         """
-        The NCO gain.
+        The NCO gain $K_0$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -135,8 +135,8 @@ class NCO:
 
     @property
     def increment(self) -> float:
-        """
-        The constant accumulation of the NCO in units/sample.
+        r"""
+        The constant accumulation $\omega$ of the NCO in units/sample.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -149,8 +149,8 @@ class NCO:
 
     @property
     def offset(self) -> float:
-        """
-        The absolute offset of the NCO in units.
+        r"""
+        The absolute offset $\theta$ of the NCO in units.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
