@@ -17,8 +17,8 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
     Plots a time-domain signal $x[n]$.
 
     Arguments:
-        x: The time-domain signal $x[n]$ to plot.
-        sample_rate: The sample rate of the signal in samples/s. If the sample rate is 1, the x-axis will
+        x: The time-domain signal $x[n]$.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If the sample rate is 1, the x-axis will
             be label as "Samples".
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 

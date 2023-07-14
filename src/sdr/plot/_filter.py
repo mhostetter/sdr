@@ -21,9 +21,9 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
     The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
     Arguments:
-        b: The feedforward coefficients, $b_i$.
-        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
-        N: The number of samples to plot. If `None`, the length of `b` is used for FIR filters and
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -83,9 +83,9 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
     The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
     Arguments:
-        b: The feedforward coefficients, $b_i$.
-        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
-        N: The number of samples to plot. If `None`, the length of `b` is used for FIR filters and
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -142,8 +142,8 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
     Plots the zeros and poles of the filter.
 
     Arguments:
-        b: The feedforward coefficients, $b_i$.
-        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
@@ -191,10 +191,10 @@ def frequency_response(
     Plots the frequency response $H(e^{j\omega})$ of the filter.
 
     Arguments:
-        b: The feedforward coefficients, $b_i$.
-        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
-        sample_rate: The sample rate of the filter in samples/s.
-        N: The number of samples in the frequency response.
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
@@ -250,10 +250,10 @@ def group_delay(
     Plots the group delay $\tau_g(\omega)$ of the IIR filter.
 
     Arguments:
-        b: The feedforward coefficients, $b_i$.
-        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
-        sample_rate: The sample rate of the filter in samples/s.
-        N: The number of samples in the frequency response.
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
@@ -310,12 +310,12 @@ def filter(  # pylint: disable=redefined-builtin
     and zeros and poles of the filter.
 
     Arguments:
-        b: The feedforward coefficients, $b_i$.
-        a: The feedback coefficients, $a_j$. For FIR filters, this is set to 1.
-        sample_rate: The sample rate of the filter in samples/s.
-        N_time: The number of samples in the time domain. If `None`, the length of `b` is used
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        N_time: The number of samples $N_t$ in the time domain. If `None`, the length of `b` is used
             for FIR filters and 100 for IIR filters.
-        N_freq: The number of samples in the frequency response.
+        N_freq: The number of samples $N_f$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
