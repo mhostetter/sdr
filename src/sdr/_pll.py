@@ -66,17 +66,17 @@ class ClosedLoopPLL:
     def __init__(
         self, noise_bandwidth: float, damping_factor: float, K0: float = 1.0, Kp: float = 1.0, sample_rate: float = 1.0
     ):
-        """
+        r"""
         Creates a closed-loop PLL analysis object.
 
         Arguments:
             noise_bandwidth: The normalized noise bandwidth $B_n T$ of the loop filter,
                 where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds.
-            damping_factor: The damping factor of the loop filter. A damping factor of 1 is critically damped,
-                less than 1 is underdamped, and greater than 1 is overdamped.
-            K0: The NCO gain.
-            Kp: The gain of the phase error detector (PED) or time error detector (TED).
-            sample_rate: The sample rate of the PLL in Hz.
+            damping_factor: The damping factor $\zeta$ of the loop filter. $\zeta = 1$ is critically damped,
+                $\zeta < 1$ is underdamped, and $\zeta > 1$ is overdamped.
+            K0: The NCO gain $K_0$.
+            Kp: The gain $K_p$ of the phase error detector (PED) or time error detector (TED).
+            sample_rate: The sample rate $f_s$ of the PLL in Hz.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -107,11 +107,15 @@ class ClosedLoopPLL:
         self._K2 = K2
 
     def phase_lock_time(self) -> float:
-        """
+        r"""
         Returns the phase lock time of the PLL.
 
+        $$
+        T_{PL} = \frac{1.3}{B_n}
+        $$
+
         Returns:
-            The time it takes the PLL to lock onto the input signal's phase in seconds.
+            The time $T_{PL}$ it takes the PLL to lock onto the input signal's phase in seconds.
 
         References:
             - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.40.
@@ -122,14 +126,18 @@ class ClosedLoopPLL:
         return 1.3 / self.Bn
 
     def frequency_lock_time(self, freq_offset: float) -> float:
-        """
+        r"""
         Returns the frequency lock time of the PLL.
 
+        $$
+        T_{FL} = 4 \frac{(\Delta f)^2}{B_n^3}
+        $$
+
         Arguments:
-            freq_offset: The frequency offset of the input signal in Hz.
+            freq_offset: The frequency offset $\Delta f$ of the input signal in Hz.
 
         Returns:
-            The time it takes the PLL to lock onto the input signal's frequency in seconds.
+            The time $T_{FL}$ it takes the PLL to lock onto the input signal's frequency in seconds.
 
         References:
             - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.39.
@@ -140,14 +148,18 @@ class ClosedLoopPLL:
         return 4 * freq_offset**2 / self.Bn**3
 
     def lock_time(self, freq_offset: float) -> float:
-        """
+        r"""
         Returns the lock time of the PLL.
 
+        $$
+        T_{LOCK} = T_{PL} + T_{FL} = \frac{1.3}{B_n} + 4 \frac{(\Delta f)^2}{B_n^3}
+        $$
+
         Arguments:
-            freq_offset: The frequency offset of the input signal in Hz.
+            freq_offset: The frequency offset $\Delta f$ of the input signal in Hz.
 
         Returns:
-            The time it takes the PLL to lock onto the input signal's phase and frequency in seconds.
+            The time $T_{LOCK}$ it takes the PLL to lock onto the input signal's phase and frequency in seconds.
 
         References:
             - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.38.
@@ -158,14 +170,18 @@ class ClosedLoopPLL:
         return self.phase_lock_time() * self.frequency_lock_time(freq_offset)
 
     def phase_error_variance(self, cn0: float) -> float:
-        """
+        r"""
         Returns the variance of the phase error of the PLL in steady state.
 
+        $$
+        \sigma_{\theta_e}^2 = \frac{N_0 B_n}{C}
+        $$
+
         Arguments:
-            cn0: The carrier-to-noise density ratio of the input signal in dB-Hz.
+            cn0: The carrier-to-noise density ratio $C/N_0$ of the input signal in dB-Hz.
 
         Returns:
-            The variance of the phase error of the PLL in radians^2.
+            The variance of the phase error $\sigma_{\theta_e}^2$ of the PLL in radians^2.
 
         References:
             - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.43.
@@ -179,7 +195,7 @@ class ClosedLoopPLL:
     @property
     def sample_rate(self) -> float:
         """
-        The sample rate of the PLL in samples/s.
+        The sample rate $f_s$ of the PLL in samples/s.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -189,7 +205,7 @@ class ClosedLoopPLL:
     @property
     def BnT(self) -> float:
         """
-        The normalized noise bandwidth of the PLL.
+        The normalized noise bandwidth $B_n T$ of the PLL.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -199,7 +215,7 @@ class ClosedLoopPLL:
     @property
     def Bn(self) -> float:
         """
-        The noise bandwidth of the PLL in Hz.
+        The noise bandwidth $B_n$ of the PLL in Hz.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -208,8 +224,8 @@ class ClosedLoopPLL:
 
     @property
     def zeta(self) -> float:
-        """
-        The damping factor of the PLL.
+        r"""
+        The damping factor $\zeta$ of the PLL.
 
         A damping factor of 1 is critically damped, less than 1 is underdamped, and greater than 1 is overdamped.
 
@@ -221,7 +237,7 @@ class ClosedLoopPLL:
     @property
     def K0(self) -> float:
         """
-        The NCO gain.
+        The NCO gain $K_0$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -231,7 +247,7 @@ class ClosedLoopPLL:
     @property
     def Kp(self) -> float:
         """
-        The phase error detector (PED) gain.
+        The phase error detector (PED) gain $K_p$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -241,7 +257,7 @@ class ClosedLoopPLL:
     @property
     def K1(self) -> float:
         """
-        The proportional gain of the loop filter.
+        The proportional gain $K_1$ of the loop filter.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -251,7 +267,7 @@ class ClosedLoopPLL:
     @property
     def K2(self) -> float:
         """
-        The integral gain of the loop filter.
+        The integral gain $K_2$ of the loop filter.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -270,8 +286,8 @@ class ClosedLoopPLL:
 
     @property
     def omega_n(self) -> float:
-        """
-        The natural frequency of the PLL in radians/s.
+        r"""
+        The natural frequency $\omega_n$ of the PLL in radians/s.
 
         References:
             - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.33.
@@ -283,8 +299,8 @@ class ClosedLoopPLL:
 
     @property
     def omega_3dB(self) -> float:
-        """
-        The 3-dB bandwidth of the PLL in radians/s.
+        r"""
+        The 3-dB bandwidth $\omega_{3\textrm{dB}}$ of the PLL in radians/s.
 
         References:
             - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.34.

@@ -161,7 +161,7 @@ class IIR:
         Returns the frequency response $H(e^{j2 \pi f})$ of the IIR filter.
 
         Arguments:
-            sample_rate: The sample rate of the filter in samples/s.
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
             N: The number of samples in the frequency response.
 
         Returns:
@@ -186,7 +186,7 @@ class IIR:
         Returns the frequency response $H(e^{j2 \pi f})$ of the IIR filter on a logarithmic frequency axis
 
         Arguments:
-            sample_rate: The sample rate of the filter in samples/s.
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
             N: The number of samples in the frequency response.
             decades: The number of frequency decades to plot.
 
