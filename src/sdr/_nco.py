@@ -181,7 +181,7 @@ class DDS:
                                  +------+
 
             x[n] = Input signal (radians)
-            y[n] = Output signal (radians)
+            y[n] = Output complex exponential
             K0 = NCO gain
             increment = Constant accumulation (radians/sample)
             offset = Absolute offset (radians)
@@ -199,13 +199,13 @@ class DDS:
     """
 
     def __init__(self, K0: float = 1.0, increment: float = 0.0, offset: float = 0.0):
-        """
+        r"""
         Creates a direct digital synthesizer (DDS).
 
         Arguments:
-            K0: The NCO gain.
-            increment: The constant accumulation of the NCO in radians/sample.
-            offset: The absolute offset of the NCO in radians.
+            K0: The NCO gain $K_0$.
+            increment: The constant accumulation $\omega$ of the NCO in radians/sample.
+            offset: The absolute offset $\theta$ of the NCO in radians.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -227,10 +227,10 @@ class DDS:
         Steps the DDS forward by $N$ samples.
 
         Arguments:
-            N: The number of samples to step the DDS forward.
+            N: The number of samples $N$ to step the DDS forward.
 
         Returns:
-            The output complex exponential, $y[n]$.
+            The output complex exponential $y[n]$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -244,10 +244,10 @@ class DDS:
         Steps the DDS with the variable phase increment signal $x[n]$.
 
         Arguments:
-            x: The input signal, $x[n]$. The input signal varies the per-sample phase increment of the DDS.
+            x: The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the DDS.
 
         Returns:
-            The output complex exponential, $y[n]$.
+            The output complex exponential $y[n]$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
