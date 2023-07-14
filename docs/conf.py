@@ -216,6 +216,7 @@ ipython_execlines = ["import math", "import numpy as np", "import sdr"]
 myst_enable_extensions = ["dollarmath"]
 
 nb_execution_mode = "off"
+nb_output_stderr = "remove-warn"
 
 mathjax_config = {
     "tex2jax": {
