@@ -42,7 +42,7 @@ class LoopFilter:
         $$H(z) = K_1 + K_2 \frac{ 1 }{ 1 - z^{-1}} = \frac{(K_1 + K_2) - K_1 z^{-1}}{1 - z^{-1}} .$$
 
         The second-order proportional-plus-integrator loop filter can track a constant phase error
-        and/or frequency error to zero. It cannot, however, track an constant chirp (frequency ramp)
+        and/or frequency error to zero. It cannot, however, track a constant chirp (frequency ramp)
         to zero.
 
     References:
@@ -56,16 +56,16 @@ class LoopFilter:
     """
 
     def __init__(self, noise_bandwidth: float, damping_factor: float, K0: float = 1.0, Kp: float = 1.0):
-        """
+        r"""
         Creates a 2nd order, proportional-plus-integrator (PPI) loop filter.
 
         Arguments:
             noise_bandwidth: The normalized noise bandwidth $B_n T$ of the loop filter,
                 where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds.
-            damping_factor: The damping factor of the loop filter. A damping factor of 1 is critically damped,
-                less than 1 is underdamped, and greater than 1 is overdamped.
-            K0: The NCO gain.
-            Kp: The gain of the phase error detector (PED) or time error detector (TED).
+            damping_factor: The damping factor $\zeta$ of the loop filter. $\zeta = 1$ is critically damped,
+                $\zeta < 1$ is underdamped, and $\zeta > 1$ is overdamped.
+            K0: The NCO gain $K_0$.
+            Kp: The gain $K_p$ of the phase error detector (PED) or time error detector (TED).
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -105,10 +105,10 @@ class LoopFilter:
         Filters the input signal $x[n]$.
 
         Arguments:
-            x: The input signal, $x[n]$.
+            x: The input signal $x[n]$.
 
         Returns:
-            The filtered signal, $y[n]$.
+            The filtered output signal $y[n]$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -128,9 +128,9 @@ class LoopFilter:
 
     @property
     def damping_factor(self) -> float:
-        """
-        The damping factor of the loop filter. A damping factor of 1 is critically damped,
-        less than 1 is underdamped, and greater than 1 is overdamped.
+        r"""
+        The damping factor $\zeta$ of the loop filter. $\zeta = 1$ is critically damped,
+        $\zeta < 1$ is underdamped, and $\zeta > 1$ is overdamped.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -140,7 +140,7 @@ class LoopFilter:
     @property
     def K1(self) -> float:
         """
-        The proportional gain of the loop filter.
+        The proportional gain $K_1$ of the loop filter.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -150,7 +150,7 @@ class LoopFilter:
     @property
     def K2(self) -> float:
         """
-        The integral gain of the loop filter.
+        The integral gain $K_2$ of the loop filter.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
