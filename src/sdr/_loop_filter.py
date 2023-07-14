@@ -46,7 +46,7 @@ class LoopFilter:
         to zero.
 
     References:
-        - M. Rice, Digital Communications: A Discrete-Time Approach, Appendix C: Phase Locked Loops.
+        - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Appendix C: Phase Locked Loops.
 
     Examples:
         See the :ref:`phase-locked-loop` example.
