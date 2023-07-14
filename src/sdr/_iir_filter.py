@@ -27,7 +27,7 @@ class IIR:
 
         The transfer function of the filter is
 
-        $$H(z) = \frac{\sum_{i=0}^{M} b_i z^{-i}}{\sum_{j=0}^{N} a_j z^{-j}} .$$
+        $$H(z) = \frac{\sum\limits_{i=0}^{M} b_i z^{-i}}{\sum\limits_{j=0}^{N} a_j z^{-j}} .$$
 
     Examples:
         See the :ref:`iir-filter` example.
