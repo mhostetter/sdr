@@ -13,7 +13,7 @@ from ._helper import export
 @export
 class FarrowResampler:
     """
-    A cubic Farrow arbitrary resampler.
+    Implements a cubic Farrow arbitrary resampler.
 
     References:
         - https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/
