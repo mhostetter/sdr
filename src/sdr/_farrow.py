@@ -31,7 +31,7 @@ class FarrowResampler:
 
         Arguments:
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`resample()`.
+                preserved between calls to :meth:`~FarrowResampler.resample()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -77,14 +77,14 @@ class FarrowResampler:
 
     def resample(self, x: npt.ArrayLike, rate: float) -> np.ndarray:
         r"""
-        Resamples the input signal by the given arbitrary rate.
+        Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
         Arguments:
-            x: The input signal, $x[n] = x(n T_s)$.
-            rate: The resampling rate, $r$.
+            x: The input signal $x[n] = x(n T_s)$.
+            rate: The resampling rate $r$.
 
         Returns:
-            The resampled signal, $y[n] = x(n T_s / r)$.
+            The resampled signal $y[n] = x(n T_s / r)$.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -140,7 +140,7 @@ class FarrowResampler:
     @property
     def taps(self) -> np.ndarray:
         """
-        Returns the Farrow filter taps.
+        The Farrow filter taps.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -150,7 +150,7 @@ class FarrowResampler:
     @property
     def order(self) -> int:
         """
-        Returns the order of the filter.
+        The order of the filter.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -160,9 +160,9 @@ class FarrowResampler:
     @property
     def streaming(self) -> bool:
         """
-        Returns whether the filter is in streaming mode.
+        Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`resample()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.resample()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
