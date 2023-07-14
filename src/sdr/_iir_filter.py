@@ -41,10 +41,10 @@ class IIR:
         Creates an IIR filter with feedforward coefficients $b_i$ and feedback coefficients $a_j$.
 
         Arguments:
-            b: The feedforward coefficients, $b_i$.
-            a: The feedback coefficients, $a_j$.
-            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`filter()`.
+            b: The feedforward coefficients $b_i$.
+            a: The feedback coefficients $a_j$.
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
+                preserved between calls to :meth:`~IIR.filter()`.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -68,7 +68,7 @@ class IIR:
             zeros: The zeros of the transfer function.
             poles: The poles of the transfer function.
             gain: The gain of the transfer function.
-            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
                 preserved between calls to :meth:`filter()`.
 
         Examples:
@@ -92,10 +92,10 @@ class IIR:
         Filters the input signal $x[n]$ with the IIR filter.
 
         Arguments:
-            x: The input signal, $x[n]$.
+            x: The input signal $x[n]$.
 
         Returns:
-            The filtered signal, $y[n]$.
+            The filtered signal $y[n]$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -111,15 +111,14 @@ class IIR:
 
     def impulse_response(self, N: int = 100) -> np.ndarray:
         r"""
-        Returns the impulse response $h[n]$ of the IIR filter.
-
-        The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
+        Returns the impulse response $h[n]$ of the IIR filter. The impulse response $h[n]$ is the
+        filter output when the input is an impulse $\delta[n]$.
 
         Arguments:
             N: The number of samples to return.
 
         Returns:
-            The impulse response of the IIR filter, $h[n]$.
+            The impulse response of the IIR filter $h[n]$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -136,15 +135,14 @@ class IIR:
 
     def step_response(self, N: int = 100) -> np.ndarray:
         """
-        Returns the step response $s[n]$ of the IIR filter.
-
-        The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
+        Returns the step response $s[n]$ of the IIR filter. The step response $s[n]$ is the
+        filter output when the input is a unit step $u[n]$.
 
         Arguments:
             N: The number of samples to return.
 
         Returns:
-            The step response of the IIR filter, $s[n]$.
+            The step response of the IIR filter $s[n]$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -167,8 +165,8 @@ class IIR:
             N: The number of samples in the frequency response.
 
         Returns:
-            - The frequencies, $f$, from $-f_s$ to $f_s$ in Hz.
-            - The frequency response of the IIR filter, $H(e^{j2 \pi f})$.
+            - The frequencies $f$ from $-f_s$ to $f_s$ in Hz.
+            - The frequency response of the IIR filter $H(e^{j2 \pi f})$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -193,8 +191,8 @@ class IIR:
             decades: The number of frequency decades to plot.
 
         Returns:
-            - The frequencies, $f$, from $0$ to $f_s$ in Hz. The frequencies are logarithmically-spaced.
-            - The frequency response of the IIR filter, $H(e^{j2 \pi f})$.
+            - The frequencies $f$ from $0$ to $f_s$ in Hz. The frequencies are logarithmically-spaced.
+            - The frequency response of the IIR filter $H(e^{j2 \pi f})$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -207,7 +205,7 @@ class IIR:
     @property
     def b_taps(self) -> np.ndarray:
         """
-        Returns the feedforward filter taps, $b_i$.
+        The feedforward taps $b_i$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -217,7 +215,7 @@ class IIR:
     @property
     def a_taps(self) -> np.ndarray:
         """
-        Returns the feedback filter taps, $a_j$.
+        The feedback taps $a_j$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -227,9 +225,9 @@ class IIR:
     @property
     def streaming(self) -> bool:
         """
-        Returns whether the filter is in streaming mode.
+        Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`filter()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~IIR.filter()`.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -239,7 +237,7 @@ class IIR:
     @property
     def order(self) -> int:
         """
-        Returns the order of the IIR filter, $N - 1$.
+        The order of the IIR filter, $N - 1$.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -249,7 +247,7 @@ class IIR:
     @property
     def zeros(self) -> np.ndarray:
         """
-        Returns the zeros of the IIR filter.
+        The zeros of the IIR filter.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -259,7 +257,7 @@ class IIR:
     @property
     def poles(self) -> np.ndarray:
         """
-        Returns the poles of the IIR filter.
+        The poles of the IIR filter.
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -269,7 +267,7 @@ class IIR:
     @property
     def gain(self) -> float:
         """
-        Returns the gain of the IIR filter.
+        The gain of the IIR filter.
 
         Examples:
             See the :ref:`iir-filter` example.
