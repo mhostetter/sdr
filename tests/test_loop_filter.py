@@ -7,7 +7,7 @@ import sdr
 def test_ppi_gains_1():
     """
     Reference:
-        - M. Rice, Digital Communications: A Discrete-Time Approach, Section 7.2.3 Example #1
+        - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Section 7.2.3 Example #1
     """
     BnT = 0.02  # Normalized noise bandwidth
     zeta = 1 / np.sqrt(2)  # Damping factor
@@ -21,7 +21,7 @@ def test_ppi_gains_1():
 def test_ppi_gains_2():
     """
     Reference:
-        - M. Rice, Digital Communications: A Discrete-Time Approach, Section 7.2.3 Example #2
+        - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Section 7.2.3 Example #2
     """
     BnT = 0.02 / 16  # Normalized noise bandwidth
     zeta = 1 / np.sqrt(2)  # Damping factor
@@ -35,7 +35,7 @@ def test_ppi_gains_2():
 def test_ppi_gains_3():
     """
     Reference:
-        - M. Rice, Digital Communications: A Discrete-Time Approach, Appendix C.2.1.
+        - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Appendix C.2.1.
     """
     BnT = 0.05  # Normalized noise bandwidth
     zeta = 1  # Damping factor

@@ -54,7 +54,7 @@ class ClosedLoopPLL:
         $$
 
     References:
-        - M. Rice, Digital Communications: A Discrete-Time Approach, Appendix C: Phase Locked Loops.
+        - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Appendix C: Phase Locked Loops.
 
     Examples:
         See the :ref:`phase-locked-loop` example.
@@ -114,7 +114,7 @@ class ClosedLoopPLL:
             The time it takes the PLL to lock onto the input signal's phase in seconds.
 
         References:
-            - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.40.
+            - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.40.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -132,7 +132,7 @@ class ClosedLoopPLL:
             The time it takes the PLL to lock onto the input signal's frequency in seconds.
 
         References:
-            - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.39.
+            - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.39.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -150,7 +150,7 @@ class ClosedLoopPLL:
             The time it takes the PLL to lock onto the input signal's phase and frequency in seconds.
 
         References:
-            - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.38.
+            - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.38.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -168,7 +168,7 @@ class ClosedLoopPLL:
             The variance of the phase error of the PLL in radians^2.
 
         References:
-            - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.43.
+            - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.43.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -274,7 +274,7 @@ class ClosedLoopPLL:
         The natural frequency of the PLL in radians/s.
 
         References:
-            - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.33.
+            - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.33.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -287,7 +287,7 @@ class ClosedLoopPLL:
         The 3-dB bandwidth of the PLL in radians/s.
 
         References:
-            - M. Rice, Digital Communications: A Discrete-Time Approach, Equation C.34.
+            - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Equation C.34.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
