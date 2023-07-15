@@ -17,7 +17,21 @@
   <a href="https://codecov.io/gh/mhostetter/sdr"><img src="https://codecov.io/gh/mhostetter/sdr/branch/master/graph/badge.svg?token=3FJML79ZUK"></a>
 </div>
 
+
 A Python package for software-defined radio.
+
+The `sdr` library is a Python 3 package for software-defined radio (SDR).
+
+The goal of `sdr` is to provide tools to design, build, and analyze digital communications systems
+in Python. The library relies on and is designed to be interoperable with NumPy, SciPy, and Matplotlib.
+Performance is also very important. So, where possible, Numba is used to accelerate computationally intensive
+functions.
+
+Additionally, the library aims to replicate relevant functionality from Matlab's Communications and
+`DSP Toolboxes.
+
+We are progressively adding functionality to the library. If there is something you'd like to see included
+in `sdr`, please open an issue on GitHub.
 
 > Enjoying the library? Give us a :star: on [GitHub](https://github.com/mhostetter/sdr)!
 
