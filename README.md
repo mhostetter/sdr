@@ -23,16 +23,14 @@ A Python package for software-defined radio.
 
 ## Features
 
-- Filters:
-   - Infinite impulse response filter (`sdr.IIR`)
-- Arbitrary resamplers:
-   - Farrow resampler (`sdr.FarrowResampler`)
-- Signal generators:
-   - Numerically-controlled oscillator (`sdr.NCO`)
-   - Direct digital synthesizer (`sdr.DDS`)
-- Phase-locked loops:
-   - Loop filter (`sdr.LoopFilter`)
-   - Closed-loop PLL analysis (`sdr.ClosedLoopPLL`)
+- Filters: `sdr.IIR`
+- Pulse shapes: `sdr.raised_cosine`, `sdr.root_raised_cosine`
+- Arbitrary resamplers: `sdr.FarrowResampler`
+- Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
+- Data manipulation: `sdr.pack`, `sdr.unpack`
+- Plotting utilities: `sdr.plot.time_domain`, `sdr.plot.filter`, `sdr.plot.frequency_response`,
+  `sdr.plot.group_delay`, `sdr.plot.impulse_response`, `sdr.plot.step_response`,
+  `sdr.plot.zeros_poles`
 
 ## Documentation
 
