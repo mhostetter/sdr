@@ -26,7 +26,7 @@ Features
 --------
 
 - Filters: :obj:`sdr.IIR`
-- Pulse shapes: :obj:`sdr.raised_cosine`, :obj:`sdr.root_raised_cosine`
+- Pulse shapes: :obj:`sdr.raised_cosine`, :obj:`sdr.root_raised_cosine`, :obj:`sdr.gaussian`
 - Arbitrary resamplers: :obj:`sdr.FarrowResampler`
 - Phase-locked loops: :obj:`sdr.NCO`, :obj:`sdr.DDS`, :obj:`sdr.LoopFilter`, :obj:`sdr.ClosedLoopPLL`
 - Data manipulation: :obj:`sdr.pack`, :obj:`sdr.unpack`, :obj:`sdr.hexdump`
