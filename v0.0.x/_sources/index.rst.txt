@@ -7,22 +7,21 @@ The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR) ap
 Features
 --------
 
-- Filters:
-   - Infinite impulse response filter (:obj:`sdr.IIR`)
-- Arbitrary resamplers:
-   - Farrow resampler (:obj:`sdr.FarrowResampler`)
-- Signal generators:
-   - Numerically-controlled oscillator (:obj:`sdr.NCO`)
-   - Direct digital synthesizer (:obj:`sdr.DDS`)
-- Phase-locked loops:
-   - Loop filter (:obj:`sdr.LoopFilter`)
-   - Closed-loop PLL analysis (:obj:`sdr.ClosedLoopPLL`)
+- Filters: :obj:`sdr.IIR`
+- Pulse shapes: :obj:`sdr.raised_cosine`, :obj:`sdr.root_raised_cosine`
+- Arbitrary resamplers: :obj:`sdr.FarrowResampler`
+- Phase-locked loops: :obj:`sdr.NCO`, :obj:`sdr.DDS`, :obj:`sdr.LoopFilter`, :obj:`sdr.ClosedLoopPLL`
+- Data manipulation: :obj:`sdr.pack`, :obj:`sdr.unpack`
+- Plotting utilities: :obj:`sdr.plot.time_domain`, :obj:`sdr.plot.filter`, :obj:`sdr.plot.frequency_response`,
+  :obj:`sdr.plot.group_delay`, :obj:`sdr.plot.impulse_response`, :obj:`sdr.plot.step_response`,
+  :obj:`sdr.plot.zeros_poles`
 
 .. toctree::
    :caption: Examples
    :hidden:
 
    examples/iir-filter.ipynb
+   examples/raised-cosine-pulse.ipynb
    examples/farrow-resampler.ipynb
    examples/phase-locked-loop.ipynb
 
