@@ -211,7 +211,7 @@ autodoc_type_aliases = {
     "npt.DTypeLike": "~numpy.typing.DTypeLike",
 }
 
-ipython_execlines = ["import math", "import numpy as np", "import sdr"]
+ipython_execlines = ["import math", "import matplotlib.pyplot as plt", "import numpy as np", "import sdr"]
 
 myst_enable_extensions = ["dollarmath"]
 
