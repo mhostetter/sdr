@@ -13,7 +13,7 @@
     
     
       
-        <title>Raised cosine pulse shapes - sdr</title>
+        <title>Pulse shapes - sdr</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#raised-cosine-filters" class="md-skip">
+        <a href="#raised-cosine" class="md-skip">
           Skip to content
         </a>
       
@@ -146,7 +146,7 @@ You're not viewing the latest version.
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Raised cosine pulse shapes
+              Pulse shapes
             
           </span>
         </div>
@@ -247,7 +247,7 @@ You're not viewing the latest version.
 
 
   <li class="md-tabs__item">
-    <a href="../iir-filter/" class="md-tabs__link md-tabs__link--active">
+    <a href="#" class="md-tabs__link md-tabs__link--active">
       <span class="md-ellipsis">Examples</span>
     </a>
   </li>
@@ -365,21 +365,6 @@ You're not viewing the latest version.
               
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../iir-filter/" class="md-nav__link">
-        <span class="md-ellipsis">IIR filters</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
     
   
     
@@ -391,12 +376,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span class="md-ellipsis">Raised cosine pulse shapes</span>
+          <span class="md-ellipsis">Pulse shapes</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span class="md-ellipsis">Raised cosine pulse shapes</span>
+        <span class="md-ellipsis">Pulse shapes</span>
       </a>
       
         
@@ -414,15 +399,22 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#raised-cosine-filters" class="md-nav__link">
-    <span class="md-ellipsis">Raised cosine filters</span>
+  <a href="#raised-cosine" class="md-nav__link">
+    <span class="md-ellipsis">Raised cosine</span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#square-root-raised-cosine-filters" class="md-nav__link">
-    <span class="md-ellipsis">Square-<wbr>root raised cosine filters</span>
+  <a href="#square-root-raised-cosine" class="md-nav__link">
+    <span class="md-ellipsis">Square-<wbr>root raised cosine</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gaussian" class="md-nav__link">
+    <span class="md-ellipsis">Gaussian</span>
   </a>
   
 </li>
@@ -431,6 +423,21 @@ You're not viewing the latest version.
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iir-filter/" class="md-nav__link">
+        <span class="md-ellipsis">IIR filters</span>
+      </a>
     </li>
   
 
@@ -974,6 +981,21 @@ You're not viewing the latest version.
           <span class="md-ellipsis">Pulse shaping</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/sdr.gaussian/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -2986,15 +3008,22 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#raised-cosine-filters" class="md-nav__link">
-    <span class="md-ellipsis">Raised cosine filters</span>
+  <a href="#raised-cosine" class="md-nav__link">
+    <span class="md-ellipsis">Raised cosine</span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#square-root-raised-cosine-filters" class="md-nav__link">
-    <span class="md-ellipsis">Square-<wbr>root raised cosine filters</span>
+  <a href="#square-root-raised-cosine" class="md-nav__link">
+    <span class="md-ellipsis">Square-<wbr>root raised cosine</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gaussian" class="md-nav__link">
+    <span class="md-ellipsis">Gaussian</span>
   </a>
   
 </li>
@@ -3013,7 +3042,7 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="raised-cosine-pulse-shapes"><span id="raised-cosine-pulse"></span>Raised cosine pulse shapes<a class="headerlink" href="#raised-cosine-pulse-shapes" title="Permalink to this heading">¶</a></h1>
+<h1 id="pulse-shapes"><span id="id1"></span>Pulse shapes<a class="headerlink" href="#pulse-shapes" title="Permalink to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -3030,8 +3059,8 @@ You're not viewing the latest version.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">sps</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">10</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">span</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># Length of the pulse shape in symbols</span>
+<span class="n">sps</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Samples per symbol</span>
 </code></pre></div>
 </div>
 </div>
@@ -3039,59 +3068,58 @@ You're not viewing the latest version.
 <p>Create a rectangular pulse shape for reference.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sps</span> <span class="o">*</span> <span class="n">N_symbols</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sps</span> <span class="o">*</span> <span class="n">span</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">rect</span><span class="p">[</span><span class="n">rect</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">rect</span><span class="o">.</span><span class="n">size</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sps</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<h2 id="raised-cosine-filters">Raised cosine filters<a class="headerlink" href="#raised-cosine-filters" title="Permalink to this heading">¶</a></h2>
+<h2 id="raised-cosine">Raised cosine<a class="headerlink" href="#raised-cosine" title="Permalink to this heading">¶</a></h2>
 <p>Create three raised cosine pulses with different excess bandwidths.
 This is achieved using the <a class="reference internal" href="../../api/sdr.raised_cosine/" title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.raised_cosine()</span></code></a> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rc_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sps</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-<span class="n">rc_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">raised_cosine</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">sps</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-<span class="n">rc_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">raised_cosine</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">sps</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">rc_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">rc_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">raised_cosine</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">rc_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">raised_cosine</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rectangular&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.01$&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.1$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rc_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.5$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rc_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.9$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ce5c284873cf709b5bd80953032358a760af504ea3c825a3d03be6ecaed06f1e.png" src="../../_images/ce5c284873cf709b5bd80953032358a760af504ea3c825a3d03be6ecaed06f1e.png" />
+<img alt="../../_images/5f442354ac767658b7c7d3b52f561a369664dc71543c9c7aaefd36ca3f96b243.png" src="../../_images/5f442354ac767658b7c7d3b52f561a369664dc71543c9c7aaefd36ca3f96b243.png" />
 </div>
 </div>
 <p>The raised cosine filter is a Nyquist filter. This means that the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is zero at adjacent symbols.
 Specifically, <span class="math notranslate nohighlight">\(h[n] = 0\)</span> for <span class="math notranslate nohighlight">\(n = \pm k\ T_s / T_{sym}\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Raised cosine pulses for adjacent symbols&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b437691aef697b39f6a4dc44463a13aaf0029373bc6366817e32d07ca568ce15.png" src="../../_images/b437691aef697b39f6a4dc44463a13aaf0029373bc6366817e32d07ca568ce15.png" />
+<img alt="../../_images/a012abe85873b8a1b48595ac3a046864f25e8f6b995556084e0eb162fca5afb7.png" src="../../_images/a012abe85873b8a1b48595ac3a046864f25e8f6b995556084e0eb162fca5afb7.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3101,16 +3129,15 @@ Specifically, <span class="math notranslate nohighlight">\(h[n] = 0\)</span> for
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.1$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">rc_0p5</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.5$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">rc_0p9</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.9$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e57ffe22b2fdacd524cdec4d4d5c753988d5b950739cb27a1aeb55f5fe662635.png" src="../../_images/e57ffe22b2fdacd524cdec4d4d5c753988d5b950739cb27a1aeb55f5fe662635.png" />
+<img alt="../../_images/dce892e02798f8b4574477c28aee27d0e42ba62aaf1d52e40aa28cf5de80b1cf.png" src="../../_images/dce892e02798f8b4574477c28aee27d0e42ba62aaf1d52e40aa28cf5de80b1cf.png" />
 </div>
 </div>
 <p>Notice the raised cosine pulse with excess bandwidth <span class="math notranslate nohighlight">\(\alpha = 0.1\)</span> has a total bandwidth of nearly <span class="math notranslate nohighlight">\(f_{sym}\)</span>.
@@ -3142,61 +3169,62 @@ Compare this to <span class="math notranslate nohighlight">\(\alpha = 0.9\)</spa
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;One-sided normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Relative power (dB)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Relative power within bandwidths for various raised cosine pulses&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/74069100e475b2849391a87b2d087c2dfbad72429a61acd2eb58b4498a8a2f02.png" src="../../_images/74069100e475b2849391a87b2d087c2dfbad72429a61acd2eb58b4498a8a2f02.png" />
+<img alt="../../_images/33f865ac71d7f6eb3b3ddb5b76f83112f544aac5dbb19f2635e52a0d7f141dad.png" src="../../_images/33f865ac71d7f6eb3b3ddb5b76f83112f544aac5dbb19f2635e52a0d7f141dad.png" />
 </div>
 </div>
-<h2 id="square-root-raised-cosine-filters">Square-root raised cosine filters<a class="headerlink" href="#square-root-raised-cosine-filters" title="Permalink to this heading">¶</a></h2>
+<h2 id="square-root-raised-cosine">Square-root raised cosine<a class="headerlink" href="#square-root-raised-cosine" title="Permalink to this heading">¶</a></h2>
 <p>Create three square-root raised cosine pulses with different excess bandwidths.
 This is achieved using the <a class="reference internal" href="../../api/sdr.root_raised_cosine/" title="sdr.root_raised_cosine (Python function) — Returns a square root raised cosine (SRRC) pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.root_raised_cosine()</span></code></a> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">srrc_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sps</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-<span class="n">srrc_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">sps</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-<span class="n">srrc_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">sps</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">srrc_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">srrc_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">srrc_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rectangular&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.01$&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rectangular&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.1$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">srrc_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.5$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">srrc_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.9$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5644a073c533a58120502032a46576e480b61e10003c2dd647a3fce45738153a.png" src="../../_images/5644a073c533a58120502032a46576e480b61e10003c2dd647a3fce45738153a.png" />
+<img alt="../../_images/3090e72315713516e6ac4a64a6fba0753ebec38bf164935ae9c954c5465edaa1.png" src="../../_images/3090e72315713516e6ac4a64a6fba0753ebec38bf164935ae9c954c5465edaa1.png" />
 </div>
 </div>
 <p>The square-root raised cosine filter is not a Nyquist filter.
 Therefore, the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is not zero at adjacent symbols.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">srrc_0p1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">sps</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Square-root raised cosine pulses for adjacent symbols&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f499e9e044fefd49a7bfd81f977cf6993232bf7cf6703be4e964aec388d98d39.png" src="../../_images/f499e9e044fefd49a7bfd81f977cf6993232bf7cf6703be4e964aec388d98d39.png" />
+<img alt="../../_images/f535ce1919c5dac129997b178c0f1c7988ede311f9ac42258cb4c0e71ba23a71.png" src="../../_images/f535ce1919c5dac129997b178c0f1c7988ede311f9ac42258cb4c0e71ba23a71.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -3208,14 +3236,14 @@ Therefore, the impulse response <span class="math notranslate nohighlight">\(h[n
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">srrc_0p9</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.9$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/eec761bdf40af1bd0adf987d73b3dde1da7bd879b7c4fccce1edc862d245ceb1.png" src="../../_images/eec761bdf40af1bd0adf987d73b3dde1da7bd879b7c4fccce1edc862d245ceb1.png" />
+<img alt="../../_images/76846d3f254a9b9ddf4503c95a47f28a2adbbd57b53a41d8d88c62fadcff04ca.png" src="../../_images/76846d3f254a9b9ddf4503c95a47f28a2adbbd57b53a41d8d88c62fadcff04ca.png" />
 </div>
 </div>
 <p>While the bandwidths of the square-root raised cosine filter are similar to the raised cosine filter,
@@ -3247,12 +3275,55 @@ This is due to this filter not being a Nyquist filter.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;One-sided normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Relative power (dB)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Relative power within bandwidths for various square-root raised cosine pulses&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e7ae7e9ccd22944f3c4afc9ef6d7b4d73c23c6c7ce8b6ec2ec1e2f7867fdf59c.png" src="../../_images/e7ae7e9ccd22944f3c4afc9ef6d7b4d73c23c6c7ce8b6ec2ec1e2f7867fdf59c.png" />
+<img alt="../../_images/bcc9a24056afb554b42f532939a869945850e72594e6efd3ef1f0db22b3a6b42.png" src="../../_images/bcc9a24056afb554b42f532939a869945850e72594e6efd3ef1f0db22b3a6b42.png" />
+</div>
+</div>
+<h2 id="gaussian">Gaussian<a class="headerlink" href="#gaussian" title="Permalink to this heading">¶</a></h2>
+<p>Create three raised Gaussian pulses with different time-bandwidth products.
+This is achieved using the <a class="reference internal" href="../../api/sdr.gaussian/" title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.gaussian()</span></code></a> function.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">gauss_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">gauss_0p2</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">gauss_0p3</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">gauss_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B T_</span><span class="si">{sym}</span><span class="s2"> = 0.1$&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">gauss_0p2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B T_</span><span class="si">{sym}</span><span class="s2"> = 0.2$&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">gauss_0p3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B T_</span><span class="si">{sym}</span><span class="s2"> = 0.3$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/38dab7fa6c1f34f5fbda7334a9f862f379d0344d976d0985300271ff9d37b888.png" src="../../_images/38dab7fa6c1f34f5fbda7334a9f862f379d0344d976d0985300271ff9d37b888.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">gauss_0p1</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B T_</span><span class="si">{sym}</span><span class="s2"> = 0.1$&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">gauss_0p2</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B T_</span><span class="si">{sym}</span><span class="s2"> = 0.2$&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">gauss_0p3</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$B T_</span><span class="si">{sym}</span><span class="s2"> = 0.3$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ddc163679798c2f29ff02ada626c20deadf2b5e20daeba77919ad2fc9a04b731.png" src="../../_images/ddc163679798c2f29ff02ada626c20deadf2b5e20daeba77919ad2fc9a04b731.png" />
 </div>
 </div>
 
@@ -3295,7 +3366,7 @@ This is due to this filter not being a Nyquist filter.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../iir-filter/" class="md-footer__link md-footer__link--prev" aria-label="Previous: IIR filters" rel="prev">
+        <a href="../../" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -3304,20 +3375,20 @@ This is due to this filter not being a Nyquist filter.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              IIR filters
+              sdr
             </div>
           </div>
         </a>
       
       
         
-        <a href="../farrow-resampler/" class="md-footer__link md-footer__link--next" aria-label="Next: Farrow arbitrary resampler" rel="next">
+        <a href="../iir-filter/" class="md-footer__link md-footer__link--next" aria-label="Next: IIR filters" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Farrow arbitrary resampler
+              IIR filters
             </div>
           </div>
           <div class="md-footer__button md-icon">

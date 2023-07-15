@@ -245,7 +245,7 @@ You're not viewing the latest version.
 
 
   <li class="md-tabs__item">
-    <a href="../examples/iir-filter/" class="md-tabs__link">
+    <a href="../examples/pulse-shapes/" class="md-tabs__link">
       <span class="md-ellipsis">Examples</span>
     </a>
   </li>
@@ -366,8 +366,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../examples/iir-filter/" class="md-nav__link">
-        <span class="md-ellipsis">IIR filters</span>
+      <a href="../examples/pulse-shapes/" class="md-nav__link">
+        <span class="md-ellipsis">Pulse shapes</span>
       </a>
     </li>
   
@@ -381,8 +381,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../examples/raised-cosine-pulse/" class="md-nav__link">
-        <span class="md-ellipsis">Raised cosine pulse shapes</span>
+      <a href="../examples/iir-filter/" class="md-nav__link">
+        <span class="md-ellipsis">IIR filters</span>
       </a>
     </li>
   
@@ -932,6 +932,21 @@ You're not viewing the latest version.
           <span class="md-ellipsis">Pulse shaping</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sdr.gaussian/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -3005,6 +3020,13 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="sdr.gaussian/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="sdr.raised_cosine/" class="md-nav__link">
     <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape." class="md-ellipsis">raised_<wbr>cosine</span>
   </a>
@@ -4007,13 +4029,19 @@ You're not viewing the latest version.
 <h2 id="pulse-shaping">Pulse shaping<a class="headerlink" href="#pulse-shaping" title="Permalink to this heading">¶</a></h2>
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="sdr.raised_cosine/" title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape."><span class="sig-name descname pseudo-toc-entry"><span class="pre">raised_cosine</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.raised_cosine/#p-alpha" title="sdr.raised_cosine.alpha (Python parameter) — The excess bandwidth $0 le alpha le 1$ of the filter."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.raised_cosine/#p-sps" title="sdr.raised_cosine.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.raised_cosine/#p-N_symbols" title="sdr.raised_cosine.N_symbols (Python parameter) — The length of the filter in symbols. The filter must have even order, sps * N_symbols == 1. The length of the filter is sps * N_symbols + 1."><span class="n"><span class="pre">N_symbols</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="sdr.gaussian/" title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape."><span class="sig-name descname pseudo-toc-entry"><span class="pre">gaussian</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.gaussian/#p-time_bandwidth" title="sdr.gaussian.time_bandwidth (Python parameter) — The time-bandwidth product $B T_{sym}$ of the filter, where $B$ is the one-sided 3-dB bandwidth in Hz and $T_{sym}$ is the symbol time in seconds. The time-bandwidth product can also be thought of as the fractional bandwidth $B / f_{sym}$. Smaller values produce wider pulses."><span class="n"><span class="pre">time_bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.gaussian/#p-span" title="sdr.gaussian.span (Python parameter) — The length of the filter in symbols. The length of the filter is span * sps + 1 samples. The filter order span * sps must be even."><span class="n"><span class="pre">span</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.gaussian/#p-sps" title="sdr.gaussian.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<dd><p>Returns a Gaussian pulse shape.</p>
+</dd></dl>
+
+<dl class="py function summary objdesc">
+<dt class="sig sig-object highlight py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="sdr.raised_cosine/" title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape."><span class="sig-name descname pseudo-toc-entry"><span class="pre">raised_cosine</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.raised_cosine/#p-alpha" title="sdr.raised_cosine.alpha (Python parameter) — The excess bandwidth $0 le alpha le 1$ of the filter."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.raised_cosine/#p-span" title="sdr.raised_cosine.span (Python parameter) — The length of the filter in symbols. The length of the filter is span * sps + 1 samples. The filter order span * sps must be even."><span class="n"><span class="pre">span</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.raised_cosine/#p-sps" title="sdr.raised_cosine.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Returns a raised cosine (RC) pulse shape.</p>
 </dd></dl>
 
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="sdr.root_raised_cosine/" title="sdr.root_raised_cosine (Python function) — Returns a square root raised cosine (SRRC) pulse shape."><span class="sig-name descname pseudo-toc-entry"><span class="pre">root_raised_cosine</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.root_raised_cosine/#p-alpha" title="sdr.root_raised_cosine.alpha (Python parameter) — The excess bandwidth $0 le alpha le 1$ of the filter."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.root_raised_cosine/#p-sps" title="sdr.root_raised_cosine.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.root_raised_cosine/#p-N_symbols" title="sdr.root_raised_cosine.N_symbols (Python parameter) — The length of the filter in symbols. The filter must have even order, sps * N_symbols == 1. The length of the filter is sps * N_symbols + 1."><span class="n"><span class="pre">N_symbols</span></span></a></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="sdr.root_raised_cosine/" title="sdr.root_raised_cosine (Python function) — Returns a square root raised cosine (SRRC) pulse shape."><span class="sig-name descname pseudo-toc-entry"><span class="pre">root_raised_cosine</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.root_raised_cosine/#p-alpha" title="sdr.root_raised_cosine.alpha (Python parameter) — The excess bandwidth $0 le alpha le 1$ of the filter."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.root_raised_cosine/#p-span" title="sdr.root_raised_cosine.span (Python parameter) — The length of the filter in symbols. The length of the filter is span * sps + 1 samples. The filter order span * sps must be even."><span class="n"><span class="pre">span</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.root_raised_cosine/#p-sps" title="sdr.root_raised_cosine.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Returns a square root raised cosine (SRRC) pulse shape.</p>
 </dd></dl>
 
