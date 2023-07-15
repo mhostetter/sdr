@@ -31,6 +31,25 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
         sdr.IIR
 
     Examples:
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_impulse_response_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(h_srrc); \
+            plt.show()
+
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_impulse_response_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(iir.b_taps, iir.a_taps, N=30); \
+            plt.show()
+
         See the :ref:`iir-filter` example.
 
     Group:
@@ -69,7 +88,6 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
 
         if label:
             plt.legend()
-
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Impulse Response, $h[n]$")
@@ -94,6 +112,25 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
         sdr.IIR
 
     Examples:
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_step_response_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.step_response(h_srrc); \
+            plt.show()
+
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_step_response_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.step_response(iir.b_taps, iir.a_taps, N=30); \
+            plt.show()
+
         See the :ref:`iir-filter` example.
 
     Group:
@@ -131,7 +168,6 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
 
         if label:
             plt.legend()
-
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
@@ -152,6 +188,17 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
         sdr.IIR
 
     Examples:
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_zeros_poles_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.zeros_poles(iir.b_taps, iir.a_taps); \
+            plt.show()
+
         See the :ref:`iir-filter` example.
 
     Group:
@@ -207,6 +254,39 @@ def frequency_response(
         sdr.IIR
 
     Examples:
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_frequency_response_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(h_srrc); \
+            plt.show()
+
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_frequency_response_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(iir.b_taps, iir.a_taps); \
+            plt.show()
+
+        .. ipython:: python
+
+            @savefig sdr_plot_frequency_response_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(h_srrc, x_axis="one-sided"); \
+            plt.show()
+
+        .. ipython:: python
+
+            @savefig sdr_plot_frequency_response_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3); \
+            plt.show()
+
         See the :ref:`iir-filter` example.
 
     Group:
@@ -230,7 +310,6 @@ def frequency_response(
             plt.plot(w, 10 * np.log10(np.abs(H) ** 2), **kwargs)
 
         plt.grid(True, which="both")
-
         if sample_rate == 1.0:
             plt.xlabel("Normalized Frequency, $f /f_s$")
         else:
@@ -267,6 +346,26 @@ def group_delay(
         sdr.IIR
 
     Examples:
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_group_delay_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.group_delay(h_srrc); \
+            plt.ylim(48, 52); \
+            plt.show()
+
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_group_delay_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.group_delay(iir.b_taps, iir.a_taps); \
+            plt.show()
+
         See the :ref:`iir-filter` example.
 
     Group:
@@ -290,7 +389,6 @@ def group_delay(
             plt.plot(w, tau_g, **kwargs)
 
         plt.grid(True, which="both")
-
         if sample_rate == 1.0:
             plt.xlabel("Normalized Frequency, $f /f_s$")
         else:
@@ -329,6 +427,25 @@ def filter(  # pylint: disable=redefined-builtin
         sdr.IIR
 
     Examples:
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_filter_1.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.filter(h_srrc); \
+            plt.show()
+
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_filter_2.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.filter(iir.b_taps, iir.a_taps, N_time=30); \
+            plt.show()
+
         See the :ref:`iir-filter` example.
 
     Group:
