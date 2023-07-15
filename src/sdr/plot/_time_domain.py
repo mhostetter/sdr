@@ -51,3 +51,4 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
         else:
             plt.xlabel("Time (s)")
         plt.ylabel("Amplitude")
+        plt.tight_layout()
