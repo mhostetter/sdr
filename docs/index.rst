@@ -39,6 +39,7 @@ Features
    :hidden:
 
    examples/pulse-shapes.ipynb
+   examples/fir-filters.ipynb
    examples/iir-filter.ipynb
    examples/farrow-resampler.ipynb
    examples/phase-locked-loop.ipynb
