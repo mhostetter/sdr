@@ -310,6 +310,8 @@ def frequency_response(
             plt.plot(w, 10 * np.log10(np.abs(H) ** 2), **kwargs)
 
         plt.grid(True, which="both")
+        if "label" in kwargs:
+            plt.legend()
         if sample_rate == 1.0:
             plt.xlabel("Normalized Frequency, $f /f_s$")
         else:
@@ -389,6 +391,8 @@ def group_delay(
             plt.plot(w, tau_g, **kwargs)
 
         plt.grid(True, which="both")
+        if "label" in kwargs:
+            plt.legend()
         if sample_rate == 1.0:
             plt.xlabel("Normalized Frequency, $f /f_s$")
         else:

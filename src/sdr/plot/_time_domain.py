@@ -82,7 +82,6 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
 
         if label:
             plt.legend()
-
         if sample_rate == 1:
             plt.xlabel("Samples")
         else:
