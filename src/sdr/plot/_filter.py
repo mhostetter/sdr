@@ -50,7 +50,7 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
             sdr.plot.impulse_response(iir.b_taps, iir.a_taps, N=30); \
             plt.show()
 
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -131,7 +131,7 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
             sdr.plot.step_response(iir.b_taps, iir.a_taps, N=30); \
             plt.show()
 
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -199,7 +199,7 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
             sdr.plot.zeros_poles(iir.b_taps, iir.a_taps); \
             plt.show()
 
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -287,7 +287,7 @@ def frequency_response(
             sdr.plot.frequency_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3); \
             plt.show()
 
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -368,7 +368,7 @@ def group_delay(
             sdr.plot.group_delay(iir.b_taps, iir.a_taps); \
             plt.show()
 
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -450,7 +450,7 @@ def filter(  # pylint: disable=redefined-builtin
             sdr.plot.filter(iir.b_taps, iir.a_taps, N_time=30); \
             plt.show()
 
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
