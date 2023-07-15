@@ -38,7 +38,7 @@ in `sdr`, please open an issue on GitHub.
 ## Features
 
 - Filters: `sdr.IIR`
-- Pulse shapes: `sdr.raised_cosine`, `sdr.root_raised_cosine`
+- Pulse shapes: `sdr.raised_cosine`, `sdr.root_raised_cosine`, `sdr.gaussian`
 - Arbitrary resamplers: `sdr.FarrowResampler`
 - Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
 - Data manipulation: `sdr.pack`, `sdr.unpack`, `sdr.hexdump`
