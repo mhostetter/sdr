@@ -27,7 +27,7 @@ A Python package for software-defined radio.
 - Pulse shapes: `sdr.raised_cosine`, `sdr.root_raised_cosine`
 - Arbitrary resamplers: `sdr.FarrowResampler`
 - Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
-- Data manipulation: `sdr.pack`, `sdr.unpack`
+- Data manipulation: `sdr.pack`, `sdr.unpack`, `sdr.hexdump`
 - Plotting utilities: `sdr.plot.time_domain`, `sdr.plot.filter`, `sdr.plot.frequency_response`,
   `sdr.plot.group_delay`, `sdr.plot.impulse_response`, `sdr.plot.step_response`,
   `sdr.plot.zeros_poles`
