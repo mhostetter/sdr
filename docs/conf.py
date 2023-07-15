@@ -212,6 +212,7 @@ autodoc_type_aliases = {
 }
 
 ipython_execlines = ["import math", "import matplotlib.pyplot as plt", "import numpy as np", "import sdr"]
+ipython_warning_is_error = False
 
 myst_enable_extensions = ["dollarmath"]
 
