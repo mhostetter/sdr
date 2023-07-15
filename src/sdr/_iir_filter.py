@@ -30,7 +30,7 @@ class IIR:
         $$H(z) = \frac{\sum\limits_{i=0}^{M} b_i z^{-i}}{\sum\limits_{j=0}^{N} a_j z^{-j}} .$$
 
     Examples:
-        See the :ref:`iir-filter` example.
+        See the :ref:`iir-filters` example.
 
     Group:
         filtering
@@ -47,7 +47,7 @@ class IIR:
                 preserved between calls to :meth:`~IIR.filter()`.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         self._b_taps = np.asarray(b)
         self._a_taps = np.asarray(a)
@@ -72,7 +72,7 @@ class IIR:
                 preserved between calls to :meth:`filter()`.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         b, a = scipy.signal.zpk2tf(zeros, poles, gain)
 
@@ -83,7 +83,7 @@ class IIR:
         *Streaming-mode only:* Resets the filter state.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
@@ -98,7 +98,7 @@ class IIR:
             The filtered signal $y[n]$.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         x = np.atleast_1d(x)
 
@@ -124,7 +124,7 @@ class IIR:
             sdr.plot.impulse_response
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         # Delta impulse function
         d = np.zeros(N, dtype=np.float32)
@@ -151,7 +151,7 @@ class IIR:
             sdr.plot.step_response
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         # Unit step function
         u = np.ones(N, dtype=np.float32)
@@ -178,7 +178,7 @@ class IIR:
             sdr.plot.frequency_response
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)
 
@@ -207,7 +207,7 @@ class IIR:
             sdr.plot.frequency_response
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
@@ -220,7 +220,7 @@ class IIR:
         The feedforward taps $b_i$.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._b_taps
 
@@ -230,7 +230,7 @@ class IIR:
         The feedback taps $a_j$.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._a_taps
 
@@ -242,7 +242,7 @@ class IIR:
         In streaming mode, the filter state is preserved between calls to :meth:`~IIR.filter()`.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._streaming
 
@@ -252,7 +252,7 @@ class IIR:
         The order of the IIR filter, $N$.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._a_taps.size - 1
 
@@ -262,7 +262,7 @@ class IIR:
         The zeros of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._zeros
 
@@ -272,7 +272,7 @@ class IIR:
         The poles of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._poles
 
@@ -282,6 +282,6 @@ class IIR:
         The gain of the IIR filter.
 
         Examples:
-            See the :ref:`iir-filter` example.
+            See the :ref:`iir-filters` example.
         """
         return self._gain
