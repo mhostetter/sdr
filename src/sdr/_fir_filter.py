@@ -197,7 +197,7 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
+        w, H = scipy.signal.freqz(self.taps, 1, worN=w, whole=False, fs=sample_rate)
 
         return w, H
 
