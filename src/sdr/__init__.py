@@ -20,3 +20,4 @@ from ._iir_filter import *
 from ._loop_filter import *
 from ._nco import *
 from ._pll import *
+from ._pulse_shape import *
