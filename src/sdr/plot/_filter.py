@@ -73,6 +73,7 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Impulse Response, $h[n]$")
+        plt.tight_layout()
 
 
 @export
@@ -134,6 +135,7 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
+        plt.tight_layout()
 
 
 @export
@@ -175,6 +177,7 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
         plt.xlabel("Real")
         plt.ylabel("Imaginary")
         plt.title("Zeros and Poles of $H(z)$")
+        plt.tight_layout()
 
 
 @export
@@ -234,6 +237,7 @@ def frequency_response(
             plt.xlabel("Frequency (Hz), $f$")
         plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
         plt.title(r"Frequency Response, $H(\omega)$")
+        plt.tight_layout()
 
 
 @export
@@ -293,6 +297,7 @@ def group_delay(
             plt.xlabel("Frequency (Hz), $f$")
         plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
         plt.title(r"Group Delay, $\tau_g(\omega)$")
+        plt.tight_layout()
 
 
 @export
