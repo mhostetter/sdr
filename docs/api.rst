@@ -8,6 +8,11 @@ Filtering
 
 .. python-apigen-group:: filtering
 
+Pulse shaping
+-------------
+
+.. python-apigen-group:: pulse-shape
+
 Resampling
 ----------
 
