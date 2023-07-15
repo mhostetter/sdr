@@ -4,7 +4,7 @@ import pytest
 import sdr
 
 
-def test_root_raised_cosine_exceptions():
+def test_exceptions():
     with pytest.raises(ValueError):
         # Alpha must be non-negative
         sdr.root_raised_cosine(-0.1, 4, 6)
@@ -19,7 +19,7 @@ def test_root_raised_cosine_exceptions():
         sdr.root_raised_cosine(0.5, 3, 5)
 
 
-def test_root_raised_cosine_0p1_6_4():
+def test_0p1_6_4():
     """
     Matlab:
         >> h = rcosdesign(0.1, 6, 4); h'
@@ -57,7 +57,7 @@ def test_root_raised_cosine_0p1_6_4():
     np.testing.assert_almost_equal(h, h_truth, decimal=3)
 
 
-def test_root_raised_cosine_0p5_6_4():
+def test_0p5_6_4():
     """
     Matlab:
         >> h = rcosdesign(0.5, 6, 4); h'
@@ -95,7 +95,7 @@ def test_root_raised_cosine_0p5_6_4():
     np.testing.assert_almost_equal(h, h_truth, decimal=3)
 
 
-def test_root_raised_cosine_0p9_6_4():
+def test_0p9_6_4():
     """
     Matlab:
         >> h = rcosdesign(0.9, 6, 4); h'
