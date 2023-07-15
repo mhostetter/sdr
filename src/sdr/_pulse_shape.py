@@ -9,29 +9,34 @@ from ._helper import export
 
 
 @export
-def raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
+def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     r"""
     Returns a raised cosine (RC) pulse shape.
 
     Arguments:
         alpha: The excess bandwidth $0 \le \alpha \le 1$ of the filter.
+        span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
+            The filter order `span * sps` must be even.
         sps: The number of samples per symbol.
-        N_symbols: The length of the filter in symbols. The filter must have even order, `sps * N_symbols == 1`.
-            The length of the filter is `sps * N_symbols + 1`.
 
     Returns:
         The raised cosine pulse shape with unit energy.
 
     References:
-        * Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
+        - Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
     Examples:
         .. ipython:: python
 
-            h_rc = sdr.raised_cosine(0.5, 10, 6)
+            h_0p1 = sdr.raised_cosine(0.1, 8, 10); \
+            h_0p5 = sdr.raised_cosine(0.5, 8, 10); \
+            h_0p9 = sdr.raised_cosine(0.9, 8, 10);
+
             @savefig sdr_raised_cosine_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(h_rc); \
+            sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
+            sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
+            sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$"); \
             plt.show()
 
         See the :ref:`raised-cosine-pulse` example.
@@ -41,14 +46,14 @@ def raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
     """
     if not 0 <= alpha <= 1:
         raise ValueError("Argument 'alpha' must be between 0 and 1.")
+    if not span > 1:
+        raise ValueError("Argument 'span' must be greater than 1.")
     if not sps > 1:
         raise ValueError("Argument 'sps' must be greater than 1.")
-    if not N_symbols > 1:
-        raise ValueError("Argument 'N_symbols' must be greater than 1.")
-    if not sps * N_symbols % 2 == 0:
-        raise ValueError("The order of the filter (sps * N_symbols) must be even.")
+    if not span * sps % 2 == 0:
+        raise ValueError("The order of the filter (span * sps) must be even.")
 
-    t = np.arange(-(sps * N_symbols) // 2, (sps * N_symbols) // 2 + 1, dtype=np.float32)
+    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float32)
     Ts = sps
 
     # Handle special cases where the denominator is zero
@@ -69,29 +74,34 @@ def raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
 
 
 @export
-def root_raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
+def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     r"""
     Returns a square root raised cosine (SRRC) pulse shape.
 
     Arguments:
         alpha: The excess bandwidth $0 \le \alpha \le 1$ of the filter.
+        span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
+            The filter order `span * sps` must be even.
         sps: The number of samples per symbol.
-        N_symbols: The length of the filter in symbols. The filter must have even order, `sps * N_symbols == 1`.
-            The length of the filter is `sps * N_symbols + 1`.
 
     Returns:
-        The root-raised cosine pulse shape with unit energy.
+        The square-root raised cosine pulse shape with unit energy.
 
     References:
-        * Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
+        - Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
     Examples:
         .. ipython:: python
 
-            h_srrc = sdr.root_raised_cosine(0.5, 10, 6)
+            h_0p1 = sdr.root_raised_cosine(0.1, 8, 10); \
+            h_0p5 = sdr.root_raised_cosine(0.5, 8, 10); \
+            h_0p9 = sdr.root_raised_cosine(0.9, 8, 10);
+
             @savefig sdr_root_raised_cosine_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(h_srrc); \
+            sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
+            sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
+            sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$"); \
             plt.show()
 
         See the :ref:`raised-cosine-pulse` example.
@@ -101,14 +111,14 @@ def root_raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
     """
     if not 0 <= alpha <= 1:
         raise ValueError("Argument 'alpha' must be between 0 and 1.")
+    if not span > 1:
+        raise ValueError("Argument 'span' must be greater than 1.")
     if not sps > 1:
         raise ValueError("Argument 'sps' must be greater than 1.")
-    if not N_symbols > 1:
-        raise ValueError("Argument 'N_symbols' must be greater than 1.")
-    if not sps * N_symbols % 2 == 0:
-        raise ValueError("The order of the filter (sps * N_symbols) must be even.")
+    if not span * sps % 2 == 0:
+        raise ValueError("The order of the filter (span * sps) must be even.")
 
-    t = np.arange(-(sps * N_symbols) // 2, (sps * N_symbols) // 2 + 1, dtype=np.float32)
+    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float32)
     Ts = sps  # Symbol duration (in samples)
 
     # Handle special cases where the denominator is zero
@@ -189,10 +199,10 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
         raise ValueError("Argument 'span' must be greater than 1.")
     if not sps > 1:
         raise ValueError("Argument 'sps' must be greater than 1.")
-    if not sps * span % 2 == 0:
-        raise ValueError("The order of the filter (sps * span) must be even.")
+    if not span * sps % 2 == 0:
+        raise ValueError("The order of the filter (span * sps) must be even.")
 
-    t = np.arange(-(sps * span) // 2, (sps * span) // 2 + 1, dtype=np.float32)
+    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float32)
     t /= sps
 
     # Equation B.2
