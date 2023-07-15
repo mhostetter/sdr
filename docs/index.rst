@@ -25,7 +25,7 @@ in :obj:`sdr`, please open an issue on `GitHub`_.
 Features
 --------
 
-- Filters: :obj:`sdr.IIR`
+- Filters: :obj:`sdr.FIR`, :obj:`sdr.IIR`
 - Pulse shapes: :obj:`sdr.raised_cosine`, :obj:`sdr.root_raised_cosine`, :obj:`sdr.gaussian`
 - Arbitrary resamplers: :obj:`sdr.FarrowResampler`
 - Phase-locked loops: :obj:`sdr.NCO`, :obj:`sdr.DDS`, :obj:`sdr.LoopFilter`, :obj:`sdr.ClosedLoopPLL`
