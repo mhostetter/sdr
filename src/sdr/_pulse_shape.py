@@ -25,6 +25,9 @@ def root_raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
     References:
         * Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
+    Examples:
+        See the :ref:`raised-cosine-pulse` example.
+
     Group:
         pulse-shape
     """
@@ -75,6 +78,9 @@ def raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
 
     References:
         * Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
+
+    Examples:
+        See the :ref:`raised-cosine-pulse` example.
 
     Group:
         pulse-shape

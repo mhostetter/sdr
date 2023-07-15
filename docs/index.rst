@@ -23,6 +23,7 @@ Features
    :hidden:
 
    examples/iir-filter.ipynb
+   examples/raised-cosine-pulse.ipynb
    examples/farrow-resampler.ipynb
    examples/phase-locked-loop.ipynb
 
