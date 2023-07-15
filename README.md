@@ -46,5 +46,5 @@ $ python3 -m pip install sdr
 
 ## Examples
 
-There are detailed examples published at https://mhostetter.github.io/sdr/latest/examples/iir-filter/.
+There are detailed examples published at https://mhostetter.github.io/sdr/latest/examples/pulse-shapes/.
 The Jupyter notebooks behind the examples are available for experimentation in `docs/examples/`.

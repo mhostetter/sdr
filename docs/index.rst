@@ -20,8 +20,8 @@ Features
    :caption: Examples
    :hidden:
 
+   examples/pulse-shapes.ipynb
    examples/iir-filter.ipynb
-   examples/raised-cosine-pulse.ipynb
    examples/farrow-resampler.ipynb
    examples/phase-locked-loop.ipynb
 
