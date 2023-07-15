@@ -29,7 +29,7 @@ class FIR:
         $$H(z) = \sum\limits_{i=0}^{N} h_i z^{-i} .$$
 
     Examples:
-        See the :ref:`fir-filter` example.
+        See the :ref:`fir-filters` example.
 
     Group:
         filtering
@@ -45,7 +45,7 @@ class FIR:
                 preserved between calls to :meth:`~FIR.filter()`.
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         self._taps = np.asarray(h)
         self._streaming = streaming
@@ -58,7 +58,7 @@ class FIR:
         *Streaming-mode only:* Resets the filter state.
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         self._x_prev = np.zeros(self.taps.size - 1, dtype=np.float32)
 
@@ -74,7 +74,7 @@ class FIR:
             The filtered signal $y[n]$.
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         x = np.atleast_1d(x)
 
@@ -103,7 +103,7 @@ class FIR:
             sdr.plot.impulse_response
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         if N is None:
             N = self.taps.size
@@ -119,7 +119,7 @@ class FIR:
 
         return h
 
-    def step_response(self, N: int = 100) -> np.ndarray:
+    def step_response(self, N: int | None = None) -> np.ndarray:
         """
         Returns the step response $s[n]$ of the FIR filter. The step response $s[n]$ is the
         filter output when the input is a unit step $u[n]$.
@@ -134,7 +134,7 @@ class FIR:
             sdr.plot.step_response
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         if N is None:
             N = self.taps.size
@@ -165,7 +165,7 @@ class FIR:
             sdr.plot.frequency_response
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         w, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
 
@@ -194,7 +194,7 @@ class FIR:
             sdr.plot.frequency_response
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
@@ -207,7 +207,7 @@ class FIR:
         The feedforward taps $h_i$.
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         return self._taps
 
@@ -219,7 +219,7 @@ class FIR:
         In streaming mode, the filter state is preserved between calls to :meth:`~FIR.filter()`.
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         return self._streaming
 
@@ -229,7 +229,7 @@ class FIR:
         The order of the FIR filter, $N$.
 
         Examples:
-            See the :ref:`fir-filter` example.
+            See the :ref:`fir-filters` example.
         """
         return self.taps.size - 1
 
