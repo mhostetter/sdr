@@ -7,16 +7,16 @@ import sdr
 def test_exceptions():
     with pytest.raises(ValueError):
         # Alpha must be non-negative
-        sdr.raised_cosine(-0.1, 4, 6)
+        sdr.raised_cosine(-0.1, 6, 4)
     with pytest.raises(ValueError):
         # Need at least 1 samples per symbol
-        sdr.raised_cosine(0.5, 1, 6)
+        sdr.raised_cosine(0.5, 6, 1)
     with pytest.raises(ValueError):
         # Need at least 2 symbols
-        sdr.raised_cosine(0.5, 4, 1)
+        sdr.raised_cosine(0.5, 1, 4)
     with pytest.raises(ValueError):
         # The filter must have even order
-        sdr.raised_cosine(0.5, 3, 5)
+        sdr.raised_cosine(0.5, 5, 3)
 
 
 def test_0p1_6_4():
@@ -24,7 +24,7 @@ def test_0p1_6_4():
     Matlab:
         >> h = rcosdesign(0.1, 6, 4, 'normal'); h'
     """
-    h = sdr.raised_cosine(0.1, 4, 6)
+    h = sdr.raised_cosine(0.1, 6, 4)
     h_truth = np.array(
         [
             0.0000,
@@ -62,7 +62,7 @@ def test_0p5_6_4():
     Matlab:
         >> h = rcosdesign(0.5, 6, 4, 'normal'); h'
     """
-    h = sdr.raised_cosine(0.5, 4, 6)
+    h = sdr.raised_cosine(0.5, 6, 4)
     h_truth = np.array(
         [
             0.0000,
@@ -100,7 +100,7 @@ def test_0p9_6_4():
     Matlab:
         >> h = rcosdesign(0.9, 6, 4, 'normal'); h'
     """
-    h = sdr.raised_cosine(0.9, 4, 6)
+    h = sdr.raised_cosine(0.9, 6, 4)
     h_truth = np.array(
         [
             0.0000,
