@@ -99,6 +99,9 @@ class FIR:
         Returns:
             The impulse response of the IIR filter $h[n]$.
 
+        See Also:
+            sdr.plot.impulse_response
+
         Examples:
             See the :ref:`fir-filter` example.
         """
@@ -123,6 +126,9 @@ class FIR:
 
         Returns:
             The step response of the FIR filter $s[n]$.
+
+        See Also:
+            sdr.plot.step_response
 
         Examples:
             See the :ref:`fir-filter` example.
@@ -149,6 +155,9 @@ class FIR:
             - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
             - The frequency response of the FIR filter $H(f)$.
 
+        See Also:
+            sdr.plot.frequency_response
+
         Examples:
             See the :ref:`fir-filter` example.
         """
@@ -174,6 +183,9 @@ class FIR:
         Returns:
             - The frequencies $f$ from $0$ to $f_s/2$ in Hz. The frequencies are logarithmically-spaced.
             - The frequency response of the IIR filter $H(f)$.
+
+        See Also:
+            sdr.plot.frequency_response
 
         Examples:
             See the :ref:`fir-filter` example.
