@@ -48,3 +48,8 @@
   background-color: var(--md-typeset-mark-color);
   color: var(--md-default-fg-color);
 }
+
+/* Invert image colors in dark mode */
+[data-md-color-scheme="slate"] img {
+  filter: invert(1);
+}
