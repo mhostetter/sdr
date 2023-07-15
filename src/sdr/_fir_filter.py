@@ -232,3 +232,13 @@ class FIR:
             See the :ref:`fir-filter` example.
         """
         return self.taps.size - 1
+
+    @property
+    def delay(self) -> int:
+        """
+        The delay of the FIR filter in samples.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        return self.order // 2
