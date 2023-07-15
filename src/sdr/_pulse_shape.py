@@ -26,6 +26,14 @@ def raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
         * Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
     Examples:
+        .. ipython:: python
+
+            h_rc = sdr.raised_cosine(0.5, 10, 6)
+            @savefig sdr_raised_cosine_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(h_rc); \
+            plt.show()
+
         See the :ref:`raised-cosine-pulse` example.
 
     Group:
@@ -78,6 +86,14 @@ def root_raised_cosine(alpha: float, sps: int, N_symbols: int) -> np.ndarray:
         * Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
     Examples:
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 6)
+            @savefig sdr_root_raised_cosine_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(h_srrc); \
+            plt.show()
+
         See the :ref:`raised-cosine-pulse` example.
 
     Group:
