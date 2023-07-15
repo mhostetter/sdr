@@ -1,0 +1,216 @@
+"""
+A module for finite impulse response (FIR) filters.
+"""
+from __future__ import annotations
+
+import numpy as np
+import numpy.typing as npt
+import scipy.signal
+from typing_extensions import Literal
+
+from ._helper import export
+
+
+@export
+class FIR:
+    r"""
+    Implements a finite impulse response (FIR) filter.
+
+    This class is a wrapper for the :func:`scipy.signal.convolve` function. It supports one-time filtering
+    and streamed filtering.
+
+    Notes:
+        A FIR filter is defined by its feedforward coefficients $h_i$.
+
+        $$y[n] = \sum_{i=0}^{N} h_i x[n-i] .$$
+
+        The transfer function of the filter is
+
+        $$H(z) = \sum\limits_{i=0}^{N} h_i z^{-i} .$$
+
+    Examples:
+        See the :ref:`fir-filter` example.
+
+    Group:
+        filtering
+    """
+
+    def __init__(self, h: npt.ArrayLike, streaming: bool = False):
+        """
+        Creates a FIR filter with feedforward coefficients $h_i$.
+
+        Arguments:
+            h: The feedforward coefficients $h_i$.
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`~FIR.filter()`.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        self._taps = np.asarray(h)
+        self._streaming = streaming
+
+        self._x_prev: np.ndarray  # The filter state. Will be updated in reset().
+        self.reset()
+
+    def reset(self):
+        """
+        *Streaming-mode only:* Resets the filter state.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        self._x_prev = np.zeros(self.taps.size - 1, dtype=np.float32)
+
+    def filter(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
+        r"""
+        Filters the input signal $x[n]$ with the FIR filter.
+
+        Arguments:
+            x: The input signal $x[n]$.
+            mode: The convolution mode. See :func:`scipy.signal.convolve` for details.
+
+        Returns:
+            The filtered signal $y[n]$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        x = np.atleast_1d(x)
+
+        if self.streaming:
+            # Prepend previous inputs from last filter() call
+            x_pad = np.concatenate((self._x_prev, x))
+            y = scipy.signal.convolve(x_pad, self.taps, mode="valid")
+            self._x_prev = x_pad[-(self.taps.size - 1) :]
+        else:
+            y = scipy.signal.convolve(x, self.taps, mode=mode)
+
+        return y
+
+    def impulse_response(self, N: int | None = None) -> np.ndarray:
+        r"""
+        Returns the impulse response $h[n]$ of the FIR filter. The impulse response $h[n]$ is the
+        filter output when the input is an impulse $\delta[n]$.
+
+        Arguments:
+            N: The number of samples to return. The default is the filter length.
+
+        Returns:
+            The impulse response of the IIR filter $h[n]$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        if N is None:
+            N = self.taps.size
+
+        # Delta impulse function
+        d = np.zeros(N, dtype=np.float32)
+        d[0] = 1
+
+        h = scipy.signal.convolve(d, self.taps, mode="full")
+
+        return h
+
+    def step_response(self, N: int = 100) -> np.ndarray:
+        """
+        Returns the step response $s[n]$ of the FIR filter. The step response $s[n]$ is the
+        filter output when the input is a unit step $u[n]$.
+
+        Arguments:
+            N: The number of samples to return. The default is the filter length.
+
+        Returns:
+            The step response of the FIR filter $s[n]$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        if N is None:
+            N = self.taps.size
+
+        # Unit step function
+        u = np.ones(N, dtype=np.float32)
+
+        s = scipy.signal.convolve(u, self.taps, mode="full")
+
+        return s
+
+    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[np.ndarray, np.ndarray]:
+        r"""
+        Returns the frequency response $H(f)$ of the FIR filter.
+
+        Arguments:
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
+            N: The number of samples in the frequency response.
+
+        Returns:
+            - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
+            - The frequency response of the FIR filter $H(f)$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        w, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
+
+        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        w = np.fft.fftshift(w)
+        H = np.fft.fftshift(H)
+
+        return w, H
+
+    def frequency_response_log(
+        self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
+    ) -> tuple[np.ndarray, np.ndarray]:
+        r"""
+        Returns the frequency response $H(f)$ of the FIR filter on a logarithmic frequency axis.
+
+        Arguments:
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
+            N: The number of samples in the frequency response.
+            decades: The number of frequency decades to plot.
+
+        Returns:
+            - The frequencies $f$ from $0$ to $f_s/2$ in Hz. The frequencies are logarithmically-spaced.
+            - The frequency response of the IIR filter $H(f)$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
+
+        return w, H
+
+    @property
+    def taps(self) -> np.ndarray:
+        """
+        The feedforward taps $h_i$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        return self._taps
+
+    @property
+    def streaming(self) -> bool:
+        """
+        Indicates whether the filter is in streaming mode.
+
+        In streaming mode, the filter state is preserved between calls to :meth:`~FIR.filter()`.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        return self._streaming
+
+    @property
+    def order(self) -> int:
+        """
+        The order of the FIR filter, $N$.
+
+        Examples:
+            See the :ref:`fir-filter` example.
+        """
+        return self.taps.size - 1
