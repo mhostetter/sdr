@@ -32,3 +32,14 @@ def test_streaming():
     y_truth = scipy.signal.convolve(x, h, mode="full")[0:N]
 
     assert np.allclose(y, y_truth)
+
+
+def test_impulse_response():
+    h_truth = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
+    fir = sdr.FIR(h_truth)
+
+    h = fir.impulse_response()
+    assert np.allclose(h, h_truth)
+
+    h = fir.impulse_response(20)
+    assert np.allclose(h, np.concatenate((h_truth, [0] * 10)))
