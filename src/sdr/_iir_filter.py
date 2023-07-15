@@ -120,6 +120,9 @@ class IIR:
         Returns:
             The impulse response of the IIR filter $h[n]$.
 
+        See Also:
+            sdr.plot.impulse_response
+
         Examples:
             See the :ref:`iir-filter` example.
         """
@@ -144,6 +147,9 @@ class IIR:
         Returns:
             The step response of the IIR filter $s[n]$.
 
+        See Also:
+            sdr.plot.step_response
+
         Examples:
             See the :ref:`iir-filter` example.
         """
@@ -167,6 +173,9 @@ class IIR:
         Returns:
             - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
             - The frequency response of the IIR filter $H(f)$.
+
+        See Also:
+            sdr.plot.frequency_response
 
         Examples:
             See the :ref:`iir-filter` example.
@@ -193,6 +202,9 @@ class IIR:
         Returns:
             - The frequencies $f$ from $0$ to $f_s/2$ in Hz. The frequencies are logarithmically-spaced.
             - The frequency response of the IIR filter $H(f)$.
+
+        See Also:
+            sdr.plot.frequency_response
 
         Examples:
             See the :ref:`iir-filter` example.
