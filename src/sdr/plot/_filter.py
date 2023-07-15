@@ -28,9 +28,11 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
-        sdr.IIR
+        sdr.FIR, sdr.IIR
 
     Examples:
+        See the :ref:`fir-filters` example.
+
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
@@ -38,6 +40,8 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(h_srrc); \
             plt.show()
+
+        See the :ref:`iir-filters` example.
 
         .. ipython:: python
 
@@ -49,8 +53,6 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(iir.b_taps, iir.a_taps, N=30); \
             plt.show()
-
-        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -109,9 +111,11 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
-        sdr.IIR
+        sdr.FIR, sdr.IIR
 
     Examples:
+        See the :ref:`fir-filters` example.
+
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
@@ -119,6 +123,8 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
             plt.figure(figsize=(8, 4)); \
             sdr.plot.step_response(h_srrc); \
             plt.show()
+
+        See the :ref:`iir-filters` example.
 
         .. ipython:: python
 
@@ -130,8 +136,6 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
             plt.figure(figsize=(8, 4)); \
             sdr.plot.step_response(iir.b_taps, iir.a_taps, N=30); \
             plt.show()
-
-        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -185,21 +189,31 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
-        sdr.IIR
+        sdr.FIR, sdr.IIR
 
     Examples:
+        See the :ref:`fir-filters` example.
+
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_zeros_poles_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.zeros_poles(h_srrc); \
+            plt.show()
+
+        See the :ref:`iir-filters` example.
+
         .. ipython:: python
 
             zero = 0.6; \
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_zeros_poles_1.png
+            @savefig sdr_plot_zeros_poles_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.zeros_poles(iir.b_taps, iir.a_taps); \
             plt.show()
-
-        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -251,9 +265,11 @@ def frequency_response(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
-        sdr.IIR
+        sdr.FIR, sdr.IIR
 
     Examples:
+        See the :ref:`fir-filters` example.
+
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
@@ -261,6 +277,8 @@ def frequency_response(
             plt.figure(figsize=(8, 4)); \
             sdr.plot.frequency_response(h_srrc); \
             plt.show()
+
+        See the :ref:`iir-filters` example.
 
         .. ipython:: python
 
@@ -286,8 +304,6 @@ def frequency_response(
             plt.figure(figsize=(8, 4)); \
             sdr.plot.frequency_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3); \
             plt.show()
-
-        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -345,9 +361,11 @@ def group_delay(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
-        sdr.IIR
+        sdr.FIR, sdr.IIR
 
     Examples:
+        See the :ref:`fir-filters` example.
+
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
@@ -356,6 +374,8 @@ def group_delay(
             sdr.plot.group_delay(h_srrc); \
             plt.ylim(48, 52); \
             plt.show()
+
+        See the :ref:`iir-filters` example.
 
         .. ipython:: python
 
@@ -367,8 +387,6 @@ def group_delay(
             plt.figure(figsize=(8, 4)); \
             sdr.plot.group_delay(iir.b_taps, iir.a_taps); \
             plt.show()
-
-        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
@@ -428,9 +446,11 @@ def filter(  # pylint: disable=redefined-builtin
         decades: The number of decades to plot when `x_axis="log"`.
 
     See Also:
-        sdr.IIR
+        sdr.FIR, sdr.IIR
 
     Examples:
+        See the :ref:`fir-filters` example.
+
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
@@ -438,6 +458,8 @@ def filter(  # pylint: disable=redefined-builtin
             plt.figure(figsize=(8, 6)); \
             sdr.plot.filter(h_srrc); \
             plt.show()
+
+        See the :ref:`iir-filters` example.
 
         .. ipython:: python
 
@@ -449,8 +471,6 @@ def filter(  # pylint: disable=redefined-builtin
             plt.figure(figsize=(8, 6)); \
             sdr.plot.filter(iir.b_taps, iir.a_taps, N_time=30); \
             plt.show()
-
-        See the :ref:`iir-filters` example.
 
     Group:
         plot-filter
