@@ -381,6 +381,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../examples/peak-to-average-power/" class="md-nav__link">
+        <span class="md-ellipsis">Peak-<wbr>to-<wbr>average power</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../examples/fir-filters/" class="md-nav__link">
         <span class="md-ellipsis">FIR filters</span>
       </a>
@@ -3086,7 +3101,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="#filter-analysis"><span class="md-ellipsis">Filter analysis</span></a>
+          <a href="#frequency-domain"><span class="md-ellipsis">Frequency-<wbr>domain</span></a>
           
             <label for="__nav_2_1_7_3">
               <span class="md-nav__icon md-icon"></span>
@@ -3094,8 +3109,61 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Filter analysis" data-md-level="4">
+      <nav class="md-nav" aria-label="Frequency-domain" data-md-level="4">
         <label class="md-nav__title" for="__nav_2_1_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Frequency-<wbr>domain</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sdr.plot.periodogram/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch&#39;s method." class="md-ellipsis">periodogram</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_7_4" type="checkbox" id="__nav_2_1_7_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="#filter-analysis"><span class="md-ellipsis">Filter analysis</span></a>
+          
+            <label for="__nav_2_1_7_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Filter analysis" data-md-level="4">
+        <label class="md-nav__title" for="__nav_2_1_7_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Filter analysis</span>
         </label>
@@ -4268,6 +4336,19 @@ You're not viewing the latest version.
     <span class="md-ellipsis">Frequency-<wbr>domain</span>
   </a>
   
+    <nav class="md-nav" aria-label="Frequency-domain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="sdr.plot.periodogram/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch&#39;s method." class="md-ellipsis">periodogram</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -4708,6 +4789,14 @@ You're not viewing the latest version.
 <div class="toctree-wrapper compound">
 </div>
 <h3 id="frequency-domain">Frequency-domain<a class="headerlink" href="#frequency-domain" title="Permalink to this heading">¶</a></h3>
+<dl class="py function summary objdesc">
+<dt class="sig sig-object highlight py">
+<span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="sdr.plot.periodogram/" title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch's method."><span class="sig-name descname pseudo-toc-entry"><span class="pre">periodogram</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.plot.periodogram/#p-x" title="sdr.plot.periodogram.x (Python parameter) — The time-domain signal $x[n]$."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="sdr.plot.periodogram/#p-sample_rate" title="sdr.plot.periodogram.sample_rate (Python parameter) — The sample rate $f_s$ of the signal in samples/s."><span class="n"><span class="pre">sample_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
+<dd><p>Plots the estimated power spectral density <span class="math notranslate nohighlight">\(P_{xx}\)</span> of a time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> using Welch’s method.</p>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
 <h3 id="filter-analysis">Filter analysis<a class="headerlink" href="#filter-analysis" title="Permalink to this heading">¶</a></h3>
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
