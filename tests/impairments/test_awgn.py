@@ -12,7 +12,7 @@ def test_exceptions():
 
 def test_real_from_snr():
     A = np.random.uniform(2, 3)  # Signal amplitude
-    N = 100
+    N = 1000
     x = A * np.ones(N, dtype=np.float32)  # Use a constant signal so the power measurement has no uncertainty
 
     snr = np.random.uniform(1, 2)  # dB
@@ -29,7 +29,7 @@ def test_real_from_snr():
 
 def test_complex_from_snr():
     A = np.random.uniform(2, 3)  # Signal amplitude
-    N = 100
+    N = 1000
     x = A * np.ones(N, dtype=np.complex64)  # Use a constant signal so the power measurement has no uncertainty
 
     snr = np.random.uniform(1, 2)  # dB
@@ -46,7 +46,7 @@ def test_complex_from_snr():
 
 def test_real_from_noise():
     A = np.random.uniform(2, 3)  # Signal amplitude
-    N = 100
+    N = 1000
     x = A * np.ones(N, dtype=np.float32)  # Use a constant signal so the power measurement has no uncertainty
 
     noise_std = np.random.uniform(1, 2)
@@ -59,7 +59,7 @@ def test_real_from_noise():
 
 def test_complex_from_noise():
     A = np.random.uniform(2, 3)  # Signal amplitude
-    N = 100
+    N = 1000
     x = A * np.ones(N, dtype=np.complex64)  # Use a constant signal so the power measurement has no uncertainty
 
     noise_std = np.random.uniform(1, 2)
