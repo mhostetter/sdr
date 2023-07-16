@@ -23,5 +23,6 @@ from ._loop_filter import *
 from ._measurement import *
 from ._nco import *
 from ._pll import *
+from ._probability import *
 from ._psk import *
 from ._pulse_shape import *
