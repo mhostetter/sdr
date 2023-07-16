@@ -70,6 +70,26 @@ def peak_voltage(x: npt.ArrayLike) -> float:
 
 
 @export
+def rms_voltage(x: npt.ArrayLike) -> float:
+    r"""
+    Measures the root-mean-square (RMS) voltage of a time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+
+    Returns:
+        The RMS voltage of $x[n]$ in units.
+
+    Notes:
+        $$V_{\text{rms}} = \sqrt{\frac{1}{N} \sum_{n=0}^{N-1} \left| x[n] \right|^2}$$
+
+    Group:
+        measurement
+    """
+    return np.sqrt(np.mean(np.abs(x) ** 2))
+
+
+@export
 def papr(x: npt.ArrayLike) -> float:
     r"""
     Measures the peak-to-average power ratio (PAPR) of a signal.
