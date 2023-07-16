@@ -10,6 +10,26 @@ from ._helper import export
 
 
 @export
+def energy(x: npt.ArrayLike) -> float:
+    r"""
+    Measures the energy of a time-domain signal $x[n]$.
+
+    $$E = \sum_{n=0}^{N-1} \left| x[n] \right|^2$$
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+
+    Returns:
+        The energy of $x[n]$ in units^2.
+
+    Group:
+        measurement
+    """
+    x = np.asarray(x)
+    return np.sum(np.abs(x) ** 2)
+
+
+@export
 def peak_power(x: npt.ArrayLike) -> float:
     r"""
     Measures the peak power of a time-domain signal $x[n]$.
@@ -34,7 +54,7 @@ def average_power(x: npt.ArrayLike) -> float:
     r"""
     Measures the average power of a time-domain signal $x[n]$.
 
-    $$P_{\text{avg}} = \frac{1}{N} \sum_{n=0}^{N-1} \left| x[n] \right|^2$$
+    $$P_{\text{avg}} = \frac{E}{N} = \frac{1}{N} \sum_{n=0}^{N-1} \left| x[n] \right|^2$$
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
