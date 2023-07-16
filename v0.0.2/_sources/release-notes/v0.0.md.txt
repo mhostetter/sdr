@@ -1,0 +1,44 @@
+---
+tocdepth: 2
+---
+
+# v0.0
+
+## v0.0.2
+
+*Released July 16, 2023*
+
+### Changes
+
+- Added finite impulse response (FIR) filters in `sdr.FIR`.
+- Added pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`.
+- Added plotting helper functions in `sdr.plot`:
+  - `sdr.plot.time_domain()`
+  - `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`
+  - `sdr.plot.filter()`, `sdr.plot.frequency_response`, `sdr.plot.group_delay()`,
+    `sdr.plot.impulse_response()`, `sdr.plot.step_response()`, `sdr.plot.zeros_poles()`
+- Added measurement functions: `sdr.papr()`, `sdr.crest_factor()`.
+- Added bit packing and unpacking functions: `sdr.pack()`, `sdr.unpack()`.
+- Added hexdump helper function in `sdr.hexdump()`.
+- Improved type annotations.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.1
+
+*Released July 9, 2023*
+
+### Changes
+
+- Added Farrow arbitrary resampling in `sdr.FarrowResampler`. ([#1](https://github.com/mhostetter/sdr/pull/1))
+- Added infinite impulse response (IIR) filters in `sdr.IIR`. ([#3](https://github.com/mhostetter/sdr/pull/3))
+- Added numerically-controlled oscillators (NCO) in `sdr.NCO`. ([#4](https://github.com/mhostetter/sdr/pull/4))
+- Added direct digital synthesizers (DDS) in `sdr.DDS`. ([#4](https://github.com/mhostetter/sdr/pull/4))
+- Added 2nd order, proportional-plus-integrator loop filters in `sdr.LoopFilter`. ([#4](https://github.com/mhostetter/sdr/pull/4))
+- Added closed-loop PLL analysis in `sdr.ClosedLoopPLL`. ([#5](https://github.com/mhostetter/sdr/pull/5))
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
