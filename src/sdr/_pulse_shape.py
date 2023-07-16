@@ -53,14 +53,16 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
-    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float32)
+    # NOTE: Do the math in float64 to avoid numerical issues and then convert to float32 at the end
+
+    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float64)
     Ts = sps
 
     # Handle special cases where the denominator is zero
     t1 = Ts / (2 * alpha)
-    t[t == -t1] -= 1e-4
-    t[t == t1] += 1e-4
-    t[t == 0] += 1e-8
+    t[t == -t1] -= 1e-8
+    t[t == t1] += 1e-8
+    t[t == 0] += 1e-16
 
     # Equation A-27
     A = np.sin(np.pi * t / Ts) / (np.pi * t / Ts)
@@ -70,7 +72,7 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     # Make the filter have unit energy
     h /= np.sqrt(np.sum(np.abs(h) ** 2))
 
-    return h
+    return h.astype(np.float32)
 
 
 @export
@@ -118,14 +120,16 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
-    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float32)
+    # NOTE: Do the math in float64 to avoid numerical issues and then convert to float32 at the end
+
+    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float64)
     Ts = sps  # Symbol duration (in samples)
 
     # Handle special cases where the denominator is zero
     t1 = Ts / (4 * alpha)
-    t[t == -t1] -= 1e-4
-    t[t == t1] += 1e-4
-    t[t == 0] += 1e-8
+    t[t == -t1] -= 1e-8
+    t[t == t1] += 1e-8
+    t[t == 0] += 1e-16
 
     # Equation A-30
     A = np.sin(np.pi * (1 - alpha) * t / Ts)
@@ -137,7 +141,7 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     # Make the filter have unit energy
     h /= np.sqrt(np.sum(np.abs(h) ** 2))
 
-    return h
+    return h.astype(np.float32)
 
 
 @export
@@ -202,7 +206,9 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
-    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float32)
+    # NOTE: Do the math in float64 to avoid numerical issues and then convert to float32 at the end
+
+    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=np.float64)
     t /= sps
 
     # Equation B.2
@@ -215,4 +221,4 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
     # Normalize coefficients so passband gain is 1
     h = h / np.sum(h)
 
-    return h
+    return h.astype(np.float32)
