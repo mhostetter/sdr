@@ -40,7 +40,9 @@ in `sdr`, please open an issue on GitHub.
 - Pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`
 - Arbitrary resamplers: `sdr.FarrowResampler`
 - Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
-- Measurement: `sdr.papr()`, `sdr.crest_factor()`
+- Impairments: `sdr.awgn()`
+- Measurement: `sdr.peak_power()`, `sdr.average_power()`, `sdr.peak_voltage()`,
+  `sdr.rms_voltage()`, `sdr.papr()`, `sdr.crest_factor()`
 - Data manipulation: `sdr.pack()`, `sdr.unpack()`, `sdr.hexdump()`
 - Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`
   `sdr.plot.filter()`, `sdr.plot.frequency_response`, `sdr.plot.group_delay()`,
