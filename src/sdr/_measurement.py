@@ -26,6 +26,7 @@ def peak_power(x: npt.ArrayLike) -> float:
     Group:
         measurement
     """
+    x = np.asarray(x)
     return np.max(np.abs(x) ** 2)
 
 
@@ -46,6 +47,7 @@ def average_power(x: npt.ArrayLike) -> float:
     Group:
         measurement
     """
+    x = np.asarray(x)
     return np.mean(np.abs(x) ** 2)
 
 
@@ -66,6 +68,7 @@ def peak_voltage(x: npt.ArrayLike) -> float:
     Group:
         measurement
     """
+    x = np.asarray(x)
     return np.max(np.abs(x))
 
 
@@ -86,6 +89,7 @@ def rms_voltage(x: npt.ArrayLike) -> float:
     Group:
         measurement
     """
+    x = np.asarray(x)
     return np.sqrt(np.mean(np.abs(x) ** 2))
 
 
