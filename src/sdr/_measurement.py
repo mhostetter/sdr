@@ -18,7 +18,7 @@ def peak_power(x: npt.ArrayLike) -> float:
         x: The time-domain signal $x[n]$ to measure.
 
     Returns:
-        The peak power of $x[n]$ in dB.
+        The peak power of $x[n]$ in units^2.
 
     Notes:
         $$P_{\text{peak}} = \max \left( \left| x[n] \right|^2 \right)$$
@@ -26,7 +26,7 @@ def peak_power(x: npt.ArrayLike) -> float:
     Group:
         measurement
     """
-    return 10 * np.log10(np.max(np.abs(x) ** 2))
+    return np.max(np.abs(x) ** 2)
 
 
 @export
@@ -38,7 +38,7 @@ def average_power(x: npt.ArrayLike) -> float:
         x: The time-domain signal $x[n]$ to measure.
 
     Returns:
-        The average power of $x[n]$ in dB.
+        The average power of $x[n]$ in units^2.
 
     Notes:
         $$P_{\text{avg}} = \frac{1}{N} \sum_{n=0}^{N-1} \left| x[n] \right|^2$$
@@ -46,7 +46,7 @@ def average_power(x: npt.ArrayLike) -> float:
     Group:
         measurement
     """
-    return 10 * np.log10(np.mean(np.abs(x) ** 2))
+    return np.mean(np.abs(x) ** 2)
 
 
 @export
