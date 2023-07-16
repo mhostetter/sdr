@@ -10,6 +10,26 @@ from ._helper import export
 
 
 @export
+def peak_power(x: npt.ArrayLike) -> float:
+    r"""
+    Measures the peak power of a time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+
+    Returns:
+        The peak power of $x[n]$ in dB.
+
+    Notes:
+        $$P_{\text{peak}} = \max \left( \left| x[n] \right|^2 \right)$$
+
+    Group:
+        measurement
+    """
+    return 10 * np.log10(np.max(np.abs(x) ** 2))
+
+
+@export
 def papr(x: npt.ArrayLike) -> float:
     r"""
     Measures the peak-to-average power ratio (PAPR) of a signal.
