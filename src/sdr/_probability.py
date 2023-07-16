@@ -22,6 +22,15 @@ def Q(x: npt.ArrayLike) -> np.ndarray:
     Returns:
         The probability $p$ that $x$ is exceeded.
 
+    See Also:
+        sdr.Qinv
+
+    Examples:
+        .. ipython:: python
+
+            sdr.Q(1)
+            sdr.Qinv(0.158655)
+
     Group:
         probability
     """
@@ -41,6 +50,15 @@ def Qinv(p: npt.ArrayLike) -> np.ndarray:
 
     Returns:
         The real-valued $x$ that is exceeded with probability $p$.
+
+    See Also:
+        sdr.Q
+
+    Examples:
+        .. ipython:: python
+
+            sdr.Qinv(0.158655)
+            sdr.Q(1)
 
     Group:
         probability
