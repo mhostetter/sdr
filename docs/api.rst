@@ -23,6 +23,11 @@ Phase/time-locked loops
 
 .. python-apigen-group:: pll
 
+Measurement
+-----------
+
+.. python-apigen-group:: measurement
+
 Data manipulation
 -----------------
 
