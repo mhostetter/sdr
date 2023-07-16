@@ -46,6 +46,7 @@ Features
    examples/fir-filters.ipynb
    examples/iir-filters.ipynb
    examples/farrow-resampler.ipynb
+   examples/psk.ipynb
    examples/phase-locked-loop.ipynb
 
 .. toctree::
