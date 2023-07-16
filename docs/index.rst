@@ -40,6 +40,7 @@ Features
    :hidden:
 
    examples/pulse-shapes.ipynb
+   examples/peak-to-average-power.ipynb
    examples/fir-filters.ipynb
    examples/iir-filters.ipynb
    examples/farrow-resampler.ipynb
