@@ -18,6 +18,11 @@ Resampling
 
 .. python-apigen-group:: resampling
 
+Modulation
+----------
+
+.. python-apigen-group:: modulation
+
 Phase/time-locked loops
 -----------------------
 
