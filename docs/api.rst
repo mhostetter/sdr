@@ -23,6 +23,11 @@ Phase/time-locked loops
 
 .. python-apigen-group:: pll
 
+Impairments
+-----------
+
+.. python-apigen-group:: impairments
+
 Measurement
 -----------
 
