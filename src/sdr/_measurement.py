@@ -50,6 +50,26 @@ def average_power(x: npt.ArrayLike) -> float:
 
 
 @export
+def peak_voltage(x: npt.ArrayLike) -> float:
+    r"""
+    Measures the peak voltage of a time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+
+    Returns:
+        The peak voltage of $x[n]$ in units.
+
+    Notes:
+        $$V_{\text{peak}} = \max \left( \left| x[n] \right| \right)$$
+
+    Group:
+        measurement
+    """
+    return np.max(np.abs(x))
+
+
+@export
 def papr(x: npt.ArrayLike) -> float:
     r"""
     Measures the peak-to-average power ratio (PAPR) of a signal.
