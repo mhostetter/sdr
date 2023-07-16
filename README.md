@@ -42,7 +42,7 @@ in `sdr`, please open an issue on GitHub.
 - Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
 - Measurement: `sdr.papr()`, `sdr.crest_factor()`
 - Data manipulation: `sdr.pack()`, `sdr.unpack()`, `sdr.hexdump()`
-- Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.filter()`, `sdr.plot.frequency_response`,
+- Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.periodogram`, `sdr.plot.filter()`, `sdr.plot.frequency_response`,
   `sdr.plot.group_delay()`, `sdr.plot.impulse_response()`, `sdr.plot.step_response`,
   `sdr.plot.zeros_poles()`
 
