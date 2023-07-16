@@ -52,7 +52,7 @@ def periodogram(
         nperseg=length,
         noverlap=overlap,
         nfft=fft,
-        return_onesided=x_axis == "one-sided",
+        return_onesided=x_axis != "two-sided",
         average=average,
     )
     Pxx = 10 * np.log10(np.abs(Pxx) ** 2)
