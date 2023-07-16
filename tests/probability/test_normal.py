@@ -54,3 +54,46 @@ def test_Q():
     pi = sdr.Q(x[i])
     assert isinstance(pi, float)
     assert p[i] == pi
+
+
+def test_Qinv():
+    """
+    Matlab:
+        >> p = 0:0.05:1;
+        >> qfuncinv(p)'
+    """
+    p = np.arange(0, 1.05, 0.05)
+    x = sdr.Qinv(p)
+    x_truth = np.array(
+        [
+            np.inf,
+            1.644853626951473,
+            1.281551565544601,
+            1.036433389493790,
+            0.841621233572914,
+            0.674489750196082,
+            0.524400512708041,
+            0.385320466407568,
+            0.253347103135800,
+            0.125661346855074,
+            0,
+            -0.125661346855074,
+            -0.253347103135800,
+            -0.385320466407567,
+            -0.524400512708041,
+            -0.674489750196082,
+            -0.841621233572914,
+            -1.036433389493790,
+            -1.281551565544601,
+            -1.644853626951472,
+            -np.inf,
+        ]
+    )
+
+    assert isinstance(x, np.ndarray)
+    assert np.allclose(x, x_truth)
+
+    i = np.random.randint(0, p.size)
+    xi = sdr.Qinv(p[i])
+    assert isinstance(xi, float)
+    assert x[i] == xi
