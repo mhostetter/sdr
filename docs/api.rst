@@ -43,6 +43,11 @@ Data manipulation
 
 .. python-apigen-group:: data
 
+Probability
+-----------
+
+.. python-apigen-group:: probability
+
 Plotting
 --------
 
