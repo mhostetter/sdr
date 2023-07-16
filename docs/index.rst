@@ -31,9 +31,9 @@ Features
 - Phase-locked loops: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
 - Measurement: :func:`sdr.papr()`, :func:`sdr.crest_factor()`
 - Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
-- Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram`, :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`,
-  :func:`sdr.plot.group_delay()`, :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response`,
-  :func:`sdr.plot.zeros_poles()`
+- Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
+  :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`, :func:`sdr.plot.group_delay()`,
+  :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`, :func:`sdr.plot.zeros_poles()`
 
 .. toctree::
    :caption: Examples
