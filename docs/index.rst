@@ -29,7 +29,9 @@ Features
 - Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
 - Arbitrary resamplers: :class:`sdr.FarrowResampler`
 - Phase-locked loops: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
-- Measurement: :func:`sdr.papr()`, :func:`sdr.crest_factor()`
+- Impairments: :func:`sdr.awgn()`
+- Measurement: :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.peak_voltage()`,
+  :func:`sdr.rms_voltage()`, :func:`sdr.papr()`, :func:`sdr.crest_factor()`
 - Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
 - Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
   :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`, :func:`sdr.plot.group_delay()`,
