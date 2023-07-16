@@ -25,15 +25,15 @@ in :obj:`sdr`, please open an issue on `GitHub`_.
 Features
 --------
 
-- Filters: :obj:`sdr.FIR`, :obj:`sdr.IIR`
-- Pulse shapes: :obj:`sdr.raised_cosine`, :obj:`sdr.root_raised_cosine`, :obj:`sdr.gaussian`
-- Arbitrary resamplers: :obj:`sdr.FarrowResampler`
-- Phase-locked loops: :obj:`sdr.NCO`, :obj:`sdr.DDS`, :obj:`sdr.LoopFilter`, :obj:`sdr.ClosedLoopPLL`
-- Measurement: :obj:`sdr.papr`, :obj:`sdr.crest_factor`
-- Data manipulation: :obj:`sdr.pack`, :obj:`sdr.unpack`, :obj:`sdr.hexdump`
-- Plotting utilities: :obj:`sdr.plot.time_domain`, :obj:`sdr.plot.filter`, :obj:`sdr.plot.frequency_response`,
-  :obj:`sdr.plot.group_delay`, :obj:`sdr.plot.impulse_response`, :obj:`sdr.plot.step_response`,
-  :obj:`sdr.plot.zeros_poles`
+- Filters: :class:`sdr.FIR`, :class:`sdr.IIR`
+- Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
+- Arbitrary resamplers: :class:`sdr.FarrowResampler`
+- Phase-locked loops: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
+- Measurement: :func:`sdr.papr()`, :func:`sdr.crest_factor()`
+- Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
+- Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`,
+  :func:`sdr.plot.group_delay()`, :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response`,
+  :func:`sdr.plot.zeros_poles()`
 
 .. toctree::
    :caption: Examples
