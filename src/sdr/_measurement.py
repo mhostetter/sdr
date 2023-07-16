@@ -11,7 +11,7 @@ from ._helper import export
 
 @export
 def papr(x: npt.ArrayLike) -> float:
-    """
+    r"""
     Measures the peak-to-average power ratio (PAPR) of a signal.
 
     Arguments:
@@ -19,6 +19,16 @@ def papr(x: npt.ArrayLike) -> float:
 
     Returns:
         The PAPR of the signal $x[n]$ in dB.
+
+    Notes:
+        $$\text{PAPR} = 10 \log_{10} \frac{P_{\text{peak}}}{P_{\text{avg}}}$$
+
+        $$P_{\text{peak}} = \max \left( \left| x[n] \right|^2 \right)$$
+
+        $$P_{\text{avg}} = \frac{1}{N} \sum_{n=0}^{N-1} \left| x[n] \right|^2$$
+
+    References:
+        - https://en.wikipedia.org/wiki/Crest_factor
 
     Group:
         measurement
@@ -34,7 +44,7 @@ def papr(x: npt.ArrayLike) -> float:
 
 @export
 def crest_factor(x: npt.ArrayLike) -> float:
-    """
+    r"""
     Measures the crest factor of a signal.
 
     Arguments:
@@ -42,6 +52,16 @@ def crest_factor(x: npt.ArrayLike) -> float:
 
     Returns:
         The crest factor of the signal $x[n]$.
+
+    Notes:
+        $$\text{CF} = \frac{V_{\text{peak}}}{V_{\text{rms}}}$$
+
+        $$V_{\text{peak}} = \max \left( \left| x[n] \right| \right)$$
+
+        $$V_{\text{rms}} = \sqrt{\frac{1}{N} \sum_{n=0}^{N-1} \left| x[n] \right|^2}$$
+
+    References:
+        - https://en.wikipedia.org/wiki/Crest_factor
 
     Group:
         measurement
