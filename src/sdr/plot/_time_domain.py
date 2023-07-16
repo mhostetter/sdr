@@ -31,7 +31,7 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
             x[::10] = symbol_map[np.random.randint(0, 2, 100)]
 
             # Pulse shape the signal with a square-root raised cosine filter
-            h_srrc = sdr.root_raised_cosine(0.5, 10, 6); \
+            h_srrc = sdr.root_raised_cosine(0.5, 7, 10); \
             y = np.convolve(x, h_srrc)
 
             @savefig sdr_plot_time_domain_1.png
@@ -49,7 +49,7 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
             x[::10] = symbol_map[np.random.randint(0, 4, 100)]
 
             # Pulse shape the signal with a square-root raised cosine filter
-            h_srrc = sdr.root_raised_cosine(0.5, 10, 6); \
+            h_srrc = sdr.root_raised_cosine(0.5, 7, 10); \
             y = np.convolve(x, h_srrc)
 
             @savefig sdr_plot_time_domain_2.png
