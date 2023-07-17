@@ -99,11 +99,33 @@ class PSK:
             Pe = Q(np.sqrt(2 * ebn0_linear))
         elif M == 4:
             # Equation 4.3-15
-            Pe = 2 * Q(np.sqrt(2 * ebn0_lienar)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
+            Pe = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
         else:
             # Equation 4.3-17
             # NOTE: This is an approximation for large M
             Pe = 2 * Q(np.sqrt(2 * np.log2(M) * np.sin(np.pi / M) ** 2 * ebn0_linear))
+
+        return Pe
+
+    def bit_error_rate(self, ebn0: npt.ArrayLike | None = None, esn0: npt.ArrayLike | None = None) -> np.ndarray:
+        r"""
+        Computes the bit error rate (BER) at the provided SNRs.
+
+        Arguments:
+            ebn0: Bit energy $E_b$ to noise PSD $N_0$ ratio in dB. If `None`, `esn0` must be provided.
+            esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB. If `None`, `ebn0` must be provided.
+
+        Returns:
+            The bit error rate $P_b$.
+
+        References:
+            - John Proakis, *Digital Communications*, Chapter 4: Optimum Receivers for AWGN Channels.
+        """
+        M = self.order  # Modulation order
+        k = np.log2(M)  # Bits per symbol
+
+        # Equation 4.3-20
+        Pe = self.symbol_error_rate(ebn0, esn0) / k
 
         return Pe
 
