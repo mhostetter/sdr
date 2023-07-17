@@ -122,10 +122,23 @@ class PSK:
             - John Proakis, *Digital Communications*, Chapter 4: Optimum Receivers for AWGN Channels.
         """
         M = self.order  # Modulation order
-        k = np.log2(M)  # Bits per symbol
+        if ebn0 is not None:
+            ebn0 = np.asarray(ebn0)
+        elif esn0 is not None:
+            esn0 = np.asarray(esn0)
+            ebn0 = esn0 - 10 * np.log10(M)  # Bit energy to noise PSD ratio
+        else:
+            raise ValueError("Either 'ebn0' or 'esn0' must be provided.")
 
-        # Equation 4.3-20
-        Pe = self.symbol_error_rate(ebn0, esn0) / k
+        ebn0_linear = 10 ** (ebn0 / 10)
+
+        if M in [2, 4]:
+            # Equation 4.3-13
+            Pe = Q(np.sqrt(2 * ebn0_linear))
+        else:
+            # Equation 4.3-20
+            k = np.log2(M)  # Bits per symbol
+            Pe = self.symbol_error_rate(ebn0, esn0) / k
 
         return Pe
 
