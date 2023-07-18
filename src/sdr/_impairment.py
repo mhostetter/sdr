@@ -59,8 +59,7 @@ def awgn(
             sdr.plot.time_domain(x, label="$x[n]$"); \
             sdr.plot.time_domain(y, label="$y[n]$"); \
             plt.title("Input signal $x[n]$ and noisy output signal $y[n]$ with 10 dB SNR"); \
-            plt.tight_layout(); \
-            plt.show()
+            plt.tight_layout()
 
     Group:
         impairments

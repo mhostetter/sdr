@@ -38,8 +38,7 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(y, sample_rate=10e3); \
             plt.title("SRRC pulse-shaped BPSK"); \
-            plt.tight_layout(); \
-            plt.show()
+            plt.tight_layout()
 
         .. ipython:: python
 
@@ -56,8 +55,7 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(y, sample_rate=10e3); \
             plt.title("SRRC pulse-shaped QPSK"); \
-            plt.tight_layout(); \
-            plt.show()
+            plt.tight_layout()
 
     Group:
         plot-time

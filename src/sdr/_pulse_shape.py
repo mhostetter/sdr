@@ -36,8 +36,7 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
-            sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$"); \
-            plt.show()
+            sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$")
 
         See the :ref:`pulse-shapes` example.
 
@@ -103,8 +102,7 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
-            sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$"); \
-            plt.show()
+            sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$")
 
         See the :ref:`pulse-shapes` example.
 
@@ -189,8 +187,7 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(h_0p1, label=r"$B T_{sym} = 0.1$"); \
             sdr.plot.impulse_response(h_0p2, label=r"$B T_{sym} = 0.2$"); \
-            sdr.plot.impulse_response(h_0p3, label=r"$B T_{sym} = 0.3$"); \
-            plt.show()
+            sdr.plot.impulse_response(h_0p3, label=r"$B T_{sym} = 0.3$")
 
         See the :ref:`pulse-shapes` example.
 

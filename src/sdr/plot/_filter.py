@@ -38,8 +38,7 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
             @savefig sdr_plot_impulse_response_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(h_srrc); \
-            plt.show()
+            sdr.plot.impulse_response(h_srrc)
 
         See the :ref:`iir-filters` example.
 
@@ -51,8 +50,7 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
 
             @savefig sdr_plot_impulse_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(iir.b_taps, iir.a_taps, N=30); \
-            plt.show()
+            sdr.plot.impulse_response(iir.b_taps, iir.a_taps, N=30)
 
     Group:
         plot-filter
@@ -121,8 +119,7 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
             @savefig sdr_plot_step_response_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.step_response(h_srrc); \
-            plt.show()
+            sdr.plot.step_response(h_srrc)
 
         See the :ref:`iir-filters` example.
 
@@ -134,8 +131,7 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
 
             @savefig sdr_plot_step_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.step_response(iir.b_taps, iir.a_taps, N=30); \
-            plt.show()
+            sdr.plot.step_response(iir.b_taps, iir.a_taps, N=30)
 
     Group:
         plot-filter
@@ -199,8 +195,7 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
             @savefig sdr_plot_zeros_poles_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.zeros_poles(h_srrc); \
-            plt.show()
+            sdr.plot.zeros_poles(h_srrc)
 
         See the :ref:`iir-filters` example.
 
@@ -212,8 +207,7 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
 
             @savefig sdr_plot_zeros_poles_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.zeros_poles(iir.b_taps, iir.a_taps); \
-            plt.show()
+            sdr.plot.zeros_poles(iir.b_taps, iir.a_taps)
 
     Group:
         plot-filter
@@ -275,8 +269,7 @@ def frequency_response(
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
             @savefig sdr_plot_frequency_response_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_srrc); \
-            plt.show()
+            sdr.plot.frequency_response(h_srrc)
 
         See the :ref:`iir-filters` example.
 
@@ -288,22 +281,19 @@ def frequency_response(
 
             @savefig sdr_plot_frequency_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(iir.b_taps, iir.a_taps); \
-            plt.show()
+            sdr.plot.frequency_response(iir.b_taps, iir.a_taps)
 
         .. ipython:: python
 
             @savefig sdr_plot_frequency_response_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_srrc, x_axis="one-sided"); \
-            plt.show()
+            sdr.plot.frequency_response(h_srrc, x_axis="one-sided")
 
         .. ipython:: python
 
             @savefig sdr_plot_frequency_response_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3); \
-            plt.show()
+            sdr.plot.frequency_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3)
 
     Group:
         plot-filter
@@ -372,8 +362,7 @@ def group_delay(
             @savefig sdr_plot_group_delay_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.group_delay(h_srrc); \
-            plt.ylim(48, 52); \
-            plt.show()
+            plt.ylim(48, 52)
 
         See the :ref:`iir-filters` example.
 
@@ -385,8 +374,7 @@ def group_delay(
 
             @savefig sdr_plot_group_delay_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.group_delay(iir.b_taps, iir.a_taps); \
-            plt.show()
+            sdr.plot.group_delay(iir.b_taps, iir.a_taps)
 
     Group:
         plot-filter
@@ -456,8 +444,7 @@ def filter(  # pylint: disable=redefined-builtin
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
             @savefig sdr_plot_filter_1.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.filter(h_srrc); \
-            plt.show()
+            sdr.plot.filter(h_srrc)
 
         See the :ref:`iir-filters` example.
 
@@ -469,8 +456,7 @@ def filter(  # pylint: disable=redefined-builtin
 
             @savefig sdr_plot_filter_2.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.filter(iir.b_taps, iir.a_taps, N_time=30); \
-            plt.show()
+            sdr.plot.filter(iir.b_taps, iir.a_taps, N_time=30)
 
     Group:
         plot-filter
