@@ -25,6 +25,8 @@ def fspl(d: float, f: float) -> float:
         The free-space path loss (FSPL) in dB.
 
     Examples:
+        Compute the free-space path loss for a 1 km link at 1 GHz.
+
         .. ipython:: python
 
             sdr.fspl(1e3, 1e9)
