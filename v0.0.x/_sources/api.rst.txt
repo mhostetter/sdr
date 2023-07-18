@@ -43,6 +43,11 @@ Data manipulation
 
 .. python-apigen-group:: data
 
+Link budgets
+------------
+
+.. python-apigen-group:: link-budget
+
 Probability
 -----------
 
