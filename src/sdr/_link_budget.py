@@ -4,6 +4,7 @@ A module containing functions for calculating link budgets.
 from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 
 from ._helper import export
 
@@ -11,7 +12,7 @@ SPEED_OF_LIGHT = 299_792_458  # m/s
 
 
 @export
-def fspl(d: float, f: float) -> float:
+def fspl(d: npt.ArrayLike, f: npt.ArrayLike) -> npt.ArrayLike:
     r"""
     Calculates the free-space path loss (FSPL) in dB.
 
@@ -48,4 +49,7 @@ def fspl(d: float, f: float) -> float:
     Group:
         link-budget
     """
-    return 20 * np.log10(4 * np.pi * d * f / SPEED_OF_LIGHT)
+    d = np.asarray(d)
+    f = np.asarray(f)
+    loss = 20 * np.log10(4 * np.pi * d * f / SPEED_OF_LIGHT)
+    return loss
