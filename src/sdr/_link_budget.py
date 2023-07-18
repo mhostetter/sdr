@@ -1,0 +1,49 @@
+"""
+A module containing functions for calculating link budgets.
+"""
+from __future__ import annotations
+
+import numpy as np
+
+from ._helper import export
+
+SPEED_OF_LIGHT = 299_792_458  # m/s
+
+
+@export
+def fspl(d: float, f: float) -> float:
+    r"""
+    Calculates the free-space path loss (FSPL) in dB.
+
+    $$\text{FSPL} = 10 \log_{10} \left( \frac{4 \pi d f}{c} \right)^2$$
+
+    Arguments:
+        d: The distance $d$ in meters between the transmitter and receiver.
+        f: The frequency $f$ in Hz of the signal.
+
+    Returns:
+        The free-space path loss (FSPL) in dB.
+
+    Examples:
+        .. ipython:: python
+
+            sdr.fspl(1e3, 1e9)
+
+        The free-space path loss is proportional to the square of the distance. So, doubling the distance
+        results in a 6 dB increase in the free-space path loss.
+
+        .. ipython:: python
+
+            sdr.fspl(2e3, 1e9)
+
+        The free-space path loss is also proportional to the square of the frequency. So, doubling the frequency
+        results in a 6 dB increase in the free-space path loss.
+
+        .. ipython:: python
+
+            sdr.fspl(1e3, 2e9)
+
+    Group:
+        link-budget
+    """
+    return 20 * np.log10(4 * np.pi * d * f / SPEED_OF_LIGHT)
