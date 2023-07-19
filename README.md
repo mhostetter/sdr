@@ -43,6 +43,7 @@ in `sdr`, please open an issue on GitHub.
   `sdr.rms_voltage()`, `sdr.papr()`, `sdr.crest_factor()`
 - Data manipulation: `sdr.pack()`, `sdr.unpack()`, `sdr.hexdump()`
 - Channel models: `sdr.bsc()`, `sdr.bec()`, `sdr.dmc()`
+- Link budgets: `sdr.fspl()`
 - Probability: `sdr.Q()`, `sdr.Qinv()`
 - Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`
   `sdr.plot.filter()`, `sdr.plot.frequency_response`, `sdr.plot.group_delay()`,
