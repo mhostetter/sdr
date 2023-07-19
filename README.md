@@ -17,8 +17,6 @@
   <a href="https://codecov.io/gh/mhostetter/sdr"><img src="https://codecov.io/gh/mhostetter/sdr/branch/master/graph/badge.svg?token=3FJML79ZUK"></a>
 </div>
 
-A Python package for software-defined radio.
-
 The `sdr` library is a Python 3 package for software-defined radio (SDR).
 
 The goal of `sdr` is to provide tools to design, build, and analyze digital communications systems
@@ -51,17 +49,17 @@ in `sdr`, please open an issue on GitHub.
 
 ## Documentation
 
-The documentation for `sdr` is located at https://mhostetter.github.io/sdr/latest/.
+The documentation for `sdr` is located at <https://mhostetter.github.io/sdr/latest/>.
 
 ## Install the package
 
 The latest version of `sdr` can be installed from [PyPI](https://pypi.org/project/sdr/) using `pip`.
 
 ```console
-$ python3 -m pip install sdr
+python3 -m pip install sdr
 ```
 
 ## Examples
 
-There are detailed examples published at https://mhostetter.github.io/sdr/latest/examples/pulse-shapes/.
+There are detailed examples published at <https://mhostetter.github.io/sdr/latest/examples/pulse-shapes/>.
 The Jupyter notebooks behind the examples are available for experimentation in `docs/examples/`.
