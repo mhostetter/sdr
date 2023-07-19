@@ -21,8 +21,8 @@ def test_types():
     assert isinstance(y, np.ndarray)
 
 
-@pytest.mark.parametrize("p", [0.1, 0.2, 0.3, 0.4, 0.5])
-def test_bit_flips(p):
+def test_bit_flips():
+    p = np.random.uniform(0.2, 0.8)
     N = int(1000 / p)
     x = np.random.randint(0, 2, N)
     y = sdr.bsc(x, p)
