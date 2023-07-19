@@ -17,7 +17,10 @@ def generate_signal():
     return tx, x
 
 
-@pytest.mark.parametrize("rate", [1 / 2, 1 / 3, 1 / np.pi, 1 / 11, 2, 3, np.pi, 11])
+RATES = [1 / 2, 1 / 3, 1 / np.pi, 1 / 11, 2, 3, np.pi, 11]
+
+
+@pytest.mark.parametrize("rate", RATES)
 def test_match_scipy(rate):
     _, x = generate_signal()
 
@@ -45,7 +48,7 @@ def test_match_scipy(rate):
     np.testing.assert_array_almost_equal(y, y_scipy, decimal=1)
 
 
-@pytest.mark.parametrize("rate", [1 / 2, 1 / 3, 1 / np.pi, 1 / 11, 2, 3, np.pi, 11])
+@pytest.mark.parametrize("rate", RATES)
 def test_streaming_match_non_streaming(rate):
     _, x = generate_signal()
 
