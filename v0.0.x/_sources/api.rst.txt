@@ -1,8 +1,5 @@
 .. py:module:: sdr
 
-sdr
-===
-
 Filtering
 ---------
 
