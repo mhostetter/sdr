@@ -16,15 +16,15 @@ def bsc(x: npt.ArrayLike, p: float) -> np.ndarray:
     with transition probability $p$.
 
     Arguments:
-        x: The input sequence $x \in \{0, 1\}$.
+        x: The input sequence $x$ with $x_i \in \{0, 1\}$.
         p: The probability $p$ of a bit flip.
 
     Returns:
-        The output sequence $y \in \{0, 1\}$.
+        The output sequence $y$ with $y_i \in \{0, 1\}$.
 
     Examples:
         When 20 bits are passed through a BSC with transition probability $p=0.25$,
-        roughly 5 bits should be flipped at the output.
+        roughly 5 bits are flipped at the output.
 
         .. ipython:: python
 
@@ -52,15 +52,15 @@ def bec(x: npt.ArrayLike, p: float) -> np.ndarray:
     with erasure probability $p$.
 
     Arguments:
-        x: The input sequence $x \in \{0, 1\}$.
+        x: The input sequence $x$ with $x_i \in \{0, 1\}$.
         p: The probability $p$ of a bit erasure.
 
     Returns:
-        The output sequence $y \in \{0, 1, e\}$. Erasures $e$ are represented by -1.
+        The output sequence $y$ with $y_i \in \{0, 1, e\}$. Erasures $e$ are represented by -1.
 
     Examples:
         When 20 bits are passed through a BEC with erasure probability $p=0.25$,
-        roughly 5 bits should be erased at the output.
+        roughly 5 bits are erased at the output.
 
         .. ipython:: python
 
