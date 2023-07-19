@@ -43,6 +43,11 @@ Data manipulation
 
 .. python-apigen-group:: data
 
+Channel models
+--------------
+
+.. python-apigen-group:: channel-model
+
 Link budgets
 ------------
 
