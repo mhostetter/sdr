@@ -33,6 +33,7 @@ Features
 - Measurement: :func:`sdr.energy()`, :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.peak_voltage()`,
   :func:`sdr.rms_voltage()`, :func:`sdr.papr()`, :func:`sdr.crest_factor()`
 - Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
+- Channel models: :func:`sdr.bsc()`, :func:`sdr.bec()`, :func:`sdr.dmc()`
 - Probability: :func:`sdr.Q()`, :func:`sdr.Qinv()`
 - Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
   :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`, :func:`sdr.plot.group_delay()`,
