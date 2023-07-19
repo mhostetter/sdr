@@ -34,7 +34,11 @@ def bsc(x: npt.ArrayLike, p: float) -> np.ndarray:
     Group:
         channel-model
     """
+    if not 0 <= p <= 1:
+        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+
     x = np.asarray(x)
-    flip = np.random.choice([0, 1], size=len(x), p=[1 - p, p])
+    flip = np.random.choice([0, 1], size=x.shape, p=[1 - p, p])
     y = x ^ flip
-    return y
+
+    return y if y.ndim > 0 else y.item()
