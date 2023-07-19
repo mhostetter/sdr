@@ -28,6 +28,7 @@ Features
 - Filters: :class:`sdr.FIR`, :class:`sdr.IIR`
 - Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
 - Arbitrary resamplers: :class:`sdr.FarrowResampler`
+- Modulation: :class:`sdr.PSK`
 - Phase-locked loops: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
 - Impairments: :func:`sdr.awgn()`
 - Measurement: :func:`sdr.energy()`, :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.peak_voltage()`,

@@ -37,6 +37,7 @@ in `sdr`, please open an issue on GitHub.
 - Filters: `sdr.FIR`, `sdr.IIR`
 - Pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`
 - Arbitrary resamplers: `sdr.FarrowResampler`
+- Modulation: `sdr.PSK`
 - Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
 - Impairments: `sdr.awgn()`
 - Measurement: `sdr.energy()`, `sdr.peak_power()`, `sdr.average_power()`, `sdr.peak_voltage()`,
