@@ -72,6 +72,54 @@ def bsc_capacity(p: npt.ArrayLike) -> np.ndarray:
 
 
 @export
+def bec_capacity(p: npt.ArrayLike) -> np.ndarray:
+    r"""
+    Calculates the capacity of a binary erasure channel (BEC).
+
+    Arguments:
+        p: The erasure probability $p$ of the BEC channel.
+
+    Returns:
+        The capacity $C$ of the channel in bits/channel use.
+
+    Notes:
+        The inputs to the BEC are $x_i \in \{0, 1\}$ and the outputs are $y_i \in \{0, 1, e\}$.
+        Erasures $e$ are represented by -1. The capacity of the BEC is
+
+        $$C = 1 - p \ \ \text{bits/channel use} .$$
+
+    Examples:
+        When the probability of erasure $p$ is 0, the capacity of the channel is 1 bit/channel use.
+        However, as the probability of erasure approaches 1, the capacity of the channel approaches
+        0.
+
+        .. ipython:: python
+
+            p = np.linspace(0, 1, 100); \
+            C = sdr.bec_capacity(p)
+
+            @savefig sdr_bec_capacity_1.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(p, C); \
+            plt.xlabel("Erasure probability, $p$"); \
+            plt.ylabel("Capacity (bits/channel use), $C$"); \
+            plt.title("Capacity of the Binary Erasure Channel"); \
+            plt.grid(True); \
+            plt.tight_layout()
+
+    Group:
+        link-budget
+    """
+    p = np.asarray(p)
+    if not (np.all(0 <= p) and np.all(p <= 1)):
+        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+
+    C = 1 - p
+
+    return C if C.ndim > 0 else C.item()
+
+
+@export
 def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndarray:
     r"""
     Calculates the capacity of an additive white Gaussian noise (AWGN) channel.
