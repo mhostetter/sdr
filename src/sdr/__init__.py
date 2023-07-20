@@ -14,6 +14,7 @@ except ModuleNotFoundError:  # pragma: no cover
     )
 
 from . import plot
+from ._capacity import *
 from ._channel_model import *
 from ._data import *
 from ._farrow import *
