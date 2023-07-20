@@ -9,6 +9,68 @@ import numpy.typing as npt
 from ._helper import export
 
 
+def Hb(x: npt.ArrayLike) -> np.ndarray:
+    """
+    Computes the binary entropy function $H_b(x)$.
+    """
+    x = np.asarray(x)
+    H = -x * np.log2(x) - (1 - x) * np.log2(1 - x)
+
+    # When x is 0 or 1, the binary entropy function is undefined. However, the limit of the binary entropy function
+    # as x approaches 0 or 1 is 0. Therefore, we can replace the undefined values with 0.
+    H = np.nan_to_num(H, nan=0)
+
+    return H
+
+
+@export
+def bsc_capacity(p: npt.ArrayLike) -> np.ndarray:
+    r"""
+    Calculates the capacity of a binary symmetric channel (BSC).
+
+    Arguments:
+        p: The transition probability $p$ of the BSC channel.
+
+    Returns:
+        The capacity $C$ of the channel in bits/channel use.
+
+    Notes:
+        The inputs to the BSC are $x_i \in \{0, 1\}$ and the outputs are $y_i \in \{0, 1\}$.
+        The capacity of the BSC is
+
+        $$C = 1 - H_b(p) \ \ \text{bits/channel use} .$$
+
+    Examples:
+        When the probability of bit error $p$ is 0, the capacity of the channel is 1 bit/channel use.
+        However, as the probability of bit error approaches 0.5, the capacity of the channel approaches
+        0.
+
+        .. ipython:: python
+
+            p = np.linspace(0, 1, 100); \
+            C = sdr.bsc_capacity(p)
+
+            @savefig sdr_bsc_capacity_1.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(p, C); \
+            plt.xlabel("Transition probability, $p$"); \
+            plt.ylabel("Capacity (bits/channel use), $C$"); \
+            plt.title("Capacity of the Binary Symmetric Channel"); \
+            plt.grid(True); \
+            plt.tight_layout()
+
+    Group:
+        link-budget
+    """
+    p = np.asarray(p)
+    if not (np.all(0 <= p) and np.all(p <= 1)):
+        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+
+    C = 1 - Hb(p)
+
+    return C if C.ndim > 0 else C.item()
+
+
 @export
 def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndarray:
     r"""
