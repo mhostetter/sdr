@@ -18,7 +18,7 @@ def test_limit_cases():
     assert sdr.bsc_capacity(1) == 1
 
 
-def test_values():
+def test_outputs():
     C = sdr.bsc_capacity([0, 0.5, 1])
     assert isinstance(C, np.ndarray)
     assert np.array_equal(C, [1, 0, 1])
