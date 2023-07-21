@@ -81,3 +81,83 @@ def awgn(
         w = rng.normal(0, np.sqrt(noise_power), x.shape)
 
     return x + w
+
+
+@export
+def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.ndarray:
+    r"""
+    Applies IQ imbalance to the complex time-domain signal $x[n]$.
+
+    Arguments:
+        x: The complex time-domain signal $x[n]$ to which IQ imbalance is applied.
+        amplitude: The amplitude imbalance $A$ in dB. A positive value indicates that the in-phase (I) component is
+            larger than the quadrature (Q) component. A negative value indicates that the Q component is larger
+            than the I component.
+        phase: The phase imbalance $\phi$ in degrees. A positive value indicates that the Q component leads the I
+            component. A negative value indicates that the I component leads the Q component.
+
+    Returns:
+        The signal $x[n]$ with IQ imbalance applied.
+
+    Examples:
+        Positive amplitude imbalance horizontally stretches the constellation, while negative amplitude imbalance
+        vertically stretches the constellation.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(4, offset=45); \
+            s = np.random.randint(0, 4, 1_000); \
+            x = psk.modulate(s); \
+            y1 = sdr.iq_imbalance(x, 5, 0); \
+            y2 = sdr.iq_imbalance(x, -5, 0)
+
+            @savefig sdr_iq_imbalance_1.png
+            plt.figure(figsize=(10, 5)); \
+            plt.subplot(1, 2, 1); \
+            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(y1, label="After"); \
+            plt.legend(); \
+            plt.title("5 dB amplitude imbalance"); \
+            plt.subplot(1, 2, 2); \
+            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(y2, label="After"); \
+            plt.legend(); \
+            plt.title("-5 dB amplitude imbalance");
+
+        Positive phase imbalance stretches to the northwest, while negative phase imbalance stretches to the
+        northeast
+
+        .. ipython:: python
+
+            y1 = sdr.iq_imbalance(x, 0, 20); \
+            y2 = sdr.iq_imbalance(x, 0, -20)
+
+            @savefig sdr_iq_imbalance_2.png
+            plt.figure(figsize=(10, 5)); \
+            plt.subplot(1, 2, 1); \
+            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(y1, label="After"); \
+            plt.legend(); \
+            plt.title("20 deg phase imbalance"); \
+            plt.subplot(1, 2, 2); \
+            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(y2, label="After"); \
+            plt.legend(); \
+            plt.title("-20 deg phase imbalance");
+
+    Group:
+        impairments
+    """
+    x = np.asarray(x)
+    if not np.iscomplexobj(x):
+        raise ValueError("Argument 'x' must be complex.")
+
+    phase = np.deg2rad(phase)
+
+    # TODO: Should the phase be negative for I?
+    gain_i = 10 ** (0.5 * amplitude / 20) * np.exp(1j * -0.5 * phase)
+    gain_q = 10 ** (-0.5 * amplitude / 20) * np.exp(1j * 0.5 * phase)
+
+    y = gain_i * x.real + 1j * gain_q * x.imag
+
+    return y
