@@ -41,7 +41,7 @@ def bsc_capacity(p: npt.ArrayLike) -> np.ndarray:
         $$C = 1 - H_b(p) \ \ \text{bits/channel use} .$$
 
     Examples:
-        When the probability of bit error $p$ is 0, the capacity of the channel is 1 bit/channel use.
+        When the probability $p$ of bit error is 0, the capacity of the channel is 1 bit/channel use.
         However, as the probability of bit error approaches 0.5, the capacity of the channel approaches
         0.
 
@@ -89,7 +89,7 @@ def bec_capacity(p: npt.ArrayLike) -> np.ndarray:
         $$C = 1 - p \ \ \text{bits/channel use} .$$
 
     Examples:
-        When the probability of erasure $p$ is 0, the capacity of the channel is 1 bit/channel use.
+        When the probability $p$ of erasure is 0, the capacity of the channel is 1 bit/channel use.
         However, as the probability of erasure approaches 1, the capacity of the channel approaches
         0.
 
@@ -126,7 +126,8 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
 
     Arguments:
         snr: The signal-to-noise ratio $S / N$ in dB of the channel.
-        bandwidth: The bandwidth $B$ of the channel in Hz. If `None`, the capacity is calculated in bits/2D.
+        bandwidth: The bandwidth $B$ of the channel in Hz. If specified, the capacity is calculated in bits/s.
+            If `None`, the capacity is calculated in bits/2D.
 
     Returns:
         The capacity $C$ of the channel in bits/2D, or bits/s if bandwidth was specified.
@@ -137,10 +138,11 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
 
         $$C = \log_2(1 + \frac{S}{N}) \ \ \text{bits/2D} ,$$
 
-        where $S$ is the signal power and $N = \sigma^2$ is the complex noise power.
-        The units are bits/2D, which is equivalent to bits per complex channel use.
+        where $S = \frac{1}{N} \sum_{i=0}^{N-1} \left| x_i \right|^2$ is the average signal power
+        and $N = \sigma^2$ is the complex noise power. The units are bits/2D, which is equivalent to
+        bits per complex channel use.
 
-        If the bandwidth $B$ of waveform is specified, the capacity is
+        If the channel bandwidth $B$ is specified, the channel capacity is
 
         $$C = B\log_2(1 + \frac{S}{N}) \ \ \text{bits/s} .$$
 
@@ -162,12 +164,12 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
             plt.grid(True); \
             plt.tight_layout()
 
-        At capacity, $E_b/N_0$ is related to $E_s/N_0$ by
+        At capacity, which occurs when $R = C$, $E_b/N_0$ is related to $E_s/N_0$ by
 
-        $$\frac{E_b}{N_0} = \frac{1}{C} \frac{E_s}{N_0} .$$
+        $$\frac{E_b}{N_0} = \frac{1}{R} \frac{E_s}{N_0} = \frac{1}{C} \frac{E_s}{N_0} .$$
 
         When viewing the capacity as a function of $E_b/N_0$, the capacity approaches 0 as $E_b/N_0$ approaches
-        -1.59 dB. This is the absolute Shannon limit.
+        -1.59 dB. This is the *absolute Shannon limit*.
 
         .. ipython:: python
 
