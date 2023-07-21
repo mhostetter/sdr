@@ -90,14 +90,20 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
 
     Arguments:
         x: The complex time-domain signal $x[n]$ to which IQ imbalance is applied.
-        amplitude: The amplitude imbalance $A$ in dB. A positive value indicates that the in-phase (I) component is
-            larger than the quadrature (Q) component. A negative value indicates that the Q component is larger
-            than the I component.
-        phase: The phase imbalance $\phi$ in degrees. A positive value indicates that the Q component leads the I
-            component. A negative value indicates that the I component leads the Q component.
+        amplitude: The amplitude imbalance $A$ in dB. A positive value indicates that the in-phase component is
+            larger than the quadrature component.
+        phase: The phase imbalance $\phi$ in degrees. A positive value indicates that the quadrature component
+            leads the in-phase component.
 
     Returns:
         The signal $x[n]$ with IQ imbalance applied.
+
+    Notes:
+        The IQ imbalance is applied as follows.
+
+        $$g_I = 10^{(A/2)/20} \exp\left(j \frac{-\phi}{2} \frac{\pi}{180}\right)$$
+        $$g_Q = 10^{(-A/2)/20} \exp\left(j \frac{\phi}{2} \frac{\pi}{180}\right)$$
+        $$y[n] = g_I x_I[n] + j g_Q x_Q[n]$$
 
     Examples:
         Positive amplitude imbalance horizontally stretches the constellation, while negative amplitude imbalance
