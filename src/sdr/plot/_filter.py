@@ -246,7 +246,7 @@ def frequency_response(
     **kwargs,
 ):
     r"""
-    Plots the frequency response $H(e^{j\omega})$ of the filter.
+    Plots the frequency response $H(\omega)$ of the filter.
 
     Arguments:
         b: The feedforward coefficients $b_i$.
@@ -419,7 +419,7 @@ def filter(  # pylint: disable=redefined-builtin
     decades: int = 4,
 ):
     r"""
-    Plots the frequency response $H(e^{j\omega})$, impulse response $h[n]$, step response $s[n]$,
+    Plots the frequency response $H(\omega)$, impulse response $h[n]$, step response $s[n]$,
     and zeros and poles of the filter.
 
     Arguments:
