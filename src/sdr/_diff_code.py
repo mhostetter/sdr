@@ -40,6 +40,7 @@ def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
         .. ipython:: python
 
             sdr.diff_encode([0, 1, 0, 0, 1, 1])
+            sdr.diff_decode([0, 1, 1, 1, 0, 1])
 
     Group:
         modulation
@@ -61,3 +62,58 @@ def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
         y[n] = x[n] ^ y[n - 1]
 
     return y
+
+
+@export
+def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
+    """
+    Differentially decodes the input data $y[k]$.
+
+    Arguments:
+        y: The input encoded data $y[k]$.
+        y_prev: The previous value of the encoded data $y[k-1]$.
+
+    Returns:
+        The differentially decoded data $x[k]$.
+
+    Notes:
+        .. code-block:: text
+            :caption: Differential Decoder Block Diagram
+
+                       +------+  y[k-1]
+            y[k] --+-->| z^-1 |----------@--> x[k]
+                   |   +------+          ^
+                   |                     |
+                   +---------------------+
+
+            y[k] = Encoded data
+            x[k] = Decoded data
+            z^-1 = Unit delay
+            @ = Adder
+
+    Examples:
+        .. ipython:: python
+
+            sdr.diff_decode([0, 1, 1, 1, 0, 1])
+            sdr.diff_encode([0, 1, 0, 0, 1, 1])
+
+    Group:
+        modulation
+    """
+    y = np.asarray(y)
+    if not y.ndim == 1:
+        raise ValueError(f"Argument 'y' must be a 1D array, not {y.ndim}D.")
+    if not np.issubdtype(y.dtype, np.integer):
+        raise TypeError(f"Argument 'y' must be an integer array, not {y.dtype}.")
+
+    if not isinstance(y_prev, int):
+        raise TypeError(f"Argument 'y_prev' must be an integer, not {type(y_prev)}.")
+    if not y_prev >= 0:
+        raise ValueError(f"Argument 'y_prev' must be non-negative, not {y_prev}.")
+
+    x = np.empty_like(y, dtype=int)
+    x[0] = y[0] ^ y_prev
+    for n in range(1, len(y)):
+        x[n] = y[n] ^ y[n - 1]
+
+    return x
