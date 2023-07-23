@@ -55,4 +55,6 @@ def constellation(
         plt.axis("square")
         plt.xlim(limits)
         plt.ylim(limits)
+        if not heatmap:
+            plt.grid()
         plt.title("Constellation")
