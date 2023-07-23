@@ -410,6 +410,10 @@ def phase_response(
     else:
         theta = np.rad2deg(np.angle(H))
 
+    if x_axis == "two-sided":
+        # Set omega=0 to have phase of 0
+        theta -= theta[w == 0]
+
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
             plt.semilogx(w, theta, **kwargs)
