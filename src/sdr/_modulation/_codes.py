@@ -10,6 +10,34 @@ from .._helper import export
 
 
 @export
+def binary_code(n: int) -> np.ndarray:
+    """
+    Generates a binary code of length $2^n$.
+
+    Arguments:
+        n: The length of the binary code.
+
+    Returns:
+        A binary code of length $2^n$.
+
+    Examples:
+        .. ipython:: python
+
+            sdr.binary_code(1)
+            sdr.binary_code(2)
+            sdr.binary_code(3)
+            sdr.binary_code(4)
+
+    Group:
+        modulation
+    """
+    if not n >= 1:
+        raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")
+
+    return np.arange(0, 2**n)
+
+
+@export
 def gray_code(n: int) -> np.ndarray:
     """
     Generates a Gray code of length $2^n$.
@@ -31,7 +59,7 @@ def gray_code(n: int) -> np.ndarray:
     Group:
         modulation
     """
-    if n < 1:
+    if not n >= 1:
         raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")
 
     if n == 1:
