@@ -433,6 +433,106 @@ def phase_response(
 
 
 @export
+def phase_delay(
+    b: npt.ArrayLike,
+    a: npt.ArrayLike = 1,
+    sample_rate: float = 1.0,
+    N: int = 1024,
+    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    decades: int = 4,
+    **kwargs,
+):
+    r"""
+    Plots the phase delay $\tau_{\phi}(\omega)$ of the filter.
+
+    Arguments:
+        b: The feedforward coefficients $b_i$.
+        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        N: The number of samples $N$ in the phase delay.
+        x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
+            one-sided spectrum with a logarithmic frequency axis.
+        decades: The number of decades to plot when `x_axis="log"`.
+        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    See Also:
+        sdr.FIR, sdr.IIR
+
+    Examples:
+        See the :ref:`fir-filters` example.
+
+        .. ipython:: python
+
+            h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+            @savefig sdr_plot_phase_delay_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.phase_delay(h_srrc)
+
+        See the :ref:`iir-filters` example.
+
+        .. ipython:: python
+
+            zero = 0.6; \
+            pole = 0.8 * np.exp(1j * np.pi / 8); \
+            iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            @savefig sdr_plot_phase_delay_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.phase_delay(iir.b_taps, iir.a_taps)
+
+        .. ipython:: python
+
+            @savefig sdr_plot_phase_delay_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.phase_delay(h_srrc, x_axis="one-sided")
+
+        .. ipython:: python
+
+            @savefig sdr_plot_phase_delay_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.phase_delay(iir.b_taps, iir.a_taps, x_axis="log", decades=3)
+
+    Group:
+        plot-filter
+    """
+    if x_axis == "log":
+        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
+    else:
+        w, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+
+    if x_axis == "two-sided":
+        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        w = np.fft.fftshift(w)
+        H = np.fft.fftshift(H)
+
+    theta = np.unwrap(np.angle(H))
+    if x_axis == "two-sided":
+        # Set omega=0 to have phase of 0
+        theta -= theta[w == 0]
+
+    tau_phi = -theta / (2 * np.pi * w)
+
+    with plt.rc_context(RC_PARAMS):
+        if x_axis == "log":
+            plt.semilogx(w, tau_phi, **kwargs)
+        else:
+            plt.plot(w, tau_phi, **kwargs)
+
+        plt.grid(True, which="both")
+        if "label" in kwargs:
+            plt.legend()
+        if sample_rate == 1.0:
+            plt.xlabel("Normalized Frequency, $f /f_s$")
+            plt.ylabel("Phase Delay (samples)")
+        else:
+            plt.xlabel("Frequency (Hz), $f$")
+            plt.ylabel("Phase Delay (seconds)")
+        plt.title(r"Phase Delay, $\tau_{\phi}(\omega)$")
+        plt.tight_layout()
+
+
+@export
 def group_delay(
     b: npt.ArrayLike,
     a: npt.ArrayLike = 1,
