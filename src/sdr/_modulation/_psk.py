@@ -6,7 +6,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from ._helper import export
+from .._helper import export
 
 
 @export
@@ -27,14 +27,14 @@ class PSK:
 
         Arguments:
             order: The modulation order $M$. Must be at least 2.
-            offset: The phase offset $\phi$ in radians.
+            offset: The phase offset $\phi$ in degrees.
         """
         if not order >= 2:
             raise ValueError("Argument 'order' must be at least 2")
 
         self._order = order
         self._offset = offset
-        self._symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + offset))
+        self._symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(offset)))
 
     def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
         """

@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ._helper import export
+from .._helper import export
 
 
 @export
