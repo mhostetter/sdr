@@ -28,18 +28,21 @@ Features
 - Filters: :class:`sdr.FIR`, :class:`sdr.IIR`
 - Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
 - Arbitrary resamplers: :class:`sdr.FarrowResampler`
-- Modulation: :class:`sdr.PSK`
+- Modulation: :class:`sdr.PSK`, :func:`sdr.gray_code()`
 - Phase-locked loops: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
-- Impairments: :func:`sdr.awgn()`
+- Impairments: :func:`sdr.awgn()`, :func:`sdr.iq_imbalance()`
 - Measurement: :func:`sdr.energy()`, :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.peak_voltage()`,
   :func:`sdr.rms_voltage()`, :func:`sdr.papr()`, :func:`sdr.crest_factor()`
 - Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
 - Channel models: :func:`sdr.bsc()`, :func:`sdr.bec()`, :func:`sdr.dmc()`
+- Link budgets: :func:`sdr.awgn_capacity()`, :func:`sdr.bsc_capacity()`, :func:`sdr.bec_capacity()`,
+  :func:`sdr.fspl()`, :func:`sdr.parabolic_antenna()`
 - Probability: :func:`sdr.Q()`, :func:`sdr.Qinv()`
-- Link budgets: :func:`sdr.fspl()`
 - Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
-  :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`, :func:`sdr.plot.group_delay()`,
-  :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`, :func:`sdr.plot.zeros_poles()`
+  :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`, :func:`sdr.plot.phase_response()`,
+  :func:`sdr.plot.phase_delay()`, :func:`sdr.plot.group_delay()`,
+  :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`,
+  :func:`sdr.plot.zeros_poles()`
 
 .. toctree::
    :caption: Examples
