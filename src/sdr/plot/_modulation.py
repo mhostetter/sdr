@@ -6,6 +6,7 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import Literal
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
@@ -46,15 +47,17 @@ def constellation(
             plt.hist2d(x_hat.real, x_hat.imag, **kwargs)
         else:
             default_kwargs = {
-                "s": 0.1,  # Marker size
+                "marker": ".",
+                "linestyle": "none",
             }
             kwargs = {**default_kwargs, **kwargs}
-            plt.scatter(x_hat.real, x_hat.imag, **kwargs)
+            plt.plot(x_hat.real, x_hat.imag, **kwargs)
         plt.xlabel("In-phase channel, $I$")
         plt.ylabel("Quadrature channel, $Q$")
         plt.axis("square")
         plt.xlim(limits)
         plt.ylim(limits)
         if not heatmap:
-            plt.grid()
+            plt.grid(True)
         plt.title("Constellation")
+        plt.tight_layout()
