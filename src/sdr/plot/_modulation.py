@@ -52,12 +52,74 @@ def constellation(
             }
             kwargs = {**default_kwargs, **kwargs}
             plt.plot(x_hat.real, x_hat.imag, **kwargs)
-        plt.xlabel("In-phase channel, $I$")
-        plt.ylabel("Quadrature channel, $Q$")
         plt.axis("square")
         plt.xlim(limits)
         plt.ylim(limits)
         if not heatmap:
             plt.grid(True)
+        plt.xlabel("In-phase channel, $I$")
+        plt.ylabel("Quadrature channel, $Q$")
         plt.title("Constellation")
+        plt.tight_layout()
+
+
+@export
+def symbol_map(
+    symbol_map: npt.ArrayLike,  # pylint: disable=redefined-outer-name
+    annotate: bool | Literal["bin"] = True,
+    limits: tuple[float, float] | None = None,
+    **kwargs,
+):
+    r"""
+    Plots the symbol map of the complex symbols $\hat{x}[k]$.
+
+    Arguments:
+        symbol_map: The complex symbols $\hat{x}[k]$.
+        annotate: If `True`, the symbols are annotated with their index.
+            If `"bin"`, the symbols are annotated with their binary representation.
+        limits: The axis limits, which apply to both the x- and y-axis.
+            If `None`, the axis limits are set to 50% larger than the maximum value.
+        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+    """
+    symbol_map = np.asarray(symbol_map)
+    k = int(np.log2(symbol_map.size))
+
+    # Set the axis limits to 50% larger than the maximum value
+    if limits is None:
+        lim = np.max(np.abs(symbol_map)) * 1.5
+        limits = (-lim, lim)
+
+    with plt.rc_context(RC_PARAMS):
+        default_kwargs = {
+            "marker": "x",
+            "markersize": 6,
+            "linestyle": "none",
+        }
+        kwargs = {**default_kwargs, **kwargs}
+        plt.plot(symbol_map.real, symbol_map.imag, **kwargs)
+
+        if annotate:
+            for i, symbol in enumerate(symbol_map):
+                if annotate == "bin":
+                    label = f"{i} =" + np.binary_repr(i, k)
+                else:
+                    label = i
+
+                plt.annotate(
+                    label,
+                    (symbol.real, symbol.imag),
+                    xytext=(0, 5),
+                    textcoords="offset points",
+                    ha="center",
+                    va="bottom",
+                    fontsize=8,
+                )
+
+        plt.axis("square")
+        plt.xlim(limits)
+        plt.ylim(limits)
+        plt.grid(True)
+        plt.xlabel("In-phase channel, $I$")
+        plt.ylabel("Quadrature channel, $Q$")
+        plt.title("Symbol Map")
         plt.tight_layout()
