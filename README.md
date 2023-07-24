@@ -47,8 +47,8 @@ in `sdr`, please open an issue on GitHub.
 - Link budgets: `sdr.awgn_capacity()`, `sdr.bsc_capacity()`, `sdr.bec_capacity()`,
   `sdr.fspl()`, `sdr.parabolic_antenna()`
 - Probability: `sdr.Q()`, `sdr.Qinv()`
-- Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`
-  `sdr.plot.filter()`, `sdr.plot.frequency_response`, `sdr.plot.phase_response()`,
+- Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`,
+  `sdr.plot.filter()`, `sdr.plot.frequency_response()`, `sdr.plot.phase_response()`,
   `sdr.plot.phase_delay()`, `sdr.plot.group_delay()`,
   `sdr.plot.impulse_response()`, `sdr.plot.step_response()`,
   `sdr.plot.zeros_poles()`
