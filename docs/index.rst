@@ -38,8 +38,8 @@ Features
 - Link budgets: :func:`sdr.awgn_capacity()`, :func:`sdr.bsc_capacity()`, :func:`sdr.bec_capacity()`,
   :func:`sdr.fspl()`, :func:`sdr.parabolic_antenna()`
 - Probability: :func:`sdr.Q()`, :func:`sdr.Qinv()`
-- Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
-  :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response`, :func:`sdr.plot.phase_response()`,
+- Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`,
+  :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response()`, :func:`sdr.plot.phase_response()`,
   :func:`sdr.plot.phase_delay()`, :func:`sdr.plot.group_delay()`,
   :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`,
   :func:`sdr.plot.zeros_poles()`
