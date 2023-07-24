@@ -18,8 +18,7 @@ from ._capacity import *
 from ._channel_model import *
 from ._data import *
 from ._farrow import *
-from ._fir_filter import *
-from ._iir_filter import *
+from ._filter import *
 from ._impairment import *
 from ._link_budget import *
 from ._loop_filter import *

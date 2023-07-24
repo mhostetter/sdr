@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import numpy as np
 
+from ._filter import IIR
 from ._helper import export
-from ._iir_filter import IIR
 from ._loop_filter import LoopFilter
 
 

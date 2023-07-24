@@ -8,7 +8,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Self
 
-from ._helper import export
+from .._helper import export
 
 
 @export
