@@ -1810,7 +1810,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="api/sdr.PSK.offset/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.offset (Python property) — The phase offset $phi$ in radians." class="md-ellipsis">offset</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">offset</span>
       </a>
     </li>
   
@@ -1825,7 +1825,22 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="api/sdr.PSK.order/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.order (Python property) — The modulation order $M$." class="md-ellipsis">order</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.order (Python property) — The modulation order $M = 2^k$." class="md-ellipsis">order</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.PSK.symbol_labels/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_labels (Python property) — The symbols values (labels) of consecutive symbols." class="md-ellipsis">symbol_<wbr>labels</span>
       </a>
     </li>
   
@@ -1840,7 +1855,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="api/sdr.PSK.symbol_map/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_map (Python property) — The symbol map ${0, dots, M-1} -&gt; mathbb{C}$. This maps decimal symbols from $0$ to $M-1$ to complex symbols." class="md-ellipsis">symbol_<wbr>map</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_map (Python property) — The symbol map ${0, dots, M-1} mapsto mathbb{C}$. This maps decimal symbols from $0$ to $M-1$ to complex symbols." class="md-ellipsis">symbol_<wbr>map</span>
       </a>
     </li>
   
@@ -1859,6 +1874,21 @@ You're not viewing the latest version.
       </nav>
     </li>
   
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.binary_code/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.binary_code (Python function) — Generates a binary code of length $2^n$." class="md-ellipsis">binary_<wbr>code</span>
+      </a>
+    </li>
   
 
             
@@ -4219,7 +4249,7 @@ in <a class="reference internal" href="api/#module-sdr" title="sdr (Python modul
 <li><p>Link budgets: <a class="reference internal" href="api/sdr.awgn_capacity/" title="sdr.awgn_capacity (Python function) — Calculates the capacity of an additive white Gaussian noise (AWGN) channel."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.awgn_capacity()</span></code></a>, <a class="reference internal" href="api/sdr.bsc_capacity/" title="sdr.bsc_capacity (Python function) — Calculates the capacity of a binary symmetric channel (BSC)."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bsc_capacity()</span></code></a>, <a class="reference internal" href="api/sdr.bec_capacity/" title="sdr.bec_capacity (Python function) — Calculates the capacity of a binary erasure channel (BEC)."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bec_capacity()</span></code></a>,
 <a class="reference internal" href="api/sdr.fspl/" title="sdr.fspl (Python function) — Calculates the free-space path loss (FSPL) in dB."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.fspl()</span></code></a>, <a class="reference internal" href="api/sdr.parabolic_antenna/" title="sdr.parabolic_antenna (Python function) — Calculates the gain $G$ and beamwidth $theta$ of a parabolic reflector."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.parabolic_antenna()</span></code></a></p></li>
 <li><p>Probability: <a class="reference internal" href="api/sdr.Q/" title="sdr.Q (Python function) — Computes the complementary cumulative distribution function $Q(x)$ of the standard normal distribution $mathcal{N}(0, 1)$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.Q()</span></code></a>, <a class="reference internal" href="api/sdr.Qinv/" title="sdr.Qinv (Python function) — Computes the inverse complementary cumulative distribution function $Q^{-1}(p)$ of the standard normal distribution $mathcal{N}(0, 1)$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.Qinv()</span></code></a></p></li>
-<li><p>Plotting utilities: <a class="reference internal" href="api/sdr.plot.time_domain/" title="sdr.plot.time_domain (Python function) — Plots a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.time_domain()</span></code></a>, <a class="reference internal" href="api/sdr.plot.periodogram/" title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.periodogram()</span></code></a>, <a class="reference internal" href="api/sdr.plot.spectrogram/" title="sdr.plot.spectrogram (Python function) — Plots the spectrogram of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.spectrogram()</span></code></a>
+<li><p>Plotting utilities: <a class="reference internal" href="api/sdr.plot.time_domain/" title="sdr.plot.time_domain (Python function) — Plots a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.time_domain()</span></code></a>, <a class="reference internal" href="api/sdr.plot.periodogram/" title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.periodogram()</span></code></a>, <a class="reference internal" href="api/sdr.plot.spectrogram/" title="sdr.plot.spectrogram (Python function) — Plots the spectrogram of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.spectrogram()</span></code></a>,
 <a class="reference internal" href="api/sdr.plot.filter/" title="sdr.plot.filter (Python function) — Plots the frequency response $H(omega)$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.filter()</span></code></a>, <a class="reference internal" href="api/sdr.plot.frequency_response/" title="sdr.plot.frequency_response (Python function) — Plots the frequency response $H(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.frequency_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.phase_response/" title="sdr.plot.phase_response (Python function) — Plots the phase response $Theta(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.phase_response()</span></code></a>,
 <a class="reference internal" href="api/sdr.plot.phase_delay/" title="sdr.plot.phase_delay (Python function) — Plots the phase delay $tau_{phi}(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.phase_delay()</span></code></a>, <a class="reference internal" href="api/sdr.plot.group_delay/" title="sdr.plot.group_delay (Python function) — Plots the group delay $tau_g(omega)$ of the IIR filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.group_delay()</span></code></a>,
 <a class="reference internal" href="api/sdr.plot.impulse_response/" title="sdr.plot.impulse_response (Python function) — Plots the impulse response $h[n]$ of a filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.impulse_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.step_response/" title="sdr.plot.step_response (Python function) — Plots the step response $s[n]$ of a filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.step_response()</span></code></a>,
@@ -4240,7 +4270,7 @@ in <a class="reference internal" href="api/#module-sdr" title="sdr (Python modul
   <small>
     
       Last update:
-      Jul 23, 2023
+      Jul 24, 2023
     
   </small>
 </div>
