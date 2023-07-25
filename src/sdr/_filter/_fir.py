@@ -68,7 +68,8 @@ class FIR:
 
         Arguments:
             x: The input signal $x[n]$.
-            mode: The convolution mode. See :func:`scipy.signal.convolve` for details.
+            mode: The non-streaming convolution mode. See :func:`scipy.signal.convolve` for details.
+                In streaming mode, $N$ inputs always produce $N$ outputs.
 
         Returns:
             The filtered signal $y[n]$.
