@@ -8,6 +8,7 @@ import math
 import numpy as np
 import numpy.typing as npt
 import scipy.signal
+from typing_extensions import Literal
 
 from .._helper import export
 
@@ -84,12 +85,14 @@ class FIRInterpolator:
         """
         self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
 
-    def filter(self, x: npt.ArrayLike) -> np.ndarray:
+    def filter(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
         """
         Filters and interpolates the input signal $x[n]$ with the FIR filter.
 
         Arguments:
             x: The input signal $x[n]$ with sample rate $f_s$.
+            mode: The non-streaming convolution mode. See :func:`scipy.signal.convolve` for details.
+                In streaming mode, $N$ inputs always produce $N r$ outputs.
 
         Returns:
             The filtered signal $y[n]$ with sample rate $f_s r$.
@@ -99,19 +102,41 @@ class FIRInterpolator:
         if self.streaming:
             # Prepend previous inputs from last filter() call
             x_pad = np.concatenate((self._x_prev, x))
-            xx = np.tile(x_pad, (self.rate, 1))
-            taps = np.tile(self.polyphase_taps, self.rate)
-            yy = scipy.signal.convolve(xx, taps, mode="valid")
+            yy = np.zeros((self.rate, x.size), dtype=x.dtype)
+            for i in range(self.rate):
+                yy[i] = scipy.signal.convolve(x_pad, self.polyphase_taps[i], mode="valid")
+
             self._x_prev = x_pad[-(self.polyphase_taps.shape[1] - 1) :]
+
+            # xx = np.tile(x_pad, (self.rate, 1))
+            # taps = np.tile(self.polyphase_taps, self.rate)
+            # yy = scipy.signal.convolve(xx, taps, mode="valid")
+
+            # Commutate the outputs of the polyphase filters
+            y = yy.T.flatten()
         else:
-            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=np.complex64)
+            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=x.dtype)
             for i in range(self.rate):
                 yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
+
+            # Commutate the outputs of the polyphase filters
+            y = yy.T.flatten()
+
+            if mode == "full":
+                size = x.size * self.rate + self.taps.size - 1
+                y = y[:size]
+            elif mode == "same":
+                size = max(x.size * self.rate, self.taps.size)
+                offset = (min(x.size * self.rate, self.taps.size) - 1) // 2
+                y = y[offset : offset + size]
+            else:
+                size = (max(x.size * self.rate, self.taps.size) - min(x.size * self.rate, self.taps.size)) + 1
+                offset = min(x.size * self.rate, self.taps.size) - 1
+                y = y[offset : offset + size]
+
             # xx = np.tile(x, (self.rate, 1))
             # taps = np.tile(self.polyphase_taps, self.rate)
             # yy = scipy.signal.convolve(xx, taps, mode="full")
-
-        y = yy.T.flatten()
 
         return y
 
