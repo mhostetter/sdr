@@ -50,6 +50,8 @@ def awgn(
         $$w \sim \mathcal{CN}(0, \sigma^2) = \mathcal{N}(0, \sigma^2 / 2) + j\mathcal{N}(0, \sigma^2 / 2)$$
 
     Examples:
+        Create a real sinusoid and set its $S/N$ to 10 dB.
+
         .. ipython:: python
 
             x = np.sin(2 * np.pi * 5 * np.arange(100) / 100); \
@@ -60,6 +62,23 @@ def awgn(
             sdr.plot.time_domain(x, label="$x[n]$"); \
             sdr.plot.time_domain(y, label="$y[n]$"); \
             plt.title("Input signal $x[n]$ and noisy output signal $y[n]$ with 10 dB SNR"); \
+            plt.tight_layout()
+
+        Create a QPSK reference signal and set its $E_s/N_0$ to 10 dB. When the signal has 1 sample per symbol,
+        $E_s/N_0$ is equivalent to the discrete-time $S/N$.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(4, offset=45); \
+            s = np.random.randint(0, psk.order, 1_000); \
+            x = psk.modulate(s); \
+            y = sdr.awgn(x, snr=10)
+
+            @savefig sdr_awgn_2.png
+            plt.figure(figsize=(10, 5)); \
+            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
+            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
+            plt.title(f"QPSK constellations for $x[n]$ with $\infty$ dB $E_s/N_0$\nand $y[n]$ with 10 dB $E_s/N_0$"); \
             plt.tight_layout()
 
     Group:
@@ -121,13 +140,13 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
             @savefig sdr_iq_imbalance_1.png
             plt.figure(figsize=(10, 5)); \
             plt.subplot(1, 2, 1); \
-            sdr.plot.constellation(x, label="Before"); \
-            sdr.plot.constellation(y1, label="After"); \
+            sdr.plot.constellation(x, label="$x[n]$"); \
+            sdr.plot.constellation(y1, label="$y_1[n]$"); \
             plt.legend(); \
             plt.title("5 dB amplitude imbalance"); \
             plt.subplot(1, 2, 2); \
-            sdr.plot.constellation(x, label="Before"); \
-            sdr.plot.constellation(y2, label="After"); \
+            sdr.plot.constellation(x, label="$x[n]$"); \
+            sdr.plot.constellation(y2, label="$y_2[n]$"); \
             plt.legend(); \
             plt.title("-5 dB amplitude imbalance");
 
@@ -142,13 +161,13 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
             @savefig sdr_iq_imbalance_2.png
             plt.figure(figsize=(10, 5)); \
             plt.subplot(1, 2, 1); \
-            sdr.plot.constellation(x, label="Before"); \
-            sdr.plot.constellation(y1, label="After"); \
+            sdr.plot.constellation(x, label="$x[n]$"); \
+            sdr.plot.constellation(y1, label="$y_1[n]$"); \
             plt.legend(); \
             plt.title("20 deg phase imbalance"); \
             plt.subplot(1, 2, 2); \
-            sdr.plot.constellation(x, label="Before"); \
-            sdr.plot.constellation(y2, label="After"); \
+            sdr.plot.constellation(x, label="$x[n]$"); \
+            sdr.plot.constellation(y2, label="$y_2[n]$"); \
             plt.legend(); \
             plt.title("-20 deg phase imbalance");
 
@@ -200,8 +219,8 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
 
             @savefig sdr_sample_rate_offset_1.png
             plt.figure(figsize=(10, 5)); \
-            sdr.plot.constellation(y, label="After"); \
-            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
+            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
             plt.title(f"{ppm} ppm sample rate offset"); \
             plt.tight_layout()
 
@@ -214,8 +233,8 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
 
             @savefig sdr_sample_rate_offset_2.png
             plt.figure(figsize=(10, 5)); \
-            sdr.plot.constellation(y, label="After"); \
-            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
+            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
             plt.title(f"{ppm} ppm sample rate offset"); \
             plt.tight_layout()
 
@@ -277,8 +296,8 @@ def frequency_offset(
 
             @savefig sdr_frequency_offset_1.png
             plt.figure(figsize=(10, 5)); \
-            sdr.plot.constellation(y, label="After"); \
-            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
+            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
             plt.title(f"{freq} cycles/sample frequency offset"); \
             plt.tight_layout()
 
@@ -292,8 +311,8 @@ def frequency_offset(
 
             @savefig sdr_frequency_offset_2.png
             plt.figure(figsize=(10, 5)); \
-            sdr.plot.constellation(y, label="After"); \
-            sdr.plot.constellation(x, label="Before"); \
+            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
+            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
             plt.title(f"{freq} cycles/sample frequency and {phase} deg offset"); \
             plt.tight_layout()
 
