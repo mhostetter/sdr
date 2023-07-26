@@ -57,6 +57,8 @@ def constellation(
         plt.ylim(limits)
         if not heatmap:
             plt.grid(True)
+        if "label" in kwargs:
+            plt.legend()
         plt.xlabel("In-phase channel, $I$")
         plt.ylabel("Quadrature channel, $Q$")
         plt.title("Constellation")
@@ -119,6 +121,8 @@ def symbol_map(
         plt.xlim(limits)
         plt.ylim(limits)
         plt.grid(True)
+        if "label" in kwargs:
+            plt.legend()
         plt.xlabel("In-phase channel, $I$")
         plt.ylabel("Quadrature channel, $Q$")
         plt.title("Symbol Map")
