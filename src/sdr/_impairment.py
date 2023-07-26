@@ -6,6 +6,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
+from ._farrow import FarrowResampler
 from ._helper import export
 from ._measurement import average_power
 
@@ -165,5 +166,73 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
     gain_q = 10 ** (-0.5 * amplitude / 20) * np.exp(1j * 0.5 * phase)
 
     y = gain_i * x.real + 1j * gain_q * x.imag
+
+    return y
+
+
+@export
+def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
+    r"""
+    Applies a sample rate offset to the time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to which the sample rate offset is applied.
+        ppm: The sample rate offset $f_{s,\text{new}} / f_s$ in parts per million (ppm).
+
+    Returns:
+        The signal $x[n]$ with sample rate offset applied.
+
+    Examples:
+        Create a QPSK reference signal.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(4, offset=45); \
+            s = np.random.randint(0, psk.order, 1_000); \
+            x = psk.modulate(s)
+
+        Add 10 ppm of sample rate offset.
+
+        .. ipython:: python
+
+            ppm = 10; \
+            y2 = sdr.sample_rate_offset(x, ppm)
+
+            @savefig sdr_sample_rate_offset_1.png
+            plt.figure(figsize=(10, 5)); \
+            sdr.plot.constellation(y2, label="After"); \
+            sdr.plot.constellation(x, label="Before"); \
+            plt.title(f"{ppm} ppm sample rate offset"); \
+            plt.tight_layout()
+
+        Add 100 ppm of sample rate offset.
+
+        .. ipython:: python
+
+            ppm = 100; \
+            y2 = sdr.sample_rate_offset(x, ppm)
+
+            @savefig sdr_sample_rate_offset_2.png
+            plt.figure(figsize=(10, 5)); \
+            sdr.plot.constellation(y2, label="After"); \
+            sdr.plot.constellation(x, label="Before"); \
+            plt.title(f"{ppm} ppm sample rate offset"); \
+            plt.tight_layout()
+
+    Group:
+        impairments
+    """
+    x = np.asarray(x)
+    if not x.ndim == 1:
+        raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
+
+    rate = 1 + ppm * 1e-6
+
+    # TODO: Add ppm_rate
+    # if ppm_rate:
+    #     rate += ppm_rate * 1e-6 * np.arange(x.size)
+
+    farrow = FarrowResampler()
+    y = farrow.resample(x, rate)
 
     return y
