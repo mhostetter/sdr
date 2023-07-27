@@ -91,7 +91,7 @@ class PSK:
         """
         x_hat = np.asarray(x_hat)
         error_vectors = np.subtract.outer(x_hat, self.symbol_map)
-        s_hat = np.argmin(error_vectors, axis=-1)
+        s_hat = np.argmin(np.abs(error_vectors), axis=-1)
         return s_hat
 
     @property
