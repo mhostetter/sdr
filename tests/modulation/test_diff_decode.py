@@ -19,8 +19,17 @@ def test_exceptions():
         sdr.diff_decode([0, 1, 0], y_prev=-1)
 
 
-def test_decode():
-    y = [0, 1, 1, 1, 0, 1]
+def test_decode_1():
+    """
+    Matlab:
+        >> diff_dec = comm.DifferentialDecoder;
+        >> y = randi([0 1], 10, 1); y
+        >> diff_dec(y)
+    """
+    y = [1, 0, 1, 1, 0, 0, 0, 0, 0, 1]
     x = sdr.diff_decode(y)
-    x_truth = [0, 1, 0, 0, 1, 1]
+    x_truth = [1, 1, 1, 0, 1, 0, 0, 0, 0, 1]
     assert np.array_equal(x, x_truth)
+
+
+# TODO: Add more Matlab tests
