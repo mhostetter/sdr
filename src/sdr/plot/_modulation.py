@@ -138,7 +138,7 @@ def symbol_map(
 @export
 def error_rate(
     snr: npt.ArrayLike,
-    error_rate: npt.ArrayLike,
+    error_rate: npt.ArrayLike,  # pylint: disable=redefined-outer-name
     x_unit: Literal["ebn0", "esn0", "snr"] = "ebn0",
     y_unit: Literal["ber", "ser"] = "ber",
     **kwargs,
