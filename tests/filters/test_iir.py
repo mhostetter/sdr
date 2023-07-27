@@ -22,4 +22,5 @@ def test_single_pole_impulse_response(pole):
     h = iir.filter(x)
     h_truth = pole ** np.arange(N)
 
+    assert h.shape == h_truth.shape
     assert np.allclose(h, h_truth)

@@ -89,6 +89,8 @@ class FarrowResampler:
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
+        if not isinstance(rate, (int, float)):
+            raise TypeError("Argument 'rate' must be an integer or float.")
         if not rate > 0:
             raise ValueError("Argument 'rate' must be positive.")
 

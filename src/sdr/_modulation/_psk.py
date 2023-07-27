@@ -8,7 +8,7 @@ import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._helper import export
-from ._codes import binary_code, gray_code
+from ._symbol_mapping import binary_code, gray_code
 
 
 @export
@@ -20,7 +20,7 @@ class PSK:
         See the :ref:`psk` example.
 
     Group:
-        modulation
+        modulation-classes
     """
 
     def __init__(

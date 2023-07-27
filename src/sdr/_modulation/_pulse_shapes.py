@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ._helper import export
+from .._helper import export
 
 
 @export
@@ -41,7 +41,7 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         See the :ref:`pulse-shapes` example.
 
     Group:
-        pulse-shape
+        modulation-pulse-shaping
     """
     if not 0 <= alpha <= 1:
         raise ValueError("Argument 'alpha' must be between 0 and 1.")
@@ -107,7 +107,7 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         See the :ref:`pulse-shapes` example.
 
     Group:
-        pulse-shape
+        modulation-pulse-shaping
     """
     if not 0 <= alpha <= 1:
         raise ValueError("Argument 'alpha' must be between 0 and 1.")
@@ -192,7 +192,7 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
         See the :ref:`pulse-shapes` example.
 
     Group:
-        pulse-shape
+        modulation-pulse-shaping
     """
     if not time_bandwidth > 0:
         raise ValueError("Argument 'time_bandwidth' must be greater than 0.")

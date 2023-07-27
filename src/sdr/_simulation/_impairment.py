@@ -6,9 +6,9 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from ._farrow import FarrowResampler
-from ._helper import export
-from ._measurement import average_power
+from .._farrow import FarrowResampler
+from .._helper import export
+from .._measurement import average_power
 
 
 @export
@@ -82,7 +82,7 @@ def awgn(
             plt.tight_layout()
 
     Group:
-        impairments
+        simulation-impairments
     """
     x = np.asarray(x)
     if snr:
@@ -172,7 +172,7 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
             plt.title("-20 deg phase imbalance");
 
     Group:
-        impairments
+        simulation-impairments
     """
     x = np.asarray(x)
     if not np.iscomplexobj(x):
@@ -239,7 +239,7 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
             plt.tight_layout()
 
     Group:
-        impairments
+        simulation-impairments
     """
     x = np.asarray(x)
     if not x.ndim == 1:
@@ -317,7 +317,7 @@ def frequency_offset(
             plt.tight_layout()
 
     Group:
-        impairments
+        simulation-impairments
     """
     x = np.asarray(x)
     if not x.ndim == 1:

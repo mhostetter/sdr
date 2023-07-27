@@ -14,12 +14,9 @@ except ModuleNotFoundError:  # pragma: no cover
     )
 
 from . import plot
-from ._capacity import *
-from ._channel_model import *
 from ._data import *
 from ._farrow import *
 from ._filter import *
-from ._impairment import *
 from ._link_budget import *
 from ._loop_filter import *
 from ._measurement import *
@@ -27,4 +24,4 @@ from ._modulation import *
 from ._nco import *
 from ._pll import *
 from ._probability import *
-from ._pulse_shape import *
+from ._simulation import *
