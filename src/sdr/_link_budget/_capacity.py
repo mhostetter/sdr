@@ -6,7 +6,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from ._helper import export
+from .._helper import export
 
 
 def Hb(x: npt.ArrayLike) -> np.ndarray:
@@ -60,7 +60,7 @@ def bsc_capacity(p: npt.ArrayLike) -> np.ndarray:
             plt.tight_layout()
 
     Group:
-        link-budget
+        link-budget-channel-capacity
     """
     p = np.asarray(p)
     if not (np.all(0 <= p) and np.all(p <= 1)):
@@ -108,7 +108,7 @@ def bec_capacity(p: npt.ArrayLike) -> np.ndarray:
             plt.tight_layout()
 
     Group:
-        link-budget
+        link-budget-channel-capacity
     """
     p = np.asarray(p)
     if not (np.all(0 <= p) and np.all(p <= 1)):
@@ -185,7 +185,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
             plt.tight_layout()
 
     Group:
-        link-budget
+        link-budget-channel-capacity
     """
     snr = np.asarray(snr)
     snr_linear = 10 ** (snr / 10)

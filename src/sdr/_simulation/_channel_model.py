@@ -6,7 +6,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from ._helper import export
+from .._helper import export
 
 
 @export
@@ -33,7 +33,7 @@ def bsc(x: npt.ArrayLike, p: float) -> np.ndarray:
             x == y
 
     Group:
-        channel-model
+        simulation-channel-models
     """
     if not 0 <= p <= 1:
         raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
@@ -69,7 +69,7 @@ def bec(x: npt.ArrayLike, p: float) -> np.ndarray:
             x == y
 
     Group:
-        channel-model
+        simulation-channel-models
     """
     if not 0 <= p <= 1:
         raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
@@ -122,7 +122,7 @@ def dmc(
             x == y
 
     Group:
-        channel-model
+        simulation-channel-models
     """
     x = np.asarray(x)
 

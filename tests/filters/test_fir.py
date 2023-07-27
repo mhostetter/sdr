@@ -14,6 +14,8 @@ def test_non_streaming(mode):
     fir = sdr.FIR(h)
     y = fir.filter(x, mode)
     y_truth = scipy.signal.convolve(x, h, mode=mode)
+
+    assert y.shape == y_truth.shape
     assert np.allclose(y, y_truth)
 
 
@@ -31,6 +33,7 @@ def test_streaming():
 
     y_truth = scipy.signal.convolve(x, h, mode="full")[0:N]
 
+    assert y.shape == y_truth.shape
     assert np.allclose(y, y_truth)
 
 
@@ -39,7 +42,10 @@ def test_impulse_response():
     fir = sdr.FIR(h_truth)
 
     h = fir.impulse_response()
+    assert h.shape == h_truth.shape
     assert np.allclose(h, h_truth)
 
     h = fir.impulse_response(20)
-    assert np.allclose(h, np.concatenate((h_truth, [0] * 10)))
+    h_truth = np.concatenate((h_truth, [0] * 10))
+    assert h.shape == h_truth.shape
+    assert np.allclose(h, h_truth)

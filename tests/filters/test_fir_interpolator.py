@@ -26,6 +26,7 @@ def test_non_streaming(mode):
         # Given the polyphase decomposition, the output is slightly less.
         y_truth = y_truth[0 : y.size]
 
+    assert y.shape == y_truth.shape
     assert np.allclose(y, y_truth)
 
 
@@ -46,6 +47,7 @@ def test_streaming():
     xr[::r] = x[:]
     y_truth = scipy.signal.convolve(xr, h, mode="full")[0 : N * r]
 
+    assert y.shape == y_truth.shape
     assert np.allclose(y, y_truth)
 
 
