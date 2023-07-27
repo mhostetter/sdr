@@ -133,3 +133,78 @@ def symbol_map(
         plt.ylabel("Quadrature channel, $Q$")
         plt.title("Symbol Map")
         plt.tight_layout()
+
+
+@export
+def error_rate(
+    snr: npt.ArrayLike,
+    error_rate: npt.ArrayLike,
+    x_unit: Literal["ebn0", "esn0", "snr"] = "ebn0",
+    y_unit: Literal["ber", "ser"] = "ber",
+    **kwargs,
+):
+    r"""
+    Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR).
+
+    Arguments:
+        snr: A form of signal-to-noise ratio in dB. Either $E_b/N_0$ if `x_unit="ebn0"`,
+            $E_s/N_0$ if `x_unit="esn0"`, or $S/N$ if `x_unit="snr"`.
+        error_rate: The bit error rate if `y_unit="ber"` or symbol error rate if `y_unit="ser"`.
+        x_unit: The unit of the x-axis.
+        y_unit: The unit of the y-axis.
+        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
+
+    Examples:
+        .. ipython:: python
+
+            # bpsk = sdr.PSK(2); \
+            # qpsk = sdr.PSK(4); \
+            # psk8 = sdr.PSK(8); \
+            # ebn0 = np.linspace(0, 10, 100)
+
+            # @savefig sdr_plot_error_rate_1.png
+            # plt.figure(figsize=(8, 4)); \
+            # sdr.plot.error_rate(ebn0, bpsk.ber(ebn0), label="BPSK"); \
+            # sdr.plot.error_rate(ebn0, bpsk.ber(ebn0), label="BPSK"); \
+            # sdr.plot.error_rate(ebn0, bpsk.ber(ebn0), label="BPSK"); \
+            # plt.title("Bit error rate curves for PSK in AWGN"); \
+            # plt.tight_layout()
+
+    Group:
+        plot-modulation
+    """
+    with plt.rc_context(RC_PARAMS):
+        default_kwargs = {
+            # "marker": "x",
+            # "markersize": 6,
+            # "linestyle": "none",
+        }
+        kwargs = {**default_kwargs, **kwargs}
+
+        plt.semilogy(snr, error_rate, **kwargs)
+        plt.grid(True, which="both")
+        if "label" in kwargs:
+            plt.legend()
+
+        if x_unit == "ebn0":
+            plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$")
+        elif x_unit == "esn0":
+            plt.xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
+        elif x_unit == "snr":
+            plt.xlabel("Bit energy to noise PSD ratio (dB), $S/N$")
+        else:
+            raise ValueError(f"Argument 'x_unit' can be either 'ebn0', 'esn0', or 'snr', not {x_unit}.")
+
+        if y_unit == "ber":
+            plt.ylabel("Probability of bit error, $P_b$")
+        elif y_unit == "ser":
+            plt.ylabel("Probability of symbol error, $P_e$")
+        else:
+            raise ValueError(f"Argument 'y_unit' can be either 'ber' or 'ser', not {y_unit}.")
+
+        if y_unit == "ber":
+            plt.title("Bit error rate curve")
+        else:
+            plt.title("Symbol error rate curve")
+
+        plt.tight_layout()
