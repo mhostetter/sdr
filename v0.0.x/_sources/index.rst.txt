@@ -59,9 +59,19 @@ Features
 .. toctree::
    :caption: API Reference
    :hidden:
-   :maxdepth: 2
+   :maxdepth: 4
 
-   api.rst
+   api/filtering.rst
+   api/resampling.rst
+   api/modulation.rst
+   api/synchronization.rst
+   api/impairments.rst
+   api/measurement.rst
+   api/simulation.rst
+   api/link-budgets.rst
+   api/probability.rst
+   api/data-manipulation.rst
+   api/plotting.rst
 
 .. toctree::
    :caption: Release Notes
