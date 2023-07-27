@@ -4898,7 +4898,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../plotting/#filter-analysis"><span class="md-ellipsis">Filter analysis</span></a>
+          <a href="../plotting/#modulation"><span class="md-ellipsis">Modulation</span></a>
           
             <label for="__nav_2_10_4">
               <span class="md-nav__icon md-icon"></span>
@@ -4906,8 +4906,91 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Filter analysis" data-md-level="3">
+      <nav class="md-nav" aria-label="Modulation" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_10_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Modulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.constellation/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.constellation (Python function) — Plots the constellation of the complex symbols $hat{x}[k]$." class="md-ellipsis">constellation</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.error_rate/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.error_rate (Python function) — Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR)." class="md-ellipsis">error_<wbr>rate</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.symbol_map/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.symbol_map (Python function) — Plots the symbol map of the complex symbols $hat{x}[k]$." class="md-ellipsis">symbol_<wbr>map</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_5" type="checkbox" id="__nav_2_10_5" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../plotting/#filter-analysis"><span class="md-ellipsis">Filter analysis</span></a>
+          
+            <label for="__nav_2_10_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Filter analysis" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_10_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Filter analysis</span>
         </label>
@@ -5269,16 +5352,16 @@ with transition probability <span class="math notranslate nohighlight">\(p\)</sp
 <p>When 20 bits are passed through a BSC with transition probability <span class="math notranslate nohighlight">\(p=0.25\)</span>,
 roughly 5 bits are flipped at the output.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="n">x</span>
-<span class="gh">Out[1]: </span><span class="go">array([1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0])</span>
+<span class="gh">Out[1]: </span><span class="go">array([1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0])</span>
 
 <span class="gp">In [2]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">bsc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">);</span> <span class="n">y</span>
-<span class="gh">Out[2]: </span><span class="go">array([1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0])</span>
+<span class="gh">Out[2]: </span><span class="go">array([1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0])</span>
 
 <span class="gp">In [3]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[3]: </span>
-<span class="go">array([ True,  True,  True,  True, False,  True,  True, False,  True,</span>
-<span class="go">        True,  True,  True,  True,  True, False,  True,  True,  True,</span>
-<span class="go">        True,  True])</span>
+<span class="go">array([ True, False, False,  True, False, False,  True,  True,  True,</span>
+<span class="go">       False,  True,  True,  True, False,  True,  True,  True,  True,</span>
+<span class="go">       False,  True])</span>
 </code></pre></div>
 </div>
 </dd></dl>
