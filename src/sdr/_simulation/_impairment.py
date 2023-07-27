@@ -85,11 +85,11 @@ def awgn(
         simulation-impairments
     """
     x = np.asarray(x)
-    if snr:
+    if snr is not None:
         snr_linear = 10 ** (snr / 10)
         signal_power = average_power(x)
         noise_power = signal_power / snr_linear
-    elif noise:
+    elif noise is not None:
         noise_power = noise
     else:
         raise ValueError("Either 'snr' or 'noise' must be specified.")
