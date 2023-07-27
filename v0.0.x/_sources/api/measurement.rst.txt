@@ -15,3 +15,8 @@ Voltage
 -------
 
 .. python-apigen-group:: measurement-voltage
+
+Errors
+------
+
+.. python-apigen-group:: measurement-errors
