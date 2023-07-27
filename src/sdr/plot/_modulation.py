@@ -29,6 +29,9 @@ def constellation(
             set to 10% larger than the maximum value.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()` (`heatmap=False`)
             or :func:`matplotlib.pyplot.hist2d()` (`heatmap=True`).
+
+    Group:
+        plot-modulation
     """
     x_hat = np.asarray(x_hat)
 
@@ -82,6 +85,9 @@ def symbol_map(
         limits: The axis limits, which apply to both the x- and y-axis.
             If `None`, the axis limits are set to 50% larger than the maximum value.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    Group:
+        plot-modulation
     """
     symbol_map = np.asarray(symbol_map)
     k = int(np.log2(symbol_map.size))
