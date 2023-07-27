@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rectangular-pulse-shape" class="md-skip">
+        <a href="#bpsk-signal-with-various-pulse-shapes" class="md-skip">
           Skip to content
         </a>
       
@@ -414,15 +414,29 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#rectangular-pulse-shape" class="md-nav__link">
-    <span class="md-ellipsis">Rectangular pulse shape</span>
+  <a href="#bpsk-signal-with-various-pulse-shapes" class="md-nav__link">
+    <span class="md-ellipsis">BPSK signal with various pulse shapes</span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#square-root-raised-cosine-pulse-shape" class="md-nav__link">
-    <span class="md-ellipsis">Square-<wbr>root raised cosine pulse shape</span>
+  <a href="#examine-time-domain" class="md-nav__link">
+    <span class="md-ellipsis">Examine time domain</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examine-frequency-domain" class="md-nav__link">
+    <span class="md-ellipsis">Examine frequency domain</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plot-across-excess-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">Plot across excess bandwidth</span>
   </a>
   
 </li>
@@ -5245,15 +5259,29 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#rectangular-pulse-shape" class="md-nav__link">
-    <span class="md-ellipsis">Rectangular pulse shape</span>
+  <a href="#bpsk-signal-with-various-pulse-shapes" class="md-nav__link">
+    <span class="md-ellipsis">BPSK signal with various pulse shapes</span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#square-root-raised-cosine-pulse-shape" class="md-nav__link">
-    <span class="md-ellipsis">Square-<wbr>root raised cosine pulse shape</span>
+  <a href="#examine-time-domain" class="md-nav__link">
+    <span class="md-ellipsis">Examine time domain</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examine-frequency-domain" class="md-nav__link">
+    <span class="md-ellipsis">Examine frequency domain</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plot-across-excess-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">Plot across excess bandwidth</span>
   </a>
   
 </li>
@@ -5286,6 +5314,17 @@ You're not viewing the latest version.
 </div>
 </div>
 </div>
+<h2 id="bpsk-signal-with-various-pulse-shapes">BPSK signal with various pulse shapes<a class="headerlink" href="#bpsk-signal-with-various-pulse-shapes" title="Permalink to this heading">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">1_000</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">span</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># Length of the pulse shape in symbols</span>
@@ -5296,49 +5335,33 @@ You're not viewing the latest version.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Create a BPSK impulse signal</span>
-<span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N_symbols</span> <span class="o">*</span> <span class="n">sps</span><span class="p">)</span>
-<span class="n">symbol_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">x</span><span class="p">[::</span><span class="n">sps</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol_map</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">pulse_shape</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">alpha</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">h</span><span class="p">[</span><span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sps</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+    <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FIRInterpolator</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+
+    <span class="n">bb</span> <span class="o">=</span> <span class="n">fir</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">pb</span> <span class="o">=</span> <span class="n">bb</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">bb</span><span class="o">.</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
+
+    <span class="k">return</span> <span class="n">bb</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">bb</span><span class="p">),</span> <span class="n">pb</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">pb</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<h2 id="rectangular-pulse-shape">Rectangular pulse shape<a class="headerlink" href="#rectangular-pulse-shape" title="Permalink to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Pulse shape the signal with a rectangular pulse</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">h</span><span class="p">[</span><span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sps</span><span class="p">)</span>
-<span class="n">x_bb_rect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>
-<span class="n">papr_bb_rect</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_bb_rect</span><span class="p">)</span>
-
-<span class="n">x_pb_rect</span> <span class="o">=</span> <span class="n">x_bb_rect</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_bb_rect</span><span class="o">.</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
-<span class="n">papr_pb_rect</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_pb_rect</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">x_bb_rect</span><span class="p">,</span> <span class="n">papr_bb_rect</span><span class="p">,</span> <span class="n">x_pb_rect</span><span class="p">,</span> <span class="n">papr_pb_rect</span> <span class="o">=</span> <span class="n">pulse_shape</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">x_bb_0p1</span><span class="p">,</span> <span class="n">papr_bb_0p1</span><span class="p">,</span> <span class="n">x_pb_0p1</span><span class="p">,</span> <span class="n">papr_pb_0p1</span> <span class="o">=</span> <span class="n">pulse_shape</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">x_bb_0p5</span><span class="p">,</span> <span class="n">papr_bb_0p5</span><span class="p">,</span> <span class="n">x_pb_0p5</span><span class="p">,</span> <span class="n">papr_pb_0p5</span> <span class="o">=</span> <span class="n">pulse_shape</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">x_bb_0p9</span><span class="p">,</span> <span class="n">papr_bb_0p9</span><span class="p">,</span> <span class="n">x_pb_0p9</span><span class="p">,</span> <span class="n">papr_pb_0p9</span> <span class="o">=</span> <span class="n">pulse_shape</span><span class="p">(</span><span class="mf">0.9</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 </div>
-<h2 id="square-root-raised-cosine-pulse-shape">Square-root raised cosine pulse shape<a class="headerlink" href="#square-root-raised-cosine-pulse-shape" title="Permalink to this heading">¶</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="c1"># Pulse shape the signal with a square-root raised cosine filter</span>
-<span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-<span class="n">x_bb_0p9</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>
-<span class="n">papr_bb_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_bb_0p9</span><span class="p">)</span>
-
-<span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-<span class="n">x_bb_0p5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>
-<span class="n">papr_bb_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_bb_0p5</span><span class="p">)</span>
-
-<span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-<span class="n">x_bb_0p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">)</span>
-<span class="n">papr_bb_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_bb_0p1</span><span class="p">)</span>
-</code></pre></div>
-</div>
-</div>
-</div>
+<h2 id="examine-time-domain">Examine time domain<a class="headerlink" href="#examine-time-domain" title="Permalink to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -5346,7 +5369,7 @@ You're not viewing the latest version.
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_bb_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.9$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_bb_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.5$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_bb_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.1$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span> <span class="o">*</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">25</span> <span class="o">*</span> <span class="n">sps</span><span class="p">,</span> <span class="mi">50</span> <span class="o">*</span> <span class="n">sps</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Baseband BPSK with SRRC pulse shaping&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -5355,9 +5378,29 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e89eb5bd71d23e0734134bd0b1f7cfaae4812bf3a18bbe5a024ac641a0f73517.png" src="../../_images/e89eb5bd71d23e0734134bd0b1f7cfaae4812bf3a18bbe5a024ac641a0f73517.png" />
+<img alt="../../_images/d833b6810e8d2b39ac5de133749b0fd8b846e889ed0aff37e7dc9ee0eb110abb.png" src="../../_images/d833b6810e8d2b39ac5de133749b0fd8b846e889ed0aff37e7dc9ee0eb110abb.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_rect</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Rectangular, PAPR = </span><span class="si">{</span><span class="n">papr_pb_rect</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.9$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.5$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.1$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">25</span> <span class="o">*</span> <span class="n">sps</span><span class="p">,</span> <span class="mi">50</span> <span class="o">*</span> <span class="n">sps</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Passband BPSK with SRRC pulse shaping&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f02c8adda44b3575c1aaf757b2797d3c239c8cd5554fc94238e6ea56b6ea57c3.png" src="../../_images/f02c8adda44b3575c1aaf757b2797d3c239c8cd5554fc94238e6ea56b6ea57c3.png" />
+</div>
+</div>
+<h2 id="examine-frequency-domain">Examine frequency domain<a class="headerlink" href="#examine-frequency-domain" title="Permalink to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -5371,40 +5414,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/990a6b7c848f878d19625b66ffb8300fe7f39e52e3b6c3521800bd9098f66d37.png" src="../../_images/990a6b7c848f878d19625b66ffb8300fe7f39e52e3b6c3521800bd9098f66d37.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">x_pb_0p9</span> <span class="o">=</span> <span class="n">x_bb_0p9</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_bb_0p9</span><span class="o">.</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
-<span class="n">papr_pb_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_pb_0p9</span><span class="p">)</span>
-
-<span class="n">x_pb_0p5</span> <span class="o">=</span> <span class="n">x_bb_0p5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_bb_0p5</span><span class="o">.</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
-<span class="n">papr_pb_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_pb_0p5</span><span class="p">)</span>
-
-<span class="n">x_pb_0p1</span> <span class="o">=</span> <span class="n">x_bb_0p1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_bb_0p1</span><span class="o">.</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
-<span class="n">papr_pb_0p1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">x_pb_0p1</span><span class="p">)</span>
-</code></pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_rect</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Rectangular, PAPR = </span><span class="si">{</span><span class="n">papr_pb_rect</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.9$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.5$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_pb_0p1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.1$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span> <span class="o">*</span> <span class="n">sps</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Passband BPSK with SRRC pulse shaping&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/2c82097f889fecc06283a2f4798ecc66d2f284632a9e6a6efb943e99cb0ea241.png" src="../../_images/2c82097f889fecc06283a2f4798ecc66d2f284632a9e6a6efb943e99cb0ea241.png" />
+<img alt="../../_images/634e2883cdbc5dc7af0510c9f5a0474fb6d302e0cfbb90202ee66233d0d7e3f8.png" src="../../_images/634e2883cdbc5dc7af0510c9f5a0474fb6d302e0cfbb90202ee66233d0d7e3f8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -5444,7 +5454,87 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c648c8f9fd3a688d659b04d898bf659026613b5482e80c6282e3ea4d78f09cd7.png" src="../../_images/c648c8f9fd3a688d659b04d898bf659026613b5482e80c6282e3ea4d78f09cd7.png" />
+<img alt="../../_images/e0a35eb2a11f20b9683f3e4df5b0469b914f4cd77266758f0f62df8a87f1cafb.png" src="../../_images/e0a35eb2a11f20b9683f3e4df5b0469b914f4cd77266758f0f62df8a87f1cafb.png" />
+</div>
+</div>
+<h2 id="plot-across-excess-bandwidth">Plot across excess bandwidth<a class="headerlink" href="#plot-across-excess-bandwidth" title="Permalink to this heading">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sweep_alpha</span><span class="p">(</span><span class="n">order</span><span class="p">):</span>
+    <span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">1_000</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">bb_papr</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">pb_papr</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+        <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FIRInterpolator</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+
+        <span class="n">bb</span> <span class="o">=</span> <span class="n">fir</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">pb</span> <span class="o">=</span> <span class="n">bb</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">bb</span><span class="o">.</span><span class="n">size</span><span class="p">))</span><span class="o">.</span><span class="n">real</span>
+
+        <span class="n">bb_papr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">bb</span><span class="p">))</span>
+        <span class="n">pb_papr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">pb</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">alphas</span><span class="p">,</span> <span class="n">bb_papr</span><span class="p">,</span> <span class="n">pb_papr</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">alpha</span><span class="p">,</span> <span class="n">bpsk_bb_papr</span><span class="p">,</span> <span class="n">bpsk_pb_papr</span> <span class="o">=</span> <span class="n">sweep_alpha</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">alpha</span><span class="p">,</span> <span class="n">qpsk_bb_papr</span><span class="p">,</span> <span class="n">qpsk_pb_papr</span> <span class="o">=</span> <span class="n">sweep_alpha</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">alpha</span><span class="p">,</span> <span class="n">psk8_bb_papr</span><span class="p">,</span> <span class="n">psk8_pb_papr</span> <span class="o">=</span> <span class="n">sweep_alpha</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">alpha</span><span class="p">,</span> <span class="n">psk16_bb_papr</span><span class="p">,</span> <span class="n">psk16_pb_papr</span> <span class="o">=</span> <span class="n">sweep_alpha</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">bpsk_bb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">qpsk_bb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">psk8_bb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">psk16_bb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;SRRC excess bandwidth, $\alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Peak-to-average-power (PAPR)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PAPR for baseband PSK across SRRC excess bandwidth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c85d0cee3ad35352719c01885e54015a79d236fc3e1800893dda815d86e18dd8.png" src="../../_images/c85d0cee3ad35352719c01885e54015a79d236fc3e1800893dda815d86e18dd8.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">bpsk_pb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">qpsk_pb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">psk8_pb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">psk16_pb_papr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;SRRC excess bandwidth, $\alpha$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Peak-to-average-power (PAPR)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PAPR for passband PSK across SRRC excess bandwidth&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/614446e208c31aa0b487c2ec19bcb1dcce95996e3f67fbb8fa6e732137d775fc.png" src="../../_images/614446e208c31aa0b487c2ec19bcb1dcce95996e3f67fbb8fa6e732137d775fc.png" />
 </div>
 </div>
 
@@ -5454,7 +5544,7 @@ You're not viewing the latest version.
   <small>
     
       Last update:
-      Jul 16, 2023
+      Jul 27, 2023
     
   </small>
 </div>

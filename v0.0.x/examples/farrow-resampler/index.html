@@ -5350,7 +5350,7 @@ You're not viewing the latest version.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># samples/s</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># samples</span>
 <span class="n">freq</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># Hz</span>
-<span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>  <span class="c1"># Time axis for the input signal</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>  <span class="c1"># Time axis for the input signal</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq</span> <span class="o">*</span> <span class="n">tx</span><span class="p">)</span>  <span class="c1"># Complex exponential input signal</span>
 <span class="n">x</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Exponential decay</span>
 </code></pre></div>
@@ -5360,8 +5360,8 @@ You're not viewing the latest version.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Real&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Imag&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;real&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;imag&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original signal, $x(t)$&quot;</span><span class="p">)</span>
@@ -5372,7 +5372,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1a51e8f9497f3132ccd7ad6c041fa0ae2974b8bdbdc23ea08b53f80b44c78bf9.png" src="../../_images/1a51e8f9497f3132ccd7ad6c041fa0ae2974b8bdbdc23ea08b53f80b44c78bf9.png" />
+<img alt="../../_images/820cb0cace89902f7b6895400bfa99bc077dd53df9bb39644936bdaf540c4bd7.png" src="../../_images/820cb0cace89902f7b6895400bfa99bc077dd53df9bb39644936bdaf540c4bd7.png" />
 </div>
 </div>
 <h2 id="resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r">Resample the input signal with rate <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(y[n] = x(n \frac{T_s}{r})\)</span><a class="headerlink" href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" title="Permalink to this heading">¶</a></h2>
@@ -5387,16 +5387,17 @@ This is accomplished, for arbitrary <span class="math notranslate nohighlight">\
     <span class="n">farrow</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FarrowResampler</span><span class="p">()</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">farrow</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
     <span class="n">new_sample_rate</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">sample_rate</span>
-    <span class="n">ty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">new_sample_rate</span>  <span class="c1"># Time axis for output signal</span>
+    <span class="n">ty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">new_sample_rate</span>  <span class="c1"># Time axis for output signal</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input signal length: </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output signal length: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (real)&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (imag)&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (real)&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (imag)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (real)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">fillstyle</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input (imag)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (real)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Output (imag)&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original $x(t)$ and resampled signal $y(t)$, rate = </span><span class="si">{</span><span class="n">rate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -5420,7 +5421,7 @@ This is accomplished, for arbitrary <span class="math notranslate nohighlight">\
 Output signal length: 200
 </code></pre></div>
 </div>
-<img alt="../../_images/86f75bb61abc9f39a6fbf115a69de19d882d6d3abe4a94fa309c943529c4bb6a.png" src="../../_images/86f75bb61abc9f39a6fbf115a69de19d882d6d3abe4a94fa309c943529c4bb6a.png" />
+<img alt="../../_images/89ceebb68f923ad04d109ea66846d01f6fa47bdf551a4a3a1c1c5c2860c0503d.png" src="../../_images/89ceebb68f923ad04d109ea66846d01f6fa47bdf551a4a3a1c1c5c2860c0503d.png" />
 </div>
 </div>
 <p>When upsampling by 4, notice there are four output samples for every input sample.</p>
@@ -5435,7 +5436,7 @@ Output signal length: 200
 Output signal length: 400
 </code></pre></div>
 </div>
-<img alt="../../_images/7e8ebea7ff2bf1504e19af543bc891659f57dbe020602c8f07efc96ff56948c5.png" src="../../_images/7e8ebea7ff2bf1504e19af543bc891659f57dbe020602c8f07efc96ff56948c5.png" />
+<img alt="../../_images/646caa5e3d6ef24f9f702393c2d5cf82f5e956cbe0db413bcf71e3a65e6ac0e8.png" src="../../_images/646caa5e3d6ef24f9f702393c2d5cf82f5e956cbe0db413bcf71e3a65e6ac0e8.png" />
 </div>
 </div>
 <h2 id="downsample-the-signal-by-an-integer-rate">Downsample the signal by an integer rate<a class="headerlink" href="#downsample-the-signal-by-an-integer-rate" title="Permalink to this heading">¶</a></h2>
@@ -5451,7 +5452,7 @@ Output signal length: 400
 Output signal length: 50
 </code></pre></div>
 </div>
-<img alt="../../_images/0c54d4132437d3f3890181ac495527a4aed982788af1f134643c178bb92376f5.png" src="../../_images/0c54d4132437d3f3890181ac495527a4aed982788af1f134643c178bb92376f5.png" />
+<img alt="../../_images/615851894310162231bee33379b7d3166d3bb632f7d3b1c76c45fa6da4261ce1.png" src="../../_images/615851894310162231bee33379b7d3166d3bb632f7d3b1c76c45fa6da4261ce1.png" />
 </div>
 </div>
 <p>When downsampling by 4, notice every fourth sample of the input appears at the output.</p>
@@ -5466,7 +5467,7 @@ Output signal length: 50
 Output signal length: 25
 </code></pre></div>
 </div>
-<img alt="../../_images/0f46f5cdd31425f106e73ad934d356980e50631963960e9cd4f881cc1a70b141.png" src="../../_images/0f46f5cdd31425f106e73ad934d356980e50631963960e9cd4f881cc1a70b141.png" />
+<img alt="../../_images/9cce658e1a37c917658068fda5e81fb3eb12bd7514cec2d4216e44750ca218d5.png" src="../../_images/9cce658e1a37c917658068fda5e81fb3eb12bd7514cec2d4216e44750ca218d5.png" />
 </div>
 </div>
 <h2 id="upsample-by-an-irrational-rate">Upsample by an irrational rate<a class="headerlink" href="#upsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
@@ -5483,7 +5484,7 @@ However, these samples often do not align with the original input samples.</p>
 Output signal length: 315
 </code></pre></div>
 </div>
-<img alt="../../_images/bc4efe66eac13e55a9ff05b01327dcb6efdb62c2f46dddc71661ee69fe2c81ef.png" src="../../_images/bc4efe66eac13e55a9ff05b01327dcb6efdb62c2f46dddc71661ee69fe2c81ef.png" />
+<img alt="../../_images/c497f0b5cbcbe2c0cd3c06c646c3f8b3cd04fe423b86fe46e7a9cab832488dac.png" src="../../_images/c497f0b5cbcbe2c0cd3c06c646c3f8b3cd04fe423b86fe46e7a9cab832488dac.png" />
 </div>
 </div>
 <h2 id="downsample-by-an-irrational-rate">Downsample by an irrational rate<a class="headerlink" href="#downsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
@@ -5500,7 +5501,7 @@ However, these samples often do not align with the original input samples.</p>
 Output signal length: 32
 </code></pre></div>
 </div>
-<img alt="../../_images/0e52ec62f7cf3419b0ceb8dd9b591858da8ab3ec6746746b1835e5bea3c726e2.png" src="../../_images/0e52ec62f7cf3419b0ceb8dd9b591858da8ab3ec6746746b1835e5bea3c726e2.png" />
+<img alt="../../_images/861a939f5ee5892b3dd1b7ec7bb0f3cdd57e5db2ca86118fb22b352b2f2a42ba.png" src="../../_images/861a939f5ee5892b3dd1b7ec7bb0f3cdd57e5db2ca86118fb22b352b2f2a42ba.png" />
 </div>
 </div>
 
@@ -5510,7 +5511,7 @@ Output signal length: 32
   <small>
     
       Last update:
-      Jul 09, 2023
+      Jul 27, 2023
     
   </small>
 </div>
