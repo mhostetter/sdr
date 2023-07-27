@@ -58,7 +58,7 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
             plt.tight_layout()
 
     Group:
-        plot-time
+        plot-time-domain
     """
     x = np.asarray(x)
     t = np.arange(x.size) / sample_rate

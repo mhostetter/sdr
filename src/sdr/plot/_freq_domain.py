@@ -43,7 +43,7 @@ def periodogram(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
-        plot-freq
+        plot-frequency-domain
     """
     f, Pxx = scipy.signal.welch(
         x,
@@ -118,7 +118,7 @@ def spectrogram(
         arguments.
 
     Group:
-        plot-freq
+        plot-frequency-domain
     """
     f, t, Sxx = scipy.signal.spectrogram(
         x,

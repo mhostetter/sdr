@@ -9,12 +9,12 @@ Configuration
 Time-domain
 -----------
 
-.. python-apigen-group:: plot-time
+.. python-apigen-group:: plot-time-domain
 
 Frequency-domain
 ----------------
 
-.. python-apigen-group:: plot-freq
+.. python-apigen-group:: plot-frequency-domain
 
 Modulation
 ----------
