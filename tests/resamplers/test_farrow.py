@@ -11,9 +11,9 @@ import sdr
 def generate_signal():
     N = 1_000  # samples
     omega = 2 * np.pi / 40  # radians
-    x = np.exp(1j * omega * np.arange(0, N))  # Complex exponential input signal
+    x = np.exp(1j * omega * np.arange(N))  # Complex exponential input signal
     x *= np.exp(-np.arange(N) / 300)  # Exponential decay
-    tx = np.arange(0, N)  # Time axis for the input signal
+    tx = np.arange(N)  # Time axis for the input signal
     return tx, x
 
 

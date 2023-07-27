@@ -33,7 +33,7 @@ def binary_code(n: int) -> np.ndarray:
     if not n >= 1:
         raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")
 
-    return np.arange(0, 2**n)
+    return np.arange(2**n)
 
 
 @export
