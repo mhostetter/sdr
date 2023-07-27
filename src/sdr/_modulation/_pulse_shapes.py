@@ -58,10 +58,11 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     Ts = sps
 
     # Handle special cases where the denominator is zero
-    t1 = Ts / (2 * alpha)
-    t[t == -t1] -= 1e-8
-    t[t == t1] += 1e-8
     t[t == 0] += 1e-16
+    if alpha > 0:
+        t1 = Ts / (2 * alpha)
+        t[t == -t1] -= 1e-8
+        t[t == t1] += 1e-8
 
     # Equation A-27
     A = np.sin(np.pi * t / Ts) / (np.pi * t / Ts)
@@ -124,10 +125,11 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     Ts = sps  # Symbol duration (in samples)
 
     # Handle special cases where the denominator is zero
-    t1 = Ts / (4 * alpha)
-    t[t == -t1] -= 1e-8
-    t[t == t1] += 1e-8
     t[t == 0] += 1e-16
+    if alpha > 0:
+        t1 = Ts / (4 * alpha)
+        t[t == -t1] -= 1e-8
+        t[t == t1] += 1e-8
 
     # Equation A-30
     A = np.sin(np.pi * (1 - alpha) * t / Ts)
