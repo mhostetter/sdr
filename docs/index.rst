@@ -67,6 +67,7 @@ Features
    api/synchronization.rst
    api/impairments.rst
    api/measurement.rst
+   api/conversions.rst
    api/simulation.rst
    api/link-budgets.rst
    api/probability.rst
