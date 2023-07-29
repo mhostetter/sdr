@@ -136,3 +136,41 @@ def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> np.ndarray:
     ecn0 = esn0 - 10 * np.log10(bps)  # Energy per coded bit
     ebn0 = ecn0 - 10 * np.log10(rate)  # Energy per information bit
     return ebn0
+
+
+@export
+def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> np.ndarray:
+    r"""
+    Converts from $E_s/N_0$ to $S/N$.
+
+    $$
+    \frac{S}{N} = \frac{E_s}{N_0} \frac{f_{sym}}{f_s}
+    $$
+
+    Arguments:
+        esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB.
+        sps: Samples per symbol $f_s / f_{sym}$.
+
+    Returns:
+        The signal-to-noise ratio $S/N$ in dB.
+
+    Examples:
+        Convert from $E_s/N_0 = 5$ dB to $S/N$ with 1 sample per symbol. In discrete-time systems,
+        when there is 1 sample per symbol, $S/N$ is equivalent to $E_s/N_0$.
+
+        .. ipython:: python
+
+            sdr.esn0_to_snr(5, sps=1)
+
+        Convert from $E_s/N_0 = 10$ dB to $S/N$ with 4 samples per symbol.
+
+        .. ipython:: python
+
+            sdr.esn0_to_snr(10, sps=4)
+
+    Group:
+        conversions-from-esn0
+    """
+    esn0 = np.asarray(esn0)  # SNR per symbol
+    snr = esn0 - 10 * np.log10(sps)  # SNR per sample
+    return snr
