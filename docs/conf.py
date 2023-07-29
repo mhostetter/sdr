@@ -360,19 +360,19 @@ sphinx_immaterial_custom_admonitions = [
 #     return skip
 
 
-# def autodoc_process_bases(app, name, obj, options, bases):
-#     """
-#     Remove private classes or mixin classes from documented class bases.
-#     """
-#     # Determine the bases to be removed
-#     remove_bases = []
-#     for base in bases:
-#         if base.__name__[0] == "_" or "Mixin" in base.__name__:
-#             remove_bases.append(base)
+def autodoc_process_bases(app, name, obj, options, bases):
+    """
+    Remove private classes or mixin classes from documented class bases.
+    """
+    # Determine the bases to be removed
+    remove_bases = []
+    for base in bases:
+        if base.__name__[0] == "_" or "Mixin" in base.__name__:
+            remove_bases.append(base)
 
-#     # Remove from the bases list in-place
-#     for base in remove_bases:
-#         bases.remove(base)
+    # Remove from the bases list in-place
+    for base in remove_bases:
+        bases.remove(base)
 
 
 # # Only during Sphinx builds, monkey-patch the metaclass properties into this class as "class properties". In Python 3.9 and greater,
@@ -474,5 +474,5 @@ def setup(app):
     monkey_patch_parse_see_also()
 
     #     app.connect("autodoc-skip-member", autodoc_skip_member)
-    #     app.connect("autodoc-process-bases", autodoc_process_bases)
+    app.connect("autodoc-process-bases", autodoc_process_bases)
     app.connect("autodoc-process-signature", autodoc_process_signature)
