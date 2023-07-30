@@ -34,24 +34,39 @@ in `sdr`, please open an issue on GitHub.
 
 ## Features
 
-- Filters: `sdr.FIR`, `sdr.IIR`
-- Pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`
-- Arbitrary resamplers: `sdr.FarrowResampler`
-- Modulation: `sdr.PSK`, `sdr.diff_encode()`, `sdr.diff_decode()`, `sdr.gray_code()`
-- Phase-locked loops: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
-- Impairments: `sdr.awgn()`, `sdr.iq_imbalance()`
-- Measurement: `sdr.energy()`, `sdr.peak_power()`, `sdr.average_power()`, `sdr.peak_voltage()`,
-  `sdr.rms_voltage()`, `sdr.papr()`, `sdr.crest_factor()`
-- Data manipulation: `sdr.pack()`, `sdr.unpack()`, `sdr.hexdump()`
-- Channel models: `sdr.bsc()`, `sdr.bec()`, `sdr.dmc()`
-- Link budgets: `sdr.awgn_capacity()`, `sdr.bsc_capacity()`, `sdr.bec_capacity()`,
-  `sdr.fspl()`, `sdr.parabolic_antenna()`
+- Filtering: `sdr.FIR`, `sdr.FIRInterpolator`, `sdr.IIR`
+- Resampling: `sdr.FarrowResampler`
+- Modulation:
+  - Classes: `sdr.PSK`
+  - Pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`
+  - Symbol mapping: `sdr.binary_code()`, `sdr.gray_code()`
+  - Symbol encoding: `sdr.diff_encode()`, `sdr.diff_decode()`
+- Synchronization: `sdr.NCO`, `sdr.DDS`, `sdr.LoopFilter`, `sdr.ClosedLoopPLL`
+- Measurement:
+  - Energy: `sdr.energy()`
+  - Power: `sdr.peak_power()`, `sdr.average_power()`, `sdr.papr()`
+  - Voltage: `sdr.peak_voltage()`, `sdr.rms_voltage()`, `sdr.crest_factor()`
+  - Errors: `sdr.ErrorRate`
+- Conversions:
+  - From $E_b/N_0$: `sdr.ebn0_to_esn0()`, `sdr.ebn0_to_snr()`
+  - From $E_s/N_0$: `sdr.esn0_to_ebn0()`, `sdr.esn0_to_snr()`
+  - From $S/N$: `sdr.snr_to_ebn0()`, `sdr.snr_to_esn0()`
+- Simulation:
+  - Channel models: `sdr.bec()`, `sdr.bsc()`, `sdr.dmc()`
+  - Signal impairments: `sdr.awgn()`, `sdr.frequency_offset()`, `sdr.sample_rate_offset()`,  `sdr.iq_imbalance()`
+- Link budgets:
+  - Channel capacity: `sdr.awgn_capacity()`, `sdr.bec_capacity()`, `sdr.bsc_capacity()`
+  - Path losses: `sdr.fspl()`
+  - Antennas: `sdr.parabolic_antenna()`
 - Probability: `sdr.Q()`, `sdr.Qinv()`
-- Plotting utilities: `sdr.plot.time_domain()`, `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`,
-  `sdr.plot.filter()`, `sdr.plot.frequency_response()`, `sdr.plot.phase_response()`,
-  `sdr.plot.phase_delay()`, `sdr.plot.group_delay()`,
-  `sdr.plot.impulse_response()`, `sdr.plot.step_response()`,
-  `sdr.plot.zeros_poles()`
+- Data manipulation: `sdr.pack()`, `sdr.unpack()`, `sdr.hexdump()`
+- Plotting:
+  - Time-domain: `sdr.plot.time_domain()`
+  - Frequency domain: `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`
+  - Modulation: `sdr.plot.ber()`, `sdr.plot.ser()`, `sdr.plot.constellation()`, `sdr.plot.symbol_map()`
+  - Filters: `sdr.plot.impulse_response()`, `sdr.plot.step_response()`, `sdr.plot.frequency_response()`,
+    `sdr.plot.phase_response()`, `sdr.plot.phase_delay()`, `sdr.plot.group_delay()`,
+    `sdr.plot.zeros_poles()`, `sdr.plot.filter()`
 
 ## Documentation
 
