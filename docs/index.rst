@@ -75,6 +75,15 @@ Features
    api/plotting.rst
 
 .. toctree::
+   :caption: Development
+   :hidden:
+
+   development/installation.rst
+   .. development/linter.rst
+   .. development/unit-tests.rst
+   .. development/documentation.rst
+
+.. toctree::
    :caption: Release Notes
    :hidden:
 
