@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v0-0-2" class="md-skip">
+        <a href="#v0-0-3" class="md-skip">
           Skip to content
         </a>
       
@@ -5536,6 +5536,13 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#v0-0-3" class="md-nav__link">
+    <span class="md-ellipsis">v0.<wbr>0.<wbr>3</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v0-0-2" class="md-nav__link">
     <span class="md-ellipsis">v0.<wbr>0.<wbr>2</span>
   </a>
@@ -5638,6 +5645,13 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#v0-0-3" class="md-nav__link">
+    <span class="md-ellipsis">v0.<wbr>0.<wbr>3</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v0-0-2" class="md-nav__link">
     <span class="md-ellipsis">v0.<wbr>0.<wbr>2</span>
   </a>
@@ -5666,9 +5680,32 @@ You're not viewing the latest version.
 
 
 <h1 id="v0-0">v0.0<a class="headerlink" href="#v0-0" title="Permalink to this heading">¶</a></h1>
+<h2 id="v0-0-3">v0.0.3<a class="headerlink" href="#v0-0-3" title="Permalink to this heading">¶</a></h2>
+<p><em>Released July 30, 2023</em></p>
+<h3 id="changes">Changes<a class="headerlink" href="#changes" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added PSK modulation in <code class="docutils literal notranslate"><span class="pre">sdr.PSK</span></code>.</p></li>
+<li><p>Added symbol mapping: <code class="docutils literal notranslate"><span class="pre">sdr.binary_code()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.gray_code()</span></code>.</p></li>
+<li><p>Added differential codes: <code class="docutils literal notranslate"><span class="pre">sdr.diff_encode()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.diff_decode()</span></code>.</p></li>
+<li><p>Added a FIR interpolating filter in <code class="docutils literal notranslate"><span class="pre">sdr.FIRInterpolator</span></code>.</p></li>
+<li><p>Added error rate measurement in <code class="docutils literal notranslate"><span class="pre">sdr.ErrorRate</span></code>.</p></li>
+<li><p>Added signal measurement functions: <code class="docutils literal notranslate"><span class="pre">sdr.energy()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.peak_power()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.average_power()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.papr()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.peak_voltage()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.rms_voltage()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.crest_factor()</span></code>.</p></li>
+<li><p>Added channel models: <code class="docutils literal notranslate"><span class="pre">sdr.bec()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.bsc()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.dmc()</span></code>.</p></li>
+<li><p>Added signal impairments: <code class="docutils literal notranslate"><span class="pre">sdr.awgn()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.frequency_offset()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.sample_rate_offset()</span></code>,  <code class="docutils literal notranslate"><span class="pre">sdr.iq_imbalance()</span></code>.</p></li>
+<li><p>Added probability functions: <code class="docutils literal notranslate"><span class="pre">sdr.Q()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.Qinv()</span></code>.</p></li>
+<li><p>Added link budget functions: <code class="docutils literal notranslate"><span class="pre">sdr.fpsl()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.parabolic_antenna()</span></code>.</p></li>
+<li><p>Added channel capacity functions: <code class="docutils literal notranslate"><span class="pre">sdr.awgn_capacity()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.bec_capacity()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.bsc_capacity()</span></code>.</p></li>
+<li><p>Added SNR conversion functions: <code class="docutils literal notranslate"><span class="pre">sdr.ebn0_to_esn0()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.ebn0_to_snr()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.esn0_to_ebn0()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.esn0_to_snr()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.snr_to_ebn0()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.snr_to_esn0()</span></code>.</p></li>
+<li><p>Added plotting functions for modulation: <code class="docutils literal notranslate"><span class="pre">sdr.plot.ber()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.ser()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.constellation()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.symbol_map()</span></code>.</p></li>
+<li><p>Added more filter plotting functions: <code class="docutils literal notranslate"><span class="pre">sdr.plot.phase_response()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.phase_delay()</span></code>.</p></li>
+</ul>
+<h3 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
+</ul>
 <h2 id="v0-0-2">v0.0.2<a class="headerlink" href="#v0-0-2" title="Permalink to this heading">¶</a></h2>
 <p><em>Released July 16, 2023</em></p>
-<h3 id="changes">Changes<a class="headerlink" href="#changes" title="Permalink to this heading">¶</a></h3>
+<h3 id="id1">Changes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added finite impulse response (FIR) filters in <code class="docutils literal notranslate"><span class="pre">sdr.FIR</span></code>.</p></li>
 <li><p>Added pulse shapes: <code class="docutils literal notranslate"><span class="pre">sdr.raised_cosine()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.root_raised_cosine()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.gaussian()</span></code>.</p></li>
@@ -5685,13 +5722,13 @@ You're not viewing the latest version.
 <li><p>Added hexdump helper function in <code class="docutils literal notranslate"><span class="pre">sdr.hexdump()</span></code>.</p></li>
 <li><p>Improved type annotations.</p></li>
 </ul>
-<h3 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h3>
+<h3 id="id2">Contributors<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
 <h2 id="v0-0-1">v0.0.1<a class="headerlink" href="#v0-0-1" title="Permalink to this heading">¶</a></h2>
 <p><em>Released July 9, 2023</em></p>
-<h3 id="id1">Changes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<h3 id="id3">Changes<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added Farrow arbitrary resampling in <code class="docutils literal notranslate"><span class="pre">sdr.FarrowResampler</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/1">#1</a>)</p></li>
 <li><p>Added infinite impulse response (IIR) filters in <code class="docutils literal notranslate"><span class="pre">sdr.IIR</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/3">#3</a>)</p></li>
@@ -5700,7 +5737,7 @@ You're not viewing the latest version.
 <li><p>Added 2nd order, proportional-plus-integrator loop filters in <code class="docutils literal notranslate"><span class="pre">sdr.LoopFilter</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/4">#4</a>)</p></li>
 <li><p>Added closed-loop PLL analysis in <code class="docutils literal notranslate"><span class="pre">sdr.ClosedLoopPLL</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/5">#5</a>)</p></li>
 </ul>
-<h3 id="id2">Contributors<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<h3 id="id4">Contributors<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
@@ -5711,7 +5748,7 @@ You're not viewing the latest version.
   <small>
     
       Last update:
-      Jul 16, 2023
+      Jul 30, 2023
     
   </small>
 </div>
