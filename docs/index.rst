@@ -79,7 +79,7 @@ Features
    :hidden:
 
    development/installation.rst
-   .. development/linter.rst
+   development/linter.rst
    .. development/unit-tests.rst
    .. development/documentation.rst
 
