@@ -30,3 +30,21 @@ def export(obj):
     setattr(module, "__all__", public_members)
 
     return obj
+
+
+def extend_docstring(method, replace=None, docstring=""):
+    """
+    A decorator to extend the docstring of `method` with the provided docstring. The decorator also finds
+    and replaces and key-value pair in `replace`.
+    """
+    replace = {} if replace is None else replace
+
+    def decorator(obj):
+        parent_docstring = getattr(method, "__doc__", "")
+        for from_str, to_str in replace.items():
+            parent_docstring = parent_docstring.replace(from_str, to_str)
+        obj.__doc__ = parent_docstring + "\n" + docstring
+
+        return obj
+
+    return decorator

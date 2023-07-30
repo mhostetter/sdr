@@ -41,7 +41,7 @@ def test_bpsk_ber():
             0.000003872108216,
         ]
     )
-    assert np.allclose(ber, ber_truth)
+    np.testing.assert_array_almost_equal(ber, ber_truth)
 
 
 def test_qpsk_ber():
@@ -79,7 +79,7 @@ def test_qpsk_ber():
             0.000003872108216,
         ]
     )
-    assert np.allclose(ber, ber_truth)
+    np.testing.assert_array_almost_equal(ber, ber_truth)
 
 
 # def test_8psk_ber():
@@ -117,7 +117,8 @@ def test_qpsk_ber():
 #             0.001011395320989,
 #         ]
 #     )
-#     assert np.allclose(ber, ber_truth)
+#     np.testing.assert_array_almost_equal(ber, ber_truth)
+
 
 # def test_16psk_ber():
 #     """
@@ -154,4 +155,4 @@ def test_qpsk_ber():
 #             0.020248957901763,
 #         ]
 #     )
-#     assert np.allclose(ber, ber_truth)
+#     np.testing.assert_array_almost_equal(ber, ber_truth)
