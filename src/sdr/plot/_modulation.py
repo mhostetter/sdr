@@ -109,7 +109,7 @@ def symbol_map(
         if annotate:
             for i, symbol in enumerate(symbol_map):
                 if annotate == "bin":
-                    label = f"{i} =" + np.binary_repr(i, k)
+                    label = f"{i} = " + np.binary_repr(i, k)
                 else:
                     label = i
 
