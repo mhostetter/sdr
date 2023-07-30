@@ -81,7 +81,7 @@ Features
    development/installation.rst
    development/linter.rst
    development/unit-tests.rst
-   .. development/documentation.rst
+   development/documentation.rst
 
 .. toctree::
    :caption: Release Notes
