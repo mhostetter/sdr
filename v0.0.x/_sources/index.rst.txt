@@ -25,24 +25,39 @@ in :obj:`sdr`, please open an issue on `GitHub`_.
 Features
 --------
 
-- Filters: :class:`sdr.FIR`, :class:`sdr.IIR`
-- Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
-- Arbitrary resamplers: :class:`sdr.FarrowResampler`
-- Modulation: :class:`sdr.PSK`, :func:`sdr.diff_encode()`, :func:`sdr.diff_decode()`, :func:`sdr.gray_code()`
-- Phase-locked loops: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
-- Impairments: :func:`sdr.awgn()`, :func:`sdr.iq_imbalance()`
-- Measurement: :func:`sdr.energy()`, :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.peak_voltage()`,
-  :func:`sdr.rms_voltage()`, :func:`sdr.papr()`, :func:`sdr.crest_factor()`
-- Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
-- Channel models: :func:`sdr.bsc()`, :func:`sdr.bec()`, :func:`sdr.dmc()`
-- Link budgets: :func:`sdr.awgn_capacity()`, :func:`sdr.bsc_capacity()`, :func:`sdr.bec_capacity()`,
-  :func:`sdr.fspl()`, :func:`sdr.parabolic_antenna()`
+- Filtering: :class:`sdr.FIR`, :class:`sdr.FIRInterpolator`, :class:`sdr.IIR`
+- Resampling: :class:`sdr.FarrowResampler`
+- Modulation:
+   - Classes: :class:`sdr.PSK`
+   - Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
+   - Symbol mapping: :func:`sdr.binary_code()`, :func:`sdr.gray_code()`
+   - Symbol encoding: :func:`sdr.diff_encode()`, :func:`sdr.diff_decode()`
+- Synchronization: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
+- Measurement:
+   - Energy: :func:`sdr.energy()`
+   - Power: :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.papr()`
+   - Voltage: :func:`sdr.peak_voltage()`, :func:`sdr.rms_voltage()`, :func:`sdr.crest_factor()`
+   - Errors: :class:`sdr.ErrorRate`
+- Conversions:
+   - From $E_b/N_0$: :func:`sdr.ebn0_to_esn0()`, :func:`sdr.ebn0_to_snr()`
+   - From $E_s/N_0$: :func:`sdr.esn0_to_ebn0()`, :func:`sdr.esn0_to_snr()`
+   - From $S/N$: :func:`sdr.snr_to_ebn0()`, :func:`sdr.snr_to_esn0()`
+- Simulation:
+   - Channel models: :func:`sdr.bec()`, :func:`sdr.bsc()`, :func:`sdr.dmc()`
+   - Signal impairments: :func:`sdr.awgn()`, :func:`sdr.frequency_offset()`, :func:`sdr.sample_rate_offset()`,  :func:`sdr.iq_imbalance()`
+- Link budgets:
+   - Channel capacity: :func:`sdr.awgn_capacity()`, :func:`sdr.bec_capacity()`, :func:`sdr.bsc_capacity()`
+   - Path losses: :func:`sdr.fspl()`
+   - Antennas: :func:`sdr.parabolic_antenna()`
 - Probability: :func:`sdr.Q()`, :func:`sdr.Qinv()`
-- Plotting utilities: :func:`sdr.plot.time_domain()`, :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`,
-  :func:`sdr.plot.filter()`, :func:`sdr.plot.frequency_response()`, :func:`sdr.plot.phase_response()`,
-  :func:`sdr.plot.phase_delay()`, :func:`sdr.plot.group_delay()`,
-  :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`,
-  :func:`sdr.plot.zeros_poles()`
+- Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
+- Plotting:
+   - Time-domain: :func:`sdr.plot.time_domain()`
+   - Frequency domain: :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
+   - Modulation: :func:`sdr.plot.ber()`, :func:`sdr.plot.ser()`, :func:`sdr.plot.constellation()`, :func:`sdr.plot.symbol_map()`
+   - Filters: :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`, :func:`sdr.plot.frequency_response()`,
+     :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`, :func:`sdr.plot.group_delay()`,
+     :func:`sdr.plot.zeros_poles()`, :func:`sdr.plot.filter()`
 
 .. toctree::
    :caption: Examples
@@ -67,11 +82,21 @@ Features
    api/synchronization.rst
    api/impairments.rst
    api/measurement.rst
+   api/conversions.rst
    api/simulation.rst
    api/link-budgets.rst
    api/probability.rst
    api/data-manipulation.rst
    api/plotting.rst
+
+.. toctree::
+   :caption: Development
+   :hidden:
+
+   development/installation.rst
+   development/linter.rst
+   development/unit-tests.rst
+   development/documentation.rst
 
 .. toctree::
    :caption: Release Notes

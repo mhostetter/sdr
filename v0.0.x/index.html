@@ -269,6 +269,18 @@ You're not viewing the latest version.
 
 
   <li class="md-tabs__item">
+    <a href="development/installation/" class="md-tabs__link">
+      <span class="md-ellipsis">Development</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
     <a href="release-notes/versioning/" class="md-tabs__link">
       <span class="md-ellipsis">Release Notes</span>
     </a>
@@ -1946,7 +1958,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="api/sdr.PSK.bit_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided SNRs." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
       </a>
     </li>
   
@@ -1991,7 +2003,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="api/sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided SNRs." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
       </a>
     </li>
   
@@ -2043,8 +2055,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="api/sdr.PSK.offset/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">offset</span>
+      <a href="api/sdr.PSK.bps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.bps (Python property) — The number of bits per symbol $k = log_2 M$." class="md-ellipsis">bps</span>
       </a>
     </li>
   
@@ -2073,8 +2085,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="api/sdr.PSK.symbol_labels/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_labels (Python property) — The symbols values (labels) of consecutive symbols." class="md-ellipsis">symbol_<wbr>labels</span>
+      <a href="api/sdr.PSK.phase_offset/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.phase_offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">phase_<wbr>offset</span>
       </a>
     </li>
   
@@ -4047,7 +4059,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="api/simulation/"><span class="md-ellipsis">Simulation</span></a>
+          <a href="api/conversions/"><span class="md-ellipsis">Conversions</span></a>
           
             <label for="__nav_2_6">
               <span class="md-nav__icon md-icon"></span>
@@ -4055,10 +4067,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Simulation" data-md-level="2">
+      <nav class="md-nav" aria-label="Conversions" data-md-level="2">
         <label class="md-nav__title" for="__nav_2_6">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Simulation</span>
+          <span class="md-ellipsis">Conversions</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -4077,7 +4089,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="api/simulation/#channel-models"><span class="md-ellipsis">Channel models</span></a>
+          <a href="api/conversions/#from-e-b-n-0"><span class="md-ellipsis">From E_<wbr>b/N_<wbr>0</span></a>
           
             <label for="__nav_2_6_1">
               <span class="md-nav__icon md-icon"></span>
@@ -4085,8 +4097,250 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Channel models" data-md-level="3">
+      <nav class="md-nav" aria-label="From E_b/N_0" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">From E_<wbr>b/N_<wbr>0</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.ebn0_to_esn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.ebn0_to_esn0 (Python function) — Converts from $E_b/N_0$ to $E_s/N_0$." class="md-ellipsis">ebn0_<wbr>to_<wbr>esn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.ebn0_to_snr/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.ebn0_to_snr (Python function) — Converts from $E_b/N_0$ to $S/N$." class="md-ellipsis">ebn0_<wbr>to_<wbr>snr</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_2" type="checkbox" id="__nav_2_6_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="api/conversions/#from-e-s-n-0"><span class="md-ellipsis">From E_<wbr>s/N_<wbr>0</span></a>
+          
+            <label for="__nav_2_6_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="From E_s/N_0" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">From E_<wbr>s/N_<wbr>0</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.esn0_to_ebn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.esn0_to_ebn0 (Python function) — Converts from $E_s/N_0$ to $E_b/N_0$." class="md-ellipsis">esn0_<wbr>to_<wbr>ebn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.esn0_to_snr/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.esn0_to_snr (Python function) — Converts from $E_s/N_0$ to $S/N$." class="md-ellipsis">esn0_<wbr>to_<wbr>snr</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_3" type="checkbox" id="__nav_2_6_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="api/conversions/#from-s-n"><span class="md-ellipsis">From S/N</span></a>
+          
+            <label for="__nav_2_6_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="From S/N" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">From S/N</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.snr_to_ebn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.snr_to_ebn0 (Python function) — Converts from $S/N$ to $E_b/N_0$." class="md-ellipsis">snr_<wbr>to_<wbr>ebn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.snr_to_esn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.snr_to_esn0 (Python function) — Converts from $S/N$ to $E_s/N_0$." class="md-ellipsis">snr_<wbr>to_<wbr>esn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="api/simulation/"><span class="md-ellipsis">Simulation</span></a>
+          
+            <label for="__nav_2_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Simulation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Simulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_1" type="checkbox" id="__nav_2_7_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="api/simulation/#channel-models"><span class="md-ellipsis">Channel models</span></a>
+          
+            <label for="__nav_2_7_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Channel models" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_7_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Channel models</span>
         </label>
@@ -4154,7 +4408,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_2" type="checkbox" id="__nav_2_6_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2" type="checkbox" id="__nav_2_7_2" >
       
       
       
@@ -4162,14 +4416,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/simulation/#signal-impairments"><span class="md-ellipsis">Signal impairments</span></a>
           
-            <label for="__nav_2_6_2">
+            <label for="__nav_2_7_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Signal impairments" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_6_2">
+        <label class="md-nav__title" for="__nav_2_7_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Signal impairments</span>
         </label>
@@ -4260,7 +4514,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
       
       
       
@@ -4268,14 +4522,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/link-budgets/"><span class="md-ellipsis">Link budgets</span></a>
           
-            <label for="__nav_2_7">
+            <label for="__nav_2_8">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Link budgets" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_7">
+        <label class="md-nav__title" for="__nav_2_8">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Link budgets</span>
         </label>
@@ -4290,7 +4544,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_1" type="checkbox" id="__nav_2_7_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_1" type="checkbox" id="__nav_2_8_1" >
       
       
       
@@ -4298,14 +4552,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/link-budgets/#channel-capacity"><span class="md-ellipsis">Channel capacity</span></a>
           
-            <label for="__nav_2_7_1">
+            <label for="__nav_2_8_1">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Channel capacity" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_7_1">
+        <label class="md-nav__title" for="__nav_2_8_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Channel capacity</span>
         </label>
@@ -4373,7 +4627,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2" type="checkbox" id="__nav_2_7_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_2" type="checkbox" id="__nav_2_8_2" >
       
       
       
@@ -4381,14 +4635,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/link-budgets/#path-losses"><span class="md-ellipsis">Path losses</span></a>
           
-            <label for="__nav_2_7_2">
+            <label for="__nav_2_8_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Path losses" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_7_2">
+        <label class="md-nav__title" for="__nav_2_8_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Path losses</span>
         </label>
@@ -4426,7 +4680,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_3" type="checkbox" id="__nav_2_7_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_3" type="checkbox" id="__nav_2_8_3" >
       
       
       
@@ -4434,14 +4688,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/link-budgets/#antennas"><span class="md-ellipsis">Antennas</span></a>
           
-            <label for="__nav_2_7_3">
+            <label for="__nav_2_8_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Antennas" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_7_3">
+        <label class="md-nav__title" for="__nav_2_8_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Antennas</span>
         </label>
@@ -4487,7 +4741,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
       
       
       
@@ -4495,14 +4749,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/probability/"><span class="md-ellipsis">Probability</span></a>
           
-            <label for="__nav_2_8">
+            <label for="__nav_2_9">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Probability" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_8">
+        <label class="md-nav__title" for="__nav_2_9">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Probability</span>
         </label>
@@ -4555,7 +4809,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10" type="checkbox" id="__nav_2_10" >
       
       
       
@@ -4563,14 +4817,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/data-manipulation/"><span class="md-ellipsis">Data manipulation</span></a>
           
-            <label for="__nav_2_9">
+            <label for="__nav_2_10">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Data manipulation" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_9">
+        <label class="md-nav__title" for="__nav_2_10">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Data manipulation</span>
         </label>
@@ -4638,7 +4892,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10" type="checkbox" id="__nav_2_10" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11" type="checkbox" id="__nav_2_11" >
       
       
       
@@ -4646,14 +4900,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/plotting/"><span class="md-ellipsis">Plotting</span></a>
           
-            <label for="__nav_2_10">
+            <label for="__nav_2_11">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Plotting" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_10">
+        <label class="md-nav__title" for="__nav_2_11">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Plotting</span>
         </label>
@@ -4668,7 +4922,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_1" type="checkbox" id="__nav_2_10_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_1" type="checkbox" id="__nav_2_11_1" >
       
       
       
@@ -4676,14 +4930,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/plotting/#configuration"><span class="md-ellipsis">Configuration</span></a>
           
-            <label for="__nav_2_10_1">
+            <label for="__nav_2_11_1">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Configuration" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_1">
+        <label class="md-nav__title" for="__nav_2_11_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Configuration</span>
         </label>
@@ -4721,7 +4975,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_2" type="checkbox" id="__nav_2_10_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_2" type="checkbox" id="__nav_2_11_2" >
       
       
       
@@ -4729,14 +4983,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/plotting/#time-domain"><span class="md-ellipsis">Time-<wbr>domain</span></a>
           
-            <label for="__nav_2_10_2">
+            <label for="__nav_2_11_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Time-domain" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_2">
+        <label class="md-nav__title" for="__nav_2_11_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Time-<wbr>domain</span>
         </label>
@@ -4774,7 +5028,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_3" type="checkbox" id="__nav_2_10_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_3" type="checkbox" id="__nav_2_11_3" >
       
       
       
@@ -4782,14 +5036,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/plotting/#frequency-domain"><span class="md-ellipsis">Frequency-<wbr>domain</span></a>
           
-            <label for="__nav_2_10_3">
+            <label for="__nav_2_11_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Frequency-domain" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_3">
+        <label class="md-nav__title" for="__nav_2_11_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Frequency-<wbr>domain</span>
         </label>
@@ -4842,7 +5096,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_4" type="checkbox" id="__nav_2_10_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_4" type="checkbox" id="__nav_2_11_4" >
       
       
       
@@ -4850,18 +5104,33 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/plotting/#modulation"><span class="md-ellipsis">Modulation</span></a>
           
-            <label for="__nav_2_10_4">
+            <label for="__nav_2_11_4">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Modulation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_4">
+        <label class="md-nav__title" for="__nav_2_11_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Modulation</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api/sdr.plot.ber/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$." class="md-ellipsis">ber</span>
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -4885,8 +5154,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="api/sdr.plot.error_rate/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.error_rate (Python function) — Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR)." class="md-ellipsis">error_<wbr>rate</span>
+      <a href="api/sdr.plot.ser/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -4925,7 +5194,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_5" type="checkbox" id="__nav_2_10_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_5" type="checkbox" id="__nav_2_11_5" >
       
       
       
@@ -4933,14 +5202,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="api/plotting/#filter-analysis"><span class="md-ellipsis">Filter analysis</span></a>
           
-            <label for="__nav_2_10_5">
+            <label for="__nav_2_11_5">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Filter analysis" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_5">
+        <label class="md-nav__title" for="__nav_2_11_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Filter analysis</span>
         </label>
@@ -5105,12 +5374,106 @@ You're not viewing the latest version.
       
       
         <label class="md-nav__link" for="__nav_3">
+          <span class="md-ellipsis">Development</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Development</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development/installation/" class="md-nav__link">
+        <span class="md-ellipsis">Installation</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development/linter/" class="md-nav__link">
+        <span class="md-ellipsis">Linter</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development/unit-tests/" class="md-nav__link">
+        <span class="md-ellipsis">Unit Tests</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="development/documentation/" class="md-nav__link">
+        <span class="md-ellipsis">Documentation</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
           <span class="md-ellipsis">Release Notes</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Release Notes" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Release Notes</span>
         </label>
@@ -5164,17 +5527,17 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
-        <label class="md-nav__link" for="__nav_4">
+        <label class="md-nav__link" for="__nav_5">
           <span class="md-ellipsis">Index</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Index" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
+        <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Index</span>
         </label>
@@ -5258,25 +5621,72 @@ functions.</p>
 in <a class="reference internal" href="api/filtering/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a>, please open an issue on <a class="reference external" href="https://github.com/mhostetter/sdr/issues">GitHub</a>.</p>
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Filters: <a class="reference internal" href="api/sdr.FIR/" title="sdr.FIR (Python class) — Implements a finite impulse response (FIR) filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.FIR</span></code></a>, <a class="reference internal" href="api/sdr.IIR/" title="sdr.IIR (Python class) — Implements an infinite impulse response (IIR) filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.IIR</span></code></a></p></li>
+<li><p>Filtering: <a class="reference internal" href="api/sdr.FIR/" title="sdr.FIR (Python class) — Implements a finite impulse response (FIR) filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.FIR</span></code></a>, <a class="reference internal" href="api/sdr.FIRInterpolator/" title="sdr.FIRInterpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.FIRInterpolator</span></code></a>, <a class="reference internal" href="api/sdr.IIR/" title="sdr.IIR (Python class) — Implements an infinite impulse response (IIR) filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.IIR</span></code></a></p></li>
+<li><p>Resampling: <a class="reference internal" href="api/sdr.FarrowResampler/" title="sdr.FarrowResampler (Python class) — Implements a cubic Farrow arbitrary resampler."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.FarrowResampler</span></code></a></p></li>
+<li><dl class="simple">
+<dt>Modulation:</dt><dd><ul>
+<li><p>Classes: <a class="reference internal" href="api/sdr.PSK/" title="sdr.PSK (Python class) — Implements phase-shift keying (PSK) modulation and demodulation."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.PSK</span></code></a></p></li>
 <li><p>Pulse shapes: <a class="reference internal" href="api/sdr.raised_cosine/" title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.raised_cosine()</span></code></a>, <a class="reference internal" href="api/sdr.root_raised_cosine/" title="sdr.root_raised_cosine (Python function) — Returns a square root raised cosine (SRRC) pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.root_raised_cosine()</span></code></a>, <a class="reference internal" href="api/sdr.gaussian/" title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.gaussian()</span></code></a></p></li>
-<li><p>Arbitrary resamplers: <a class="reference internal" href="api/sdr.FarrowResampler/" title="sdr.FarrowResampler (Python class) — Implements a cubic Farrow arbitrary resampler."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.FarrowResampler</span></code></a></p></li>
-<li><p>Modulation: <a class="reference internal" href="api/sdr.PSK/" title="sdr.PSK (Python class) — Implements phase-shift keying (PSK) modulation and demodulation."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.PSK</span></code></a>, <a class="reference internal" href="api/sdr.diff_encode/" title="sdr.diff_encode (Python function) — Differentially encodes the input data $x[k]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.diff_encode()</span></code></a>, <a class="reference internal" href="api/sdr.diff_decode/" title="sdr.diff_decode (Python function) — Differentially decodes the input data $y[k]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.diff_decode()</span></code></a>, <a class="reference internal" href="api/sdr.gray_code/" title="sdr.gray_code (Python function) — Generates a Gray code of length $2^n$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.gray_code()</span></code></a></p></li>
-<li><p>Phase-locked loops: <a class="reference internal" href="api/sdr.NCO/" title="sdr.NCO (Python class) — Implements a numerically-controlled oscillator (NCO)."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.NCO</span></code></a>, <a class="reference internal" href="api/sdr.DDS/" title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.DDS</span></code></a>, <a class="reference internal" href="api/sdr.LoopFilter/" title="sdr.LoopFilter (Python class) — Implements a 2nd order, proportional-plus-integrator (PPI) loop filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.LoopFilter</span></code></a>, <a class="reference internal" href="api/sdr.ClosedLoopPLL/" title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.ClosedLoopPLL</span></code></a></p></li>
-<li><p>Impairments: <a class="reference internal" href="api/sdr.awgn/" title="sdr.awgn (Python function) — Adds additive white Gaussian noise (AWGN) to the time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.awgn()</span></code></a>, <a class="reference internal" href="api/sdr.iq_imbalance/" title="sdr.iq_imbalance (Python function) — Applies IQ imbalance to the complex time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.iq_imbalance()</span></code></a></p></li>
-<li><p>Measurement: <a class="reference internal" href="api/sdr.energy/" title="sdr.energy (Python function) — Measures the energy of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.energy()</span></code></a>, <a class="reference internal" href="api/sdr.peak_power/" title="sdr.peak_power (Python function) — Measures the peak power of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.peak_power()</span></code></a>, <a class="reference internal" href="api/sdr.average_power/" title="sdr.average_power (Python function) — Measures the average power of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.average_power()</span></code></a>, <a class="reference internal" href="api/sdr.peak_voltage/" title="sdr.peak_voltage (Python function) — Measures the peak voltage of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.peak_voltage()</span></code></a>,
-<a class="reference internal" href="api/sdr.rms_voltage/" title="sdr.rms_voltage (Python function) — Measures the root-mean-square (RMS) voltage of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.rms_voltage()</span></code></a>, <a class="reference internal" href="api/sdr.papr/" title="sdr.papr (Python function) — Measures the peak-to-average power ratio (PAPR) of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.papr()</span></code></a>, <a class="reference internal" href="api/sdr.crest_factor/" title="sdr.crest_factor (Python function) — Measures the crest factor of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.crest_factor()</span></code></a></p></li>
-<li><p>Data manipulation: <a class="reference internal" href="api/sdr.pack/" title="sdr.pack (Python function) — Packs a binary array into an array with multiple bits per element."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.pack()</span></code></a>, <a class="reference internal" href="api/sdr.unpack/" title="sdr.unpack (Python function) — Unpacks an array with multiple bits per element into a binary array."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.unpack()</span></code></a>, <a class="reference internal" href="api/sdr.hexdump/" title="sdr.hexdump (Python function) — Returns a hexdump of the specified data."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.hexdump()</span></code></a></p></li>
-<li><p>Channel models: <a class="reference internal" href="api/sdr.bsc/" title="sdr.bsc (Python function) — Passes the binary input sequence $x$ through a binary symmetric channel (BSC) with transition probability $p$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bsc()</span></code></a>, <a class="reference internal" href="api/sdr.bec/" title="sdr.bec (Python function) — Passes the binary input sequence $x$ through a binary erasure channel (BEC) with erasure probability $p$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bec()</span></code></a>, <a class="reference internal" href="api/sdr.dmc/" title="sdr.dmc (Python function) — Passes the input sequence $x$ through a discrete memoryless channel (DMC) with transition probability matrix $P$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.dmc()</span></code></a></p></li>
-<li><p>Link budgets: <a class="reference internal" href="api/sdr.awgn_capacity/" title="sdr.awgn_capacity (Python function) — Calculates the capacity of an additive white Gaussian noise (AWGN) channel."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.awgn_capacity()</span></code></a>, <a class="reference internal" href="api/sdr.bsc_capacity/" title="sdr.bsc_capacity (Python function) — Calculates the capacity of a binary symmetric channel (BSC)."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bsc_capacity()</span></code></a>, <a class="reference internal" href="api/sdr.bec_capacity/" title="sdr.bec_capacity (Python function) — Calculates the capacity of a binary erasure channel (BEC)."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bec_capacity()</span></code></a>,
-<a class="reference internal" href="api/sdr.fspl/" title="sdr.fspl (Python function) — Calculates the free-space path loss (FSPL) in dB."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.fspl()</span></code></a>, <a class="reference internal" href="api/sdr.parabolic_antenna/" title="sdr.parabolic_antenna (Python function) — Calculates the gain $G$ and beamwidth $theta$ of a parabolic reflector."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.parabolic_antenna()</span></code></a></p></li>
-<li><p>Probability: <a class="reference internal" href="api/sdr.Q/" title="sdr.Q (Python function) — Computes the complementary cumulative distribution function $Q(x)$ of the standard normal distribution $mathcal{N}(0, 1)$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.Q()</span></code></a>, <a class="reference internal" href="api/sdr.Qinv/" title="sdr.Qinv (Python function) — Computes the inverse complementary cumulative distribution function $Q^{-1}(p)$ of the standard normal distribution $mathcal{N}(0, 1)$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.Qinv()</span></code></a></p></li>
-<li><p>Plotting utilities: <a class="reference internal" href="api/sdr.plot.time_domain/" title="sdr.plot.time_domain (Python function) — Plots a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.time_domain()</span></code></a>, <a class="reference internal" href="api/sdr.plot.periodogram/" title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.periodogram()</span></code></a>, <a class="reference internal" href="api/sdr.plot.spectrogram/" title="sdr.plot.spectrogram (Python function) — Plots the spectrogram of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.spectrogram()</span></code></a>,
-<a class="reference internal" href="api/sdr.plot.filter/" title="sdr.plot.filter (Python function) — Plots the frequency response $H(omega)$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.filter()</span></code></a>, <a class="reference internal" href="api/sdr.plot.frequency_response/" title="sdr.plot.frequency_response (Python function) — Plots the frequency response $H(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.frequency_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.phase_response/" title="sdr.plot.phase_response (Python function) — Plots the phase response $Theta(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.phase_response()</span></code></a>,
-<a class="reference internal" href="api/sdr.plot.phase_delay/" title="sdr.plot.phase_delay (Python function) — Plots the phase delay $tau_{phi}(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.phase_delay()</span></code></a>, <a class="reference internal" href="api/sdr.plot.group_delay/" title="sdr.plot.group_delay (Python function) — Plots the group delay $tau_g(omega)$ of the IIR filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.group_delay()</span></code></a>,
-<a class="reference internal" href="api/sdr.plot.impulse_response/" title="sdr.plot.impulse_response (Python function) — Plots the impulse response $h[n]$ of a filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.impulse_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.step_response/" title="sdr.plot.step_response (Python function) — Plots the step response $s[n]$ of a filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.step_response()</span></code></a>,
-<a class="reference internal" href="api/sdr.plot.zeros_poles/" title="sdr.plot.zeros_poles (Python function) — Plots the zeros and poles of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.zeros_poles()</span></code></a></p></li>
+<li><p>Symbol mapping: <a class="reference internal" href="api/sdr.binary_code/" title="sdr.binary_code (Python function) — Generates a binary code of length $2^n$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.binary_code()</span></code></a>, <a class="reference internal" href="api/sdr.gray_code/" title="sdr.gray_code (Python function) — Generates a Gray code of length $2^n$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.gray_code()</span></code></a></p></li>
+<li><p>Symbol encoding: <a class="reference internal" href="api/sdr.diff_encode/" title="sdr.diff_encode (Python function) — Differentially encodes the input data $x[k]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.diff_encode()</span></code></a>, <a class="reference internal" href="api/sdr.diff_decode/" title="sdr.diff_decode (Python function) — Differentially decodes the input data $y[k]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.diff_decode()</span></code></a></p></li>
 </ul>
+</dd>
+</dl>
+</li>
+<li><p>Synchronization: <a class="reference internal" href="api/sdr.NCO/" title="sdr.NCO (Python class) — Implements a numerically-controlled oscillator (NCO)."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.NCO</span></code></a>, <a class="reference internal" href="api/sdr.DDS/" title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.DDS</span></code></a>, <a class="reference internal" href="api/sdr.LoopFilter/" title="sdr.LoopFilter (Python class) — Implements a 2nd order, proportional-plus-integrator (PPI) loop filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.LoopFilter</span></code></a>, <a class="reference internal" href="api/sdr.ClosedLoopPLL/" title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.ClosedLoopPLL</span></code></a></p></li>
+<li><dl class="simple">
+<dt>Measurement:</dt><dd><ul>
+<li><p>Energy: <a class="reference internal" href="api/sdr.energy/" title="sdr.energy (Python function) — Measures the energy of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.energy()</span></code></a></p></li>
+<li><p>Power: <a class="reference internal" href="api/sdr.peak_power/" title="sdr.peak_power (Python function) — Measures the peak power of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.peak_power()</span></code></a>, <a class="reference internal" href="api/sdr.average_power/" title="sdr.average_power (Python function) — Measures the average power of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.average_power()</span></code></a>, <a class="reference internal" href="api/sdr.papr/" title="sdr.papr (Python function) — Measures the peak-to-average power ratio (PAPR) of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.papr()</span></code></a></p></li>
+<li><p>Voltage: <a class="reference internal" href="api/sdr.peak_voltage/" title="sdr.peak_voltage (Python function) — Measures the peak voltage of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.peak_voltage()</span></code></a>, <a class="reference internal" href="api/sdr.rms_voltage/" title="sdr.rms_voltage (Python function) — Measures the root-mean-square (RMS) voltage of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.rms_voltage()</span></code></a>, <a class="reference internal" href="api/sdr.crest_factor/" title="sdr.crest_factor (Python function) — Measures the crest factor of a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.crest_factor()</span></code></a></p></li>
+<li><p>Errors: <a class="reference internal" href="api/sdr.ErrorRate/" title="sdr.ErrorRate (Python class) — A class for measuring bit error rates (BER) or symbol error rates (SER)."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.ErrorRate</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Conversions:</dt><dd><ul>
+<li><p>From <span class="math notranslate nohighlight">\(E_b/N_0\)</span>: <a class="reference internal" href="api/sdr.ebn0_to_esn0/" title="sdr.ebn0_to_esn0 (Python function) — Converts from $E_b/N_0$ to $E_s/N_0$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.ebn0_to_esn0()</span></code></a>, <a class="reference internal" href="api/sdr.ebn0_to_snr/" title="sdr.ebn0_to_snr (Python function) — Converts from $E_b/N_0$ to $S/N$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.ebn0_to_snr()</span></code></a></p></li>
+<li><p>From <span class="math notranslate nohighlight">\(E_s/N_0\)</span>: <a class="reference internal" href="api/sdr.esn0_to_ebn0/" title="sdr.esn0_to_ebn0 (Python function) — Converts from $E_s/N_0$ to $E_b/N_0$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.esn0_to_ebn0()</span></code></a>, <a class="reference internal" href="api/sdr.esn0_to_snr/" title="sdr.esn0_to_snr (Python function) — Converts from $E_s/N_0$ to $S/N$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.esn0_to_snr()</span></code></a></p></li>
+<li><p>From <span class="math notranslate nohighlight">\(S/N\)</span>: <a class="reference internal" href="api/sdr.snr_to_ebn0/" title="sdr.snr_to_ebn0 (Python function) — Converts from $S/N$ to $E_b/N_0$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.snr_to_ebn0()</span></code></a>, <a class="reference internal" href="api/sdr.snr_to_esn0/" title="sdr.snr_to_esn0 (Python function) — Converts from $S/N$ to $E_s/N_0$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.snr_to_esn0()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Simulation:</dt><dd><ul>
+<li><p>Channel models: <a class="reference internal" href="api/sdr.bec/" title="sdr.bec (Python function) — Passes the binary input sequence $x$ through a binary erasure channel (BEC) with erasure probability $p$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bec()</span></code></a>, <a class="reference internal" href="api/sdr.bsc/" title="sdr.bsc (Python function) — Passes the binary input sequence $x$ through a binary symmetric channel (BSC) with transition probability $p$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bsc()</span></code></a>, <a class="reference internal" href="api/sdr.dmc/" title="sdr.dmc (Python function) — Passes the input sequence $x$ through a discrete memoryless channel (DMC) with transition probability matrix $P$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.dmc()</span></code></a></p></li>
+<li><p>Signal impairments: <a class="reference internal" href="api/sdr.awgn/" title="sdr.awgn (Python function) — Adds additive white Gaussian noise (AWGN) to the time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.awgn()</span></code></a>, <a class="reference internal" href="api/sdr.frequency_offset/" title="sdr.frequency_offset (Python function) — Applies a frequency and phase offset to the time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.frequency_offset()</span></code></a>, <a class="reference internal" href="api/sdr.sample_rate_offset/" title="sdr.sample_rate_offset (Python function) — Applies a sample rate offset to the time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.sample_rate_offset()</span></code></a>,  <a class="reference internal" href="api/sdr.iq_imbalance/" title="sdr.iq_imbalance (Python function) — Applies IQ imbalance to the complex time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.iq_imbalance()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Link budgets:</dt><dd><ul>
+<li><p>Channel capacity: <a class="reference internal" href="api/sdr.awgn_capacity/" title="sdr.awgn_capacity (Python function) — Calculates the capacity of an additive white Gaussian noise (AWGN) channel."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.awgn_capacity()</span></code></a>, <a class="reference internal" href="api/sdr.bec_capacity/" title="sdr.bec_capacity (Python function) — Calculates the capacity of a binary erasure channel (BEC)."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bec_capacity()</span></code></a>, <a class="reference internal" href="api/sdr.bsc_capacity/" title="sdr.bsc_capacity (Python function) — Calculates the capacity of a binary symmetric channel (BSC)."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.bsc_capacity()</span></code></a></p></li>
+<li><p>Path losses: <a class="reference internal" href="api/sdr.fspl/" title="sdr.fspl (Python function) — Calculates the free-space path loss (FSPL) in dB."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.fspl()</span></code></a></p></li>
+<li><p>Antennas: <a class="reference internal" href="api/sdr.parabolic_antenna/" title="sdr.parabolic_antenna (Python function) — Calculates the gain $G$ and beamwidth $theta$ of a parabolic reflector."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.parabolic_antenna()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Probability: <a class="reference internal" href="api/sdr.Q/" title="sdr.Q (Python function) — Computes the complementary cumulative distribution function $Q(x)$ of the standard normal distribution $mathcal{N}(0, 1)$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.Q()</span></code></a>, <a class="reference internal" href="api/sdr.Qinv/" title="sdr.Qinv (Python function) — Computes the inverse complementary cumulative distribution function $Q^{-1}(p)$ of the standard normal distribution $mathcal{N}(0, 1)$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.Qinv()</span></code></a></p></li>
+<li><p>Data manipulation: <a class="reference internal" href="api/sdr.pack/" title="sdr.pack (Python function) — Packs a binary array into an array with multiple bits per element."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.pack()</span></code></a>, <a class="reference internal" href="api/sdr.unpack/" title="sdr.unpack (Python function) — Unpacks an array with multiple bits per element into a binary array."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.unpack()</span></code></a>, <a class="reference internal" href="api/sdr.hexdump/" title="sdr.hexdump (Python function) — Returns a hexdump of the specified data."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.hexdump()</span></code></a></p></li>
+<li><dl class="simple">
+<dt>Plotting:</dt><dd><ul>
+<li><p>Time-domain: <a class="reference internal" href="api/sdr.plot.time_domain/" title="sdr.plot.time_domain (Python function) — Plots a time-domain signal $x[n]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.time_domain()</span></code></a></p></li>
+<li><p>Frequency domain: <a class="reference internal" href="api/sdr.plot.periodogram/" title="sdr.plot.periodogram (Python function) — Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.periodogram()</span></code></a>, <a class="reference internal" href="api/sdr.plot.spectrogram/" title="sdr.plot.spectrogram (Python function) — Plots the spectrogram of a time-domain signal $x[n]$ using Welch's method."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.spectrogram()</span></code></a></p></li>
+<li><p>Modulation: <a class="reference internal" href="api/sdr.plot.ber/" title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.ber()</span></code></a>, <a class="reference internal" href="api/sdr.plot.ser/" title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.ser()</span></code></a>, <a class="reference internal" href="api/sdr.plot.constellation/" title="sdr.plot.constellation (Python function) — Plots the constellation of the complex symbols $hat{x}[k]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.constellation()</span></code></a>, <a class="reference internal" href="api/sdr.plot.symbol_map/" title="sdr.plot.symbol_map (Python function) — Plots the symbol map of the complex symbols $hat{x}[k]$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.symbol_map()</span></code></a></p></li>
+<li><p>Filters: <a class="reference internal" href="api/sdr.plot.impulse_response/" title="sdr.plot.impulse_response (Python function) — Plots the impulse response $h[n]$ of a filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.impulse_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.step_response/" title="sdr.plot.step_response (Python function) — Plots the step response $s[n]$ of a filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.step_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.frequency_response/" title="sdr.plot.frequency_response (Python function) — Plots the frequency response $H(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.frequency_response()</span></code></a>,
+<a class="reference internal" href="api/sdr.plot.phase_response/" title="sdr.plot.phase_response (Python function) — Plots the phase response $Theta(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.phase_response()</span></code></a>, <a class="reference internal" href="api/sdr.plot.phase_delay/" title="sdr.plot.phase_delay (Python function) — Plots the phase delay $tau_{phi}(omega)$ of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.phase_delay()</span></code></a>, <a class="reference internal" href="api/sdr.plot.group_delay/" title="sdr.plot.group_delay (Python function) — Plots the group delay $tau_g(omega)$ of the IIR filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.group_delay()</span></code></a>,
+<a class="reference internal" href="api/sdr.plot.zeros_poles/" title="sdr.plot.zeros_poles (Python function) — Plots the zeros and poles of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.zeros_poles()</span></code></a>, <a class="reference internal" href="api/sdr.plot.filter/" title="sdr.plot.filter (Python function) — Plots the frequency response $H(omega)$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.plot.filter()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
@@ -5292,7 +5702,7 @@ in <a class="reference internal" href="api/filtering/#module-sdr" title="sdr (Py
   <small>
     
       Last update:
-      Jul 27, 2023
+      Jul 30, 2023
     
   </small>
 </div>
@@ -5408,6 +5818,9 @@ in <a class="reference internal" href="api/filtering/#module-sdr" title="sdr (Py
       
         <script src="_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
         <script src="_static/design-tabs.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

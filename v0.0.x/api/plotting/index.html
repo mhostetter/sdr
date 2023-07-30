@@ -271,6 +271,18 @@ You're not viewing the latest version.
 
 
   <li class="md-tabs__item">
+    <a href="../../development/installation/" class="md-tabs__link">
+      <span class="md-ellipsis">Development</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
     <a href="../../release-notes/versioning/" class="md-tabs__link">
       <span class="md-ellipsis">Release Notes</span>
     </a>
@@ -1950,7 +1962,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.PSK.bit_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided SNRs." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
       </a>
     </li>
   
@@ -1995,7 +2007,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided SNRs." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
       </a>
     </li>
   
@@ -2047,8 +2059,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.offset/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">offset</span>
+      <a href="../sdr.PSK.bps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.bps (Python property) — The number of bits per symbol $k = log_2 M$." class="md-ellipsis">bps</span>
       </a>
     </li>
   
@@ -2077,8 +2089,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.symbol_labels/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_labels (Python property) — The symbols values (labels) of consecutive symbols." class="md-ellipsis">symbol_<wbr>labels</span>
+      <a href="../sdr.PSK.phase_offset/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.phase_offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">phase_<wbr>offset</span>
       </a>
     </li>
   
@@ -4051,7 +4063,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../simulation/"><span class="md-ellipsis">Simulation</span></a>
+          <a href="../conversions/"><span class="md-ellipsis">Conversions</span></a>
           
             <label for="__nav_2_6">
               <span class="md-nav__icon md-icon"></span>
@@ -4059,10 +4071,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Simulation" data-md-level="2">
+      <nav class="md-nav" aria-label="Conversions" data-md-level="2">
         <label class="md-nav__title" for="__nav_2_6">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Simulation</span>
+          <span class="md-ellipsis">Conversions</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -4081,7 +4093,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../simulation/#channel-models"><span class="md-ellipsis">Channel models</span></a>
+          <a href="../conversions/#from-e-b-n-0"><span class="md-ellipsis">From E_<wbr>b/N_<wbr>0</span></a>
           
             <label for="__nav_2_6_1">
               <span class="md-nav__icon md-icon"></span>
@@ -4089,8 +4101,250 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Channel models" data-md-level="3">
+      <nav class="md-nav" aria-label="From E_b/N_0" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_6_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">From E_<wbr>b/N_<wbr>0</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ebn0_to_esn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.ebn0_to_esn0 (Python function) — Converts from $E_b/N_0$ to $E_s/N_0$." class="md-ellipsis">ebn0_<wbr>to_<wbr>esn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ebn0_to_snr/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.ebn0_to_snr (Python function) — Converts from $E_b/N_0$ to $S/N$." class="md-ellipsis">ebn0_<wbr>to_<wbr>snr</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_2" type="checkbox" id="__nav_2_6_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../conversions/#from-e-s-n-0"><span class="md-ellipsis">From E_<wbr>s/N_<wbr>0</span></a>
+          
+            <label for="__nav_2_6_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="From E_s/N_0" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_6_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">From E_<wbr>s/N_<wbr>0</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.esn0_to_ebn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.esn0_to_ebn0 (Python function) — Converts from $E_s/N_0$ to $E_b/N_0$." class="md-ellipsis">esn0_<wbr>to_<wbr>ebn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.esn0_to_snr/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.esn0_to_snr (Python function) — Converts from $E_s/N_0$ to $S/N$." class="md-ellipsis">esn0_<wbr>to_<wbr>snr</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_3" type="checkbox" id="__nav_2_6_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../conversions/#from-s-n"><span class="md-ellipsis">From S/N</span></a>
+          
+            <label for="__nav_2_6_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="From S/N" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_6_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">From S/N</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.snr_to_ebn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.snr_to_ebn0 (Python function) — Converts from $S/N$ to $E_b/N_0$." class="md-ellipsis">snr_<wbr>to_<wbr>ebn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.snr_to_esn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.snr_to_esn0 (Python function) — Converts from $S/N$ to $E_s/N_0$." class="md-ellipsis">snr_<wbr>to_<wbr>esn0</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../simulation/"><span class="md-ellipsis">Simulation</span></a>
+          
+            <label for="__nav_2_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Simulation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Simulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_1" type="checkbox" id="__nav_2_7_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../simulation/#channel-models"><span class="md-ellipsis">Channel models</span></a>
+          
+            <label for="__nav_2_7_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Channel models" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_7_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Channel models</span>
         </label>
@@ -4158,7 +4412,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6_2" type="checkbox" id="__nav_2_6_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2" type="checkbox" id="__nav_2_7_2" >
       
       
       
@@ -4166,14 +4420,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../simulation/#signal-impairments"><span class="md-ellipsis">Signal impairments</span></a>
           
-            <label for="__nav_2_6_2">
+            <label for="__nav_2_7_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Signal impairments" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_6_2">
+        <label class="md-nav__title" for="__nav_2_7_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Signal impairments</span>
         </label>
@@ -4264,7 +4518,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7" type="checkbox" id="__nav_2_7" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
       
       
       
@@ -4272,14 +4526,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../link-budgets/"><span class="md-ellipsis">Link budgets</span></a>
           
-            <label for="__nav_2_7">
+            <label for="__nav_2_8">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Link budgets" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_7">
+        <label class="md-nav__title" for="__nav_2_8">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Link budgets</span>
         </label>
@@ -4294,7 +4548,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_1" type="checkbox" id="__nav_2_7_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_1" type="checkbox" id="__nav_2_8_1" >
       
       
       
@@ -4302,14 +4556,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../link-budgets/#channel-capacity"><span class="md-ellipsis">Channel capacity</span></a>
           
-            <label for="__nav_2_7_1">
+            <label for="__nav_2_8_1">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Channel capacity" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_7_1">
+        <label class="md-nav__title" for="__nav_2_8_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Channel capacity</span>
         </label>
@@ -4377,7 +4631,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_2" type="checkbox" id="__nav_2_7_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_2" type="checkbox" id="__nav_2_8_2" >
       
       
       
@@ -4385,14 +4639,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../link-budgets/#path-losses"><span class="md-ellipsis">Path losses</span></a>
           
-            <label for="__nav_2_7_2">
+            <label for="__nav_2_8_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Path losses" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_7_2">
+        <label class="md-nav__title" for="__nav_2_8_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Path losses</span>
         </label>
@@ -4430,7 +4684,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_7_3" type="checkbox" id="__nav_2_7_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8_3" type="checkbox" id="__nav_2_8_3" >
       
       
       
@@ -4438,14 +4692,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../link-budgets/#antennas"><span class="md-ellipsis">Antennas</span></a>
           
-            <label for="__nav_2_7_3">
+            <label for="__nav_2_8_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Antennas" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_7_3">
+        <label class="md-nav__title" for="__nav_2_8_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Antennas</span>
         </label>
@@ -4491,7 +4745,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_8" type="checkbox" id="__nav_2_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
       
       
       
@@ -4499,14 +4753,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../probability/"><span class="md-ellipsis">Probability</span></a>
           
-            <label for="__nav_2_8">
+            <label for="__nav_2_9">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Probability" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_8">
+        <label class="md-nav__title" for="__nav_2_9">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Probability</span>
         </label>
@@ -4559,7 +4813,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_9" type="checkbox" id="__nav_2_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10" type="checkbox" id="__nav_2_10" >
       
       
       
@@ -4567,14 +4821,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../data-manipulation/"><span class="md-ellipsis">Data manipulation</span></a>
           
-            <label for="__nav_2_9">
+            <label for="__nav_2_10">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Data manipulation" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_9">
+        <label class="md-nav__title" for="__nav_2_10">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Data manipulation</span>
         </label>
@@ -4645,7 +4899,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--active md-nav__current-nested md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10" type="checkbox" id="__nav_2_10" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11" type="checkbox" id="__nav_2_11" checked>
       
       
       
@@ -4653,14 +4907,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index md-nav__link--active">
           <a href="#"><span class="md-ellipsis">Plotting</span></a>
           
-            <label for="__nav_2_10">
+            <label for="__nav_2_11">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Plotting" data-md-level="2">
-        <label class="md-nav__title" for="__nav_2_10">
+        <label class="md-nav__title" for="__nav_2_11">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Plotting</span>
         </label>
@@ -4675,7 +4929,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_1" type="checkbox" id="__nav_2_10_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_1" type="checkbox" id="__nav_2_11_1" >
       
       
       
@@ -4683,14 +4937,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="#configuration"><span class="md-ellipsis">Configuration</span></a>
           
-            <label for="__nav_2_10_1">
+            <label for="__nav_2_11_1">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Configuration" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_1">
+        <label class="md-nav__title" for="__nav_2_11_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Configuration</span>
         </label>
@@ -4728,7 +4982,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_2" type="checkbox" id="__nav_2_10_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_2" type="checkbox" id="__nav_2_11_2" >
       
       
       
@@ -4736,14 +4990,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="#time-domain"><span class="md-ellipsis">Time-<wbr>domain</span></a>
           
-            <label for="__nav_2_10_2">
+            <label for="__nav_2_11_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Time-domain" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_2">
+        <label class="md-nav__title" for="__nav_2_11_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Time-<wbr>domain</span>
         </label>
@@ -4781,7 +5035,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_3" type="checkbox" id="__nav_2_10_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_3" type="checkbox" id="__nav_2_11_3" >
       
       
       
@@ -4789,14 +5043,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="#frequency-domain"><span class="md-ellipsis">Frequency-<wbr>domain</span></a>
           
-            <label for="__nav_2_10_3">
+            <label for="__nav_2_11_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Frequency-domain" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_3">
+        <label class="md-nav__title" for="__nav_2_11_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Frequency-<wbr>domain</span>
         </label>
@@ -4849,7 +5103,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_4" type="checkbox" id="__nav_2_10_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_4" type="checkbox" id="__nav_2_11_4" >
       
       
       
@@ -4857,18 +5111,33 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="#modulation"><span class="md-ellipsis">Modulation</span></a>
           
-            <label for="__nav_2_10_4">
+            <label for="__nav_2_11_4">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Modulation" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_4">
+        <label class="md-nav__title" for="__nav_2_11_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Modulation</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.ber/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$." class="md-ellipsis">ber</span>
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -4892,8 +5161,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.plot.error_rate/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.error_rate (Python function) — Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR)." class="md-ellipsis">error_<wbr>rate</span>
+      <a href="../sdr.plot.ser/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -4932,7 +5201,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_10_5" type="checkbox" id="__nav_2_10_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_11_5" type="checkbox" id="__nav_2_11_5" >
       
       
       
@@ -4940,14 +5209,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="#filter-analysis"><span class="md-ellipsis">Filter analysis</span></a>
           
-            <label for="__nav_2_10_5">
+            <label for="__nav_2_11_5">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Filter analysis" data-md-level="3">
-        <label class="md-nav__title" for="__nav_2_10_5">
+        <label class="md-nav__title" for="__nav_2_11_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Filter analysis</span>
         </label>
@@ -5191,6 +5460,13 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="../sdr.plot.ber/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$." class="md-ellipsis">ber</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="../sdr.plot.constellation/" class="md-nav__link">
     <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.constellation (Python function) — Plots the constellation of the complex symbols $hat{x}[k]$." class="md-ellipsis">constellation</span>
   </a>
@@ -5198,8 +5474,8 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.plot.error_rate/" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.error_rate (Python function) — Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR)." class="md-ellipsis">error_<wbr>rate</span>
+  <a href="../sdr.plot.ser/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
   </a>
   
 </li>
@@ -5317,12 +5593,106 @@ You're not viewing the latest version.
       
       
         <label class="md-nav__link" for="__nav_3">
+          <span class="md-ellipsis">Development</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Development" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Development</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/installation/" class="md-nav__link">
+        <span class="md-ellipsis">Installation</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/linter/" class="md-nav__link">
+        <span class="md-ellipsis">Linter</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/unit-tests/" class="md-nav__link">
+        <span class="md-ellipsis">Unit Tests</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/documentation/" class="md-nav__link">
+        <span class="md-ellipsis">Documentation</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
           <span class="md-ellipsis">Release Notes</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Release Notes" data-md-level="1">
-        <label class="md-nav__title" for="__nav_3">
+        <label class="md-nav__title" for="__nav_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Release Notes</span>
         </label>
@@ -5376,17 +5746,17 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
       
       
       
-        <label class="md-nav__link" for="__nav_4">
+        <label class="md-nav__link" for="__nav_5">
           <span class="md-ellipsis">Index</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Index" data-md-level="1">
-        <label class="md-nav__title" for="__nav_4">
+        <label class="md-nav__title" for="__nav_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Index</span>
         </label>
@@ -5523,14 +5893,20 @@ You're not viewing the latest version.
 <h2 id="modulation">Modulation<a class="headerlink" href="#modulation" title="Permalink to this heading">¶</a></h2>
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
+<span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.plot.ber/" title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ber</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.ber/#p-ebn0" title="sdr.plot.ber.ebn0 (Python parameter) — The bit energy $E_b$ to noise PSD $N_0$ ratio (dB)."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.ber/#p-ber" title="sdr.plot.ber.ber (Python parameter) — The bit error rate $P_b$."><span class="n"><span class="pre">ber</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em></span><span class="sig-paren">)</span></dt>
+<dd><p>Plots the bit error rate (BER) as a function of <span class="math notranslate nohighlight">\(E_b/N_0\)</span>.</p>
+</dd></dl>
+
+<dl class="py function summary objdesc">
+<dt class="sig sig-object highlight py">
 <span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.plot.constellation/" title="sdr.plot.constellation (Python function) — Plots the constellation of the complex symbols $hat{x}[k]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">constellation</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.constellation/#p-x_hat" title="sdr.plot.constellation.x_hat (Python parameter) — The complex symbols $hat{x}[k]$."><span class="n"><span class="pre">x_hat</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.constellation/#p-heatmap" title="sdr.plot.constellation.heatmap (Python parameter) — If True, a heatmap is plotted instead of a scatter plot."><span class="n"><span class="pre">heatmap</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Plots the constellation of the complex symbols <span class="math notranslate nohighlight">\(\hat{x}[k]\)</span>.</p>
 </dd></dl>
 
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.plot.error_rate/" title="sdr.plot.error_rate (Python function) — Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR)."><span class="sig-name descname pseudo-toc-entry"><span class="pre">error_rate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.error_rate/#p-snr" title="sdr.plot.error_rate.snr (Python parameter) — A form of signal-to-noise ratio in dB. Either $E_b/N_0$ if x_unit=&quot;ebn0&quot;, $E_s/N_0$ if x_unit=&quot;esn0&quot;, or $S/N$ if x_unit=&quot;snr&quot;."><span class="n"><span class="pre">snr</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.error_rate/#p-error_rate" title="sdr.plot.error_rate.error_rate (Python parameter) — The bit error rate if y_unit=&quot;ber&quot; or symbol error rate if y_unit=&quot;ser&quot;."><span class="n"><span class="pre">error_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
-<dd><p>Plots the bit error rate (BER) or symbol error rate (SER) as a function of the signal-to-noise ratio (SNR).</p>
+<span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.plot.ser/" title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ser</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.ser/#p-esn0" title="sdr.plot.ser.esn0 (Python parameter) — The symbol energy $E_s$ to noise PSD $N_0$ ratio (dB)."><span class="n"><span class="pre">esn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.plot.ser/#p-ser" title="sdr.plot.ser.ser (Python parameter) — The symbol error rate $P_e$."><span class="n"><span class="pre">ser</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em></span><span class="sig-paren">)</span></dt>
+<dd><p>Plots the symbol error rate (SER) as a function of <span class="math notranslate nohighlight">\(E_s/N_0\)</span>.</p>
 </dd></dl>
 
 <dl class="py function summary objdesc">
