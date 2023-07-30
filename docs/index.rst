@@ -80,7 +80,7 @@ Features
 
    development/installation.rst
    development/linter.rst
-   .. development/unit-tests.rst
+   development/unit-tests.rst
    .. development/documentation.rst
 
 .. toctree::
