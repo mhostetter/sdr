@@ -2,9 +2,6 @@ import numpy as np
 
 import sdr
 
-# TODO: Commented-out tests are failing. Can't use approximation equations from Proakis.
-#       Need to numerically integration equations to get exact values.
-
 
 def test_bpsk_ser():
     """
@@ -41,7 +38,7 @@ def test_bpsk_ser():
             0.000003872108216,
         ]
     )
-    assert np.allclose(ser, ser_truth)
+    np.testing.assert_almost_equal(ser, ser_truth)
 
 
 def test_qpsk_ser():
@@ -53,7 +50,8 @@ def test_qpsk_ser():
     psk = sdr.PSK(4)
 
     ebn0 = np.arange(0, 10.5, 0.5)
-    ser = psk.symbol_error_rate(ebn0)
+    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
+    ser = psk.symbol_error_rate(esn0)
     ser_truth = np.array(
         [
             0.151113446915623,
@@ -79,80 +77,98 @@ def test_qpsk_ser():
             0.000007744201438,
         ]
     )
-    assert np.allclose(ser, ser_truth)
+    np.testing.assert_almost_equal(ser, ser_truth)
 
 
-# def test_8psk_ser():
-#     """
-#     Matlab:
-#         >> ebn0 = 0:0.5:10;
-#         >> [ber, ser] = berawgn(ebn0, 'psk', 8, 'nondiff');
-#     """
-#     psk = sdr.PSK(8)
+def test_8psk_ser():
+    """
+    Matlab:
+        >> ebn0 = 0:0.5:10;
+        >> [ber, ser] = berawgn(ebn0, 'psk', 8, 'nondiff');
+    """
+    psk = sdr.PSK(8)
 
-#     ebn0 = np.arange(0, 10.5, 0.5)
-#     ser = psk.symbol_error_rate(ebn0)
-#     ser_truth = np.array(
-#         [
-#             0.347800871199895,
-#             0.320262230592363,
-#             0.292616128934030,
-#             0.265075851862023,
-#             0.237871592637444,
-#             0.211246727844741,
-#             0.185452969086007,
-#             0.160744207836485,
-#             0.137368903756424,
-#             0.115560985581131,
-#             0.095529453105280,
-#             0.077447176298401,
-#             0.061439739725131,
-#             0.047575507975520,
-#             0.035858307286818,
-#             0.026224145471455,
-#             0.018543155232650,
-#             0.012627405490587,
-#             0.008244400588842,
-#             0.005135084035396,
-#             0.003034185962138,
-#         ]
-#     )
-#     assert np.allclose(ser, ser_truth)
+    ebn0 = np.arange(0, 10.5, 0.5)
+    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
+    ser = psk.symbol_error_rate(esn0)
+    ser_truth = np.array(
+        [
+            0.347800871199895,
+            0.320262230592363,
+            0.292616128934030,
+            0.265075851862023,
+            0.237871592637444,
+            0.211246727844741,
+            0.185452969086007,
+            0.160744207836485,
+            0.137368903756424,
+            0.115560985581131,
+            0.095529453105280,
+            0.077447176298401,
+            0.061439739725131,
+            0.047575507975520,
+            0.035858307286818,
+            0.026224145471455,
+            0.018543155232650,
+            0.012627405490587,
+            0.008244400588842,
+            0.005135084035396,
+            0.003034185962138,
+        ]
+    )
+
+    # import matplotlib.pyplot as plt
+
+    # plt.figure()
+    # sdr.plot.ser(esn0, ser, label="Me")
+    # sdr.plot.ser(esn0, ser_truth, label="Matlab")
+    # plt.show()
+
+    np.testing.assert_almost_equal(ser, ser_truth, decimal=3)
 
 
-# def test_16psk_ser():
-#     """
-#     Matlab:
-#         >> ebn0 = 0:0.5:10;
-#         >> [ber, ser] = berawgn(ebn0, 'psk', 16, 'nondiff');
-#     """
-#     psk = sdr.PSK(16)
+def test_16psk_ser():
+    """
+    Matlab:
+        >> ebn0 = 0:0.5:10;
+        >> [ber, ser] = berawgn(ebn0, 'psk', 16, 'nondiff');
+    """
+    psk = sdr.PSK(16)
 
-#     ebn0 = np.arange(0, 10.5, 0.5)
-#     ser = psk.symbol_error_rate(ebn0)
-#     ser_truth = np.array(
-#         [
-#             0.580976792181077,
-#             0.558826055301207,
-#             0.535799440104755,
-#             0.511927850919973,
-#             0.487252691121724,
-#             0.461827792445486,
-#             0.435721495259769,
-#             0.409018736505945,
-#             0.381822986042064,
-#             0.354257867520100,
-#             0.326468296781818,
-#             0.298620960546231,
-#             0.270903939013563,
-#             0.243525254285281,
-#             0.216710114353729,
-#             0.190696633868739,
-#             0.165729861047883,
-#             0.142054036040723,
-#             0.119903157906526,
-#             0.099490147901799,
-#             0.080995159210313,
-#         ]
-#     )
-#     assert np.allclose(ser, ser_truth)
+    ebn0 = np.arange(0, 10.5, 0.5)
+    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
+    ser = psk.symbol_error_rate(esn0)
+    ser_truth = np.array(
+        [
+            0.580976792181077,
+            0.558826055301207,
+            0.535799440104755,
+            0.511927850919973,
+            0.487252691121724,
+            0.461827792445486,
+            0.435721495259769,
+            0.409018736505945,
+            0.381822986042064,
+            0.354257867520100,
+            0.326468296781818,
+            0.298620960546231,
+            0.270903939013563,
+            0.243525254285281,
+            0.216710114353729,
+            0.190696633868739,
+            0.165729861047883,
+            0.142054036040723,
+            0.119903157906526,
+            0.099490147901799,
+            0.080995159210313,
+        ]
+    )
+
+    # import matplotlib.pyplot as plt
+
+    # plt.figure()
+    # sdr.plot.ser(esn0, ser, label="Me")
+    # sdr.plot.ser(esn0, ser_truth, label="Matlab")
+    # plt.show()
+
+    np.testing.assert_almost_equal(ser, ser_truth, decimal=3)

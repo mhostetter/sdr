@@ -7,13 +7,15 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, extend_docstring
 from .._probability import Q
+from .._snr import ebn0_to_esn0, esn0_to_ebn0
+from ._linear import _LinearModulation
 from ._symbol_mapping import binary_code, gray_code
 
 
 @export
-class PSK:
+class PSK(_LinearModulation):
     """
     Implements phase-shift keying (PSK) modulation and demodulation.
 
@@ -27,97 +29,72 @@ class PSK:
     def __init__(
         self,
         order: int,
-        offset: float = 0.0,
+        phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
     ):
         r"""
         Creates a new PSK object.
 
         Arguments:
-            order: The modulation order $M = 2^k$ with $k \ge 1$.
-            offset: The phase offset $\phi$ in degrees.
-            symbol_labels: The symbol labels of consecutive symbols. If `"bin"`, the symbols are binary-coded.
-                If `"gray"`, the symbols are Gray-coded. If an array-like object, the symbols are labeled by the
-                values in the array. The array must have unique values from $0$ to $M-1$.
+            order: The modulation order $M = 2^k$, where $k \ge 1$ is the bits per symbol.
+            phase_offset: The phase offset $\phi$ in degrees.
+            symbol_labels: The decimal symbol labels of consecutive complex symbols.
+
+                - `"bin"`: The symbols are binary-coded. Adjacent symbols may differ by more than one bit.
+                - `"gray":` The symbols are Gray-coded. Adjacent symbols only differ by one bit.
+                - `npt.ArrayLike`: An $M$-length array whose indices are the default symbol labels and whose values are
+                  the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
+                  and going counter-clockwise around the unit circle.
         """
-        if not isinstance(order, int):
-            raise TypeError(f"Argument 'order' must be an integer, not {type(order)}.")
-        if not np.log2(order).is_integer():
-            raise ValueError(f"Argument 'order' must be a power of 2, not {order}.")
-        self._order = order
-        self._k = int(np.log2(order))
-        self._offset = offset
+        # Define the base PSK symbol map
+        base_symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(phase_offset)))
+
+        super().__init__(order, base_symbol_map, phase_offset)
 
         if symbol_labels == "bin":
-            self._symbol_labels = binary_code(self._k)
+            self._symbol_labels = binary_code(self.bps)
         elif symbol_labels == "gray":
-            self._symbol_labels = gray_code(self._k)
+            self._symbol_labels = gray_code(self.bps)
         else:
-            if not np.array_equal(np.sort(symbol_labels), np.arange(order)):
-                raise ValueError(f"Argument 'symbol_labels' have unique values 0 to {order-1}.")
+            if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
+                raise ValueError(f"Argument 'symbol_labels' have unique values 0 to {self.order-1}.")
             self._symbol_labels = np.asarray(symbol_labels)
 
-        # Define the base binary symbol map
-        self._symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(offset)))
-
-        # Relabel the symbols based on the symbol map
+        # Relabel the symbols
         self._symbol_map[self._symbol_labels] = self._symbol_map.copy()
 
-    def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
+    @extend_docstring(
+        _LinearModulation.bit_error_rate,
+        {},
         r"""
-        Modulates to decimal symbols $s[k]$ to complex symbols $x[k]$.
-
-        Arguments:
-            symbols: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
-
-        Examples:
-            See the :ref:`psk` example.
-        """
-        symbols = np.asarray(symbols)
-        return self.symbol_map[symbols]
-
-    def demodulate(self, x_hat: npt.ArrayLike) -> np.ndarray:
-        r"""
-        Demodulates the complex symbols $\hat{x}[k]$ to decimal symbols $\hat{s}[k]$
-        using maximum-likelihood estimation.
-
-        Arguments:
-            x_hat: The complex symbols $\hat{x}[k]$ to demodulate.
-
-        Returns:
-            The decimal symbols $\hat{s}[k]$, $0$ to $M-1$.
-
-        Examples:
-            See the :ref:`psk` example.
-        """
-        x_hat = np.asarray(x_hat)
-        error_vectors = np.subtract.outer(x_hat, self.symbol_map)
-        s_hat = np.argmin(np.abs(error_vectors), axis=-1)
-        return s_hat
-
-    def bit_error_rate(self, ebn0: npt.ArrayLike | None = None, esn0: npt.ArrayLike | None = None) -> np.ndarray:
-        r"""
-        Computes the bit error rate (BER) at the provided SNRs.
-
-        Arguments:
-            ebn0: Bit energy $E_b$ to noise PSD $N_0$ ratio in dB. If `None`, `esn0` must be provided.
-            esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB. If `None`, `ebn0` must be provided.
-
-        Returns:
-            The bit error rate $P_b$.
-
         References:
             - John Proakis, *Digital Communications*, Chapter 4: Optimum Receivers for AWGN Channels.
-        """
-        M = self.order  # Modulation order
-        if ebn0 is not None:
-            ebn0 = np.asarray(ebn0)
-        elif esn0 is not None:
-            esn0 = np.asarray(esn0)
-            ebn0 = esn0 - 10 * np.log10(M)  # Bit energy to noise PSD ratio
-        else:
-            raise ValueError("Argument 'ebn0' or 'esn0' must be provided.")
 
+        Examples:
+            See the :ref:`psk` example.
+
+            Plot theoretical BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.
+
+            .. ipython:: python
+
+                bpsk = sdr.PSK(2); \
+                qpsk = sdr.PSK(4); \
+                psk8 = sdr.PSK(8); \
+                ebn0 = np.linspace(0, 10, 1000)
+
+                @savefig sdr_psk_bit_error_rate_1.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.ber(ebn0, bpsk.bit_error_rate(ebn0), label="BPSK"); \
+                sdr.plot.ber(ebn0, qpsk.bit_error_rate(ebn0), label="QPSK"); \
+                sdr.plot.ber(ebn0, psk8.bit_error_rate(ebn0), label="8-PSK"); \
+                plt.title("BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel"); \
+                plt.tight_layout();
+        """,
+    )
+    def bit_error_rate(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
+        M = self.order
+        k = self.bps
+        ebn0 = np.asarray(ebn0)
         ebn0_linear = 10 ** (ebn0 / 10)
 
         if M in [2, 4]:
@@ -125,34 +102,45 @@ class PSK:
             Pe = Q(np.sqrt(2 * ebn0_linear))
         else:
             # Equation 4.3-20
-            k = np.log2(M)  # Bits per symbol
-            Pe = self.symbol_error_rate(ebn0, esn0) / k
+            esn0 = ebn0_to_esn0(ebn0, k)
+            Pe = self.symbol_error_rate(esn0) / k
 
         return Pe
 
-    def symbol_error_rate(self, ebn0: npt.ArrayLike | None = None, esn0: npt.ArrayLike | None = None) -> np.ndarray:
+    @extend_docstring(
+        _LinearModulation.symbol_error_rate,
+        {},
         r"""
-        Computes the symbol error rate (SER) at the provided SNRs.
-
-        Arguments:
-            esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB. If `None`, `ebn0` must be provided.
-            ebn0: Bit energy $E_b$ to noise PSD $N_0$ ratio in dB. If `None`, `esn0` must be provided.
-
-        Returns:
-            The symbol error rate $P_e$.
-
         References:
             - John Proakis, *Digital Communications*, Chapter 4: Optimum Receivers for AWGN Channels.
-        """
-        M = self.order  # Modulation order
-        if ebn0 is not None:
-            ebn0 = np.asarray(ebn0)
-        elif esn0 is not None:
-            esn0 = np.asarray(esn0)
-            ebn0 = esn0 - 10 * np.log10(M)  # Bit energy to noise PSD ratio
-        else:
-            raise ValueError("Argument 'ebn0' or 'esn0' must be provided.")
 
+        Examples:
+            See the :ref:`psk` example.
+
+            Plot theoretical SER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.
+
+            .. ipython:: python
+
+                bpsk = sdr.PSK(2); \
+                qpsk = sdr.PSK(4); \
+                psk8 = sdr.PSK(8); \
+                esn0 = np.linspace(0, 10, 1000)
+
+                @savefig sdr_psk_symbol_error_rate_1.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.ser(esn0, bpsk.symbol_error_rate(esn0), label="BPSK"); \
+                sdr.plot.ser(esn0, qpsk.symbol_error_rate(esn0), label="QPSK"); \
+                sdr.plot.ser(esn0, psk8.symbol_error_rate(esn0), label="8-PSK"); \
+                plt.title("SER curves for BPSK, QPSK, and 8-PSK in an AWGN channel"); \
+                plt.tight_layout();
+        """,
+    )
+    def symbol_error_rate(self, esn0: npt.ArrayLike | None = None) -> np.ndarray:
+        M = self.order
+        k = self.bps
+        esn0 = np.asarray(esn0)
+        # esn0_linear = 10 ** (esn0 / 10)
+        ebn0 = esn0_to_ebn0(esn0, k)
         ebn0_linear = 10 ** (ebn0 / 10)
 
         if M == 2:
@@ -169,97 +157,44 @@ class PSK:
         return Pe
 
     @property
-    def order(self) -> int:
+    @extend_docstring(
+        _LinearModulation.phase_offset,
+        {},
         r"""
-        The modulation order $M = 2^k$.
-
         Examples:
             See the :ref:`psk` example.
+
+            Create a QPSK constellation with no phase offset.
 
             .. ipython:: python
 
                 psk = sdr.PSK(4); \
-                psk.order
+                psk.phase_offset
 
-                @savefig sdr_psk_order_1.png
+                @savefig sdr_psk_phase_offset_1.png
                 plt.figure(figsize=(8, 4)); \
                 sdr.plot.symbol_map(psk.symbol_map);
+
+            Create a QPSK constellation with 45° phase offset.
 
             .. ipython:: python
 
-                psk = sdr.PSK(8); \
-                psk.order
+                psk = sdr.PSK(4, phase_offset=45); \
+                psk.phase_offset
 
-                @savefig sdr_psk_offset_2.png
+                @savefig sdr_psk_phase_offset_2.png
                 plt.figure(figsize=(8, 4)); \
                 sdr.plot.symbol_map(psk.symbol_map);
-        """
-        return self._order
+        """,
+    )
+    def phase_offset(self) -> float:
+        return super().phase_offset
 
     @property
-    def offset(self) -> float:
+    @extend_docstring(
+        _LinearModulation.symbol_map,
+        {},
         r"""
-        The phase offset $\phi$ in degrees.
-
-        Examples:
-            See the :ref:`psk` example.
-
-            .. ipython:: python
-
-                psk = sdr.PSK(4); \
-                psk.offset
-
-                @savefig sdr_psk_offset_1.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.symbol_map(psk.symbol_map);
-
-            .. ipython:: python
-
-                psk = sdr.PSK(4, offset=45); \
-                psk.offset
-
-                @savefig sdr_psk_offset_2.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.symbol_map(psk.symbol_map);
-        """
-        return self._offset
-
-    @property
-    def symbol_labels(self) -> np.ndarray:
-        r"""
-        The symbols values (labels) of consecutive symbols.
-
-        Examples:
-            The default Gray-coded symbols. Adjacent symbols only differ by one bit.
-
-            .. ipython:: python
-
-                psk = sdr.PSK(8); \
-                psk.symbol_labels
-
-                @savefig sdr_psk_symbol_labels_1.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
-
-            The binary-coded symbols. Adjacent symbols may differ by more than one bit.
-
-            .. ipython:: python
-
-                psk = sdr.PSK(8, symbol_labels="bin"); \
-                psk.symbol_labels
-
-                @savefig sdr_psk_symbol_labels_2.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
-        """
-        return self._symbol_labels
-
-    @property
-    def symbol_map(self) -> np.ndarray:
-        r"""
-        The symbol map $\{0, \dots, M-1\} \mapsto \mathbb{C}$. This maps decimal symbols from $0$ to $M-1$
-        to complex symbols.
-
         Examples:
             See the :ref:`psk` example.
 
@@ -284,5 +219,7 @@ class PSK:
                 @savefig sdr_psk_symbol_map_2.png
                 plt.figure(figsize=(8, 4)); \
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
-        """
-        return self._symbol_map
+        """,
+    )
+    def symbol_map(self) -> np.ndarray:
+        return super().symbol_map
