@@ -150,20 +150,22 @@ def ber(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
+        Plot theoretical BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.
+
         .. ipython:: python
 
-            # bpsk = sdr.PSK(2); \
-            # qpsk = sdr.PSK(4); \
-            # psk8 = sdr.PSK(8); \
-            # ebn0 = np.linspace(0, 10, 100)
+            bpsk = sdr.PSK(2); \
+            qpsk = sdr.PSK(4); \
+            psk8 = sdr.PSK(8); \
+            ebn0 = np.linspace(0, 10, 1000)
 
-            # @savefig sdr_plot_error_rate_1.png
-            # plt.figure(figsize=(8, 4)); \
-            # sdr.plot.error_rate(ebn0, bpsk.ber(ebn0), label="BPSK"); \
-            # sdr.plot.error_rate(ebn0, bpsk.ber(ebn0), label="BPSK"); \
-            # sdr.plot.error_rate(ebn0, bpsk.ber(ebn0), label="BPSK"); \
-            # plt.title("Bit error rate curves for PSK in AWGN"); \
-            # plt.tight_layout()
+            @savefig sdr_plot_ber_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.ber(ebn0, bpsk.bit_error_rate(ebn0), label="BPSK"); \
+            sdr.plot.ber(ebn0, qpsk.bit_error_rate(ebn0), label="QPSK"); \
+            sdr.plot.ber(ebn0, psk8.bit_error_rate(ebn0), label="8-PSK"); \
+            plt.title("BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel"); \
+            plt.tight_layout();
 
     Group:
         plot-modulation
@@ -198,20 +200,22 @@ def ser(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
+        Plot theoretical SER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.
+
         .. ipython:: python
 
-            # bpsk = sdr.PSK(2); \
-            # qpsk = sdr.PSK(4); \
-            # psk8 = sdr.PSK(8); \
-            # esn0 = np.linspace(0, 10, 100)
+            bpsk = sdr.PSK(2); \
+            qpsk = sdr.PSK(4); \
+            psk8 = sdr.PSK(8); \
+            esn0 = np.linspace(0, 10, 1000)
 
-            # @savefig sdr_plot_error_rate_2.png
-            # plt.figure(figsize=(8, 4)); \
-            # sdr.plot.error_rate(esn0, bpsk.ser(esn0), label="BPSK"); \
-            # sdr.plot.error_rate(esn0, qpsk.ser(esn0), label="QPSK"); \
-            # sdr.plot.error_rate(esn0, psk8.ser(esn0), label="8-PSK"); \
-            # plt.title("Symbol error rate curves for PSK in AWGN"); \
-            # plt.tight_layout()
+            @savefig sdr_plot_ser_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.ser(esn0, bpsk.symbol_error_rate(esn0), label="BPSK"); \
+            sdr.plot.ser(esn0, qpsk.symbol_error_rate(esn0), label="QPSK"); \
+            sdr.plot.ser(esn0, psk8.symbol_error_rate(esn0), label="8-PSK"); \
+            plt.title("SER curves for BPSK, QPSK, and 8-PSK in an AWGN channel"); \
+            plt.tight_layout();
 
     Group:
         plot-modulation
