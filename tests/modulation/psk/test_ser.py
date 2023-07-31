@@ -116,15 +116,7 @@ def test_8psk_ser():
             0.003034185962138,
         ]
     )
-
-    # import matplotlib.pyplot as plt
-
-    # plt.figure()
-    # sdr.plot.ser(esn0, ser, label="Me")
-    # sdr.plot.ser(esn0, ser_truth, label="Matlab")
-    # plt.show()
-
-    np.testing.assert_almost_equal(ser, ser_truth, decimal=3)
+    np.testing.assert_almost_equal(ser, ser_truth)
 
 
 def test_16psk_ser():
@@ -163,12 +155,4 @@ def test_16psk_ser():
             0.080995159210313,
         ]
     )
-
-    # import matplotlib.pyplot as plt
-
-    # plt.figure()
-    # sdr.plot.ser(esn0, ser, label="Me")
-    # sdr.plot.ser(esn0, ser_truth, label="Matlab")
-    # plt.show()
-
-    np.testing.assert_almost_equal(ser, ser_truth, decimal=3)
+    np.testing.assert_almost_equal(ser, ser_truth)

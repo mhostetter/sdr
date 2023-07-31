@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.integrate
 from typing_extensions import Literal
 
 from .._helper import export, extend_docstring
@@ -139,7 +140,7 @@ class PSK(_LinearModulation):
         M = self.order
         k = self.bps
         esn0 = np.asarray(esn0)
-        # esn0_linear = 10 ** (esn0 / 10)
+        esn0_linear = 10 ** (esn0 / 10)
         ebn0 = esn0_to_ebn0(esn0, k)
         ebn0_linear = 10 ** (ebn0 / 10)
 
@@ -150,9 +151,21 @@ class PSK(_LinearModulation):
             # Equation 4.3-15
             Pe = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
         else:
-            # Equation 4.3-17
-            # NOTE: This is an approximation for large M
-            Pe = 2 * Q(np.sqrt(2 * np.log2(M) * np.sin(np.pi / M) ** 2 * ebn0_linear))
+
+            def p_theta(theta):
+                # Equation 4.3-10
+                return scipy.integrate.quad_vec(
+                    lambda nu: 1
+                    / (2 * np.pi)
+                    * np.exp(-esn0_linear * np.sin(theta) ** 2)
+                    * nu
+                    * np.exp(-((nu - np.sqrt(2 * esn0_linear) * np.cos(theta)) ** 2) / 2),
+                    0,
+                    np.inf,
+                )[0]
+
+            # Equation 4.3-12
+            Pe = 1 - scipy.integrate.quad_vec(lambda theta: p_theta(theta), -np.pi / M, np.pi / M)[0]
 
         return Pe
 
