@@ -146,7 +146,7 @@ def ber(
 
     Arguments:
         ebn0: The bit energy $E_b$ to noise PSD $N_0$ ratio (dB).
-        ber: The bit error rate $P_b$.
+        ber: The bit error rate $P_{be}$.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
@@ -182,7 +182,7 @@ def ber(
             plt.legend()
 
         plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$")
-        plt.ylabel("Probability of bit error, $P_b$")
+        plt.ylabel("Probability of bit error, $P_{be}$")
         plt.title("Bit error rate curve")
         plt.tight_layout()
 
@@ -198,7 +198,7 @@ def ser(
 
     Arguments:
         esn0: The symbol energy $E_s$ to noise PSD $N_0$ ratio (dB).
-        ser: The symbol error rate $P_e$.
+        ser: The symbol error rate $P_{se}$.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
@@ -234,6 +234,6 @@ def ser(
             plt.legend()
 
         plt.xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
-        plt.ylabel("Probability of symbol error, $P_e$")
+        plt.ylabel("Probability of symbol error, $P_{se}$")
         plt.title("Symbol error rate curve")
         plt.tight_layout()

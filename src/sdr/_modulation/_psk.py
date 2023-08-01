@@ -84,7 +84,7 @@ class PSK(_LinearModulation):
             diff_encoded: Indicates whether the input symbols were differentially encoded.
 
         Returns:
-            The bit error rate $P_b$.
+            The bit error rate $P_{be}$.
 
         See Also:
             sdr.esn0_to_ebn0, sdr.snr_to_ebn0
@@ -137,32 +137,32 @@ class PSK(_LinearModulation):
         if not diff_encoded:
             if M == 2:
                 # Equation 4.3-13 from Proakis
-                Pb = Q(np.sqrt(2 * ebn0_linear))
+                Pbe = Q(np.sqrt(2 * ebn0_linear))
             elif M == 4 and np.array_equal(self._symbol_labels, gray_code(k)):
                 # Equation 4.3-13 from Proakis
-                Pb = Q(np.sqrt(2 * ebn0_linear))
+                Pbe = Q(np.sqrt(2 * ebn0_linear))
             else:
                 # Equation 8.29 from Simon and Alouini
-                Pb = np.zeros_like(esn0_linear)
+                Pbe = np.zeros_like(esn0_linear)
                 for i in range(esn0_linear.size):
                     for j in range(1, M):
                         Pj = Pk(M, esn0_linear[i], j)
                         # The number of bits that differ between symbol j and symbol 0
                         N_bits = unpack(self._symbol_labels[j] ^ self._symbol_labels[0], k).sum()
-                        Pb[i] += Pj * N_bits
+                        Pbe[i] += Pj * N_bits
                     # Equation 8.31 from Simon and Alouini
-                    Pb[i] /= k
+                    Pbe[i] /= k
         else:
             if M == 2:
                 # Equation 8.37 from Simon and Alouini
-                Pb = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
+                Pbe = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
             elif M == 4 and np.array_equal(self._symbol_labels, gray_code(k)):
                 # Equation 8.37 from Simon and Alouini
-                Pb = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
+                Pbe = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
             else:
                 raise ValueError("Differential encoding is not supported for M-PSK with M > 4.")
 
-        return Pb
+        return Pbe
 
     def ser(self, esn0: npt.ArrayLike | None = None, diff_encoded: bool = False) -> np.ndarray:
         r"""
@@ -173,7 +173,7 @@ class PSK(_LinearModulation):
             diff_encoded: Indicates whether the input symbols were differentially encoded.
 
         Returns:
-            The symbol error rate $P_e$.
+            The symbol error rate $P_{se}$.
 
         See Also:
             sdr.ebn0_to_esn0, sdr.snr_to_esn0
@@ -226,15 +226,15 @@ class PSK(_LinearModulation):
         if not diff_encoded:
             if M == 2:
                 # Equation 4.3-13 from Proakis
-                Pe = Q(np.sqrt(2 * ebn0_linear))
+                Pse = Q(np.sqrt(2 * ebn0_linear))
             elif M == 4:
                 # Equation 4.3-15 from Proakis
-                Pe = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
+                Pse = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
             else:
                 # Equation 8.18 from Simon and Alouini
-                Pe = np.zeros_like(esn0_linear)
+                Pse = np.zeros_like(esn0_linear)
                 for i in range(esn0_linear.size):
-                    Pe[i] = (
+                    Pse[i] = (
                         Q(np.sqrt(2 * esn0_linear[i]))
                         + scipy.integrate.quad(
                             lambda u: 2
@@ -247,14 +247,14 @@ class PSK(_LinearModulation):
                     )
         else:
             # Equation 8.36 from Simon and Alouini
-            Pe_non_diff = self.ser(esn0, diff_encoded=False)
-            Pe = 2 * Pe_non_diff - Pe_non_diff**2
+            Pse_non_diff = self.ser(esn0, diff_encoded=False)
+            Pse = 2 * Pse_non_diff - Pse_non_diff**2
             for i in range(esn0_linear.size):
                 for j in range(1, M):
                     Pj = Pk(M, esn0_linear[i], j)
-                    Pe[i] -= Pj**2
+                    Pse[i] -= Pj**2
 
-        return Pe
+        return Pse
 
     @property
     @extend_docstring(
