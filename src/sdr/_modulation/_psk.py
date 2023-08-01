@@ -75,10 +75,20 @@ class PSK(_LinearModulation):
         # Relabel the symbols
         self._symbol_map[self._symbol_labels] = self._symbol_map.copy()
 
-    @extend_docstring(
-        _LinearModulation.ber,
-        {},
+    def ber(self, ebn0: npt.ArrayLike | None = None, diff_encoded: bool = False) -> np.ndarray:
         r"""
+        Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
+
+        Arguments:
+            ebn0: Bit energy $E_b$ to noise PSD $N_0$ ratio in dB.
+            diff_encoded: Indicates whether the input symbols were differentially encoded.
+
+        Returns:
+            The bit error rate $P_b$.
+
+        See Also:
+            sdr.esn0_to_ebn0, sdr.snr_to_ebn0
+
         References:
             - Simon and Alouini, *Digital Communications over Fading Channels*,
               Chapter 8: Performance of Single-Channel Receivers.
@@ -105,37 +115,56 @@ class PSK(_LinearModulation):
                 sdr.plot.ber(ebn0, psk16.ber(ebn0), label="16-PSK"); \
                 plt.title("BER curves for PSK modulation in an AWGN channel"); \
                 plt.tight_layout();
-        """,
-    )
-    def ber(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
+
+            Compare the bit error rate of QPSK and DE-QPSK in an AWGN channel.
+
+            .. ipython:: python
+
+                @savefig sdr_psk_ber_2.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
+                sdr.plot.ber(ebn0, qpsk.ber(ebn0, diff_encoded=True), label="DE-QPSK"); \
+                plt.title("BER curves for PSK and DE-PSK modulation in an AWGN channel"); \
+                plt.tight_layout();
+        """
         M = self.order
         k = self.bps
         ebn0 = np.asarray(ebn0)
         ebn0_linear = 10 ** (ebn0 / 10)
+        esn0 = ebn0_to_esn0(ebn0, k)
+        esn0_linear = 10 ** (esn0 / 10)
 
-        if M in [2, 4] and np.array_equal(self._symbol_labels, gray_code(k)):
-            # Equation 4.3-13 from Proakis
-            # This is only applicable for Gray codes
-            Pb = Q(np.sqrt(2 * ebn0_linear))
+        if not diff_encoded:
+            if M == 2:
+                # Equation 4.3-13 from Proakis
+                Pb = Q(np.sqrt(2 * ebn0_linear))
+            elif M == 4 and np.array_equal(self._symbol_labels, gray_code(k)):
+                # Equation 4.3-13 from Proakis
+                Pb = Q(np.sqrt(2 * ebn0_linear))
+            else:
+                # Equation 8.29 from Simon and Alouini
+                Pb = np.zeros_like(esn0_linear)
+                for i in range(esn0_linear.size):
+                    for j in range(1, M):
+                        Pj = Pk(M, esn0_linear[i], j)
+                        # The number of bits that differ between symbol j and symbol 0
+                        N_bits = unpack(self._symbol_labels[j] ^ self._symbol_labels[0], k).sum()
+                        Pb[i] += Pj * N_bits
+                    # Equation 8.31 from Simon and Alouini
+                    Pb[i] /= k
         else:
-            # Equation 8.29 from Simon and Alouini
-            esn0 = ebn0_to_esn0(ebn0, k)
-            esn0_linear = 10 ** (esn0 / 10)
-            Pb = np.zeros_like(esn0_linear)
-            for i in range(esn0_linear.size):
-                for j in range(1, M):
-                    Pj = Pk(M, esn0_linear[i], j)
-                    # The number of bits that differ between symbol j and symbol 0
-                    N_bits = unpack(self._symbol_labels[j] ^ self._symbol_labels[0], k).sum()
-
-                    Pb[i] += Pj * N_bits
-
-                # Equation 8.31 from Simon and Alouini
-                Pb[i] /= k
+            if M == 2:
+                # Equation 8.37 from Simon and Alouini
+                Pb = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
+            elif M == 4 and np.array_equal(self._symbol_labels, gray_code(k)):
+                # Equation 8.37 from Simon and Alouini
+                Pb = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
+            else:
+                raise ValueError("Differential encoding is not supported for M-PSK with M > 4.")
 
         return Pb
 
-    def ser(self, esn0: npt.ArrayLike | None = None, diff_encoded=False) -> np.ndarray:
+    def ser(self, esn0: npt.ArrayLike | None = None, diff_encoded: bool = False) -> np.ndarray:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 
