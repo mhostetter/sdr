@@ -76,7 +76,7 @@ class PSK(_LinearModulation):
         self._symbol_map[self._symbol_labels] = self._symbol_map.copy()
 
     @extend_docstring(
-        _LinearModulation.bit_error_rate,
+        _LinearModulation.ber,
         {},
         r"""
         References:
@@ -97,17 +97,17 @@ class PSK(_LinearModulation):
                 psk16 = sdr.PSK(16); \
                 ebn0 = np.linspace(-2, 10, 100)
 
-                @savefig sdr_psk_bit_error_rate_1.png
+                @savefig sdr_psk_ber_1.png
                 plt.figure(figsize=(8, 4)); \
-                sdr.plot.ber(ebn0, bpsk.bit_error_rate(ebn0), label="BPSK"); \
-                sdr.plot.ber(ebn0, qpsk.bit_error_rate(ebn0), label="QPSK"); \
-                sdr.plot.ber(ebn0, psk8.bit_error_rate(ebn0), label="8-PSK"); \
-                sdr.plot.ber(ebn0, psk16.bit_error_rate(ebn0), label="16-PSK"); \
+                sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK"); \
+                sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
+                sdr.plot.ber(ebn0, psk8.ber(ebn0), label="8-PSK"); \
+                sdr.plot.ber(ebn0, psk16.ber(ebn0), label="16-PSK"); \
                 plt.title("BER curves for PSK modulation in an AWGN channel"); \
                 plt.tight_layout();
         """,
     )
-    def bit_error_rate(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
+    def ber(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
         M = self.order
         k = self.bps
         ebn0 = np.asarray(ebn0)
@@ -155,7 +155,7 @@ class PSK(_LinearModulation):
         return Pb
 
     @extend_docstring(
-        _LinearModulation.symbol_error_rate,
+        _LinearModulation.ser,
         {},
         r"""
         References:
@@ -176,17 +176,17 @@ class PSK(_LinearModulation):
                 psk16 = sdr.PSK(16); \
                 esn0 = np.linspace(-2, 10, 100)
 
-                @savefig sdr_psk_symbol_error_rate_1.png
+                @savefig sdr_psk_ser_1.png
                 plt.figure(figsize=(8, 4)); \
-                sdr.plot.ser(esn0, bpsk.symbol_error_rate(esn0), label="BPSK"); \
-                sdr.plot.ser(esn0, qpsk.symbol_error_rate(esn0), label="QPSK"); \
-                sdr.plot.ser(esn0, psk8.symbol_error_rate(esn0), label="8-PSK"); \
-                sdr.plot.ser(esn0, psk16.symbol_error_rate(esn0), label="16-PSK"); \
+                sdr.plot.ser(esn0, bpsk.ser(esn0), label="BPSK"); \
+                sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
+                sdr.plot.ser(esn0, psk8.ser(esn0), label="8-PSK"); \
+                sdr.plot.ser(esn0, psk16.ser(esn0), label="16-PSK"); \
                 plt.title("SER curves for PSK modulation in an AWGN channel"); \
                 plt.tight_layout();
         """,
     )
-    def symbol_error_rate(self, esn0: npt.ArrayLike | None = None) -> np.ndarray:
+    def ser(self, esn0: npt.ArrayLike | None = None) -> np.ndarray:
         M = self.order
         k = self.bps
         esn0 = np.asarray(esn0)

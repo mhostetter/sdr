@@ -73,7 +73,7 @@ class _LinearModulation:
         return s_hat
 
     @abc.abstractmethod
-    def bit_error_rate(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
+    def ber(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
         r"""
         Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
 
@@ -89,7 +89,7 @@ class _LinearModulation:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def symbol_error_rate(self, esn0: npt.ArrayLike) -> np.ndarray:
+    def ser(self, esn0: npt.ArrayLike) -> np.ndarray:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 
