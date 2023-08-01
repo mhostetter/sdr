@@ -69,7 +69,7 @@ def awgn(
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, offset=45); \
+            psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1_000); \
             x = psk.modulate(s); \
             y = sdr.awgn(x, snr=10)
@@ -131,7 +131,7 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, offset=45); \
+            psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, 4, 1_000); \
             x = psk.modulate(s); \
             y1 = sdr.iq_imbalance(x, 5, 0); \
@@ -206,7 +206,7 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, offset=45); \
+            psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1_000); \
             x = psk.modulate(s)
 
@@ -283,7 +283,7 @@ def frequency_offset(
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, offset=45); \
+            psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1_000); \
             x = psk.modulate(s)
 
