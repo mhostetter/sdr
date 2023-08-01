@@ -152,7 +152,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
 
         .. ipython:: python
 
-            snr = np.linspace(-20, 10, 100); \
+            snr = np.linspace(-20, 20, 100); \
             C = sdr.awgn_capacity(snr)
 
             @savefig sdr_awgn_capacity_1.png
@@ -177,11 +177,11 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
 
             @savefig sdr_awgn_capacity_2.png
             plt.figure(figsize=(8, 4)); \
-            plt.plot(ebn0, C); \
+            plt.semilogy(ebn0, C); \
             plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$"); \
             plt.ylabel("Capacity (bits/2D), $C$"); \
             plt.title("Capacity of the AWGN Channel"); \
-            plt.grid(True); \
+            plt.grid(True, which="both"); \
             plt.tight_layout()
 
     Group:
