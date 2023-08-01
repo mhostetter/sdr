@@ -13,7 +13,7 @@
     
     
       
-        <title>sdr.PSK.bit_error_rate - sdr</title>
+        <title>sdr.PSK.ber - sdr</title>
       
     
     
@@ -146,7 +146,7 @@ You're not viewing the latest version.
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              sdr.PSK.bit_error_rate
+              sdr.PSK.ber
             
           </span>
         </div>
@@ -1977,12 +1977,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+          <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
       </a>
       
         
@@ -2009,7 +2009,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-ebn0" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PSK.bit_error_rate.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB." class="md-ellipsis">ebn0</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PSK.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB." class="md-ellipsis">ebn0</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-diff_encoded" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PSK.ber.diff_encoded (Python parameter) — Indicates whether the input symbols were differentially encoded." class="md-ellipsis">diff_<wbr>encoded</span>
   </a>
   
 </li>
@@ -2086,8 +2093,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ser/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -5682,7 +5689,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-ebn0" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PSK.bit_error_rate.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB." class="md-ellipsis">ebn0</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PSK.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB." class="md-ellipsis">ebn0</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-diff_encoded" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PSK.ber.diff_encoded (Python parameter) — Indicates whether the input symbols were differentially encoded." class="md-ellipsis">diff_<wbr>encoded</span>
   </a>
   
 </li>
@@ -5728,18 +5742,20 @@ You're not viewing the latest version.
 
 
 <dl class="py method objdesc">
-<dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">PSK.</span></span><span class="sig-name descname"><span class="pre">bit_error_rate</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-ebn0" title="sdr.PSK.bit_error_rate.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<dt class="sig sig-object highlight sig-wrap py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">PSK.</span></span><span class="sig-name descname"><span class="pre">ber</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-ebn0" title="sdr.PSK.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-diff_encoded" title="sdr.PSK.ber.diff_encoded (Python parameter) — Indicates whether the input symbols were differentially encoded."><span class="n"><span class="pre">diff_encoded</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Computes the bit error rate (BER) at the provided <span class="math notranslate nohighlight">\(E_b/N_0\)</span> values.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="p-ebn0"><span class="n sig-name">ebn0</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike<span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-ebn0" title="Permalink to this definition">¶</a></dt><dd><p>Bit energy <span class="math notranslate nohighlight">\(E_b\)</span> to noise PSD <span class="math notranslate nohighlight">\(N_0\)</span> ratio in dB.</p>
 </dd>
+<dt id="p-diff_encoded"><span class="n sig-name">diff_encoded</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)">bool</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code><a class="headerlink" href="#p-diff_encoded" title="Permalink to this definition">¶</a></dt><dd><p>Indicates whether the input symbols were differentially encoded.</p>
+</dd>
 </dl>
 </dd>
 <dt class="field-even" id="returns">Returns<span class="colon">:</span><a class="headerlink" href="#returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The bit error rate <span class="math notranslate nohighlight">\(P_b\)</span>.</p>
+<dd class="field-even"><p>The bit error rate <span class="math notranslate nohighlight">\(P_{be}\)</span>.</p>
 </dd>
 </dl>
 <div class="seealso collapsible admonition">
@@ -5748,27 +5764,41 @@ You're not viewing the latest version.
 </div>
 <p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
 <ul class="simple">
+<li><p>Simon and Alouini, <em>Digital Communications over Fading Channels</em>,
+Chapter 8: Performance of Single-Channel Receivers.</p></li>
 <li><p>John Proakis, <em>Digital Communications</em>, Chapter 4: Optimum Receivers for AWGN Channels.</p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>See the <a class="reference internal" href="../../examples/psk/#psk"><span class="std std-ref">Phase-shift keying</span></a> example.</p>
-<p>Plot theoretical BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.</p>
+<p>Plot theoretical BER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">psk8</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">psk16</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">bit_error_rate</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">bit_error_rate</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk8</span><span class="o">.</span><span class="n">bit_error_rate</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk8</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk16</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;BER curves for PSK modulation in an AWGN channel&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_psk_bit_error_rate_1.png" src="../../_images/sdr_psk_bit_error_rate_1.png" />
+<img alt="../../_images/sdr_psk_ber_1.png" src="../../_images/sdr_psk_ber_1.png" />
+<p>Compare the bit error rate of QPSK and DE-QPSK in an AWGN channel.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">diff_encoded</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;DE-QPSK&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;BER curves for PSK and DE-PSK modulation in an AWGN channel&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+<span class="gp">   ...: </span>
+</code></pre></div>
+</div>
+<img alt="../../_images/sdr_psk_ber_2.png" src="../../_images/sdr_psk_ber_2.png" />
 </dd></dl>
 
 

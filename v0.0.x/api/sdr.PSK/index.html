@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#examples" class="md-skip">
+        <a href="#notes" class="md-skip">
           Skip to content
         </a>
       
@@ -1968,8 +1968,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.bit_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ber/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
       </a>
     </li>
   
@@ -2013,8 +2013,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ser/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -2162,6 +2162,13 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">Examples</span>
   </a>
@@ -2197,8 +2204,8 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.PSK.bit_error_rate/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+  <a href="../sdr.PSK.ber/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
   </a>
   
 </li>
@@ -2218,8 +2225,8 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.PSK.symbol_error_rate/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+  <a href="../sdr.PSK.ser/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
   </a>
   
 </li>
@@ -5744,6 +5751,13 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">Examples</span>
   </a>
@@ -5789,6 +5803,15 @@ You're not viewing the latest version.
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">PSK</span></span></dt>
 <dd><p>Implements phase-shift keying (PSK) modulation and demodulation.</p>
+<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p>Phase-shift keying (PSK) is a linear phase modulation scheme that encodes information by modulating
+the phase of a carrier sinusoid. The modulation order <span class="math notranslate nohighlight">\(M = 2^k\)</span> is a power of 2 and indicates the number of
+phases used. The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</span> bits at a time to create decimal symbols
+<span class="math notranslate nohighlight">\(s[k] \in \{0, \dots, M-1\}\)</span>. These decimal symbols <span class="math notranslate nohighlight">\(s[k]\)</span> are then mapped to complex symbols
+<span class="math notranslate nohighlight">\(x[k] \in \mathbb{C}\)</span> by the equation</p>
+<p><div class="math notranslate nohighlight">
+\[x[k] = \exp\left(j\left(\frac{2\pi}{M}s[k] + \phi\right)\right) .\]</div>
+</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>See the <a class="reference internal" href="../../examples/psk/#psk"><span class="std std-ref">Phase-shift keying</span></a> example.</p>
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
@@ -5803,7 +5826,7 @@ You're not viewing the latest version.
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.PSK.bit_error_rate/" title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">bit_error_rate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PSK.bit_error_rate/#p-ebn0" title="sdr.PSK.bit_error_rate.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.PSK.ber/" title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ber</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PSK.ber/#p-ebn0" title="sdr.PSK.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Computes the bit error rate (BER) at the provided <span class="math notranslate nohighlight">\(E_b/N_0\)</span> values.</p>
 </dd></dl>
 
@@ -5822,7 +5845,7 @@ using maximum-likelihood estimation.</p>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.PSK.symbol_error_rate/" title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">symbol_error_rate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PSK.symbol_error_rate/#p-esn0" title="sdr.PSK.symbol_error_rate.esn0 (Python parameter) — Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">esn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.PSK.ser/" title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ser</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PSK.ser/#p-esn0" title="sdr.PSK.ser.esn0 (Python parameter) — Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">esn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Computes the symbol error rate (SER) at the provided <span class="math notranslate nohighlight">\(E_s/N_0\)</span> values.</p>
 </dd></dl>
 

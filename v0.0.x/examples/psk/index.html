@@ -531,6 +531,33 @@ You're not viewing the latest version.
     <span class="md-ellipsis">Error rate curves</span>
   </a>
   
+    <nav class="md-nav" aria-label="Error rate curves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit-error-rate-curves" class="md-nav__link">
+    <span class="md-ellipsis">Bit error rate curves</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbol-error-rate-curves" class="md-nav__link">
+    <span class="md-ellipsis">Symbol error rate curves</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symbol-mapping" class="md-nav__link">
+    <span class="md-ellipsis">Symbol mapping</span>
+  </a>
+  
 </li>
       
     </ul>
@@ -2040,8 +2067,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../../api/sdr.PSK.bit_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+      <a href="../../api/sdr.PSK.ber/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
       </a>
     </li>
   
@@ -2085,8 +2112,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../../api/sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+      <a href="../../api/sdr.PSK.ser/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -5717,6 +5744,33 @@ You're not viewing the latest version.
     <span class="md-ellipsis">Error rate curves</span>
   </a>
   
+    <nav class="md-nav" aria-label="Error rate curves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit-error-rate-curves" class="md-nav__link">
+    <span class="md-ellipsis">Bit error rate curves</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symbol-error-rate-curves" class="md-nav__link">
+    <span class="md-ellipsis">Symbol error rate curves</span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symbol-mapping" class="md-nav__link">
+    <span class="md-ellipsis">Symbol mapping</span>
+  </a>
+  
 </li>
       
     </ul>
@@ -5750,12 +5804,9 @@ You're not viewing the latest version.
 <p>In the <a class="reference internal" href="../../api/filtering/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> library, phase-shift keying modulation is available in the <a class="reference internal" href="../../api/sdr.PSK/" title="sdr.PSK (Python class) — Implements phase-shift keying (PSK) modulation and demodulation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.PSK</span></code></a> class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">analyze_psk</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">esn0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="c1"># Create a PSK modulation object</span>
-    <span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">analyze_psk</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">esn0</span><span class="p">):</span>
     <span class="c1"># Generate random decimal symbols</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">)</span>
 
     <span class="c1"># Modulate decimal symbols to complex symbols</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
@@ -5766,17 +5817,17 @@ You're not viewing the latest version.
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="c1"># sdr.plot.constellation(x_hat, linestyle=&quot;none&quot;)</span>
     <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">(</span><span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
     <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">heatmap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Constellation at </span><span class="si">{</span><span class="n">esn0</span><span class="si">}</span><span class="s2"> dB $E_s/N_0$&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">order</span><span class="si">}</span><span class="s2">-PSK constellation&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="si">}</span><span class="s2">-PSK constellation&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-    <span class="n">h_srrc</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-    <span class="n">tx_mf</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FIRInterpolator</span><span class="p">(</span><span class="n">h_srrc</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">sps</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">h_srrc</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+    <span class="n">tx_mf</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FIRInterpolator</span><span class="p">(</span><span class="n">h_srrc</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">tx_mf</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -5790,72 +5841,72 @@ You're not viewing the latest version.
 <h3 id="bpsk">BPSK<a class="headerlink" href="#bpsk" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">analyze_psk</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">analyze_psk</span><span class="p">(</span><span class="n">bpsk</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f4a00e4cc6533c2c5b267827fa482ac1f9f733839aa2b9b160105b047e43a590.png" src="../../_images/f4a00e4cc6533c2c5b267827fa482ac1f9f733839aa2b9b160105b047e43a590.png" />
-<img alt="../../_images/8638491b97aede8d583a944f6a47378a66f0e3ba07da72ec2c40eaf846d110b7.png" src="../../_images/8638491b97aede8d583a944f6a47378a66f0e3ba07da72ec2c40eaf846d110b7.png" />
+<img alt="../../_images/e50f677ae6a2857f42fe4072b7faa955aa1d720e660c7229d5928c61831cb7c4.png" src="../../_images/e50f677ae6a2857f42fe4072b7faa955aa1d720e660c7229d5928c61831cb7c4.png" />
+<img alt="../../_images/bd57efbdc2a123e1a2b2d0203abffb988d9995eb8b68a50cc8547358ed81e4a4.png" src="../../_images/bd57efbdc2a123e1a2b2d0203abffb988d9995eb8b68a50cc8547358ed81e4a4.png" />
 </div>
 </div>
 <h3 id="qpsk">QPSK<a class="headerlink" href="#qpsk" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">analyze_psk</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">analyze_psk</span><span class="p">(</span><span class="n">qpsk</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ab8aaca8cbd8608385ec7ef2f99647a5ed070c5998e81e99fd13b41fa845b0f6.png" src="../../_images/ab8aaca8cbd8608385ec7ef2f99647a5ed070c5998e81e99fd13b41fa845b0f6.png" />
-<img alt="../../_images/306f54d4aed4dd139861d77bbb9b9297b9dab4aee431710d1721bea98f19e651.png" src="../../_images/306f54d4aed4dd139861d77bbb9b9297b9dab4aee431710d1721bea98f19e651.png" />
+<img alt="../../_images/8f89b7267a11d546a987f840691640aa8c94767947d83c483ce53e0287125ebf.png" src="../../_images/8f89b7267a11d546a987f840691640aa8c94767947d83c483ce53e0287125ebf.png" />
+<img alt="../../_images/76f5e310ae9b52469571acfc82d70832396fef06c0666c2e75fb9a3da85eb20a.png" src="../../_images/76f5e310ae9b52469571acfc82d70832396fef06c0666c2e75fb9a3da85eb20a.png" />
 </div>
 </div>
 <h3 id="id1">8-PSK<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">analyze_psk</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk8</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">analyze_psk</span><span class="p">(</span><span class="n">psk8</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/37cc834fc32b28b22f9e6884e51d2bcff10e94182321563c027aa98dacb6cc49.png" src="../../_images/37cc834fc32b28b22f9e6884e51d2bcff10e94182321563c027aa98dacb6cc49.png" />
-<img alt="../../_images/af84c8f35157ba435fb5ccfc002a6380c4f43e8c8c6b083dda4eabe60feb44d4.png" src="../../_images/af84c8f35157ba435fb5ccfc002a6380c4f43e8c8c6b083dda4eabe60feb44d4.png" />
+<img alt="../../_images/a68213aadb95aeb8572203a9b3710c21bd9de61f6945fc56efdaa2ac14555382.png" src="../../_images/a68213aadb95aeb8572203a9b3710c21bd9de61f6945fc56efdaa2ac14555382.png" />
+<img alt="../../_images/827001ee304d7b4a1a49ec5aaa0092536e034ef30424a6751a7f6c33f7503eb1.png" src="../../_images/827001ee304d7b4a1a49ec5aaa0092536e034ef30424a6751a7f6c33f7503eb1.png" />
 </div>
 </div>
 <h3 id="id2">16-PSK<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">analyze_psk</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk16</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">analyze_psk</span><span class="p">(</span><span class="n">psk16</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/25f723773d9ab6809479361ee0aae8ed3d23b4da3065b8848ba508860c945644.png" src="../../_images/25f723773d9ab6809479361ee0aae8ed3d23b4da3065b8848ba508860c945644.png" />
-<img alt="../../_images/59e8f6a149078e33d99f9554a1e9acaf0d3f827c9030e095e26826277c26a407.png" src="../../_images/59e8f6a149078e33d99f9554a1e9acaf0d3f827c9030e095e26826277c26a407.png" />
+<img alt="../../_images/aa4ca6502332d32038212188ebcab36e45d7b515244ca1697ea5ff01f62efe07.png" src="../../_images/aa4ca6502332d32038212188ebcab36e45d7b515244ca1697ea5ff01f62efe07.png" />
+<img alt="../../_images/1a5df709a22c6c93a3b1a5d1d226cad99becfcd57e61483976a46a2dc35060d3.png" src="../../_images/1a5df709a22c6c93a3b1a5d1d226cad99becfcd57e61483976a46a2dc35060d3.png" />
 </div>
 </div>
 <h2 id="error-rate-curves">Error rate curves<a class="headerlink" href="#error-rate-curves" title="Permalink to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">error_rates</span><span class="p">(</span><span class="n">order</span><span class="p">):</span>
-    <span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
-    <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>  <span class="c1"># Bits per symbol</span>
-
-    <span class="n">ebn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-    <span class="n">esn0</span> <span class="o">=</span> <span class="n">ebn0</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">error_rates</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">):</span>
+    <span class="n">esn0</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ebn0_to_esn0</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">bps</span><span class="p">)</span>
+    <span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">esn0_to_snr</span><span class="p">(</span><span class="n">esn0</span><span class="p">)</span>
 
     <span class="n">ber</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ErrorRate</span><span class="p">()</span>
     <span class="n">ser</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ErrorRate</span><span class="p">()</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">esn0</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
-        <span class="n">N_symbols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e6</span><span class="p">)</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">snr</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e6</span><span class="p">))</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-        <span class="n">x_hat</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snr</span><span class="o">=</span><span class="n">esn0</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">x_hat</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         <span class="n">s_hat</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">x_hat</span><span class="p">)</span>
 
-        <span class="n">ber</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ebn0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sdr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">k</span><span class="p">),</span> <span class="n">sdr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">s_hat</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>
+        <span class="n">ber</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ebn0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sdr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">bps</span><span class="p">),</span> <span class="n">sdr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">s_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">bps</span><span class="p">))</span>
         <span class="n">ser</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">esn0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">,</span> <span class="n">s_hat</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">ber</span><span class="p">,</span> <span class="n">ser</span>
@@ -5865,22 +5916,32 @@ You're not viewing the latest version.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">bpsk_ber</span><span class="p">,</span> <span class="n">bpsk_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">qpsk_ber</span><span class="p">,</span> <span class="n">qpsk_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">psk8_ber</span><span class="p">,</span> <span class="n">psk8_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">psk16_ber</span><span class="p">,</span> <span class="n">psk16_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">ebn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="n">bpsk_ber</span><span class="p">,</span> <span class="n">bpsk_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">bpsk</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">)</span>
+<span class="n">qpsk_ber</span><span class="p">,</span> <span class="n">qpsk_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">qpsk</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">)</span>
+<span class="n">psk8_ber</span><span class="p">,</span> <span class="n">psk8_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">psk8</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">)</span>
+<span class="n">psk16_ber</span><span class="p">,</span> <span class="n">psk16_ser</span> <span class="o">=</span> <span class="n">error_rates</span><span class="p">(</span><span class="n">psk16</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 </div>
+<h3 id="bit-error-rate-curves">Bit error rate curves<a class="headerlink" href="#bit-error-rate-curves" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">bpsk_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">qpsk_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">psk8_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">psk16_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e0</span><span class="p">)</span>
+<span class="n">ebn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk8</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk16</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">bpsk_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK simulated&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">qpsk_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK simulated&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">psk8_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK simulated&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="o">*</span><span class="n">psk16_ber</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK simulated&quot;</span><span class="p">)</span>
+<span class="c1"># sdr.plot.ber(ebn0, psk16.bit_error_rate(ebn0), label=&quot;16-PSK theoretical&quot;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Bit error rate curves for PSK modulation in AWGN&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -5888,17 +5949,24 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/94b5e565e61d70934f4de7fe99dbe32349fd2ff261cd3420e956ed218b415086.png" src="../../_images/94b5e565e61d70934f4de7fe99dbe32349fd2ff261cd3420e956ed218b415086.png" />
+<img alt="../../_images/8e996795162b4be02a4eb4523cf65736bfc2edc8e322633aa0f234a4f808196f.png" src="../../_images/8e996795162b4be02a4eb4523cf65736bfc2edc8e322633aa0f234a4f808196f.png" />
 </div>
 </div>
+<h3 id="symbol-error-rate-curves">Symbol error rate curves<a class="headerlink" href="#symbol-error-rate-curves" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">bpsk_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">qpsk_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">psk8_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">psk16_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1e0</span><span class="p">)</span>
+<span class="n">esn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">,</span> <span class="n">psk8</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">,</span> <span class="n">psk16</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="n">esn0</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK theoretical&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">bpsk_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;BPSK simulated&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">qpsk_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;QPSK simulated&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">psk8_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK simulated&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ser</span><span class="p">(</span><span class="o">*</span><span class="n">psk16_ser</span><span class="o">.</span><span class="n">error_rates</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;16-PSK simulated&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Symbol error rate curves for PSK modulation in AWGN&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -5906,7 +5974,54 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/3c88a760a180b692ccaf20617ca338acafbc9a0f76a776e9ed210a07107c79e9.png" src="../../_images/3c88a760a180b692ccaf20617ca338acafbc9a0f76a776e9ed210a07107c79e9.png" />
+<img alt="../../_images/4cb985c15cb9693da34227076b1cb0e8c723958cea8e426295c23b08e45b3587.png" src="../../_images/4cb985c15cb9693da34227076b1cb0e8c723958cea8e426295c23b08e45b3587.png" />
+</div>
+</div>
+<h2 id="symbol-mapping">Symbol mapping<a class="headerlink" href="#symbol-mapping" title="Permalink to this heading">¶</a></h2>
+<p>The mapping of decimal symbols to complex symbols is important.
+Ideally, adjacent symbol errors only result in 1 bit error.
+This is generally accomplished using a Gray code (the default in :class:<code class="docutils literal notranslate"><span class="pre">sdr.PSK</span></code>).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk8_bin</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">symbol_labels</span><span class="o">=</span><span class="s2">&quot;bin&quot;</span><span class="p">)</span>
+<span class="n">psk8_gray</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">symbol_labels</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">(</span><span class="n">psk8_bin</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Symbol map for binary coded 8-PSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">(</span><span class="n">psk8_gray</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Symbol map for gray coded 8-PSK&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/66ed01c9f618644aa06a3b41e42b53dd7541cc6b9acf4863b8506cb5b487362e.png" src="../../_images/66ed01c9f618644aa06a3b41e42b53dd7541cc6b9acf4863b8506cb5b487362e.png" />
+</div>
+</div>
+<p>Since adjacent symbol errors can lead to multiple bit errors, binary-coded 8-PSK has worse bit error performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ebn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">symbol_labels</span><span class="o">=</span><span class="s2">&quot;bin&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK w/ binary code&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">symbol_labels</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ber</span><span class="p">(</span><span class="n">ebn0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;8-PSK w/ gray code&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Bit error rate curves for 8-PSK modulation in AWGN&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/651df5db8b032afd06d96a88a3b3700d6b5523066cdec85fdf007439e2ef10a7.png" src="../../_images/651df5db8b032afd06d96a88a3b3700d6b5523066cdec85fdf007439e2ef10a7.png" />
 </div>
 </div>
 
@@ -5916,7 +6031,7 @@ You're not viewing the latest version.
   <small>
     
       Last update:
-      Jul 29, 2023
+      Aug 01, 2023
     
   </small>
 </div>

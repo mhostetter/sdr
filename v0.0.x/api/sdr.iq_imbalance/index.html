@@ -1961,8 +1961,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.bit_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ber/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
       </a>
     </li>
   
@@ -2006,8 +2006,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ser/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -5786,20 +5786,12 @@ leads the in-phase component.</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Positive amplitude imbalance horizontally stretches the constellation, while negative amplitude imbalance
 vertically stretches the constellation.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">45</span><span class="p">);</span> \
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">y1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">iq_imbalance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">y2</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">iq_imbalance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="gp">   ...: </span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">45</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1_000</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">);</span> \
-
-<span class="ne">TypeError</span>: __init__() got an unexpected keyword argument &#39;offset&#39;
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> \
@@ -5813,16 +5805,6 @@ vertically stretches the constellation.</p>
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;-5 dB amplitude imbalance&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$x[n]$&quot;</span><span class="p">);</span> \
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$y_1[n]$&quot;</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;5 dB amplitude imbalance&quot;</span><span class="p">);</span> \
-
-<span class="ne">NameError</span>: name &#39;y1&#39; is not defined
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_iq_imbalance_1.png" src="../../_images/sdr_iq_imbalance_1.png" />
@@ -5831,20 +5813,6 @@ northeast</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">y1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">iq_imbalance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">y2</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">iq_imbalance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">)</span>
 <span class="gp">   ...: </span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">iq_imbalance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">iq_imbalance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/sdr/_simulation/_impairment.py:179,</span> in <span class="ni">iq_imbalance</span><span class="nt">(x, amplitude, phase)</span>
-<span class="g g-Whitespace">    </span><span class="mi">177</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">iscomplexobj</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">179</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Argument &#39;x&#39; must be complex.&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">181</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">phase</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">183</span> <span class="c1"># TODO: Should the phase be negative for I?</span>
-
-<span class="ne">ValueError</span>: Argument &#39;x&#39; must be complex.
 
 <span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> \
@@ -5858,16 +5826,6 @@ northeast</p>
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;-20 deg phase imbalance&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$x[n]$&quot;</span><span class="p">);</span> \
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$y_1[n]$&quot;</span><span class="p">);</span> \
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;20 deg phase imbalance&quot;</span><span class="p">);</span> \
-
-<span class="ne">NameError</span>: name &#39;y1&#39; is not defined
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_iq_imbalance_2.png" src="../../_images/sdr_iq_imbalance_2.png" />

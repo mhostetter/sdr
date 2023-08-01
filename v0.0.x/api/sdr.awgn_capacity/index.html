@@ -1961,8 +1961,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.bit_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.bit_error_rate (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">bit_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ber/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values." class="md-ellipsis">ber</span>
       </a>
     </li>
   
@@ -2006,8 +2006,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.symbol_error_rate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.symbol_error_rate (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">symbol_<wbr>error_<wbr>rate</span>
+      <a href="../sdr.PSK.ser/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -5771,13 +5771,13 @@ bits per complex channel use.</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>The capacity monotonically decreases as the SNR decreases. In the limit as the SNR approaches 0
 (<span class="math notranslate nohighlight">\(-\infty\)</span> dB), the capacity approaches 0.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">esn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">C</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn_capacity</span><span class="p">(</span><span class="n">esn0</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">snr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">C</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn_capacity</span><span class="p">(</span><span class="n">snr</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">esn0</span><span class="p">,</span> <span class="n">C</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Symbol energy to noise PSD ratio (dB), $E_s/N_0$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">snr</span><span class="p">,</span> <span class="n">C</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Signal-to-noise ratio (dB), $S/N$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Capacity (bits/2D), $C$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Capacity of the AWGN Channel&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">);</span> \
@@ -5792,14 +5792,14 @@ bits per complex channel use.</p>
 </p>
 <p>When viewing the capacity as a function of <span class="math notranslate nohighlight">\(E_b/N_0\)</span>, the capacity approaches 0 as <span class="math notranslate nohighlight">\(E_b/N_0\)</span> approaches
 -1.59 dB. This is the <em>absolute Shannon limit</em>.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="n">esn0</span> <span class="o">-</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">snr_to_ebn0</span><span class="p">(</span><span class="n">snr</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 
 <span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">C</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">C</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Bit energy to noise PSD ratio (dB), $E_b/N_0$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Capacity (bits/2D), $C$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Capacity of the AWGN Channel&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
