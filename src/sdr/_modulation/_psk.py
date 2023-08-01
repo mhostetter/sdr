@@ -237,12 +237,13 @@ class PSK(_LinearModulation):
                     Pse[i] = (
                         Q(np.sqrt(2 * esn0_linear[i]))
                         + scipy.integrate.quad(
-                            lambda u: 2
+                            lambda u, i: 2
                             / np.sqrt(np.pi)
                             * np.exp(-((u - np.sqrt(esn0_linear[i])) ** 2))
                             * Q(np.sqrt(2) * u * np.tan(np.pi / M)),
                             0,
                             np.inf,
+                            args=(i,),
                         )[0]
                     )
         else:
