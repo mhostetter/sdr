@@ -22,6 +22,11 @@ def test_dtype():
     assert sdr.unpack(x, 7, dtype=np.uint16).dtype == np.uint16
 
 
+def test_0d():
+    assert np.array_equal(sdr.unpack(5, 3), [1, 0, 1])
+    assert np.array_equal(sdr.unpack(2, 3), [0, 1, 0])
+
+
 def test_1d():
     # 32 elements
     x = [1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0]

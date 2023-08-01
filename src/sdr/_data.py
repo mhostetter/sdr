@@ -37,6 +37,7 @@ def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np.n
         data
     """
     x = np.asarray(x)
+    x = np.atleast_1d(x)
     if not np.issubdtype(x.dtype, np.integer):
         raise ValueError("Argument 'x' must be an integer array, not have {x.dtype} dtype.")
     if not bpe >= 1:
@@ -89,6 +90,7 @@ def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np
         data
     """
     x = np.asarray(x)
+    x = np.atleast_1d(x)
     if not np.issubdtype(x.dtype, np.integer):
         raise ValueError("Argument 'x' must be an integer array, not have {x.dtype} dtype.")
     if not bpe >= 1:
