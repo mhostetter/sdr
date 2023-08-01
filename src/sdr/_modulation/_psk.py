@@ -113,8 +113,9 @@ class PSK(_LinearModulation):
         ebn0 = np.asarray(ebn0)
         ebn0_linear = 10 ** (ebn0 / 10)
 
-        if M in [2, 4]:
+        if M in [2, 4] and np.array_equal(self._symbol_labels, gray_code(k)):
             # Equation 4.3-13 from Proakis
+            # This is only applicable for Gray codes
             Pb = Q(np.sqrt(2 * ebn0_linear))
         else:
             # Equation 8.29 from Simon and Alouini
