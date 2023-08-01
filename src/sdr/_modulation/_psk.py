@@ -19,8 +19,17 @@ from ._symbol_mapping import binary_code, gray_code
 
 @export
 class PSK(_LinearModulation):
-    """
+    r"""
     Implements phase-shift keying (PSK) modulation and demodulation.
+
+    Notes:
+        Phase-shift keying (PSK) is a linear phase modulation scheme that encodes information by modulating
+        the phase of a carrier sinusoid. The modulation order $M = 2^k$ is a power of 2 and indicates the number of
+        phases used. The input bit stream is taken $k$ bits at a time to create decimal symbols
+        $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
+        $x[k] \in \mathbb{C}$ by the equation
+
+        $$x[k] = \exp\left(j\left(\frac{2\pi}{M}s[k] + \phi\right)\right) .$$
 
     Examples:
         See the :ref:`psk` example.
