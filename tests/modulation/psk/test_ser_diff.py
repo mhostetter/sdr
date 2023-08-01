@@ -62,14 +62,6 @@ def test_bpsk():
             0.000007744186445,
         ]
     )
-
-    import matplotlib.pyplot as plt
-
-    plt.figure()
-    sdr.plot.ser(esn0, ser)
-    sdr.plot.ser(esn0, ser_truth)
-    plt.show()
-
     np.testing.assert_almost_equal(ser, ser_truth)
 
 
@@ -123,14 +115,6 @@ def test_qpsk():
             0.000015488312917,
         ]
     )
-
-    import matplotlib.pyplot as plt
-
-    plt.figure()
-    sdr.plot.ser(esn0, ser)
-    sdr.plot.ser(esn0, ser_truth)
-    plt.show()
-
     np.testing.assert_almost_equal(ser, ser_truth)
 
 
