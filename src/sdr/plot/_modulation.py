@@ -86,6 +86,17 @@ def symbol_map(
             If `None`, the axis limits are set to 50% larger than the maximum value.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
+    Example:
+        Display the symbol mapping for Gray-coded QPSK.
+
+        .. ipython:: python
+
+            qpsk = sdr.PSK(4, phase_offset=45)
+
+            @savefig sdr_plot_symbol_map_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.symbol_map(qpsk.symbol_map);
+
     Group:
         plot-modulation
     """
