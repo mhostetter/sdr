@@ -17,7 +17,7 @@ def test_bpsk_ser():
 
     ebn0 = np.arange(-10, 10.5, 0.5)
     esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
-    ser = psk.symbol_error_rate(esn0)
+    ser = psk.ser(esn0)
     ser_truth = np.array(
         [
             0.327360423009289,
@@ -71,7 +71,7 @@ def test_qpsk_ser():
 
     ebn0 = np.arange(-10, 10.5, 0.5)
     esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
-    ser = psk.symbol_error_rate(esn0)
+    ser = psk.ser(esn0)
     ser_truth = np.array(
         [
             0.547555999465757,
@@ -125,7 +125,7 @@ def test_8psk_ser():
 
     ebn0 = np.arange(-10, 10.5, 0.5)
     esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
-    ser = psk.symbol_error_rate(esn0)
+    ser = psk.ser(esn0)
     ser_truth = np.array(
         [
             0.726752782740187,
@@ -179,7 +179,7 @@ def test_16psk_ser():
 
     ebn0 = np.arange(-10, 10.5, 0.5)
     esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
-    ser = psk.symbol_error_rate(esn0)
+    ser = psk.ser(esn0)
     ser_truth = np.array(
         [
             0.845496122720940,
