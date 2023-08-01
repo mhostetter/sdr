@@ -30,6 +30,28 @@ def constellation(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()` (`heatmap=False`)
             or :func:`matplotlib.pyplot.hist2d()` (`heatmap=True`).
 
+    Example:
+        Display the symbol constellation for Gray-coded QPSK at 6 dB $E_s/N_0$.
+
+        .. ipython:: python
+
+            qpsk = sdr.PSK(4, phase_offset=45); \
+            s = np.random.randint(0, qpsk.order, 10_000); \
+            x = qpsk.modulate(s); \
+            x_hat = sdr.awgn(x, 6);
+
+            @savefig sdr_plot_constellation_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(x_hat);
+
+        Display the symbol constellation using a heatmap.
+
+        .. ipython:: python
+
+            @savefig sdr_plot_constellation_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(x_hat, heatmap=True);
+
     Group:
         plot-modulation
     """
