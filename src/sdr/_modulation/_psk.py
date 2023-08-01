@@ -123,27 +123,7 @@ class PSK(_LinearModulation):
             Pb = np.zeros_like(esn0_linear)
             for i in range(esn0_linear.size):
                 for j in range(1, M):
-                    # Equation 8.30 from Simon and Alouini
-                    A = scipy.integrate.quad(
-                        lambda theta, i, j: 1
-                        / (2 * np.pi)
-                        * np.exp(-esn0_linear[i] * np.sin((2 * j - 1) * np.pi / M) ** 2 / np.sin(theta) ** 2),
-                        0,
-                        np.pi * (1 - (2 * j - 1) / M),
-                        args=(i, j),
-                    )[0]
-                    B = scipy.integrate.quad(
-                        lambda theta, i, j: 1
-                        / (2 * np.pi)
-                        * np.exp(-esn0_linear[i] * np.sin((2 * j + 1) * np.pi / M) ** 2 / np.sin(theta) ** 2),
-                        0,
-                        np.pi * (1 - (2 * j + 1) / M),
-                        args=(i, j),
-                    )[0]
-
-                    # Probability of landing in decision region for symbol j when symbol 0 was transmitted
-                    Pj = A - B
-
+                    Pj = Pk(M, esn0_linear[i], j)
                     # The number of bits that differ between symbol j and symbol 0
                     N_bits = unpack(self._symbol_labels[j] ^ self._symbol_labels[0], k).sum()
 
@@ -154,10 +134,20 @@ class PSK(_LinearModulation):
 
         return Pb
 
-    @extend_docstring(
-        _LinearModulation.ser,
-        {},
+    def ser(self, esn0: npt.ArrayLike | None = None, diff_encoded=False) -> np.ndarray:
         r"""
+        Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
+
+        Arguments:
+            esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB.
+            diff_encoded: Indicates whether the input symbols were differentially encoded.
+
+        Returns:
+            The symbol error rate $P_e$.
+
+        See Also:
+            sdr.ebn0_to_esn0, sdr.snr_to_esn0
+
         References:
             - Simon and Alouini, *Digital Communications over Fading Channels*,
               Chapter 8: Performance of Single-Channel Receivers.
@@ -184,9 +174,18 @@ class PSK(_LinearModulation):
                 sdr.plot.ser(esn0, psk16.ser(esn0), label="16-PSK"); \
                 plt.title("SER curves for PSK modulation in an AWGN channel"); \
                 plt.tight_layout();
-        """,
-    )
-    def ser(self, esn0: npt.ArrayLike | None = None) -> np.ndarray:
+
+            Compare the symbol error rate of QPSK and DE-QPSK in an AWGN channel.
+
+            .. ipython:: python
+
+                @savefig sdr_psk_ser_2.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
+                sdr.plot.ser(esn0, qpsk.ser(esn0, diff_encoded=True), label="DE-QPSK"); \
+                plt.title("SER curves for PSK and DE-PSK modulation in an AWGN channel"); \
+                plt.tight_layout();
+        """
         M = self.order
         k = self.bps
         esn0 = np.asarray(esn0)
@@ -194,27 +193,36 @@ class PSK(_LinearModulation):
         ebn0 = esn0_to_ebn0(esn0, k)
         ebn0_linear = 10 ** (ebn0 / 10)
 
-        if M == 2:
-            # Equation 4.3-13 from Proakis
-            Pe = Q(np.sqrt(2 * ebn0_linear))
-        elif M == 4:
-            # Equation 4.3-15 from Proakis
-            Pe = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
+        if not diff_encoded:
+            if M == 2:
+                # Equation 4.3-13 from Proakis
+                Pe = Q(np.sqrt(2 * ebn0_linear))
+            elif M == 4:
+                # Equation 4.3-15 from Proakis
+                Pe = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
+            else:
+                # Equation 8.18 from Simon and Alouini
+                Pe = np.zeros_like(esn0_linear)
+                for i in range(esn0_linear.size):
+                    Pe[i] = (
+                        Q(np.sqrt(2 * esn0_linear[i]))
+                        + scipy.integrate.quad(
+                            lambda u: 2
+                            / np.sqrt(np.pi)
+                            * np.exp(-((u - np.sqrt(esn0_linear[i])) ** 2))
+                            * Q(np.sqrt(2) * u * np.tan(np.pi / M)),
+                            0,
+                            np.inf,
+                        )[0]
+                    )
         else:
-            # Equation 8.18 from Simon and Alouini
-            Pe = np.zeros_like(esn0_linear)
+            # Equation 8.36 from Simon and Alouini
+            Pe_non_diff = self.ser(esn0, diff_encoded=False)
+            Pe = 2 * Pe_non_diff - Pe_non_diff**2
             for i in range(esn0_linear.size):
-                Pe[i] = (
-                    Q(np.sqrt(2 * esn0_linear[i]))
-                    + scipy.integrate.quad(
-                        lambda u: 2
-                        / np.sqrt(np.pi)
-                        * np.exp(-((u - np.sqrt(esn0_linear[i])) ** 2))
-                        * Q(np.sqrt(2) * u * np.tan(np.pi / M)),
-                        0,
-                        np.inf,
-                    )[0]
-                )
+                for j in range(1, M):
+                    Pj = Pk(M, esn0_linear[i], j)
+                    Pe[i] -= Pj**2
 
         return Pe
 
@@ -285,3 +293,29 @@ class PSK(_LinearModulation):
     )
     def symbol_map(self) -> np.ndarray:
         return super().symbol_map
+
+
+def Pk(M: int, esn0_linear: float, j: int) -> float:
+    """
+    Determines the probability of receiving symbol j given symbol 0 was transmitted.
+    """
+    # Equation 8.30 from Simon and Alouini
+    A = scipy.integrate.quad(
+        lambda theta, j: 1
+        / (2 * np.pi)
+        * np.exp(-esn0_linear * np.sin((2 * j - 1) * np.pi / M) ** 2 / np.sin(theta) ** 2),
+        0,
+        np.pi * (1 - (2 * j - 1) / M),
+        args=(j,),
+    )[0]
+    B = scipy.integrate.quad(
+        lambda theta, j: 1
+        / (2 * np.pi)
+        * np.exp(-esn0_linear * np.sin((2 * j + 1) * np.pi / M) ** 2 / np.sin(theta) ** 2),
+        0,
+        np.pi * (1 - (2 * j + 1) / M),
+        args=(j,),
+    )[0]
+
+    # Probability of landing in decision region for symbol j when symbol 0 was transmitted
+    return A - B
