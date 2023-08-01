@@ -14,7 +14,6 @@ import sdr
 
 def test_bpsk():
     psk = sdr.PSK(2)
-
     ebn0 = np.arange(-10, 10.5, 0.5)
     ber = psk.ber(ebn0)
     ber_truth = np.array(
@@ -67,7 +66,6 @@ def test_bpsk():
 
 def test_qpsk():
     psk = sdr.PSK(4)
-
     ebn0 = np.arange(-10, 10.5, 0.5)
     ber = psk.ber(ebn0)
     ber_truth = np.array(
@@ -120,7 +118,6 @@ def test_qpsk():
 
 def test_8psk():
     psk = sdr.PSK(8)
-
     ebn0 = np.arange(-10, 10.5, 0.5)
     ber = psk.ber(ebn0)
     ber_truth = np.array(
@@ -173,7 +170,6 @@ def test_8psk():
 
 def test_16psk():
     psk = sdr.PSK(16)
-
     ebn0 = np.arange(-10, 10.5, 0.5)
     ber = psk.ber(ebn0)
     ber_truth = np.array(
