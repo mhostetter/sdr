@@ -25,11 +25,11 @@ def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
         .. code-block:: text
             :caption: Differential Encoder Block Diagram
 
-            x[k] -->@-------------+--> y[k]
-                    ^             |
-                    |  +------+   |
-            y[k-1]  +--| z^-1 |<--+
-                       +------+
+            x[k] -->@--------------+--> y[k]
+                    ^              |
+                    |   +------+   |
+            y[k-1]  +---| z^-1 |<--+
+                        +------+
 
             x[k] = Input data
             y[k] = Encoded data
