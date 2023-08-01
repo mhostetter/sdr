@@ -12,7 +12,7 @@ import numpy as np
 import sdr
 
 
-def test_bpsk_ser():
+def test_bpsk():
     psk = sdr.PSK(2)
 
     ebn0 = np.arange(-10, 10.5, 0.5)
@@ -66,7 +66,7 @@ def test_bpsk_ser():
     np.testing.assert_almost_equal(ser, ser_truth)
 
 
-def test_qpsk_ser():
+def test_qpsk():
     psk = sdr.PSK(4)
 
     ebn0 = np.arange(-10, 10.5, 0.5)
@@ -120,7 +120,7 @@ def test_qpsk_ser():
     np.testing.assert_almost_equal(ser, ser_truth)
 
 
-def test_8psk_ser():
+def test_8psk():
     psk = sdr.PSK(8)
 
     ebn0 = np.arange(-10, 10.5, 0.5)
@@ -174,7 +174,7 @@ def test_8psk_ser():
     np.testing.assert_almost_equal(ser, ser_truth)
 
 
-def test_16psk_ser():
+def test_16psk():
     psk = sdr.PSK(16)
 
     ebn0 = np.arange(-10, 10.5, 0.5)
