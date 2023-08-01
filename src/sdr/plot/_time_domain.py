@@ -60,6 +60,9 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
     Group:
         plot-time-domain
     """
+    if not isinstance(sample_rate, (int, float)):
+        raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
     x = np.asarray(x)
     t = np.arange(x.size) / sample_rate
 
