@@ -6,8 +6,10 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 import scipy.integrate
+import scipy.special
 from typing_extensions import Literal
 
+from .._data import unpack
 from .._helper import export, extend_docstring
 from .._probability import Q
 from .._snr import ebn0_to_esn0, esn0_to_ebn0
@@ -69,26 +71,30 @@ class PSK(_LinearModulation):
         {},
         r"""
         References:
+            - Simon and Alouini, *Digital Communications over Fading Channels*,
+              Chapter 8: Performance of Single-Channel Receivers.
             - John Proakis, *Digital Communications*, Chapter 4: Optimum Receivers for AWGN Channels.
 
         Examples:
             See the :ref:`psk` example.
 
-            Plot theoretical BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.
+            Plot theoretical BER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.
 
             .. ipython:: python
 
                 bpsk = sdr.PSK(2); \
                 qpsk = sdr.PSK(4); \
                 psk8 = sdr.PSK(8); \
-                ebn0 = np.linspace(0, 10, 1000)
+                psk16 = sdr.PSK(16); \
+                ebn0 = np.linspace(-2, 10, 100)
 
                 @savefig sdr_psk_bit_error_rate_1.png
                 plt.figure(figsize=(8, 4)); \
                 sdr.plot.ber(ebn0, bpsk.bit_error_rate(ebn0), label="BPSK"); \
                 sdr.plot.ber(ebn0, qpsk.bit_error_rate(ebn0), label="QPSK"); \
                 sdr.plot.ber(ebn0, psk8.bit_error_rate(ebn0), label="8-PSK"); \
-                plt.title("BER curves for BPSK, QPSK, and 8-PSK in an AWGN channel"); \
+                sdr.plot.ber(ebn0, psk16.bit_error_rate(ebn0), label="16-PSK"); \
+                plt.title("BER curves for PSK modulation in an AWGN channel"); \
                 plt.tight_layout();
         """,
     )
@@ -99,40 +105,75 @@ class PSK(_LinearModulation):
         ebn0_linear = 10 ** (ebn0 / 10)
 
         if M in [2, 4]:
-            # Equation 4.3-13
-            Pe = Q(np.sqrt(2 * ebn0_linear))
+            # Equation 4.3-13 from Proakis
+            Pb = Q(np.sqrt(2 * ebn0_linear))
         else:
-            # Equation 4.3-20
+            # Equation 8.29 from Simon and Alouini
             esn0 = ebn0_to_esn0(ebn0, k)
-            Pe = self.symbol_error_rate(esn0) / k
+            esn0_linear = 10 ** (esn0 / 10)
+            Pb = np.zeros_like(esn0_linear)
+            for i in range(esn0_linear.size):
+                for j in range(1, M):
+                    # Equation 8.30 from Simon and Alouini
+                    A = scipy.integrate.quad(
+                        lambda theta, i, j: 1
+                        / (2 * np.pi)
+                        * np.exp(-esn0_linear[i] * np.sin((2 * j - 1) * np.pi / M) ** 2 / np.sin(theta) ** 2),
+                        0,
+                        np.pi * (1 - (2 * j - 1) / M),
+                        args=(i, j),
+                    )[0]
+                    B = scipy.integrate.quad(
+                        lambda theta, i, j: 1
+                        / (2 * np.pi)
+                        * np.exp(-esn0_linear[i] * np.sin((2 * j + 1) * np.pi / M) ** 2 / np.sin(theta) ** 2),
+                        0,
+                        np.pi * (1 - (2 * j + 1) / M),
+                        args=(i, j),
+                    )[0]
 
-        return Pe
+                    # Probability of landing in decision region for symbol j when symbol 0 was transmitted
+                    Pj = A - B
+
+                    # The number of bits that differ between symbol j and symbol 0
+                    N_bits = unpack(self._symbol_labels[j] ^ self._symbol_labels[0], k).sum()
+
+                    Pb[i] += Pj * N_bits
+
+                # Equation 8.31 from Simon and Alouini
+                Pb[i] /= k
+
+        return Pb
 
     @extend_docstring(
         _LinearModulation.symbol_error_rate,
         {},
         r"""
         References:
+            - Simon and Alouini, *Digital Communications over Fading Channels*,
+              Chapter 8: Performance of Single-Channel Receivers.
             - John Proakis, *Digital Communications*, Chapter 4: Optimum Receivers for AWGN Channels.
 
         Examples:
             See the :ref:`psk` example.
 
-            Plot theoretical SER curves for BPSK, QPSK, and 8-PSK in an AWGN channel.
+            Plot theoretical SER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.
 
             .. ipython:: python
 
                 bpsk = sdr.PSK(2); \
                 qpsk = sdr.PSK(4); \
                 psk8 = sdr.PSK(8); \
-                esn0 = np.linspace(0, 10, 1000)
+                psk16 = sdr.PSK(16); \
+                esn0 = np.linspace(-2, 10, 100)
 
                 @savefig sdr_psk_symbol_error_rate_1.png
                 plt.figure(figsize=(8, 4)); \
                 sdr.plot.ser(esn0, bpsk.symbol_error_rate(esn0), label="BPSK"); \
                 sdr.plot.ser(esn0, qpsk.symbol_error_rate(esn0), label="QPSK"); \
                 sdr.plot.ser(esn0, psk8.symbol_error_rate(esn0), label="8-PSK"); \
-                plt.title("SER curves for BPSK, QPSK, and 8-PSK in an AWGN channel"); \
+                sdr.plot.ser(esn0, psk16.symbol_error_rate(esn0), label="16-PSK"); \
+                plt.title("SER curves for PSK modulation in an AWGN channel"); \
                 plt.tight_layout();
         """,
     )
@@ -145,27 +186,26 @@ class PSK(_LinearModulation):
         ebn0_linear = 10 ** (ebn0 / 10)
 
         if M == 2:
-            # Equation 4.3-13
+            # Equation 4.3-13 from Proakis
             Pe = Q(np.sqrt(2 * ebn0_linear))
         elif M == 4:
-            # Equation 4.3-15
+            # Equation 4.3-15 from Proakis
             Pe = 2 * Q(np.sqrt(2 * ebn0_linear)) * (1 - 1 / 2 * Q(np.sqrt(2 * ebn0_linear)))
         else:
-
-            def p_theta(theta):
-                # Equation 4.3-10
-                return scipy.integrate.quad_vec(
-                    lambda nu: 1
-                    / (2 * np.pi)
-                    * np.exp(-esn0_linear * np.sin(theta) ** 2)
-                    * nu
-                    * np.exp(-((nu - np.sqrt(2 * esn0_linear) * np.cos(theta)) ** 2) / 2),
-                    0,
-                    np.inf,
-                )[0]
-
-            # Equation 4.3-12
-            Pe = 1 - scipy.integrate.quad_vec(lambda theta: p_theta(theta), -np.pi / M, np.pi / M)[0]
+            # Equation 8.18 from Simon and Alouini
+            Pe = np.zeros_like(esn0_linear)
+            for i in range(esn0_linear.size):
+                Pe[i] = (
+                    Q(np.sqrt(2 * esn0_linear[i]))
+                    + scipy.integrate.quad(
+                        lambda u: 2
+                        / np.sqrt(np.pi)
+                        * np.exp(-((u - np.sqrt(esn0_linear[i])) ** 2))
+                        * Q(np.sqrt(2) * u * np.tan(np.pi / M)),
+                        0,
+                        np.inf,
+                    )[0]
+                )
 
         return Pe
 
