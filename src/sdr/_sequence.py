@@ -11,12 +11,12 @@ from ._helper import export
 
 
 @export
-def barker(size: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.ndarray:
-    """
+def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.ndarray:
+    r"""
     Returns the Barker code/sequence of length $N$.
 
     Arguments:
-        size: The length $N$ of the Barker code/sequence.
+        length: The length $N$ of the Barker code/sequence.
         output: The output format of the Barker code/sequence.
 
             - `"binary"`: The Barker code with binary values of 0 and 1.
@@ -33,45 +33,45 @@ def barker(size: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.nd
             code = sdr.barker(13, output="binary"); code
             seq = sdr.barker(13); seq
 
-        Barker sequences have maximally-small autocorrelation sidelobes of +1 or -1.
+        Barker sequences have ideally-minimal autocorrelation sidelobes of +1 or -1.
 
         .. ipython:: python
 
             corr = np.correlate(seq, seq, mode="full"); corr
-            lag = np.arange(-seq.size - 1, seq.size)
+            lag = np.arange(-seq.size + 1, seq.size)
 
             @savefig sdr_barker_1.png
             plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(corr)**2); \
+            plt.plot(lag, np.abs(corr)); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Power"); \
+            plt.ylabel("Magnitude"); \
             plt.title("Autocorrelation of Length-13 Barker Sequence"); \
             plt.tight_layout();
 
     Group:
         sequences
     """
-    if not isinstance(size, int):
-        raise TypeError(f"Argument 'size' must be of type 'int', not {type(size)}.")
+    if not isinstance(length, int):
+        raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
 
-    if size == 1:
+    if length == 1:
         code = np.array([1])
-    elif size == 2:
+    elif length == 2:
         code = np.array([1, 0])
-    elif size == 3:
+    elif length == 3:
         code = np.array([1, 1, 0])
-    elif size == 4:
+    elif length == 4:
         code = np.array([1, 1, 0, 1])
-    elif size == 5:
+    elif length == 5:
         code = np.array([1, 1, 1, 0, 1])
-    elif size == 7:
+    elif length == 7:
         code = np.array([1, 1, 1, 0, 0, 1, 0])
-    elif size == 11:
+    elif length == 11:
         code = np.array([1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0])
-    elif size == 13:
+    elif length == 13:
         code = np.array([1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1])
     else:
-        raise ValueError(f"Barker sequence of length {size} does not exist.")
+        raise ValueError(f"Barker sequence of length {length} does not exist.")
 
     if output == "binary":
         return code
