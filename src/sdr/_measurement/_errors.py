@@ -56,7 +56,7 @@ class ErrorRate:
             ber.error_rates()
 
     Group:
-        measurement-errors
+        measurement-modulation
     """
 
     def __init__(self) -> None:
