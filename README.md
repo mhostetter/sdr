@@ -46,7 +46,7 @@ in `sdr`, please open an issue on GitHub.
   - Energy: `sdr.energy()`
   - Power: `sdr.peak_power()`, `sdr.average_power()`, `sdr.papr()`
   - Voltage: `sdr.peak_voltage()`, `sdr.rms_voltage()`, `sdr.crest_factor()`
-  - Errors: `sdr.ErrorRate`
+  - Modulation: `sdr.ErrorRate`, `sdr.evm()`
 - Conversions:
   - From $E_b/N_0$: `sdr.ebn0_to_esn0()`, `sdr.ebn0_to_snr()`
   - From $E_s/N_0$: `sdr.esn0_to_ebn0()`, `sdr.esn0_to_snr()`
