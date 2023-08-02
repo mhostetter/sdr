@@ -16,6 +16,11 @@ Voltage
 
 .. python-apigen-group:: measurement-voltage
 
+Modulation
+----------
+
+.. python-apigen-group:: measurement-modulation
+
 Errors
 ------
 
