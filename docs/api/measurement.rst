@@ -20,8 +20,3 @@ Modulation
 ----------
 
 .. python-apigen-group:: measurement-modulation
-
-Errors
-------
-
-.. python-apigen-group:: measurement-errors
