@@ -28,13 +28,33 @@ def evm(
         norm: The normalization source used in the EVM calculation.
 
             - `"average-power-ref"`: The average power of the reference symbols $x[k]$.
+
+            $$P_{\text{ref}} = \frac{1}{N} \sum_{k=0}^{N-1} \left| x[k] \right|^2$$
+
             - `"average-power"`: The average power of the received symbols $\hat{x}[k]$.
+
+            $$P_{\text{ref}} = \frac{1}{N} \sum_{k=0}^{N-1} \left| \hat{x}[k] \right|^2$$
+
             - `"peak-power"`: The peak power of the received symbols $\hat{x}[k]$.
+
+            $$P_{\text{ref}} = \text{max} \left| \hat{x}[k] \right|^2$$
 
         output: The output type of the EVM calculation.
 
             - `"rms"`: The root-mean-square (RMS) EVM.
+
+            $$
+            \text{EVM}_{\text{RMS}} =
+            100 \sqrt{\frac{\frac{1}{N} \sum_{k=0}^{N-1} \left| \hat{x}[k] - x[k] \right|^2}{P_{\text{ref}}}}
+            $$
+
             - `"all"`: The instantaneous EVM for each symbol.
+
+            $$
+            \text{EVM}_{k} =
+            100 \sqrt{\frac{\left| \hat{x}[k] - x[k] \right|^2}{P_{\text{ref}}}}
+            $$
+
             - `float`: The RMS EVM for the given percentile (0 - 100).
 
     Examples:
@@ -88,7 +108,7 @@ def evm(
 
             @savefig sdr_evm_2.png
             plt.figure(figsize=(8, 4)); \
-            plt.hist(inst_evm, bins=50); \
+            plt.hist(inst_evm, bins=20); \
             plt.xlabel("RMS EVM (%)"); \
             plt.ylabel("Count"); \
             plt.title("Instantaneous EVM Histogram"); \
