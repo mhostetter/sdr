@@ -94,11 +94,11 @@ def evm(
 
             sdr.evm(x_hat, psk.symbol_map, norm="peak-power")
 
-        Measure the 90th percentile EVM.
+        Measure the 95th percentile EVM.
 
         .. ipython:: python
 
-            sdr.evm(x_hat, psk.symbol_map, output=90)
+            sdr.evm(x_hat, psk.symbol_map, output=95)
 
         Measure the instantaneous EVM for each symbol.
 
@@ -111,7 +111,7 @@ def evm(
             plt.hist(inst_evm, bins=20); \
             plt.xlabel("RMS EVM (%)"); \
             plt.ylabel("Count"); \
-            plt.title("Instantaneous EVM Histogram"); \
+            plt.title("EVM Histogram"); \
             plt.tight_layout();
 
     Group:
