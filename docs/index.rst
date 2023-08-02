@@ -37,7 +37,7 @@ Features
    - Energy: :func:`sdr.energy()`
    - Power: :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.papr()`
    - Voltage: :func:`sdr.peak_voltage()`, :func:`sdr.rms_voltage()`, :func:`sdr.crest_factor()`
-   - Errors: :class:`sdr.ErrorRate`
+   - Modulation: :class:`sdr.ErrorRate`, :func:`sdr.evm()`
 - Conversions:
    - From $E_b/N_0$: :func:`sdr.ebn0_to_esn0()`, :func:`sdr.ebn0_to_snr()`
    - From $E_s/N_0$: :func:`sdr.esn0_to_ebn0()`, :func:`sdr.esn0_to_snr()`
