@@ -3896,7 +3896,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../measurement/#errors"><span class="md-ellipsis">Errors</span></a>
+          <a href="../measurement/#modulation"><span class="md-ellipsis">Modulation</span></a>
           
             <label for="__nav_2_5_4">
               <span class="md-nav__icon md-icon"></span>
@@ -3904,10 +3904,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Errors" data-md-level="3">
+      <nav class="md-nav" aria-label="Modulation" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_5_4">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Errors</span>
+          <span class="md-ellipsis">Modulation</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -4111,6 +4111,21 @@ You're not viewing the latest version.
       </nav>
     </li>
   
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.evm/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.evm (Python function) — Calculates the error-vector magnitude (EVM) of the complex symbols $hat{x}[k]$." class="md-ellipsis">evm</span>
+      </a>
+    </li>
   
 
             
@@ -5758,11 +5773,11 @@ You're not viewing the latest version.
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>Differential Encoder Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>x[k] --&gt;@-------------+--&gt; y[k]
-        ^             |
-        |  +------+   |
-y[k-1]  +--| z^-1 |&lt;--+
-           +------+
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>x[k] --&gt;@--------------+--&gt; y[k]
+        ^              |
+        |   +------+   |
+y[k-1]  +---| z^-1 |&lt;--+
+            +------+
 
 x[k] = Input data
 y[k] = Encoded data
