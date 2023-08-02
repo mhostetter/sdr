@@ -8,8 +8,17 @@ Matlab:
     end
 """
 import numpy as np
+import pytest
 
 import sdr
+
+
+def test_exceptions():
+    with pytest.raises(TypeError):
+        sdr.barker(13.0)
+    with pytest.raises(ValueError):
+        # Barker code of length 6 does not exist
+        sdr.barker(6)
 
 
 def test_1():
