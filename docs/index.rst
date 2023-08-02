@@ -78,6 +78,7 @@ Features
 
    api/filtering.rst
    api/resampling.rst
+   api/sequences.rst
    api/modulation.rst
    api/synchronization.rst
    api/impairments.rst
