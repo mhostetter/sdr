@@ -102,9 +102,12 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> np.ndarray:
     Notes:
         The root-$u$ Zadoff-Chu sequence with length $N$ and shift $q$ is defined as
 
-        $$x_u[n] = \exp \left( -j \frac{\pi u n (n + c_{f} + q)}{N} \right) ,$$
+        $$x_u[n] = \exp \left( -j \frac{\pi u n (n + c_{f} + 2q)}{N} \right) ,$$
 
         where $c_{f} = N \mod 2$.
+
+    References:
+        - https://en.wikipedia.org/wiki/Zadoff%E2%80%93Chu_sequence
 
     Examples:
         Create a root-3 Zadoff-Chu sequence $x_3[n]$ with length 139.
@@ -184,6 +187,6 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> np.ndarray:
 
     n = np.arange(length)
     cf = length % 2
-    xu = np.exp(-1j * np.pi * root * n * (n + cf + shift) / length)
+    xu = np.exp(-1j * np.pi * root * n * (n + cf + 2 * shift) / length)
 
     return xu
