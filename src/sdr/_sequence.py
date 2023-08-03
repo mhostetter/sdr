@@ -6,7 +6,6 @@ from __future__ import annotations
 import math
 
 import numpy as np
-import numpy.typing as npt
 from typing_extensions import Literal
 
 from ._helper import export
