@@ -1914,6 +1914,13 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">References</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">Examples</span>
   </a>
@@ -5812,6 +5819,13 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">References</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">Examples</span>
   </a>
@@ -5856,9 +5870,13 @@ is a cyclic shift of the root-<span class="math notranslate nohighlight">\(u\)</
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
 <p>The root-<span class="math notranslate nohighlight">\(u\)</span> Zadoff-Chu sequence with length <span class="math notranslate nohighlight">\(N\)</span> and shift <span class="math notranslate nohighlight">\(q\)</span> is defined as</p>
 <p><div class="math notranslate nohighlight">
-\[x_u[n] = \exp \left( -j \frac{\pi u n (n + c_{f} + q)}{N} \right) ,\]</div>
+\[x_u[n] = \exp \left( -j \frac{\pi u n (n + c_{f} + 2q)}{N} \right) ,\]</div>
 </p>
 <p>where <span class="math notranslate nohighlight">\(c_{f} = N \mod 2\)</span>.</p>
+<p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Zadoff%E2%80%93Chu_sequence">https://en.wikipedia.org/wiki/Zadoff%E2%80%93Chu_sequence</a></p></li>
+</ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Create a root-3 Zadoff-Chu sequence <span class="math notranslate nohighlight">\(x_3[n]\)</span> with length 139.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">N</span> <span class="o">=</span> <span class="mi">139</span><span class="p">;</span> \
