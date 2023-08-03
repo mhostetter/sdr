@@ -314,3 +314,13 @@ def test_25_11():
         ]
     )
     np.testing.assert_array_almost_equal(seq, seq_truth)
+
+
+def test_shift():
+    x = sdr.zadoff_chu(13, 3)
+    x_shift = sdr.zadoff_chu(13, 3, shift=1)
+
+    # The shifted version should be a cyclic shift of the original sequence multiplied by a complex value
+    y = np.roll(x, -1) / x_shift
+    y /= y[0]
+    np.testing.assert_array_almost_equal(y, 1)
