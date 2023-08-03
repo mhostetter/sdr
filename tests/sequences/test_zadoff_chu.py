@@ -22,6 +22,10 @@ def test_exceptions():
     with pytest.raises(TypeError):
         # R must be an integer
         sdr.zadoff_chu(13, 3.0)
+    with pytest.raises(TypeError):
+        # Shift must be an integer
+        sdr.zadoff_chu(13, 3, 1.0)
+
     with pytest.raises(ValueError):
         # N must be at least 2
         sdr.zadoff_chu(1, 3)

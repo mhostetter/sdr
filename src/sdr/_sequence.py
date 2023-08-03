@@ -185,6 +185,9 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> np.ndarray:
     if not math.gcd(length, root) == 1:
         raise ValueError(f"Argument 'root' must be relatively prime to 'length'; {root} and {length} are not.")
 
+    if not isinstance(shift, int):
+        raise TypeError(f"Argument 'shift' must be of type 'int', not {type(shift)}.")
+
     n = np.arange(length)
     cf = length % 2
     xu = np.exp(-1j * np.pi * root * n * (n + cf + 2 * shift) / length)
