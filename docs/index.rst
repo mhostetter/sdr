@@ -27,6 +27,7 @@ Features
 
 - Filtering: :class:`sdr.FIR`, :class:`sdr.FIRInterpolator`, :class:`sdr.IIR`
 - Resampling: :class:`sdr.FarrowResampler`
+- Sequences: :func:`sdr.barker()`, :func:`sdr.zadoff_chu()`
 - Modulation:
    - Classes: :class:`sdr.PSK`
    - Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`

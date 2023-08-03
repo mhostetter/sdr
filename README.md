@@ -36,6 +36,7 @@ in `sdr`, please open an issue on GitHub.
 
 - Filtering: `sdr.FIR`, `sdr.FIRInterpolator`, `sdr.IIR`
 - Resampling: `sdr.FarrowResampler`
+- Sequences: `sdr.barker()`, `sdr.zadoff_chu()`
 - Modulation:
   - Classes: `sdr.PSK`
   - Pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`
