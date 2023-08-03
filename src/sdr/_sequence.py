@@ -3,6 +3,8 @@ A module containing various bipolar and binary sequences.
 """
 from __future__ import annotations
 
+import math
+
 import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
@@ -37,7 +39,7 @@ def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.
 
         .. ipython:: python
 
-            corr = np.correlate(seq, seq, mode="full"); corr
+            corr = np.correlate(seq, seq, mode="full"); \
             lag = np.arange(-seq.size + 1, seq.size)
 
             @savefig sdr_barker_1.png
@@ -45,7 +47,7 @@ def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.
             plt.plot(lag, np.abs(corr)); \
             plt.xlabel("Lag"); \
             plt.ylabel("Magnitude"); \
-            plt.title("Autocorrelation of Length-13 Barker Sequence"); \
+            plt.title("Autocorrelation of length-13 Barker sequence"); \
             plt.tight_layout();
 
     Group:
@@ -81,3 +83,108 @@ def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.
     sequence = sequence.astype(np.float64)
 
     return sequence
+
+
+@export
+def zadoff_chu(length: int, root: int, shift: int = 0) -> np.ndarray:
+    r"""
+    Returns the root-$u$ Zadoff-Chu sequence of length $N$.
+
+    Arguments:
+        length: The length $N$ of the Zadoff-Chu sequence.
+        root: The root $0 < u < N$ of the Zadoff-Chu sequence. The root must be relatively prime to the length,
+            i.e., $\gcd(u, N) = 1$.
+        shift: The shift $q \in \mathbb{Z}$ of the Zadoff-Chu sequence. When $q \ne 0$, the returned sequence
+            is a cyclic shift of the root-$u$ Zadoff-Chu sequence.
+
+    Returns:
+        The root-$u$ Zadoff-Chu sequence of length $N$.
+
+    Notes:
+        The root-$u$ Zadoff-Chu sequence with length $N$ and shift $q$ is defined as
+
+        $$x_u[n] = \exp \left( -j \frac{\pi u n (n + c_{f} + q)}{N} \right) ,$$
+
+        where $c_{f} = N \mod 2$.
+
+    Examples:
+        Create a root-3 Zadoff-Chu sequence $x_3[n]$ with length 139.
+
+        .. ipython:: python
+
+            N = 139; \
+            x3 = sdr.zadoff_chu(N, 3)
+
+            @savefig sdr_zadoff_chu_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(x3, linestyle="-", linewidth=0.5); \
+            plt.title(f"Root-3 Zadoff-Chu sequence of length {N}"); \
+            plt.tight_layout();
+
+        The *periodic* autocorrelation of a Zadoff-Chu sequence has sidelobes of magnitude 0.
+
+        .. ipython:: python
+
+            # Perform periodic autocorrelation
+            corr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x3, mode="valid"); \
+            lag = np.arange(-N//2 + 1, N//2 + 2)
+
+            @savefig sdr_zadoff_chu_2.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(lag, np.abs(corr) / N); \
+            plt.ylim(0, 1); \
+            plt.xlabel("Lag"); \
+            plt.ylabel("Magnitude"); \
+            plt.title(f"Periodic autocorrelation of root-3 Zadoff-Chu sequence of length {N}"); \
+            plt.tight_layout();
+
+        Create a root-5 Zadoff-Chu sequence $x_5[n]$ with length 139.
+
+        .. ipython:: python
+
+            x5 = sdr.zadoff_chu(N, 5)
+
+            @savefig sdr_zadoff_chu_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(x5, linestyle="-", linewidth=0.5); \
+            plt.title(f"Root-5 Zadoff-Chu sequence of length {N}"); \
+            plt.tight_layout();
+
+        The *periodic* cross correlation of two prime-length Zadoff-Chu sequences with different roots has sidelobes
+        with magnitude $1 / \sqrt{N}$.
+
+        .. ipython:: python
+
+            # Perform periodic cross correlation
+            xcorr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x5, mode="valid"); \
+            lag = np.arange(-N//2 + 1, N//2 + 2)
+
+            @savefig sdr_zadoff_chu_4.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(lag, np.abs(xcorr) / N); \
+            plt.ylim(0, 1); \
+            plt.xlabel("Lag"); \
+            plt.ylabel("Magnitude"); \
+            plt.title(f"Periodic cross correlation of root-3 and root-5 Zadoff-Chu sequences of length {N}"); \
+            plt.tight_layout();
+
+    Group:
+        sequences
+    """
+    if not isinstance(length, int):
+        raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
+    if not length > 1:
+        raise ValueError(f"Argument 'length' must be greater than 1, not {length}.")
+
+    if not isinstance(root, int):
+        raise TypeError(f"Argument 'root' must be of type 'int', not {type(root)}.")
+    if not 0 < root < length:
+        raise ValueError(f"Argument 'root' must be greater than 0 and less than 'length', not {root}.")
+    if not math.gcd(length, root) == 1:
+        raise ValueError(f"Argument 'root' must be relatively prime to 'length'; {root} and {length} are not.")
+
+    n = np.arange(length)
+    cf = length % 2
+    xu = np.exp(-1j * np.pi * root * n * (n + cf + shift) / length)
+
+    return xu
