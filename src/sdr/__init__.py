@@ -25,5 +25,6 @@ from ._nco import *
 from ._pll import *
 from ._probability import *
 from ._sequence import *
+from ._signal import *
 from ._simulation import *
 from ._snr import *
