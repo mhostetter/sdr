@@ -16,6 +16,7 @@ from ._rc_params import RC_PARAMS
 def time_domain(
     x: npt.ArrayLike,
     sample_rate: float = 1.0,
+    centered: bool = False,
     diff: Literal["color", "line"] = "color",
     **kwargs,
 ):
@@ -26,6 +27,7 @@ def time_domain(
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If the sample rate is 1, the x-axis will
             be label as "Samples".
+        centered: Indicates whether to center the x-axis about 0.
         diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
@@ -74,7 +76,14 @@ def time_domain(
         raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
 
     x = np.asarray(x)
-    t = np.arange(x.size) / sample_rate
+
+    if centered:
+        if x.size % 2 == 0:
+            t = np.arange(-x.size // 2, x.size // 2) / sample_rate
+        else:
+            t = np.arange(-(x.size - 1) // 2, (x.size + 1) // 2) / sample_rate
+    else:
+        t = np.arange(x.size) / sample_rate
 
     # with plt.style.context(Path(__file__).parent / ".." / "presentation.mplstyle"):
     with plt.rc_context(RC_PARAMS):
