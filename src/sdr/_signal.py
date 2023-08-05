@@ -78,20 +78,20 @@ def mix(x: npt.ArrayLike, freq: float = 0, phase: float = 0, sample_rate: float 
 
 
 @export
-def to_complex(x_r: npt.ArrayLike) -> np.ndarray:
+def to_complex_bb(x_r: npt.ArrayLike) -> np.ndarray:
     r"""
-    Converts the real signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a
-    complex signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
+    Converts the real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a
+    complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
 
     Arguments:
-        x_r: The real signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$.
+        x_r: The real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$.
             If the length is odd, one zero is appended to the end.
 
     Returns:
-        The complex signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
+        The complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
 
     Examples:
-        Create a real signal with frequency components at 100, 250, and 300 Hz, at a sample rate of 1 ksps.
+        Create a real passband signal with frequency components at 100, 250, and 300 Hz, at a sample rate of 1 ksps.
         Notice the spectrum is complex-conjugate symmetric.
 
         .. ipython:: python
@@ -104,34 +104,34 @@ def to_complex(x_r: npt.ArrayLike) -> np.ndarray:
             ); \
             x_r = sdr.awgn(x_r, snr=30)
 
-            @savefig sdr_to_complex_1.png
+            @savefig sdr_to_complex_bb_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_r[n]$"); \
             plt.tight_layout();
 
-            @savefig sdr_to_complex_2.png
+            @savefig sdr_to_complex_bb_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_r[n]$"); \
             plt.tight_layout();
 
-        Convert the real signal to a complex signal with sample rate 500 sps and center around 0 Hz.
+        Convert the real passband signal to a complex baseband signal with sample rate 500 sps and center of 0 Hz.
         Notice the spectrum is no longer complex-conjugate symmetric.
         The real sinusoids are now complex exponentials at -150, 0, and 50 Hz.
 
         .. ipython:: python
 
-            x_c = sdr.to_complex(x_r); \
+            x_c = sdr.to_complex_bb(x_r); \
             sample_rate /= 2
 
-            @savefig sdr_to_complex_3.png
+            @savefig sdr_to_complex_bb_3.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_c[n]$"); \
             plt.tight_layout();
 
-            @savefig sdr_to_complex_4.png
+            @savefig sdr_to_complex_bb_4.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_c[n]$"); \
@@ -157,26 +157,27 @@ def to_complex(x_r: npt.ArrayLike) -> np.ndarray:
     # Mix the complex signal to baseband. What was fs/4 is now 0.
     x_c = mix(x_a, freq=-0.25)
 
-    # Decimate by 2 to achieve fs/2 sample rate
+    # Decimate by 2 to achieve fs/2 sample rate. This can be done without anti-alias filtering since the
+    # spectrum outside +/- fs/4 is zero.
     x_c = x_c[::2]
 
     return x_c
 
 
 @export
-def to_real(x_c: npt.ArrayLike) -> np.ndarray:
+def to_real_pb(x_c: npt.ArrayLike) -> np.ndarray:
     r"""
-    Converts the complex signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a
-    real signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
+    Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a
+    real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
 
     Arguments:
-        x_c: The complex signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$.
+        x_c: The complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$.
 
     Returns:
-        The real signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
+        The real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
 
     Examples:
-        Create a complex signal with frequency components at -150, 0, and 50 Hz, at a sample rate of 50 sps.
+        Create a complex baseband signal with frequency components at -150, 0, and 50 Hz, at a sample rate of 50 sps.
         Notice the spectrum is asymmetric.
 
         .. ipython:: python
@@ -189,34 +190,34 @@ def to_real(x_c: npt.ArrayLike) -> np.ndarray:
             ); \
             x_c = sdr.awgn(x_c, snr=30)
 
-            @savefig sdr_to_real_1.png
+            @savefig sdr_to_real_pb_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_c[n]$"); \
             plt.tight_layout();
 
-            @savefig sdr_to_real_2.png
+            @savefig sdr_to_real_pb_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_c[n]$"); \
             plt.tight_layout();
 
-        Convert the complex signal to a real signal with sample rate 1 ksps and center around 250 Hz.
+        Convert the complex baseband signal to a real passband signal with sample rate 1 ksps and center of 250 Hz.
         Notice the spectrum is now complex-conjugate symmetric.
         The complex exponentials are now real sinusoids at 100, 250, and 300 Hz.
 
         .. ipython:: python
 
-            x_r = sdr.to_real(x_c); \
+            x_r = sdr.to_real_pb(x_c); \
             sample_rate *= 2
 
-            @savefig sdr_to_real_3.png
+            @savefig sdr_to_real_pb_3.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_r[n]$"); \
             plt.tight_layout();
 
-            @savefig sdr_to_real_4.png
+            @savefig sdr_to_real_pb_4.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_r[n]$"); \
