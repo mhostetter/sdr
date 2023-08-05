@@ -77,8 +77,7 @@ Features
    :hidden:
    :maxdepth: 4
 
-   api/filtering.rst
-   api/resampling.rst
+   api/dsp.rst
    api/sequences.rst
    api/modulation.rst
    api/synchronization.rst
