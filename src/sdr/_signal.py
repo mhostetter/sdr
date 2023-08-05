@@ -14,11 +14,12 @@ def mix(x: npt.ArrayLike, freq: float = 0, phase: float = 0, sample_rate: float 
     r"""
     Mixes the time-domain signal $x[n]$ with a complex exponential.
 
-    $$y[n] = x[n] \cdot \exp \left[ j (\frac{2 \pi f}{f_s} n + \phi) \right]$$
+    $$y[n] = x[n] \cdot \exp \left[ j \left( \frac{2 \pi f}{f_s} n + \phi \right) \right]$$
 
     Arguments:
         x: The time-domain signal $x[n]$.
         freq: The frequency $f$ of the complex exponential in Hz (or 1/samples if `sample_rate=1`).
+            The frequency must satisfy $-f_s/2 \le f < f_s/2$.
         phase: The phase $\phi$ of the complex exponential in degrees.
         sample_rate: The sample rate $f_s$ of the signal.
 
@@ -59,12 +60,13 @@ def mix(x: npt.ArrayLike, freq: float = 0, phase: float = 0, sample_rate: float 
 
     if not isinstance(freq, (int, float)):
         raise TypeError(f"Argument 'freq' must be a number, not {type(freq)}.")
-
     if not isinstance(phase, (int, float)):
         raise TypeError(f"Argument 'phase' must be a number, not {type(phase)}.")
-
     if not isinstance(sample_rate, (int, float)):
         raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+    if not -sample_rate / 2 <= freq < sample_rate / 2:
+        raise ValueError(f"Argument 'freq' must be in the range [{-sample_rate/2}, {sample_rate/2}), not {freq}.")
     if not sample_rate > 0:
         raise ValueError(f"Argument 'sample_rate' must be positive, not {sample_rate}.")
 
