@@ -177,7 +177,7 @@ def to_real_pb(x_c: npt.ArrayLike) -> np.ndarray:
         The real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
 
     Examples:
-        Create a complex baseband signal with frequency components at -150, 0, and 50 Hz, at a sample rate of 50 sps.
+        Create a complex baseband signal with frequency components at -150, 0, and 50 Hz, at a sample rate of 500 sps.
         Notice the spectrum is asymmetric.
 
         .. ipython:: python
