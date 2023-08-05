@@ -21,6 +21,7 @@ def periodogram(
     length: int | None = None,
     overlap: int | None = None,
     fft: int | None = None,
+    detrend: Literal["constant", "linear", False] = False,
     average: Literal["mean", "median"] = "mean",
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     **kwargs,
@@ -39,6 +40,7 @@ def periodogram(
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
+        detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
         average: The type of averaging to use. Options are to average the periodograms using the mean or median.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
@@ -54,6 +56,7 @@ def periodogram(
         nperseg=length,
         noverlap=overlap,
         nfft=fft,
+        detrend=detrend,
         return_onesided=x_axis != "two-sided",
         average=average,
     )
@@ -95,6 +98,7 @@ def spectrogram(
     length: int | None = None,
     overlap: int | None = None,
     fft: int | None = None,
+    detrend: Literal["constant", "linear", False] = False,
     x_axis: Literal["one-sided", "two-sided"] = "two-sided",
     **kwargs,
 ):
@@ -112,6 +116,7 @@ def spectrogram(
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
+        detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum or two-sided spectrum.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
@@ -130,6 +135,7 @@ def spectrogram(
         nperseg=length,
         noverlap=overlap,
         nfft=fft,
+        detrend=detrend,
         return_onesided=x_axis != "two-sided",
         mode="psd",
     )
