@@ -161,3 +161,84 @@ def to_complex(x_r: npt.ArrayLike) -> np.ndarray:
     x_c = x_c[::2]
 
     return x_c
+
+
+@export
+def to_real(x_c: npt.ArrayLike) -> np.ndarray:
+    r"""
+    Converts the complex signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a
+    real signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
+
+    Arguments:
+        x_c: The complex signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$.
+
+    Returns:
+        The real signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
+
+    Examples:
+        Create a complex signal with frequency components at -150, 0, and 50 Hz, at a sample rate of 50 sps.
+        Notice the spectrum is asymmetric.
+
+        .. ipython:: python
+
+            sample_rate = 500; \
+            x_c = ( \
+                0.1 * np.exp(1j * 2 * np.pi * -150 / sample_rate * np.arange(1000)) \
+                + 1.0 * np.exp(1j * 2 * np.pi * 0 / sample_rate * np.arange(1000)) \
+                + 0.5 * np.exp(1j * 2 * np.pi * 50 / sample_rate * np.arange(1000)) \
+            ); \
+            x_c = sdr.awgn(x_c, snr=30)
+
+            @savefig sdr_to_real_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
+            plt.title("Time-domain signal $x_c[n]$"); \
+            plt.tight_layout();
+
+            @savefig sdr_to_real_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
+            plt.title("Periodogram of $x_c[n]$"); \
+            plt.tight_layout();
+
+        Convert the complex signal to a real signal with sample rate 1 ksps and center around 250 Hz.
+        Notice the spectrum is now complex-conjugate symmetric.
+        The complex exponentials are now real sinusoids at 100, 250, and 300 Hz.
+
+        .. ipython:: python
+
+            x_r = sdr.to_real(x_c); \
+            sample_rate *= 2
+
+            @savefig sdr_to_real_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
+            plt.title("Time-domain signal $x_r[n]$"); \
+            plt.tight_layout();
+
+            @savefig sdr_to_real_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
+            plt.title("Periodogram of $x_r[n]$"); \
+            plt.tight_layout();
+
+    Group:
+        dsp-signal-manipulation
+    """
+    x_c = np.asarray(x_c)
+
+    if not x_c.ndim == 1:
+        raise ValueError(f"Argument 'x_c' must be a 1D array, not {x_c.ndim}D.")
+    if not np.iscomplexobj(x_c):
+        raise ValueError("Argument 'x_c' must be complex, not real.")
+
+    # Upsample by 2 to achieve 2*fs sample rate
+    x_c = scipy.signal.resample_poly(x_c, 2, 1)
+
+    # Mix the complex baseband signal to passband. What was 0 is now fs/4.
+    x_c = mix(x_c, freq=0.25)
+
+    # Only preserve the real part, which is complex-conjugate symmetric about 0 Hz.
+    x_r = x_c.real
+
+    return x_r
