@@ -114,11 +114,11 @@ def spectrogram(
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum or two-sided spectrum.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
+            The following keyword arguments are set by default. The defaults may be overwritten.
 
-    Notes:
-        By default, the color bar range is from the 10th to 100th percentile. This is to provide more dynamic range
-        in the "active" values, and not the noise. This can be changed by passing `vmin` and `vmax` as keyword
-        arguments.
+            - `"vmin"`: 10th percentile
+            - `"vmax"`: 100th percentile
+            - `"shading"`: `"gouraud"`
 
     Group:
         plot-spectral-estimation
@@ -144,8 +144,6 @@ def spectrogram(
         f = np.fft.fftshift(f)
         Sxx = np.fft.fftshift(Sxx)
 
-    # Add the default kwargs to the kwargs passed to the function. If there are any conflicts, the kwargs passed
-    # to the function take precedence.
     default_kwargs = {
         "vmin": np.percentile(Sxx, 10),
         "vmax": np.percentile(Sxx, 100),

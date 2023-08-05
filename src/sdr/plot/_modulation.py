@@ -27,8 +27,17 @@ def constellation(
         heatmap: If `True`, a heatmap is plotted instead of a scatter plot.
         limits: The axis limits, which apply to both the x- and y-axis. If `None`, the axis limits are
             set to 10% larger than the maximum value.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()` (`heatmap=False`)
-            or :func:`matplotlib.pyplot.hist2d()` (`heatmap=True`).
+        **kwargs: If `heatmap=False`, additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()`.
+            The following keyword arguments are set by default. The defaults may be overwritten.
+
+            - `"range"`: +/- 10% of the maximum value
+            - `"bins"`: 75, which is the number of bins per axis
+
+            If `heatmap=True`, additional keyword arguments to pass to :func:`matplotlib.pyplot.hist2d()`.
+            The following keyword arguments are set by default. The defaults may be overwritten.
+
+            - `"marker"`: `"."`
+            - `"linestyle"`: `"none"`
 
     Example:
         Display the symbol constellation for Gray-coded QPSK at 6 dB $E_s/N_0$.
@@ -107,6 +116,11 @@ def symbol_map(
         limits: The axis limits, which apply to both the x- and y-axis.
             If `None`, the axis limits are set to 50% larger than the maximum value.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+            The following keyword arguments are set by default. The defaults may be overwritten.
+
+            - `"marker"`: `"x"`
+            - `"markersize"`: 6
+            - `"linestyle"`: `"none"`
 
     Example:
         Display the symbol mapping for Gray-coded QPSK.
