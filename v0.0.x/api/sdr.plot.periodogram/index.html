@@ -1811,6 +1811,89 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_3" type="checkbox" id="__nav_2_1_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../dsp/#signal-manipulation"><span class="md-ellipsis">Signal manipulation</span></a>
+          
+            <label for="__nav_2_1_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Signal manipulation" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Signal manipulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.mix/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential." class="md-ellipsis">mix</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.to_complex_bb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_complex_bb (Python function) — Converts the real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$." class="md-ellipsis">to_<wbr>complex_<wbr>bb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.to_real_pb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_real_pb (Python function) — Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$." class="md-ellipsis">to_<wbr>real_<wbr>pb</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -5163,7 +5246,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../plotting/#frequency-domain"><span class="md-ellipsis">Frequency-<wbr>domain</span></a>
+          <a href="../plotting/#spectral-estimation"><span class="md-ellipsis">Spectral estimation</span></a>
           
             <label for="__nav_2_11_3">
               <span class="md-nav__icon md-icon"></span>
@@ -5171,10 +5254,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Frequency-domain" data-md-level="3">
+      <nav class="md-nav" aria-label="Spectral estimation" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_11_3">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Frequency-<wbr>domain</span>
+          <span class="md-ellipsis">Spectral estimation</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -5261,6 +5344,13 @@ You're not viewing the latest version.
           <li class="md-nav__item">
   <a href="#p-fft" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.plot.periodogram.fft (Python parameter) — The number of points to use in the FFT. If None, the FFT length is set to length." class="md-ellipsis">fft</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-detrend" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.plot.periodogram.detrend (Python parameter) — The type of detrending to apply. Options are to remove the mean or a linear trend from each segment." class="md-ellipsis">detrend</span>
   </a>
   
 </li>
@@ -5868,6 +5958,13 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
+  <a href="#p-detrend" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.plot.periodogram.detrend (Python parameter) — The type of detrending to apply. Options are to remove the mean or a linear trend from each segment." class="md-ellipsis">detrend</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#p-average" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.plot.periodogram.average (Python parameter) — The type of averaging to use. Options are to average the periodograms using the mean or median." class="md-ellipsis">average</span>
   </a>
@@ -5902,9 +5999,13 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><span class="sig-name descname"><span class="pre">periodogram</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.plot.periodogram.x (Python parameter) — The time-domain signal $x[n]$."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sample_rate" title="sdr.plot.periodogram.sample_rate (Python parameter) — The sample rate $f_s$ of the signal in samples/s."><span class="n"><span class="pre">sample_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-window" title="sdr.plot.periodogram.window (Python parameter) — The windowing function to use. This can be a string or a vector of length length."><span class="n"><span class="pre">window</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;hann&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-length" title="sdr.plot.periodogram.length (Python parameter) — The length of each segment in samples. If None, the length is set to 256."><span class="n"><span class="pre">length</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-overlap" title="sdr.plot.periodogram.overlap (Python parameter) — The number of samples to overlap between segments. If None, the overlap is set to length // 2."><span class="n"><span class="pre">overlap</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-fft" title="sdr.plot.periodogram.fft (Python parameter) — The number of points to use in the FFT. If None, the FFT length is set to length."><span class="n"><span class="pre">fft</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-average" title="sdr.plot.periodogram.average (Python parameter) — The type of averaging to use. Options are to average the periodograms using the mean or median."><span class="n"><span class="pre">average</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'mean'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'median'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;mean&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x_axis" title="sdr.plot.periodogram.x_axis (Python parameter) — The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or one-sided spectrum with a logarithmic frequency axis."><span class="n"><span class="pre">x_axis</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'one-sided'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'two-sided'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'log'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;two-sided&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em></span><span class="sig-paren">)</span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.plot.</span></span><span class="sig-name descname"><span class="pre">periodogram</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.plot.periodogram.x (Python parameter) — The time-domain signal $x[n]$."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sample_rate" title="sdr.plot.periodogram.sample_rate (Python parameter) — The sample rate $f_s$ of the signal in samples/s."><span class="n"><span class="pre">sample_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-window" title="sdr.plot.periodogram.window (Python parameter) — The windowing function to use. This can be a string or a vector of length length."><span class="n"><span class="pre">window</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;hann&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-length" title="sdr.plot.periodogram.length (Python parameter) — The length of each segment in samples. If None, the length is set to 256."><span class="n"><span class="pre">length</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-overlap" title="sdr.plot.periodogram.overlap (Python parameter) — The number of samples to overlap between segments. If None, the overlap is set to length // 2."><span class="n"><span class="pre">overlap</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-fft" title="sdr.plot.periodogram.fft (Python parameter) — The number of points to use in the FFT. If None, the FFT length is set to length."><span class="n"><span class="pre">fft</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-detrend" title="sdr.plot.periodogram.detrend (Python parameter) — The type of detrending to apply. Options are to remove the mean or a linear trend from each segment."><span class="n"><span class="pre">detrend</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'constant'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'linear'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="k"><span class="pre">False</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-average" title="sdr.plot.periodogram.average (Python parameter) — The type of averaging to use. Options are to average the periodograms using the mean or median."><span class="n"><span class="pre">average</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'mean'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'median'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;mean&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x_axis" title="sdr.plot.periodogram.x_axis (Python parameter) — The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or one-sided spectrum with a logarithmic frequency axis."><span class="n"><span class="pre">x_axis</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'one-sided'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'two-sided'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'log'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;two-sided&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Plots the estimated power spectral density <span class="math notranslate nohighlight">\(P_{xx}\)</span> of a time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> using Welch’s method.</p>
-<p>This function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.welch()</span></code></a> to estimate the power spectral density of a time-domain signal.</p>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>This function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.welch()</span></code></a> to estimate the power spectral density of the
+time-domain signal.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
@@ -5919,6 +6020,8 @@ You're not viewing the latest version.
 <dt id="p-overlap"><span class="n sig-name">overlap</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-overlap" title="Permalink to this definition">¶</a></dt><dd><p>The number of samples to overlap between segments. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, the overlap is set to <code class="code highlight python docutils literal highlight-python"><span class="n">length</span> <span class="o">//</span> <span class="mi">2</span></code>.</p>
 </dd>
 <dt id="p-fft"><span class="n sig-name">fft</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-fft" title="Permalink to this definition">¶</a></dt><dd><p>The number of points to use in the FFT. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, the FFT length is set to <code class="code highlight python docutils literal highlight-python"><span class="n">length</span></code>.</p>
+</dd>
+<dt id="p-detrend"><span class="n sig-name">detrend</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'constant'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'linear'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="k">False</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code><a class="headerlink" href="#p-detrend" title="Permalink to this definition">¶</a></dt><dd><p>The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.</p>
 </dd>
 <dt id="p-average"><span class="n sig-name">average</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'mean'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'median'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;mean&#39;</span></code><a class="headerlink" href="#p-average" title="Permalink to this definition">¶</a></dt><dd><p>The type of averaging to use. Options are to average the periodograms using the mean or median.</p>
 </dd>

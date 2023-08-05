@@ -16,6 +16,11 @@ Frequency-domain
 
 .. python-apigen-group:: plot-frequency-domain
 
+Spectral estimation
+-------------------
+
+.. python-apigen-group:: plot-spectral-estimation
+
 Modulation
 ----------
 

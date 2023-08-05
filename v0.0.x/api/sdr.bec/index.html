@@ -1811,6 +1811,89 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_3" type="checkbox" id="__nav_2_1_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../dsp/#signal-manipulation"><span class="md-ellipsis">Signal manipulation</span></a>
+          
+            <label for="__nav_2_1_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Signal manipulation" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Signal manipulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.mix/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential." class="md-ellipsis">mix</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.to_complex_bb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_complex_bb (Python function) — Converts the real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$." class="md-ellipsis">to_<wbr>complex_<wbr>bb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.to_real_pb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_real_pb (Python function) — Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$." class="md-ellipsis">to_<wbr>real_<wbr>pb</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -5235,7 +5318,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../plotting/#frequency-domain"><span class="md-ellipsis">Frequency-<wbr>domain</span></a>
+          <a href="../plotting/#spectral-estimation"><span class="md-ellipsis">Spectral estimation</span></a>
           
             <label for="__nav_2_11_3">
               <span class="md-nav__icon md-icon"></span>
@@ -5243,10 +5326,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Frequency-domain" data-md-level="3">
+      <nav class="md-nav" aria-label="Spectral estimation" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_11_3">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Frequency-<wbr>domain</span>
+          <span class="md-ellipsis">Spectral estimation</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -5866,17 +5949,17 @@ with erasure probability <span class="math notranslate nohighlight">\(p\)</span>
 <p>When 20 bits are passed through a BEC with erasure probability <span class="math notranslate nohighlight">\(p=0.25\)</span>,
 roughly 5 bits are erased at the output.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span> <span class="n">x</span>
-<span class="gh">Out[1]: </span><span class="go">array([1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1])</span>
+<span class="gh">Out[1]: </span><span class="go">array([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0])</span>
 
 <span class="gp">In [2]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">bec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">);</span> <span class="n">y</span>
 <span class="gh">Out[2]: </span>
-<span class="go">array([ 1,  1, -1,  0,  0,  1,  1, -1, -1,  1,  1, -1,  0, -1,  1,  0,  1,</span>
-<span class="go">        0,  1,  1])</span>
+<span class="go">array([ 0, -1, -1,  0, -1, -1,  1,  1,  1,  1, -1, -1,  0,  1,  1, -1, -1,</span>
+<span class="go">       -1,  0,  0])</span>
 
 <span class="gp">In [3]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[3]: </span>
-<span class="go">array([ True,  True, False,  True,  True,  True,  True, False, False,</span>
-<span class="go">        True,  True, False,  True, False,  True,  True,  True,  True,</span>
+<span class="go">array([ True, False, False,  True, False, False,  True,  True,  True,</span>
+<span class="go">        True, False, False,  True,  True,  True, False, False, False,</span>
 <span class="go">        True,  True])</span>
 </code></pre></div>
 </div>

@@ -17,3 +17,8 @@ Correlation
 -----------
 
 .. python-apigen-group:: dsp-correlation
+
+Signal manipulation
+-------------------
+
+.. python-apigen-group:: dsp-signal-manipulation

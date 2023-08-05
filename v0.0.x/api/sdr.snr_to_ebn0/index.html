@@ -1811,6 +1811,89 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1_3" type="checkbox" id="__nav_2_1_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../dsp/#signal-manipulation"><span class="md-ellipsis">Signal manipulation</span></a>
+          
+            <label for="__nav_2_1_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Signal manipulation" data-md-level="3">
+        <label class="md-nav__title" for="__nav_2_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Signal manipulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.mix/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential." class="md-ellipsis">mix</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.to_complex_bb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_complex_bb (Python function) — Converts the real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$." class="md-ellipsis">to_<wbr>complex_<wbr>bb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.to_real_pb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_real_pb (Python function) — Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$." class="md-ellipsis">to_<wbr>real_<wbr>pb</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -5249,7 +5332,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../plotting/#frequency-domain"><span class="md-ellipsis">Frequency-<wbr>domain</span></a>
+          <a href="../plotting/#spectral-estimation"><span class="md-ellipsis">Spectral estimation</span></a>
           
             <label for="__nav_2_11_3">
               <span class="md-nav__icon md-icon"></span>
@@ -5257,10 +5340,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Frequency-domain" data-md-level="3">
+      <nav class="md-nav" aria-label="Spectral estimation" data-md-level="3">
         <label class="md-nav__title" for="__nav_2_11_3">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Frequency-<wbr>domain</span>
+          <span class="md-ellipsis">Spectral estimation</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -5902,7 +5985,7 @@ number of coded bits.</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Convert from <span class="math notranslate nohighlight">\(S/N = 5\)</span> dB to <span class="math notranslate nohighlight">\(E_b/N_0\)</span> for a 4-QAM signal with <span class="math notranslate nohighlight">\(r = 2/3\)</span> and 1 sample per symbol.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">snr_to_ebn0</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="gh">Out[1]: </span><span class="go">3.750612633917001</span>
+<span class="gh">Out[1]: </span><span class="go">3.7506126339170005</span>
 </code></pre></div>
 </div>
 <p>Convert from <span class="math notranslate nohighlight">\(S/N = 10\)</span> dB to <span class="math notranslate nohighlight">\(E_b/N_0\)</span> for a 16-QAM signal with <span class="math notranslate nohighlight">\(r = 1\)</span> and 4 samples per symbol.</p>
