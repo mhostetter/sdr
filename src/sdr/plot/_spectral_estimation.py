@@ -1,5 +1,5 @@
 """
-A module containing frequency-domain plotting functions.
+A module containing various spectral estimation techniques.
 """
 from __future__ import annotations
 
@@ -28,7 +28,9 @@ def periodogram(
     r"""
     Plots the estimated power spectral density $P_{xx}$ of a time-domain signal $x[n]$ using Welch's method.
 
-    This function uses :func:`scipy.signal.welch()` to estimate the power spectral density of a time-domain signal.
+    Note:
+        This function uses :func:`scipy.signal.welch()` to estimate the power spectral density of the
+        time-domain signal.
 
     Arguments:
         x: The time-domain signal $x[n]$.
@@ -43,7 +45,7 @@ def periodogram(
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
-        plot-frequency-domain
+        plot-spectral-estimation
     """
     f, Pxx = scipy.signal.welch(
         x,
@@ -99,7 +101,8 @@ def spectrogram(
     r"""
     Plots the spectrogram of a time-domain signal $x[n]$ using Welch's method.
 
-    This function uses :func:`scipy.signal.spectrogram()` to estimate the spectrogram of a time-domain signal.
+    Note:
+        This function uses :func:`scipy.signal.spectrogram()` to estimate the spectrogram of the time-domain signal.
 
     Arguments:
         x: The time-domain signal $x[n]$.
@@ -118,7 +121,7 @@ def spectrogram(
         arguments.
 
     Group:
-        plot-frequency-domain
+        plot-spectral-estimation
     """
     f, t, Sxx = scipy.signal.spectrogram(
         x,
