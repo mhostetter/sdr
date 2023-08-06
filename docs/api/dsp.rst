@@ -1,7 +1,7 @@
 .. py:module:: sdr
 
-DSP
-===
+Digital signal processing
+=========================
 
 Filtering
 ---------
