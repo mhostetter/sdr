@@ -54,7 +54,6 @@ These dependencies are stored in `requirements-dev.txt`.
 
 .. literalinclude:: ../../requirements-dev.txt
    :caption: requirements-dev.txt
-   :language: txt
 
 Install the development dependencies by passing `-r` to `pip install`.
 

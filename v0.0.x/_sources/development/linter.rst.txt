@@ -21,7 +21,7 @@ Various nuisance `pylint` warnings are added to an ignore list in `pyproject.tom
 .. literalinclude:: ../../pyproject.toml
    :caption: pyproject.toml
    :start-at: [tool.pylint]
-   :end-before: [tool.pytest.black]
+   :end-before: [tool.black]
    :language: toml
 
 Run from the command line

@@ -3,9 +3,9 @@ sdr
 
 The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR).
 
-The goal of :obj:`sdr` is to provide tools to design, build, and analyze digital communications systems
+The goal of :obj:`sdr` is to provide tools to design, analyze, build, and test digital communication systems
 in Python. The library relies on and is designed to be interoperable with `NumPy`_, `SciPy`_, and `Matplotlib`_.
-Performance is also very important. So, where possible, `Numba`_ is used to accelerate computationally intensive
+Performance is also very important. So, where possible, `Numba`_ is used to accelerate computationally-intensive
 functions.
 
 Additionally, the library aims to replicate relevant functionality from Matlab's `Communications`_ and
@@ -22,11 +22,25 @@ in :obj:`sdr`, please open an issue on `GitHub`_.
 .. _DSP: https://www.mathworks.com/products/dsp-system.html
 .. _GitHub: https://github.com/mhostetter/sdr/issues
 
+Installation
+------------
+
+The latest version of :obj:`sdr` can be installed from `PyPI`_ using `pip`_.
+
+.. code-block:: bash
+
+   python3 -m pip install sdr
+
+.. _PyPI: https://pypi.org/project/sdr/
+.. _pip: https://pip.pypa.io/en/stable/
+
 Features
 --------
 
-- Filtering: :class:`sdr.FIR`, :class:`sdr.FIRInterpolator`, :class:`sdr.IIR`
-- Resampling: :class:`sdr.FarrowResampler`
+- Digital signal processing:
+   - Filtering: :class:`sdr.FIR`, :class:`sdr.FIRInterpolator`, :class:`sdr.IIR`
+   - Resampling: :class:`sdr.FarrowResampler`
+   - Signal manipulation: :func:`sdr.mix()`, :func:`sdr.to_complex_bb()`, :func:`sdr.to_real_pb()`
 - Sequences: :func:`sdr.barker()`, :func:`sdr.zadoff_chu()`
 - Modulation:
    - Classes: :class:`sdr.PSK`
@@ -45,7 +59,8 @@ Features
    - From $S/N$: :func:`sdr.snr_to_ebn0()`, :func:`sdr.snr_to_esn0()`
 - Simulation:
    - Channel models: :func:`sdr.bec()`, :func:`sdr.bsc()`, :func:`sdr.dmc()`
-   - Signal impairments: :func:`sdr.awgn()`, :func:`sdr.frequency_offset()`, :func:`sdr.sample_rate_offset()`,  :func:`sdr.iq_imbalance()`
+   - Signal impairments: :func:`sdr.awgn()`, :func:`sdr.frequency_offset()`, :func:`sdr.sample_rate_offset()`,
+     :func:`sdr.iq_imbalance()`
 - Link budgets:
    - Channel capacity: :func:`sdr.awgn_capacity()`, :func:`sdr.bec_capacity()`, :func:`sdr.bsc_capacity()`
    - Path losses: :func:`sdr.fspl()`
@@ -54,11 +69,12 @@ Features
 - Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
 - Plotting:
    - Time-domain: :func:`sdr.plot.time_domain()`
-   - Frequency domain: :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
-   - Modulation: :func:`sdr.plot.ber()`, :func:`sdr.plot.ser()`, :func:`sdr.plot.constellation()`, :func:`sdr.plot.symbol_map()`
-   - Filters: :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`, :func:`sdr.plot.frequency_response()`,
-     :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`, :func:`sdr.plot.group_delay()`,
-     :func:`sdr.plot.zeros_poles()`, :func:`sdr.plot.filter()`
+   - Spectral estimation: :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
+   - Modulation: :func:`sdr.plot.ber()`, :func:`sdr.plot.ser()`, :func:`sdr.plot.constellation()`,
+     :func:`sdr.plot.symbol_map()`
+   - Filters: :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`,
+     :func:`sdr.plot.frequency_response()`, :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`,
+     :func:`sdr.plot.group_delay()`, :func:`sdr.plot.zeros_poles()`, :func:`sdr.plot.filter()`
 
 .. toctree::
    :caption: Examples
@@ -73,6 +89,15 @@ Features
    examples/phase-locked-loop.ipynb
 
 .. toctree::
+   :caption: Development
+   :hidden:
+
+   development/installation.rst
+   development/linter.rst
+   development/unit-tests.rst
+   development/documentation.rst
+
+.. toctree::
    :caption: API Reference
    :hidden:
    :maxdepth: 4
@@ -81,7 +106,6 @@ Features
    api/sequences.rst
    api/modulation.rst
    api/synchronization.rst
-   api/impairments.rst
    api/measurement.rst
    api/conversions.rst
    api/simulation.rst
@@ -89,15 +113,6 @@ Features
    api/probability.rst
    api/data-manipulation.rst
    api/plotting.rst
-
-.. toctree::
-   :caption: Development
-   :hidden:
-
-   development/installation.rst
-   development/linter.rst
-   development/unit-tests.rst
-   development/documentation.rst
 
 .. toctree::
    :caption: Release Notes
