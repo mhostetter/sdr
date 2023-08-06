@@ -98,11 +98,12 @@ class FIRInterpolator:
             The filtered signal $y[n]$ with sample rate $f_s r$.
         """
         x = np.atleast_1d(x)
+        dtype = np.result_type(x, self.polyphase_taps)
 
         if self.streaming:
             # Prepend previous inputs from last filter() call
             x_pad = np.concatenate((self._x_prev, x))
-            yy = np.zeros((self.rate, x.size), dtype=x.dtype)
+            yy = np.zeros((self.rate, x.size), dtype=dtype)
             for i in range(self.rate):
                 yy[i] = scipy.signal.convolve(x_pad, self.polyphase_taps[i], mode="valid")
 
@@ -115,7 +116,7 @@ class FIRInterpolator:
             # Commutate the outputs of the polyphase filters
             y = yy.T.flatten()
         else:
-            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=x.dtype)
+            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=dtype)
             for i in range(self.rate):
                 yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
 
