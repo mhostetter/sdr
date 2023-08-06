@@ -44,7 +44,7 @@ def periodogram(
         average: The type of averaging to use. Options are to average the periodograms using the mean or median.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
         plot-spectral-estimation
@@ -118,7 +118,7 @@ def spectrogram(
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
         detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum or two-sided spectrum.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
             - `"vmin"`: 10th percentile

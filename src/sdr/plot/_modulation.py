@@ -27,7 +27,7 @@ def constellation(
         heatmap: If `True`, a heatmap is plotted instead of a scatter plot.
         limits: The axis limits, which apply to both the x- and y-axis. If `None`, the axis limits are
             set to 10% larger than the maximum value.
-        **kwargs: If `heatmap=False`, additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()`.
+        kwargs: If `heatmap=False`, additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
             - `"range"`: +/- 10% of the maximum value
@@ -115,7 +115,7 @@ def symbol_map(
             If `"bin"`, the symbols are annotated with their binary representation.
         limits: The axis limits, which apply to both the x- and y-axis.
             If `None`, the axis limits are set to 50% larger than the maximum value.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
             - `"marker"`: `"x"`
@@ -194,7 +194,7 @@ def ber(
     Arguments:
         ebn0: The bit energy $E_b$ to noise PSD $N_0$ ratio (dB).
         ber: The bit error rate $P_{be}$.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
         Plot theoretical BER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.
@@ -246,7 +246,7 @@ def ser(
     Arguments:
         esn0: The symbol energy $E_s$ to noise PSD $N_0$ ratio (dB).
         ser: The symbol error rate $P_{se}$.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
         Plot theoretical SER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.
