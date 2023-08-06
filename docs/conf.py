@@ -184,6 +184,12 @@ html_last_updated_fmt = ""
 html_use_index = True
 html_domain_indices = True
 
+nitpicky = True
+nitpick_ignore = [
+    ("py:class", "numpy.typing.ArrayLike"),  # Wish this would work
+    ("py:class", "numpy.typing.DTypeLike"),  # Wish this would work
+]
+
 
 # -- Extension configuration -------------------------------------------------
 
