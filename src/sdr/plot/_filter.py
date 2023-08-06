@@ -25,7 +25,7 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
         a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
@@ -106,7 +106,7 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
         a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
@@ -182,7 +182,7 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
     Arguments:
         b: The feedforward coefficients $b_i$.
         a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
@@ -256,7 +256,7 @@ def frequency_response(
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
@@ -352,7 +352,7 @@ def phase_response(
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
@@ -453,7 +453,7 @@ def phase_delay(
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
@@ -553,7 +553,7 @@ def group_delay(
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
-        **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
         sdr.FIR, sdr.IIR
