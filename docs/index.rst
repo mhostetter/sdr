@@ -60,6 +60,18 @@ Features
      :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`, :func:`sdr.plot.group_delay()`,
      :func:`sdr.plot.zeros_poles()`, :func:`sdr.plot.filter()`
 
+Installation
+------------
+
+The latest version of :obj:`sdr` can be installed from `PyPI`_ using `pip`_.
+
+.. code-block:: bash
+
+   python3 -m pip install sdr
+
+.. _PyPI: https://pypi.org/project/sdr/
+.. _pip: https://pip.pypa.io/en/stable/
+
 .. toctree::
    :caption: Examples
    :hidden:
@@ -71,6 +83,15 @@ Features
    examples/farrow-resampler.ipynb
    examples/psk.ipynb
    examples/phase-locked-loop.ipynb
+
+.. toctree::
+   :caption: Development
+   :hidden:
+
+   development/installation.rst
+   development/linter.rst
+   development/unit-tests.rst
+   development/documentation.rst
 
 .. toctree::
    :caption: API Reference
@@ -89,15 +110,6 @@ Features
    api/probability.rst
    api/data-manipulation.rst
    api/plotting.rst
-
-.. toctree::
-   :caption: Development
-   :hidden:
-
-   development/installation.rst
-   development/linter.rst
-   development/unit-tests.rst
-   development/documentation.rst
 
 .. toctree::
    :caption: Release Notes
