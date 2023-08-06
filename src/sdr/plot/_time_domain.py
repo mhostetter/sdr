@@ -6,13 +6,19 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import Literal
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
 
 
 @export
-def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
+def time_domain(
+    x: npt.ArrayLike,
+    sample_rate: float = 1.0,
+    diff: Literal["color", "line"] = "color",
+    **kwargs,
+):
     r"""
     Plots a time-domain signal $x[n]$.
 
@@ -20,6 +26,10 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If the sample rate is 1, the x-axis will
             be label as "Samples".
+        diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
+            real and imaginary parts will have different colors based on the current Matplotlib color cycle.
+            If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
+            and both lines will share the same color.
         **kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -74,8 +84,16 @@ def time_domain(x: npt.ArrayLike, sample_rate: float = 1.0, **kwargs):
                 label, label2 = "real", "imag"
             else:
                 label, label2 = label + " (real)", label + " (imag)"
-            plt.plot(t, x.real, label=label, **kwargs)
-            plt.plot(t, x.imag, label=label2, **kwargs)
+
+            if diff == "color":
+                plt.plot(t, x.real, label=label, **kwargs)
+                plt.plot(t, x.imag, label=label2, **kwargs)
+            elif diff == "line":
+                (real,) = plt.plot(t, x.real, "-", label=label, **kwargs)
+                kwargs.pop("color", None)
+                plt.plot(t, x.imag, "--", color=real.get_color(), label=label2, **kwargs)
+            else:
+                raise ValueError(f"Argument 'diff' must be 'color' or 'line', not {diff}.")
         else:
             plt.plot(t, x, label=label, **kwargs)
 
