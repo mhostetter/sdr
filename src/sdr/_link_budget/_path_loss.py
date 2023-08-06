@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.constants
 
-from .._constants import SPEED_OF_LIGHT
 from .._helper import export
 
 
@@ -50,5 +50,5 @@ def fspl(d: npt.ArrayLike, f: npt.ArrayLike) -> np.ndarray:
     """
     d = np.asarray(d)
     f = np.asarray(f)
-    loss = 20 * np.log10(4 * np.pi * d * f / SPEED_OF_LIGHT)
+    loss = 20 * np.log10(4 * np.pi * d * f / scipy.constants.speed_of_light)
     return loss

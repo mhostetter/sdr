@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.constants
 
-from .._constants import SPEED_OF_LIGHT
 from .._helper import export
 
 
@@ -61,7 +61,7 @@ def parabolic_antenna(
     if not np.all((0 <= efficiency) & (efficiency <= 1)):
         raise ValueError("Argument 'efficiency' must be between 0 and 1.")
 
-    lambda_ = SPEED_OF_LIGHT / freq  # Wavelength in meters
+    lambda_ = scipy.constants.speed_of_light / freq  # Wavelength in meters
     G = (np.pi * diameter / lambda_) ** 2 * efficiency  # Gain in linear units
     G = 10 * np.log10(G)  # Gain in dBi
 
