@@ -87,6 +87,7 @@ View all available classes and functions in the `API Reference <https://mhostett
    api/dsp.rst
    api/sequences.rst
    api/modulation.rst
+   api/detection.rst
    api/synchronization.rst
    api/measurement.rst
    api/conversions.rst
