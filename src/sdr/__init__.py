@@ -16,6 +16,7 @@ except ModuleNotFoundError:  # pragma: no cover
 from . import plot
 from ._conversion import *
 from ._data import *
+from ._detection import *
 from ._farrow import *
 from ._filter import *
 from ._link_budget import *
