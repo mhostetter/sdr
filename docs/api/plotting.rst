@@ -26,6 +26,11 @@ Modulation
 
 .. python-apigen-group:: plot-modulation
 
+Detection
+---------
+
+.. python-apigen-group:: plot-detection
+
 Filter analysis
 ---------------
 
