@@ -59,7 +59,7 @@ class FIRInterpolator:
             taps: The feedforward coefficients $h_i$.
             rate: The interpolation rate $r$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~FIRInterpolator.filter()`.
+                preserved between calls to :meth:`~FIRInterpolator.__call__()`.
         """
         self._taps = np.asarray(taps)
 
@@ -85,7 +85,7 @@ class FIRInterpolator:
         """
         self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
 
-    def filter(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
         """
         Filters and interpolates the input signal $x[n]$ with the FIR filter.
 
@@ -101,7 +101,7 @@ class FIRInterpolator:
         dtype = np.result_type(x, self.polyphase_taps)
 
         if self.streaming:
-            # Prepend previous inputs from last filter() call
+            # Prepend previous inputs from last __call__() call
             x_pad = np.concatenate((self._x_prev, x))
             yy = np.zeros((self.rate, x.size), dtype=dtype)
             for i in range(self.rate):
@@ -199,6 +199,6 @@ class FIRInterpolator:
         """
         Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`~FIRInterpolator.filter()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~FIRInterpolator.__call__()`.
         """
         return self._streaming

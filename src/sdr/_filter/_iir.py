@@ -44,7 +44,7 @@ class IIR:
             b: The feedforward coefficients $b_i$.
             a: The feedback coefficients $a_j$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
-                preserved between calls to :meth:`~IIR.filter()`.
+                preserved between calls to :meth:`~IIR.__call__()`.
 
         Examples:
             See the :ref:`iir-filters` example.
@@ -69,7 +69,7 @@ class IIR:
             poles: The poles of the transfer function.
             gain: The gain of the transfer function.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
-                preserved between calls to :meth:`filter()`.
+                preserved between calls to :meth:`~IIR.__call__()`.
 
         Examples:
             See the :ref:`iir-filters` example.
@@ -87,7 +87,7 @@ class IIR:
         """
         self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
-    def filter(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
         r"""
         Filters the input signal $x[n]$ with the IIR filter.
 
@@ -131,7 +131,7 @@ class IIR:
         d[0] = 1
 
         zi = self._zi
-        h = self.filter(d)
+        h = self(d)
         self._zi = zi  # Restore the filter state
 
         return h
@@ -157,7 +157,7 @@ class IIR:
         u = np.ones(N, dtype=np.float32)
 
         zi = self._zi
-        s = self.filter(u)
+        s = self(u)
         self._zi = zi  # Restore the filter state
 
         return s
@@ -239,7 +239,7 @@ class IIR:
         """
         Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`~IIR.filter()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~IIR.__call__()`.
 
         Examples:
             See the :ref:`iir-filters` example.
