@@ -1,5 +1,5 @@
 """
-A module that converts between various types of signal-to-noise ratios (SNRs).
+A module that contains various conversion functions.
 """
 from __future__ import annotations
 
