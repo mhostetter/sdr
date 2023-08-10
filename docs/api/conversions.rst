@@ -1,6 +1,11 @@
 Conversions
 ===========
 
+Decibels
+--------
+
+.. python-apigen-group:: conversions-decibels
+
 From $E_b/N_0$
 --------------
 
