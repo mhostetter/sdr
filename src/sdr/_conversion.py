@@ -76,6 +76,68 @@ def db(
     raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
 
 
+@export
+def linear(
+    x: npt.ArrayLike,
+    type: Literal["value", "power", "voltage"] = "value",  # pylint: disable=redefined-builtin
+) -> np.ndarray:
+    r"""
+    Converts from decibels to linear units.
+
+    Arguments:
+        x: The input value or signal in dB.
+        type: The type of output value or signal.
+
+            - `"value`": The output value/signal is any value.
+
+            $$x_{\text{linear}} = 10^{\frac{x_{\text{dB}}}{10}}$$
+
+            - `"power`": The output value/signal is a power measurement.
+
+            $$P_{\text{linear}} = 10^{\frac{P_{\text{dB}}}{10}}$$
+
+            - `"voltage`": The output value/signal is a voltage measurement.
+
+            $$V_{\text{linear}} = 10^{\frac{V_{\text{dB}}}{20}}$$
+
+    Returns:
+        The value or signal in linear units.
+
+    Examples:
+        Convert 77 dB-Hz to 50 MHz.
+
+        .. ipython:: python
+
+            sdr.linear(77)
+
+        Convert 20 dBm to 100 mW.
+
+        .. ipython:: python
+
+            sdr.linear(20, type="power")
+
+        Convert 6 dBV to 2 V.
+
+        .. ipython:: python
+
+            sdr.linear(6, type="voltage")
+
+    Group:
+        conversions-decibels
+    """
+    x = np.asarray(x)
+    if not np.all(x >= 0):
+        raise ValueError("Argument 'x' must be non-negative.")
+
+    if type in ["value", "power"]:
+        return 10 ** (x / 10)
+
+    if type == "voltage":
+        return 10 ** (x / 20)
+
+    raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
+
+
 ##############################################################################
 # From Eb/N0
 ##############################################################################
