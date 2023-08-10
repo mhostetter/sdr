@@ -26,15 +26,15 @@ def db(
         x: The input value or signal.
         type: The type of input value or signal.
 
-            - `"value`": The input value/signal is any value.
+            - `"value"`: The input value/signal is any value.
 
             $$x_{\text{dB}} = 10 \log_{10} x_{\text{linear}}$$
 
-            - `"power`": The input value/signal is a power measurement.
+            - `"power"`: The input value/signal is a power measurement.
 
             $$P_{\text{dB}} = 10 \log_{10} P_{\text{linear}}$$
 
-            - `"voltage`": The input value/signal is a voltage measurement.
+            - `"voltage"`: The input value/signal is a voltage measurement.
 
             $$V_{\text{dB}} = 20 \log_{10} V_{\text{linear}}$$
 
@@ -88,15 +88,15 @@ def linear(
         x: The input value or signal in dB.
         type: The type of output value or signal.
 
-            - `"value`": The output value/signal is any value.
+            - `"value"`: The output value/signal is any value.
 
             $$x_{\text{linear}} = 10^{\frac{x_{\text{dB}}}{10}}$$
 
-            - `"power`": The output value/signal is a power measurement.
+            - `"power"`: The output value/signal is a power measurement.
 
             $$P_{\text{linear}} = 10^{\frac{P_{\text{dB}}}{10}}$$
 
-            - `"voltage`": The output value/signal is a voltage measurement.
+            - `"voltage"`: The output value/signal is a voltage measurement.
 
             $$V_{\text{linear}} = 10^{\frac{V_{\text{dB}}}{20}}$$
 
