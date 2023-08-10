@@ -5,8 +5,76 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import Literal
 
 from ._helper import export
+
+##############################################################################
+# Decibels
+##############################################################################
+
+
+@export
+def db(
+    x: npt.ArrayLike,
+    type: Literal["value", "power", "voltage"] = "value",  # pylint: disable=redefined-builtin
+) -> np.ndarray:
+    r"""
+    Converts from linear units to decibels.
+
+    Arguments:
+        x: The input value or signal.
+        type: The type of input value or signal.
+
+            - `"value`": The input value/signal is any value.
+
+            $$x_{\text{dB}} = 10 \log_{10} x_{\text{linear}}$$
+
+            - `"power`": The input value/signal is a power measurement.
+
+            $$P_{\text{dB}} = 10 \log_{10} P_{\text{linear}}$$
+
+            - `"voltage`": The input value/signal is a voltage measurement.
+
+            $$V_{\text{dB}} = 20 \log_{10} V_{\text{linear}}$$
+
+    Returns:
+        The value or signal in dB.
+
+    Examples:
+        Convert 50 MHz to 77 dB-Hz.
+
+        .. ipython:: python
+
+            sdr.db(50e6)
+
+        Convert 100 mW to 20 dBm.
+
+        .. ipython:: python
+
+            sdr.db(100, type="power")
+
+        Convert 2 V to 6 dBV.
+
+        .. ipython:: python
+
+            sdr.db(2, type="voltage")
+
+    Group:
+        conversions-decibels
+    """
+    x = np.asarray(x)
+    if not np.all(x >= 0):
+        raise ValueError("Argument 'x' must be non-negative.")
+
+    if type in ["value", "power"]:
+        return 10 * np.log10(x)
+
+    if type == "voltage":
+        return 20 * np.log10(x)
+
+    raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
+
 
 ##############################################################################
 # From Eb/N0
