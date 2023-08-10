@@ -9,10 +9,10 @@ import scipy.integrate
 import scipy.special
 from typing_extensions import Literal
 
+from .._conversion import ebn0_to_esn0, esn0_to_ebn0
 from .._data import unpack
 from .._helper import export, extend_docstring
 from .._probability import Q
-from .._snr import ebn0_to_esn0, esn0_to_ebn0
 from ._linear import _LinearModulation
 from ._symbol_mapping import binary_code, gray_code
 
