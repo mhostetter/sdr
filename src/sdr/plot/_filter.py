@@ -9,20 +9,48 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
+from .._filter import FIR, IIR
 from .._helper import export
 from ._rc_params import RC_PARAMS
 
 
+def _convert_to_taps(
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike]  # pylint: disable=redefined-builtin
+) -> tuple[np.ndarray, np.ndarray]:
+    if isinstance(filter, FIR):
+        b = filter.taps
+        a = np.array([1])
+    elif isinstance(filter, IIR):
+        b = filter.b_taps
+        a = filter.a_taps
+    elif isinstance(filter, tuple):
+        b = np.asarray(filter[0])
+        a = np.asarray(filter[1])
+    else:
+        b = np.asarray(filter)
+        a = np.array([1])
+    return b, a
+
+
 @export
-def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, **kwargs):
+def impulse_response(
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    N: int | None = None,
+    **kwargs,
+):
     r"""
     Plots the impulse response $h[n]$ of a filter.
 
     The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
@@ -50,13 +78,12 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
 
             @savefig sdr_plot_impulse_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(iir.b_taps, iir.a_taps, N=30)
+            sdr.plot.impulse_response(iir, N=30)
 
     Group:
         plot-filter
     """
-    b = np.atleast_1d(b)
-    a = np.atleast_1d(a)
+    b, a = _convert_to_taps(filter)
 
     if N is None:
         if a.size == 1 and a[0] == 1:
@@ -95,15 +122,24 @@ def impulse_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = Non
 
 
 @export
-def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, **kwargs):
+def step_response(
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    N: int | None = None,
+    **kwargs,
+):
     r"""
     Plots the step response $s[n]$ of a filter.
 
     The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
@@ -131,13 +167,12 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
 
             @savefig sdr_plot_step_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.step_response(iir.b_taps, iir.a_taps, N=30)
+            sdr.plot.step_response(iir, N=30)
 
     Group:
         plot-filter
     """
-    b = np.atleast_1d(b)
-    a = np.atleast_1d(a)
+    b, a = _convert_to_taps(filter)
 
     if N is None:
         if a.size == 1 and a[0] == 1:
@@ -175,13 +210,21 @@ def step_response(b: npt.ArrayLike, a: npt.ArrayLike = 1, N: int | None = None, 
 
 
 @export
-def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
+def zeros_poles(
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    **kwargs,
+):
     r"""
     Plots the zeros and poles of the filter.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
@@ -207,11 +250,13 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
 
             @savefig sdr_plot_zeros_poles_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.zeros_poles(iir.b_taps, iir.a_taps)
+            sdr.plot.zeros_poles(iir)
 
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+
     z, p, _ = scipy.signal.tf2zpk(b, a)
     unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
 
@@ -237,8 +282,7 @@ def zeros_poles(b: npt.ArrayLike, a: npt.ArrayLike = 1, **kwargs):
 
 @export
 def frequency_response(
-    b: npt.ArrayLike,
-    a: npt.ArrayLike = 1,
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -249,8 +293,13 @@ def frequency_response(
     Plots the frequency response $H(\omega)$ of the filter.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         sample_rate: The sample rate $f_s$ of the filter in samples/s.
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
@@ -281,7 +330,7 @@ def frequency_response(
 
             @savefig sdr_plot_frequency_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(iir.b_taps, iir.a_taps)
+            sdr.plot.frequency_response(iir)
 
         .. ipython:: python
 
@@ -293,11 +342,13 @@ def frequency_response(
 
             @savefig sdr_plot_frequency_response_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3)
+            sdr.plot.frequency_response(iir, x_axis="log", decades=3)
 
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+
     if x_axis == "log":
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
@@ -331,8 +382,7 @@ def frequency_response(
 
 @export
 def phase_response(
-    b: npt.ArrayLike,
-    a: npt.ArrayLike = 1,
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
     sample_rate: float = 1.0,
     N: int = 1024,
     unwrap: bool = True,
@@ -344,8 +394,13 @@ def phase_response(
     Plots the phase response $\Theta(\omega)$ of the filter.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         sample_rate: The sample rate $f_s$ of the filter in samples/s.
         N: The number of samples $N$ in the phase response.
         unwrap: Indicates whether to unwrap the phase response.
@@ -377,7 +432,7 @@ def phase_response(
 
             @savefig sdr_plot_phase_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.phase_response(iir.b_taps, iir.a_taps)
+            sdr.plot.phase_response(iir)
 
         .. ipython:: python
 
@@ -389,11 +444,13 @@ def phase_response(
 
             @savefig sdr_plot_phase_response_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.phase_response(iir.b_taps, iir.a_taps, x_axis="log", decades=3)
+            sdr.plot.phase_response(iir, x_axis="log", decades=3)
 
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+
     if x_axis == "log":
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
@@ -434,8 +491,7 @@ def phase_response(
 
 @export
 def phase_delay(
-    b: npt.ArrayLike,
-    a: npt.ArrayLike = 1,
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -446,8 +502,13 @@ def phase_delay(
     Plots the phase delay $\tau_{\phi}(\omega)$ of the filter.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         sample_rate: The sample rate $f_s$ of the filter in samples/s.
         N: The number of samples $N$ in the phase delay.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
@@ -478,7 +539,7 @@ def phase_delay(
 
             @savefig sdr_plot_phase_delay_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.phase_delay(iir.b_taps, iir.a_taps)
+            sdr.plot.phase_delay(iir)
 
         .. ipython:: python
 
@@ -490,11 +551,13 @@ def phase_delay(
 
             @savefig sdr_plot_phase_delay_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.phase_delay(iir.b_taps, iir.a_taps, x_axis="log", decades=3)
+            sdr.plot.phase_delay(iir, x_axis="log", decades=3)
 
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+
     if x_axis == "log":
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
@@ -534,8 +597,7 @@ def phase_delay(
 
 @export
 def group_delay(
-    b: npt.ArrayLike,
-    a: npt.ArrayLike = 1,
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -546,8 +608,13 @@ def group_delay(
     Plots the group delay $\tau_g(\omega)$ of the IIR filter.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         sample_rate: The sample rate $f_s$ of the filter in samples/s.
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
@@ -579,11 +646,13 @@ def group_delay(
 
             @savefig sdr_plot_group_delay_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.group_delay(iir.b_taps, iir.a_taps)
+            sdr.plot.group_delay(iir)
 
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+
     if x_axis == "log":
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
         w, tau_g = scipy.signal.group_delay((b, a), w=w, whole=False, fs=sample_rate)
@@ -615,8 +684,7 @@ def group_delay(
 
 @export
 def filter(  # pylint: disable=redefined-builtin
-    b: npt.ArrayLike,
-    a: npt.ArrayLike = 1,
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
     sample_rate: float = 1.0,
     N_time: int | None = None,
     N_freq: int = 1024,
@@ -628,8 +696,13 @@ def filter(  # pylint: disable=redefined-builtin
     and zeros and poles of the filter.
 
     Arguments:
-        b: The feedforward coefficients $b_i$.
-        a: The feedback coefficients $a_j$. For FIR filters, this is set to 1.
+        filter: The filter definition.
+
+            - :class:`sdr.FIR`, :class:`sdr.IIR`: The filter object.
+            - `npt.ArrayLike`: The feedforward coefficients $b_i$.
+            - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
+              feedback coefficients $a_j$.
+
         sample_rate: The sample rate $f_s$ of the filter in samples/s.
         N_time: The number of samples $N_t$ in the time domain. If `None`, the length of `b` is used
             for FIR filters and 100 for IIR filters.
@@ -661,22 +734,24 @@ def filter(  # pylint: disable=redefined-builtin
 
             @savefig sdr_plot_filter_2.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.filter(iir.b_taps, iir.a_taps, N_time=30)
+            sdr.plot.filter(iir, N_time=30)
 
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+
     with plt.rc_context(RC_PARAMS):
         plt.subplot2grid((4, 3), (0, 0), 2, 3)
-        frequency_response(b, a, sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
+        frequency_response((b, a), sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
 
         plt.subplot2grid((4, 3), (2, 0), 2, 1)
-        zeros_poles(b, a)
+        zeros_poles((b, a))
 
         plt.subplot2grid((4, 3), (2, 1), 1, 2)
-        impulse_response(b, a, N=N_time)
+        impulse_response((b, a), N=N_time)
 
         plt.subplot2grid((4, 3), (3, 1), 1, 2)
-        step_response(b, a, N=N_time)
+        step_response((b, a), N=N_time)
 
         plt.tight_layout()
