@@ -252,7 +252,7 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
     #     rate += ppm_rate * 1e-6 * np.arange(x.size)
 
     farrow = FarrowResampler()
-    y = farrow.resample(x, rate)
+    y = farrow(x, rate)
 
     return y
 

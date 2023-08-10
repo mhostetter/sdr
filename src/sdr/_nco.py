@@ -72,24 +72,7 @@ class NCO:
         """
         self._y_prev = 0.0
 
-    def step(self, N: int) -> np.ndarray:
-        """
-        Steps the NCO forward by $N$ samples.
-
-        Arguments:
-            N: The number of samples $N$ to step the NCO forward.
-
-        Returns:
-            The output signal $y[n]$.
-
-        Examples:
-            See the :ref:`phase-locked-loop` example.
-        """
-        x = np.zeros(N)
-        y = self.process(x)
-        return y
-
-    def process(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
         """
         Steps the NCO with the variable-increment signal $x[n]$.
 
@@ -117,6 +100,23 @@ class NCO:
         # Store the last output sample for the next iteration
         self._y_prev = y[-1]
 
+        return y
+
+    def step(self, N: int) -> np.ndarray:
+        """
+        Steps the NCO forward by $N$ samples.
+
+        Arguments:
+            N: The number of samples $N$ to step the NCO forward.
+
+        Returns:
+            The output signal $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
+        """
+        x = np.zeros(N)
+        y = self(x)
         return y
 
     @property
@@ -222,6 +222,23 @@ class DDS:
         """
         self.nco.reset()
 
+    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
+        """
+        Steps the DDS with the variable phase increment signal $x[n]$.
+
+        Arguments:
+            x: The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the DDS.
+
+        Returns:
+            The output complex exponential $y[n]$.
+
+        Examples:
+            See the :ref:`phase-locked-loop` example.
+        """
+        phase = self.nco(x)
+        y = np.exp(1j * phase)
+        return y
+
     def step(self, N: int) -> np.ndarray:
         """
         Steps the DDS forward by $N$ samples.
@@ -236,24 +253,7 @@ class DDS:
             See the :ref:`phase-locked-loop` example.
         """
         x = np.zeros(N)
-        y = self.process(x)
-        return y
-
-    def process(self, x: npt.ArrayLike) -> np.ndarray:
-        """
-        Steps the DDS with the variable phase increment signal $x[n]$.
-
-        Arguments:
-            x: The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the DDS.
-
-        Returns:
-            The output complex exponential $y[n]$.
-
-        Examples:
-            See the :ref:`phase-locked-loop` example.
-        """
-        phase = self.nco.process(x)
-        y = np.exp(1j * phase)
+        y = self(x)
         return y
 
     @property

@@ -12,7 +12,7 @@ def test_non_streaming(mode):
     h = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
 
     fir = sdr.FIR(h)
-    y = fir.filter(x, mode)
+    y = fir(x, mode)
     y_truth = scipy.signal.convolve(x, h, mode=mode)
 
     assert y.shape == y_truth.shape
@@ -29,7 +29,7 @@ def test_streaming():
     d = 5  # Stride
     y = np.zeros(N, dtype=np.complex64)
     for i in range(0, N, d):
-        y[i : i + d] = fir.filter(x[i : i + d])
+        y[i : i + d] = fir(x[i : i + d])
 
     y_truth = scipy.signal.convolve(x, h, mode="full")[0:N]
 

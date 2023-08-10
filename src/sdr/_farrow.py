@@ -31,7 +31,7 @@ class FarrowResampler:
 
         Arguments:
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~FarrowResampler.resample()`.
+                preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -75,7 +75,7 @@ class FarrowResampler:
         # Initial fractional sample delay accounts for filter delay
         self._mu_next = self._taps.shape[1] // 2
 
-    def resample(self, x: npt.ArrayLike, rate: float) -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, rate: float) -> np.ndarray:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
@@ -112,7 +112,7 @@ class FarrowResampler:
             else:
                 mu = np.arange(self._mu_next, y0.size, 1 / rate)
 
-            # Store the previous inputs and next fractional sample index for the next call to resample()
+            # Store the previous inputs and next fractional sample index for the next call to __call__()
             self._x_prev = x_pad[-(self._taps.shape[1] - 1) :]
             self._mu_next = (mu[-1] + 1 / rate) - y0.size
         else:
@@ -164,7 +164,7 @@ class FarrowResampler:
         """
         Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.resample()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.

@@ -42,7 +42,7 @@ class FIR:
         Arguments:
             h: The feedforward coefficients $h_i$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~FIR.filter()`.
+                preserved between calls to :meth:`~FIR.__call__()`.
 
         Examples:
             See the :ref:`fir-filters` example.
@@ -62,7 +62,7 @@ class FIR:
         """
         self._x_prev = np.zeros(self.taps.size - 1, dtype=np.float32)
 
-    def filter(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
         r"""
         Filters the input signal $x[n]$ with the FIR filter.
 
@@ -80,7 +80,7 @@ class FIR:
         x = np.atleast_1d(x)
 
         if self.streaming:
-            # Prepend previous inputs from last filter() call
+            # Prepend previous inputs from last __call__() call
             x_pad = np.concatenate((self._x_prev, x))
             y = scipy.signal.convolve(x_pad, self.taps, mode="valid")
             self._x_prev = x_pad[-(self.taps.size - 1) :]
@@ -88,6 +88,18 @@ class FIR:
             y = scipy.signal.convolve(x, self.taps, mode=mode)
 
         return y
+
+    def __len__(self) -> int:
+        """
+        Returns the filter length $N$.
+
+        Returns:
+            The filter length $N$.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        return self.taps.size
 
     def impulse_response(self, N: int | None = None) -> np.ndarray:
         r"""
@@ -217,7 +229,7 @@ class FIR:
         """
         Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`~FIR.filter()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~FIR.__call__()`.
 
         Examples:
             See the :ref:`fir-filters` example.
