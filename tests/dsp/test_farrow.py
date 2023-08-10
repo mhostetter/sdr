@@ -25,7 +25,7 @@ def test_match_scipy(rate):
     _, x = generate_signal()
 
     farrow = sdr.FarrowResampler()
-    y = farrow.resample(x, rate)
+    y = farrow(x, rate)
     y_scipy = scipy.signal.resample(x, int(math.ceil(rate * x.size)))
 
     # Ignore edge effects
@@ -53,14 +53,14 @@ def test_streaming_match_non_streaming(rate):
     _, x = generate_signal()
 
     farrow = sdr.FarrowResampler()
-    y_non_streaming = farrow.resample(x, rate)
+    y_non_streaming = farrow(x, rate)
 
     farrow = sdr.FarrowResampler(streaming=True)
     y_streaming = []
     N = 50
     assert x.size % N == 0
     for i in range(0, x.size, N):
-        y_streaming.append(farrow.resample(x[i : i + N], rate))
+        y_streaming.append(farrow(x[i : i + N], rate))
     y_streaming = np.concatenate(y_streaming)
 
     # Match the lengths

@@ -16,7 +16,7 @@ def test_non_streaming(mode):
     r = np.random.randint(3, 7)  # Interpolation rate
 
     fir = sdr.FIRInterpolator(h, r)
-    y = fir.filter(x, mode)
+    y = fir(x, mode)
 
     xr = np.zeros(N * r, dtype=np.complex64)
     xr[::r] = x[:]
@@ -41,7 +41,7 @@ def test_streaming():
     d = 10  # Stride
     y = np.zeros(N * r, dtype=np.complex64)
     for i in range(0, N, d):
-        y[i * r : (i + d) * r] = fir.filter(x[i : i + d])
+        y[i * r : (i + d) * r] = fir(x[i : i + d])
 
     xr = np.zeros(N * r, dtype=np.complex64)
     xr[::r] = x[:]
@@ -163,7 +163,7 @@ def test_matlab_1():
     )
 
     fir = sdr.FIRInterpolator(h, 4, streaming=True)
-    y = fir.filter(x)
+    y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -273,7 +273,7 @@ def test_matlab_2():
     )
 
     fir = sdr.FIRInterpolator(h, 5, streaming=True)
-    y = fir.filter(x)
+    y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -415,6 +415,6 @@ def test_matlab_3():
     )
 
     fir = sdr.FIRInterpolator(h, 6, streaming=True)
-    y = fir.filter(x)
+    y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)

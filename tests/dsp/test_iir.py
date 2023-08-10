@@ -19,7 +19,7 @@ def test_single_pole_impulse_response(pole):
     b = np.array([1], dtype=np.complex64)
     a = np.array([1, -pole], dtype=np.complex64)
     iir = sdr.IIR(b, a)
-    h = iir.filter(x)
+    h = iir(x)
     h_truth = pole ** np.arange(N)
 
     assert h.shape == h_truth.shape

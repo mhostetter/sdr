@@ -100,7 +100,7 @@ class LoopFilter:
         """
         self.iir.reset()
 
-    def filter(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
         """
         Filters the input signal $x[n]$.
 
@@ -113,7 +113,7 @@ class LoopFilter:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        return self.iir.filter(x)
+        return self.iir(x)
 
     @property
     def noise_bandwidth(self) -> float:
