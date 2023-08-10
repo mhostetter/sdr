@@ -13,9 +13,11 @@ from .._filter import FIR, IIR
 from .._helper import export
 from ._rc_params import RC_PARAMS
 
+# pylint: disable=redefined-builtin,redefined-outer-name
+
 
 def _convert_to_taps(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike]  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike]
 ) -> tuple[np.ndarray, np.ndarray]:
     if isinstance(filter, FIR):
         b = filter.taps
@@ -34,7 +36,7 @@ def _convert_to_taps(
 
 @export
 def impulse_response(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
     **kwargs,
 ):
@@ -123,7 +125,7 @@ def impulse_response(
 
 @export
 def step_response(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
     **kwargs,
 ):
@@ -211,7 +213,7 @@ def step_response(
 
 @export
 def zeros_poles(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     **kwargs,
 ):
     r"""
@@ -282,7 +284,7 @@ def zeros_poles(
 
 @export
 def frequency_response(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -382,7 +384,7 @@ def frequency_response(
 
 @export
 def phase_response(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float = 1.0,
     N: int = 1024,
     unwrap: bool = True,
@@ -491,7 +493,7 @@ def phase_response(
 
 @export
 def phase_delay(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -597,7 +599,7 @@ def phase_delay(
 
 @export
 def group_delay(
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float = 1.0,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -683,8 +685,8 @@ def group_delay(
 
 
 @export
-def filter(  # pylint: disable=redefined-builtin
-    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],  # pylint: disable=redefined-builtin
+def filter(
+    filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float = 1.0,
     N_time: int | None = None,
     N_freq: int = 1024,
