@@ -25,16 +25,22 @@
         "exponentials",
         "Feedforward",
         "hexdump",
+        "lowpass",
         "matplotlib",
+        "multirate",
         "overdamped",
         "passband",
         "periodogram",
         "periodograms",
+        "polyphase",
         "pyplot",
         "resampler",
         "resamplers",
         "scipy",
+        "sinc",
+        "stopband",
         "underdamped",
+        "upsampled",
         "upsampling"
     ]
 }
