@@ -64,10 +64,8 @@ class FIR:
                 fir = sdr.FIR(h)
                 fir
         """
-        prefix = f"sdr.{type(self).__name__}("
-        suffix = f", streaming={self.streaming})"
-        array = np.array2string(self.taps, separator=", ", prefix="  ", suppress_small=True)
-        return prefix + array + suffix
+        h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
+        return f"sdr.{type(self).__name__}({h_str}, streaming={self.streaming})"
 
     def __str__(self) -> str:
         """
