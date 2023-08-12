@@ -78,6 +78,45 @@ class IIR:
 
         return cls(b, a, streaming=streaming)
 
+    def __repr__(self) -> str:
+        """
+        Returns a code-styled string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                zero = 0.6
+                pole = 0.8 * np.exp(1j * np.pi / 8)
+                iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+                iir
+        """
+        return f"sdr.{type(self).__name__}({self.b_taps.tolist()}, {self.a_taps.tolist()}, streaming={self.streaming})"
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                zero = 0.6
+                pole = 0.8 * np.exp(1j * np.pi / 8)
+                iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+                print(iir)
+        """
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
+        string += f"\n  b_taps: {self.b_taps.shape} shape"
+        string += f"\n    {self.b_taps.tolist()}"
+        string += f"\n  a_taps: {self.a_taps.shape} shape"
+        string += f"\n    {self.a_taps.tolist()}"
+        string += f"\n  zeros: {self.zeros.shape} shape"
+        string += f"\n    {self.zeros.tolist()}"
+        string += f"\n  poles: {self.poles.shape} shape"
+        string += f"\n    {self.poles.tolist()}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
     def reset(self):
         """
         *Streaming-mode only:* Resets the filter state.
