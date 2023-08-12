@@ -257,7 +257,7 @@ class FIRInterpolator(FIR):
         if self.method == "custom":
             h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
         else:
-            h_str = self.method
+            h_str = repr(self.method)
         return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
 
     def __str__(self) -> str:
