@@ -282,15 +282,16 @@ class FIRInterpolator(FIR):
     def reset(self):
         self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["same", "full"] = "same") -> np.ndarray:
-        """
+    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> np.ndarray:
+        r"""
         Filters and interpolates the input signal $x[n]$ with the FIR filter.
 
         Arguments:
             x: The input signal $x[n]$ with sample rate $f_s$ and length $N$.
             mode: The non-streaming convolution mode.
 
-                - `"same"`: The output signal $y[n]$ has length $N r$. Output sample 0 aligns with input sample 0.
+                - `"rate"`: The output signal $y[n]$ has length $N r$ proportional to the interpolation rate.
+                  Output sample 0 aligns with input sample 0.
                 - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $N r + M - 1$,
                   where $M - 1$ is the order of the filter. Output sample :obj:`~FIRInterpolator.delay` aligns
                   with input sample 0.
@@ -326,15 +327,15 @@ class FIRInterpolator(FIR):
             # Commutate the outputs of the polyphase filters
             y = yy.T.flatten()
 
-            if mode == "full":
-                size = x.size * self.rate + self.taps.size - 1
-                y = y[:size]
-            elif mode == "same":
+            if mode == "rate":
                 size = x.size * self.rate
                 offset = self.taps.size // 2
                 y = y[offset : offset + size]
+            elif mode == "full":
+                size = x.size * self.rate + self.taps.size - 1
+                y = y[:size]
             else:
-                raise ValueError(f"Argument 'mode' must be 'full' or 'same', not {mode}.")
+                raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode}.")
 
         return y
 
