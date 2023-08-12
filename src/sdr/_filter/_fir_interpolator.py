@@ -253,13 +253,11 @@ class FIRInterpolator(FIR):
                 fir = sdr.FIRInterpolator(7)
                 fir
         """
-        if self.method != "custom":
-            return f"sdr.{type(self).__name__}({self.rate}, {self._method!r}, streaming={self.streaming})"
-
-        prefix = f"sdr.{type(self).__name__}({self.rate}, "
-        suffix = f", streaming={self.streaming})"
-        array = np.array2string(self.taps, separator=", ", prefix="  ", suppress_small=True)
-        return prefix + array + suffix
+        if self.method == "custom":
+            h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
+        else:
+            h_str = self.method
+        return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
 
     def __str__(self) -> str:
         """
