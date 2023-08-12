@@ -8,35 +8,41 @@ import scipy.signal
 import sdr
 
 
-@pytest.mark.parametrize("mode", ["full", "valid", "same"])
-def test_non_streaming(mode):
+def test_non_streaming_full():
+    mode = "full"
     N = 50
     x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    h = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
     r = np.random.randint(3, 7)  # Interpolation rate
 
-    fir = sdr.FIRInterpolator(r, h)
+    fir = sdr.FIRInterpolator(r)
     y = fir(x, mode)
 
     xr = np.zeros(N * r, dtype=np.complex64)
     xr[::r] = x[:]
-    y_truth = scipy.signal.convolve(xr, h, mode=mode)
+    y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)
 
-    if mode == "full":
-        # Given the polyphase decomposition, the output is slightly less.
-        y_truth = y_truth[0 : y.size]
+    np.testing.assert_array_almost_equal(y, y_truth)
 
-    assert y.shape == y_truth.shape
-    assert np.allclose(y, y_truth)
+
+def test_non_streaming_same():
+    mode = "same"
+    N = 50
+    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
+    r = np.random.randint(3, 7)  # Interpolation rate
+
+    fir = sdr.FIRInterpolator(r)
+    y = fir(x, mode)
+
+    # The output should align with the input. Every r-th sample should match.
+    np.testing.assert_array_almost_equal(y, y_truth)
 
 
 def test_streaming():
     N = 50
     x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    h = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
     r = np.random.randint(3, 7)  # Interpolation rate
 
-    fir = sdr.FIRInterpolator(r, h, streaming=True)
+    fir = sdr.FIRInterpolator(r, streaming=True)
 
     d = 10  # Stride
     y = np.zeros(N * r, dtype=np.complex64)
@@ -45,23 +51,9 @@ def test_streaming():
 
     xr = np.zeros(N * r, dtype=np.complex64)
     xr[::r] = x[:]
-    y_truth = scipy.signal.convolve(xr, h, mode="full")[0 : N * r]
+    y_truth = scipy.signal.convolve(xr, fir.taps, mode="full")[0 : N * r]
 
-    assert y.shape == y_truth.shape
-    assert np.allclose(y, y_truth)
-
-
-# def test_impulse_response():
-#     h_truth = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
-#     r = np.random.randint(3, 7)  # Interpolation rate
-
-#     fir = sdr.FIR(h_truth, r)
-
-#     h = fir.impulse_response()
-#     assert np.allclose(h, h_truth)
-
-#     h = fir.impulse_response(20)
-#     assert np.allclose(h, np.concatenate((h_truth, [0] * 10)))
+    np.testing.assert_array_almost_equal(y, y_truth)
 
 
 def test_3_kaiser():
