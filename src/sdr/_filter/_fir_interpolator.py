@@ -11,6 +11,7 @@ import scipy.signal
 from typing_extensions import Literal
 
 from .._helper import export
+from ._fir import FIR
 
 
 @export
@@ -103,7 +104,7 @@ def multirate_fir(
 
 
 @export
-class FIRInterpolator:
+class FIRInterpolator(FIR):
     r"""
     Implements a polyphase finite impulse response (FIR) interpolating filter.
 
@@ -278,6 +279,16 @@ class FIRInterpolator:
                 fir.polyphase_taps
         """
         return self._polyphase_taps
+
+    @property
+    def delay(self) -> int:
+        """
+        The delay of the FIR interpolating filter in samples.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        return self.polyphase_taps.shape[1] // 2
 
     @property
     def rate(self) -> int:
