@@ -32,7 +32,7 @@ class FIR:
         See the :ref:`fir-filters` example.
 
     Group:
-        filtering
+        dsp-filtering
     """
 
     def __init__(self, h: npt.ArrayLike, streaming: bool = False):

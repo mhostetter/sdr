@@ -33,7 +33,7 @@ class IIR:
         See the :ref:`iir-filters` example.
 
     Group:
-        filtering
+        dsp-filtering
     """
 
     def __init__(self, b: npt.ArrayLike, a: npt.ArrayLike, streaming: bool = False):
