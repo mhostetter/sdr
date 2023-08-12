@@ -140,23 +140,26 @@ class FIRInterpolator:
         dsp-multirate-filtering
     """
 
-    def __init__(self, taps: npt.ArrayLike, rate: int, streaming: bool = False):
+    def __init__(self, rate: int, taps: npt.ArrayLike | None = None, streaming: bool = False):
         r"""
         Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$.
 
         Arguments:
-            taps: The feedforward coefficients $h_i$.
             rate: The interpolation rate $r$.
+            taps: The multirate filter coefficients $h_i$. If `None`, the filter is designed using
+                :func:`~sdr.multirate_fir()` with arguments `rate` and 1.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FIRInterpolator.__call__()`.
         """
-        self._taps = np.asarray(taps)
-
         if not isinstance(rate, int):
             raise TypeError("Argument 'rate' must be an integer.")
         if not rate >= 1:
             raise ValueError(f"Argument 'rate' must be at least 1, not {rate}.")
         self._rate = rate
+
+        if taps is None:
+            taps = multirate_fir(rate, 1)
+        self._taps = np.asarray(taps)
 
         if not isinstance(streaming, bool):
             raise TypeError("Argument 'streaming' must be a boolean.")
@@ -247,7 +250,7 @@ class FIRInterpolator:
         Examples:
             .. ipython:: python
 
-                fir = sdr.FIRInterpolator(np.arange(10), 3)
+                fir = sdr.FIRInterpolator(3, np.arange(10))
                 fir.taps
                 fir.polyphase_taps
         """
@@ -270,7 +273,7 @@ class FIRInterpolator:
         Examples:
             .. ipython:: python
 
-                fir = sdr.FIRInterpolator(np.arange(10), 3)
+                fir = sdr.FIRInterpolator(3, np.arange(10))
                 fir.taps
                 fir.polyphase_taps
         """
