@@ -282,17 +282,26 @@ class FIRInterpolator(FIR):
     def reset(self):
         self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, mode: Literal["same", "full"] = "same") -> np.ndarray:
         """
         Filters and interpolates the input signal $x[n]$ with the FIR filter.
 
         Arguments:
-            x: The input signal $x[n]$ with sample rate $f_s$.
-            mode: The non-streaming convolution mode. See :func:`scipy.signal.convolve` for details.
-                In streaming mode, $N$ inputs always produce $N r$ outputs.
+            x: The input signal $x[n]$ with sample rate $f_s$ and length $N$.
+            mode: The non-streaming convolution mode.
+
+                - `"same"`: The output signal $y[n]$ has length $N r$. Output sample 0 aligns with input sample 0.
+                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $N r + M - 1$,
+                  where $M - 1$ is the order of the filter. Output sample :obj:`~FIRInterpolator.delay` aligns
+                  with input sample 0.
+
+                In streaming mode, the `"full"` convolution is performed. However, for each $N$ input samples
+                only $N r$ output samples are produced per call. A final call with input zeros is required to flush
+                the filter state.
 
         Returns:
-            The filtered signal $y[n]$ with sample rate $f_s r$.
+            The filtered signal $y[n]$ with sample rate $f_s r$. The output length is dictated by
+            the `mode` argument.
         """
         x = np.atleast_1d(x)
         dtype = np.result_type(x, self.polyphase_taps)
@@ -306,16 +315,13 @@ class FIRInterpolator(FIR):
 
             self._x_prev = x_pad[-(self.polyphase_taps.shape[1] - 1) :]
 
-            # xx = np.tile(x_pad, (self.rate, 1))
-            # taps = np.tile(self.polyphase_taps, self.rate)
-            # yy = scipy.signal.convolve(xx, taps, mode="valid")
-
             # Commutate the outputs of the polyphase filters
             y = yy.T.flatten()
         else:
-            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=dtype)
+            x_pad = np.append(x, 0)
+            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1]), dtype=dtype)
             for i in range(self.rate):
-                yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
+                yy[i] = scipy.signal.convolve(x_pad, self.polyphase_taps[i], mode="full")
 
             # Commutate the outputs of the polyphase filters
             y = yy.T.flatten()
@@ -325,16 +331,11 @@ class FIRInterpolator(FIR):
                 y = y[:size]
             elif mode == "same":
                 size = max(x.size * self.rate, self.taps.size)
-                offset = (min(x.size * self.rate, self.taps.size) - 1) // 2
+                # offset = (min(x.size * self.rate, self.taps.size) - 1) // 2
+                offset = min(x.size * self.rate, self.taps.size) // 2
                 y = y[offset : offset + size]
             else:
-                size = (max(x.size * self.rate, self.taps.size) - min(x.size * self.rate, self.taps.size)) + 1
-                offset = min(x.size * self.rate, self.taps.size) - 1
-                y = y[offset : offset + size]
-
-            # xx = np.tile(x, (self.rate, 1))
-            # taps = np.tile(self.polyphase_taps, self.rate)
-            # yy = scipy.signal.convolve(xx, taps, mode="full")
+                raise ValueError(f"Argument 'mode' must be 'full' or 'same', not {mode}.")
 
         return y
 
