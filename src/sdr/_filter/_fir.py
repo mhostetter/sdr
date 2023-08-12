@@ -64,8 +64,7 @@ class FIR:
                 fir = sdr.FIR(h)
                 fir
         """
-        h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
-        return f"sdr.{type(self).__name__}({h_str}, streaming={self.streaming})"
+        return f"sdr.{type(self).__name__}({self.taps.tolist()}, streaming={self.streaming})"
 
     def __str__(self) -> str:
         """
@@ -79,8 +78,9 @@ class FIR:
                 print(fir)
         """
         string = f"sdr.{type(self).__name__}:"
-        string += f"\n  taps: {self.taps.shape} shape"
         string += f"\n  order: {self.order}"
+        string += f"\n  taps: {self.taps.shape} shape"
+        string += f"\n    {self.taps.tolist()}"
         string += f"\n  delay: {self.delay}"
         string += f"\n  streaming: {self.streaming}"
         return string
