@@ -330,9 +330,8 @@ class FIRInterpolator(FIR):
                 size = x.size * self.rate + self.taps.size - 1
                 y = y[:size]
             elif mode == "same":
-                size = max(x.size * self.rate, self.taps.size)
-                # offset = (min(x.size * self.rate, self.taps.size) - 1) // 2
-                offset = min(x.size * self.rate, self.taps.size) // 2
+                size = x.size * self.rate
+                offset = self.taps.size // 2
                 y = y[offset : offset + size]
             else:
                 raise ValueError(f"Argument 'mode' must be 'full' or 'same', not {mode}.")
