@@ -48,7 +48,7 @@ class FIRInterpolator:
         $$h_{i, j} = h_{i + j r} .$$
 
     Group:
-        filtering
+        dsp-multirate-filtering
     """
 
     def __init__(self, taps: npt.ArrayLike, rate: int, streaming: bool = False):

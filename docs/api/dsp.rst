@@ -6,7 +6,12 @@ Digital signal processing
 Filtering
 ---------
 
-.. python-apigen-group:: filtering
+.. python-apigen-group:: dsp-filtering
+
+Multirate filtering
+-------------------
+
+.. python-apigen-group:: dsp-multirate-filtering
 
 Resampling
 ----------
