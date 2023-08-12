@@ -53,6 +53,40 @@ class FIR:
         self._x_prev: np.ndarray  # The filter state. Will be updated in reset().
         self.reset()
 
+    def __repr__(self) -> str:
+        """
+        Returns a code-styled string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                h = sdr.root_raised_cosine(0.5, 6, 5)
+                fir = sdr.FIR(h)
+                fir
+        """
+        prefix = f"sdr.{type(self).__name__}("
+        suffix = f", streaming={self.streaming})"
+        array = np.array2string(self.taps, separator=", ", prefix="  ", suppress_small=True)
+        return prefix + array + suffix
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                h = sdr.root_raised_cosine(0.5, 6, 5)
+                fir = sdr.FIR(h)
+                print(fir)
+        """
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  taps: {self.taps.shape} shape"
+        string += f"\n  order: {self.order}"
+        string += f"\n  delay: {self.delay}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
     def reset(self):
         """
         *Streaming-mode only:* Resets the filter state.
