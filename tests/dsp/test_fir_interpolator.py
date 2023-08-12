@@ -8,6 +8,19 @@ import scipy.signal
 import sdr
 
 
+def test_non_streaming_rate():
+    mode = "rate"
+    N = 50
+    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
+    r = np.random.randint(3, 7)  # Interpolation rate
+
+    fir = sdr.FIRInterpolator(r)
+    y = fir(x, mode)
+
+    # The output should align with the input. Every r-th sample should match.
+    np.testing.assert_array_almost_equal(y[::r], x)
+
+
 def test_non_streaming_full():
     mode = "full"
     N = 50
@@ -21,19 +34,6 @@ def test_non_streaming_full():
     xr[::r] = x[:]
     y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)
 
-    np.testing.assert_array_almost_equal(y, y_truth)
-
-
-def test_non_streaming_same():
-    mode = "same"
-    N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    r = np.random.randint(3, 7)  # Interpolation rate
-
-    fir = sdr.FIRInterpolator(r)
-    y = fir(x, mode)
-
-    # The output should align with the input. Every r-th sample should match.
     np.testing.assert_array_almost_equal(y, y_truth)
 
 
