@@ -154,7 +154,7 @@ class Interpolator(FIR):
             @savefig sdr_fir_interpolator_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
             plt.title("Interpolation by 7 with the Kaiser window method"); \
             plt.tight_layout();
 
@@ -169,7 +169,7 @@ class Interpolator(FIR):
             @savefig sdr_fir_interpolator_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
             plt.title("Interpolation by 7 with the linear method"); \
             plt.tight_layout();
 
@@ -184,7 +184,7 @@ class Interpolator(FIR):
             @savefig sdr_fir_interpolator_3.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
             plt.title("Interpolation by 7 with the zero-order hold method"); \
             plt.tight_layout();
 
