@@ -205,7 +205,8 @@ class FIRInterpolator(FIR):
             rate: The interpolation rate $r$.
             taps: The multirate filter design specification.
 
-                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_fir()` with arguments `rate` and 1.
+                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_fir()`
+                  with arguments `rate` and 1.
                 - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
@@ -270,6 +271,7 @@ class FIRInterpolator(FIR):
                 print(fir)
         """
         string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
         string += f"\n  rate: {self.rate}"
         string += f"\n  method: {self._method!r}"
         string += f"\n  polyphase_taps: {self.polyphase_taps.shape} shape"
