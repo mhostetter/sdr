@@ -38,7 +38,7 @@ Features
 --------
 
 - Digital signal processing:
-   - Filtering: :class:`sdr.FIR`, :class:`sdr.FIRInterpolator`, :class:`sdr.IIR`
+   - Filtering: :class:`sdr.FIR`, :class:`sdr.Interpolator`, :class:`sdr.IIR`
    - Resampling: :class:`sdr.FarrowResampler`
    - Signal manipulation: :func:`sdr.mix()`, :func:`sdr.to_complex_bb()`, :func:`sdr.to_real_pb()`
 - Sequences: :func:`sdr.barker()`, :func:`sdr.zadoff_chu()`

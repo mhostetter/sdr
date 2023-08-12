@@ -25,7 +25,7 @@ def multirate_fir(
     Computes the multirate FIR filter that achieves rational resampling by $P/Q$.
 
     Note:
-        This filter can be used with :class:`sdr.FIRInterpolator` or :class:`sdr.FIRDecimator`.
+        This filter can be used with :class:`sdr.Interpolator` or :class:`sdr.FIRDecimator`.
 
     Arguments:
         P: The interpolation rate $P$.
@@ -104,7 +104,7 @@ def multirate_fir(
 
 
 @export
-class FIRInterpolator(FIR):
+class Interpolator(FIR):
     r"""
     Implements a polyphase finite impulse response (FIR) interpolating filter.
 
@@ -148,7 +148,7 @@ class FIRInterpolator(FIR):
 
         .. ipython:: python
 
-            fir = sdr.FIRInterpolator(7); fir
+            fir = sdr.Interpolator(7); fir
             y = fir(x)
 
             @savefig sdr_fir_interpolator_1.png
@@ -162,7 +162,7 @@ class FIRInterpolator(FIR):
 
         .. ipython:: python
 
-            fir = sdr.FIRInterpolator(7, "linear"); fir
+            fir = sdr.Interpolator(7, "linear"); fir
             fir.polyphase_taps
             y = fir(x)
 
@@ -177,7 +177,7 @@ class FIRInterpolator(FIR):
 
         .. ipython:: python
 
-            fir = sdr.FIRInterpolator(7, "zoh"); fir
+            fir = sdr.Interpolator(7, "zoh"); fir
             fir.polyphase_taps
             y = fir(x)
 
@@ -214,7 +214,7 @@ class FIRInterpolator(FIR):
                 - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~FIRInterpolator.__call__()`.
+                preserved between calls to :meth:`~Interpolator.__call__()`.
         """
         if not isinstance(rate, int):
             raise TypeError("Argument 'rate' must be an integer.")
@@ -251,7 +251,7 @@ class FIRInterpolator(FIR):
         Examples:
             .. ipython:: python
 
-                fir = sdr.FIRInterpolator(7)
+                fir = sdr.Interpolator(7)
                 fir
         """
         if self.method == "custom":
@@ -267,7 +267,7 @@ class FIRInterpolator(FIR):
         Examples:
             .. ipython:: python
 
-                fir = sdr.FIRInterpolator(7)
+                fir = sdr.Interpolator(7)
                 print(fir)
         """
         string = f"sdr.{type(self).__name__}:"
@@ -293,7 +293,7 @@ class FIRInterpolator(FIR):
                 - `"rate"`: The output signal $y[n]$ has length $N r$ proportional to the interpolation rate.
                   Output sample 0 aligns with input sample 0.
                 - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $N r + M - 1$,
-                  where $M - 1$ is the order of the filter. Output sample :obj:`~FIRInterpolator.delay` aligns
+                  where $M - 1$ is the order of the filter. Output sample :obj:`~Interpolator.delay` aligns
                   with input sample 0.
 
                 In streaming mode, the `"full"` convolution is performed. However, for each $N$ input samples
@@ -363,7 +363,7 @@ class FIRInterpolator(FIR):
         Examples:
             .. ipython:: python
 
-                fir = sdr.FIRInterpolator(3, np.arange(10))
+                fir = sdr.Interpolator(3, np.arange(10))
                 fir.taps
                 fir.polyphase_taps
         """
@@ -386,7 +386,7 @@ class FIRInterpolator(FIR):
         Examples:
             .. ipython:: python
 
-                fir = sdr.FIRInterpolator(3, np.arange(10))
+                fir = sdr.Interpolator(3, np.arange(10))
                 fir.taps
                 fir.polyphase_taps
         """

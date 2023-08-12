@@ -14,7 +14,7 @@ def test_non_streaming_rate():
     x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
     r = np.random.randint(3, 7)  # Interpolation rate
 
-    fir = sdr.FIRInterpolator(r)
+    fir = sdr.Interpolator(r)
     y = fir(x, mode)
 
     # The output should align with the input. Every r-th sample should match.
@@ -27,7 +27,7 @@ def test_non_streaming_full():
     x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
     r = np.random.randint(3, 7)  # Interpolation rate
 
-    fir = sdr.FIRInterpolator(r)
+    fir = sdr.Interpolator(r)
     y = fir(x, mode)
 
     xr = np.zeros(N * r, dtype=np.complex64)
@@ -42,7 +42,7 @@ def test_streaming():
     x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
     r = np.random.randint(3, 7)  # Interpolation rate
 
-    fir = sdr.FIRInterpolator(r, streaming=True)
+    fir = sdr.Interpolator(r, streaming=True)
 
     d = 10  # Stride
     y = np.zeros(N * r, dtype=np.complex64)
@@ -60,7 +60,7 @@ def test_3_kaiser():
     """
     Matlab:
         >> x = cos(pi/4*(0:19)');
-        >> fir = dsp.FIRInterpolator(3);
+        >> fir = dsp.Interpolator(3);
         >> y = fir(x);
     """
     x = np.cos(np.pi / 4 * np.arange(20))
@@ -129,7 +129,7 @@ def test_3_kaiser():
         ]
     )
 
-    fir = sdr.FIRInterpolator(3, streaming=True)
+    fir = sdr.Interpolator(3, streaming=True)
     y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
@@ -139,7 +139,7 @@ def test_3_linear():
     """
     Matlab:
         >> x = cos(pi/4*(0:19)');
-        >> fir = dsp.FIRInterpolator(3, 'Linear');
+        >> fir = dsp.Interpolator(3, 'Linear');
         >> y = fir(x);
     """
     x = np.cos(np.pi / 4 * np.arange(20))
@@ -208,7 +208,7 @@ def test_3_linear():
         ]
     )
 
-    fir = sdr.FIRInterpolator(3, "linear", streaming=True)
+    fir = sdr.Interpolator(3, "linear", streaming=True)
     y = fir(x)
 
     # NOTE: Matlab starts with the first interpolated sample as 1/N not 0/N.
@@ -220,7 +220,7 @@ def test_3_zoh():
     """
     Matlab:
         >> x = cos(pi/4*(0:19)');
-        >> fir = dsp.FIRInterpolator(3, 'ZOH');
+        >> fir = dsp.Interpolator(3, 'ZOH');
         >> y = fir(x);
     """
     x = np.cos(np.pi / 4 * np.arange(20))
@@ -289,7 +289,7 @@ def test_3_zoh():
         ]
     )
 
-    fir = sdr.FIRInterpolator(3, "zoh", streaming=True)
+    fir = sdr.Interpolator(3, "zoh", streaming=True)
     y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
@@ -302,7 +302,7 @@ def test_srrc_0p5_6():
         >> h = rcosdesign(0.5, 6, sps);
         >> s = randi([0 3], 10, 1);
         >> x = pskmod(s, 4);
-        >> fir = dsp.FIRInterpolator(sps, h);
+        >> fir = dsp.Interpolator(sps, h);
         >> y = fir(x);
     """
     h = np.array(
@@ -393,7 +393,7 @@ def test_srrc_0p5_6():
         ]
     )
 
-    fir = sdr.FIRInterpolator(4, h, streaming=True)
+    fir = sdr.Interpolator(4, h, streaming=True)
     y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
@@ -406,7 +406,7 @@ def test_srrc_0p9_4():
         >> h = rcosdesign(0.9, 4, sps);
         >> s = randi([0 3], 10, 1);
         >> x = pskmod(s, 4);
-        >> fir = dsp.FIRInterpolator(sps, h);
+        >> fir = dsp.Interpolator(sps, h);
         >> y = fir(x);
     """
     h = np.array(
@@ -503,7 +503,7 @@ def test_srrc_0p9_4():
         ]
     )
 
-    fir = sdr.FIRInterpolator(5, h, streaming=True)
+    fir = sdr.Interpolator(5, h, streaming=True)
     y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
@@ -516,7 +516,7 @@ def test_srrc_0p1_7():
         >> h = rcosdesign(0.1, 7, sps);
         >> s = randi([0 3], 10, 1);
         >> x = pskmod(s, 4);
-        >> fir = dsp.FIRInterpolator(sps, h);
+        >> fir = dsp.Interpolator(sps, h);
         >> y = fir(x);
     """
     h = np.array(
@@ -645,7 +645,7 @@ def test_srrc_0p1_7():
         ]
     )
 
-    fir = sdr.FIRInterpolator(6, h, streaming=True)
+    fir = sdr.Interpolator(6, h, streaming=True)
     y = fir(x)
 
     np.testing.assert_almost_equal(y, y_truth)
