@@ -254,4 +254,4 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        return self.order // 2
+        return self.taps.size // 2
