@@ -222,14 +222,19 @@ class FIRInterpolator(FIR):
         self._rate = rate
 
         if taps == "kaiser":
+            self._method = "kaiser"
             taps = multirate_fir(rate, 1)
         elif taps == "linear":
+            self._method = "linear"
             taps = np.zeros(2 * rate, dtype=np.float32)
             taps[:rate] = np.arange(0, rate) / rate
             taps[rate:] = np.arange(rate, 0, -1) / rate
         elif taps == "zoh":
+            self._method = "zoh"
             taps = np.ones(rate, dtype=np.float32)
-        taps = np.asarray(taps)
+        else:
+            self._method = "custom"
+            taps = np.asarray(taps)
 
         N = math.ceil(taps.size / rate) * rate
         self._polyphase_taps = np.pad(taps, (0, N - taps.size), mode="constant").reshape(-1, rate).T
@@ -294,6 +299,13 @@ class FIRInterpolator(FIR):
             # yy = scipy.signal.convolve(xx, taps, mode="full")
 
         return y
+
+    @property
+    def method(self) -> Literal["kaiser", "linear", "zoh", "custom"]:
+        """
+        The method used to design the multirate filter.
+        """
+        return self._method
 
     @property
     def taps(self) -> np.ndarray:
