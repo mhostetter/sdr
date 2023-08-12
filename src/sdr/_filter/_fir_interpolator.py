@@ -137,18 +137,81 @@ class FIRInterpolator(FIR):
 
         $$h_{i, j} = h_{i + j r} .$$
 
+    Examples:
+        Create an input signal to interpolate.
+
+        .. ipython:: python
+
+            x = np.cos(np.pi / 4 * np.arange(40))
+
+        Create a polyphase filter that interpolates by 7 using the Kaiser window method.
+
+        .. ipython:: python
+
+            fir = sdr.FIRInterpolator(7); fir
+            y = fir(x)
+
+            @savefig sdr_fir_interpolator_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker="o", label="Input"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered"); \
+            plt.title("Interpolation by 7 with the Kaiser window method"); \
+            plt.tight_layout();
+
+        Create a polyphase filter that interpolates by 7 using linear method.
+
+        .. ipython:: python
+
+            fir = sdr.FIRInterpolator(7, "linear"); fir
+            fir.polyphase_taps
+            y = fir(x)
+
+            @savefig sdr_fir_interpolator_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker="o", label="Input"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered");
+            plt.title("Interpolation by 7 with the linear method"); \
+            plt.tight_layout();
+
+        Create a polyphase filter that interpolates by 7 using the zero-order hold method.
+
+        .. ipython:: python
+
+            fir = sdr.FIRInterpolator(7, "zoh"); fir
+            fir.polyphase_taps
+            y = fir(x)
+
+            @savefig sdr_fir_interpolator_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker="o", label="Input"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered");
+            plt.title("Interpolation by 7 with the zero-order hold method"); \
+            plt.tight_layout();
+
     Group:
         dsp-multirate-filtering
     """
 
-    def __init__(self, rate: int, taps: npt.ArrayLike | None = None, streaming: bool = False):
+    def __init__(
+        self,
+        rate: int,
+        taps: Literal["kaiser", "linear", "zoh"] | npt.ArrayLike = "kaiser",
+        streaming: bool = False,
+    ):
         r"""
         Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$.
 
         Arguments:
             rate: The interpolation rate $r$.
-            taps: The multirate filter coefficients $h_i$. If `None`, the filter is designed using
-                :func:`~sdr.multirate_fir()` with arguments `rate` and 1.
+            taps: The multirate filter design specification.
+
+                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_fir()` with arguments `rate` and 1.
+                - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
+                  The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
+                - `"zoh"`: The multirate filter is designed to be a zero-order hold.
+                  The filter coefficients are a length-$r$ array of ones.
+                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
+
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FIRInterpolator.__call__()`.
         """
@@ -158,24 +221,22 @@ class FIRInterpolator(FIR):
             raise ValueError(f"Argument 'rate' must be at least 1, not {rate}.")
         self._rate = rate
 
-        if taps is None:
+        if taps == "kaiser":
             taps = multirate_fir(rate, 1)
-        self._taps = np.asarray(taps)
+        elif taps == "linear":
+            taps = np.zeros(2 * rate, dtype=np.float32)
+            taps[:rate] = np.arange(0, rate) / rate
+            taps[rate:] = np.arange(rate, 0, -1) / rate
+        elif taps == "zoh":
+            taps = np.ones(rate, dtype=np.float32)
+        taps = np.asarray(taps)
 
-        if not isinstance(streaming, bool):
-            raise TypeError("Argument 'streaming' must be a boolean.")
-        self._streaming = streaming
+        N = math.ceil(taps.size / rate) * rate
+        self._polyphase_taps = np.pad(taps, (0, N - taps.size), mode="constant").reshape(-1, rate).T
 
-        N = math.ceil(self.taps.size / rate) * rate
-        self._polyphase_taps = np.pad(self.taps, (0, N - self.taps.size), mode="constant").reshape(-1, rate).T
-
-        self._x_prev: np.ndarray  # The filter state. Will be updated in reset().
-        self.reset()
+        super().__init__(taps, streaming=streaming)
 
     def reset(self):
-        """
-        *Streaming-mode only:* Resets the filter state.
-        """
         self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
 
     def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
@@ -281,27 +342,8 @@ class FIRInterpolator(FIR):
         return self._polyphase_taps
 
     @property
-    def delay(self) -> int:
-        """
-        The delay of the FIR interpolating filter in samples.
-
-        Examples:
-            See the :ref:`fir-filters` example.
-        """
-        return self.polyphase_taps.shape[1] // 2
-
-    @property
     def rate(self) -> int:
         """
         The interpolation rate $r$.
         """
         return self._rate
-
-    @property
-    def streaming(self) -> bool:
-        """
-        Indicates whether the filter is in streaming mode.
-
-        In streaming mode, the filter state is preserved between calls to :meth:`~FIRInterpolator.__call__()`.
-        """
-        return self._streaming
