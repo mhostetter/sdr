@@ -14,6 +14,95 @@ from .._helper import export
 
 
 @export
+def multirate_fir(
+    P: int,
+    Q: int = 1,
+    half_length: int = 12,
+    A_stop: float = 80,
+) -> np.ndarray:
+    r"""
+    Computes the multirate FIR filter that achieves rational resampling by $P/Q$.
+
+    Note:
+        This filter can be used with :class:`sdr.FIRInterpolator` or :class:`sdr.FIRDecimator`.
+
+    Arguments:
+        P: The interpolation rate $P$.
+        Q: The decimation rate $Q$.
+        half_length: The half-length of the polyphase filters.
+        A_stop: The stopband attenuation $A_{\text{stop}}$ in dB.
+
+    Returns:
+        The multirate FIR filter $h[n]$.
+
+    References:
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters
+        - https://www.mathworks.com/help/dsp/ref/designmultiratefir.html
+
+    Examples:
+        Design a multirate FIR filter for rational resampling by 2/3.
+
+        .. ipython:: python
+
+            h = sdr.multirate_fir(2, 3)
+
+            @savefig sdr_multirate_fir_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(h);
+
+            @savefig sdr_multirate_fir_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(h);
+
+    Group:
+        dsp-multirate-filtering
+    """
+    if not isinstance(P, int):
+        raise TypeError(f"Argument 'P' must be an integer, not {P}.")
+    if not P >= 1:
+        raise ValueError(f"Argument 'P' must be at least 1, not {P}.")
+
+    if not isinstance(Q, int):
+        raise TypeError(f"Argument 'Q' must be an integer, not {Q}.")
+    if not Q >= 1:
+        raise ValueError(f"Argument 'Q' must be at least 1, not {Q}.")
+
+    B = P if P > 1 else Q  # The number of polyphase branches
+    R = max(P, Q)  # Inverse of the filter's fractional bandwidth
+
+    # Compute the filter order, which is length - 1
+    N = 2 * half_length * B
+
+    # Compute ideal lowpass filter
+    n = np.arange(N + 1)
+    h = P / R * np.sinc((n - N // 2) / R)
+
+    # Compute Kaiser window
+    if A_stop >= 50:
+        beta = 0.1102 * (A_stop - 8.71)
+    elif A_stop > 21:
+        beta = 0.5842 * (A_stop - 21) ** 0.4 + 0.07886 * (A_stop - 21)
+    else:
+        beta = 0
+    w = scipy.signal.kaiser(N + 1, beta)
+
+    # Compute windowed filter
+    h = h * w
+
+    if not (Q > P > 1 and (half_length * P) % Q != 0):
+        # The first and last elements are zero. Remove the last zero so that the filter is evenly
+        # partitioned across the polyphase branches. The filter now has length 2 * half_length * B and
+        # each polyphase branch has length 2 * half_length.
+        h = h[:-1]
+
+    # If the above condition is not true, the first and last elements are non-zero. The filter length
+    # is 2 * half_length * B + 1 and each polyphase branch has length 2 * half_length + 1. The final
+    # column in the polyphase matrix will be padded with zeros.
+
+    return h
+
+
+@export
 class FIRInterpolator:
     r"""
     Implements a polyphase finite impulse response (FIR) interpolating filter.
