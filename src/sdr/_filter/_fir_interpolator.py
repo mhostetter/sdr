@@ -241,6 +241,42 @@ class FIRInterpolator(FIR):
 
         super().__init__(taps, streaming=streaming)
 
+    def __repr__(self) -> str:
+        """
+        Returns a code-styled string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.FIRInterpolator(7)
+                fir
+        """
+        if self.method != "custom":
+            return f"sdr.{type(self).__name__}({self.rate}, {self._method!r}, streaming={self.streaming})"
+
+        prefix = f"sdr.{type(self).__name__}({self.rate}, "
+        suffix = f", streaming={self.streaming})"
+        array = np.array2string(self.taps, separator=", ", prefix="  ", suppress_small=True)
+        return prefix + array + suffix
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.FIRInterpolator(7)
+                print(fir)
+        """
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  rate: {self.rate}"
+        string += f"\n  method: {self._method!r}"
+        string += f"\n  polyphase_taps: {self.polyphase_taps.shape} shape"
+        string += f"\n  delay: {self.delay}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
     def reset(self):
         self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
 
