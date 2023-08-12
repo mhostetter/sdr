@@ -47,7 +47,7 @@ python3 -m pip install sdr
 ## Features
 
 - Digital signal processing:
-   - Filtering: `sdr.FIR`, `sdr.FIRInterpolator`, `sdr.IIR`
+   - Filtering: `sdr.FIR`, `sdr.Interpolator`, `sdr.IIR`
    - Resampling: `sdr.FarrowResampler`
    - Signal manipulation: `sdr.mix()`, `sdr.to_complex_bb()`, `sdr.to_real_pb()`
 - Sequences: `sdr.barker()`, `sdr.zadoff_chu()`
