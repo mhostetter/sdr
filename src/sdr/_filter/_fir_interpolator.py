@@ -221,7 +221,10 @@ class FIRInterpolator(FIR):
             raise ValueError(f"Argument 'rate' must be at least 1, not {rate}.")
         self._rate = rate
 
-        if taps == "kaiser":
+        if not isinstance(taps, str):
+            self._method = "custom"
+            taps = np.asarray(taps)
+        elif taps == "kaiser":
             self._method = "kaiser"
             taps = multirate_fir(rate, 1)
         elif taps == "linear":
@@ -233,8 +236,7 @@ class FIRInterpolator(FIR):
             self._method = "zoh"
             taps = np.ones(rate, dtype=np.float32)
         else:
-            self._method = "custom"
-            taps = np.asarray(taps)
+            raise ValueError(f"Argument 'taps' must be 'kaiser', 'linear', 'zoh', or an array-like, not {taps}.")
 
         N = math.ceil(taps.size / rate) * rate
         self._polyphase_taps = np.pad(taps, (0, N - taps.size), mode="constant").reshape(-1, rate).T
