@@ -15,7 +15,7 @@ from ._fir import FIR
 
 
 @export
-def multirate_fir(
+def multirate_taps(
     P: int,
     Q: int = 1,
     half_length: int = 12,
@@ -45,7 +45,7 @@ def multirate_fir(
 
         .. ipython:: python
 
-            h = sdr.multirate_fir(11, 3)
+            h = sdr.multirate_taps(11, 3)
 
             @savefig sdr_multirate_fir_1.png
             plt.figure(figsize=(8, 4)); \
@@ -205,7 +205,7 @@ class Interpolator(FIR):
             rate: The interpolation rate $r$.
             taps: The multirate filter design specification.
 
-                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_fir()`
+                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_taps()`
                   with arguments `rate` and 1.
                 - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
@@ -227,7 +227,7 @@ class Interpolator(FIR):
             taps = np.asarray(taps)
         elif taps == "kaiser":
             self._method = "kaiser"
-            taps = multirate_fir(rate, 1)
+            taps = multirate_taps(rate, 1)
         elif taps == "linear":
             self._method = "linear"
             taps = np.zeros(2 * rate, dtype=np.float32)
