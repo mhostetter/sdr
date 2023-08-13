@@ -123,17 +123,47 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
     Examples:
+        The excess bandwidth $\alpha$ controls bandwidth of the filter. A smaller $\alpha$ results in a
+        narrower bandwidth at the expense of higher sidelobes.
+
         .. ipython:: python
 
             h_0p1 = sdr.root_raised_cosine(0.1, 8, 10); \
             h_0p5 = sdr.root_raised_cosine(0.5, 8, 10); \
-            h_0p9 = sdr.root_raised_cosine(0.9, 8, 10);
+            h_0p9 = sdr.root_raised_cosine(0.9, 8, 10)
 
             @savefig sdr_root_raised_cosine_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
             sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$")
+
+            @savefig sdr_root_raised_cosine_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(h_0p1, label=r"$\alpha = 0.1$"); \
+            sdr.plot.frequency_response(h_0p5, label=r"$\alpha = 0.5$"); \
+            sdr.plot.frequency_response(h_0p9, label=r"$\alpha = 0.9$")
+
+        The span of the filter affects the stopband attenuation. A longer span results in greater stopband
+        attenuation and lower sidelobes.
+
+        .. ipython:: python
+
+            h_2 = sdr.root_raised_cosine(0.1, 2, 10); \
+            h_4 = sdr.root_raised_cosine(0.1, 4, 10); \
+            h_8 = sdr.root_raised_cosine(0.1, 8, 10)
+
+            @savefig sdr_root_raised_cosine_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(h_2, label="span = 2"); \
+            sdr.plot.impulse_response(h_4, label="span = 4"); \
+            sdr.plot.impulse_response(h_8, label="span = 8")
+
+            @savefig sdr_root_raised_cosine_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.frequency_response(h_2, label="span = 2"); \
+            sdr.plot.frequency_response(h_4, label="span = 4"); \
+            sdr.plot.frequency_response(h_8, label="span = 8")
 
         See the :ref:`pulse-shapes` example.
 
