@@ -151,7 +151,7 @@ class Interpolator(FIR):
             fir = sdr.Interpolator(7); fir
             y = fir(x)
 
-            @savefig sdr_fir_interpolator_1.png
+            @savefig sdr_Interpolator_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
@@ -166,7 +166,7 @@ class Interpolator(FIR):
             fir.polyphase_taps
             y = fir(x)
 
-            @savefig sdr_fir_interpolator_2.png
+            @savefig sdr_Interpolator_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
@@ -181,7 +181,7 @@ class Interpolator(FIR):
             fir.polyphase_taps
             y = fir(x, mode="full")
 
-            @savefig sdr_fir_interpolator_3.png
+            @savefig sdr_Interpolator_3.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered"); \
@@ -303,7 +303,53 @@ class Interpolator(FIR):
         Returns:
             The filtered signal $y[n]$ with sample rate $f_s r$. The output length is dictated by
             the `mode` argument.
-        """
+
+        Examples:
+            Create an input signal to interpolate.
+
+            .. ipython:: python
+
+                x = np.cos(np.pi / 4 * np.arange(20))
+
+            Interpolate the signal using the `"same"` mode.
+
+            .. ipython:: python
+
+                fir = sdr.Interpolator(4); fir
+                y = fir(x)
+
+                @savefig sdr_Interpolator_call_1.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
+                sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="$y[n]$");
+
+            Interpolate the signal using the `"full"` mode.
+
+            .. ipython:: python
+
+                y = fir(x, mode="full")
+
+                @savefig sdr_Interpolator_call_2.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
+                sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="$y[n]$");
+
+            Interpolate the signal iteratively using the streaming mode.
+
+            .. ipython:: python
+
+                fir = sdr.Interpolator(4, streaming=True); fir
+
+                y1 = fir(x[:10]); \
+                y2 = fir(x[10:]); \
+                y3 = fir(np.zeros(fir.polyphase_taps.shape[1])); \
+                y = np.concatenate((y1, y2, y3))
+
+                @savefig sdr_Interpolator_call_3.png
+                plt.figure(figsize=(8, 4)); \
+                sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
+                sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="$y[n]$");
+        """  # pylint: disable=line-too-long
         x = np.atleast_1d(x)
         dtype = np.result_type(x, self.polyphase_taps)
 
