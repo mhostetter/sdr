@@ -13,7 +13,7 @@
     
     
       
-        <title>sdr.multirate_fir - sdr</title>
+        <title>sdr.polyphase_matrix - sdr</title>
       
     
     
@@ -146,7 +146,7 @@ You're not viewing the latest version.
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              sdr.multirate_fir
+              sdr.polyphase_matrix
             
           </span>
         </div>
@@ -902,7 +902,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIR/#methods"><span class="md-ellipsis">Methods</span></a>
+          <a href="../sdr.FIR/#streaming-mode-only"><span class="md-ellipsis">Streaming mode only</span></a>
           
             <label for="__nav_3_1_1_1_4">
               <span class="md-nav__icon md-icon"></span>
@@ -910,12 +910,140 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Methods" data-md-level="5">
+      <nav class="md-nav" aria-label="Streaming mode only" data-md-level="5">
         <label class="md-nav__title" for="__nav_3_1_1_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Streaming mode only</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.reset/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.reset (Python method) — Resets the filter state. Only useful when using streaming mode." class="md-ellipsis">reset</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.flush/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.flush (Python method) — Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode." class="md-ellipsis">flush</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.streaming/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.state/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.state (Python property) — The filter state consisting of the previous $N$ inputs." class="md-ellipsis">state</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1_1_5" type="checkbox" id="__nav_3_1_1_1_5" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.FIR/#methods"><span class="md-ellipsis">Methods</span></a>
+          
+            <label for="__nav_3_1_1_1_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Methods" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_1_1_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Methods</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.impulse_response/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.impulse_response (Python method) — Returns the impulse response $h[n]$ of the FIR filter. The impulse response $h[n]$ is the filter output when the input is an impulse $delta[n]$." class="md-ellipsis">impulse_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.step_response/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.step_response (Python method) — Returns the step response $s[n]$ of the FIR filter. The step response $s[n]$ is the filter output when the input is a unit step $u[n]$." class="md-ellipsis">step_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -947,51 +1075,6 @@ You're not viewing the latest version.
 
             
           
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.FIR.impulse_response/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.impulse_response (Python method) — Returns the impulse response $h[n]$ of the FIR filter. The impulse response $h[n]$ is the filter output when the input is an impulse $delta[n]$." class="md-ellipsis">impulse_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.FIR.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.FIR.step_response/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.step_response (Python method) — Returns the step response $s[n]$ of the FIR filter. The step response $s[n]$ is the filter output when the input is a unit step $u[n]$." class="md-ellipsis">step_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
         </ul>
       </nav>
     </li>
@@ -1009,7 +1092,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1_1_5" type="checkbox" id="__nav_3_1_1_1_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1_1_6" type="checkbox" id="__nav_3_1_1_1_6" >
       
       
       
@@ -1017,14 +1100,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.FIR/#properties"><span class="md-ellipsis">Properties</span></a>
           
-            <label for="__nav_3_1_1_1_5">
+            <label for="__nav_3_1_1_1_6">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Properties" data-md-level="5">
-        <label class="md-nav__title" for="__nav_3_1_1_1_5">
+        <label class="md-nav__title" for="__nav_3_1_1_1_6">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Properties</span>
         </label>
@@ -1037,8 +1120,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIR.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+      <a href="../sdr.FIR.taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -1067,23 +1150,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIR.streaming/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.FIR.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+      <a href="../sdr.FIR.delay/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -1340,7 +1408,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.IIR/#methods"><span class="md-ellipsis">Methods</span></a>
+          <a href="../sdr.IIR/#streaming-mode-only"><span class="md-ellipsis">Streaming mode only</span></a>
           
             <label for="__nav_3_1_1_2_4">
               <span class="md-nav__icon md-icon"></span>
@@ -1348,12 +1416,125 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Methods" data-md-level="5">
+      <nav class="md-nav" aria-label="Streaming mode only" data-md-level="5">
         <label class="md-nav__title" for="__nav_3_1_1_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Streaming mode only</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.IIR.reset/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.reset (Python method) — Resets the filter state. Only useful when using streaming mode." class="md-ellipsis">reset</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.IIR.streaming/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.IIR.state/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.state (Python property) — The filter state." class="md-ellipsis">state</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1_2_5" type="checkbox" id="__nav_3_1_1_2_5" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.IIR/#methods"><span class="md-ellipsis">Methods</span></a>
+          
+            <label for="__nav_3_1_1_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Methods" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_1_2_5">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Methods</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.IIR.impulse_response/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.impulse_response (Python method) — Returns the impulse response $h[n]$ of the IIR filter. The impulse response $h[n]$ is the filter output when the input is an impulse $delta[n]$." class="md-ellipsis">impulse_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.IIR.step_response/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.step_response (Python method) — Returns the step response $s[n]$ of the IIR filter. The step response $s[n]$ is the filter output when the input is a unit step $u[n]$." class="md-ellipsis">step_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
           
             
               
@@ -1385,51 +1566,6 @@ You're not viewing the latest version.
 
             
           
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.impulse_response/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.impulse_response (Python method) — Returns the impulse response $h[n]$ of the IIR filter. The impulse response $h[n]$ is the filter output when the input is an impulse $delta[n]$." class="md-ellipsis">impulse_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.step_response/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.step_response (Python method) — Returns the step response $s[n]$ of the IIR filter. The step response $s[n]$ is the filter output when the input is a unit step $u[n]$." class="md-ellipsis">step_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
         </ul>
       </nav>
     </li>
@@ -1447,7 +1583,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1_2_5" type="checkbox" id="__nav_3_1_1_2_5" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_1_2_6" type="checkbox" id="__nav_3_1_1_2_6" >
       
       
       
@@ -1455,33 +1591,18 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.IIR/#properties"><span class="md-ellipsis">Properties</span></a>
           
-            <label for="__nav_3_1_1_2_5">
+            <label for="__nav_3_1_1_2_6">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Properties" data-md-level="5">
-        <label class="md-nav__title" for="__nav_3_1_1_2_5">
+        <label class="md-nav__title" for="__nav_3_1_1_2_6">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Properties</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.a_taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.a_taps (Python property) — The feedback taps $a_j$ for $j = 0,...,N$." class="md-ellipsis">a_<wbr>taps</span>
-      </a>
-    </li>
-  
-
-            
           
             
               
@@ -1505,8 +1626,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.IIR.gain/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.gain (Python property) — The gain of the IIR filter." class="md-ellipsis">gain</span>
+      <a href="../sdr.IIR.a_taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.a_taps (Python property) — The feedback taps $a_j$ for $j = 0,...,N$." class="md-ellipsis">a_<wbr>taps</span>
       </a>
     </li>
   
@@ -1535,6 +1656,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.IIR.zeros/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.zeros (Python property) — The zeros of the IIR filter." class="md-ellipsis">zeros</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.IIR.poles/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.poles (Python property) — The poles of the IIR filter." class="md-ellipsis">poles</span>
       </a>
@@ -1550,23 +1686,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.IIR.streaming/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.zeros/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.zeros (Python property) — The zeros of the IIR filter." class="md-ellipsis">zeros</span>
+      <a href="../sdr.IIR.gain/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.gain (Python property) — The gain of the IIR filter." class="md-ellipsis">gain</span>
       </a>
     </li>
   
@@ -1697,7 +1818,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.Interpolator.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__init__ (Python method) — Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__init__ (Python method) — Creates a polyphase FIR interpolating filter." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1750,7 +1871,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.Interpolator.__call__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__call__ (Python method) — Filters and interpolates the input signal $x[n]$ with the FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__call__ (Python method) — Interpolates and filters the input signal $x[n]$ with the polyphase FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
       </a>
     </li>
   
@@ -1848,7 +1969,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.Interpolator/#methods"><span class="md-ellipsis">Methods</span></a>
+          <a href="../sdr.Interpolator/#streaming-mode-only"><span class="md-ellipsis">Streaming mode only</span></a>
           
             <label for="__nav_3_1_2_1_4">
               <span class="md-nav__icon md-icon"></span>
@@ -1856,10 +1977,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Methods" data-md-level="5">
+      <nav class="md-nav" aria-label="Streaming mode only" data-md-level="5">
         <label class="md-nav__title" for="__nav_3_1_2_1_4">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
+          <span class="md-ellipsis">Streaming mode only</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1871,7 +1992,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.Interpolator.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.reset (Python method) — Resets the filter state. Only useful when using streaming mode." class="md-ellipsis">reset</span>
       </a>
     </li>
   
@@ -1923,38 +2044,23 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.Interpolator.method/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.Interpolator.polyphase_taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.Interpolator.rate/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.rate (Python property) — The interpolation rate $r$." class="md-ellipsis">rate</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Interpolator.method/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
       </a>
     </li>
   
@@ -1976,6 +2082,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Interpolator.polyphase_taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1996,6 +2117,384 @@ You're not viewing the latest version.
               
   
   
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2_2" type="checkbox" id="__nav_3_1_2_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.Decimator/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.Decimator (Python class) — Implements a polyphase finite impulse response (FIR) decimating filter." class="md-ellipsis">Decimator</span></a>
+          
+            <label for="__nav_3_1_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Decimator" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_1_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.Decimator (Python class) — Implements a polyphase finite impulse response (FIR) decimating filter." class="md-ellipsis">Decimator</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2_2_1" type="checkbox" id="__nav_3_1_2_2_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.Decimator/#constructors"><span class="md-ellipsis">Constructors</span></a>
+          
+            <label for="__nav_3_1_2_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Constructors" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Constructors</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.__init__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Decimator.__init__ (Python method) — Creates a polyphase FIR decimating filter." class="md-ellipsis">__<wbr>init__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2_2_2" type="checkbox" id="__nav_3_1_2_2_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.Decimator/#special-methods"><span class="md-ellipsis">Special methods</span></a>
+          
+            <label for="__nav_3_1_2_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Special methods" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_2_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Special methods</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.__call__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Decimator.__call__ (Python method) — Filters and decimates the input signal $x[n]$ with the polyphase FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2_2_3" type="checkbox" id="__nav_3_1_2_2_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.Decimator/#string-representation"><span class="md-ellipsis">String representation</span></a>
+          
+            <label for="__nav_3_1_2_2_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="String representation" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_2_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">String representation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.__repr__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Decimator.__repr__ (Python method) — Returns a code-styled string representation of the object." class="md-ellipsis">__<wbr>repr__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.__str__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Decimator.__str__ (Python method) — Returns a human-readable string representation of the object." class="md-ellipsis">__<wbr>str__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2_2_4" type="checkbox" id="__nav_3_1_2_2_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.Decimator/#streaming-mode-only"><span class="md-ellipsis">Streaming mode only</span></a>
+          
+            <label for="__nav_3_1_2_2_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Streaming mode only" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_2_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Streaming mode only</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.reset/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Decimator.reset (Python method) — Resets the filter state. Only useful when using streaming mode." class="md-ellipsis">reset</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1_2_2_5" type="checkbox" id="__nav_3_1_2_2_5" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.Decimator/#properties"><span class="md-ellipsis">Properties</span></a>
+          
+            <label for="__nav_3_1_2_2_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Properties" data-md-level="5">
+        <label class="md-nav__title" for="__nav_3_1_2_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Properties</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.rate/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Decimator.rate (Python property) — The decimation rate $r$." class="md-ellipsis">rate</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.method/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Decimator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Decimator.taps (Python property) — The prototype feedforward taps $h_i$." class="md-ellipsis">taps</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.polyphase_taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Decimator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multirate_taps/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multirate_taps (Python function) — Computes the multirate FIR filter that achieves rational resampling by $P/Q$." class="md-ellipsis">multirate_<wbr>taps</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
     
@@ -2007,12 +2506,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multirate_fir (Python function) — Computes the multirate FIR filter that achieves rational resampling by $P/Q$." class="md-ellipsis">multirate_<wbr>fir</span>
+          <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.polyphase_matrix (Python function) — Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves rational resampling by $P/Q$." class="md-ellipsis">polyphase_<wbr>matrix</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multirate_fir (Python function) — Computes the multirate FIR filter that achieves rational resampling by $P/Q$." class="md-ellipsis">multirate_<wbr>fir</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.polyphase_matrix (Python function) — Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves rational resampling by $P/Q$." class="md-ellipsis">polyphase_<wbr>matrix</span>
       </a>
       
         
@@ -2039,28 +2538,21 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-P" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.P (Python parameter) — The interpolation rate $P$." class="md-ellipsis">P</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.polyphase_matrix.P (Python parameter) — The interpolation rate $P$." class="md-ellipsis">P</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#p-Q" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.Q (Python parameter) — The decimation rate $Q$." class="md-ellipsis">Q</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.polyphase_matrix.Q (Python parameter) — The decimation rate $Q$." class="md-ellipsis">Q</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#p-half_length" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.half_length (Python parameter) — The half-length of the polyphase filters." class="md-ellipsis">half_<wbr>length</span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#p-A_stop" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.A_stop (Python parameter) — The stopband attenuation $A_{text{stop}}$ in dB." class="md-ellipsis">A_<wbr>stop</span>
+  <a href="#p-taps" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.polyphase_matrix.taps (Python parameter) — The multirate FIR filter taps $h_i$." class="md-ellipsis">taps</span>
   </a>
   
 </li>
@@ -2073,6 +2565,13 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
   </a>
   
 </li>
@@ -2364,6 +2863,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.FarrowResampler.taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.taps (Python property) — The Farrow filter taps." class="md-ellipsis">taps</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.order/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.order (Python property) — The order of the filter." class="md-ellipsis">order</span>
       </a>
@@ -2381,21 +2895,6 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.streaming/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.FarrowResampler.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.taps (Python property) — The Farrow filter taps." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -2780,8 +3279,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.demodulate (Python method) — Demodulates the complex symbols $hat{x}[k]$ to decimal symbols $hat{s}[k]$ using maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
+      <a href="../sdr.PSK.ser/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -2810,8 +3309,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.ser/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values." class="md-ellipsis">ser</span>
+      <a href="../sdr.PSK.demodulate/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PSK.demodulate (Python method) — Demodulates the complex symbols $hat{x}[k]$ to decimal symbols $hat{s}[k]$ using maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -2863,8 +3362,23 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.bps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.bps (Python property) — The number of bits per symbol $k = log_2 M$." class="md-ellipsis">bps</span>
+      <a href="../sdr.PSK.phase_offset/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.phase_offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">phase_<wbr>offset</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.PSK.symbol_map/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_map (Python property) — The symbol map ${0, dots, M-1} mapsto mathbb{C}$. This maps decimal symbols from $0$ to $M-1$ to complex symbols." class="md-ellipsis">symbol_<wbr>map</span>
       </a>
     </li>
   
@@ -2893,23 +3407,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.PSK.phase_offset/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.phase_offset (Python property) — The phase offset $phi$ in degrees." class="md-ellipsis">phase_<wbr>offset</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.PSK.symbol_map/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.symbol_map (Python property) — The symbol map ${0, dots, M-1} mapsto mathbb{C}$. This maps decimal symbols from $0$ to $M-1$ to complex symbols." class="md-ellipsis">symbol_<wbr>map</span>
+      <a href="../sdr.PSK.bps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PSK.bps (Python property) — The number of bits per symbol $k = log_2 M$." class="md-ellipsis">bps</span>
       </a>
     </li>
   
@@ -2977,21 +3476,6 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.gaussian/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.raised_cosine/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape." class="md-ellipsis">raised_<wbr>cosine</span>
       </a>
@@ -3009,6 +3493,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.root_raised_cosine/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.root_raised_cosine (Python function) — Returns a square root raised cosine (SRRC) pulse shape." class="md-ellipsis">root_<wbr>raised_<wbr>cosine</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.gaussian/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
       </a>
     </li>
   
@@ -3128,8 +3627,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.diff_decode/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.diff_decode (Python function) — Differentially decodes the input data $y[k]$." class="md-ellipsis">diff_<wbr>decode</span>
+      <a href="../sdr.diff_encode/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.diff_encode (Python function) — Differentially encodes the input data $x[k]$." class="md-ellipsis">diff_<wbr>encode</span>
       </a>
     </li>
   
@@ -3143,8 +3642,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.diff_encode/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.diff_encode (Python function) — Differentially encodes the input data $x[k]$." class="md-ellipsis">diff_<wbr>encode</span>
+      <a href="../sdr.diff_decode/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.diff_decode (Python function) — Differentially decodes the input data $y[k]$." class="md-ellipsis">diff_<wbr>decode</span>
       </a>
     </li>
   
@@ -3212,7 +3711,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.ClosedLoopPLL/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span></a>
+          <a href="../sdr.LoopFilter/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.LoopFilter (Python class) — Implements a 2nd order, proportional-plus-integrator (PPI) loop filter." class="md-ellipsis">Loop<wbr>Filter</span></a>
           
             <label for="__nav_3_4_1">
               <span class="md-nav__icon md-icon"></span>
@@ -3220,10 +3719,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="ClosedLoopPLL" data-md-level="3">
+      <nav class="md-nav" aria-label="LoopFilter" data-md-level="3">
         <label class="md-nav__title" for="__nav_3_4_1">
           <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.LoopFilter (Python class) — Implements a 2nd order, proportional-plus-integrator (PPI) loop filter." class="md-ellipsis">Loop<wbr>Filter</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -3242,7 +3741,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.ClosedLoopPLL/#constructors"><span class="md-ellipsis">Constructors</span></a>
+          <a href="../sdr.LoopFilter/#constructors"><span class="md-ellipsis">Constructors</span></a>
           
             <label for="__nav_3_4_1_1">
               <span class="md-nav__icon md-icon"></span>
@@ -3252,663 +3751,6 @@ You're not viewing the latest version.
       
       <nav class="md-nav" aria-label="Constructors" data-md-level="4">
         <label class="md-nav__title" for="__nav_3_4_1_1">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Constructors</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.__init__ (Python method) — Creates a closed-loop PLL analysis object." class="md-ellipsis">__<wbr>init__<wbr></span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_1_2" type="checkbox" id="__nav_3_4_1_2" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.ClosedLoopPLL/#methods"><span class="md-ellipsis">Methods</span></a>
-          
-            <label for="__nav_3_4_1_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_1_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.frequency_lock_time/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.frequency_lock_time (Python method) — Returns the frequency lock time of the PLL." class="md-ellipsis">frequency_<wbr>lock_<wbr>time</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.lock_time/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.lock_time (Python method) — Returns the lock time of the PLL." class="md-ellipsis">lock_<wbr>time</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.phase_error_variance/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.phase_error_variance (Python method) — Returns the variance of the phase error of the PLL in steady state." class="md-ellipsis">phase_<wbr>error_<wbr>variance</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.phase_lock_time/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.phase_lock_time (Python method) — Returns the phase lock time of the PLL." class="md-ellipsis">phase_<wbr>lock_<wbr>time</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_1_3" type="checkbox" id="__nav_3_4_1_3" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.ClosedLoopPLL/#properties"><span class="md-ellipsis">Properties</span></a>
-          
-            <label for="__nav_3_4_1_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Properties" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_1_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Properties</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.Bn/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.Bn (Python property) — The noise bandwidth $B_n$ of the PLL in Hz." class="md-ellipsis">Bn</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.BnT/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.BnT (Python property) — The normalized noise bandwidth $B_n T$ of the PLL." class="md-ellipsis">Bn<wbr>T</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.iir/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.iir (Python property) — The IIR filter that represents the closed-loop transfer function of the PLL." class="md-ellipsis">iir</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.K0/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.K0 (Python property) — The NCO gain $K_0$." class="md-ellipsis">K0</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.K1/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.K1 (Python property) — The proportional gain $K_1$ of the loop filter." class="md-ellipsis">K1</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.K2/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.K2 (Python property) — The integral gain $K_2$ of the loop filter." class="md-ellipsis">K2</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.Kp/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.Kp (Python property) — The phase error detector (PED) gain $K_p$." class="md-ellipsis">Kp</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.omega_3dB/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.omega_3dB (Python property) — The 3-dB bandwidth $omega_{3textrm{dB}}$ of the PLL in radians/s." class="md-ellipsis">omega_<wbr>3d<wbr>B</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.omega_n/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.omega_n (Python property) — The natural frequency $omega_n$ of the PLL in radians/s." class="md-ellipsis">omega_<wbr>n</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.sample_rate/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.sample_rate (Python property) — The sample rate $f_s$ of the PLL in samples/s." class="md-ellipsis">sample_<wbr>rate</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ClosedLoopPLL.zeta/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.zeta (Python property) — The damping factor $zeta$ of the PLL." class="md-ellipsis">zeta</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2" type="checkbox" id="__nav_3_4_2" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)." class="md-ellipsis">DDS</span></a>
-          
-            <label for="__nav_3_4_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="DDS" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_4_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)." class="md-ellipsis">DDS</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_1" type="checkbox" id="__nav_3_4_2_1" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#constructors"><span class="md-ellipsis">Constructors</span></a>
-          
-            <label for="__nav_3_4_2_1">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Constructors" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_2_1">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Constructors</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.__init__ (Python method) — Creates a direct digital synthesizer (DDS)." class="md-ellipsis">__<wbr>init__<wbr></span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_2" type="checkbox" id="__nav_3_4_2_2" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#special-methods"><span class="md-ellipsis">Special methods</span></a>
-          
-            <label for="__nav_3_4_2_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Special methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_2_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Special methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.__call__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.__call__ (Python method) — Steps the DDS with the variable phase increment signal $x[n]$." class="md-ellipsis">__<wbr>call__<wbr></span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_3" type="checkbox" id="__nav_3_4_2_3" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#methods"><span class="md-ellipsis">Methods</span></a>
-          
-            <label for="__nav_3_4_2_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_2_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.reset (Python method) — Resets the DDS." class="md-ellipsis">reset</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.step/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.step (Python method) — Steps the DDS forward by $N$ samples." class="md-ellipsis">step</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_4" type="checkbox" id="__nav_3_4_2_4" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#properties"><span class="md-ellipsis">Properties</span></a>
-          
-            <label for="__nav_3_4_2_4">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Properties" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_2_4">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Properties</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.nco/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.DDS.nco (Python property) — The numerically-controlled oscillator (NCO) used by the DDS." class="md-ellipsis">nco</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3" type="checkbox" id="__nav_3_4_3" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.LoopFilter/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.LoopFilter (Python class) — Implements a 2nd order, proportional-plus-integrator (PPI) loop filter." class="md-ellipsis">Loop<wbr>Filter</span></a>
-          
-            <label for="__nav_3_4_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="LoopFilter" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_4_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.LoopFilter (Python class) — Implements a 2nd order, proportional-plus-integrator (PPI) loop filter." class="md-ellipsis">Loop<wbr>Filter</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_1" type="checkbox" id="__nav_3_4_3_1" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.LoopFilter/#constructors"><span class="md-ellipsis">Constructors</span></a>
-          
-            <label for="__nav_3_4_3_1">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Constructors" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_3_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Constructors</span>
         </label>
@@ -3946,7 +3788,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_2" type="checkbox" id="__nav_3_4_3_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_1_2" type="checkbox" id="__nav_3_4_1_2" >
       
       
       
@@ -3954,14 +3796,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.LoopFilter/#special-methods"><span class="md-ellipsis">Special methods</span></a>
           
-            <label for="__nav_3_4_3_2">
+            <label for="__nav_3_4_1_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Special methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_3_2">
+        <label class="md-nav__title" for="__nav_3_4_1_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Special methods</span>
         </label>
@@ -3999,7 +3841,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_3" type="checkbox" id="__nav_3_4_3_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_1_3" type="checkbox" id="__nav_3_4_1_3" >
       
       
       
@@ -4007,14 +3849,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.LoopFilter/#methods"><span class="md-ellipsis">Methods</span></a>
           
-            <label for="__nav_3_4_3_3">
+            <label for="__nav_3_4_1_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_3_3">
+        <label class="md-nav__title" for="__nav_3_4_1_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Methods</span>
         </label>
@@ -4052,7 +3894,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_4" type="checkbox" id="__nav_3_4_3_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_1_4" type="checkbox" id="__nav_3_4_1_4" >
       
       
       
@@ -4060,14 +3902,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.LoopFilter/#properties"><span class="md-ellipsis">Properties</span></a>
           
-            <label for="__nav_3_4_3_4">
+            <label for="__nav_3_4_1_4">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Properties" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_3_4">
+        <label class="md-nav__title" for="__nav_3_4_1_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Properties</span>
         </label>
@@ -4080,8 +3922,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.LoopFilter.damping_factor/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LoopFilter.damping_factor (Python property) — The damping factor $zeta$ of the loop filter. $zeta = 1$ is critically damped, $zeta &lt; 1$ is underdamped, and $zeta &gt; 1$ is overdamped." class="md-ellipsis">damping_<wbr>factor</span>
+      <a href="../sdr.LoopFilter.noise_bandwidth/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LoopFilter.noise_bandwidth (Python property) — The normalized noise bandwidth $B_n T$ of the loop filter, where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds." class="md-ellipsis">noise_<wbr>bandwidth</span>
       </a>
     </li>
   
@@ -4095,8 +3937,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.LoopFilter.iir/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LoopFilter.iir (Python property) — The underlying IIR filter used to implement the loop filter." class="md-ellipsis">iir</span>
+      <a href="../sdr.LoopFilter.damping_factor/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LoopFilter.damping_factor (Python property) — The damping factor $zeta$ of the loop filter. $zeta = 1$ is critically damped, $zeta &lt; 1$ is underdamped, and $zeta &gt; 1$ is overdamped." class="md-ellipsis">damping_<wbr>factor</span>
       </a>
     </li>
   
@@ -4140,8 +3982,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.LoopFilter.noise_bandwidth/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LoopFilter.noise_bandwidth (Python property) — The normalized noise bandwidth $B_n T$ of the loop filter, where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds." class="md-ellipsis">noise_<wbr>bandwidth</span>
+      <a href="../sdr.LoopFilter.iir/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LoopFilter.iir (Python property) — The underlying IIR filter used to implement the loop filter." class="md-ellipsis">iir</span>
       </a>
     </li>
   
@@ -4173,7 +4015,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4" type="checkbox" id="__nav_3_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2" type="checkbox" id="__nav_3_4_2" >
       
       
       
@@ -4181,14 +4023,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.NCO/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.NCO (Python class) — Implements a numerically-controlled oscillator (NCO)." class="md-ellipsis">NCO</span></a>
           
-            <label for="__nav_3_4_4">
+            <label for="__nav_3_4_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="NCO" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_4_4">
+        <label class="md-nav__title" for="__nav_3_4_2">
           <span class="md-nav__icon md-icon"></span>
           <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.NCO (Python class) — Implements a numerically-controlled oscillator (NCO)." class="md-ellipsis">NCO</span>
         </label>
@@ -4203,7 +4045,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_1" type="checkbox" id="__nav_3_4_4_1" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_1" type="checkbox" id="__nav_3_4_2_1" >
       
       
       
@@ -4211,14 +4053,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.NCO/#constructors"><span class="md-ellipsis">Constructors</span></a>
           
-            <label for="__nav_3_4_4_1">
+            <label for="__nav_3_4_2_1">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Constructors" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_4_1">
+        <label class="md-nav__title" for="__nav_3_4_2_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Constructors</span>
         </label>
@@ -4256,7 +4098,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_2" type="checkbox" id="__nav_3_4_4_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_2" type="checkbox" id="__nav_3_4_2_2" >
       
       
       
@@ -4264,14 +4106,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.NCO/#special-methods"><span class="md-ellipsis">Special methods</span></a>
           
-            <label for="__nav_3_4_4_2">
+            <label for="__nav_3_4_2_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Special methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_4_2">
+        <label class="md-nav__title" for="__nav_3_4_2_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Special methods</span>
         </label>
@@ -4309,7 +4151,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_3" type="checkbox" id="__nav_3_4_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_3" type="checkbox" id="__nav_3_4_2_3" >
       
       
       
@@ -4317,14 +4159,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.NCO/#methods"><span class="md-ellipsis">Methods</span></a>
           
-            <label for="__nav_3_4_4_3">
+            <label for="__nav_3_4_2_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_4_3">
+        <label class="md-nav__title" for="__nav_3_4_2_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Methods</span>
         </label>
@@ -4377,7 +4219,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_4" type="checkbox" id="__nav_3_4_4_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_2_4" type="checkbox" id="__nav_3_4_2_4" >
       
       
       
@@ -4385,33 +4227,18 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.NCO/#properties"><span class="md-ellipsis">Properties</span></a>
           
-            <label for="__nav_3_4_4_4">
+            <label for="__nav_3_4_2_4">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Properties" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_4_4_4">
+        <label class="md-nav__title" for="__nav_3_4_2_4">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Properties</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.NCO.increment/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.increment (Python property) — The constant accumulation $omega$ of the NCO in units/sample." class="md-ellipsis">increment</span>
-      </a>
-    </li>
-  
-
-            
           
             
               
@@ -4435,8 +4262,680 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.NCO.increment/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.increment (Python property) — The constant accumulation $omega$ of the NCO in units/sample." class="md-ellipsis">increment</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.NCO.offset/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.offset (Python property) — The absolute offset $theta$ of the NCO in units." class="md-ellipsis">offset</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3" type="checkbox" id="__nav_3_4_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.DDS/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)." class="md-ellipsis">DDS</span></a>
+          
+            <label for="__nav_3_4_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="DDS" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)." class="md-ellipsis">DDS</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_1" type="checkbox" id="__nav_3_4_3_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.DDS/#constructors"><span class="md-ellipsis">Constructors</span></a>
+          
+            <label for="__nav_3_4_3_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Constructors" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Constructors</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.DDS.__init__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.__init__ (Python method) — Creates a direct digital synthesizer (DDS)." class="md-ellipsis">__<wbr>init__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_2" type="checkbox" id="__nav_3_4_3_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.DDS/#special-methods"><span class="md-ellipsis">Special methods</span></a>
+          
+            <label for="__nav_3_4_3_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Special methods" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Special methods</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.DDS.__call__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.__call__ (Python method) — Steps the DDS with the variable phase increment signal $x[n]$." class="md-ellipsis">__<wbr>call__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_3" type="checkbox" id="__nav_3_4_3_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.DDS/#methods"><span class="md-ellipsis">Methods</span></a>
+          
+            <label for="__nav_3_4_3_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Methods" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Methods</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.DDS.reset/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.reset (Python method) — Resets the DDS." class="md-ellipsis">reset</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.DDS.step/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.step (Python method) — Steps the DDS forward by $N$ samples." class="md-ellipsis">step</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_3_4" type="checkbox" id="__nav_3_4_3_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.DDS/#properties"><span class="md-ellipsis">Properties</span></a>
+          
+            <label for="__nav_3_4_3_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Properties" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Properties</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.DDS.nco/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.DDS.nco (Python property) — The numerically-controlled oscillator (NCO) used by the DDS." class="md-ellipsis">nco</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4" type="checkbox" id="__nav_3_4_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.ClosedLoopPLL/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span></a>
+          
+            <label for="__nav_3_4_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="ClosedLoopPLL" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_1" type="checkbox" id="__nav_3_4_4_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.ClosedLoopPLL/#constructors"><span class="md-ellipsis">Constructors</span></a>
+          
+            <label for="__nav_3_4_4_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Constructors" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Constructors</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.__init__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.__init__ (Python method) — Creates a closed-loop PLL analysis object." class="md-ellipsis">__<wbr>init__<wbr></span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_2" type="checkbox" id="__nav_3_4_4_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.ClosedLoopPLL/#methods"><span class="md-ellipsis">Methods</span></a>
+          
+            <label for="__nav_3_4_4_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Methods" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Methods</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.phase_lock_time/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.phase_lock_time (Python method) — Returns the phase lock time of the PLL." class="md-ellipsis">phase_<wbr>lock_<wbr>time</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.frequency_lock_time/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.frequency_lock_time (Python method) — Returns the frequency lock time of the PLL." class="md-ellipsis">frequency_<wbr>lock_<wbr>time</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.lock_time/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.lock_time (Python method) — Returns the lock time of the PLL." class="md-ellipsis">lock_<wbr>time</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.phase_error_variance/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ClosedLoopPLL.phase_error_variance (Python method) — Returns the variance of the phase error of the PLL in steady state." class="md-ellipsis">phase_<wbr>error_<wbr>variance</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_4_4_3" type="checkbox" id="__nav_3_4_4_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../sdr.ClosedLoopPLL/#properties"><span class="md-ellipsis">Properties</span></a>
+          
+            <label for="__nav_3_4_4_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Properties" data-md-level="4">
+        <label class="md-nav__title" for="__nav_3_4_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Properties</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.sample_rate/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.sample_rate (Python property) — The sample rate $f_s$ of the PLL in samples/s." class="md-ellipsis">sample_<wbr>rate</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.BnT/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.BnT (Python property) — The normalized noise bandwidth $B_n T$ of the PLL." class="md-ellipsis">Bn<wbr>T</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.Bn/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.Bn (Python property) — The noise bandwidth $B_n$ of the PLL in Hz." class="md-ellipsis">Bn</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.zeta/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.zeta (Python property) — The damping factor $zeta$ of the PLL." class="md-ellipsis">zeta</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.K0/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.K0 (Python property) — The NCO gain $K_0$." class="md-ellipsis">K0</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.Kp/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.Kp (Python property) — The phase error detector (PED) gain $K_p$." class="md-ellipsis">Kp</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.K1/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.K1 (Python property) — The proportional gain $K_1$ of the loop filter." class="md-ellipsis">K1</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.K2/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.K2 (Python property) — The integral gain $K_2$ of the loop filter." class="md-ellipsis">K2</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.iir/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.iir (Python property) — The IIR filter that represents the closed-loop transfer function of the PLL." class="md-ellipsis">iir</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.omega_n/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.omega_n (Python property) — The natural frequency $omega_n$ of the PLL in radians/s." class="md-ellipsis">omega_<wbr>n</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.ClosedLoopPLL.omega_3dB/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.ClosedLoopPLL.omega_3dB (Python property) — The 3-dB bandwidth $omega_{3textrm{dB}}$ of the PLL in radians/s." class="md-ellipsis">omega_<wbr>3d<wbr>B</span>
       </a>
     </li>
   
@@ -4587,6 +5086,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.peak_power/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peak_power (Python function) — Measures the peak power of a time-domain signal $x[n]$." class="md-ellipsis">peak_<wbr>power</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.average_power/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.average_power (Python function) — Measures the average power of a time-domain signal $x[n]$." class="md-ellipsis">average_<wbr>power</span>
       </a>
@@ -4604,21 +5118,6 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.papr/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.papr (Python function) — Measures the peak-to-average power ratio (PAPR) of a time-domain signal $x[n]$." class="md-ellipsis">papr</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.peak_power/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peak_power (Python function) — Measures the peak power of a time-domain signal $x[n]$." class="md-ellipsis">peak_<wbr>power</span>
       </a>
     </li>
   
@@ -4670,21 +5169,6 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.crest_factor/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.crest_factor (Python function) — Measures the crest factor of a time-domain signal $x[n]$." class="md-ellipsis">crest_<wbr>factor</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.peak_voltage/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peak_voltage (Python function) — Measures the peak voltage of a time-domain signal $x[n]$." class="md-ellipsis">peak_<wbr>voltage</span>
       </a>
@@ -4702,6 +5186,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.rms_voltage/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.rms_voltage (Python function) — Measures the root-mean-square (RMS) voltage of a time-domain signal $x[n]$." class="md-ellipsis">rms_<wbr>voltage</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.crest_factor/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.crest_factor (Python function) — Measures the crest factor of a time-domain signal $x[n]$." class="md-ellipsis">crest_<wbr>factor</span>
       </a>
     </li>
   
@@ -4881,6 +5380,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.ErrorRate.errors/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ErrorRate.errors (Python method) — Returns the number of errors at the specified signal-to-noise ratio (SNR)." class="md-ellipsis">errors</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.ErrorRate.counts/" class="md-nav__link">
         <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ErrorRate.counts (Python method) — Returns the number of counts at the specified signal-to-noise ratio (SNR)." class="md-ellipsis">counts</span>
       </a>
@@ -4913,21 +5427,6 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.ErrorRate.error_rates/" class="md-nav__link">
         <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ErrorRate.error_rates (Python method) — Returns all signal-to-noise ratios (SNRs) in ascending order and their corresponding error rates." class="md-ellipsis">error_<wbr>rates</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ErrorRate.errors/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.ErrorRate.errors (Python method) — Returns the number of errors at the specified signal-to-noise ratio (SNR)." class="md-ellipsis">errors</span>
       </a>
     </li>
   
@@ -5358,8 +5857,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.bec/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bec (Python function) — Passes the binary input sequence $x$ through a binary erasure channel (BEC) with erasure probability $p$." class="md-ellipsis">bec</span>
+      <a href="../sdr.bsc/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bsc (Python function) — Passes the binary input sequence $x$ through a binary symmetric channel (BSC) with transition probability $p$." class="md-ellipsis">bsc</span>
       </a>
     </li>
   
@@ -5373,8 +5872,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.bsc/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bsc (Python function) — Passes the binary input sequence $x$ through a binary symmetric channel (BSC) with transition probability $p$." class="md-ellipsis">bsc</span>
+      <a href="../sdr.bec/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bec (Python function) — Passes the binary input sequence $x$ through a binary erasure channel (BEC) with erasure probability $p$." class="md-ellipsis">bec</span>
       </a>
     </li>
   
@@ -5456,21 +5955,6 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.frequency_offset/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.frequency_offset (Python function) — Applies a frequency and phase offset to the time-domain signal $x[n]$." class="md-ellipsis">frequency_<wbr>offset</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.iq_imbalance/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.iq_imbalance (Python function) — Applies IQ imbalance to the complex time-domain signal $x[n]$." class="md-ellipsis">iq_<wbr>imbalance</span>
       </a>
@@ -5488,6 +5972,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.sample_rate_offset/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sample_rate_offset (Python function) — Applies a sample rate offset to the time-domain signal $x[n]$." class="md-ellipsis">sample_<wbr>rate_<wbr>offset</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.frequency_offset/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.frequency_offset (Python function) — Applies a frequency and phase offset to the time-domain signal $x[n]$." class="md-ellipsis">frequency_<wbr>offset</span>
       </a>
     </li>
   
@@ -5577,8 +6076,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.awgn_capacity/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.awgn_capacity (Python function) — Calculates the capacity of an additive white Gaussian noise (AWGN) channel." class="md-ellipsis">awgn_<wbr>capacity</span>
+      <a href="../sdr.bsc_capacity/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bsc_capacity (Python function) — Calculates the capacity of a binary symmetric channel (BSC)." class="md-ellipsis">bsc_<wbr>capacity</span>
       </a>
     </li>
   
@@ -5607,8 +6106,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.bsc_capacity/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bsc_capacity (Python function) — Calculates the capacity of a binary symmetric channel (BSC)." class="md-ellipsis">bsc_<wbr>capacity</span>
+      <a href="../sdr.awgn_capacity/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.awgn_capacity (Python function) — Calculates the capacity of an additive white Gaussian noise (AWGN) channel." class="md-ellipsis">awgn_<wbr>capacity</span>
       </a>
     </li>
   
@@ -5842,21 +6341,6 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.hexdump/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.hexdump (Python function) — Returns a hexdump of the specified data." class="md-ellipsis">hexdump</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.pack/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.pack (Python function) — Packs a binary array into an array with multiple bits per element." class="md-ellipsis">pack</span>
       </a>
@@ -5874,6 +6358,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.unpack/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.unpack (Python function) — Unpacks an array with multiple bits per element into a binary array." class="md-ellipsis">unpack</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.hexdump/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.hexdump (Python function) — Returns a hexdump of the specified data." class="md-ellipsis">hexdump</span>
       </a>
     </li>
   
@@ -6129,21 +6628,6 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.plot.ber/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$." class="md-ellipsis">ber</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.plot.constellation/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.constellation (Python function) — Plots the constellation of the complex symbols $hat{x}[k]$." class="md-ellipsis">constellation</span>
       </a>
@@ -6159,8 +6643,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.plot.ser/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
+      <a href="../sdr.plot.symbol_map/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.symbol_map (Python function) — Plots the symbol map of the complex symbols $hat{x}[k]$." class="md-ellipsis">symbol_<wbr>map</span>
       </a>
     </li>
   
@@ -6174,8 +6658,23 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.plot.symbol_map/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.symbol_map (Python function) — Plots the symbol map of the complex symbols $hat{x}[k]$." class="md-ellipsis">symbol_<wbr>map</span>
+      <a href="../sdr.plot.ber/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ber (Python function) — Plots the bit error rate (BER) as a function of $E_b/N_0$." class="md-ellipsis">ber</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.ser/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
       </a>
     </li>
   
@@ -6227,83 +6726,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.plot.filter/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.filter (Python function) — Plots the magnitude response $|H(omega)|^2$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter." class="md-ellipsis">filter</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.plot.group_delay/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.group_delay (Python function) — Plots the group delay $tau_g(omega)$ of the IIR filter." class="md-ellipsis">group_<wbr>delay</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../sdr.plot.impulse_response/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.impulse_response (Python function) — Plots the impulse response $h[n]$ of a filter." class="md-ellipsis">impulse_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.plot.magnitude_response/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.magnitude_response (Python function) — Plots the magnitude response $|H(omega)|^2$ of the filter." class="md-ellipsis">magnitude_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.plot.phase_delay/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_delay (Python function) — Plots the phase delay $tau_{phi}(omega)$ of the filter." class="md-ellipsis">phase_<wbr>delay</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.plot.phase_response/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_response (Python function) — Plots the phase response $angle H(omega)$ of the filter." class="md-ellipsis">phase_<wbr>response</span>
       </a>
     </li>
   
@@ -6334,6 +6758,81 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.plot.zeros_poles/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.zeros_poles (Python function) — Plots the zeros and poles of the filter." class="md-ellipsis">zeros_<wbr>poles</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.magnitude_response/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.magnitude_response (Python function) — Plots the magnitude response $|H(omega)|^2$ of the filter." class="md-ellipsis">magnitude_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.phase_response/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_response (Python function) — Plots the phase response $angle H(omega)$ of the filter." class="md-ellipsis">phase_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.phase_delay/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_delay (Python function) — Plots the phase delay $tau_{phi}(omega)$ of the filter." class="md-ellipsis">phase_<wbr>delay</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.group_delay/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.group_delay (Python function) — Plots the group delay $tau_g(omega)$ of the IIR filter." class="md-ellipsis">group_<wbr>delay</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.filter/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.filter (Python function) — Plots the magnitude response $|H(omega)|^2$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter." class="md-ellipsis">filter</span>
       </a>
     </li>
   
@@ -6509,28 +7008,21 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-P" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.P (Python parameter) — The interpolation rate $P$." class="md-ellipsis">P</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.polyphase_matrix.P (Python parameter) — The interpolation rate $P$." class="md-ellipsis">P</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#p-Q" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.Q (Python parameter) — The decimation rate $Q$." class="md-ellipsis">Q</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.polyphase_matrix.Q (Python parameter) — The decimation rate $Q$." class="md-ellipsis">Q</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#p-half_length" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.half_length (Python parameter) — The half-length of the polyphase filters." class="md-ellipsis">half_<wbr>length</span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#p-A_stop" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.multirate_fir.A_stop (Python parameter) — The stopband attenuation $A_{text{stop}}$ in dB." class="md-ellipsis">A_<wbr>stop</span>
+  <a href="#p-taps" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.polyphase_matrix.taps (Python parameter) — The multirate FIR filter taps $h_i$." class="md-ellipsis">taps</span>
   </a>
   
 </li>
@@ -6543,6 +7035,13 @@ You're not viewing the latest version.
         <li class="md-nav__item">
   <a href="#returns" class="md-nav__link">
     <span class="md-ellipsis">Returns</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
   </a>
   
 </li>
@@ -6576,50 +7075,66 @@ You're not viewing the latest version.
 
 
 <dl class="py function objdesc">
-<dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">multirate_fir</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-P" title="sdr.multirate_fir.P (Python parameter) — The interpolation rate $P$."><span class="n"><span class="pre">P</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-Q" title="sdr.multirate_fir.Q (Python parameter) — The decimation rate $Q$."><span class="n"><span class="pre">Q</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-half_length" title="sdr.multirate_fir.half_length (Python parameter) — The half-length of the polyphase filters."><span class="n"><span class="pre">half_length</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">12</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-A_stop" title="sdr.multirate_fir.A_stop (Python parameter) — The stopband attenuation $A_{text{stop}}$ in dB."><span class="n"><span class="pre">A_stop</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">80</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
-<dd><p>Computes the multirate FIR filter that achieves rational resampling by <span class="math notranslate nohighlight">\(P/Q\)</span>.</p>
-<div class="note admonition">
-<p class="admonition-title">Note</p>
-<p>This filter can be used with <a class="reference internal" href="../sdr.Interpolator/" title="sdr.Interpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter."><code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.Interpolator</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">sdr.FIRDecimator</span></code>.</p>
-</div>
+<dt class="sig sig-object highlight py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">polyphase_matrix</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-P" title="sdr.polyphase_matrix.P (Python parameter) — The interpolation rate $P$."><span class="n"><span class="pre">P</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-Q" title="sdr.polyphase_matrix.Q (Python parameter) — The decimation rate $Q$."><span class="n"><span class="pre">Q</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-taps" title="sdr.polyphase_matrix.taps (Python parameter) — The multirate FIR filter taps $h_i$."><span class="n"><span class="pre">taps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<dd><p>Converts the multirate FIR filter taps <span class="math notranslate nohighlight">\(h_i\)</span> into the polyphase matrix <span class="math notranslate nohighlight">\(H_{i, j}\)</span> that achieves
+rational resampling by <span class="math notranslate nohighlight">\(P/Q\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="p-P"><span class="n sig-name">P</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><a class="headerlink" href="#p-P" title="Permalink to this definition">¶</a></dt><dd><p>The interpolation rate <span class="math notranslate nohighlight">\(P\)</span>.</p>
 </dd>
-<dt id="p-Q"><span class="n sig-name">Q</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code><a class="headerlink" href="#p-Q" title="Permalink to this definition">¶</a></dt><dd><p>The decimation rate <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<dt id="p-Q"><span class="n sig-name">Q</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><a class="headerlink" href="#p-Q" title="Permalink to this definition">¶</a></dt><dd><p>The decimation rate <span class="math notranslate nohighlight">\(Q\)</span>.</p>
 </dd>
-<dt id="p-half_length"><span class="n sig-name">half_length</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">12</span></code><a class="headerlink" href="#p-half_length" title="Permalink to this definition">¶</a></dt><dd><p>The half-length of the polyphase filters.</p>
-</dd>
-<dt id="p-A_stop"><span class="n sig-name">A_stop</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)">float</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">80</span></code><a class="headerlink" href="#p-A_stop" title="Permalink to this definition">¶</a></dt><dd><p>The stopband attenuation <span class="math notranslate nohighlight">\(A_{\text{stop}}\)</span> in dB.</p>
+<dt id="p-taps"><span class="n sig-name">taps</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-taps" title="Permalink to this definition">¶</a></dt><dd><p>The multirate FIR filter taps <span class="math notranslate nohighlight">\(h_i\)</span>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="returns">Returns<span class="colon">:</span><a class="headerlink" href="#returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The multirate FIR filter <span class="math notranslate nohighlight">\(h[n]\)</span>.</p>
+<dd class="field-even"><p>The polyphase matrix <span class="math notranslate nohighlight">\(H_{i, j}\)</span>.</p>
 </dd>
 </dl>
+<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p>The multirate FIR filter taps <span class="math notranslate nohighlight">\(h_i\)</span> are arranged down the columns of the polyphase matrix
+<span class="math notranslate nohighlight">\(H_{i, j}\)</span> as follows:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
+</span>Polyphase Matrix<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>+------+------+------+------+
+| h[0] | h[3] | h[6] | h[9] |
++------+------+------+------+
+| h[1] | h[4] | h[7] | 0    |
++------+------+------+------+
+| h[2] | h[5] | h[8] | 0    |
++------+------+------+------+
+</code></pre></div>
+</div>
+</div>
 <p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
 <ul class="simple">
 <li><p>fred harris, <em>Multirate Signal Processing for Communication Systems</em>, Chapter 7: Resampling Filters</p></li>
-<li><p><a class="reference external" href="https://www.mathworks.com/help/dsp/ref/designmultiratefir.html">https://www.mathworks.com/help/dsp/ref/designmultiratefir.html</a></p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
-<p>Design a multirate FIR filter for rational resampling by 11/3.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">multirate_fir</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<p>Convert the multirate FIR filter (notional taps for demonstration) into a polyphase matrix
+for rational resampling by 3/4 and 1/6.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 
-<span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">h</span><span class="p">);</span>
-<span class="gp">   ...: </span>
+<span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">polyphase_matrix</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="gh">Out[2]: </span>
+<span class="go">array([[ 0,  3,  6,  9, 12, 15, 18],</span>
+<span class="go">       [ 1,  4,  7, 10, 13, 16, 19],</span>
+<span class="go">       [ 2,  5,  8, 11, 14, 17,  0]])</span>
 
-<span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">h</span><span class="p">);</span>
-<span class="gp">   ...: </span>
+<span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">polyphase_matrix</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+<span class="gh">Out[3]: </span>
+<span class="go">array([[ 0,  6, 12, 18],</span>
+<span class="go">       [ 1,  7, 13, 19],</span>
+<span class="go">       [ 2,  8, 14,  0],</span>
+<span class="go">       [ 3,  9, 15,  0],</span>
+<span class="go">       [ 4, 10, 16,  0],</span>
+<span class="go">       [ 5, 11, 17,  0]])</span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_multirate_fir_1.png" src="../../_images/sdr_multirate_fir_1.png" />
-<img alt="../../_images/sdr_multirate_fir_2.png" src="../../_images/sdr_multirate_fir_2.png" />
 </dd></dl>
 
 
@@ -6652,7 +7167,7 @@ You're not viewing the latest version.
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../sdr.Interpolator.taps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.Interpolator.taps" rel="prev">
+        <a href="../sdr.multirate_taps/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.multirate_taps" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -6661,7 +7176,7 @@ You're not viewing the latest version.
               <span class="md-footer__direction">
                 Previous
               </span>
-              sdr.Interpolator.taps
+              sdr.multirate_taps
             </div>
           </div>
         </a>
