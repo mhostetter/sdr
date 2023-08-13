@@ -46,6 +46,9 @@ def periodogram(
             one-sided spectrum with a logarithmic frequency axis.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
+    Note:
+        The default y-axis lower limit is set to the 10th percentile. This is to crop any deep nulls.
+
     Group:
         plot-spectral-estimation
     """
@@ -77,9 +80,10 @@ def periodogram(
         if "label" in kwargs:
             plt.legend()
 
-        # y_max = plt.gca().get_ylim()[1]
-        # y_min = np.percentile(Pxx, 0.2)
-        # plt.ylim(y_min, y_max)
+        # Avoid deep nulls
+        y_max = plt.gca().get_ylim()[1]
+        y_min = np.percentile(H, 10)
+        plt.ylim(y_min, y_max)
 
         if sample_rate == 1.0:
             plt.xlabel("Normalized Frequency, $f /f_s$")
