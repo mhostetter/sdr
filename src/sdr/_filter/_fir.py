@@ -40,7 +40,7 @@ class FIR:
         Creates a FIR filter with feedforward coefficients $h_i$.
 
         Arguments:
-            h: The feedforward coefficients $h_i$.
+            h: The feedforward coefficients $h_i$ for $i = 0,...N$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FIR.__call__()`.
 
@@ -123,10 +123,7 @@ class FIR:
 
     def __len__(self) -> int:
         """
-        Returns the filter length $N$.
-
-        Returns:
-            The filter length $N$.
+        Returns the filter length $N + 1$.
 
         Examples:
             See the :ref:`fir-filters` example.
@@ -249,7 +246,7 @@ class FIR:
     @property
     def taps(self) -> np.ndarray:
         """
-        The feedforward taps $h_i$.
+        The feedforward taps $h_i$ for $i = 0,...,N$.
 
         Examples:
             See the :ref:`fir-filters` example.
@@ -271,7 +268,7 @@ class FIR:
     @property
     def order(self) -> int:
         """
-        The order of the FIR filter, $N$.
+        The order of the FIR filter $N$.
 
         Examples:
             See the :ref:`fir-filters` example.
@@ -280,8 +277,8 @@ class FIR:
 
     @property
     def delay(self) -> int:
-        """
-        The delay of the FIR filter in samples.
+        r"""
+        The delay of the FIR filter $d = \lfloor \frac{N + 1}{2} \rfloor$ in samples.
 
         Examples:
             See the :ref:`fir-filters` example.
