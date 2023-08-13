@@ -53,6 +53,37 @@ class FIR:
         self._x_prev: np.ndarray  # The filter state. Will be updated in reset().
         self.reset()
 
+    ##############################################################################
+    # Special methods
+    ##############################################################################
+
+    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
+        r"""
+        Filters the input signal $x[n]$ with the FIR filter.
+
+        Arguments:
+            x: The input signal $x[n]$.
+            mode: The non-streaming convolution mode. See :func:`scipy.signal.convolve` for details.
+                In streaming mode, $N$ inputs always produce $N$ outputs.
+
+        Returns:
+            The filtered signal $y[n]$.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        x = np.atleast_1d(x)
+
+        if self.streaming:
+            # Prepend previous inputs from last __call__() call
+            x_pad = np.concatenate((self._x_prev, x))
+            y = scipy.signal.convolve(x_pad, self.taps, mode="valid")
+            self._x_prev = x_pad[-(self.taps.size - 1) :]
+        else:
+            y = scipy.signal.convolve(x, self.taps, mode=mode)
+
+        return y
+
     def __repr__(self) -> str:
         """
         Returns a code-styled string representation of the object.
@@ -85,42 +116,6 @@ class FIR:
         string += f"\n  streaming: {self.streaming}"
         return string
 
-    def reset(self):
-        """
-        *Streaming-mode only:* Resets the filter state.
-
-        Examples:
-            See the :ref:`fir-filters` example.
-        """
-        self._x_prev = np.zeros(self.taps.size - 1, dtype=np.float32)
-
-    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
-        r"""
-        Filters the input signal $x[n]$ with the FIR filter.
-
-        Arguments:
-            x: The input signal $x[n]$.
-            mode: The non-streaming convolution mode. See :func:`scipy.signal.convolve` for details.
-                In streaming mode, $N$ inputs always produce $N$ outputs.
-
-        Returns:
-            The filtered signal $y[n]$.
-
-        Examples:
-            See the :ref:`fir-filters` example.
-        """
-        x = np.atleast_1d(x)
-
-        if self.streaming:
-            # Prepend previous inputs from last __call__() call
-            x_pad = np.concatenate((self._x_prev, x))
-            y = scipy.signal.convolve(x_pad, self.taps, mode="valid")
-            self._x_prev = x_pad[-(self.taps.size - 1) :]
-        else:
-            y = scipy.signal.convolve(x, self.taps, mode=mode)
-
-        return y
-
     def __len__(self) -> int:
         """
         Returns the filter length $N + 1$.
@@ -129,6 +124,41 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         return self.taps.size
+
+    ##############################################################################
+    # Streaming mode
+    ##############################################################################
+
+    def reset(self):
+        """
+        Resets the filter state. Only useful when using streaming mode.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+
+        Group:
+            Streaming mode only
+        """
+        self._x_prev = np.zeros(self.taps.size - 1, dtype=np.float32)
+
+    @property
+    def streaming(self) -> bool:
+        """
+        Indicates whether the filter is in streaming mode.
+
+        In streaming mode, the filter state is preserved between calls to :meth:`~FIR.__call__()`.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+
+        Group:
+            Streaming mode only
+        """
+        return self._streaming
+
+    ##############################################################################
+    # Methods
+    ##############################################################################
 
     def impulse_response(self, N: int | None = None) -> np.ndarray:
         r"""
@@ -243,6 +273,10 @@ class FIR:
 
         return w, H
 
+    ##############################################################################
+    # Properties
+    ##############################################################################
+
     @property
     def taps(self) -> np.ndarray:
         """
@@ -252,18 +286,6 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         return self._taps
-
-    @property
-    def streaming(self) -> bool:
-        """
-        Indicates whether the filter is in streaming mode.
-
-        In streaming mode, the filter state is preserved between calls to :meth:`~FIR.__call__()`.
-
-        Examples:
-            See the :ref:`fir-filters` example.
-        """
-        return self._streaming
 
     @property
     def order(self) -> int:

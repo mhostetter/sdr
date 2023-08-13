@@ -59,6 +59,10 @@ class IIR:
         # Compute the zeros and poles of the transfer function
         self._zeros, self._poles, self._gain = scipy.signal.tf2zpk(self.b_taps, self.a_taps)
 
+    ##############################################################################
+    # Alternate constructors
+    ##############################################################################
+
     @classmethod
     def ZerosPoles(cls, zeros: npt.ArrayLike, poles: npt.ArrayLike, gain: float = 1.0, streaming: bool = False) -> Self:
         """
@@ -77,6 +81,32 @@ class IIR:
         b, a = scipy.signal.zpk2tf(zeros, poles, gain)
 
         return cls(b, a, streaming=streaming)
+
+    ##############################################################################
+    # Special methods
+    ##############################################################################
+
+    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
+        r"""
+        Filters the input signal $x[n]$ with the IIR filter.
+
+        Arguments:
+            x: The input signal $x[n]$.
+
+        Returns:
+            The filtered signal $y[n]$.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        x = np.atleast_1d(x)
+
+        if not self.streaming:
+            self.reset()
+
+        y, self._zi = scipy.signal.lfilter(self.b_taps, self.a_taps, x, zi=self._zi)
+
+        return y
 
     def __repr__(self) -> str:
         """
@@ -117,36 +147,40 @@ class IIR:
         string += f"\n  streaming: {self.streaming}"
         return string
 
+    ##############################################################################
+    # Streaming mode
+    ##############################################################################
+
     def reset(self):
         """
-        *Streaming-mode only:* Resets the filter state.
+        Resets the filter state. Only useful when using streaming mode.
 
         Examples:
             See the :ref:`iir-filters` example.
+
+        Group:
+            Streaming mode only
         """
         self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
-    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
-        r"""
-        Filters the input signal $x[n]$ with the IIR filter.
+    @property
+    def streaming(self) -> bool:
+        """
+        Indicates whether the filter is in streaming mode.
 
-        Arguments:
-            x: The input signal $x[n]$.
-
-        Returns:
-            The filtered signal $y[n]$.
+        In streaming mode, the filter state is preserved between calls to :meth:`~IIR.__call__()`.
 
         Examples:
             See the :ref:`iir-filters` example.
+
+        Group:
+            Streaming mode only
         """
-        x = np.atleast_1d(x)
+        return self._streaming
 
-        if not self.streaming:
-            self.reset()
-
-        y, self._zi = scipy.signal.lfilter(self.b_taps, self.a_taps, x, zi=self._zi)
-
-        return y
+    ##############################################################################
+    # Methods
+    ##############################################################################
 
     def impulse_response(self, N: int = 100) -> np.ndarray:
         r"""
@@ -253,6 +287,10 @@ class IIR:
 
         return w, H
 
+    ##############################################################################
+    # Properties
+    ##############################################################################
+
     @property
     def b_taps(self) -> np.ndarray:
         """
@@ -272,18 +310,6 @@ class IIR:
             See the :ref:`iir-filters` example.
         """
         return self._a_taps
-
-    @property
-    def streaming(self) -> bool:
-        """
-        Indicates whether the filter is in streaming mode.
-
-        In streaming mode, the filter state is preserved between calls to :meth:`~IIR.__call__()`.
-
-        Examples:
-            See the :ref:`iir-filters` example.
-        """
-        return self._streaming
 
     @property
     def order(self) -> int:
