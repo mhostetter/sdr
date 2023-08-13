@@ -53,7 +53,7 @@ class IIR:
         self._a_taps = np.asarray(a)
         self._streaming = streaming
 
-        self._zi: np.ndarray  # The filter state. Will be updated in reset().
+        self._state: np.ndarray  # The filter state. Will be updated in reset().
         self.reset()
 
         # Compute the zeros and poles of the transfer function
@@ -104,7 +104,7 @@ class IIR:
         if not self.streaming:
             self.reset()
 
-        y, self._zi = scipy.signal.lfilter(self.b_taps, self.a_taps, x, zi=self._zi)
+        y, self._state = scipy.signal.lfilter(self.b_taps, self.a_taps, x, zi=self._state)
 
         return y
 
@@ -161,7 +161,7 @@ class IIR:
         Group:
             Streaming mode only
         """
-        self._zi = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
+        self._state = scipy.signal.lfiltic(self.b_taps, self.a_taps, y=[], x=[])
 
     @property
     def streaming(self) -> bool:
@@ -177,6 +177,19 @@ class IIR:
             Streaming mode only
         """
         return self._streaming
+
+    @property
+    def state(self) -> np.ndarray:
+        """
+        The filter state.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+
+        Group:
+            Streaming mode only
+        """
+        return self._state
 
     ##############################################################################
     # Methods
@@ -203,9 +216,9 @@ class IIR:
         d = np.zeros(N, dtype=np.float32)
         d[0] = 1
 
-        zi = self._zi
+        zi = self._state
         h = self(d)
-        self._zi = zi  # Restore the filter state
+        self._state = zi  # Restore the filter state
 
         return h
 
@@ -229,9 +242,9 @@ class IIR:
         # Unit step function
         u = np.ones(N, dtype=np.float32)
 
-        zi = self._zi
+        state = self._state
         s = self(u)
-        self._zi = zi  # Restore the filter state
+        self._state = state  # Restore the filter state
 
         return s
 
