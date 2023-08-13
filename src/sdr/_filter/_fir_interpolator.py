@@ -221,6 +221,7 @@ class Interpolator(FIR):
         if not rate >= 1:
             raise ValueError(f"Argument 'rate' must be at least 1, not {rate}.")
         self._rate = rate
+        self._method: Literal["kaiser", "linear", "zoh", "custom"]
 
         if not isinstance(taps, str):
             self._method = "custom"
@@ -352,6 +353,7 @@ class Interpolator(FIR):
         """  # pylint: disable=line-too-long
         x = np.atleast_1d(x)
         dtype = np.result_type(x, self.polyphase_taps)
+        _, M = self.polyphase_taps.shape  # Number of polyphase branches, polyphase filter length
 
         if self.streaming:
             # Prepend previous inputs from last __call__() call
@@ -360,27 +362,22 @@ class Interpolator(FIR):
             for i in range(self.rate):
                 yy[i] = scipy.signal.convolve(x_pad, self.polyphase_taps[i], mode="valid")
 
-            self._x_prev = x_pad[-(self.polyphase_taps.shape[1] - 1) :]
-
-            # Commutate the outputs of the polyphase filters
-            y = yy.T.flatten()
+            self._x_prev = x_pad[-(M - 1) :]
         else:
-            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=dtype)
-            for i in range(self.rate):
-                yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
-
-            # Commutate the outputs of the polyphase filters
-            y = yy.T.flatten()
-
-            if mode == "rate":
-                size = x.size * self.rate
-                offset = self.taps.size // 2
-                y = y[offset : offset + size]
-            elif mode == "full":
-                size = x.size * self.rate + self.taps.size - 1  # TODO: y is already smaller than size
-                y = y[:size]
+            if mode == "full":
+                yy = np.zeros((self.rate, x.size + M - 1), dtype=dtype)
+                for i in range(self.rate):
+                    yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
+            elif mode == "rate":
+                yy = np.zeros((self.rate, x.size), dtype=dtype)
+                for i in range(self.rate):
+                    corr = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
+                    yy[i] = corr[M // 2 : M // 2 + x.size]
             else:
                 raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode}.")
+
+        # Commutate the outputs of the polyphase filters
+        y = yy.T.flatten()
 
         return y
 
