@@ -41,8 +41,8 @@ class IIR:
         Creates an IIR filter with feedforward coefficients $b_i$ and feedback coefficients $a_j$.
 
         Arguments:
-            b: The feedforward coefficients $b_i$.
-            a: The feedback coefficients $a_j$.
+            b: The feedforward coefficients $b_i$ for $i = 0,...,M$.
+            a: The feedback coefficients $a_j$ for $j = 0,...,N$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
                 preserved between calls to :meth:`~IIR.__call__()`.
 
@@ -256,7 +256,7 @@ class IIR:
     @property
     def b_taps(self) -> np.ndarray:
         """
-        The feedforward taps $b_i$.
+        The feedforward taps $b_i$ for $i = 0,...,M$.
 
         Examples:
             See the :ref:`iir-filters` example.
@@ -266,7 +266,7 @@ class IIR:
     @property
     def a_taps(self) -> np.ndarray:
         """
-        The feedback taps $a_j$.
+        The feedback taps $a_j$ for $j = 0,...,N$.
 
         Examples:
             See the :ref:`iir-filters` example.
@@ -288,7 +288,7 @@ class IIR:
     @property
     def order(self) -> int:
         """
-        The order of the IIR filter, $N$.
+        The order of the IIR filter $N$.
 
         Examples:
             See the :ref:`iir-filters` example.
