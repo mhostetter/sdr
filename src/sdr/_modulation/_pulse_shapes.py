@@ -43,9 +43,9 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
 
             @savefig sdr_raised_cosine_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_0p1, label=r"$\alpha = 0.1$"); \
-            sdr.plot.frequency_response(h_0p5, label=r"$\alpha = 0.5$"); \
-            sdr.plot.frequency_response(h_0p9, label=r"$\alpha = 0.9$")
+            sdr.plot.magnitude_response(h_0p1, label=r"$\alpha = 0.1$"); \
+            sdr.plot.magnitude_response(h_0p5, label=r"$\alpha = 0.5$"); \
+            sdr.plot.magnitude_response(h_0p9, label=r"$\alpha = 0.9$")
 
         The span of the filter affects the stopband attenuation. A longer span results in greater stopband
         attenuation and lower sidelobes.
@@ -64,9 +64,9 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
 
             @savefig sdr_raised_cosine_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_4, label="span = 4"); \
-            sdr.plot.frequency_response(h_8, label="span = 8"); \
-            sdr.plot.frequency_response(h_16, label="span = 16")
+            sdr.plot.magnitude_response(h_4, label="span = 4"); \
+            sdr.plot.magnitude_response(h_8, label="span = 8"); \
+            sdr.plot.magnitude_response(h_16, label="span = 16")
 
         See the :ref:`pulse-shapes` example.
 
@@ -140,9 +140,9 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
 
             @savefig sdr_root_raised_cosine_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_0p1, label=r"$\alpha = 0.1$"); \
-            sdr.plot.frequency_response(h_0p5, label=r"$\alpha = 0.5$"); \
-            sdr.plot.frequency_response(h_0p9, label=r"$\alpha = 0.9$")
+            sdr.plot.magnitude_response(h_0p1, label=r"$\alpha = 0.1$"); \
+            sdr.plot.magnitude_response(h_0p5, label=r"$\alpha = 0.5$"); \
+            sdr.plot.magnitude_response(h_0p9, label=r"$\alpha = 0.9$")
 
         The span of the filter affects the stopband attenuation. A longer span results in greater stopband
         attenuation and lower sidelobes.
@@ -161,9 +161,9 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
 
             @savefig sdr_root_raised_cosine_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_4, label="span = 4"); \
-            sdr.plot.frequency_response(h_8, label="span = 8"); \
-            sdr.plot.frequency_response(h_16, label="span = 16")
+            sdr.plot.magnitude_response(h_4, label="span = 4"); \
+            sdr.plot.magnitude_response(h_8, label="span = 8"); \
+            sdr.plot.magnitude_response(h_16, label="span = 16")
 
         See the :ref:`pulse-shapes` example.
 

@@ -82,7 +82,7 @@ python3 -m pip install sdr
    - Modulation: `sdr.plot.ber()`, `sdr.plot.ser()`, `sdr.plot.constellation()`,
      `sdr.plot.symbol_map()`
    - Filters: `sdr.plot.impulse_response()`, `sdr.plot.step_response()`,
-     `sdr.plot.frequency_response()`, `sdr.plot.phase_response()`, `sdr.plot.phase_delay()`,
+     `sdr.plot.magnitude_response()`, `sdr.plot.phase_response()`, `sdr.plot.phase_delay()`,
      `sdr.plot.group_delay()`, `sdr.plot.zeros_poles()`, `sdr.plot.filter()`
 
 ## Examples
