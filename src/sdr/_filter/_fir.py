@@ -50,7 +50,7 @@ class FIR:
         self._taps = np.asarray(h)
         self._streaming = streaming
 
-        self._x_prev: np.ndarray  # The filter state. Will be updated in reset().
+        self._state: np.ndarray  # The filter state. Will be updated in reset().
         self.reset()
 
     ##############################################################################
@@ -76,9 +76,9 @@ class FIR:
 
         if self.streaming:
             # Prepend previous inputs from last __call__() call
-            x_pad = np.concatenate((self._x_prev, x))
+            x_pad = np.concatenate((self._state, x))
             y = scipy.signal.convolve(x_pad, self.taps, mode="valid")
-            self._x_prev = x_pad[-(self.taps.size - 1) :]
+            self._state = x_pad[-(self.taps.size - 1) :]
         else:
             y = scipy.signal.convolve(x, self.taps, mode=mode)
 
@@ -139,7 +139,24 @@ class FIR:
         Group:
             Streaming mode only
         """
-        self._x_prev = np.zeros(self.taps.size - 1, dtype=np.float32)
+        self._state = np.zeros(self.taps.size - 1, dtype=self.taps.dtype)
+
+    def flush(self) -> np.ndarray:
+        """
+        Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
+
+        Returns:
+            The remaining filtered signal $y[n]$.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+
+        Group:
+            Streaming mode only
+        """
+        x = np.zeros_like(self.state)
+        y = self(x)
+        return y
 
     @property
     def streaming(self) -> bool:
@@ -155,6 +172,19 @@ class FIR:
             Streaming mode only
         """
         return self._streaming
+
+    @property
+    def state(self) -> np.ndarray:
+        """
+        The filter state consisting of the previous $N$ inputs.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+
+        Group:
+            Streaming mode only
+        """
+        return self._state
 
     ##############################################################################
     # Methods
