@@ -133,6 +133,10 @@ class Interpolator(FIR):
             Input Hold                                          Output Commutator
                                                                 (top-to-bottom)
 
+            x[n] = Input signal with sample rate fs
+            y[n] = Output signal with sample rate fs * r
+            h[n] = Prototype FIR filter
+
         The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
 
         $$h_{i, j} = h_{i + j r} .$$
@@ -199,7 +203,7 @@ class Interpolator(FIR):
         streaming: bool = False,
     ):
         r"""
-        Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$.
+        Creates a polyphase FIR interpolating filter.
 
         Arguments:
             rate: The interpolation rate $r$.
@@ -245,47 +249,13 @@ class Interpolator(FIR):
 
         super().__init__(taps, streaming=streaming)
 
-    def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Interpolator(7)
-                fir
-        """
-        if self.method == "custom":
-            h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
-        else:
-            h_str = repr(self.method)
-        return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
-
-    def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Interpolator(7)
-                print(fir)
-        """
-        string = f"sdr.{type(self).__name__}:"
-        string += f"\n  order: {self.order}"
-        string += f"\n  rate: {self.rate}"
-        string += f"\n  method: {self._method!r}"
-        string += f"\n  polyphase_taps: {self.polyphase_taps.shape} shape"
-        string += f"\n  delay: {self.delay}"
-        string += f"\n  streaming: {self.streaming}"
-        return string
-
-    def reset(self):
-        self._x_prev = np.zeros(self.polyphase_taps.shape[1] - 1)
+    ##############################################################################
+    # Special methods
+    ##############################################################################
 
     def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> np.ndarray:
         r"""
-        Filters and interpolates the input signal $x[n]$ with the FIR filter.
+        Interpolates and filters the input signal $x[n]$ with the polyphase FIR filter.
 
         Arguments:
             x: The input signal $x[n]$ with sample rate $f_s$ and length $L$.
@@ -298,8 +268,8 @@ class Interpolator(FIR):
                   with input sample 0.
 
                 In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
-                only $L r$ output samples are produced per call. A final call with input zeros is required to flush
-                the filter state.
+                only $L r$ output samples are produced per call. A final call to :meth:`~Interpolator.flush()`
+                is required to flush the filter state.
 
         Returns:
             The filtered signal $y[n]$ with sample rate $f_s r$. The output length is dictated by
@@ -352,34 +322,90 @@ class Interpolator(FIR):
                 sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="$y[n]$");
         """  # pylint: disable=line-too-long
         x = np.atleast_1d(x)
+        if not x.ndim == 1:
+            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
+
         dtype = np.result_type(x, self.polyphase_taps)
-        _, M = self.polyphase_taps.shape  # Number of polyphase branches, polyphase filter length
+        H = self.polyphase_taps
+        B, M = self.polyphase_taps.shape  # Number of polyphase branches, polyphase filter length
 
         if self.streaming:
-            # Prepend previous inputs from last __call__() call
-            x_pad = np.concatenate((self._x_prev, x))
-            yy = np.zeros((self.rate, x.size), dtype=dtype)
-            for i in range(self.rate):
-                yy[i] = scipy.signal.convolve(x_pad, self.polyphase_taps[i], mode="valid")
+            x_pad = np.concatenate((self._state, x))  # Prepend previous inputs from last __call__() call
+            Y = np.zeros((B, x.size), dtype=dtype)
+            for i in range(B):
+                Y[i] = scipy.signal.convolve(x_pad, H[i], mode="valid")
 
-            self._x_prev = x_pad[-(M - 1) :]
+            self._state = x_pad[-(M - 1) :]
         else:
             if mode == "full":
-                yy = np.zeros((self.rate, x.size + M - 1), dtype=dtype)
-                for i in range(self.rate):
-                    yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
+                Y = np.zeros((B, x.size + M - 1), dtype=dtype)
+                for i in range(B):
+                    Y[i] = scipy.signal.convolve(x, H[i], mode="full")
             elif mode == "rate":
-                yy = np.zeros((self.rate, x.size), dtype=dtype)
-                for i in range(self.rate):
-                    corr = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
-                    yy[i] = corr[M // 2 : M // 2 + x.size]
+                Y = np.zeros((B, x.size), dtype=dtype)
+                for i in range(B):
+                    corr = scipy.signal.convolve(x, H[i], mode="full")
+                    Y[i] = corr[M // 2 : M // 2 + x.size]
             else:
-                raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode}.")
+                raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
 
         # Commutate the outputs of the polyphase filters
-        y = yy.T.flatten()
+        y = Y.T.flatten()
 
         return y
+
+    def __repr__(self) -> str:
+        """
+        Returns a code-styled string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.Interpolator(7)
+                fir
+        """
+        if self.method == "custom":
+            h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
+        else:
+            h_str = repr(self.method)
+        return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the object.
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.Interpolator(7)
+                print(fir)
+        """
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
+        string += f"\n  rate: {self.rate}"
+        string += f"\n  method: {self._method!r}"
+        string += f"\n  polyphase_taps: {self.polyphase_taps.shape} shape"
+        string += f"\n  delay: {self.delay}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
+    ##############################################################################
+    # Streaming mode
+    ##############################################################################
+
+    def reset(self):
+        self._state = np.zeros(self.polyphase_taps.shape[1] - 1)
+
+    ##############################################################################
+    # Properties
+    ##############################################################################
+
+    @property
+    def rate(self) -> int:
+        """
+        The interpolation rate $r$.
+        """
+        return self._rate
 
     @property
     def method(self) -> Literal["kaiser", "linear", "zoh", "custom"]:
@@ -433,10 +459,3 @@ class Interpolator(FIR):
                 fir.polyphase_taps
         """
         return self._polyphase_taps
-
-    @property
-    def rate(self) -> int:
-        """
-        The interpolation rate $r$.
-        """
-        return self._rate
