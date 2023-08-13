@@ -7137,30 +7137,30 @@ The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is 
 <h2 id="examine-the-frequency-response-h-omega">Examine the frequency response, <span class="math notranslate nohighlight">\(H(\omega)\)</span><a class="headerlink" href="#examine-the-frequency-response-h-omega" title="Permalink to this heading">¶</a></h2>
 <p>The frequency response is the transfer function <span class="math notranslate nohighlight">\(H(z)\)</span> evaluated at the complex exponential
 <span class="math notranslate nohighlight">\(e^{j \omega}\)</span>, where <span class="math notranslate nohighlight">\(\omega = 2 \pi f / f_s\)</span>.</p>
-<p>The two-sided frequency response is conveniently plotted using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.frequency_response()</span></code> function.</p>
+<p>The two-sided frequency response is conveniently plotted using the <a class="reference internal" href="../../api/sdr.plot.magnitude_response/" title="sdr.plot.magnitude_response (Python function) — Plots the magnitude response $|H(omega)|^2$ of the filter."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.magnitude_response()</span></code></a> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">fir</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">fir</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1eb286aeedb017b8f6e9b3d77ee30eb9539a5c5a0b141ed2108856fbdecda73f.png" src="../../_images/1eb286aeedb017b8f6e9b3d77ee30eb9539a5c5a0b141ed2108856fbdecda73f.png" />
+<img alt="../../_images/5a9df9b7f5b9a1c8d422157357e8025666774717057e4155c351b916d7dede28.png" src="../../_images/5a9df9b7f5b9a1c8d422157357e8025666774717057e4155c351b916d7dede28.png" />
 </div>
 </div>
 <p>The one-sided frequency response, with logarithmic scale, can be plotted using the <code class="docutils literal notranslate"><span class="pre">x_axis=&quot;log&quot;</span></code> keyword argument.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">fir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">decades</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">fir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">decades</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d0b0b8a19a3e558b09f053562605d9bbeb140ee4edecee524c9327542b5567c4.png" src="../../_images/d0b0b8a19a3e558b09f053562605d9bbeb140ee4edecee524c9327542b5567c4.png" />
+<img alt="../../_images/e643eef552062ff3e70e82fa8c6b84d13c7fba966f864a09fe1622e48574729e.png" src="../../_images/e643eef552062ff3e70e82fa8c6b84d13c7fba966f864a09fe1622e48574729e.png" />
 </div>
 </div>
 <h2 id="examine-the-group-delay-tau-g-omega">Examine the group delay, <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span><a class="headerlink" href="#examine-the-group-delay-tau-g-omega" title="Permalink to this heading">¶</a></h2>
@@ -7213,7 +7213,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/cbdcfd5b61ee1eefa6b56852acfe0ca7a35b3ee3b34ca0e693c73da07db1a200.png" src="../../_images/cbdcfd5b61ee1eefa6b56852acfe0ca7a35b3ee3b34ca0e693c73da07db1a200.png" />
+<img alt="../../_images/5107596e51db47a4d171c2d5d7ffef4b3911e76dff6b32a5b7b3505f62328cdb.png" src="../../_images/5107596e51db47a4d171c2d5d7ffef4b3911e76dff6b32a5b7b3505f62328cdb.png" />
 </div>
 </div>
 
@@ -7223,7 +7223,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
   <small>
     
       Last update:
-      Aug 10, 2023
+      Aug 13, 2023
     
   </small>
 </div>

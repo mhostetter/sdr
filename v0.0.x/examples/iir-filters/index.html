@@ -7087,7 +7087,17 @@ Alternatively, an IIR filter may be created by specifying the zeros and poles in
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.IIR object at 0x00000179FF644BC8&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>sdr.IIR:
+  order: 2
+  b_taps: (2,) shape
+    [1.0, -0.6]
+  a_taps: (3,) shape
+    [1.0, -1.478207252018059, 0.6400000000000001]
+  zeros: (1,) shape
+    [0.6]
+  poles: (2,) shape
+    [(0.7391036260090295+0.3061467458920719j), (0.7391036260090295-0.3061467458920719j)]
+  streaming: False
 </code></pre></div>
 </div>
 </div>
@@ -7219,30 +7229,30 @@ The poles define the stability of the IIR filter.</p>
 <h2 id="examine-the-frequency-response-h-omega">Examine the frequency response, <span class="math notranslate nohighlight">\(H(\omega)\)</span><a class="headerlink" href="#examine-the-frequency-response-h-omega" title="Permalink to this heading">¶</a></h2>
 <p>The frequency response is the transfer function <span class="math notranslate nohighlight">\(H(z)\)</span> evaluated at the complex exponential
 <span class="math notranslate nohighlight">\(e^{j \omega}\)</span>, where <span class="math notranslate nohighlight">\(\omega = 2 \pi f / f_s\)</span>.</p>
-<p>The two-sided frequency response is conveniently plotted using the <code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.frequency_response()</span></code> function.</p>
+<p>The two-sided frequency response is conveniently plotted using the <a class="reference internal" href="../../api/sdr.plot.magnitude_response/" title="sdr.plot.magnitude_response (Python function) — Plots the magnitude response $|H(omega)|^2$ of the filter."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.magnitude_response()</span></code></a> function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">iir</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6170bc8fad2f7f611632d68bae724b619696ddca8537b4cf61ed8dde115ff016.png" src="../../_images/6170bc8fad2f7f611632d68bae724b619696ddca8537b4cf61ed8dde115ff016.png" />
+<img alt="../../_images/754db178f4bc64fe6a1eb4dd1645e2a880436916ed13b07b0e0b93fc040aaca7.png" src="../../_images/754db178f4bc64fe6a1eb4dd1645e2a880436916ed13b07b0e0b93fc040aaca7.png" />
 </div>
 </div>
 <p>The one-sided frequency response, with logarithmic scale, can be plotted using the <code class="docutils literal notranslate"><span class="pre">x_axis=&quot;log&quot;</span></code> keyword argument.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">iir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4af26edf8a5015ed1189147e6abb7c262251ce50ce3ab82bcacfd459dee41aab.png" src="../../_images/4af26edf8a5015ed1189147e6abb7c262251ce50ce3ab82bcacfd459dee41aab.png" />
+<img alt="../../_images/1dbd30ab0dc2599b8f1fe94a7f493ce3827a0033373b3a0c654ac23e9a604d69.png" src="../../_images/1dbd30ab0dc2599b8f1fe94a7f493ce3827a0033373b3a0c654ac23e9a604d69.png" />
 </div>
 </div>
 <h2 id="examine-the-group-delay-tau-g-omega">Examine the group delay, <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span><a class="headerlink" href="#examine-the-group-delay-tau-g-omega" title="Permalink to this heading">¶</a></h2>
@@ -7287,7 +7297,17 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.IIR object at 0x000001799A0F5188&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>sdr.IIR:
+  order: 8
+  b_taps: (2,) shape
+    [1.0, -0.8]
+  a_taps: (9,) shape
+    [1.0, -4.092337035029908, 7.71104892744724, -8.684365018955985, 6.37868538208862, -3.1263714068241546, 0.9993519409971622, -0.1909320767063554, 0.016796159999999997]
+  zeros: (1,) shape
+    [0.8]
+  poles: (8,) shape
+    [(0.46380627201679264+0.3806359704987118j), (0.46380627201679264-0.3806359704987118j), (0.4988817673846036+0.333342139809402j), (0.4988817673846036-0.333342139809402j), (0.5543277195082319+0.22961005941718524j), (0.5543277195082319-0.22961005941718524j), (0.5291527586053246+0.2828380420991956j), (0.5291527586053246-0.2828380420991956j)]
+  streaming: False
 </code></pre></div>
 </div>
 </div>
@@ -7301,7 +7321,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/8ef8b1d8f588a34c064a164fb915440f211721860e50543acf77275ff92f679e.png" src="../../_images/8ef8b1d8f588a34c064a164fb915440f211721860e50543acf77275ff92f679e.png" />
+<img alt="../../_images/cf7a1b88169232d49b70e3e6483242f4a266c25663e48c6a89a49fbabf1ca9c3.png" src="../../_images/cf7a1b88169232d49b70e3e6483242f4a266c25663e48c6a89a49fbabf1ca9c3.png" />
 </div>
 </div>
 <h2 id="poles-and-digital-filter-stability">Poles and digital filter stability<a class="headerlink" href="#poles-and-digital-filter-stability" title="Permalink to this heading">¶</a></h2>
@@ -7323,7 +7343,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/922bfd9cd6ac2b844f5d0ac1009983ecd12a352bc27c089a9ec8a25857f7c077.png" src="../../_images/922bfd9cd6ac2b844f5d0ac1009983ecd12a352bc27c089a9ec8a25857f7c077.png" />
+<img alt="../../_images/875c0b493edca51b68824ab00c510d6962eb3c8fcf79eed7b37ccd3471f1e53e.png" src="../../_images/875c0b493edca51b68824ab00c510d6962eb3c8fcf79eed7b37ccd3471f1e53e.png" />
 </div>
 </div>
 <p>When the poles are complex conjugates and inside the unit circle, the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is a decaying sinusoid.</p>
@@ -7341,7 +7361,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/be32b4d32e7932caa93aa9e1bd8ee32d9e2dba8b4257b912aba35cb486224e59.png" src="../../_images/be32b4d32e7932caa93aa9e1bd8ee32d9e2dba8b4257b912aba35cb486224e59.png" />
+<img alt="../../_images/a4350584f7039441900f12d90243d8c0916a91d21ee2d6dc50a485ec2e0c4c26.png" src="../../_images/a4350584f7039441900f12d90243d8c0916a91d21ee2d6dc50a485ec2e0c4c26.png" />
 </div>
 </div>
 <p>When the pole is real and on the unit circle, the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is constant.
@@ -7359,7 +7379,7 @@ This filter is an integrator.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/abef521cd58c9da99be470a1d4901a02627c75e0d5e6a9301c37ebb6534aff1b.png" src="../../_images/abef521cd58c9da99be470a1d4901a02627c75e0d5e6a9301c37ebb6534aff1b.png" />
+<img alt="../../_images/e3cd00aee1ea96ea67bc950f84a0cf5e19a75b13ca9fa367216d4875c177a07a.png" src="../../_images/e3cd00aee1ea96ea67bc950f84a0cf5e19a75b13ca9fa367216d4875c177a07a.png" />
 </div>
 </div>
 <p>When the poles are complex conjugates and on the unit circle, the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is a sinusoid.</p>
@@ -7377,7 +7397,7 @@ This filter is an integrator.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/462758bb65252e9dce1662421c905a7ba0cf98a5b075ccc549171be85bb87545.png" src="../../_images/462758bb65252e9dce1662421c905a7ba0cf98a5b075ccc549171be85bb87545.png" />
+<img alt="../../_images/2bb8e367708a8a68e8fd03de5124635ba4e12089be8887c9e5b71fec60df20d2.png" src="../../_images/2bb8e367708a8a68e8fd03de5124635ba4e12089be8887c9e5b71fec60df20d2.png" />
 </div>
 </div>
 <p>When the pole is real and outside the unit circle, the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is an exponential.
@@ -7395,7 +7415,7 @@ This filter is unstable.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2506c3be15ffc7464f14faaa39e342d37c2e0627e69c2783cbc0c2b13d7556f3.png" src="../../_images/2506c3be15ffc7464f14faaa39e342d37c2e0627e69c2783cbc0c2b13d7556f3.png" />
+<img alt="../../_images/fa4de6bf2b757415942aa9b2552c6b7a184b0f7c719595ea4236fcbace8ea929.png" src="../../_images/fa4de6bf2b757415942aa9b2552c6b7a184b0f7c719595ea4236fcbace8ea929.png" />
 </div>
 </div>
 <p>When the poles are complex conjugates and outside the unit circle,
@@ -7415,7 +7435,7 @@ This filter is unstable.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0b7c47f639f4db924bfd5df7e44abb73f7fd6bfd77ed5fa9d085b36b8d0f31e4.png" src="../../_images/0b7c47f639f4db924bfd5df7e44abb73f7fd6bfd77ed5fa9d085b36b8d0f31e4.png" />
+<img alt="../../_images/4521bb870d7c83e1701c67cb9d0dced54dc319cfe5f1368a43b9d30a2702980e.png" src="../../_images/4521bb870d7c83e1701c67cb9d0dced54dc319cfe5f1368a43b9d30a2702980e.png" />
 </div>
 </div>
 
@@ -7425,7 +7445,7 @@ This filter is unstable.</p>
   <small>
     
       Last update:
-      Aug 10, 2023
+      Aug 13, 2023
     
   </small>
 </div>

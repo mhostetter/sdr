@@ -7043,7 +7043,7 @@ You're not viewing the latest version.
         <span class="n">h</span><span class="p">[</span><span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="p">:</span> <span class="n">span</span> <span class="o">*</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sps</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sps</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-    <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+    <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">sps</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 
     <span class="n">bb</span> <span class="o">=</span> <span class="n">fir</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">pb</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">to_real_pb</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
@@ -7080,7 +7080,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5e1b0e5205cff8b4368e80c7b273f86f0cd1c83b6d09878e9fab2b25ac1015fc.png" src="../../_images/5e1b0e5205cff8b4368e80c7b273f86f0cd1c83b6d09878e9fab2b25ac1015fc.png" />
+<img alt="../../_images/4a83d8b95471af52dec662011519ede8abdb2dcb87b5bc673b31d893298ada0f.png" src="../../_images/4a83d8b95471af52dec662011519ede8abdb2dcb87b5bc673b31d893298ada0f.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -7099,7 +7099,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/67c5c109f0545f7a7b537b1cebabab6068a0688979263420392458630e788269.png" src="../../_images/67c5c109f0545f7a7b537b1cebabab6068a0688979263420392458630e788269.png" />
+<img alt="../../_images/eead71d6823c0216e24f19ed07ed0d924b6e23d2ad664b4b926b943d9238f057.png" src="../../_images/eead71d6823c0216e24f19ed07ed0d924b6e23d2ad664b4b926b943d9238f057.png" />
 </div>
 </div>
 <h2 id="examine-frequency-domain">Examine frequency domain<a class="headerlink" href="#examine-frequency-domain" title="Permalink to this heading">¶</a></h2>
@@ -7116,7 +7116,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f3bda5323445d2ea2ad284edc301aa0b66eda37a2fb8858060d4606e8db29d8a.png" src="../../_images/f3bda5323445d2ea2ad284edc301aa0b66eda37a2fb8858060d4606e8db29d8a.png" />
+<img alt="../../_images/48c071f80ddb5ea5f727d9b7fa95055561020497ab471e4861bf291b08e06217.png" src="../../_images/48c071f80ddb5ea5f727d9b7fa95055561020497ab471e4861bf291b08e06217.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -7156,7 +7156,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a1e978a62affc4bd656e859a05ee8faec02c0580ce5b0b303c2ded18471f4e90.png" src="../../_images/a1e978a62affc4bd656e859a05ee8faec02c0580ce5b0b303c2ded18471f4e90.png" />
+<img alt="../../_images/449b23d51286b6b4fd6a92c921fa84e6c01cb3a4fbf1e15a11475d81b1b24350.png" src="../../_images/449b23d51286b6b4fd6a92c921fa84e6c01cb3a4fbf1e15a11475d81b1b24350.png" />
 </div>
 </div>
 <h2 id="plot-across-excess-bandwidth">Plot across excess bandwidth<a class="headerlink" href="#plot-across-excess-bandwidth" title="Permalink to this heading">¶</a></h2>
@@ -7174,7 +7174,7 @@ You're not viewing the latest version.
 
     <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">:</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="n">span</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-        <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+        <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">sps</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 
         <span class="n">bb</span> <span class="o">=</span> <span class="n">fir</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">pb</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">to_real_pb</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
@@ -7214,7 +7214,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7218577a9895c3c84138931d3ee9c48b9749025f7707f61589aa40f09bea0af8.png" src="../../_images/7218577a9895c3c84138931d3ee9c48b9749025f7707f61589aa40f09bea0af8.png" />
+<img alt="../../_images/fbfc8251e73c6c68363d58fbf0e19d32cc9d9572edf507dfbe8ff45136a9c219.png" src="../../_images/fbfc8251e73c6c68363d58fbf0e19d32cc9d9572edf507dfbe8ff45136a9c219.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -7234,7 +7234,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/bb89786f0bfc4f7e76cf2067f746670ed19d693bad9e7754296cecc1b360e72b.png" src="../../_images/bb89786f0bfc4f7e76cf2067f746670ed19d693bad9e7754296cecc1b360e72b.png" />
+<img alt="../../_images/d0ac7291e85ac18321d63b625b51be44170a8dd73ef09185de9c137983161d7b.png" src="../../_images/d0ac7291e85ac18321d63b625b51be44170a8dd73ef09185de9c137983161d7b.png" />
 </div>
 </div>
 

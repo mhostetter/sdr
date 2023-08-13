@@ -7102,7 +7102,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x00000244C97410C8&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x000002276D2BCC08&gt;
 </code></pre></div>
 </div>
 </div>
@@ -7110,13 +7110,13 @@ z^-1 = Unit delay
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">loop_filter</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">decades</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">loop_filter</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">decades</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fc636a4c31e7d61e53cfa13e2842db9c6f93fc9cf54bd2eef6d6c2ca6ab40b64.png" src="../../_images/fc636a4c31e7d61e53cfa13e2842db9c6f93fc9cf54bd2eef6d6c2ca6ab40b64.png" />
+<img alt="../../_images/4a1191124cd4fb703cb66cb8d9c6f0187bb1efe1f01ba460fb01815478df2d0b.png" src="../../_images/4a1191124cd4fb703cb66cb8d9c6f0187bb1efe1f01ba460fb01815478df2d0b.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-phase-domain">Implement a PLL in the phase domain<a class="headerlink" href="#implement-a-pll-in-the-phase-domain" title="Permalink to this heading">¶</a></h2>
@@ -7299,7 +7299,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">zeta</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
     <span class="n">pll</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ClosedLoopPLL</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">zeta</span><span class="p">)</span>
-    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">pll</span><span class="o">.</span><span class="n">omega_n</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\zeta = </span><span class="si">{</span><span class="n">zeta</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">pll</span><span class="o">.</span><span class="n">omega_n</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\zeta = </span><span class="si">{</span><span class="n">zeta</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">10</span><span class="o">**-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="mi">2</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
@@ -7310,7 +7310,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/51223c9dc21f9d33bff1462bbce282a56b240dddb87284ad6ae7251c9390809e.png" src="../../_images/51223c9dc21f9d33bff1462bbce282a56b240dddb87284ad6ae7251c9390809e.png" />
+<img alt="../../_images/1c5969fcb6cc07800106c121a35fc96d3a39abe90b666084a4a0a5a2266dd635.png" src="../../_images/1c5969fcb6cc07800106c121a35fc96d3a39abe90b666084a4a0a5a2266dd635.png" />
 </div>
 </div>
 <h3 id="compare-step-and-frequency-response-across-b-n-t">Compare step and frequency response across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-b-n-t" title="Permalink to this heading">¶</a></h3>
@@ -7335,7 +7335,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">BnT</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]:</span>
     <span class="n">pll</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ClosedLoopPLL</span><span class="p">(</span><span class="n">BnT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">frequency_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$B_nT = </span><span class="si">{</span><span class="n">BnT</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$B_nT = </span><span class="si">{</span><span class="n">BnT</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequency response of the closed-loop PLL across normalized noise bandwidth&quot;</span><span class="p">)</span>
@@ -7344,7 +7344,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e96fb8920411d156a046a4f29c60ee346f992b9bc01a945d7b96bc6bbf8b7049.png" src="../../_images/e96fb8920411d156a046a4f29c60ee346f992b9bc01a945d7b96bc6bbf8b7049.png" />
+<img alt="../../_images/e13d23d6c6f2556f740e6bad60a1effecffe42af0e300744274d41084bebf365.png" src="../../_images/e13d23d6c6f2556f740e6bad60a1effecffe42af0e300744274d41084bebf365.png" />
 </div>
 </div>
 <h3 id="compare-lock-time-across-b-n-t">Compare lock time across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-lock-time-across-b-n-t" title="Permalink to this heading">¶</a></h3>
@@ -7377,7 +7377,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
   <small>
     
       Last update:
-      Aug 10, 2023
+      Aug 13, 2023
     
   </small>
 </div>

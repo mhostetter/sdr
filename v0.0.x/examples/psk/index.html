@@ -7136,7 +7136,7 @@ You're not viewing the latest version.
 
     <span class="n">sps</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">h_srrc</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-    <span class="n">tx_mf</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">h_srrc</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
+    <span class="n">tx_mf</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">sps</span><span class="p">,</span> <span class="n">h_srrc</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">tx_mf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -7156,8 +7156,8 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e13623e8d839f7de6f19fb56be227bafaec609686dc7976f5abd40bc5678eeb9.png" src="../../_images/e13623e8d839f7de6f19fb56be227bafaec609686dc7976f5abd40bc5678eeb9.png" />
-<img alt="../../_images/e6b2b9a65654e1cfbabb6714ef48e9726c628d17efb1ab37b7528dea5b97ffc9.png" src="../../_images/e6b2b9a65654e1cfbabb6714ef48e9726c628d17efb1ab37b7528dea5b97ffc9.png" />
+<img alt="../../_images/c1ce68a9fd6db55655be6a14273e979a978e417914d720ee377de9c9b53ef4ef.png" src="../../_images/c1ce68a9fd6db55655be6a14273e979a978e417914d720ee377de9c9b53ef4ef.png" />
+<img alt="../../_images/1632e6f6a6acbdcf25a2d5ffc2e3d2fae064e731c11803041c1050aae7f4503d.png" src="../../_images/1632e6f6a6acbdcf25a2d5ffc2e3d2fae064e731c11803041c1050aae7f4503d.png" />
 </div>
 </div>
 <h3 id="qpsk">QPSK<a class="headerlink" href="#qpsk" title="Permalink to this heading">¶</a></h3>
@@ -7169,8 +7169,8 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/68fe8b298405c95b3d0108fa964794829b6e7b9d7a8b730ceecaa15fc87acf2b.png" src="../../_images/68fe8b298405c95b3d0108fa964794829b6e7b9d7a8b730ceecaa15fc87acf2b.png" />
-<img alt="../../_images/084de695eade5bc30e773baacc965c62c4c19ede8f0f7d21f9abb27b2422a64c.png" src="../../_images/084de695eade5bc30e773baacc965c62c4c19ede8f0f7d21f9abb27b2422a64c.png" />
+<img alt="../../_images/1f71763be5d46f0e6aaecd2141d94f06e2fcdc6d752f2431ca38c95a169d4e9f.png" src="../../_images/1f71763be5d46f0e6aaecd2141d94f06e2fcdc6d752f2431ca38c95a169d4e9f.png" />
+<img alt="../../_images/44d0e523e0f008ee0c48fb2993b3ee41a15dccf40d6df85f6da827861f02ce2d.png" src="../../_images/44d0e523e0f008ee0c48fb2993b3ee41a15dccf40d6df85f6da827861f02ce2d.png" />
 </div>
 </div>
 <h3 id="id1">8-PSK<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
@@ -7182,8 +7182,8 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a01859d9aa800317d3fd3402e530ee8d835fc78e40ff2ee325b75fa0a1184a80.png" src="../../_images/a01859d9aa800317d3fd3402e530ee8d835fc78e40ff2ee325b75fa0a1184a80.png" />
-<img alt="../../_images/b3b83780d8473157a7d505e3ae94acfd72f0b2d9c502f58a20e5b442046df2f6.png" src="../../_images/b3b83780d8473157a7d505e3ae94acfd72f0b2d9c502f58a20e5b442046df2f6.png" />
+<img alt="../../_images/f788ac494eff7a7543e918c67483398dfd7d5047dd6a513cf394e3308311fdc5.png" src="../../_images/f788ac494eff7a7543e918c67483398dfd7d5047dd6a513cf394e3308311fdc5.png" />
+<img alt="../../_images/86b74d303713a7a7badbb566d47ba5e2253a73e919578cfe80de376b1c333f6b.png" src="../../_images/86b74d303713a7a7badbb566d47ba5e2253a73e919578cfe80de376b1c333f6b.png" />
 </div>
 </div>
 <h3 id="id2">16-PSK<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
@@ -7195,8 +7195,8 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0a5077328bc3693ba2de55a8b82126eea59dbd9a98ae0b2aa0478fc833840079.png" src="../../_images/0a5077328bc3693ba2de55a8b82126eea59dbd9a98ae0b2aa0478fc833840079.png" />
-<img alt="../../_images/f8ef493fc3d820a8f3157060fd473973e8bccc3f0ce4302b304b00d21c609944.png" src="../../_images/f8ef493fc3d820a8f3157060fd473973e8bccc3f0ce4302b304b00d21c609944.png" />
+<img alt="../../_images/d8533739f6a399d1afb6477387c39955cf13dcac9600a4cb584cb16d5cb91eac.png" src="../../_images/d8533739f6a399d1afb6477387c39955cf13dcac9600a4cb584cb16d5cb91eac.png" />
+<img alt="../../_images/ac5f64f2229ae1cad7f2e3e2abdf7f61c9d5cc0f66da73fc54201e9ed08262bc.png" src="../../_images/ac5f64f2229ae1cad7f2e3e2abdf7f61c9d5cc0f66da73fc54201e9ed08262bc.png" />
 </div>
 </div>
 <h2 id="error-rate-curves">Error rate curves<a class="headerlink" href="#error-rate-curves" title="Permalink to this heading">¶</a></h2>
@@ -7257,7 +7257,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f59bc8eed1684ce4b80009194fe7d5f7b73a7b3f46acb7ad6b2cad852b991663.png" src="../../_images/f59bc8eed1684ce4b80009194fe7d5f7b73a7b3f46acb7ad6b2cad852b991663.png" />
+<img alt="../../_images/71cc0bb4e7111d9bc13d8b5d45d44a7cd6d3ed7d89a9a8114afbf080b0a831fb.png" src="../../_images/71cc0bb4e7111d9bc13d8b5d45d44a7cd6d3ed7d89a9a8114afbf080b0a831fb.png" />
 </div>
 </div>
 <h3 id="symbol-error-rate-curves">Symbol error rate curves<a class="headerlink" href="#symbol-error-rate-curves" title="Permalink to this heading">¶</a></h3>
@@ -7282,7 +7282,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d9cf6e92073bcdb1ec11258fd3e6a97ea8b99e75c989152654b4a19f0da1699c.png" src="../../_images/d9cf6e92073bcdb1ec11258fd3e6a97ea8b99e75c989152654b4a19f0da1699c.png" />
+<img alt="../../_images/3aefa82071764fc0b28c8d4206073a97f4077a04bb4a6137e11fc251e78c7501.png" src="../../_images/3aefa82071764fc0b28c8d4206073a97f4077a04bb4a6137e11fc251e78c7501.png" />
 </div>
 </div>
 <h2 id="symbol-mapping">Symbol mapping<a class="headerlink" href="#symbol-mapping" title="Permalink to this heading">¶</a></h2>
