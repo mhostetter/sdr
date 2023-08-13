@@ -91,10 +91,10 @@ class IIR:
         Filters the input signal $x[n]$ with the IIR filter.
 
         Arguments:
-            x: The input signal $x[n]$.
+            x: The input signal $x[n]$ with length $L$.
 
         Returns:
-            The filtered signal $y[n]$.
+            The filtered signal $y[n]$ with length $L$.
 
         Examples:
             See the :ref:`iir-filters` example.
