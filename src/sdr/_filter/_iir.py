@@ -203,7 +203,7 @@ class IIR:
 
     def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[np.ndarray, np.ndarray]:
         r"""
-        Returns the frequency response $H(f)$ of the IIR filter.
+        Returns the frequency response $H(\omega)$ of the IIR filter.
 
         Arguments:
             sample_rate: The sample rate $f_s$ of the filter in samples/s.
@@ -211,10 +211,10 @@ class IIR:
 
         Returns:
             - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
-            - The frequency response of the IIR filter $H(f)$.
+            - The frequency response of the IIR filter $H(\omega)$.
 
         See Also:
-            sdr.plot.frequency_response
+            sdr.plot.magnitude_response, sdr.plot.phase_response
 
         Examples:
             See the :ref:`iir-filters` example.
@@ -231,7 +231,7 @@ class IIR:
         self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
     ) -> tuple[np.ndarray, np.ndarray]:
         r"""
-        Returns the frequency response $H(f)$ of the IIR filter on a logarithmic frequency axis.
+        Returns the frequency response $H(\omega)$ of the IIR filter on a logarithmic frequency axis.
 
         Arguments:
             sample_rate: The sample rate $f_s$ of the filter in samples/s.
@@ -240,10 +240,10 @@ class IIR:
 
         Returns:
             - The frequencies $f$ from $0$ to $f_s/2$ in Hz. The frequencies are logarithmically-spaced.
-            - The frequency response of the IIR filter $H(f)$.
+            - The frequency response of the IIR filter $H(\omega)$.
 
         See Also:
-            sdr.plot.frequency_response
+            sdr.plot.magnitude_response, sdr.plot.phase_response
 
         Examples:
             See the :ref:`iir-filters` example.

@@ -73,7 +73,7 @@ Features
    - Modulation: :func:`sdr.plot.ber()`, :func:`sdr.plot.ser()`, :func:`sdr.plot.constellation()`,
      :func:`sdr.plot.symbol_map()`
    - Filters: :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`,
-     :func:`sdr.plot.frequency_response()`, :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`,
+     :func:`sdr.plot.magnitude_response()`, :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`,
      :func:`sdr.plot.group_delay()`, :func:`sdr.plot.zeros_poles()`, :func:`sdr.plot.filter()`
 
 .. toctree::

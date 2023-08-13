@@ -274,7 +274,7 @@ def zeros_poles(
 
 
 @export
-def frequency_response(
+def magnitude_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float = 1.0,
     N: int = 1024,
@@ -283,7 +283,7 @@ def frequency_response(
     **kwargs,
 ):
     r"""
-    Plots the frequency response $H(\omega)$ of the filter.
+    Plots the magnitude response $|H(\omega)|^2$ of the filter.
 
     Arguments:
         filter: The filter definition.
@@ -309,9 +309,9 @@ def frequency_response(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
-            @savefig sdr_plot_frequency_response_1.png
+            @savefig sdr_plot_magnitude_response_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_srrc)
+            sdr.plot.magnitude_response(h_srrc)
 
         See the :ref:`iir-filters` example.
 
@@ -321,21 +321,21 @@ def frequency_response(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_frequency_response_2.png
+            @savefig sdr_plot_magnitude_response_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(iir)
+            sdr.plot.magnitude_response(iir)
 
         .. ipython:: python
 
-            @savefig sdr_plot_frequency_response_3.png
+            @savefig sdr_plot_magnitude_response_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_srrc, x_axis="one-sided")
+            sdr.plot.magnitude_response(h_srrc, x_axis="one-sided")
 
         .. ipython:: python
 
-            @savefig sdr_plot_frequency_response_4.png
+            @savefig sdr_plot_magnitude_response_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(iir, x_axis="log", decades=3)
+            sdr.plot.magnitude_response(iir, x_axis="log", decades=3)
 
     Group:
         plot-filter
@@ -374,7 +374,7 @@ def frequency_response(
         else:
             plt.xlabel("Frequency (Hz), $f$")
         plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
-        plt.title(r"Frequency Response, $H(\omega)$")
+        plt.title(r"Magnitude Response, $|H(\omega)|^2$")
         plt.tight_layout()
 
 
@@ -389,7 +389,7 @@ def phase_response(
     **kwargs,
 ):
     r"""
-    Plots the phase response $\Theta(\omega)$ of the filter.
+    Plots the phase response $\angle H(\omega)$ of the filter.
 
     Arguments:
         filter: The filter definition.
@@ -480,7 +480,7 @@ def phase_response(
         else:
             plt.xlabel("Frequency (Hz), $f$")
         plt.ylabel(r"Phase (deg), $\angle H(\omega)$")
-        plt.title(r"Phase Response, $\Theta(\omega)$")
+        plt.title(r"Phase Response, $\angle H(\omega)$")
         plt.tight_layout()
 
 
@@ -681,7 +681,7 @@ def filter(
     decades: int = 4,
 ):
     r"""
-    Plots the frequency response $H(\omega)$, impulse response $h[n]$, step response $s[n]$,
+    Plots the magnitude response $|H(\omega)|^2$, impulse response $h[n]$, step response $s[n]$,
     and zeros and poles of the filter.
 
     Arguments:
@@ -729,7 +729,7 @@ def filter(
 
     with plt.rc_context(RC_PARAMS):
         plt.subplot2grid((4, 3), (0, 0), 2, 3)
-        frequency_response((b, a), sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
+        magnitude_response((b, a), sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
 
         plt.subplot2grid((4, 3), (2, 0), 2, 1)
         zeros_poles((b, a))

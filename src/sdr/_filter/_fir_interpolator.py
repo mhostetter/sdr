@@ -53,7 +53,7 @@ def multirate_fir(
 
             @savefig sdr_multirate_fir_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h);
+            sdr.plot.magnitude_response(h);
 
     Group:
         dsp-multirate-filtering
