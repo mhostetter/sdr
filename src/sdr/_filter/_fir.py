@@ -62,12 +62,20 @@ class FIR:
         Filters the input signal $x[n]$ with the FIR filter.
 
         Arguments:
-            x: The input signal $x[n]$.
-            mode: The non-streaming convolution mode. See :func:`scipy.signal.convolve` for details.
-                In streaming mode, $N$ inputs always produce $N$ outputs.
+            x: The input signal $x[n]$ with length $L$.
+            mode: The non-streaming convolution mode.
+
+                - `"same"`: The output signal $y[n]$ has length $L$. Output sample 0 aligns with input sample 0.
+                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $L + N$,
+                  where $N$ is the order of the filter. Output sample :obj:`~sdr.FIR.delay` aligns
+                  with input sample 0.
+
+                In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
+                only $L$ output samples are produced per call. A final call to :meth:`~sdr.FIR.flush()`
+                is required to flush the filter state.
 
         Returns:
-            The filtered signal $y[n]$.
+            The filtered signal $y[n]$. The output length is dictated by the `mode` argument.
 
         Examples:
             See the :ref:`fir-filters` example.
