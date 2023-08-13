@@ -73,6 +73,8 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         x = np.atleast_1d(x)
+        if not x.ndim == 1:
+            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
 
         if self.streaming:
             # Prepend previous inputs from last __call__() call
