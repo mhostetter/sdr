@@ -228,8 +228,31 @@ class Interpolator(FIR):
             @savefig sdr_Interpolator_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Interpolated"); \
             plt.title("Interpolation by 7 with the Kaiser window method"); \
+            plt.tight_layout();
+
+        Create a streaming polyphase filter that interpolates by 7 using the Kaiser window method. This filter
+        preserves state between calls.
+
+        .. ipython:: python
+
+            fir = sdr.Interpolator(7, streaming=True); fir
+
+            y1 = fir(x[0:10]); \
+            y2 = fir(x[10:20]); \
+            y3 = fir(x[20:30]); \
+            y4 = fir(x[30:40]); \
+            y5 = fir.flush()
+
+            @savefig sdr_Interpolator_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Interpolated $y_1[n]$"); \
+            sdr.plot.time_domain(y2, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 10, marker=".", label="Interpolated $y_2[n]$"); \
+            sdr.plot.time_domain(y3, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 20, marker=".", label="Interpolated $y_3[n]$"); \
+            sdr.plot.time_domain(y4, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 30, marker=".", label="Interpolated $y_4[n]$"); \
+            sdr.plot.time_domain(y5, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 40, marker=".", label="Interpolated $y_5[n]$"); \
+            plt.title("Streaming interpolation by 7 with the Kaiser window method"); \
             plt.tight_layout();
 
         Create a polyphase filter that interpolates by 7 using linear method.
@@ -237,28 +260,27 @@ class Interpolator(FIR):
         .. ipython:: python
 
             fir = sdr.Interpolator(7, "linear"); fir
-            fir.polyphase_taps
             y = fir(x)
-
-            @savefig sdr_Interpolator_2.png
-            plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Filtered"); \
-            plt.title("Interpolation by 7 with the linear method"); \
-            plt.tight_layout();
-
-        Create a polyphase filter that interpolates by 7 using the zero-order hold method.
-
-        .. ipython:: python
-
-            fir = sdr.Interpolator(7, "zoh"); fir
-            fir.polyphase_taps
-            y = fir(x, mode="full")
 
             @savefig sdr_Interpolator_3.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Filtered"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Interpolated"); \
+            plt.title("Interpolation by 7 with the linear method"); \
+            plt.tight_layout();
+
+        Create a polyphase filter that interpolates by 7 using the zero-order hold method. It is recommended to
+        the `"full"` convolution mode. This way the first upsampled symbol has $r$ samples.
+
+        .. ipython:: python
+
+            fir = sdr.Interpolator(7, "zoh"); fir
+            y = fir(x, mode="full")
+
+            @savefig sdr_Interpolator_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker="o", label="Input"); \
+            sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Interpolated"); \
             plt.title("Interpolation by 7 with the zero-order hold method"); \
             plt.tight_layout();
 
@@ -403,7 +425,6 @@ class Interpolator(FIR):
             Y = np.zeros((B, x.size), dtype=dtype)
             for i in range(B):
                 Y[i] = scipy.signal.convolve(x_pad, H[i], mode="valid")
-
             self._state = x_pad[-(M - 1) :]
         else:
             if mode == "full":
