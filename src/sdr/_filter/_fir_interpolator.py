@@ -41,11 +41,11 @@ def multirate_fir(
         - https://www.mathworks.com/help/dsp/ref/designmultiratefir.html
 
     Examples:
-        Design a multirate FIR filter for rational resampling by 2/3.
+        Design a multirate FIR filter for rational resampling by 11/3.
 
         .. ipython:: python
 
-            h = sdr.multirate_fir(2, 3)
+            h = sdr.multirate_fir(11, 3)
 
             @savefig sdr_multirate_fir_1.png
             plt.figure(figsize=(8, 4)); \
