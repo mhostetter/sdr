@@ -52,21 +52,21 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
 
         .. ipython:: python
 
-            h_2 = sdr.raised_cosine(0.1, 2, 10); \
             h_4 = sdr.raised_cosine(0.1, 4, 10); \
-            h_8 = sdr.raised_cosine(0.1, 8, 10)
+            h_8 = sdr.raised_cosine(0.1, 8, 10); \
+            h_16 = sdr.raised_cosine(0.1, 16, 10)
 
             @savefig sdr_raised_cosine_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(h_2, label="span = 2"); \
             sdr.plot.impulse_response(h_4, label="span = 4"); \
-            sdr.plot.impulse_response(h_8, label="span = 8")
+            sdr.plot.impulse_response(h_8, label="span = 8"); \
+            sdr.plot.impulse_response(h_16, label="span = 16")
 
             @savefig sdr_raised_cosine_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_2, label="span = 2"); \
             sdr.plot.frequency_response(h_4, label="span = 4"); \
-            sdr.plot.frequency_response(h_8, label="span = 8")
+            sdr.plot.frequency_response(h_8, label="span = 8"); \
+            sdr.plot.frequency_response(h_16, label="span = 16")
 
         See the :ref:`pulse-shapes` example.
 
@@ -149,21 +149,21 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
 
         .. ipython:: python
 
-            h_2 = sdr.root_raised_cosine(0.1, 2, 10); \
             h_4 = sdr.root_raised_cosine(0.1, 4, 10); \
-            h_8 = sdr.root_raised_cosine(0.1, 8, 10)
+            h_8 = sdr.root_raised_cosine(0.1, 8, 10); \
+            h_16 = sdr.root_raised_cosine(0.1, 16, 10)
 
             @savefig sdr_root_raised_cosine_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(h_2, label="span = 2"); \
             sdr.plot.impulse_response(h_4, label="span = 4"); \
-            sdr.plot.impulse_response(h_8, label="span = 8")
+            sdr.plot.impulse_response(h_8, label="span = 8"); \
+            sdr.plot.impulse_response(h_16, label="span = 16")
 
             @savefig sdr_root_raised_cosine_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.frequency_response(h_2, label="span = 2"); \
             sdr.plot.frequency_response(h_4, label="span = 4"); \
-            sdr.plot.frequency_response(h_8, label="span = 8")
+            sdr.plot.frequency_response(h_8, label="span = 8"); \
+            sdr.plot.frequency_response(h_16, label="span = 16")
 
         See the :ref:`pulse-shapes` example.
 
