@@ -179,7 +179,7 @@ class Interpolator(FIR):
 
             fir = sdr.Interpolator(7, "zoh"); fir
             fir.polyphase_taps
-            y = fir(x)
+            y = fir(x, mode="full")
 
             @savefig sdr_fir_interpolator_3.png
             plt.figure(figsize=(8, 4)); \
@@ -287,17 +287,17 @@ class Interpolator(FIR):
         Filters and interpolates the input signal $x[n]$ with the FIR filter.
 
         Arguments:
-            x: The input signal $x[n]$ with sample rate $f_s$ and length $N$.
+            x: The input signal $x[n]$ with sample rate $f_s$ and length $L$.
             mode: The non-streaming convolution mode.
 
-                - `"rate"`: The output signal $y[n]$ has length $N r$ proportional to the interpolation rate.
+                - `"rate"`: The output signal $y[n]$ has length $L r$ proportional to the interpolation rate $r$.
                   Output sample 0 aligns with input sample 0.
-                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $N r + M - 1$,
-                  where $M - 1$ is the order of the filter. Output sample :obj:`~Interpolator.delay` aligns
+                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $L r + N - r$,
+                  where $L$ is the length of the multirate filter. Output sample :obj:`~sdr.Interpolator.delay` aligns
                   with input sample 0.
 
-                In streaming mode, the `"full"` convolution is performed. However, for each $N$ input samples
-                only $N r$ output samples are produced per call. A final call with input zeros is required to flush
+                In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
+                only $L r$ output samples are produced per call. A final call with input zeros is required to flush
                 the filter state.
 
         Returns:
@@ -319,10 +319,9 @@ class Interpolator(FIR):
             # Commutate the outputs of the polyphase filters
             y = yy.T.flatten()
         else:
-            x_pad = np.append(x, 0)
-            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1]), dtype=dtype)
+            yy = np.zeros((self.rate, x.size + self.polyphase_taps.shape[1] - 1), dtype=dtype)
             for i in range(self.rate):
-                yy[i] = scipy.signal.convolve(x_pad, self.polyphase_taps[i], mode="full")
+                yy[i] = scipy.signal.convolve(x, self.polyphase_taps[i], mode="full")
 
             # Commutate the outputs of the polyphase filters
             y = yy.T.flatten()
@@ -332,7 +331,7 @@ class Interpolator(FIR):
                 offset = self.taps.size // 2
                 y = y[offset : offset + size]
             elif mode == "full":
-                size = x.size * self.rate + self.taps.size - 1
+                size = x.size * self.rate + self.taps.size - 1  # TODO: y is already smaller than size
                 y = y[:size]
             else:
                 raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode}.")
