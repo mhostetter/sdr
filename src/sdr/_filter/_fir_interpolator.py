@@ -105,6 +105,75 @@ def multirate_taps(
 
 
 @export
+def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> np.ndarray:
+    """
+    Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves
+    rational resampling by $P/Q$.
+
+    Arguments:
+        P: The interpolation rate $P$.
+        Q: The decimation rate $Q$.
+        taps: The multirate FIR filter taps $h_i$.
+
+    Returns:
+        The polyphase matrix $H_{i, j}$.
+
+    Notes:
+        The multirate FIR filter taps $h_i$ are arranged down the columns of the polyphase matrix
+        $H_{i, j}$ as follows:
+
+        .. code-block:: text
+            :caption: Polyphase Matrix
+
+            +------+------+------+------+
+            | h[0] | h[3] | h[6] | h[9] |
+            +------+------+------+------+
+            | h[1] | h[4] | h[7] | 0    |
+            +------+------+------+------+
+            | h[2] | h[5] | h[8] | 0    |
+            +------+------+------+------+
+
+    References:
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters
+
+    Examples:
+        Convert the multirate FIR filter (notional taps for demonstration) into a polyphase matrix
+        for rational resampling by 3/4 and 1/6.
+
+        .. ipython:: python
+
+            h = np.arange(0, 20)
+            sdr.polyphase_matrix(3, 4, h)
+            sdr.polyphase_matrix(1, 6, h)
+
+    Group:
+        dsp-multirate-filtering
+    """
+    if not isinstance(P, int):
+        raise TypeError(f"Argument 'P' must be an integer, not {P}.")
+    if not P >= 1:
+        raise ValueError(f"Argument 'P' must be at least 1, not {P}.")
+
+    if not isinstance(Q, int):
+        raise TypeError(f"Argument 'Q' must be an integer, not {Q}.")
+    if not Q >= 1:
+        raise ValueError(f"Argument 'Q' must be at least 1, not {Q}.")
+
+    taps = np.asarray(taps)
+
+    B = P if P > 1 else Q  # The number of polyphase branches
+    N = math.ceil(taps.size / B) * B  # Filter length
+
+    # Append zeros to the end of the taps so that the filter length is a multiple of B
+    taps_pad = np.pad(taps, (0, N - taps.size), mode="constant")
+
+    # Reshape the taps down the columns of H
+    H = taps_pad.reshape(-1, B).T
+
+    return H
+
+
+@export
 class Interpolator(FIR):
     r"""
     Implements a polyphase finite impulse response (FIR) interpolating filter.
@@ -245,8 +314,7 @@ class Interpolator(FIR):
         else:
             raise ValueError(f"Argument 'taps' must be 'kaiser', 'linear', 'zoh', or an array-like, not {taps}.")
 
-        N = math.ceil(taps.size / rate) * rate
-        self._polyphase_taps = np.pad(taps, (0, N - taps.size), mode="constant").reshape(-1, rate).T
+        self._polyphase_taps = polyphase_matrix(rate, 1, taps)
 
         super().__init__(taps, streaming=streaming)
 
