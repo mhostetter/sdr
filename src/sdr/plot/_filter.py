@@ -57,9 +57,6 @@ def impulse_response(
             100 for IIR filters.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    See Also:
-        sdr.FIR, sdr.IIR
-
     Examples:
         See the :ref:`fir-filters` example.
 
@@ -146,9 +143,6 @@ def step_response(
             100 for IIR filters.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    See Also:
-        sdr.FIR, sdr.IIR
-
     Examples:
         See the :ref:`fir-filters` example.
 
@@ -229,9 +223,6 @@ def zeros_poles(
 
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    See Also:
-        sdr.FIR, sdr.IIR
-
     Examples:
         See the :ref:`fir-filters` example.
 
@@ -308,9 +299,6 @@ def frequency_response(
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
-
-    See Also:
-        sdr.FIR, sdr.IIR
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -410,9 +398,6 @@ def phase_response(
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
-
-    See Also:
-        sdr.FIR, sdr.IIR
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -518,9 +503,6 @@ def phase_delay(
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    See Also:
-        sdr.FIR, sdr.IIR
-
     Examples:
         See the :ref:`fir-filters` example.
 
@@ -624,9 +606,6 @@ def group_delay(
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    See Also:
-        sdr.FIR, sdr.IIR
-
     Examples:
         See the :ref:`fir-filters` example.
 
@@ -712,9 +691,6 @@ def filter(
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
-
-    See Also:
-        sdr.FIR, sdr.IIR
 
     Examples:
         See the :ref:`fir-filters` example.
