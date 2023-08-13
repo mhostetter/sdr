@@ -34,7 +34,8 @@ def test_non_streaming_full():
     xr[::r] = x[:]
     y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)
 
-    np.testing.assert_array_almost_equal(y, y_truth)
+    # Given the polyphase decomposition, the polyphase output is slightly shorter
+    np.testing.assert_array_almost_equal(y, y_truth[: y.size])
 
 
 def test_streaming():
