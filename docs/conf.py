@@ -273,7 +273,7 @@ python_apigen_default_order = [
     ("property:.*", 60),
     (r".*:.*\.is_[a-z,_]*", 70),
 ]
-python_apigen_order_tiebreaker = "alphabetical"
+# python_apigen_order_tiebreaker = "alphabetical"
 python_apigen_case_insensitive_filesystem = False
 python_apigen_show_base_classes = True
 
