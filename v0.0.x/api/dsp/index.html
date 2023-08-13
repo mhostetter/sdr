@@ -805,7 +805,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__len__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__len__ (Python method) — Returns the filter length $N$." class="md-ellipsis">__<wbr>len__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__len__ (Python method) — Returns the filter length $N + 1$." class="md-ellipsis">__<wbr>len__<wbr></span>
       </a>
     </li>
   
@@ -926,7 +926,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.frequency_response/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(f)$ of the FIR filter." class="md-ellipsis">frequency_<wbr>response</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the FIR filter." class="md-ellipsis">frequency_<wbr>response</span>
       </a>
     </li>
   
@@ -941,7 +941,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.frequency_response_log/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(f)$ of the FIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the FIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
       </a>
     </li>
   
@@ -1039,7 +1039,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.delay (Python property) — The delay of the FIR filter in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -1054,7 +1054,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.order/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.order (Python property) — The order of the FIR filter, $N$." class="md-ellipsis">order</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.order (Python property) — The order of the FIR filter $N$." class="md-ellipsis">order</span>
       </a>
     </li>
   
@@ -1084,7 +1084,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$." class="md-ellipsis">taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -1364,7 +1364,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.IIR.frequency_response/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(f)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
       </a>
     </li>
   
@@ -1379,7 +1379,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.IIR.frequency_response_log/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response_log (Python method) — Returns the frequency response $H(f)$ of the IIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the IIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
       </a>
     </li>
   
@@ -1477,7 +1477,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.IIR.a_taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.a_taps (Python property) — The feedback taps $a_j$." class="md-ellipsis">a_<wbr>taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.a_taps (Python property) — The feedback taps $a_j$ for $j = 0,...,N$." class="md-ellipsis">a_<wbr>taps</span>
       </a>
     </li>
   
@@ -1492,7 +1492,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.IIR.b_taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.b_taps (Python property) — The feedforward taps $b_i$." class="md-ellipsis">b_<wbr>taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.b_taps (Python property) — The feedforward taps $b_i$ for $i = 0,...,M$." class="md-ellipsis">b_<wbr>taps</span>
       </a>
     </li>
   
@@ -1522,7 +1522,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.IIR.order/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.order (Python property) — The order of the IIR filter, $N$." class="md-ellipsis">order</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.order (Python property) — The order of the IIR filter $N$." class="md-ellipsis">order</span>
       </a>
     </li>
   
@@ -1643,7 +1643,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIRInterpolator/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FIRInterpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter." class="md-ellipsis">FIRInterpolator</span></a>
+          <a href="../sdr.Interpolator/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.Interpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter." class="md-ellipsis">Interpolator</span></a>
           
             <label for="__nav_3_1_2_1">
               <span class="md-nav__icon md-icon"></span>
@@ -1651,10 +1651,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="FIRInterpolator" data-md-level="4">
+      <nav class="md-nav" aria-label="Interpolator" data-md-level="4">
         <label class="md-nav__title" for="__nav_3_1_2_1">
           <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FIRInterpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter." class="md-ellipsis">FIRInterpolator</span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.Interpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter." class="md-ellipsis">Interpolator</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -1673,7 +1673,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIRInterpolator/#constructors"><span class="md-ellipsis">Constructors</span></a>
+          <a href="../sdr.Interpolator/#constructors"><span class="md-ellipsis">Constructors</span></a>
           
             <label for="__nav_3_1_2_1_1">
               <span class="md-nav__icon md-icon"></span>
@@ -1695,8 +1695,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__init__ (Python method) — Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+      <a href="../sdr.Interpolator.__init__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__init__ (Python method) — Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1726,7 +1726,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIRInterpolator/#special-methods"><span class="md-ellipsis">Special methods</span></a>
+          <a href="../sdr.Interpolator/#special-methods"><span class="md-ellipsis">Special methods</span></a>
           
             <label for="__nav_3_1_2_1_2">
               <span class="md-nav__icon md-icon"></span>
@@ -1748,8 +1748,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.__call__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__call__ (Python method) — Filters and interpolates the input signal $x[n]$ with the FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
+      <a href="../sdr.Interpolator.__call__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__call__ (Python method) — Filters and interpolates the input signal $x[n]$ with the FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
       </a>
     </li>
   
@@ -1779,7 +1779,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIRInterpolator/#string-representation"><span class="md-ellipsis">String representation</span></a>
+          <a href="../sdr.Interpolator/#string-representation"><span class="md-ellipsis">String representation</span></a>
           
             <label for="__nav_3_1_2_1_3">
               <span class="md-nav__icon md-icon"></span>
@@ -1801,8 +1801,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.__repr__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__repr__ (Python method) — Returns a code-styled string representation of the object." class="md-ellipsis">__<wbr>repr__<wbr></span>
+      <a href="../sdr.Interpolator.__repr__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__repr__ (Python method) — Returns a code-styled string representation of the object." class="md-ellipsis">__<wbr>repr__<wbr></span>
       </a>
     </li>
   
@@ -1816,8 +1816,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.__str__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__str__ (Python method) — Returns a human-readable string representation of the object." class="md-ellipsis">__<wbr>str__<wbr></span>
+      <a href="../sdr.Interpolator.__str__/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__str__ (Python method) — Returns a human-readable string representation of the object." class="md-ellipsis">__<wbr>str__<wbr></span>
       </a>
     </li>
   
@@ -1847,7 +1847,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIRInterpolator/#methods"><span class="md-ellipsis">Methods</span></a>
+          <a href="../sdr.Interpolator/#methods"><span class="md-ellipsis">Methods</span></a>
           
             <label for="__nav_3_1_2_1_4">
               <span class="md-nav__icon md-icon"></span>
@@ -1869,8 +1869,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
+      <a href="../sdr.Interpolator.reset/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
       </a>
     </li>
   
@@ -1900,7 +1900,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FIRInterpolator/#properties"><span class="md-ellipsis">Properties</span></a>
+          <a href="../sdr.Interpolator/#properties"><span class="md-ellipsis">Properties</span></a>
           
             <label for="__nav_3_1_2_1_5">
               <span class="md-nav__icon md-icon"></span>
@@ -1922,8 +1922,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.method/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
+      <a href="../sdr.Interpolator.method/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
       </a>
     </li>
   
@@ -1937,8 +1937,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.polyphase_taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
+      <a href="../sdr.Interpolator.polyphase_taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
       </a>
     </li>
   
@@ -1952,8 +1952,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.rate/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.rate (Python property) — The interpolation rate $r$." class="md-ellipsis">rate</span>
+      <a href="../sdr.Interpolator.rate/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.rate (Python property) — The interpolation rate $r$." class="md-ellipsis">rate</span>
       </a>
     </li>
   
@@ -1967,8 +1967,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIRInterpolator.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.taps (Python property) — The prototype feedforward taps $h_i$." class="md-ellipsis">taps</span>
+      <a href="../sdr.Interpolator.taps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.taps (Python property) — The prototype feedforward taps $h_i$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -2502,7 +2502,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.__len__/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__len__ (Python method) — Returns the filter length $N$." class="md-ellipsis">__<wbr>len__<wbr></span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__len__ (Python method) — Returns the filter length $N + 1$." class="md-ellipsis">__<wbr>len__<wbr></span>
   </a>
   
 </li>
@@ -2549,14 +2549,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.frequency_response/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(f)$ of the FIR filter." class="md-ellipsis">frequency_<wbr>response</span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the FIR filter." class="md-ellipsis">frequency_<wbr>response</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.frequency_response_log/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(f)$ of the FIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the FIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
   </a>
   
 </li>
@@ -2597,14 +2597,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.delay/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.delay (Python property) — The delay of the FIR filter in samples." class="md-ellipsis">delay</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.order/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.order (Python property) — The order of the FIR filter, $N$." class="md-ellipsis">order</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.order (Python property) — The order of the FIR filter $N$." class="md-ellipsis">order</span>
   </a>
   
 </li>
@@ -2618,7 +2618,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.taps/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$." class="md-ellipsis">taps</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
   </a>
   
 </li>
@@ -2725,14 +2725,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.IIR.frequency_response/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(f)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="../sdr.IIR.frequency_response_log/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response_log (Python method) — Returns the frequency response $H(f)$ of the IIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the IIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
   </a>
   
 </li>
@@ -2773,14 +2773,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.IIR.a_taps/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.a_taps (Python property) — The feedback taps $a_j$." class="md-ellipsis">a_<wbr>taps</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.a_taps (Python property) — The feedback taps $a_j$ for $j = 0,...,N$." class="md-ellipsis">a_<wbr>taps</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="../sdr.IIR.b_taps/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.b_taps (Python property) — The feedforward taps $b_i$." class="md-ellipsis">b_<wbr>taps</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.b_taps (Python property) — The feedforward taps $b_i$ for $i = 0,...,M$." class="md-ellipsis">b_<wbr>taps</span>
   </a>
   
 </li>
@@ -2794,7 +2794,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.IIR.order/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.order (Python property) — The order of the IIR filter, $N$." class="md-ellipsis">order</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.IIR.order (Python property) — The order of the IIR filter $N$." class="md-ellipsis">order</span>
   </a>
   
 </li>
@@ -2844,15 +2844,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator/" class="md-nav__link">
-    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FIRInterpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter." class="md-ellipsis">FIRInterpolator</span>
+  <a href="../sdr.Interpolator/" class="md-nav__link">
+    <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.Interpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter." class="md-ellipsis">Interpolator</span>
   </a>
   
-    <nav class="md-nav" aria-label="FIRInterpolator">
+    <nav class="md-nav" aria-label="Interpolator">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator/#constructors" class="md-nav__link">
+  <a href="../sdr.Interpolator/#constructors" class="md-nav__link">
     <span class="md-ellipsis">Constructors</span>
   </a>
   
@@ -2860,8 +2860,8 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.__init__/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__init__ (Python method) — Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+  <a href="../sdr.Interpolator.__init__/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__init__ (Python method) — Creates a polyphase FIR interpolating filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
   </a>
   
 </li>
@@ -2872,7 +2872,7 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator/#special-methods" class="md-nav__link">
+  <a href="../sdr.Interpolator/#special-methods" class="md-nav__link">
     <span class="md-ellipsis">Special methods</span>
   </a>
   
@@ -2880,8 +2880,8 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.__call__/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__call__ (Python method) — Filters and interpolates the input signal $x[n]$ with the FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
+  <a href="../sdr.Interpolator.__call__/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__call__ (Python method) — Filters and interpolates the input signal $x[n]$ with the FIR filter." class="md-ellipsis">__<wbr>call__<wbr></span>
   </a>
   
 </li>
@@ -2892,7 +2892,7 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator/#string-representation" class="md-nav__link">
+  <a href="../sdr.Interpolator/#string-representation" class="md-nav__link">
     <span class="md-ellipsis">String representation</span>
   </a>
   
@@ -2900,15 +2900,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.__repr__/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__repr__ (Python method) — Returns a code-styled string representation of the object." class="md-ellipsis">__<wbr>repr__<wbr></span>
+  <a href="../sdr.Interpolator.__repr__/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__repr__ (Python method) — Returns a code-styled string representation of the object." class="md-ellipsis">__<wbr>repr__<wbr></span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.__str__/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.__str__ (Python method) — Returns a human-readable string representation of the object." class="md-ellipsis">__<wbr>str__<wbr></span>
+  <a href="../sdr.Interpolator.__str__/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.__str__ (Python method) — Returns a human-readable string representation of the object." class="md-ellipsis">__<wbr>str__<wbr></span>
   </a>
   
 </li>
@@ -2919,7 +2919,7 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator/#methods" class="md-nav__link">
+  <a href="../sdr.Interpolator/#methods" class="md-nav__link">
     <span class="md-ellipsis">Methods</span>
   </a>
   
@@ -2927,8 +2927,8 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.reset/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIRInterpolator.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
+  <a href="../sdr.Interpolator.reset/" class="md-nav__link">
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.Interpolator.reset (Python method) — Streaming-mode only: Resets the filter state." class="md-ellipsis">reset</span>
   </a>
   
 </li>
@@ -2939,7 +2939,7 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator/#properties" class="md-nav__link">
+  <a href="../sdr.Interpolator/#properties" class="md-nav__link">
     <span class="md-ellipsis">Properties</span>
   </a>
   
@@ -2947,29 +2947,29 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.method/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
+  <a href="../sdr.Interpolator.method/" class="md-nav__link">
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.method (Python property) — The method used to design the multirate filter." class="md-ellipsis">method</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.polyphase_taps/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
+  <a href="../sdr.Interpolator.polyphase_taps/" class="md-nav__link">
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.rate/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.rate (Python property) — The interpolation rate $r$." class="md-ellipsis">rate</span>
+  <a href="../sdr.Interpolator.rate/" class="md-nav__link">
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.rate (Python property) — The interpolation rate $r$." class="md-ellipsis">rate</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.FIRInterpolator.taps/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIRInterpolator.taps (Python property) — The prototype feedforward taps $h_i$." class="md-ellipsis">taps</span>
+  <a href="../sdr.Interpolator.taps/" class="md-nav__link">
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.taps (Python property) — The prototype feedforward taps $h_i$." class="md-ellipsis">taps</span>
   </a>
   
 </li>
@@ -6877,22 +6877,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.plot.filter/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.filter (Python function) — Plots the frequency response $H(omega)$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter." class="md-ellipsis">filter</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.plot.frequency_response/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.frequency_response (Python function) — Plots the frequency response $H(omega)$ of the filter." class="md-ellipsis">frequency_<wbr>response</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.filter (Python function) — Plots the magnitude response $|H(omega)|^2$, impulse response $h[n]$, step response $s[n]$, and zeros and poles of the filter." class="md-ellipsis">filter</span>
       </a>
     </li>
   
@@ -6936,6 +6921,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.plot.magnitude_response/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.magnitude_response (Python function) — Plots the magnitude response $|H(omega)|^2$ of the filter." class="md-ellipsis">magnitude_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.plot.phase_delay/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_delay (Python function) — Plots the phase delay $tau_{phi}(omega)$ of the filter." class="md-ellipsis">phase_<wbr>delay</span>
       </a>
@@ -6952,7 +6952,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.plot.phase_response/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_response (Python function) — Plots the phase response $Theta(omega)$ of the filter." class="md-ellipsis">phase_<wbr>response</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.phase_response (Python function) — Plots the phase response $angle H(omega)$ of the filter." class="md-ellipsis">phase_<wbr>response</span>
       </a>
     </li>
   
@@ -7216,7 +7216,7 @@ You're not viewing the latest version.
 <h2 id="multirate-filtering">Multirate filtering<a class="headerlink" href="#multirate-filtering" title="Permalink to this heading">¶</a></h2>
 <dl class="py class summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FIRInterpolator/" title="sdr.FIRInterpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">FIRInterpolator</span></span></a><span class="p"><span class="pre">(</span></span><span class="desctype"><a class="reference internal" href="../sdr.FIR/" title="sdr.FIR (Python class) — Implements a finite impulse response (FIR) filter."><span class="pre">sdr.FIR</span></a></span><span class="p"><span class="pre">)</span></span></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.Interpolator/" title="sdr.Interpolator (Python class) — Implements a polyphase finite impulse response (FIR) interpolating filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">Interpolator</span></span></a><span class="p"><span class="pre">(</span></span><span class="desctype"><a class="reference internal" href="../sdr.FIR/" title="sdr.FIR (Python class) — Implements a finite impulse response (FIR) filter."><span class="pre">sdr.FIR</span></a></span><span class="p"><span class="pre">)</span></span></dt>
 <dd><p>Implements a polyphase finite impulse response (FIR) interpolating filter.</p>
 </dd></dl>
 
