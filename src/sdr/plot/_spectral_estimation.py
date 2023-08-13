@@ -82,7 +82,7 @@ def periodogram(
 
         # Avoid deep nulls
         y_max = plt.gca().get_ylim()[1]
-        y_min = np.percentile(H, 10)
+        y_min = np.percentile(Pxx, 10)
         plt.ylim(y_min, y_max)
 
         if sample_rate == 1.0:
