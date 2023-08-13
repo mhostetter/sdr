@@ -57,6 +57,24 @@ def test_streaming():
     np.testing.assert_array_almost_equal(y, y_truth)
 
 
+def test_streaming_match_full():
+    N = 50
+    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
+    r = np.random.randint(3, 7)  # Interpolation rate
+
+    fir1 = sdr.Interpolator(r)
+    y_full = fir1(x, mode="full")
+
+    fir2 = sdr.Interpolator(r, streaming=True)
+    d = 10  # Stride
+    y_stream = np.zeros_like(y_full)
+    for i in range(0, N, d):
+        y_stream[i * r : (i + d) * r] = fir2(x[i : i + d])
+    y_stream[(i + d) * r :] = fir2.flush()
+
+    np.testing.assert_array_almost_equal(y_full, y_stream)
+
+
 def test_3_kaiser():
     """
     Matlab:
