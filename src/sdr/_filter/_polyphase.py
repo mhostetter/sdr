@@ -25,7 +25,7 @@ def multirate_taps(
     Computes the multirate FIR filter that achieves rational resampling by $P/Q$.
 
     Note:
-        This filter can be used with :class:`sdr.Interpolator` or :class:`sdr.FIRDecimator`.
+        This filter can be used with :class:`sdr.Interpolator` or :class:`sdr.Decimator`.
 
     Arguments:
         P: The interpolation rate $P$.
