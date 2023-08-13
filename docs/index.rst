@@ -37,44 +37,24 @@ The latest version of :obj:`sdr` can be installed from `PyPI`_ using `pip`_.
 Features
 --------
 
-- Digital signal processing:
-   - Filtering: :class:`sdr.FIR`, :class:`sdr.Interpolator`, :class:`sdr.IIR`
-   - Resampling: :class:`sdr.FarrowResampler`
-   - Signal manipulation: :func:`sdr.mix()`, :func:`sdr.to_complex_bb()`, :func:`sdr.to_real_pb()`
-- Sequences: :func:`sdr.barker()`, :func:`sdr.zadoff_chu()`
-- Modulation:
-   - Classes: :class:`sdr.PSK`
-   - Pulse shapes: :func:`sdr.raised_cosine()`, :func:`sdr.root_raised_cosine()`, :func:`sdr.gaussian()`
-   - Symbol mapping: :func:`sdr.binary_code()`, :func:`sdr.gray_code()`
-   - Symbol encoding: :func:`sdr.diff_encode()`, :func:`sdr.diff_decode()`
-- Synchronization: :class:`sdr.NCO`, :class:`sdr.DDS`, :class:`sdr.LoopFilter`, :class:`sdr.ClosedLoopPLL`
-- Measurement:
-   - Energy: :func:`sdr.energy()`
-   - Power: :func:`sdr.peak_power()`, :func:`sdr.average_power()`, :func:`sdr.papr()`
-   - Voltage: :func:`sdr.peak_voltage()`, :func:`sdr.rms_voltage()`, :func:`sdr.crest_factor()`
-   - Modulation: :class:`sdr.ErrorRate`, :func:`sdr.evm()`
-- Conversions:
-   - From $E_b/N_0$: :func:`sdr.ebn0_to_esn0()`, :func:`sdr.ebn0_to_snr()`
-   - From $E_s/N_0$: :func:`sdr.esn0_to_ebn0()`, :func:`sdr.esn0_to_snr()`
-   - From $S/N$: :func:`sdr.snr_to_ebn0()`, :func:`sdr.snr_to_esn0()`
-- Simulation:
-   - Channel models: :func:`sdr.bec()`, :func:`sdr.bsc()`, :func:`sdr.dmc()`
-   - Signal impairments: :func:`sdr.awgn()`, :func:`sdr.frequency_offset()`, :func:`sdr.sample_rate_offset()`,
-     :func:`sdr.iq_imbalance()`
-- Link budgets:
-   - Channel capacity: :func:`sdr.awgn_capacity()`, :func:`sdr.bec_capacity()`, :func:`sdr.bsc_capacity()`
-   - Path losses: :func:`sdr.fspl()`
-   - Antennas: :func:`sdr.parabolic_antenna()`
-- Probability: :func:`sdr.Q()`, :func:`sdr.Qinv()`
-- Data manipulation: :func:`sdr.pack()`, :func:`sdr.unpack()`, :func:`sdr.hexdump()`
-- Plotting:
-   - Time-domain: :func:`sdr.plot.time_domain()`
-   - Spectral estimation: :func:`sdr.plot.periodogram()`, :func:`sdr.plot.spectrogram()`
-   - Modulation: :func:`sdr.plot.ber()`, :func:`sdr.plot.ser()`, :func:`sdr.plot.constellation()`,
-     :func:`sdr.plot.symbol_map()`
-   - Filters: :func:`sdr.plot.impulse_response()`, :func:`sdr.plot.step_response()`,
-     :func:`sdr.plot.magnitude_response()`, :func:`sdr.plot.phase_response()`, :func:`sdr.plot.phase_delay()`,
-     :func:`sdr.plot.group_delay()`, :func:`sdr.plot.zeros_poles()`, :func:`sdr.plot.filter()`
+View all available classes and functions in the `API Reference <https://mhostetter.github.io/sdr/latest/api/dsp/>`_.
+
+- **Digital signal processing**: Finite impulse response (FIR) filters, infinite impulse response (IIR) filters,
+  polyphase interpolator, polyphase decimator, polyphase resampler, Farrow arbitrary resampler,
+  complex mixing, real/complex conversion.
+- **Sequences**: Barker, Zadoff-Chu.
+- **Modulation**: Phase-shift keying (PSK), raised cosine pulse shape, root raised cosine pulse shape,
+  Gaussian pulse shape, binary and Gray symbol mapping, differential encoding.
+- **Synchronization**: Numerically-controlled oscillators (NCO), direct digital synthesizers (DDS), loop filters,
+  closed-loop PLL analysis.
+- **Measurement**: Energy, power, voltage, bit/symbol error rate, error vector magnitude (EVM).
+- **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
+- **Simulation**: Binary symmetric channel (BSC), binary erasure channel (BEC), discrete memoryless channel (DMC),
+  additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
+- **Link budgets**: Channel capacities, free-space path loss, antenna gains.
+- **Data manipulation**: Packing and unpacking binary data, hexdumping binary data.
+- **Plotting**: Time-domain, periodogram, spectrogram, BER, SER, constellation, symbol map, impulse response,
+  step response, magnitude response, phase response, phase delay, group delay, and zeros/poles.
 
 .. toctree::
    :caption: Examples
