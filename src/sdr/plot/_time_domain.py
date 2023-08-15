@@ -15,7 +15,7 @@ from ._rc_params import RC_PARAMS
 @export
 def time_domain(
     x: npt.ArrayLike,
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     centered: bool = False,
     offset: float = 0,
     diff: Literal["color", "line"] = "color",
@@ -26,8 +26,8 @@ def time_domain(
 
     Arguments:
         x: The time-domain signal $x[n]$.
-        sample_rate: The sample rate $f_s$ of the signal in samples/s. If the sample rate is 1, the x-axis will
-            be label as "Samples".
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Samples".
         centered: Indicates whether to center the x-axis about 0. This argument is mutually exclusive with
             `offset`.
         offset: The x-axis offset to apply to the first sample. The units of the offset are $1/f_s$.
@@ -76,10 +76,17 @@ def time_domain(
     Group:
         plot-time-domain
     """
-    if not isinstance(sample_rate, (int, float)):
-        raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
-
     x = np.asarray(x)
+    if not x.ndim == 1:
+        raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
+
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
+    else:
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
 
     if centered:
         if x.size % 2 == 0:
@@ -112,9 +119,9 @@ def time_domain(
 
         if label:
             plt.legend()
-        if sample_rate == 1:
-            plt.xlabel("Samples")
-        else:
+        if sample_rate_provided:
             plt.xlabel("Time (s)")
+        else:
+            plt.xlabel("Samples")
         plt.ylabel("Amplitude")
         plt.tight_layout()
