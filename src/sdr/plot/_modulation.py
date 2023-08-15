@@ -193,10 +193,10 @@ def eye(
     **kwargs,
 ):
     r"""
-    Plots the eye diagram of the real baseband signal $x[k]$.
+    Plots the eye diagram of the real baseband signal $x[n]$.
 
     Arguments:
-        x: The real baseband signal $x[k]$.
+        x: The real baseband signal $x[n]$.
         sps: The number of samples per symbol.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
