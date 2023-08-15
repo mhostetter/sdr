@@ -223,7 +223,7 @@ def raster(
         ax = plt.gca()
         ax.add_collection(line_collection)
         ax.set_xlim(t.min(), t.max())
-        ax.set_ylim(-np.abs(x).max(), np.abs(x).max())
+        ax.set_ylim(x.min(), x.max())
 
         if colorbar:
             axcb = plt.colorbar(line_collection)
