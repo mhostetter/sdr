@@ -6,6 +6,7 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
+from matplotlib.collections import LineCollection
 from typing_extensions import Literal
 
 from .._helper import export
@@ -119,6 +120,106 @@ def time_domain(
 
         if label:
             plt.legend()
+        if sample_rate_provided:
+            plt.xlabel("Time (s)")
+        else:
+            plt.xlabel("Samples")
+        plt.ylabel("Amplitude")
+        plt.tight_layout()
+
+
+@export
+def raster(
+    x: npt.ArrayLike,
+    length: int,
+    stride: int | None = None,
+    sample_rate: float | None = None,
+    color: Literal["index"] | str = "index",
+    colorbar: bool = False,
+    **kwargs,
+):
+    """
+    Plots a raster of the time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$.
+        length: The length of each raster in samples.
+        stride: The stride between each raster in samples. If `None`, the stride is set to `length`.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Samples".
+        color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
+            If a valid Matplotlib color, the rasters are all colored with that color.
+        colorbar: Indicates whether to add a colorbar to the plot.
+        kwargs: Additional keyword arguments to pass to :obj:`matplotlib.collections.LineCollection`.
+            The following keyword arguments are set by default. The defaults may be overwritten.
+
+            - `"linewidths"`: `(0.5, 1, 1.5, 2)`
+            - `"linestyles"`: `"solid"`
+
+    Group:
+        plot-time-domain
+    """
+    x = np.asarray(x)
+    if not np.isrealobj(x):
+        raise TypeError(f"Argument 'x' must be real, not {x.dtype}.")
+    if not x.ndim == 1:
+        raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
+
+    if not isinstance(length, int):
+        raise TypeError(f"Argument 'length' must be an integer, not {type(length)}.")
+    if not 1 <= length <= x.size:
+        raise ValueError(f"Argument 'length' must be at least 1 and less than the length of 'x', not {length}.")
+
+    if stride is None:
+        stride = length
+    elif not isinstance(stride, int):
+        raise TypeError(f"Argument 'stride' must be an integer, not {type(stride)}.")
+    elif not 1 <= stride <= x.size:
+        raise ValueError(f"Argument 'stride' must be at least 1 and less than the length of 'x', not {stride}.")
+
+    if sample_rate is None:
+        sample_rate_provided = False
+        t = np.arange(length)
+    else:
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        t = np.arange(length) / sample_rate
+
+    # Compute the strided data and format into segments for LineCollection
+    N_rasters = (x.size - length) // stride + 1
+    x_strided = np.lib.stride_tricks.as_strided(
+        x, shape=(N_rasters, length), strides=(x.strides[0] * stride, x.strides[0]), writeable=False
+    )
+    segs = [np.column_stack([t, x_raster]) for x_raster in x_strided]
+
+    # Set the default keyword arguments and override with user-specified keyword arguments
+    default_kwargs = {
+        "linewidths": (0.5, 1, 1.5, 2),
+        "linestyles": "solid",
+    }
+    if color == "index":
+        default_kwargs["array"] = np.arange(N_rasters)
+    else:
+        default_kwargs["colors"] = color
+    kwargs = {**default_kwargs, **kwargs}
+
+    line_collection = LineCollection(
+        segs,
+        **kwargs,
+    )
+
+    with plt.rc_context(RC_PARAMS):
+        ax = plt.gca()
+        ax.add_collection(line_collection)
+        ax.set_xlim(t.min(), t.max())
+        ax.set_ylim(x.min(), x.max())
+
+        if colorbar:
+            axcb = plt.colorbar(line_collection)
+            axcb.set_label("Raster Index")
+
+        plt.grid(True)
         if sample_rate_provided:
             plt.xlabel("Time (s)")
         else:
