@@ -151,7 +151,7 @@ def raster(
             be labeled as "Samples".
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
-        colorbar: Indicates whether to add a colorbar to the plot.
+        colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"`.
         kwargs: Additional keyword arguments to pass to :obj:`matplotlib.collections.LineCollection`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
@@ -168,6 +168,8 @@ def raster(
         raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
 
     if x.ndim == 1:
+        if not length is not None:
+            raise ValueError("Argument 'length' must be specified if 'x' is 1-D.")
         if not isinstance(length, int):
             raise TypeError(f"Argument 'length' must be an integer, not {type(length)}.")
         if not 1 <= length <= x.size:
@@ -237,7 +239,7 @@ def raster(
         ax.set_xlim(t.min(), t.max())
         ax.set_ylim(x.min(), x.max())
 
-        if colorbar:
+        if colorbar and color == "index":
             axcb = plt.colorbar(line_collection)
             axcb.set_label("Raster Index")
 
