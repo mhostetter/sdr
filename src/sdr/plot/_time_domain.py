@@ -135,7 +135,7 @@ def raster(
     stride: int | None = None,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
-    colorbar: bool = False,
+    colorbar: bool = True,
     **kwargs,
 ):
     """
