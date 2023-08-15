@@ -160,6 +160,7 @@ def raster(
     Group:
         plot-time-domain
     """
+    # pylint: disable=too-many-statements
     x = np.asarray(x)
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
