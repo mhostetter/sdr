@@ -142,7 +142,8 @@ def raster(
     Plots a raster of the time-domain signal $x[n]$.
 
     Arguments:
-        x: The time-domain signal $x[n]$.
+        x: The time-domain signal $x[n]$. If `x` is complex, the real and imaginary rasters are interleaved.
+            Time order is preserved.
         length: The length of each raster in samples.
         stride: The stride between each raster in samples. If `None`, the stride is set to `length`.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
@@ -160,8 +161,6 @@ def raster(
         plot-time-domain
     """
     x = np.asarray(x)
-    if not np.isrealobj(x):
-        raise TypeError(f"Argument 'x' must be real, not {x.dtype}.")
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
 
@@ -191,7 +190,17 @@ def raster(
     x_strided = np.lib.stride_tricks.as_strided(
         x, shape=(N_rasters, length), strides=(x.strides[0] * stride, x.strides[0]), writeable=False
     )
-    segs = [np.column_stack([t, x_raster]) for x_raster in x_strided]
+
+    if np.iscomplexobj(x):
+        segments_real = [np.column_stack([t, x_raster.real]) for x_raster in x_strided]
+        segments_imag = [np.column_stack([t, x_raster.imag]) for x_raster in x_strided]
+
+        # Interleave the real and imaginary rasters
+        segments = [None] * (2 * N_rasters)
+        segments[::2] = segments_real
+        segments[1::2] = segments_imag
+    else:
+        segments = [np.column_stack([t, x_raster]) for x_raster in x_strided]
 
     # Set the default keyword arguments and override with user-specified keyword arguments
     default_kwargs = {
@@ -205,7 +214,7 @@ def raster(
     kwargs = {**default_kwargs, **kwargs}
 
     line_collection = LineCollection(
-        segs,
+        segments,
         **kwargs,
     )
 
