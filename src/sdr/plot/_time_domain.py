@@ -131,7 +131,7 @@ def time_domain(
 @export
 def raster(
     x: npt.ArrayLike,
-    length: int,
+    length: int | None = None,
     stride: int | None = None,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
@@ -143,8 +143,9 @@ def raster(
 
     Arguments:
         x: The time-domain signal $x[n]$. If `x` is complex, the real and imaginary rasters are interleaved.
-            Time order is preserved.
-        length: The length of each raster in samples.
+            Time order is preserved. If `x` is 1D, the rastering is determined by `length` and `stride`.
+            If `x` is 2D, the rows correspond to each raster.
+        length: The length of each raster in samples. This must be provided if `x` is 1D.
         stride: The stride between each raster in samples. If `None`, the stride is set to `length`.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Samples".
@@ -162,20 +163,35 @@ def raster(
     """
     # pylint: disable=too-many-statements
     x = np.asarray(x)
-    if not x.ndim == 1:
-        raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
+    if not x.ndim in [1, 2]:
+        raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
 
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be an integer, not {type(length)}.")
-    if not 1 <= length <= x.size:
-        raise ValueError(f"Argument 'length' must be at least 1 and less than the length of 'x', not {length}.")
+    if x.ndim == 1:
+        if not isinstance(length, int):
+            raise TypeError(f"Argument 'length' must be an integer, not {type(length)}.")
+        if not 1 <= length <= x.size:
+            raise ValueError(f"Argument 'length' must be at least 1 and less than the length of 'x', not {length}.")
 
-    if stride is None:
-        stride = length
-    elif not isinstance(stride, int):
-        raise TypeError(f"Argument 'stride' must be an integer, not {type(stride)}.")
-    elif not 1 <= stride <= x.size:
-        raise ValueError(f"Argument 'stride' must be at least 1 and less than the length of 'x', not {stride}.")
+        if stride is None:
+            stride = length
+        elif not isinstance(stride, int):
+            raise TypeError(f"Argument 'stride' must be an integer, not {type(stride)}.")
+        elif not 1 <= stride <= x.size:
+            raise ValueError(f"Argument 'stride' must be at least 1 and less than the length of 'x', not {stride}.")
+
+        # Compute the strided data and format into segments for LineCollection
+        N_rasters = (x.size - length) // stride + 1
+        x_strided = np.lib.stride_tricks.as_strided(
+            x, shape=(N_rasters, length), strides=(x.strides[0] * stride, x.strides[0]), writeable=False
+        )
+    else:
+        if not length is None:
+            raise ValueError("Argument 'length' can not be specified if 'x' is 2-D.")
+        if not stride is None:
+            raise ValueError("Argument 'stride' can not be specified if 'x' is 2-D.")
+
+        N_rasters, length = x.shape
+        x_strided = x
 
     if sample_rate is None:
         sample_rate_provided = False
@@ -186,17 +202,11 @@ def raster(
             raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
         t = np.arange(length) / sample_rate
 
-    # Compute the strided data and format into segments for LineCollection
-    N_rasters = (x.size - length) // stride + 1
-    x_strided = np.lib.stride_tricks.as_strided(
-        x, shape=(N_rasters, length), strides=(x.strides[0] * stride, x.strides[0]), writeable=False
-    )
-
+    # Interleave the real and imaginary rasters, if necessary
     if np.iscomplexobj(x):
         segments_real = [np.column_stack([t, x_raster.real]) for x_raster in x_strided]
         segments_imag = [np.column_stack([t, x_raster.imag]) for x_raster in x_strided]
 
-        # Interleave the real and imaginary rasters
         segments = [None] * (2 * N_rasters)
         segments[::2] = segments_real
         segments[1::2] = segments_imag
