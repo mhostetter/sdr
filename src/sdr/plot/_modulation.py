@@ -250,6 +250,12 @@ def eye(
     """
     raster(x, span * sps + 1, stride=sps, sample_rate=sample_rate, color=color, **kwargs)
 
+    # Make y-axis symmetric
+    ax = plt.gca()
+    ymin, ymax = ax.get_ylim()
+    ylim = max(np.abs(ymin), np.abs(ymax))
+    ax.set_ylim(-ylim, ylim)
+
 
 @export
 def ber(
