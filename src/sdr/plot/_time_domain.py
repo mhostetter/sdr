@@ -157,6 +157,7 @@ def raster(
 
             - `"linewidths"`: 1
             - `"linestyles"`: `"solid"`
+            - `"cmap"`: `"rainbow"`
 
     Group:
         plot-time-domain
@@ -217,6 +218,7 @@ def raster(
     default_kwargs = {
         "linewidths": 1,
         "linestyles": "solid",
+        "cmap": "rainbow",
     }
     if color == "index":
         default_kwargs["array"] = np.arange(N_rasters)
