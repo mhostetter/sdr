@@ -10,6 +10,7 @@ from typing_extensions import Literal
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
+from ._time_domain import raster
 
 
 @export
@@ -180,6 +181,74 @@ def symbol_map(
         plt.ylabel("Quadrature channel, $Q$")
         plt.title("Symbol Map")
         plt.tight_layout()
+
+
+@export
+def eye(
+    x: npt.ArrayLike,
+    sps: int,
+    span: int = 2,
+    sample_rate: float | None = None,
+    color: Literal["index"] | str = "index",
+    **kwargs,
+):
+    r"""
+    Plots the eye diagram of the real baseband signal $x[k]$.
+
+    Arguments:
+        x: The real baseband signal $x[k]$.
+        sps: The number of samples per symbol.
+        span: The number of symbols per raster.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Samples".
+        color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
+            If a valid Matplotlib color, the rasters are all colored with that color.
+        kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
+
+    Note:
+        To plot an eye diagram for I and Q, call this function twice, passing `x.real` and then `x.imag`.
+
+    Example:
+        Modulate 100 BPSK symbols.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(2); \
+            s = np.random.randint(0, psk.order, 100); \
+            a = psk.modulate(s)
+
+        Apply a raised cosine pulse shape and examine the eye diagram of the I channel. Since the raised
+        cosine pulse shape is a Nyquist filter, there is no intersymbol interference (ISI) at the symbol decisions.
+
+        .. ipython:: python
+
+            sps = 25; \
+            h = sdr.raised_cosine(0.5, 6, sps); \
+            fir = sdr.Interpolator(sps, h); \
+            x = fir(a)
+
+            @savefig sdr_plot_eye_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.eye(x.real, sps)
+
+        Apply a root raised cosine pulse shape and examine the eye diagram of the I channel. The root raised
+        cosine filter is not a Nyquist filter, and ISI can be observed.
+
+        .. ipython:: python
+
+            sps = 25; \
+            h = sdr.root_raised_cosine(0.5, 6, sps); \
+            fir = sdr.Interpolator(sps, h); \
+            x = fir(a)
+
+            @savefig sdr_plot_eye_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.eye(x.real, sps)
+
+    Group:
+        plot-modulation
+    """
+    raster(x, span * sps + 1, stride=sps, sample_rate=sample_rate, color=color, **kwargs)
 
 
 @export
