@@ -193,10 +193,11 @@ def eye(
     **kwargs,
 ):
     r"""
-    Plots the eye diagram of the real baseband signal $x[n]$.
+    Plots the eye diagram of the baseband modulated signal $x[n]$.
 
     Arguments:
-        x: The real baseband signal $x[n]$.
+        x: The baseband modulated signal $x[n]$. If `x` is complex, the real and imaginary rasters are interleaved.
+            Time order is preserved.
         sps: The number of samples per symbol.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
@@ -205,20 +206,17 @@ def eye(
             If a valid Matplotlib color, the rasters are all colored with that color.
         kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
 
-    Note:
-        To plot an eye diagram for I and Q, call this function twice, passing `x.real` and then `x.imag`.
-
     Example:
-        Modulate 100 BPSK symbols.
+        Modulate 100 QPSK symbols.
 
         .. ipython:: python
 
-            psk = sdr.PSK(2); \
+            psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 100); \
             a = psk.modulate(s)
 
-        Apply a raised cosine pulse shape and examine the eye diagram of the I channel. Since the raised
-        cosine pulse shape is a Nyquist filter, there is no intersymbol interference (ISI) at the symbol decisions.
+        Apply a raised cosine pulse shape and examine the eye diagram. Since the raised cosine pulse shape
+        is a Nyquist filter, there is no intersymbol interference (ISI) at the symbol decisions.
 
         .. ipython:: python
 
@@ -229,10 +227,12 @@ def eye(
 
             @savefig sdr_plot_eye_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.eye(x.real, sps)
+            sdr.plot.eye(x, sps)
 
-        Apply a root raised cosine pulse shape and examine the eye diagram of the I channel. The root raised
-        cosine filter is not a Nyquist filter, and ISI can be observed.
+        Apply a root raised cosine pulse shape and examine the eye diagram. The root raised cosine filter
+        is not a Nyquist filter, and ISI can be observed. (It should be noted that two cascaded root raised
+        cosine filters, one for transmit and one for receive, is a Nyquist filter. This is why SRRC pulse shaping
+        is often used in practice.)
 
         .. ipython:: python
 
@@ -243,7 +243,7 @@ def eye(
 
             @savefig sdr_plot_eye_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.eye(x.real, sps)
+            sdr.plot.eye(x, sps)
 
     Group:
         plot-modulation
