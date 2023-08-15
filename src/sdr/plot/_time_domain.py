@@ -153,7 +153,7 @@ def raster(
         kwargs: Additional keyword arguments to pass to :obj:`matplotlib.collections.LineCollection`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
-            - `"linewidths"`: `(0.5, 1, 1.5, 2)`
+            - `"linewidths"`: 1
             - `"linestyles"`: `"solid"`
 
     Group:
@@ -195,7 +195,7 @@ def raster(
 
     # Set the default keyword arguments and override with user-specified keyword arguments
     default_kwargs = {
-        "linewidths": (0.5, 1, 1.5, 2),
+        "linewidths": 1,
         "linestyles": "solid",
     }
     if color == "index":
