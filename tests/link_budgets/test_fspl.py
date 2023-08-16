@@ -125,3 +125,44 @@ def test_28p25_GHz():
     fspl = sdr.fspl(d[i], 28.25e9)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
+
+
+def test_300_MHz_near_field():
+    """
+    Matlab:
+        >> d = linspace(0, 0.25, 20); d'
+        >> L = fspl(d, physconst('LightSpeed')/300e6); L'
+    """
+    d = np.linspace(0, 0.25, 20)
+    fspl = sdr.fspl(d, 300e6)
+    fspl_truth = np.array(
+        [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1.275897270945932,
+            2.435736210499666,
+            3.458786659447293,
+            4.373936470660794,
+            5.201790173825296,
+            5.957561391613292,
+            6.652803516797531,
+            7.296497184225555,
+            7.895761651774420,
+            8.456336123779291,
+            8.982914898226273,
+            9.479386572726916,
+            9.949008489717375,
+        ]
+    )
+    assert isinstance(fspl, np.ndarray)
+    assert np.allclose(fspl, fspl_truth)
+
+    i = np.random.randint(0, d.size)
+    fspl = sdr.fspl(d[i], 300e6)
+    assert isinstance(fspl, float)
+    assert fspl == pytest.approx(fspl_truth[i])
