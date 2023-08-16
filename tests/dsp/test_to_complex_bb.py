@@ -11,5 +11,5 @@ def test_exceptions():
         sdr.to_complex_bb(x_r)
     with pytest.raises(ValueError):
         # x_r must be real
-        x_r = np.zeros(4, dtype=np.complex64)
+        x_r = np.zeros(4, dtype=complex)
         sdr.to_complex_bb(x_r)

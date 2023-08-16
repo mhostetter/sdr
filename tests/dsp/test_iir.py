@@ -16,8 +16,8 @@ def test_single_pole_impulse_response(pole):
     x = np.zeros(N, dtype=float)
     x[0] = 1
 
-    b = np.array([1], dtype=np.complex64)
-    a = np.array([1, -pole], dtype=np.complex64)
+    b = np.array([1], dtype=complex)
+    a = np.array([1, -pole], dtype=complex)
     iir = sdr.IIR(b, a)
     h = iir(x)
     h_truth = pole ** np.arange(N)

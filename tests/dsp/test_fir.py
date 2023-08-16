@@ -27,7 +27,7 @@ def test_streaming():
     fir = sdr.FIR(h, streaming=True)
 
     d = 5  # Stride
-    y = np.zeros(N, dtype=np.complex64)
+    y = np.zeros(N, dtype=complex)
     for i in range(0, N, d):
         y[i : i + d] = fir(x[i : i + d])
 

@@ -30,7 +30,7 @@ def test_non_streaming_full():
     fir = sdr.Interpolator(r)
     y = fir(x, mode)
 
-    xr = np.zeros(N * r, dtype=np.complex64)
+    xr = np.zeros(N * r, dtype=complex)
     xr[::r] = x[:]
     y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)
 
@@ -46,11 +46,11 @@ def test_streaming():
     fir = sdr.Interpolator(r, streaming=True)
 
     d = 10  # Stride
-    y = np.zeros(N * r, dtype=np.complex64)
+    y = np.zeros(N * r, dtype=complex)
     for i in range(0, N, d):
         y[i * r : (i + d) * r] = fir(x[i : i + d])
 
-    xr = np.zeros(N * r, dtype=np.complex64)
+    xr = np.zeros(N * r, dtype=complex)
     xr[::r] = x[:]
     y_truth = scipy.signal.convolve(xr, fir.taps, mode="full")[0 : N * r]
 
