@@ -6,7 +6,7 @@ import sdr
 
 def test_exceptions():
     with pytest.raises(ValueError):
-        x = np.array([8, 13, 12], dtype=np.float32)
+        x = np.array([8, 13, 12], dtype=float)
         sdr.pack(x, 4)
     with pytest.raises(ValueError):
         x = np.array([8, 13, 12], dtype=int)

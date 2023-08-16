@@ -224,7 +224,7 @@ class FIR:
             raise ValueError("Argument 'N' must be greater than or equal to the filter length.")
 
         # Delta impulse function
-        d = np.zeros(N - self.taps.size + 1, dtype=np.float32)
+        d = np.zeros(N - self.taps.size + 1, dtype=float)
         d[0] = 1
 
         h = scipy.signal.convolve(d, self.taps, mode="full")
@@ -255,7 +255,7 @@ class FIR:
             raise ValueError("Argument 'N' must be greater than or equal to the filter length.")
 
         # Unit step function
-        u = np.ones(N - self.taps.size + 1, dtype=np.float32)
+        u = np.ones(N - self.taps.size + 1, dtype=float)
 
         s = scipy.signal.convolve(u, self.taps, mode="full")
 
