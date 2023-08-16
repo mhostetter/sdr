@@ -7,7 +7,7 @@ import sdr
 def test_exceptions():
     with pytest.raises(ValueError):
         # x_c must be 1D
-        x_c = np.zeros((2, 2), dtype=np.complex64)
+        x_c = np.zeros((2, 2), dtype=complex)
         sdr.to_real_pb(x_c)
     with pytest.raises(ValueError):
         # x_c must be real

@@ -60,7 +60,7 @@ def time_domain(
         .. ipython:: python
 
             # Create a QPSK impulse signal
-            x = np.zeros(1000, dtype=np.complex64); \
+            x = np.zeros(1000, dtype=complex); \
             symbol_map = np.exp(1j * np.pi / 4) * np.array([1, 1j, -1, -1j]); \
             x[::10] = symbol_map[np.random.randint(0, 4, 100)]
 

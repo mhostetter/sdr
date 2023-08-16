@@ -29,7 +29,7 @@ import sdr
 #     fir = sdr.Decimator(r)
 #     y = fir(x, mode)
 
-#     xr = np.zeros(N * r, dtype=np.complex64)
+#     xr = np.zeros(N * r, dtype=complex)
 #     xr[::r] = x[:]
 #     y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)
 
