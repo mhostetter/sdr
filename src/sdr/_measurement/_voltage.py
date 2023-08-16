@@ -6,31 +6,37 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
+from .._conversion import db as to_db
 from .._helper import export
 
 
 @export
-def peak_voltage(x: npt.ArrayLike) -> float:
+def peak_voltage(x: npt.ArrayLike, db: bool = False) -> float:
     r"""
     Measures the peak voltage of a time-domain signal $x[n]$.
 
-    $$V_{\text{peak}} = \max \left( \left| x[n] \right| \right)$$
+    $$V_{\text{peak}} = \max \left| x[n] \right|$$
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
+        db: Indicates whether to return the result in dB.
 
     Returns:
-        The peak voltage of $x[n]$ in units.
+        The peak voltage. If `db=False`, $V_{\text{peak}}$ is returned.
+        If `db=True`, $20 \log_{10} V_{\text{peak}}$ is returned.
 
     Group:
         measurement-voltage
     """
     x = np.asarray(x)
-    return np.max(np.abs(x))
+    V_peak = np.max(np.abs(x))
+    if db:
+        V_peak = to_db(V_peak, type="voltage")
+    return V_peak
 
 
 @export
-def rms_voltage(x: npt.ArrayLike) -> float:
+def rms_voltage(x: npt.ArrayLike, db: bool = False) -> float:
     r"""
     Measures the root-mean-square (RMS) voltage of a time-domain signal $x[n]$.
 
@@ -38,15 +44,20 @@ def rms_voltage(x: npt.ArrayLike) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
+        db: Indicates whether to return the result in dB.
 
     Returns:
-        The RMS voltage of $x[n]$ in units.
+        The root-mean-square voltage. If `db=False`, $V_{\text{rms}}$ is returned.
+        If `db=True`, $20 \log_{10} V_{\text{rms}}$ is returned.
 
     Group:
         measurement-voltage
     """
     x = np.asarray(x)
-    return np.sqrt(np.mean(np.abs(x) ** 2))
+    V_rms = np.sqrt(np.mean(np.abs(x) ** 2))
+    if db:
+        V_rms = to_db(V_rms, type="voltage")
+    return V_rms
 
 
 @export
