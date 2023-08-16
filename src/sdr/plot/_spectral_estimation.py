@@ -63,7 +63,7 @@ def periodogram(
         return_onesided=x_axis != "two-sided",
         average=average,
     )
-    Pxx = 10 * np.log10(np.abs(Pxx) ** 2)
+    Pxx = 10 * np.log10(Pxx)
 
     if x_axis == "two-sided":
         f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
@@ -143,7 +143,7 @@ def spectrogram(
         return_onesided=x_axis != "two-sided",
         mode="psd",
     )
-    Sxx = 10 * np.log10(np.abs(Sxx))
+    Sxx = 10 * np.log10(Sxx)
 
     if x_axis == "one-sided" and np.iscomplexobj(x):
         # If complex data, the spectrogram always returns a two-sided spectrum. So we need to remove the second half.
