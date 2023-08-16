@@ -327,12 +327,12 @@ class Interpolator(FIR):
             taps = multirate_taps(rate, 1)
         elif taps == "linear":
             self._method = "linear"
-            taps = np.zeros(2 * rate, dtype=np.float32)
+            taps = np.zeros(2 * rate, dtype=float)
             taps[:rate] = np.arange(0, rate) / rate
             taps[rate:] = np.arange(rate, 0, -1) / rate
         elif taps == "zoh":
             self._method = "zoh"
-            taps = np.ones(rate, dtype=np.float32)
+            taps = np.ones(rate, dtype=float)
         else:
             raise ValueError(f"Argument 'taps' must be 'kaiser', 'linear', 'zoh', or an array-like, not {taps}.")
 

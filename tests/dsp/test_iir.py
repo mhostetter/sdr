@@ -13,7 +13,7 @@ def test_single_pole_impulse_response(pole):
         - R. Lyons, Understanding Digital Signal Processing 3rd Edition, Section 6.3.1.
     """
     N = 100
-    x = np.zeros(N, dtype=np.float32)
+    x = np.zeros(N, dtype=float)
     x[0] = 1
 
     b = np.array([1], dtype=np.complex64)

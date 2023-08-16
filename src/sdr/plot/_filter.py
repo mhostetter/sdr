@@ -91,7 +91,7 @@ def impulse_response(
             N = 100  # IIR filter
 
     # Delta impulse function
-    d = np.zeros(N, dtype=np.float32)
+    d = np.zeros(N, dtype=float)
     d[0] = 1
 
     # Filter the impulse
@@ -177,7 +177,7 @@ def step_response(
             N = 100  # IIR filter
 
     # Unit step function
-    u = np.ones(N, dtype=np.float32)
+    u = np.ones(N, dtype=float)
 
     # Filter the impulse
     zi = scipy.signal.lfiltic(b, a, y=[], x=[])

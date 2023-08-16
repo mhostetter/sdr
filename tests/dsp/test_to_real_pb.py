@@ -11,5 +11,5 @@ def test_exceptions():
         sdr.to_real_pb(x_c)
     with pytest.raises(ValueError):
         # x_c must be real
-        x_c = np.zeros(4, dtype=np.float32)
+        x_c = np.zeros(4, dtype=float)
         sdr.to_real_pb(x_c)

@@ -215,7 +215,7 @@ class IIR:
             See the :ref:`iir-filters` example.
         """
         # Delta impulse function
-        d = np.zeros(N, dtype=np.float32)
+        d = np.zeros(N, dtype=float)
         d[0] = 1
 
         zi = self._state
@@ -242,7 +242,7 @@ class IIR:
             See the :ref:`iir-filters` example.
         """
         # Unit step function
-        u = np.ones(N, dtype=np.float32)
+        u = np.ones(N, dtype=float)
 
         state = self._state
         s = self(u)

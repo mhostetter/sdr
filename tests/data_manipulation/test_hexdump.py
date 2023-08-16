@@ -7,7 +7,7 @@ import sdr
 def test_exceptions():
     with pytest.raises(ValueError):
         # Must only have integer arrays
-        sdr.hexdump(np.array([8, 13, 12], dtype=np.float32))
+        sdr.hexdump(np.array([8, 13, 12], dtype=float))
     with pytest.raises(ValueError):
         # Must only have 1D arrays
         sdr.hexdump(np.array([[8, 13, 12]], dtype=int))

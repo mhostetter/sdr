@@ -48,7 +48,7 @@ class FarrowResampler:
                 [1 / 6, -1, 1 / 2, 1 / 3],
                 [0, 0, 1, 0],
             ],
-            dtype=np.float32,
+            dtype=float,
         )
 
         self.reset()

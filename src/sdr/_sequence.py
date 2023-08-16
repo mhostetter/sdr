@@ -79,7 +79,7 @@ def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.
 
     # Map binary Barker code to bipolar. The mapping is equivalent to BPSK: 0 -> 1, 1 -> -1.
     sequence = 1 - 2 * code
-    sequence = sequence.astype(np.float64)
+    sequence = sequence.astype(float)
 
     return sequence
 
