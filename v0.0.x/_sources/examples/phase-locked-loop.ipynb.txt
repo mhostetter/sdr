@@ -208,7 +208,7 @@
     "N = 75  # samples\n",
     "theta_0 = 2 * np.pi / 10  # radians/sample\n",
     "x = np.exp(1j * (theta_0 * np.arange(N) + np.pi))  # Input signal\n",
-    "y = np.ones(x.size + 1, dtype=np.complex64)  # Output signal\n",
+    "y = np.ones(x.size + 1, dtype=complex)  # Output signal\n",
     "phase_error = np.zeros(x.size)\n",
     "freq_estimate = np.zeros(x.size)\n",
     "\n",
