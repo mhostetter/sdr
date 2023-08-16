@@ -126,8 +126,6 @@ def linear(
         conversions-decibels
     """
     x = np.asarray(x)
-    if not np.all(x >= 0):
-        raise ValueError("Argument 'x' must be non-negative.")
 
     if type in ["value", "power"]:
         return 10 ** (x / 10)
