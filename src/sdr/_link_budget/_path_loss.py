@@ -50,5 +50,14 @@ def fspl(d: npt.ArrayLike, f: npt.ArrayLike) -> np.ndarray:
     """
     d = np.asarray(d)
     f = np.asarray(f)
+
+    # The free-space path loss equation is only valid in the far field. For very small distances, the FSPL
+    # equation could have a negative result, implying a path gain. This is not possible. So for distances less
+    # than lambda / (4 * pi), the path loss is set to 0 dB.
+    lambda_ = scipy.constants.speed_of_light / f
+    d = np.maximum(d, lambda_ / (4 * np.pi))
+
+    # The free-space path loss equation
     loss = 20 * np.log10(4 * np.pi * d * f / scipy.constants.speed_of_light)
+
     return loss
