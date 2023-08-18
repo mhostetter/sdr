@@ -258,3 +258,57 @@ def to_real_pb(x_c: npt.ArrayLike) -> np.ndarray:
     x_r = x_c.real
 
     return x_r
+
+
+@export
+def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
+    r"""
+    Upsamples the time-domain signal $x[n]$ by the factor $r$.
+
+    Warning:
+        This function does not perform any anti-alias filtering. The upsampled signal $y[n]$ will have
+        frequency components above the Nyquist frequency of the original signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ with sample rate $f_s$.
+        rate: The upsampling factor $r$.
+
+    Returns:
+        The upsampled signal $y[n]$ with sample rate $f_s r$.
+
+    Examples:
+        Upsample a complex exponential by a factor of 4.
+
+        .. ipython:: python
+
+            x = np.exp(1j*2*np.pi/16*np.arange(20)); x
+            y = sdr.upsample(x, 4); y
+
+            @savefig sdr_upsample_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, label="$x[n]$"); \
+            sdr.plot.time_domain(y, sample_rate=4, label="$y[n]$");
+
+        The spectrum of $y[n]$ has 3 additional copies of the spectrum of $x[n]$.
+
+        .. ipython:: python
+
+            @savefig sdr_upsample_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(x, fft=2048, sample_rate=1, label="$x[n]$"); \
+            sdr.plot.periodogram(y, fft=2048, sample_rate=4, label="$y[n]$");
+
+    Group:
+        dsp-signal-manipulation
+    """
+    x = np.asarray(x)
+
+    if not isinstance(rate, int):
+        raise TypeError(f"Argument 'rate' must be an int, not {type(rate)}.")
+    if not rate > 0:
+        raise ValueError(f"Argument 'rate' must be positive, not {rate}.")
+
+    y = np.zeros(x.size * rate, dtype=x.dtype)
+    y[::rate] = x
+
+    return y
