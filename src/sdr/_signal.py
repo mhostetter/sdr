@@ -266,8 +266,9 @@ def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
     Upsamples the time-domain signal $x[n]$ by the factor $r$.
 
     Warning:
-        This function does not perform any anti-alias filtering. The upsampled signal $y[n]$ will have
-        frequency components above the Nyquist frequency of the original signal $x[n]$.
+        This function does not perform any anti-aliasing filtering. The upsampled signal $y[n]$ will have
+        frequency components above the Nyquist frequency of the original signal $x[n]$. For efficient
+        polyphase interpolation (with anti-aliasing filtering), see :class:`sdr.Interpolator`.
 
     Arguments:
         x: The time-domain signal $x[n]$ with sample rate $f_s$.
@@ -276,13 +277,16 @@ def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
     Returns:
         The upsampled signal $y[n]$ with sample rate $f_s r$.
 
+    See Also:
+        sdr.Interpolator
+
     Examples:
         Upsample a complex exponential by a factor of 4.
 
         .. ipython:: python
 
-            x = np.exp(1j*2*np.pi/16*np.arange(20)); x
-            y = sdr.upsample(x, 4); y
+            x = np.exp(1j * 2 * np.pi / 16 * np.arange(20))
+            y = sdr.upsample(x, 4)
 
             @savefig sdr_upsample_1.png
             plt.figure(figsize=(8, 4)); \
