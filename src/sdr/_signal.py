@@ -11,18 +11,26 @@ from ._helper import export
 
 
 @export
-def mix(x: npt.ArrayLike, freq: float = 0, phase: float = 0, sample_rate: float = 1) -> np.ndarray:
+def mix(
+    x: npt.ArrayLike,
+    freq: float = 0,
+    phase: float = 0,
+    sample_rate: float = 1,
+    complex: bool = True,  # pylint: disable=redefined-builtin
+) -> np.ndarray:
     r"""
-    Mixes the time-domain signal $x[n]$ with a complex exponential.
-
-    $$y[n] = x[n] \cdot \exp \left[ j \left( \frac{2 \pi f}{f_s} n + \phi \right) \right]$$
+    Mixes the time-domain signal $x[n]$ with a complex exponential or real sinusoid.
 
     Arguments:
         x: The time-domain signal $x[n]$.
-        freq: The frequency $f$ of the complex exponential in Hz (or 1/samples if `sample_rate=1`).
+        freq: The frequency $f$ of the sinusoid in Hz (or 1/samples if `sample_rate=1`).
             The frequency must satisfy $-f_s/2 \le f \le f_s/2$.
-        phase: The phase $\phi$ of the complex exponential in degrees.
+        phase: The phase $\phi$ of the sinusoid in degrees.
         sample_rate: The sample rate $f_s$ of the signal.
+        complex: Indicates whether to mix by a complex exponential or real sinusoid.
+
+            - `True`: $y[n] = x[n] \cdot \exp \left[ j \left( \frac{2 \pi f}{f_s} n + \phi \right) \right]$
+            - `False`: $y[n] = x[n] \cdot \cos \left( \frac{2 \pi f}{f_s} n + \phi \right)$
 
     Returns:
         The mixed signal $y[n]$.
@@ -65,6 +73,8 @@ def mix(x: npt.ArrayLike, freq: float = 0, phase: float = 0, sample_rate: float 
         raise TypeError(f"Argument 'phase' must be a number, not {type(phase)}.")
     if not isinstance(sample_rate, (int, float)):
         raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+    if not isinstance(complex, bool):
+        raise TypeError(f"Argument 'complex' must be a bool, not {type(complex)}.")
 
     if not -sample_rate / 2 <= freq <= sample_rate / 2:
         raise ValueError(f"Argument 'freq' must be in the range [{-sample_rate/2}, {sample_rate/2}], not {freq}.")
@@ -72,7 +82,12 @@ def mix(x: npt.ArrayLike, freq: float = 0, phase: float = 0, sample_rate: float 
         raise ValueError(f"Argument 'sample_rate' must be positive, not {sample_rate}.")
 
     t = np.arange(len(x)) / sample_rate  # Time vector in seconds
-    y = x * np.exp(1j * (2 * np.pi * freq * t + np.deg2rad(phase)))
+    if complex:
+        lo = np.exp(1j * (2 * np.pi * freq * t + np.deg2rad(phase)))
+    else:
+        lo = np.cos(2 * np.pi * freq * t + np.deg2rad(phase))
+
+    y = x * lo
 
     return y
 
