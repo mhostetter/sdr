@@ -3126,7 +3126,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.mix/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential." class="md-ellipsis">mix</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential or real sinusoid." class="md-ellipsis">mix</span>
       </a>
     </li>
   
@@ -3157,6 +3157,36 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.to_real_pb/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_real_pb (Python function) — Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$." class="md-ellipsis">to_<wbr>real_<wbr>pb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.upsample/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.upsample (Python function) — Upsamples the time-domain signal $x[n]$ by the factor $r$." class="md-ellipsis">upsample</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.downsample/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.downsample (Python function) — Downsamples the time-domain signal $x[n]$ by the factor $r$." class="md-ellipsis">downsample</span>
       </a>
     </li>
   
@@ -7265,7 +7295,7 @@ You're not viewing the latest version.
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">IIR</span></span></dt>
 <dd><p>Implements an infinite impulse response (IIR) filter.</p>
-<p>This class is a wrapper for the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.lfilter.html#scipy.signal.lfilter" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.lfilter()</span></code></a> function. It supports one-time filtering
+<p>This class is a wrapper for the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.lfilter.html#scipy.signal.lfilter" title="(in SciPy v1.11.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.lfilter()</span></code></a> function. It supports one-time filtering
 and streamed filtering.</p>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
 <p>An IIR filter is defined by its feedforward coefficients <span class="math notranslate nohighlight">\(b_i\)</span> and feedback coefficients <span class="math notranslate nohighlight">\(a_j\)</span>.

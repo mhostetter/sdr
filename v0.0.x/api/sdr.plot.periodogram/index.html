@@ -2866,7 +2866,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.mix/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential." class="md-ellipsis">mix</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes the time-domain signal $x[n]$ with a complex exponential or real sinusoid." class="md-ellipsis">mix</span>
       </a>
     </li>
   
@@ -2897,6 +2897,36 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.to_real_pb/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.to_real_pb (Python function) — Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$." class="md-ellipsis">to_<wbr>real_<wbr>pb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.upsample/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.upsample (Python function) — Upsamples the time-domain signal $x[n]$ by the factor $r$." class="md-ellipsis">upsample</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.downsample/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.downsample (Python function) — Downsamples the time-domain signal $x[n]$ by the factor $r$." class="md-ellipsis">downsample</span>
       </a>
     </li>
   
@@ -7152,7 +7182,7 @@ You're not viewing the latest version.
 <dd><p>Plots the estimated power spectral density <span class="math notranslate nohighlight">\(P_{xx}\)</span> of a time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> using Welch’s method.</p>
 <div class="note admonition">
 <p class="admonition-title">Note</p>
-<p>This function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch" title="(in SciPy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.welch()</span></code></a> to estimate the power spectral density of the
+<p>This function uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html#scipy.signal.welch" title="(in SciPy v1.11.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.welch()</span></code></a> to estimate the power spectral density of the
 time-domain signal.</p>
 </div>
 <dl class="field-list simple">
