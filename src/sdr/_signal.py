@@ -316,3 +316,79 @@ def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
     y[::rate] = x
 
     return y
+
+
+@export
+def downsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
+    r"""
+    Downsamples the time-domain signal $x[n]$ by the factor $r$.
+
+    Warning:
+        This function does not perform any anti-aliasing filtering. The downsampled signal $y[n]$ will have
+        spectral aliasing. For efficient polyphase decimation (with anti-aliasing filtering), see
+        :class:`sdr.Decimator`.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ with sample rate $f_s$.
+        rate: The downsampling factor $r$.
+
+    Returns:
+        The downsampled signal $y[n]$ with sample rate $f_s / r$.
+
+    Examples:
+        Downsample a complex exponential by a factor of 4.
+
+        .. ipython:: python
+
+            sample_rate = 400; \
+            x1 = np.exp(1j * 2 * np.pi * 0 / sample_rate * np.arange(200)); \
+            x2 = np.exp(1j * 2 * np.pi * 130 / sample_rate * np.arange(200)); \
+            x3 = np.exp(1j * 2 * np.pi * -140 / sample_rate * np.arange(200)); \
+            x = x1 + x2 + x3
+            y = sdr.downsample(x, 4)
+
+            @savefig sdr_downsample_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=sample_rate); \
+            plt.title("Input signal $x[n]$"); \
+            plt.tight_layout();
+
+            @savefig sdr_downsample_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y, sample_rate=sample_rate/4); \
+            plt.title("Downsampled signal $y[n]$"); \
+            plt.tight_layout();
+
+        The spectrum of $x[n]$ has aliased. Any spectral content above the Nyquist frequency of $f_s / 2$
+        will *fold* into the spectrum of $y[n]$. The CW at 0 Hz remains at 0 Hz (unaliased).
+        The CW at 130 Hz folds into 30 Hz. The CW at -140 Hz folds into -40 Hz.
+
+        .. ipython:: python
+
+            @savefig sdr_downsample_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
+            plt.xlim(-sample_rate/2, sample_rate/2); \
+            plt.title("Input signal $x[n]$"); \
+            plt.tight_layout();
+
+            @savefig sdr_downsample_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate/4); \
+            plt.xlim(-sample_rate/2, sample_rate/2); \
+            plt.title("Downsampled signal $y[n]$"); \
+            plt.tight_layout();
+
+    Group:
+        dsp-signal-manipulation
+    """
+    x = np.asarray(x)
+
+    if not isinstance(rate, int):
+        raise TypeError(f"Argument 'rate' must be an int, not {type(rate)}.")
+    if not rate > 0:
+        raise ValueError(f"Argument 'rate' must be positive, not {rate}.")
+
+    y = x[::rate]
+
+    return y
