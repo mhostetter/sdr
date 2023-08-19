@@ -285,22 +285,39 @@ def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
 
         .. ipython:: python
 
-            x = np.exp(1j * 2 * np.pi / 16 * np.arange(20))
+            sample_rate = 100; \
+            x = np.exp(1j * 2 * np.pi * 15 / sample_rate * np.arange(20))
             y = sdr.upsample(x, 4)
 
             @savefig sdr_upsample_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x, sample_rate=1, label="$x[n]$"); \
-            sdr.plot.time_domain(y, sample_rate=4, label="$y[n]$");
+            sdr.plot.time_domain(x, sample_rate=sample_rate); \
+            plt.title("Input signal $x[n]$"); \
+            plt.tight_layout();
+
+            @savefig sdr_upsample_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y, sample_rate=sample_rate*4); \
+            plt.title("Upsampled signal $y[n]$"); \
+            plt.tight_layout();
 
         The spectrum of $y[n]$ has 3 additional copies of the spectrum of $x[n]$.
 
         .. ipython:: python
 
-            @savefig sdr_upsample_2.png
+            @savefig sdr_upsample_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.periodogram(x, fft=2048, sample_rate=1, label="$x[n]$"); \
-            sdr.plot.periodogram(y, fft=2048, sample_rate=4, label="$y[n]$");
+            sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
+            plt.xlim(-sample_rate*2, sample_rate*2); \
+            plt.title("Input signal $x[n]$"); \
+            plt.tight_layout();
+
+            @savefig sdr_upsample_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate*4); \
+            plt.xlim(-sample_rate*2, sample_rate*2); \
+            plt.title("Upsampled signal $y[n]$"); \
+            plt.tight_layout();
 
     Group:
         dsp-signal-manipulation
