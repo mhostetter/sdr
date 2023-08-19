@@ -12,6 +12,33 @@ from .._helper import export
 
 
 @export
+def wavelength(freq: float) -> float:
+    r"""
+    Calculates the wavelength $\lambda$ of a electromagnetic wave with frequency $f$.
+
+    $$\lambda = \frac{c}{f}$$
+
+    Arguments:
+        freq: The frequency $f$ in Hz of the signal.
+
+    Returns:
+        The wavelength $\lambda$ in meters.
+
+    Examples:
+        The wavelength of a 1 GHz signal is 0.3 meters.
+
+        .. ipython:: python
+
+            sdr.wavelength(1e9)
+
+    Group:
+        link-budget-antennas
+    """
+    freq = np.asarray(freq)
+    return scipy.constants.speed_of_light / freq
+
+
+@export
 def parabolic_antenna(
     freq: float,
     diameter: float,
@@ -62,7 +89,7 @@ def parabolic_antenna(
     if not np.all((0 <= efficiency) & (efficiency <= 1)):
         raise ValueError("Argument 'efficiency' must be between 0 and 1.")
 
-    lambda_ = scipy.constants.speed_of_light / freq  # Wavelength in meters
+    lambda_ = wavelength(freq)  # Wavelength in meters
     G = (np.pi * diameter / lambda_) ** 2 * efficiency  # Gain in linear units
     G = db(G)  # Gain in dBi
 
