@@ -20,10 +20,13 @@
     ],
     "cSpell.words": [
         "awgn",
-        "Baseband",
+        "baseband",
+        "downsample",
+        "downsampled",
+        "downsamples",
         "downsampling",
         "exponentials",
-        "Feedforward",
+        "feedforward",
         "figsize",
         "hexdump",
         "intersymbol",
@@ -46,6 +49,7 @@
         "stopband",
         "underdamped",
         "upsampled",
+        "upsamples",
         "upsampling"
     ]
 }
