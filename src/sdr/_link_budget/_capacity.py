@@ -68,7 +68,7 @@ def bsc_capacity(p: npt.ArrayLike) -> np.ndarray:
 
     C = 1 - Hb(p)
 
-    return C if C.ndim > 0 else C.item()
+    return C
 
 
 @export
@@ -116,7 +116,7 @@ def bec_capacity(p: npt.ArrayLike) -> np.ndarray:
 
     C = 1 - p
 
-    return C if C.ndim > 0 else C.item()
+    return C
 
 
 @export
@@ -195,4 +195,4 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
     else:
         C = np.log2(1 + snr_linear)  # bits/2D
 
-    return C if C.ndim > 0 else C.item()
+    return C
