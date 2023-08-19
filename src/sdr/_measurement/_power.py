@@ -83,4 +83,4 @@ def papr(x: npt.ArrayLike) -> float:
         measurement-power
     """
     x = np.asarray(x)
-    return 10 * np.log10(peak_power(x) / average_power(x))
+    return to_db(peak_power(x) / average_power(x))

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import numpy as np
 
+from ._conversion import linear
 from ._filter import IIR
 from ._helper import export
 from ._loop_filter import LoopFilter
@@ -189,7 +190,7 @@ class ClosedLoopPLL:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        cn0_linear = 10 ** (cn0 / 10)
+        cn0_linear = linear(cn0)
         return self.Bn / cn0_linear
 
     @property

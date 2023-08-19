@@ -7,6 +7,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.constants
 
+from .._conversion import db
 from .._helper import export
 
 
@@ -63,7 +64,7 @@ def parabolic_antenna(
 
     lambda_ = scipy.constants.speed_of_light / freq  # Wavelength in meters
     G = (np.pi * diameter / lambda_) ** 2 * efficiency  # Gain in linear units
-    G = 10 * np.log10(G)  # Gain in dBi
+    G = db(G)  # Gain in dBi
 
     theta = np.arcsin(3.83 * lambda_ / (np.pi * diameter))  # Beamwidth in radians
     theta = np.rad2deg(theta)  # Beamwidth in degrees

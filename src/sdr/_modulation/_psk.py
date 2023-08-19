@@ -9,7 +9,7 @@ import scipy.integrate
 import scipy.special
 from typing_extensions import Literal
 
-from .._conversion import ebn0_to_esn0, esn0_to_ebn0
+from .._conversion import ebn0_to_esn0, esn0_to_ebn0, linear
 from .._data import unpack
 from .._helper import export, extend_docstring
 from .._probability import Q
@@ -130,9 +130,9 @@ class PSK(_LinearModulation):
         M = self.order
         k = self.bps
         ebn0 = np.asarray(ebn0)
-        ebn0_linear = 10 ** (ebn0 / 10)
+        ebn0_linear = linear(ebn0)
         esn0 = ebn0_to_esn0(ebn0, k)
-        esn0_linear = 10 ** (esn0 / 10)
+        esn0_linear = linear(esn0)
 
         if not diff_encoded:
             if M == 2:
@@ -219,9 +219,9 @@ class PSK(_LinearModulation):
         M = self.order
         k = self.bps
         esn0 = np.asarray(esn0)
-        esn0_linear = 10 ** (esn0 / 10)
+        esn0_linear = linear(esn0)
         ebn0 = esn0_to_ebn0(esn0, k)
-        ebn0_linear = 10 ** (ebn0 / 10)
+        ebn0_linear = linear(ebn0)
 
         if not diff_encoded:
             if M == 2:
