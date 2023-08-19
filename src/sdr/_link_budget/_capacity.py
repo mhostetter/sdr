@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.stats
 
 from .._helper import export
 
@@ -14,13 +15,8 @@ def Hb(x: npt.ArrayLike) -> np.ndarray:
     Computes the binary entropy function $H_b(x)$.
     """
     x = np.asarray(x)
-    H = -x * np.log2(x) - (1 - x) * np.log2(1 - x)
 
-    # When x is 0 or 1, the binary entropy function is undefined. However, the limit of the binary entropy function
-    # as x approaches 0 or 1 is 0. Therefore, we can replace the undefined values with 0.
-    H = np.nan_to_num(H, nan=0)
-
-    return H
+    return scipy.stats.entropy([x, 1 - x], base=2)
 
 
 @export
@@ -66,9 +62,7 @@ def bsc_capacity(p: npt.ArrayLike) -> np.ndarray:
     if not (np.all(0 <= p) and np.all(p <= 1)):
         raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
 
-    C = 1 - Hb(p)
-
-    return C
+    return 1 - Hb(p)
 
 
 @export
@@ -114,9 +108,7 @@ def bec_capacity(p: npt.ArrayLike) -> np.ndarray:
     if not (np.all(0 <= p) and np.all(p <= 1)):
         raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
 
-    C = 1 - p
-
-    return C
+    return 1 - p
 
 
 @export
@@ -191,8 +183,6 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
     snr_linear = 10 ** (snr / 10)
 
     if bandwidth:
-        C = bandwidth * np.log2(1 + snr_linear)  # bits/s
-    else:
-        C = np.log2(1 + snr_linear)  # bits/2D
+        return bandwidth * np.log2(1 + snr_linear)  # bits/s
 
-    return C
+    return np.log2(1 + snr_linear)  # bits/2D
