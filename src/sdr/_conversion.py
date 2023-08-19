@@ -176,8 +176,8 @@ def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> np.ndarray:
         conversions-from-ebn0
     """
     ebn0 = np.asarray(ebn0)  # Energy per information bit
-    ecn0 = ebn0 + 10 * np.log10(rate)  # Energy per coded bit
-    esn0 = ecn0 + 10 * np.log10(bps)  # Energy per symbol
+    ecn0 = ebn0 + db(rate)  # Energy per coded bit
+    esn0 = ecn0 + db(bps)  # Energy per symbol
     return esn0
 
 
@@ -217,7 +217,7 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
         conversions-from-ebn0
     """
     esn0 = ebn0_to_esn0(ebn0, bps, rate=rate)  # SNR per symbol
-    snr = esn0 - 10 * np.log10(sps)  # SNR per sample
+    snr = esn0 - db(sps)  # SNR per sample
     return snr
 
 
@@ -261,8 +261,8 @@ def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> np.ndarray:
         conversions-from-esn0
     """
     esn0 = np.asarray(esn0)
-    ecn0 = esn0 - 10 * np.log10(bps)  # Energy per coded bit
-    ebn0 = ecn0 - 10 * np.log10(rate)  # Energy per information bit
+    ecn0 = esn0 - db(bps)  # Energy per coded bit
+    ebn0 = ecn0 - db(rate)  # Energy per information bit
     return ebn0
 
 
@@ -300,7 +300,7 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> np.ndarray:
         conversions-from-esn0
     """
     esn0 = np.asarray(esn0)  # SNR per symbol
-    snr = esn0 - 10 * np.log10(sps)  # SNR per sample
+    snr = esn0 - db(sps)  # SNR per sample
     return snr
 
 
@@ -384,5 +384,5 @@ def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> np.ndarray:
         conversions-from-snr
     """
     snr = np.asarray(snr)
-    esn0 = snr + 10 * np.log10(sps)
+    esn0 = snr + db(sps)
     return esn0

@@ -6,6 +6,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
+from .._conversion import linear
 from .._farrow import FarrowResampler
 from .._helper import export
 from .._measurement import average_power
@@ -86,7 +87,7 @@ def awgn(
     """
     x = np.asarray(x)
     if snr is not None:
-        snr_linear = 10 ** (snr / 10)
+        snr_linear = linear(snr)
         signal_power = average_power(x)
         noise_power = signal_power / snr_linear
     elif noise is not None:
@@ -181,8 +182,8 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
     phase = np.deg2rad(phase)
 
     # TODO: Should the phase be negative for I?
-    gain_i = 10 ** (0.5 * amplitude / 20) * np.exp(1j * -0.5 * phase)
-    gain_q = 10 ** (-0.5 * amplitude / 20) * np.exp(1j * 0.5 * phase)
+    gain_i = linear(0.5 * amplitude, type="voltage") * np.exp(1j * -0.5 * phase)
+    gain_q = linear(-0.5 * amplitude, type="voltage") * np.exp(1j * 0.5 * phase)
 
     y = gain_i * x.real + 1j * gain_q * x.imag
 

@@ -7,6 +7,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.stats
 
+from .._conversion import linear
 from .._helper import export
 
 
@@ -180,7 +181,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> np.ndar
         link-budget-channel-capacity
     """
     snr = np.asarray(snr)
-    snr_linear = 10 ** (snr / 10)
+    snr_linear = linear(snr)
 
     if bandwidth:
         return bandwidth * np.log2(1 + snr_linear)  # bits/s
