@@ -4,6 +4,24 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.6
+
+*Released August 20, 2023*
+
+### Changes
+
+- Added raster plots in `sdr.plot.raster()`.
+- Added eye diagrams in `sdr.plot.eye()`.
+- Added upsampling (without anti-aliasing filtering) in `sdr.upsample()`.
+- Added downsampling (without anti-aliasing filtering) in `sdr.downsample()`.
+- Added wavelength calculation in `sdr.wavelength()`.
+- Supported real sinusoid mixing.
+- Supported returning measurements in dB.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.5
 
 *Released August 13, 2023*
