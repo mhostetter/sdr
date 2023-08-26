@@ -5,6 +5,13 @@ import sdr
 
 
 def test_exceptions():
+    with pytest.raises(TypeError):
+        sdr.root_raised_cosine("invalid", 6, 4)
+    with pytest.raises(TypeError):
+        sdr.root_raised_cosine(0.5, 6.0, 4)
+    with pytest.raises(TypeError):
+        sdr.root_raised_cosine(0.5, 6, 4.0)
+
     with pytest.raises(ValueError):
         # Alpha must be non-negative
         sdr.root_raised_cosine(-0.1, 6, 4)
