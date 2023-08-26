@@ -1,5 +1,5 @@
 """
-A module containing a class for phase-shift keying (PSK) modulation.
+A module containing a class for phase-shift keying (PSK) modulations.
 """
 from __future__ import annotations
 
@@ -29,13 +29,13 @@ class PSK(LinearModulation):
         $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
         $x[k] \in \mathbb{C}$ by the equation
 
-        $$x[k] = \exp\left(j\left(\frac{2\pi}{M}s[k] + \phi\right)\right) .$$
+        $$x[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
 
     Examples:
         See the :ref:`psk` example.
 
     Group:
-        modulation-classes
+        modulation-linear
     """
 
     def __init__(
@@ -259,7 +259,7 @@ class PSK(LinearModulation):
 
     @property
     @extend_docstring(
-        _LinearModulation.phase_offset,
+        LinearModulation.phase_offset,
         {},
         r"""
         Examples:
@@ -293,7 +293,7 @@ class PSK(LinearModulation):
 
     @property
     @extend_docstring(
-        _LinearModulation.symbol_map,
+        LinearModulation.symbol_map,
         {},
         r"""
         Examples:
@@ -324,6 +324,77 @@ class PSK(LinearModulation):
     )
     def symbol_map(self) -> np.ndarray:
         return super().symbol_map
+
+
+@export
+class PiMPSK(PSK):
+    r"""
+    Implements $\pi/M$ M-PSK modulation and demodulation.
+
+    Notes:
+        $\pi/M$ M-PSK is a linear phase modulation scheme similar to conventional M-PSK. One key distinction is that
+        in $\pi/M$ M-PSK, the odd symbols are rotated by $\pi/M$ radians relative to the even symbols.
+        This prevents symbol transitions through the origin, which results in a lower peak-to-average power ratio
+        (PAPR).
+
+        The modulation order $M = 2^k$ is a power of 2 and indicates the number of phases used $2M$.
+        The input bit stream is taken $k$ bits at a time to create decimal symbols
+        $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
+        $x[k] \in \mathbb{C}$ by the equation
+
+        $$x[k] =
+        \begin{cases}
+        \displaystyle
+        \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] & k\ \text{even} \\
+        \displaystyle
+        \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi + \pi/M\right) \right] & k\ \text{odd} \\
+        \end{cases}
+        $$
+
+    Examples:
+        See the :ref:`psk` example.
+
+    Group:
+        modulation-linear
+    """
+
+    def __init__(
+        self,
+        order: int,
+        phase_offset: float = 0.0,
+        symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+    ):
+        r"""
+        Creates a new $\pi/M$ M-PSK object.
+
+        Arguments:
+            order: The modulation order $M = 2^k$, where $k \ge 1$ is the bits per symbol.
+            phase_offset: The absolute phase offset $\phi$ in degrees.
+            symbol_labels: The decimal symbol labels of consecutive complex symbols.
+
+                - `"bin"`: The symbols are binary-coded. Adjacent symbols may differ by more than one bit.
+                - `"gray":` The symbols are Gray-coded. Adjacent symbols only differ by one bit.
+                - `npt.ArrayLike`: An $M$-length array whose indices are the default symbol labels and whose values are
+                  the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
+                  and going counter-clockwise around the unit circle.
+        """
+        super().__init__(order, phase_offset=phase_offset, symbol_labels=symbol_labels)
+
+    def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
+        symbols = super().modulate(symbols)
+
+        # Rotate odd symbols by pi/M
+        symbols[1::2] *= np.exp(1j * np.pi / self.order)
+
+        return symbols
+
+    def demodulate(self, x_hat: npt.ArrayLike) -> np.ndarray:
+        x_hat = np.asarray(x_hat)
+
+        # Rotate odd symbols by -pi/M
+        x_hat[1::2] *= np.exp(-1j * np.pi / self.order)
+
+        return super().demodulate(x_hat)
 
 
 def Pk(M: int, esn0_linear: float, j: int) -> float:
