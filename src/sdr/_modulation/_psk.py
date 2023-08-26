@@ -32,23 +32,23 @@ class PSK(LinearModulation):
         $$x[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
 
     Examples:
-        Create a QPSK constellation with 45° phase offset.
+        Create a QPSK modem whose constellation has a 45° phase offset.
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, phase_offset=45); psk
+            qpsk = sdr.PSK(4, phase_offset=45); qpsk
 
             @savefig sdr_PSK_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.symbol_map(psk);
+            sdr.plot.symbol_map(qpsk);
 
         Generate a random bit stream, convert to 2-bit symbols, and modulate.
 
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, psk.bps); symbols[0:4]
-            a = psk.modulate(symbols); a[0:4]
+            symbols = sdr.pack(bits, qpsk.bps); symbols[0:4]
+            a = qpsk.modulate(symbols); a[0:4]
 
             @savefig sdr_PSK_2.png
             plt.figure(figsize=(8, 4)); \
@@ -72,7 +72,7 @@ class PSK(LinearModulation):
         .. ipython:: python
 
             ebn0 = 12; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=psk.bps, sps=sps); \
+            snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=sps); \
             y = sdr.awgn(x, snr=snr)
 
             @savefig sdr_PSK_4.png
@@ -411,7 +411,7 @@ class PSK(LinearModulation):
 @export
 class PiMPSK(PSK):
     r"""
-    Implements $\pi/M$ M-PSK modulation and demodulation.
+    Implements $\pi/M$ phase-shift keying ($\pi/M$ PSK) modulation and demodulation.
 
     Notes:
         $\pi/M$ M-PSK is a linear phase modulation scheme similar to conventional M-PSK. One key distinction is that
@@ -434,23 +434,23 @@ class PiMPSK(PSK):
         $$
 
     Examples:
-        Create a $\pi/4$ QPSK constellation.
+        Create a $\pi/4$ QPSK modem.
 
         .. ipython:: python
 
-            psk = sdr.PiMPSK(4); psk
+            pi4_qpsk = sdr.PiMPSK(4); pi4_qpsk
 
             @savefig sdr_PiMPSK_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.symbol_map(psk);
+            sdr.plot.symbol_map(pi4_qpsk);
 
         Generate a random bit stream, convert to 2-bit symbols, and modulate.
 
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, psk.bps); symbols[0:4]
-            a = psk.modulate(symbols); a[0:4]
+            symbols = sdr.pack(bits, pi4_qpsk.bps); symbols[0:4]
+            a = pi4_qpsk.modulate(symbols); a[0:4]
 
             @savefig sdr_PiMPSK_2.png
             plt.figure(figsize=(8, 4)); \
@@ -474,7 +474,7 @@ class PiMPSK(PSK):
         .. ipython:: python
 
             ebn0 = 12; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=psk.bps, sps=sps); \
+            snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=sps); \
             y = sdr.awgn(x, snr=snr)
 
             @savefig sdr_PiMPSK_4.png
@@ -505,7 +505,7 @@ class PiMPSK(PSK):
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
     ):
         r"""
-        Creates a new $\pi/M$ M-PSK object.
+        Creates a new $\pi/M$ PSK object.
 
         Arguments:
             order: The modulation order $M = 2^k$, where $k \ge 1$ is the bits per symbol.
