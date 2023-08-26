@@ -1,10 +1,13 @@
 Modulation
 ==========
 
-Classes
--------
+Linear modulations
+------------------
 
-.. python-apigen-group:: modulation-classes
+.. python-apigen-group:: modulation-linear
+
+Orthogonal modulations
+----------------------
 
 Pulse shaping
 -------------
