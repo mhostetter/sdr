@@ -5,6 +5,13 @@ import sdr
 
 
 def test_exceptions():
+    with pytest.raises(TypeError):
+        sdr.gaussian("invalid", 4, 6)
+    with pytest.raises(TypeError):
+        sdr.gaussian(0.5, 4.0, 6)
+    with pytest.raises(TypeError):
+        sdr.gaussian(0.5, 4, 6.0)
+
     with pytest.raises(ValueError):
         # Time-bandwidth product must be non-negative
         sdr.gaussian(-0.1, 4, 6)
