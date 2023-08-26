@@ -73,12 +73,21 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     Group:
         modulation-pulse-shaping
     """
+    if not isinstance(alpha, (int, float)):
+        raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
     if not 0 <= alpha <= 1:
         raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
+
+    if not isinstance(span, int):
+        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
     if not span > 1:
         raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
+
+    if not isinstance(sps, int):
+        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
     if not sps > 1:
         raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
@@ -168,12 +177,21 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     Group:
         modulation-pulse-shaping
     """
+    if not isinstance(alpha, (int, float)):
+        raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
     if not 0 <= alpha <= 1:
         raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
+
+    if not isinstance(span, int):
+        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
     if not span > 1:
         raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
+
+    if not isinstance(sps, int):
+        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
     if not sps > 1:
         raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
@@ -252,12 +270,21 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
     Group:
         modulation-pulse-shaping
     """
+    if not isinstance(time_bandwidth, (int, float)):
+        raise TypeError(f"Argument 'time_bandwidth' must be a number, not {type(time_bandwidth)}.")
     if not time_bandwidth > 0:
         raise ValueError(f"Argument 'time_bandwidth' must be greater than 0, not {time_bandwidth}.")
+
+    if not isinstance(span, int):
+        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
     if not span > 1:
         raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
+
+    if not isinstance(sps, int):
+        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
     if not sps > 1:
         raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
