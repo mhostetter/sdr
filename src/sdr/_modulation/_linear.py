@@ -46,6 +46,23 @@ class LinearModulation:
             raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
         self._phase_offset = phase_offset  # Phase offset in degrees
 
+    def __repr__(self) -> str:
+        """
+        Returns a code-styled string representation of the object.
+        """
+        return f"sdr.{type(self).__name__}({self.symbol_map.tolist()}, phase_offset={self.phase_offset})"
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the object.
+        """
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
+        string += f"\n  symbol_map: {self.symbol_map.shape} shape"
+        string += f"\n    {self.symbol_map.tolist()}"
+        string += f"\n  phase_offset: {self.phase_offset}"
+        return string
+
     def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
         r"""
         Modulates to decimal symbols $s[k]$ to complex symbols $x[k]$.
