@@ -91,7 +91,7 @@ def half_sine(
             - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
-        The half-sine pulse shape with unit energy.
+        The half-sine pulse shape.
 
     Examples:
         .. ipython:: python
@@ -156,7 +156,7 @@ def gaussian(
             - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
-        The Gaussian pulse shape. The amplitude is normalized so that the nominal passband gain is 1.
+        The Gaussian pulse shape.
 
     Notes:
         The Gaussian pulse shape has a transfer function of
@@ -248,7 +248,7 @@ def raised_cosine(
             - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
-        The raised cosine pulse shape with unit energy.
+        The raised cosine pulse shape.
 
     References:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
@@ -361,7 +361,7 @@ def root_raised_cosine(
             - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
-        The square-root raised cosine pulse shape with unit energy.
+        The square-root raised cosine pulse shape.
 
     References:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
