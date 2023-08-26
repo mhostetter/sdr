@@ -9,6 +9,59 @@ from .._helper import export
 
 
 @export
+def rectangular(sps: int, span: int = 1) -> np.ndarray:
+    r"""
+    Returns a rectangular pulse shape.
+
+    Arguments:
+        sps: The number of samples per symbol.
+        span: The length of the filter in symbols. The length of the filter is `span * sps` samples,
+            but only the center `sps` samples are non-zero. The only reason for `span` to be larger than 1 is to
+            add delay to the filter.
+
+    Returns:
+        The rectangular pulse shape with unit energy.
+
+    Examples:
+        .. ipython:: python
+
+            h_rect = sdr.rectangular(10)
+
+            @savefig sdr_rectangular_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(h_rect);
+
+            @savefig sdr_rectangular_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(h_rect);
+
+        See the :ref:`pulse-shapes` example.
+
+    Group:
+        modulation-pulse-shaping
+    """
+    if not isinstance(sps, int):
+        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
+    if not sps >= 1:
+        raise ValueError(f"Argument 'sps' must be at least 1, not {sps}.")
+
+    if not isinstance(span, int):
+        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
+    if not span >= 1:
+        raise ValueError(f"Argument 'span' must be at least 1, not {span}.")
+
+    length = span * sps
+    h = np.zeros(length, dtype=float)
+    idx = (length - sps) // 2
+    h[idx : idx + sps] = 1
+
+    # Make the filter have unit energy
+    h /= np.sqrt(np.sum(np.abs(h) ** 2))
+
+    return h
+
+
+@export
 def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     r"""
     Returns a raised cosine (RC) pulse shape.
