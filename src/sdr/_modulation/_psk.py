@@ -13,12 +13,12 @@ from .._conversion import ebn0_to_esn0, esn0_to_ebn0, linear
 from .._data import unpack
 from .._helper import export, extend_docstring
 from .._probability import Q
-from ._linear import _LinearModulation
+from ._linear import LinearModulation
 from ._symbol_mapping import binary_code, gray_code
 
 
 @export
-class PSK(_LinearModulation):
+class PSK(LinearModulation):
     r"""
     Implements phase-shift keying (PSK) modulation and demodulation.
 
@@ -61,7 +61,7 @@ class PSK(_LinearModulation):
         # Define the base PSK symbol map
         base_symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(phase_offset)))
 
-        super().__init__(order, base_symbol_map, phase_offset)
+        super().__init__(base_symbol_map, phase_offset)
 
         if symbol_labels == "bin":
             self._symbol_labels = binary_code(self.bps)
