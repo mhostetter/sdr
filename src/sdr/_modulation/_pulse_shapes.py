@@ -74,11 +74,11 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         modulation-pulse-shaping
     """
     if not 0 <= alpha <= 1:
-        raise ValueError("Argument 'alpha' must be between 0 and 1.")
+        raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
     if not span > 1:
-        raise ValueError("Argument 'span' must be greater than 1.")
+        raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
     if not sps > 1:
-        raise ValueError("Argument 'sps' must be greater than 1.")
+        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
@@ -169,11 +169,11 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         modulation-pulse-shaping
     """
     if not 0 <= alpha <= 1:
-        raise ValueError("Argument 'alpha' must be between 0 and 1.")
+        raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
     if not span > 1:
-        raise ValueError("Argument 'span' must be greater than 1.")
+        raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
     if not sps > 1:
-        raise ValueError("Argument 'sps' must be greater than 1.")
+        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
@@ -253,11 +253,11 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
         modulation-pulse-shaping
     """
     if not time_bandwidth > 0:
-        raise ValueError("Argument 'time_bandwidth' must be greater than 0.")
+        raise ValueError(f"Argument 'time_bandwidth' must be greater than 0, not {time_bandwidth}.")
     if not span > 1:
-        raise ValueError("Argument 'span' must be greater than 1.")
+        raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
     if not sps > 1:
-        raise ValueError("Argument 'sps' must be greater than 1.")
+        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
     if not span * sps % 2 == 0:
         raise ValueError("The order of the filter (span * sps) must be even.")
 
