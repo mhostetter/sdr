@@ -4162,6 +4162,51 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.rectangular/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.rectangular (Python function) — Returns a rectangular pulse shape." class="md-ellipsis">rectangular</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.half_sine/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.half_sine (Python function) — Returns a half-sine pulse shape." class="md-ellipsis">half_<wbr>sine</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.gaussian/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.raised_cosine/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape." class="md-ellipsis">raised_<wbr>cosine</span>
       </a>
@@ -4236,6 +4281,13 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#p-norm" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.root_raised_cosine.norm (Python parameter) — Indicates how to normalize the pulse shape." class="md-ellipsis">norm</span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4266,21 +4318,6 @@ You're not viewing the latest version.
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.gaussian/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gaussian (Python function) — Returns a Gaussian pulse shape." class="md-ellipsis">gaussian</span>
-      </a>
     </li>
   
 
@@ -7844,6 +7881,13 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#p-norm" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.root_raised_cosine.norm (Python parameter) — Indicates how to normalize the pulse shape." class="md-ellipsis">norm</span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -7885,8 +7929,8 @@ You're not viewing the latest version.
 
 
 <dl class="py function objdesc">
-<dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">root_raised_cosine</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-alpha" title="sdr.root_raised_cosine.alpha (Python parameter) — The excess bandwidth $0 le alpha le 1$ of the filter."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-span" title="sdr.root_raised_cosine.span (Python parameter) — The length of the filter in symbols. The length of the filter is span * sps + 1 samples. The filter order span * sps must be even."><span class="n"><span class="pre">span</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sps" title="sdr.root_raised_cosine.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<dt class="sig sig-object highlight sig-wrap py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">root_raised_cosine</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-alpha" title="sdr.root_raised_cosine.alpha (Python parameter) — The excess bandwidth $0 le alpha le 1$ of the filter."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-span" title="sdr.root_raised_cosine.span (Python parameter) — The length of the filter in symbols. The length of the filter is span * sps + 1 samples. The filter order span * sps must be even."><span class="n"><span class="pre">span</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sps" title="sdr.root_raised_cosine.sps (Python parameter) — The number of samples per symbol."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-norm" title="sdr.root_raised_cosine.norm (Python parameter) — Indicates how to normalize the pulse shape."><span class="n"><span class="pre">norm</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'power'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'energy'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'passband'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;energy&#39;</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.25)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Returns a square root raised cosine (SRRC) pulse shape.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
@@ -7897,6 +7941,14 @@ You're not viewing the latest version.
 The filter order <code class="code highlight python docutils literal highlight-python"><span class="n">span</span> <span class="o">*</span> <span class="n">sps</span></code> must be even.</p>
 </dd>
 <dt id="p-sps"><span class="n sig-name">sps</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><a class="headerlink" href="#p-sps" title="Permalink to this definition">¶</a></dt><dd><p>The number of samples per symbol.</p>
+</dd>
+<dt id="p-norm"><span class="n sig-name">norm</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'power'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'energy'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'passband'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;energy&#39;</span></code><a class="headerlink" href="#p-norm" title="Permalink to this definition">¶</a></dt><dd><p><p>Indicates how to normalize the pulse shape.</p>
+<ul class="simple">
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;power&quot;</span></code>: The pulse shape is normalized so that the maximum power is 1.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;energy&quot;</span></code>: The pulse shape is normalized so that the total energy is 1.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;passband&quot;</span></code>: The pulse shape is normalized so that the passband gain is 1.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd>
@@ -8002,13 +8054,13 @@ attenuation and lower sidelobes.</p>
       
       
         
-        <a href="../sdr.gaussian/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.gaussian" rel="next">
+        <a href="../sdr.binary_code/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.binary_code" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              sdr.gaussian
+              sdr.binary_code
             </div>
           </div>
           <div class="md-footer__button md-icon">
