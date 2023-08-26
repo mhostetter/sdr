@@ -9,6 +9,7 @@ import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._helper import export
+from .._modulation import LinearModulation, PiMPSK
 from ._rc_params import RC_PARAMS
 from ._time_domain import raster
 
@@ -102,7 +103,7 @@ def constellation(
 
 @export
 def symbol_map(
-    symbol_map: npt.ArrayLike,  # pylint: disable=redefined-outer-name
+    modulation: LinearModulation | npt.ArrayLike,
     annotate: bool | Literal["bin"] = True,
     limits: tuple[float, float] | None = None,
     **kwargs,
@@ -111,7 +112,7 @@ def symbol_map(
     Plots the symbol map of the complex symbols $\hat{x}[k]$.
 
     Arguments:
-        symbol_map: The complex symbols $\hat{x}[k]$.
+        modulation: The linear modulation or symbol map $\{0, \dots, M-1\} \mapsto \mathbb{C}$.
         annotate: If `True`, the symbols are annotated with their index.
             If `"bin"`, the symbols are annotated with their binary representation.
         limits: The axis limits, which apply to both the x- and y-axis.
@@ -137,12 +138,29 @@ def symbol_map(
     Group:
         plot-modulation
     """
-    symbol_map = np.asarray(symbol_map)
-    k = int(np.log2(symbol_map.size))
+    if isinstance(modulation, LinearModulation):
+        symbol_map_ = modulation.symbol_map
+    else:
+        symbol_map_ = np.asarray(modulation)
+    k = int(np.log2(symbol_map_.size))
+
+    if isinstance(modulation, PiMPSK):
+        label = kwargs.pop("label", None)
+        if label:
+            even_label = f"{label} (even)"
+            odd_label = f"{label} (odd)"
+        else:
+            even_label = "even"
+            odd_label = "odd"
+        even_symbol_map = symbol_map_
+        odd_symbol_map = symbol_map_ * np.exp(1j * np.pi / modulation.order)
+        symbol_map(even_symbol_map, annotate=annotate, limits=limits, label=even_label, **kwargs)
+        symbol_map(odd_symbol_map, annotate=annotate, limits=limits, label=odd_label, **kwargs)
+        return
 
     # Set the axis limits to 50% larger than the maximum value
     if limits is None:
-        lim = np.max(np.abs(symbol_map)) * 1.5
+        lim = np.max(np.abs(symbol_map_)) * 1.5
         limits = (-lim, lim)
 
     with plt.rc_context(RC_PARAMS):
@@ -152,10 +170,10 @@ def symbol_map(
             "linestyle": "none",
         }
         kwargs = {**default_kwargs, **kwargs}
-        plt.plot(symbol_map.real, symbol_map.imag, **kwargs)
+        plt.plot(symbol_map_.real, symbol_map_.imag, **kwargs)
 
         if annotate:
-            for i, symbol in enumerate(symbol_map):
+            for i, symbol in enumerate(symbol_map_):
                 if annotate == "bin":
                     label = f"{i} = " + np.binary_repr(i, k)
                 else:
