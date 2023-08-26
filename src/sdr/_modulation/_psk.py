@@ -122,19 +122,19 @@ class PSK(LinearModulation):
         super().__init__(base_symbol_map, phase_offset)
 
         if symbol_labels == "bin":
-            self._symbol_labels = "bin"
-            labels = binary_code(self.bps)
+            self._symbol_labels = binary_code(self.bps)
+            self._symbol_labels_str = "bin"
         elif symbol_labels == "gray":
-            self._symbol_labels = "gray"
-            labels = gray_code(self.bps)
+            self._symbol_labels = gray_code(self.bps)
+            self._symbol_labels_str = "gray"
         else:
             if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
                 raise ValueError(f"Argument 'symbol_labels' have unique values 0 to {self.order-1}.")
             self._symbol_labels = np.asarray(symbol_labels)
-            labels = self._symbol_labels
+            self._symbol_labels_str = self._symbol_labels
 
         # Relabel the symbols
-        self._symbol_map[labels] = self._symbol_map.copy()
+        self._symbol_map[self._symbol_labels] = self._symbol_map.copy()
 
     def __repr__(self) -> str:
         """
@@ -142,7 +142,7 @@ class PSK(LinearModulation):
         """
         return (
             f"sdr.{type(self).__name__}({self.order}, phase_offset={self.phase_offset}, "
-            + f"symbol_labels={self._symbol_labels!r})"
+            + f"symbol_labels={self._symbol_labels_str!r})"
         )
 
     def __str__(self) -> str:
@@ -153,7 +153,7 @@ class PSK(LinearModulation):
         string += f"\n  order: {self.order}"
         string += f"\n  symbol_map: {self.symbol_map.shape} shape"
         string += f"\n    {self.symbol_map.tolist()}"
-        string += f"\n  symbol_labels: {self._symbol_labels!r}"
+        string += f"\n  symbol_labels: {self._symbol_labels_str!r}"
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
