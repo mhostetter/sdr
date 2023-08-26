@@ -4,12 +4,17 @@ A module containing various discrete-time pulse shapes.
 from __future__ import annotations
 
 import numpy as np
+from typing_extensions import Literal
 
 from .._helper import export
 
 
 @export
-def rectangular(sps: int, span: int = 1) -> np.ndarray:
+def rectangular(
+    sps: int,
+    span: int = 1,
+    norm: Literal["power", "energy", "passband"] = "energy",
+) -> np.ndarray:
     r"""
     Returns a rectangular pulse shape.
 
@@ -18,9 +23,14 @@ def rectangular(sps: int, span: int = 1) -> np.ndarray:
         span: The length of the filter in symbols. The length of the filter is `span * sps` samples,
             but only the center `sps` samples are non-zero. The only reason for `span` to be larger than 1 is to
             add delay to the filter.
+        norm: Indicates how to normalize the pulse shape.
+
+            - `"power"`: The pulse shape is normalized so that the maximum power is 1.
+            - `"energy"`: The pulse shape is normalized so that the total energy is 1.
+            - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
-        The rectangular pulse shape with unit energy.
+        The rectangular pulse shape.
 
     Examples:
         .. ipython:: python
@@ -55,14 +65,17 @@ def rectangular(sps: int, span: int = 1) -> np.ndarray:
     idx = (length - sps) // 2
     h[idx : idx + sps] = 1
 
-    # Make the filter have unit energy
-    h /= np.sqrt(np.sum(np.abs(h) ** 2))
+    h = _normalize(h, norm)
 
     return h
 
 
 @export
-def half_sine(sps: int, span: int = 1) -> np.ndarray:
+def half_sine(
+    sps: int,
+    span: int = 1,
+    norm: Literal["power", "energy", "passband"] = "energy",
+) -> np.ndarray:
     r"""
     Returns a half-sine pulse shape.
 
@@ -71,6 +84,11 @@ def half_sine(sps: int, span: int = 1) -> np.ndarray:
         span: The length of the filter in symbols. The length of the filter is `span * sps` samples,
             but only the center `sps` samples are non-zero. The only reason for `span` to be larger than 1 is to
             add delay to the filter.
+        norm: Indicates how to normalize the pulse shape.
+
+            - `"power"`: The pulse shape is normalized so that the maximum power is 1.
+            - `"energy"`: The pulse shape is normalized so that the total energy is 1.
+            - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
         The half-sine pulse shape with unit energy.
@@ -108,14 +126,18 @@ def half_sine(sps: int, span: int = 1) -> np.ndarray:
     idx = (length - sps) // 2
     h[idx : idx + sps] = np.sin(np.pi * np.arange(sps) / sps)
 
-    # Make the filter have unit energy
-    h /= np.sqrt(np.sum(np.abs(h) ** 2))
+    h = _normalize(h, norm)
 
     return h
 
 
 @export
-def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
+def gaussian(
+    time_bandwidth: float,
+    span: int,
+    sps: int,
+    norm: Literal["power", "energy", "passband"] = "passband",
+) -> np.ndarray:
     r"""
     Returns a Gaussian pulse shape.
 
@@ -127,6 +149,11 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
         span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
             The filter order `span * sps` must be even.
         sps: The number of samples per symbol.
+        norm: Indicates how to normalize the pulse shape.
+
+            - `"power"`: The pulse shape is normalized so that the maximum power is 1.
+            - `"energy"`: The pulse shape is normalized so that the total energy is 1.
+            - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
         The Gaussian pulse shape. The amplitude is normalized so that the nominal passband gain is 1.
@@ -194,14 +221,18 @@ def gaussian(time_bandwidth: float, span: int, sps: int) -> np.ndarray:
     # Equation B.3
     h = np.sqrt(np.pi) / alpha * np.exp(-((np.pi * t / alpha) ** 2))
 
-    # Normalize coefficients so passband gain is 1
-    h = h / np.sum(h)
+    h = _normalize(h, norm)
 
     return h
 
 
 @export
-def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
+def raised_cosine(
+    alpha: float,
+    span: int,
+    sps: int,
+    norm: Literal["power", "energy", "passband"] = "energy",
+) -> np.ndarray:
     r"""
     Returns a raised cosine (RC) pulse shape.
 
@@ -210,6 +241,11 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
             The filter order `span * sps` must be even.
         sps: The number of samples per symbol.
+        norm: Indicates how to normalize the pulse shape.
+
+            - `"power"`: The pulse shape is normalized so that the maximum power is 1.
+            - `"energy"`: The pulse shape is normalized so that the total energy is 1.
+            - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
         The raised cosine pulse shape with unit energy.
@@ -298,14 +334,18 @@ def raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     B = np.cos(np.pi * alpha * t / Ts) / (1 - (2 * alpha * t / Ts) ** 2)
     h = A * B
 
-    # Make the filter have unit energy
-    h /= np.sqrt(np.sum(np.abs(h) ** 2))
+    h = _normalize(h, norm)
 
     return h
 
 
 @export
-def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
+def root_raised_cosine(
+    alpha: float,
+    span: int,
+    sps: int,
+    norm: Literal["power", "energy", "passband"] = "energy",
+) -> np.ndarray:
     r"""
     Returns a square root raised cosine (SRRC) pulse shape.
 
@@ -314,6 +354,11 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
         span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
             The filter order `span * sps` must be even.
         sps: The number of samples per symbol.
+        norm: Indicates how to normalize the pulse shape.
+
+            - `"power"`: The pulse shape is normalized so that the maximum power is 1.
+            - `"energy"`: The pulse shape is normalized so that the total energy is 1.
+            - `"passband"`: The pulse shape is normalized so that the passband gain is 1.
 
     Returns:
         The square-root raised cosine pulse shape with unit energy.
@@ -404,7 +449,19 @@ def root_raised_cosine(alpha: float, span: int, sps: int) -> np.ndarray:
     h = (A + B) / C
     h /= 1 / np.sqrt(Ts)
 
-    # Make the filter have unit energy
-    h /= np.sqrt(np.sum(np.abs(h) ** 2))
+    h = _normalize(h, norm)
+
+    return h
+
+
+def _normalize(h: np.ndarray, norm: Literal["power", "energy", "passband"]) -> np.ndarray:
+    if norm == "power":
+        h /= np.sqrt(np.max(np.abs(h) ** 2))
+    elif norm == "energy":
+        h /= np.sqrt(np.sum(np.abs(h) ** 2))
+    elif norm == "passband":
+        h /= np.sum(h)
+    else:
+        raise ValueError(f"Argument 'norm' must be 'power', 'energy', or 'passband', not {norm}.")
 
     return h
