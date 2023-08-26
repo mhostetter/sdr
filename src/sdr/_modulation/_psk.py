@@ -140,7 +140,10 @@ class PSK(LinearModulation):
         """
         Returns a code-styled string representation of the object.
         """
-        return f"sdr.{type(self).__name__}({self.order}, phase_offset={self.phase_offset}, symbol_labels={self._symbol_labels!r})"
+        return (
+            f"sdr.{type(self).__name__}({self.order}, phase_offset={self.phase_offset}, "
+            + f"symbol_labels={self._symbol_labels!r})"
+        )
 
     def __str__(self) -> str:
         """
