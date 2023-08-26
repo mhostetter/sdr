@@ -32,6 +32,64 @@ class PSK(LinearModulation):
         $$x[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
 
     Examples:
+        Create a QPSK constellation with 45° phase offset.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(4, phase_offset=45); psk
+
+            @savefig sdr_PSK_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.symbol_map(psk.symbol_map);
+
+        Generate a random bit stream, convert to 2-bit symbols, and modulate.
+
+        .. ipython:: python
+
+            bits = np.random.randint(0, 2, 1000); bits[0:8]
+            symbols = sdr.pack(bits, psk.bps); symbols[0:4]
+            a = psk.modulate(symbols); a[0:4]
+
+            @savefig sdr_PSK_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(a);
+
+        Apply square-root raised-cosine pulse shaping.
+
+        .. ipython:: python
+
+            sps = 8; \
+            h_rrc = sdr.root_raised_cosine(0.5, 10, sps); \
+            tx_fir = sdr.Interpolator(sps, h_rrc); \
+            x = tx_fir(a)
+
+            @savefig sdr_PSK_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x[0:30*sps], sample_rate=sps);
+
+        Add AWGN noise such that $E_b/N_0 = 12$ dB.
+
+        .. ipython:: python
+
+            ebn0 = 12; \
+            snr = sdr.ebn0_to_snr(ebn0, bps=psk.bps, sps=sps); \
+            y = sdr.awgn(x, snr=snr)
+
+            @savefig sdr_PSK_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y[0:30*sps], sample_rate=sps);
+
+        Apply matched filtering.
+
+        .. ipython:: python
+
+            rx_fir = sdr.Decimator(sps, h_rrc); \
+            y_hat = rx_fir(y)
+
+            @savefig sdr_PSK_5.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(y_hat);
+
         See the :ref:`psk` example.
 
     Group:
