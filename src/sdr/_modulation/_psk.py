@@ -537,6 +537,165 @@ class PiMPSK(PSK):
         return super().demodulate(x_hat)
 
 
+@export
+class OQPSK(PSK):
+    r"""
+    Implements offset quadrature phase-shift keying (OQPSK) modulation and demodulation.
+
+    Notes:
+        Offset QPSK is a linear phase modulation scheme similar to conventional QPSK. One key distinction is that
+        the I and Q channels transition independently, one half symbol apart. This prevents symbol transitions
+        through the origin, which results in a lower peak-to-average power ratio (PAPR).
+
+        The modulation order $M = 2^k$ is a power of 2 and indicates the number of phases used.
+        The input bit stream is taken $k$ bits at a time to create decimal symbols
+        $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
+        $x[k] \in \mathbb{C}$ by the equation
+
+        $$I[k] + jQ[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right]$$
+
+        $$
+        \begin{align}
+        x[k + 0] &= I[k] + jQ[k - 1] \\
+        x[k + 1/2] &= I[k] + jQ[k] \\
+        x[k + 1] &= I[k + 1] + jQ[k] \\
+        x[k + 3/2] &= I[k + 1] + jQ[k + 1] \\
+        \end{align}
+        $$
+
+    Examples:
+        Create a OQPSK modem.
+
+        .. ipython:: python
+
+            oqpsk = sdr.OQPSK(); oqpsk
+
+            @savefig sdr_OQPSK_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.symbol_map(oqpsk);
+
+        Generate a random bit stream, convert to 2-bit symbols, and modulate.
+
+        .. ipython:: python
+
+            bits = np.random.randint(0, 2, 1000); bits[0:8]
+            symbols = sdr.pack(bits, oqpsk.bps); symbols[0:4]
+            a = oqpsk.modulate(symbols); a[0:4]
+
+            @savefig sdr_OQPSK_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(a, linestyle="-");
+
+        Apply square-root raised-cosine pulse shaping.
+
+        .. ipython:: python
+
+            sps = 8; \
+            h_rrc = sdr.root_raised_cosine(0.5, 10, sps); \
+            tx_fir = sdr.Interpolator(sps, h_rrc); \
+            x = tx_fir(a)
+
+            @savefig sdr_OQPSK_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x[0:30*sps], sample_rate=sps);
+
+        Add AWGN noise such that $E_b/N_0 = 12$ dB.
+
+        .. ipython:: python
+
+            ebn0 = 12; \
+            snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=sps); \
+            y = sdr.awgn(x, snr=snr)
+
+            @savefig sdr_OQPSK_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y[0:30*sps], sample_rate=sps);
+
+        Apply matched filtering.
+
+        .. ipython:: python
+
+            rx_fir = sdr.Decimator(sps, h_rrc); \
+            y_hat = rx_fir(y)
+
+            @savefig sdr_OQPSK_5.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.constellation(y_hat);
+
+        See the :ref:`psk` example.
+
+    Group:
+        modulation-linear
+    """
+
+    def __init__(
+        self,
+        phase_offset: float = 45,
+        symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+    ):
+        r"""
+        Creates a new OQPSK object.
+
+        Arguments:
+            phase_offset: The absolute phase offset $\phi$ in degrees.
+            symbol_labels: The decimal symbol labels of consecutive complex symbols.
+
+                - `"bin"`: The symbols are binary-coded. Adjacent symbols may differ by more than one bit.
+                - `"gray":` The symbols are Gray-coded. Adjacent symbols only differ by one bit.
+                - `npt.ArrayLike`: An $4$-length array whose indices are the default symbol labels and whose values are
+                  the new symbol labels. The default symbol labels are $0$ to $4-1$ for phases starting at $1 + 0j$
+                  and going counter-clockwise around the unit circle.
+        """
+        super().__init__(4, phase_offset=phase_offset, symbol_labels=symbol_labels)
+
+    def __repr__(self) -> str:
+        """
+        Returns a code-styled string representation of the object.
+        """
+        return f"sdr.{type(self).__name__}(phase_offset={self.phase_offset}, symbol_labels={self._symbol_labels_str!r})"
+
+    def __str__(self) -> str:
+        """
+        Returns a human-readable string representation of the object.
+        """
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  symbol_map: {self.symbol_map.shape} shape"
+        string += f"\n    {self.symbol_map.tolist()}"
+        string += f"\n  symbol_labels: {self._symbol_labels_str!r}"
+        string += f"\n  phase_offset: {self.phase_offset}"
+        return string
+
+    def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
+        symbols = super().modulate(symbols)
+
+        I_symbols = np.repeat(symbols.real, 2)
+        Q_symbols = np.repeat(symbols.imag, 2)
+
+        # Shift Q symbols by 1/2 symbol
+        I_symbols = np.append(I_symbols, 0)
+        Q_symbols = np.insert(Q_symbols, 0, 0)
+
+        return I_symbols + 1j * Q_symbols
+
+    def demodulate(self, x_hat: npt.ArrayLike) -> np.ndarray:
+        x_hat = np.asarray(x_hat)
+
+        # TODO: Use two matched filters to demodulate I and Q symbols?
+
+        I_symbols = x_hat.real
+        Q_symbols = x_hat.imag
+
+        # Shift Q symbols by -1/2 symbol
+        I_symbols = I_symbols[:-1]
+        Q_symbols = Q_symbols[1:]
+
+        # Integrate the 2 samples/symbol
+        I_symbols = I_symbols.reshape(-1, 2).sum(axis=1).flatten()
+        Q_symbols = Q_symbols.reshape(-1, 2).sum(axis=1).flatten()
+
+        return super().demodulate(I_symbols + 1j * Q_symbols)
+
+
 def Pk(M: int, esn0_linear: float, j: int) -> float:
     """
     Determines the probability of receiving symbol j given symbol 0 was transmitted.
