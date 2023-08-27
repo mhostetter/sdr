@@ -76,7 +76,7 @@ class PSK(LinearModulation):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
-        Apply matched filtering and demodulate.
+        Matched filter and demodulate.
 
         .. ipython:: python
 
@@ -498,7 +498,7 @@ class PiMPSK(PSK):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
-        Apply matched filtering and demodulate.
+        Matched filter and demodulate.
 
         .. ipython:: python
 
@@ -651,7 +651,7 @@ class OQPSK(PSK):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
-        Apply matched filtering and demodulate.
+        Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
 
         .. ipython:: python
 
