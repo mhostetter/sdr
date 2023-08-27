@@ -9,6 +9,8 @@ Linear modulations
 Orthogonal modulations
 ----------------------
 
+.. _pulse-shaping-functions:
+
 Pulse shaping
 -------------
 
