@@ -7,8 +7,11 @@ import abc
 
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import Literal
 
+from .._filter import Decimator, Interpolator
 from .._helper import export
+from ._pulse_shapes import half_sine, raised_cosine, rectangular, root_raised_cosine
 
 
 @export
@@ -24,14 +27,30 @@ class LinearModulation:
         self,
         symbol_map: npt.ArrayLike,
         phase_offset: float = 0.0,
+        sps: int = 8,
+        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
     ):
         r"""
         Creates a new linear phase/amplitude modulation object.
 
         Arguments:
             symbol_map: The symbol mapping $\{0, \dots, M-1\} \mapsto \mathbb{C}$. An $M$-length array whose indices
-                are decimal symbols and whose values are complex symbols, where $M$ is the modulation order.
-            phase_offset: The phase offset $\phi$ in degrees.
+                are decimal symbols $s[k]$ and whose values are complex symbols $a[k]$, where $M$ is the
+                modulation order.
+            phase_offset: A phase offset $\phi$ in degrees to apply to `symbol_map`.
+            sps: The number of samples per symbol $f_s / f_{sym}$.
+            pulse_shape: The pulse shape $h[n]$ of the modulated signal.
+
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                  of the pulse shape. See :ref:`pulse-shaping-functions`.
+                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
+                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
+                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
+                  and span of 10 symbols. This option is for convenience. Users can design their own RC
+                  pulse shape with :func:`sdr.raised_cosine()`.
+                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
+                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
+                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
         """
         symbol_map = np.asarray(symbol_map)
         if not symbol_map.ndim == 1:
@@ -45,6 +64,34 @@ class LinearModulation:
         if not isinstance(phase_offset, (int, float)):
             raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
         self._phase_offset = phase_offset  # Phase offset in degrees
+
+        if not isinstance(sps, int):
+            raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
+        if not sps > 1:
+            raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+        self._sps = sps  # Samples per symbol
+
+        if isinstance(pulse_shape, str):
+            if pulse_shape == "rect":
+                self._pulse_shape = rectangular(self.sps)
+            elif pulse_shape == "sine":
+                self._pulse_shape = half_sine(self.sps)
+            elif pulse_shape == "rc":
+                self._pulse_shape = raised_cosine(0.2, 10, self.sps)
+            elif pulse_shape == "srrc":
+                self._pulse_shape = root_raised_cosine(0.2, 10, self.sps)
+            else:
+                raise ValueError(
+                    f"Argument 'pulse_shape' must be 'rect', 'sine', 'rc', or 'srrc', not {pulse_shape!r}."
+                )
+        else:
+            pulse_shape = np.asarray(pulse_shape)
+            if not pulse_shape.ndim == 1:
+                raise ValueError(f"Argument 'pulse_shape' must be 1-D, not {pulse_shape.ndim}-D.")
+            self._pulse_shape = pulse_shape  # Pulse shape
+
+        self._tx_filter = Interpolator(self.sps, self.pulse_shape)  # Transmit pulse shaping filter
+        self._rx_filter = Decimator(self.sps, self.pulse_shape[::-1].conj())  # Receive matched filter
 
     def __repr__(self) -> str:
         """
@@ -63,31 +110,112 @@ class LinearModulation:
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
+    def map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
         r"""
-        Modulates to decimal symbols $s[k]$ to complex symbols $x[k]$.
+        Converts the decimal symbols $s[k]$ to complex symbols $a[k]$.
 
         Arguments:
-            symbols: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
-        """
-        symbols = np.asarray(symbols)
-        return self.symbol_map[symbols]
-
-    def demodulate(self, x_hat: npt.ArrayLike) -> np.ndarray:
-        r"""
-        Demodulates the complex symbols $\hat{x}[k]$ to decimal symbols $\hat{s}[k]$
-        using maximum-likelihood estimation.
-
-        Arguments:
-            x_hat: The complex symbols $\hat{x}[k]$ to demodulate.
+            s: The decimal symbols $s[k]$ to map, $0$ to $M-1$.
 
         Returns:
-            The decimal symbols $\hat{s}[k]$, $0$ to $M-1$.
+            The complex symbols $a[k]$.
         """
-        x_hat = np.asarray(x_hat)
-        error_vectors = np.subtract.outer(x_hat, self.symbol_map)
+        return self._map_symbols(s)
+
+    def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+        s = np.asarray(s)  # Decimal symbols
+        a = self.symbol_map[s]  # Complex symbols
+        return a
+
+    def decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+        r"""
+        Converts the received complex symbols $\hat{a}[k]$ into decimal symbol decisions $\hat{s}[k]$
+        using maximum-likelihood estimation (MLE).
+
+        Arguments:
+            a_hat: The received complex symbols $\hat{a}[k]$.
+
+        Returns:
+            The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
+        """
+        return self._decide_symbols(a_hat)
+
+    def _decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+        error_vectors = np.subtract.outer(a_hat, self.symbol_map)
         s_hat = np.argmin(np.abs(error_vectors), axis=-1)
         return s_hat
+
+    def modulate(self, s: npt.ArrayLike) -> np.ndarray:
+        r"""
+        Modulates the decimal symbols $s[k]$ into pulse-shaped complex samples $x[n]$.
+
+        Arguments:
+            s: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
+
+        Returns:
+            The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol.
+
+            - If :obj:`filter_mode` is `"full"`, then `sps * s.size + pulse_shape.size - 1` samples are returned,
+              and the transient response of the pulse shaping filters is visible.
+            - If :obj:`filter_mode` is `"rate"`, then `sps * s.size` samples are returned.
+        """
+        return self._modulate(s)
+
+    def _modulate(self, s: npt.ArrayLike) -> np.ndarray:
+        a = self._map_symbols(s)  # Complex symbols
+        x = self._tx_pulse_shape(a)  # Complex samples
+        return x
+
+    def _tx_pulse_shape(self, a: npt.ArrayLike) -> np.ndarray:
+        a = np.asarray(a)  # Complex symbols
+        x = self._tx_filter(a, mode="full")  # Complex samples
+        return x
+
+    def demodulate(self, x_hat: npt.ArrayLike) -> tuple[np.ndarray, np.ndarray]:
+        r"""
+        Demodulates the pulse-shaped complex samples $\hat{x}[n]$ into decimal symbol decisions $\hat{s}[k]$
+        using matched filtering and maximum-likelihood estimation.
+
+        Arguments:
+            x_hat: The received pulse-shaped complex samples $\hat{x}[n]$ to demodulate, with :obj:`sps`
+                samples per symbol.
+
+                - If :obj:`filter_mode` is `"full"`, then `sps * s_hat.size + pulse_shape.size - 1` samples
+                  should be passed.
+                - If :obj:`filter_mode` is `"rate"`, then `sps * s_hat.size` samples should be passed.
+
+        Returns:
+            - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
+            - The matched filter outputs $\hat{a}[k]$.
+        """
+        return self._demodulate(x_hat)
+
+    def _demodulate(self, x_hat: npt.ArrayLike) -> tuple[np.ndarray, np.ndarray]:
+        x_hat = np.asarray(x_hat)  # Complex samples
+        a_hat = self._rx_matched_filter(x_hat)  # Complex symbols
+        s_hat = self._decide_symbols(a_hat)  # Decimal symbols
+        return s_hat, a_hat
+
+    def _rx_matched_filter(self, x_hat: npt.ArrayLike) -> np.ndarray:
+        x_hat = np.asarray(x_hat)  # Complex samples
+
+        if self.pulse_shape.size % self.sps == 0:
+            x_hat = np.insert(x_hat, 0, 0)
+
+        a_hat = self._rx_filter(x_hat, mode="full")  # Complex symbols
+
+        span = self.pulse_shape.size // self.sps
+        if span == 1:
+            N_symbols = x_hat.size // self.sps
+            offset = span
+        else:
+            N_symbols = x_hat.size // self.sps - span
+            offset = span
+
+        # Select the symbol decisions from the output of the decimating filter
+        a_hat = a_hat[offset : offset + N_symbols]
+
+        return a_hat
 
     @abc.abstractmethod
     def ber(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
@@ -149,3 +277,31 @@ class LinearModulation:
         to complex symbols.
         """
         return self._symbol_map
+
+    @property
+    def sps(self) -> int:
+        r"""
+        The number of samples per symbol $f_s / f_{sym}$.
+        """
+        return self._sps
+
+    @property
+    def pulse_shape(self) -> np.ndarray:
+        r"""
+        The pulse shape $h[n]$ of the modulated signal.
+        """
+        return self._pulse_shape
+
+    @property
+    def tx_filter(self) -> Interpolator:
+        r"""
+        The transmit interpolating pulse shaping filter. The filter coefficients are the pulse shape $h[n]$.
+        """
+        return self._tx_filter
+
+    @property
+    def rx_filter(self) -> Decimator:
+        r"""
+        The receive decimating matched filter. The filter coefficients are matched to the pulse shape $h[-n]^*$.
+        """
+        return self._rx_filter
