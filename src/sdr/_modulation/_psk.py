@@ -732,21 +732,27 @@ class OQPSK(PSK):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    # def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
-    #     s = super()._map_symbols(s)
+    def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+        s = super()._map_symbols(s)
 
-    #     I = np.repeat(s.real, 2)
-    #     Q = np.repeat(s.imag, 2)
+        I = np.repeat(s.real, 2)
+        Q = np.repeat(s.imag, 2)
 
-    #     # Shift Q symbols by 1/2 symbol
-    #     I = np.append(I, 0)
-    #     Q = np.insert(Q, 0, 0)
+        # Shift Q symbols by 1/2 symbol
+        I = np.append(I, 0)
+        Q = np.insert(Q, 0, 0)
 
-    #     return I + 1j * Q
+        a = I + 1j * Q
+
+        return a
 
     def _tx_pulse_shape(self, a: npt.ArrayLike) -> np.ndarray:
         a = np.asarray(a)  # Complex symbols
         I, Q = a.real, a.imag
+
+        # Shift Q symbols by -1/2 symbol and grab 1 sample per symbol
+        I = I[:-1:2]
+        Q = Q[1::2]
 
         I = self._tx_filter(I, mode="full")  # Complex samples
         Q = self._tx_filter(Q, mode="full")  # Complex samples
@@ -755,23 +761,25 @@ class OQPSK(PSK):
         I = np.append(I, np.zeros(self.sps // 2))
         Q = np.insert(Q, 0, np.zeros(self.sps // 2))
 
-        return I + 1j * Q
+        x = I + 1j * Q
 
-    # def _decide_symbol(self, a_hat: npt.ArrayLike) -> np.ndarray:
-    #     a_hat = np.asarray(a_hat)
+        return x
 
-    #     I = a_hat.real
-    #     Q = a_hat.imag
+    def _decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+        a_hat = np.asarray(a_hat)
+        I, Q = a_hat.real, a_hat.imag
 
-    #     # Shift Q symbols by -1/2 symbol
-    #     I = I[:-1]
-    #     Q = Q[1:]
+        # Shift Q symbols by -1/2 symbol
+        I = I[:-1]
+        Q = Q[1:]
 
-    #     # Integrate the 2 samples/symbol
-    #     I = I.reshape(-1, 2).sum(axis=1).flatten()
-    #     Q = Q.reshape(-1, 2).sum(axis=1).flatten()
+        # Integrate the 2 samples/symbol
+        I = I.reshape(-1, 2).sum(axis=1).flatten()
+        Q = Q.reshape(-1, 2).sum(axis=1).flatten()
 
-    #     return super()._decide_symbol(I + 1j * Q)
+        a_hat = I + 1j * Q
+
+        return super()._decide_symbols(a_hat)
 
     def _rx_matched_filter(self, x_hat: npt.ArrayLike) -> np.ndarray:
         x_hat = np.asarray(x_hat)
@@ -781,10 +789,19 @@ class OQPSK(PSK):
         I = I[: -self.sps // 2]
         Q = Q[self.sps // 2 :]
 
-        I = self._rx_filter(I, mode="full")  # Complex samples
-        Q = self._rx_filter(Q, mode="full")  # Complex samples
+        I = super()._rx_matched_filter(I)  # Complex samples
+        Q = super()._rx_matched_filter(Q)  # Complex samples
 
-        return I + 1j * Q
+        I = np.repeat(I, 2)
+        Q = np.repeat(Q, 2)
+
+        # Shift Q symbols by 1/2 symbol
+        I = np.append(I, 0)
+        Q = np.insert(Q, 0, 0)
+
+        a_hat = I + 1j * Q
+
+        return a_hat
 
 
 def Pk(M: int, esn0_linear: float, j: int) -> float:
