@@ -79,14 +79,14 @@ def multirate_taps(
     h = P / R * np.sinc((n - N // 2) / R)
 
     # Compute Kaiser window
-    # beta = scipy.signal.kaiser_beta(A_stop)
+    # beta = scipy.signal.windows.kaiser_beta(A_stop)
     if A_stop >= 50:
         beta = 0.1102 * (A_stop - 8.71)  # TODO: Matlab uses 8.71 and SciPy uses 8.7
     elif A_stop > 21:
         beta = 0.5842 * (A_stop - 21) ** 0.4 + 0.07886 * (A_stop - 21)
     else:
         beta = 0
-    w = scipy.signal.kaiser(N + 1, beta)
+    w = scipy.signal.windows.kaiser(N + 1, beta)
 
     # Compute windowed filter
     h = h * w
