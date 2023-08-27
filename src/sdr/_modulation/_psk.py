@@ -36,59 +36,58 @@ class PSK(LinearModulation):
 
         .. ipython:: python
 
-            qpsk = sdr.PSK(4, phase_offset=45); qpsk
+            qpsk = sdr.PSK(4, phase_offset=45, pulse_shape="srrc"); qpsk
 
             @savefig sdr_PSK_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.symbol_map(qpsk);
 
-        Generate a random bit stream, convert to 2-bit symbols, and modulate.
+        Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
 
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
             symbols = sdr.pack(bits, qpsk.bps); symbols[0:4]
-            a = qpsk.modulate(symbols); a[0:4]
+            complex_symbols = qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PSK_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(a, linestyle="-");
+            sdr.plot.constellation(complex_symbols, linestyle="-");
 
-        Apply square-root raised-cosine pulse shaping.
+        Modulate and pulse shape the symbols to a complex baseband signal.
 
         .. ipython:: python
 
-            sps = 8; \
-            h_rrc = sdr.root_raised_cosine(0.5, 10, sps); \
-            tx_fir = sdr.Interpolator(sps, h_rrc); \
-            x = tx_fir(a)
+            tx_samples = qpsk.modulate(symbols)
 
             @savefig sdr_PSK_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x[0:30*sps], sample_rate=sps);
+            sdr.plot.time_domain(tx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
-        Add AWGN noise such that $E_b/N_0 = 12$ dB.
+        Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
 
-            ebn0 = 12; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=sps); \
-            y = sdr.awgn(x, snr=snr)
+            ebn0 = 20; \
+            snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=qpsk.sps); \
+            rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PSK_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y[0:30*sps], sample_rate=sps);
+            sdr.plot.time_domain(rx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
-        Apply matched filtering.
+        Apply matched filtering and demodulate.
 
         .. ipython:: python
 
-            rx_fir = sdr.Decimator(sps, h_rrc); \
-            y_hat = rx_fir(y)
+            rx_symbols, rx_complex_symbols = qpsk.demodulate(rx_samples)
+
+            # The symbol decisions are error-free
+            np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_PSK_5.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(y_hat);
+            sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.
 
@@ -101,6 +100,8 @@ class PSK(LinearModulation):
         order: int,
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        sps: int = 8,
+        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
     ):
         r"""
         Creates a new PSK object.
@@ -115,11 +116,30 @@ class PSK(LinearModulation):
                 - `npt.ArrayLike`: An $M$-length array whose indices are the default symbol labels and whose values are
                   the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
+
+            sps: The number of samples per symbol $f_s / f_{sym}$.
+            pulse_shape: The pulse shape $h[n]$ of the modulated signal.
+
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                  of the pulse shape. See :ref:`pulse-shaping-functions`.
+                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
+                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
+                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
+                  and span of 10 symbols. This option is for convenience. Users can design their own RC
+                  pulse shape with :func:`sdr.raised_cosine()`.
+                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
+                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
+                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
         """
         # Define the base PSK symbol map
         base_symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(phase_offset)))
 
-        super().__init__(base_symbol_map, phase_offset)
+        super().__init__(
+            base_symbol_map,
+            phase_offset=phase_offset,
+            sps=sps,
+            pulse_shape=pulse_shape,
+        )
 
         if symbol_labels == "bin":
             self._symbol_labels = binary_code(self.bps)
@@ -438,59 +458,58 @@ class PiMPSK(PSK):
 
         .. ipython:: python
 
-            pi4_qpsk = sdr.PiMPSK(4); pi4_qpsk
+            pi4_qpsk = sdr.PiMPSK(4, pulse_shape="srrc"); pi4_qpsk
 
             @savefig sdr_PiMPSK_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.symbol_map(pi4_qpsk);
 
-        Generate a random bit stream, convert to 2-bit symbols, and modulate.
+        Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
 
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
             symbols = sdr.pack(bits, pi4_qpsk.bps); symbols[0:4]
-            a = pi4_qpsk.modulate(symbols); a[0:4]
+            complex_symbols = pi4_qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PiMPSK_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(a, linestyle="-");
+            sdr.plot.constellation(complex_symbols, linestyle="-");
 
-        Apply square-root raised-cosine pulse shaping.
+        Modulate and pulse shape the symbols to a complex baseband signal.
 
         .. ipython:: python
 
-            sps = 8; \
-            h_rrc = sdr.root_raised_cosine(0.5, 10, sps); \
-            tx_fir = sdr.Interpolator(sps, h_rrc); \
-            x = tx_fir(a)
+            tx_samples = pi4_qpsk.modulate(symbols)
 
             @savefig sdr_PiMPSK_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x[0:30*sps], sample_rate=sps);
+            sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
-        Add AWGN noise such that $E_b/N_0 = 12$ dB.
+        Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
 
-            ebn0 = 12; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=sps); \
-            y = sdr.awgn(x, snr=snr)
+            ebn0 = 20; \
+            snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=pi4_qpsk.sps); \
+            rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PiMPSK_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y[0:30*sps], sample_rate=sps);
+            sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
-        Apply matched filtering.
+        Apply matched filtering and demodulate.
 
         .. ipython:: python
 
-            rx_fir = sdr.Decimator(sps, h_rrc); \
-            y_hat = rx_fir(y)
+            rx_symbols, rx_complex_symbols = pi4_qpsk.demodulate(rx_samples)
+
+            # The symbol decisions are error-free
+            np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_PiMPSK_5.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(y_hat);
+            sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.
 
@@ -503,6 +522,8 @@ class PiMPSK(PSK):
         order: int,
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        sps: int = 8,
+        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
     ):
         r"""
         Creates a new $\pi/M$ PSK object.
@@ -517,24 +538,46 @@ class PiMPSK(PSK):
                 - `npt.ArrayLike`: An $M$-length array whose indices are the default symbol labels and whose values are
                   the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
-        """
-        super().__init__(order, phase_offset=phase_offset, symbol_labels=symbol_labels)
 
-    def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
-        symbols = super().modulate(symbols)
+            sps: The number of samples per symbol $f_s / f_{sym}$.
+            pulse_shape: The pulse shape $h[n]$ of the modulated signal.
+
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                  of the pulse shape. See :ref:`pulse-shaping-functions`.
+                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
+                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
+                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
+                  and span of 10 symbols. This option is for convenience. Users can design their own RC
+                  pulse shape with :func:`sdr.raised_cosine()`.
+                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
+                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
+                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
+        """
+        super().__init__(
+            order,
+            phase_offset=phase_offset,
+            symbol_labels=symbol_labels,
+            sps=sps,
+            pulse_shape=pulse_shape,
+        )
+
+    def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+        s = super()._map_symbols(s)
 
         # Rotate odd symbols by pi/M
-        symbols[1::2] *= np.exp(1j * np.pi / self.order)
+        s_rotated = s.copy()
+        s_rotated[1::2] *= np.exp(1j * np.pi / self.order)
 
-        return symbols
+        return s_rotated
 
-    def demodulate(self, x_hat: npt.ArrayLike) -> np.ndarray:
-        x_hat = np.asarray(x_hat)
+    def _decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+        a_hat = np.asarray(a_hat)
 
         # Rotate odd symbols by -pi/M
-        x_hat[1::2] *= np.exp(-1j * np.pi / self.order)
+        a_hat_derotated = a_hat.copy()
+        a_hat_derotated[1::2] *= np.exp(-1j * np.pi / self.order)
 
-        return super().demodulate(x_hat)
+        return super()._decide_symbols(a_hat_derotated)
 
 
 @export
@@ -568,59 +611,58 @@ class OQPSK(PSK):
 
         .. ipython:: python
 
-            oqpsk = sdr.OQPSK(); oqpsk
+            oqpsk = sdr.OQPSK(pulse_shape="srrc"); oqpsk
 
             @savefig sdr_OQPSK_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.symbol_map(oqpsk);
 
-        Generate a random bit stream, convert to 2-bit symbols, and modulate.
+        Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
 
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
             symbols = sdr.pack(bits, oqpsk.bps); symbols[0:4]
-            a = oqpsk.modulate(symbols); a[0:4]
+            complex_symbols = oqpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_OQPSK_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(a, linestyle="-");
+            sdr.plot.constellation(complex_symbols, linestyle="-");
 
-        Apply square-root raised-cosine pulse shaping.
+        Modulate and pulse shape the symbols to a complex baseband signal.
 
         .. ipython:: python
 
-            sps = 8; \
-            h_rrc = sdr.root_raised_cosine(0.5, 10, sps); \
-            tx_fir = sdr.Interpolator(sps, h_rrc); \
-            x = tx_fir(a)
+            tx_samples = oqpsk.modulate(symbols)
 
             @savefig sdr_OQPSK_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x[0:30*sps], sample_rate=sps);
+            sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
-        Add AWGN noise such that $E_b/N_0 = 12$ dB.
+        Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
 
-            ebn0 = 12; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=sps); \
-            y = sdr.awgn(x, snr=snr)
+            ebn0 = 20; \
+            snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=oqpsk.sps); \
+            rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_OQPSK_4.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y[0:30*sps], sample_rate=sps);
+            sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
-        Apply matched filtering.
+        Apply matched filtering and demodulate.
 
         .. ipython:: python
 
-            rx_fir = sdr.Decimator(sps, h_rrc); \
-            y_hat = rx_fir(y)
+            rx_symbols, rx_complex_symbols = oqpsk.demodulate(rx_samples)
+
+            # The symbol decisions are error-free
+            np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_OQPSK_5.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(y_hat);
+            sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.
 
@@ -632,6 +674,8 @@ class OQPSK(PSK):
         self,
         phase_offset: float = 45,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        sps: int = 8,
+        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
     ):
         r"""
         Creates a new OQPSK object.
@@ -645,8 +689,31 @@ class OQPSK(PSK):
                 - `npt.ArrayLike`: An $4$-length array whose indices are the default symbol labels and whose values are
                   the new symbol labels. The default symbol labels are $0$ to $4-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
+
+            sps: The number of samples per symbol $f_s / f_{sym}$.
+            pulse_shape: The pulse shape $h[n]$ of the modulated signal.
+
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                  of the pulse shape. See :ref:`pulse-shaping-functions`.
+                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
+                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
+                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
+                  and span of 10 symbols. This option is for convenience. Users can design their own RC
+                  pulse shape with :func:`sdr.raised_cosine()`.
+                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
+                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
+                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
         """
-        super().__init__(4, phase_offset=phase_offset, symbol_labels=symbol_labels)
+        super().__init__(
+            4,
+            phase_offset=phase_offset,
+            symbol_labels=symbol_labels,
+            sps=sps,
+            pulse_shape=pulse_shape,
+        )
+
+        if sps > 1 and sps % 2 != 0:
+            raise ValueError(f"Argument 'sps' must be even, not {sps}.")
 
     def __repr__(self) -> str:
         """
@@ -665,35 +732,59 @@ class OQPSK(PSK):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def modulate(self, symbols: npt.ArrayLike) -> np.ndarray:
-        symbols = super().modulate(symbols)
+    # def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+    #     s = super()._map_symbols(s)
 
-        I_symbols = np.repeat(symbols.real, 2)
-        Q_symbols = np.repeat(symbols.imag, 2)
+    #     I = np.repeat(s.real, 2)
+    #     Q = np.repeat(s.imag, 2)
+
+    #     # Shift Q symbols by 1/2 symbol
+    #     I = np.append(I, 0)
+    #     Q = np.insert(Q, 0, 0)
+
+    #     return I + 1j * Q
+
+    def _tx_pulse_shape(self, a: npt.ArrayLike) -> np.ndarray:
+        a = np.asarray(a)  # Complex symbols
+        I, Q = a.real, a.imag
+
+        I = self._tx_filter(I, mode="full")  # Complex samples
+        Q = self._tx_filter(Q, mode="full")  # Complex samples
 
         # Shift Q symbols by 1/2 symbol
-        I_symbols = np.append(I_symbols, 0)
-        Q_symbols = np.insert(Q_symbols, 0, 0)
+        I = np.append(I, np.zeros(self.sps // 2))
+        Q = np.insert(Q, 0, np.zeros(self.sps // 2))
 
-        return I_symbols + 1j * Q_symbols
+        return I + 1j * Q
 
-    def demodulate(self, x_hat: npt.ArrayLike) -> np.ndarray:
+    # def _decide_symbol(self, a_hat: npt.ArrayLike) -> np.ndarray:
+    #     a_hat = np.asarray(a_hat)
+
+    #     I = a_hat.real
+    #     Q = a_hat.imag
+
+    #     # Shift Q symbols by -1/2 symbol
+    #     I = I[:-1]
+    #     Q = Q[1:]
+
+    #     # Integrate the 2 samples/symbol
+    #     I = I.reshape(-1, 2).sum(axis=1).flatten()
+    #     Q = Q.reshape(-1, 2).sum(axis=1).flatten()
+
+    #     return super()._decide_symbol(I + 1j * Q)
+
+    def _rx_matched_filter(self, x_hat: npt.ArrayLike) -> np.ndarray:
         x_hat = np.asarray(x_hat)
+        I, Q = x_hat.real, x_hat.imag
 
-        # TODO: Use two matched filters to demodulate I and Q symbols?
+        # Shift Q samples by -1/2 symbol
+        I = I[: -self.sps // 2]
+        Q = Q[self.sps // 2 :]
 
-        I_symbols = x_hat.real
-        Q_symbols = x_hat.imag
+        I = self._rx_filter(I, mode="full")  # Complex samples
+        Q = self._rx_filter(Q, mode="full")  # Complex samples
 
-        # Shift Q symbols by -1/2 symbol
-        I_symbols = I_symbols[:-1]
-        Q_symbols = Q_symbols[1:]
-
-        # Integrate the 2 samples/symbol
-        I_symbols = I_symbols.reshape(-1, 2).sum(axis=1).flatten()
-        Q_symbols = Q_symbols.reshape(-1, 2).sum(axis=1).flatten()
-
-        return super().demodulate(I_symbols + 1j * Q_symbols)
+        return I + 1j * Q
 
 
 def Pk(M: int, esn0_linear: float, j: int) -> float:
