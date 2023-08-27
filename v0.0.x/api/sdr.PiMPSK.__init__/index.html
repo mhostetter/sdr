@@ -3269,8 +3269,38 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.LinearModulation.map_symbols/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.map_symbols (Python method) — Converts the decimal symbols $s[k]$ to complex symbols $a[k]$." class="md-ellipsis">map_<wbr>symbols</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.LinearModulation.decide_symbols/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.LinearModulation.modulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.modulate (Python method) — Modulates to decimal symbols $s[k]$ to complex symbols $x[k]$." class="md-ellipsis">modulate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.modulate (Python method) — Modulates the decimal symbols $s[k]$ into pulse-shaped complex samples $x[n]$." class="md-ellipsis">modulate</span>
       </a>
     </li>
   
@@ -3285,7 +3315,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the complex symbols $hat{x}[k]$ to decimal symbols $hat{s}[k]$ using maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $hat{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -3414,6 +3444,66 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.symbol_map/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LinearModulation.symbol_map (Python property) — The symbol map ${0, dots, M-1} mapsto mathbb{C}$. This maps decimal symbols from $0$ to $M-1$ to complex symbols." class="md-ellipsis">symbol_<wbr>map</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.LinearModulation.sps/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LinearModulation.sps (Python property) — The number of samples per symbol $f_s / f_{sym}$." class="md-ellipsis">sps</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.LinearModulation.pulse_shape/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LinearModulation.pulse_shape (Python property) — The pulse shape $h[n]$ of the modulated signal." class="md-ellipsis">pulse_<wbr>shape</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.LinearModulation.tx_filter/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LinearModulation.tx_filter (Python property) — The transmit interpolating pulse shaping filter. The filter coefficients are the pulse shape $h[n]$." class="md-ellipsis">tx_<wbr>filter</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.LinearModulation.rx_filter/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.LinearModulation.rx_filter (Python property) — The receive decimating matched filter. The filter coefficients are matched to the pulse shape $h[-n]^*$." class="md-ellipsis">rx_<wbr>filter</span>
       </a>
     </li>
   
@@ -3861,6 +3951,20 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#p-sps" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PiMPSK.__init__.sps (Python parameter) — The number of samples per symbol $f_s / f_{sym}$." class="md-ellipsis">sps</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-pulse_shape" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PiMPSK.__init__.pulse_shape (Python parameter) — The pulse shape $h[n]$ of the modulated signal." class="md-ellipsis">pulse_<wbr>shape</span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3870,74 +3974,6 @@ You're not viewing the latest version.
   
 </nav>
       
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_1_3_2" type="checkbox" id="__nav_3_3_1_3_2" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.PiMPSK/#methods"><span class="md-ellipsis">Methods</span></a>
-          
-            <label for="__nav_3_3_1_3_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Methods" data-md-level="5">
-        <label class="md-nav__title" for="__nav_3_3_1_3_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.PiMPSK.modulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PiMPSK.modulate (Python method) — Modulates to decimal symbols $s[k]$ to complex symbols $x[k]$." class="md-ellipsis">modulate</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.PiMPSK.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.PiMPSK.demodulate (Python method) — Demodulates the complex symbols $hat{x}[k]$ to decimal symbols $hat{s}[k]$ using maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
-      </a>
     </li>
   
 
@@ -4096,74 +4132,6 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.OQPSK.__str__/" class="md-nav__link">
         <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.OQPSK.__str__ (Python method) — Returns a human-readable string representation of the object." class="md-ellipsis">__<wbr>str__<wbr></span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_3_1_4_3" type="checkbox" id="__nav_3_3_1_4_3" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.OQPSK/#methods"><span class="md-ellipsis">Methods</span></a>
-          
-            <label for="__nav_3_3_1_4_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Methods" data-md-level="5">
-        <label class="md-nav__title" for="__nav_3_3_1_4_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.OQPSK.modulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.OQPSK.modulate (Python method) — Modulates to decimal symbols $s[k]$ to complex symbols $x[k]$." class="md-ellipsis">modulate</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.OQPSK.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.OQPSK.demodulate (Python method) — Demodulates the complex symbols $hat{x}[k]$ to decimal symbols $hat{s}[k]$ using maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -7857,6 +7825,20 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#p-sps" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PiMPSK.__init__.sps (Python parameter) — The number of samples per symbol $f_s / f_{sym}$." class="md-ellipsis">sps</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-pulse_shape" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.PiMPSK.__init__.pulse_shape (Python parameter) — The pulse shape $h[n]$ of the modulated signal." class="md-ellipsis">pulse_<wbr>shape</span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -7878,7 +7860,7 @@ You're not viewing the latest version.
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">PiMPSK</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-order" title="sdr.PiMPSK.__init__.order (Python parameter) — The modulation order $M = 2^k$, where $k ge 1$ is the bits per symbol."><span class="n"><span class="pre">order</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase_offset" title="sdr.PiMPSK.__init__.phase_offset (Python parameter) — The absolute phase offset $phi$ in degrees."><span class="n"><span class="pre">phase_offset</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-symbol_labels" title="sdr.PiMPSK.__init__.symbol_labels (Python parameter) — The decimal symbol labels of consecutive complex symbols."><span class="n"><span class="pre">symbol_labels</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'bin'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'gray'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;gray&#39;</span></code></em></span><span class="sig-paren">)</span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">PiMPSK</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-order" title="sdr.PiMPSK.__init__.order (Python parameter) — The modulation order $M = 2^k$, where $k ge 1$ is the bits per symbol."><span class="n"><span class="pre">order</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase_offset" title="sdr.PiMPSK.__init__.phase_offset (Python parameter) — The absolute phase offset $phi$ in degrees."><span class="n"><span class="pre">phase_offset</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.11)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-symbol_labels" title="sdr.PiMPSK.__init__.symbol_labels (Python parameter) — The decimal symbol labels of consecutive complex symbols."><span class="n"><span class="pre">symbol_labels</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'bin'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'gray'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;gray&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sps" title="sdr.PiMPSK.__init__.sps (Python parameter) — The number of samples per symbol $f_s / f_{sym}$."><span class="n"><span class="pre">sps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">8</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-pulse_shape" title="sdr.PiMPSK.__init__.pulse_shape (Python parameter) — The pulse shape $h[n]$ of the modulated signal."><span class="n"><span class="pre">pulse_shape</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'rect'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'sine'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'rc'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'srrc'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;rect&#39;</span></code></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates a new <span class="math notranslate nohighlight">\(\pi/M\)</span> PSK object.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
@@ -7894,6 +7876,23 @@ You're not viewing the latest version.
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="n">npt</span><span class="o">.</span><span class="n">ArrayLike</span></code>: An <span class="math notranslate nohighlight">\(M\)</span>-length array whose indices are the default symbol labels and whose values are
 the new symbol labels. The default symbol labels are <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(M-1\)</span> for phases starting at <span class="math notranslate nohighlight">\(1 + 0j\)</span>
 and going counter-clockwise around the unit circle.</p></li>
+</ul>
+</p>
+</dd>
+<dt id="p-sps"><span class="n sig-name">sps</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)">int</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">8</span></code><a class="headerlink" href="#p-sps" title="Permalink to this definition">¶</a></dt><dd><p>The number of samples per symbol <span class="math notranslate nohighlight">\(f_s / f_{sym}\)</span>.</p>
+</dd>
+<dt id="p-pulse_shape"><span class="n sig-name">pulse_shape</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike<span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'rect'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'sine'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'rc'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'srrc'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;rect&#39;</span></code><a class="headerlink" href="#p-pulse_shape" title="Permalink to this definition">¶</a></dt><dd><p><p>The pulse shape <span class="math notranslate nohighlight">\(h[n]\)</span> of the modulated signal.</p>
+<ul class="simple">
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="n">npt</span><span class="o">.</span><span class="n">ArrayLike</span></code>: A custom pulse shape. It is important that <code class="code highlight python docutils literal highlight-python"><span class="n">sps</span></code> matches the design
+of the pulse shape. See <a class="reference internal" href="../modulation/#pulse-shaping-functions"><span class="std std-ref">Pulse shaping</span></a>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;rect&quot;</span></code>: Rectangular pulse shaping with <code class="code highlight python docutils literal highlight-python"><span class="n">sps</span></code> samples per symbol, see <a class="reference internal" href="../sdr.rectangular/" title="sdr.rectangular (Python function) — Returns a rectangular pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.rectangular()</span></code></a>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;sine&quot;</span></code>: Half-sine pulse shaping with <code class="code highlight python docutils literal highlight-python"><span class="n">sps</span></code> samples per symbol, see <a class="reference internal" href="../sdr.half_sine/" title="sdr.half_sine (Python function) — Returns a half-sine pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.half_sine()</span></code></a>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;rc&quot;</span></code>: Raised cosine pulse shaping with <code class="code highlight python docutils literal highlight-python"><span class="n">sps</span></code> samples per symbol, roll-off factor of 0.2,
+and span of 10 symbols. This option is for convenience. Users can design their own RC
+pulse shape with <a class="reference internal" href="../sdr.raised_cosine/" title="sdr.raised_cosine (Python function) — Returns a raised cosine (RC) pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.raised_cosine()</span></code></a>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;srrc&quot;</span></code>: Square-root raised cosine pulse shaping with <code class="code highlight python docutils literal highlight-python"><span class="n">sps</span></code> samples per symbol, roll-off
+factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
+own SRRC pulse shape with <a class="reference internal" href="../sdr.root_raised_cosine/" title="sdr.root_raised_cosine (Python function) — Returns a square root raised cosine (SRRC) pulse shape."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.root_raised_cosine()</span></code></a>.</p></li>
 </ul>
 </p>
 </dd>
@@ -7948,13 +7947,13 @@ and going counter-clockwise around the unit circle.</p></li>
       
       
         
-        <a href="../sdr.PiMPSK.modulate/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.PiMPSK.modulate" rel="next">
+        <a href="../sdr.OQPSK/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.OQPSK" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              sdr.PiMPSK.modulate
+              sdr.OQPSK
             </div>
           </div>
           <div class="md-footer__button md-icon">
