@@ -153,11 +153,8 @@ class LinearModulation:
             s: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
 
         Returns:
-            The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol.
-
-            - If :obj:`filter_mode` is `"full"`, then `sps * s.size + pulse_shape.size - 1` samples are returned,
-              and the transient response of the pulse shaping filters is visible.
-            - If :obj:`filter_mode` is `"rate"`, then `sps * s.size` samples are returned.
+            The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol
+            and length `sps * s.size + pulse_shape.size - 1`.
         """
         return self._modulate(s)
 
@@ -178,11 +175,7 @@ class LinearModulation:
 
         Arguments:
             x_hat: The received pulse-shaped complex samples $\hat{x}[n]$ to demodulate, with :obj:`sps`
-                samples per symbol.
-
-                - If :obj:`filter_mode` is `"full"`, then `sps * s_hat.size + pulse_shape.size - 1` samples
-                  should be passed.
-                - If :obj:`filter_mode` is `"rate"`, then `sps * s_hat.size` samples should be passed.
+                samples per symbol and length `sps * s_hat.size + pulse_shape.size - 1`.
 
         Returns:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
