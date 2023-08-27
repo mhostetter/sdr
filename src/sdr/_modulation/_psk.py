@@ -27,9 +27,9 @@ class PSK(LinearModulation):
         the phase of a carrier sinusoid. The modulation order $M = 2^k$ is a power of 2 and indicates the number of
         phases used. The input bit stream is taken $k$ bits at a time to create decimal symbols
         $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
-        $x[k] \in \mathbb{C}$ by the equation
+        $a[k] \in \mathbb{C}$ by the equation
 
-        $$x[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
+        $$a[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
 
     Examples:
         Create a QPSK modem whose constellation has a 45° phase offset.
@@ -442,9 +442,9 @@ class PiMPSK(PSK):
         The modulation order $M = 2^k$ is a power of 2 and indicates the number of phases used $2M$.
         The input bit stream is taken $k$ bits at a time to create decimal symbols
         $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
-        $x[k] \in \mathbb{C}$ by the equation
+        $a[k] \in \mathbb{C}$ by the equation
 
-        $$x[k] =
+        $$a[k] =
         \begin{cases}
         \displaystyle
         \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] & k\ \text{even} \\
@@ -593,16 +593,16 @@ class OQPSK(PSK):
         The modulation order $M = 2^k$ is a power of 2 and indicates the number of phases used.
         The input bit stream is taken $k$ bits at a time to create decimal symbols
         $s[k] \in \{0, \dots, M-1\}$. These decimal symbols $s[k]$ are then mapped to complex symbols
-        $x[k] \in \mathbb{C}$ by the equation
+        $a[k] \in \mathbb{C}$ by the equation
 
         $$I[k] + jQ[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right]$$
 
         $$
         \begin{align}
-        x[k + 0] &= I[k] + jQ[k - 1] \\
-        x[k + 1/2] &= I[k] + jQ[k] \\
-        x[k + 1] &= I[k + 1] + jQ[k] \\
-        x[k + 3/2] &= I[k + 1] + jQ[k + 1] \\
+        a[k + 0] &= I[k] + jQ[k - 1] \\
+        a[k + 1/2] &= I[k] + jQ[k] \\
+        a[k + 1] &= I[k + 1] + jQ[k] \\
+        a[k + 3/2] &= I[k + 1] + jQ[k + 1] \\
         \end{align}
         $$
 
