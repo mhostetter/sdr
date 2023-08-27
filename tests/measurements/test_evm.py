@@ -174,7 +174,7 @@ def test_average_power_ref():
     evm = sdr.evm(X_HAT, psk.symbol_map, norm="average-power-ref")
     assert evm == pytest.approx(9.913846806617736)
 
-    x = psk.modulate(S)
+    x = psk.map_symbols(S)
     evm = sdr.evm(X_HAT, x, norm="average-power-ref")
     assert evm == pytest.approx(9.913846806617736)
 
@@ -184,7 +184,7 @@ def test_average_power():
     evm = sdr.evm(X_HAT, psk.symbol_map, norm="average-power")
     assert evm == pytest.approx(10.005285125256888)
 
-    x = psk.modulate(S)
+    x = psk.map_symbols(S)
     evm = sdr.evm(X_HAT, x, norm="average-power")
     assert evm == pytest.approx(10.005285125256888)
 
@@ -194,7 +194,7 @@ def test_peak_power():
     evm = sdr.evm(X_HAT, psk.symbol_map, norm="peak-power")
     assert evm == pytest.approx(8.102616784925608)
 
-    x = psk.modulate(S)
+    x = psk.map_symbols(S)
     evm = sdr.evm(X_HAT, x, norm="peak-power")
     assert evm == pytest.approx(8.102616784925608)
 
