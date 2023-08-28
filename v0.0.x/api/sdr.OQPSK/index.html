@@ -7893,17 +7893,17 @@ through the origin, which results in a lower peak-to-average power ratio (PAPR).
 <p>The modulation order <span class="math notranslate nohighlight">\(M = 2^k\)</span> is a power of 2 and indicates the number of phases used.
 The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</span> bits at a time to create decimal symbols
 <span class="math notranslate nohighlight">\(s[k] \in \{0, \dots, M-1\}\)</span>. These decimal symbols <span class="math notranslate nohighlight">\(s[k]\)</span> are then mapped to complex symbols
-<span class="math notranslate nohighlight">\(x[k] \in \mathbb{C}\)</span> by the equation</p>
+<span class="math notranslate nohighlight">\(a[k] \in \mathbb{C}\)</span> by the equation</p>
 <p><div class="math notranslate nohighlight">
 \[I[k] + jQ[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right]\]</div>
 </p>
 <p><div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-x[k + 0] &amp;= I[k] + jQ[k - 1] \\
-x[k + 1/2] &amp;= I[k] + jQ[k] \\
-x[k + 1] &amp;= I[k + 1] + jQ[k] \\
-x[k + 3/2] &amp;= I[k + 1] + jQ[k + 1] \\
+a[k + 0] &amp;= I[k] + jQ[k - 1] \\
+a[k + 1/2] &amp;= I[k] + jQ[k] \\
+a[k + 1] &amp;= I[k + 1] + jQ[k] \\
+a[k + 3/2] &amp;= I[k + 1] + jQ[k + 1] \\
 \end{align}
 \end{split}\]</div>
 </p>

@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#v0-0-6" class="md-skip">
+        <a href="#v0-0-7" class="md-skip">
           Skip to content
         </a>
       
@@ -7653,6 +7653,13 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#v0-0-7" class="md-nav__link">
+    <span class="md-ellipsis">v0.<wbr>0.<wbr>7</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v0-0-6" class="md-nav__link">
     <span class="md-ellipsis">v0.<wbr>0.<wbr>6</span>
   </a>
@@ -7783,6 +7790,13 @@ You're not viewing the latest version.
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#v0-0-7" class="md-nav__link">
+    <span class="md-ellipsis">v0.<wbr>0.<wbr>7</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#v0-0-6" class="md-nav__link">
     <span class="md-ellipsis">v0.<wbr>0.<wbr>6</span>
   </a>
@@ -7839,9 +7853,25 @@ You're not viewing the latest version.
 
 
 <h1 id="v0-0">v0.0<a class="headerlink" href="#v0-0" title="Permalink to this heading">¶</a></h1>
+<h2 id="v0-0-7">v0.0.7<a class="headerlink" href="#v0-0-7" title="Permalink to this heading">¶</a></h2>
+<p><em>Released August 27, 2023</em></p>
+<h3 id="changes">Changes<a class="headerlink" href="#changes" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Added generic linear modulation schemes in <code class="docutils literal notranslate"><span class="pre">sdr.LinearModulation</span></code>.</p></li>
+<li><p>Added <span class="math notranslate nohighlight">\(\pi/M\)</span> PSK modulation in <code class="docutils literal notranslate"><span class="pre">sdr.PiMPSK</span></code>.</p></li>
+<li><p>Added offset QPSK modulation in <code class="docutils literal notranslate"><span class="pre">sdr.OQPSK</span></code>.</p></li>
+<li><p>Added rectangular pulse shapes in <code class="docutils literal notranslate"><span class="pre">sdr.rectangular()</span></code>.</p></li>
+<li><p>Added half-sine pulse shapes in <code class="docutils literal notranslate"><span class="pre">sdr.half_sine()</span></code>.</p></li>
+<li><p>Added pulse shaping in linear modulations. Now <code class="docutils literal notranslate"><span class="pre">map_symbols()</span></code> and <code class="docutils literal notranslate"><span class="pre">decide_symbols()</span></code> operate on 1 sample per symbol
+and <code class="docutils literal notranslate"><span class="pre">modulate()</span></code> and <code class="docutils literal notranslate"><span class="pre">demodulate()</span></code> operate on multiple samples per symbol.</p></li>
+</ul>
+<h3 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
+</ul>
 <h2 id="v0-0-6">v0.0.6<a class="headerlink" href="#v0-0-6" title="Permalink to this heading">¶</a></h2>
 <p><em>Released August 20, 2023</em></p>
-<h3 id="changes">Changes<a class="headerlink" href="#changes" title="Permalink to this heading">¶</a></h3>
+<h3 id="id1">Changes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added raster plots in <code class="docutils literal notranslate"><span class="pre">sdr.plot.raster()</span></code>.</p></li>
 <li><p>Added eye diagrams in <code class="docutils literal notranslate"><span class="pre">sdr.plot.eye()</span></code>.</p></li>
@@ -7851,13 +7881,13 @@ You're not viewing the latest version.
 <li><p>Supported real sinusoid mixing.</p></li>
 <li><p>Supported returning measurements in dB.</p></li>
 </ul>
-<h3 id="contributors">Contributors<a class="headerlink" href="#contributors" title="Permalink to this heading">¶</a></h3>
+<h3 id="id2">Contributors<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
 <h2 id="v0-0-5">v0.0.5<a class="headerlink" href="#v0-0-5" title="Permalink to this heading">¶</a></h2>
 <p><em>Released August 13, 2023</em></p>
-<h3 id="id1">Changes<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<h3 id="id3">Changes<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added polyphase FIR decimator in <code class="docutils literal notranslate"><span class="pre">sdr.Decimator()</span></code>.</p></li>
 <li><p>Added multirate FIR filter design in <code class="docutils literal notranslate"><span class="pre">sdr.multirate_taps()</span></code>.</p></li>
@@ -7873,13 +7903,13 @@ You're not viewing the latest version.
 <li><p>Renamed <code class="docutils literal notranslate"><span class="pre">sdr.plot.frequency_response()</span></code> to <code class="docutils literal notranslate"><span class="pre">sdr.plot.magnitude_response()</span></code>.</p></li>
 <li><p>Removed superfluous methods like <code class="docutils literal notranslate"><span class="pre">FIR.filter()</span></code> and replaced with <code class="docutils literal notranslate"><span class="pre">FIR.__call__()</span></code>.</p></li>
 </ul>
-<h3 id="id2">Contributors<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<h3 id="id4">Contributors<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
 <h2 id="v0-0-4">v0.0.4<a class="headerlink" href="#v0-0-4" title="Permalink to this heading">¶</a></h2>
 <p><em>Released August 6, 2023</em></p>
-<h3 id="id3">Changes<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<h3 id="id5">Changes<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added error vector magnitude measurement in <code class="docutils literal notranslate"><span class="pre">sdr.evm()</span></code>.</p></li>
 <li><p>Added complex mixing (frequency translation) in <code class="docutils literal notranslate"><span class="pre">sdr.mix()</span></code>.</p></li>
@@ -7890,13 +7920,13 @@ You're not viewing the latest version.
 <li><p>Added theoretical BER/SER for DE-PSK.</p></li>
 <li><p>Fixed theoretical BER/SER for PSK.</p></li>
 </ul>
-<h3 id="id4">Contributors<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<h3 id="id6">Contributors<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
 <h2 id="v0-0-3">v0.0.3<a class="headerlink" href="#v0-0-3" title="Permalink to this heading">¶</a></h2>
 <p><em>Released July 30, 2023</em></p>
-<h3 id="id5">Changes<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<h3 id="id7">Changes<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added PSK modulation in <code class="docutils literal notranslate"><span class="pre">sdr.PSK</span></code>.</p></li>
 <li><p>Added symbol mapping: <code class="docutils literal notranslate"><span class="pre">sdr.binary_code()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.gray_code()</span></code>.</p></li>
@@ -7913,13 +7943,13 @@ You're not viewing the latest version.
 <li><p>Added plotting functions for modulation: <code class="docutils literal notranslate"><span class="pre">sdr.plot.ber()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.ser()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.constellation()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.symbol_map()</span></code>.</p></li>
 <li><p>Added more filter plotting functions: <code class="docutils literal notranslate"><span class="pre">sdr.plot.phase_response()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.plot.phase_delay()</span></code>.</p></li>
 </ul>
-<h3 id="id6">Contributors<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<h3 id="id8">Contributors<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
 <h2 id="v0-0-2">v0.0.2<a class="headerlink" href="#v0-0-2" title="Permalink to this heading">¶</a></h2>
 <p><em>Released July 16, 2023</em></p>
-<h3 id="id7">Changes<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<h3 id="id9">Changes<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added finite impulse response (FIR) filters in <code class="docutils literal notranslate"><span class="pre">sdr.FIR</span></code>.</p></li>
 <li><p>Added pulse shapes: <code class="docutils literal notranslate"><span class="pre">sdr.raised_cosine()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.root_raised_cosine()</span></code>, <code class="docutils literal notranslate"><span class="pre">sdr.gaussian()</span></code>.</p></li>
@@ -7936,13 +7966,13 @@ You're not viewing the latest version.
 <li><p>Added hexdump helper function in <code class="docutils literal notranslate"><span class="pre">sdr.hexdump()</span></code>.</p></li>
 <li><p>Improved type annotations.</p></li>
 </ul>
-<h3 id="id8">Contributors<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<h3 id="id10">Contributors<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
 <h2 id="v0-0-1">v0.0.1<a class="headerlink" href="#v0-0-1" title="Permalink to this heading">¶</a></h2>
 <p><em>Released July 9, 2023</em></p>
-<h3 id="id9">Changes<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<h3 id="id11">Changes<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Added Farrow arbitrary resampling in <code class="docutils literal notranslate"><span class="pre">sdr.FarrowResampler</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/1">#1</a>)</p></li>
 <li><p>Added infinite impulse response (IIR) filters in <code class="docutils literal notranslate"><span class="pre">sdr.IIR</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/3">#3</a>)</p></li>
@@ -7951,7 +7981,7 @@ You're not viewing the latest version.
 <li><p>Added 2nd order, proportional-plus-integrator loop filters in <code class="docutils literal notranslate"><span class="pre">sdr.LoopFilter</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/4">#4</a>)</p></li>
 <li><p>Added closed-loop PLL analysis in <code class="docutils literal notranslate"><span class="pre">sdr.ClosedLoopPLL</span></code>. (<a class="reference external" href="https://github.com/mhostetter/sdr/pull/5">#5</a>)</p></li>
 </ul>
-<h3 id="id10">Contributors<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<h3 id="id12">Contributors<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Matt Hostetter (<a class="reference external" href="https://github.com/mhostetter">&#64;mhostetter</a>)</p></li>
 </ul>
@@ -7962,7 +7992,7 @@ You're not viewing the latest version.
   <small>
     
       Last update:
-      Aug 21, 2023
+      Aug 28, 2023
     
   </small>
 </div>
@@ -8078,6 +8108,9 @@ You're not viewing the latest version.
       
         <script src="../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
         <script src="../../_static/design-tabs.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>

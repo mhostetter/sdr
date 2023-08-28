@@ -43,8 +43,9 @@ View all available classes and functions in the `API Reference <https://mhostett
   polyphase interpolator, polyphase decimator, polyphase resampler, Farrow arbitrary resampler,
   complex mixing, real/complex conversion.
 - **Sequences**: Barker, Zadoff-Chu.
-- **Modulation**: Phase-shift keying (PSK), raised cosine pulse shape, root raised cosine pulse shape,
-  Gaussian pulse shape, binary and Gray symbol mapping, differential encoding.
+- **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, rectangular pulse shape, half-sine pulse shape,
+  raised cosine pulse shape, root raised cosine pulse shape, Gaussian pulse shape, binary and Gray symbol mapping,
+  differential encoding.
 - **Synchronization**: Numerically-controlled oscillators (NCO), direct digital synthesizers (DDS), loop filters,
   closed-loop PLL analysis.
 - **Measurement**: Energy, power, voltage, bit/symbol error rate, error vector magnitude (EVM).
