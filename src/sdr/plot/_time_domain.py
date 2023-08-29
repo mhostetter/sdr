@@ -11,6 +11,7 @@ from typing_extensions import Literal
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
+from ._units import time_units
 
 
 @export
@@ -97,6 +98,10 @@ def time_domain(
     else:
         t = np.arange(x.size) / sample_rate + offset
 
+    if sample_rate_provided:
+        units, scalar = time_units(t)
+        t *= scalar
+
     # with plt.style.context(Path(__file__).parent / ".." / "presentation.mplstyle"):
     with plt.rc_context(RC_PARAMS):
         label = kwargs.pop("label", None)
@@ -121,7 +126,7 @@ def time_domain(
         if label:
             plt.legend()
         if sample_rate_provided:
-            plt.xlabel("Time (s)")
+            plt.xlabel(f"Time ({units})")
         else:
             plt.xlabel("Samples")
         plt.ylabel("Amplitude")
@@ -204,6 +209,8 @@ def raster(
         if not isinstance(sample_rate, (int, float)):
             raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
         t = np.arange(length) / sample_rate
+        units, scalar = time_units(t)
+        t *= scalar
 
     # Interleave the real and imaginary rasters, if necessary
     if np.iscomplexobj(x):
@@ -245,7 +252,7 @@ def raster(
 
         plt.grid(True)
         if sample_rate_provided:
-            plt.xlabel("Time (s)")
+            plt.xlabel(f"Time ({units})")
         else:
             plt.xlabel("Samples")
         plt.ylabel("Amplitude")
