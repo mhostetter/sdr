@@ -12,7 +12,7 @@ def time_units(time: npt.ArrayLike) -> tuple[str, float]:
     Determines the appropriate time units to use for a given time array.
     """
     time = np.asarray(time)
-    max_time = np.max(np.abs(time))
+    max_time = np.nanmax(np.abs(time))
 
     if max_time > 1:
         scalar = 1
@@ -41,7 +41,7 @@ def freq_units(freq: npt.ArrayLike) -> tuple[str, float]:
     Determines the appropriate frequency units to use for a given frequency array.
     """
     freq = np.asarray(freq)
-    max_freq = np.max(np.abs(freq))
+    max_freq = np.nanmax(np.abs(freq))
 
     if max_freq > 10e12:
         scalar = 1e-12
