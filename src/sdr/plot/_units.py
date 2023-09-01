@@ -29,7 +29,7 @@ def time_units(time: npt.ArrayLike) -> tuple[str, float]:
     elif max_time > 1e-12:
         scalar = 1e12
         units = "ps"
-    elif max_time > 1e-15:
+    else:
         scalar = 1e15
         units = "fs"
 
@@ -61,7 +61,7 @@ def freq_units(freq: npt.ArrayLike) -> tuple[str, float]:
     elif max_freq > 10e-3:
         scalar = 1e3
         units = "mHz"
-    elif max_freq > 10e-6:
+    else:
         scalar = 1e6
         units = "μHz"
 
