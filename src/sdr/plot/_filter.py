@@ -12,6 +12,7 @@ from typing_extensions import Literal
 from .._filter import FIR, IIR
 from .._helper import export
 from ._rc_params import RC_PARAMS
+from ._units import freq_units, time_units
 
 # pylint: disable=redefined-builtin,redefined-outer-name
 
@@ -276,7 +277,7 @@ def zeros_poles(
 @export
 def magnitude_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     decades: int = 4,
@@ -293,7 +294,8 @@ def magnitude_response(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
@@ -342,24 +344,36 @@ def magnitude_response(
     """
     b, a = _convert_to_taps(filter)
 
-    if x_axis == "log":
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
     else:
-        w, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+    if x_axis == "log":
+        f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
+    else:
+        f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
+        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        f = np.fft.fftshift(f)
         H = np.fft.fftshift(H)
+
+    if sample_rate_provided:
+        units, scalar = freq_units(f)
+        f *= scalar
 
     H = 10 * np.log10(np.abs(H) ** 2)
 
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
-            plt.semilogx(w, H, **kwargs)
+            plt.semilogx(f, H, **kwargs)
         else:
-            plt.plot(w, H, **kwargs)
+            plt.plot(f, H, **kwargs)
 
         # Avoid deep nulls
         y_max = plt.gca().get_ylim()[1]
@@ -369,10 +383,10 @@ def magnitude_response(
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
-        if sample_rate == 1.0:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
+        if sample_rate_provided:
+            plt.xlabel(f"Frequency ({units}), $f$")
         else:
-            plt.xlabel("Frequency (Hz), $f$")
+            plt.xlabel("Normalized Frequency, $f /f_s$")
         plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
         plt.title(r"Magnitude Response, $|H(\omega)|^2$")
         plt.tight_layout()
@@ -381,7 +395,7 @@ def magnitude_response(
 @export
 def phase_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     N: int = 1024,
     unwrap: bool = True,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -399,7 +413,8 @@ def phase_response(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the phase response.
         unwrap: Indicates whether to unwrap the phase response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
@@ -446,16 +461,28 @@ def phase_response(
     """
     b, a = _convert_to_taps(filter)
 
-    if x_axis == "log":
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
     else:
-        w, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+    if x_axis == "log":
+        f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
+    else:
+        f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
+        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        f = np.fft.fftshift(f)
         H = np.fft.fftshift(H)
+
+    if sample_rate_provided:
+        units, scalar = freq_units(f)
+        f *= scalar
 
     if unwrap:
         theta = np.rad2deg(np.unwrap(np.angle(H)))
@@ -464,21 +491,21 @@ def phase_response(
 
     if x_axis == "two-sided":
         # Set omega=0 to have phase of 0
-        theta -= theta[w == 0]
+        theta -= theta[f == 0]
 
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
-            plt.semilogx(w, theta, **kwargs)
+            plt.semilogx(f, theta, **kwargs)
         else:
-            plt.plot(w, theta, **kwargs)
+            plt.plot(f, theta, **kwargs)
 
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
-        if sample_rate == 1.0:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
+        if sample_rate_provided:
+            plt.xlabel(f"Frequency ({units}), $f$")
         else:
-            plt.xlabel("Frequency (Hz), $f$")
+            plt.xlabel("Normalized Frequency, $f /f_s$")
         plt.ylabel(r"Phase (deg), $\angle H(\omega)$")
         plt.title(r"Phase Response, $\angle H(\omega)$")
         plt.tight_layout()
@@ -487,7 +514,7 @@ def phase_response(
 @export
 def phase_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     decades: int = 4,
@@ -504,7 +531,8 @@ def phase_delay(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the phase delay.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
@@ -550,39 +578,53 @@ def phase_delay(
     """
     b, a = _convert_to_taps(filter)
 
-    if x_axis == "log":
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(b, a, worN=w, whole=False, fs=sample_rate)
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
     else:
-        w, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+    if x_axis == "log":
+        f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
+    else:
+        f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
+        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        f = np.fft.fftshift(f)
         H = np.fft.fftshift(H)
 
     theta = np.unwrap(np.angle(H))
     if x_axis == "two-sided":
         # Set omega=0 to have phase of 0
-        theta -= theta[w == 0]
+        theta -= theta[f == 0]
 
-    tau_phi = -theta / (2 * np.pi * w)
+    tau_phi = -theta / (2 * np.pi * f)
+
+    if sample_rate_provided:
+        f_units, scalar = freq_units(f)
+        f *= scalar
+        t_units, scalar = time_units(tau_phi)
+        tau_phi *= scalar
 
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
-            plt.semilogx(w, tau_phi, **kwargs)
+            plt.semilogx(f, tau_phi, **kwargs)
         else:
-            plt.plot(w, tau_phi, **kwargs)
+            plt.plot(f, tau_phi, **kwargs)
 
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
-        if sample_rate == 1.0:
+        if sample_rate_provided:
+            plt.xlabel(f"Frequency ({f_units}), $f$")
+            plt.ylabel(f"Phase Delay ({t_units})")
+        else:
             plt.xlabel("Normalized Frequency, $f /f_s$")
             plt.ylabel("Phase Delay (samples)")
-        else:
-            plt.xlabel("Frequency (Hz), $f$")
-            plt.ylabel("Phase Delay (seconds)")
         plt.title(r"Phase Delay, $\tau_{\phi}(\omega)$")
         plt.tight_layout()
 
@@ -590,7 +632,7 @@ def phase_delay(
 @export
 def group_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     decades: int = 4,
@@ -607,7 +649,8 @@ def group_delay(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
@@ -642,30 +685,46 @@ def group_delay(
     """
     b, a = _convert_to_taps(filter)
 
-    if x_axis == "log":
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, tau_g = scipy.signal.group_delay((b, a), w=w, whole=False, fs=sample_rate)
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
     else:
-        w, tau_g = scipy.signal.group_delay((b, a), w=N, whole=x_axis == "two-sided", fs=sample_rate)
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+    if x_axis == "log":
+        f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        f, tau_g = scipy.signal.group_delay((b, a), w=f, whole=False, fs=sample_rate)
+    else:
+        f, tau_g = scipy.signal.group_delay((b, a), w=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
+        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        f = np.fft.fftshift(f)
         tau_g = np.fft.fftshift(tau_g)
+
+    if sample_rate_provided:
+        f_units, scalar = freq_units(f)
+        f *= scalar
+        t_units, scalar = time_units(tau_g)
+        tau_g *= scalar
 
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
-            plt.semilogx(w, tau_g, **kwargs)
+            plt.semilogx(f, tau_g, **kwargs)
         else:
-            plt.plot(w, tau_g, **kwargs)
+            plt.plot(f, tau_g, **kwargs)
 
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
-        if sample_rate == 1.0:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
+        if sample_rate_provided:
+            plt.xlabel(f"Frequency ({f_units}), $f$")
+            plt.ylabel(f"Phase Delay ({t_units})")
         else:
-            plt.xlabel("Frequency (Hz), $f$")
+            plt.xlabel("Normalized Frequency, $f /f_s$")
+            plt.ylabel("Phase Delay (samples)")
         plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
         plt.title(r"Group Delay, $\tau_g(\omega)$")
         plt.tight_layout()
@@ -674,7 +733,7 @@ def group_delay(
 @export
 def filter(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     N_time: int | None = None,
     N_freq: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
@@ -692,7 +751,8 @@ def filter(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        sample_rate: The sample rate $f_s$ of the filter in samples/s.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized Frequency".
         N_time: The number of samples $N_t$ in the time domain. If `None`, the length of `b` is used
             for FIR filters and 100 for IIR filters.
         N_freq: The number of samples $N_f$ in the frequency response.

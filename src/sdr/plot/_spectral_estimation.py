@@ -11,12 +11,13 @@ from typing_extensions import Literal
 
 from .._helper import export
 from ._rc_params import RC_PARAMS
+from ._units import freq_units, time_units
 
 
 @export
 def periodogram(
     x: npt.ArrayLike,
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     window: str | npt.ArrayLike = "hann",
     length: int | None = None,
     overlap: int | None = None,
@@ -35,7 +36,8 @@ def periodogram(
 
     Arguments:
         x: The time-domain signal $x[n]$.
-        sample_rate: The sample rate $f_s$ of the signal in samples/s.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized Frequency".
         window: The windowing function to use. This can be a string or a vector of length `length`.
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
@@ -52,6 +54,14 @@ def periodogram(
     Group:
         plot-spectral-estimation
     """
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
+    else:
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
     f, Pxx = scipy.signal.welch(
         x,
         fs=sample_rate,
@@ -70,6 +80,10 @@ def periodogram(
         f = np.fft.fftshift(f)
         Pxx = np.fft.fftshift(Pxx)
 
+    if sample_rate_provided:
+        units, scalar = freq_units(f)
+        f *= scalar
+
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
             plt.semilogx(f, Pxx, **kwargs)
@@ -85,10 +99,10 @@ def periodogram(
         y_min = np.percentile(Pxx, 10)
         plt.ylim(y_min, y_max)
 
-        if sample_rate == 1.0:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
+        if sample_rate_provided:
+            plt.xlabel(f"Frequency ({units}), $f$")
         else:
-            plt.xlabel("Frequency (Hz), $f$")
+            plt.xlabel("Normalized Frequency, $f /f_s$")
         plt.ylabel("Power density (dB/Hz)")
         plt.title("Power spectral density")
         plt.tight_layout()
@@ -97,7 +111,7 @@ def periodogram(
 @export
 def spectrogram(
     x: npt.ArrayLike,
-    sample_rate: float = 1.0,
+    sample_rate: float | None = None,
     window: str | npt.ArrayLike = "hann",
     length: int | None = None,
     overlap: int | None = None,
@@ -114,7 +128,7 @@ def spectrogram(
 
     Arguments:
         x: The time-domain signal $x[n]$.
-        sample_rate: The sample rate $f_s$ of the signal in samples/s. If the sample rate is 1, the x-axis will
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be label as "Samples" and the y-axis as "Normalized Frequency".
         window: The windowing function to use. This can be a string or a vector of length `length`.
         length: The length of each segment in samples. If `None`, the length is set to 256.
@@ -132,6 +146,14 @@ def spectrogram(
     Group:
         plot-spectral-estimation
     """
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
+    else:
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
     f, t, Sxx = scipy.signal.spectrogram(
         x,
         fs=sample_rate,
@@ -154,6 +176,12 @@ def spectrogram(
         f = np.fft.fftshift(f)
         Sxx = np.fft.fftshift(Sxx)
 
+    if sample_rate_provided:
+        f_units, scalar = freq_units(f)
+        f *= scalar
+        t_units, scalar = time_units(t)
+        t *= scalar
+
     default_kwargs = {
         "vmin": np.percentile(Sxx, 10),
         "vmax": np.percentile(Sxx, 100),
@@ -162,11 +190,11 @@ def spectrogram(
     kwargs = {**default_kwargs, **kwargs}
 
     plt.pcolormesh(t, f, Sxx, **kwargs)
-    if sample_rate == 1.0:
+    if sample_rate_provided:
+        plt.xlabel(f"Time ({t_units}), $t$")
+        plt.ylabel(f"Frequency ({f_units}), $f$")
+    else:
         plt.xlabel("Samples, $n$")
         plt.ylabel("Normalized Frequency, $f /f_s$")
-    else:
-        plt.xlabel("Time (s), $t$")
-        plt.ylabel("Frequency (Hz), $f$")
     plt.title("Spectrogram")
     plt.tight_layout()
