@@ -359,8 +359,7 @@ def magnitude_response(
         f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        f = np.fft.fftshift(f)
+        f -= sample_rate / 2
         H = np.fft.fftshift(H)
 
     if sample_rate_provided:
@@ -476,8 +475,7 @@ def phase_response(
         f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        f = np.fft.fftshift(f)
+        f -= sample_rate / 2
         H = np.fft.fftshift(H)
 
     if sample_rate_provided:
@@ -491,7 +489,7 @@ def phase_response(
 
     if x_axis == "two-sided":
         # Set omega=0 to have phase of 0
-        theta -= theta[f == 0]
+        theta -= theta[np.argmin(np.abs(f))]
 
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
@@ -593,16 +591,13 @@ def phase_delay(
         f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        f = np.fft.fftshift(f)
+        f -= sample_rate / 2
         H = np.fft.fftshift(H)
 
     theta = np.unwrap(np.angle(H))
-    if x_axis == "two-sided":
-        # Set omega=0 to have phase of 0
-        theta -= theta[f == 0]
-
+    theta -= theta[np.argmin(np.abs(f))]  # Set omega=0 to have phase of 0
     tau_phi = -theta / (2 * np.pi * f)
+    tau_phi[np.argmin(np.abs(f))] = np.nan  # Avoid crazy result when dividing by near zero
 
     if sample_rate_provided:
         f_units, scalar = freq_units(f)
@@ -700,13 +695,14 @@ def group_delay(
         f, tau_g = scipy.signal.group_delay((b, a), w=N, whole=x_axis == "two-sided", fs=sample_rate)
 
     if x_axis == "two-sided":
-        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        f = np.fft.fftshift(f)
+        f -= sample_rate / 2
         tau_g = np.fft.fftshift(tau_g)
 
     if sample_rate_provided:
         f_units, scalar = freq_units(f)
         f *= scalar
+
+        tau_g /= sample_rate
         t_units, scalar = time_units(tau_g)
         tau_g *= scalar
 
@@ -721,11 +717,10 @@ def group_delay(
             plt.legend()
         if sample_rate_provided:
             plt.xlabel(f"Frequency ({f_units}), $f$")
-            plt.ylabel(f"Phase Delay ({t_units})")
+            plt.ylabel(rf"Group Delay ({t_units}), $\tau_g(\omega)$")
         else:
             plt.xlabel("Normalized Frequency, $f /f_s$")
-            plt.ylabel("Phase Delay (samples)")
-        plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
+            plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
         plt.title(r"Group Delay, $\tau_g(\omega)$")
         plt.tight_layout()
 
