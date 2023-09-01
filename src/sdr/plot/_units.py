@@ -34,3 +34,35 @@ def time_units(time: npt.ArrayLike) -> tuple[str, float]:
         units = "fs"
 
     return units, scalar
+
+
+def freq_units(freq: npt.ArrayLike) -> tuple[str, float]:
+    """
+    Determines the appropriate frequency units to use for a given frequency array.
+    """
+    freq = np.asarray(freq)
+    max_freq = np.max(np.abs(freq))
+
+    if max_freq > 10e12:
+        scalar = 1e-12
+        units = "THz"
+    elif max_freq > 10e9:
+        scalar = 1e-9
+        units = "GHz"
+    elif max_freq > 10e6:
+        scalar = 1e-6
+        units = "MHz"
+    elif max_freq > 10e3:
+        scalar = 1e-3
+        units = "kHz"
+    elif max_freq > 10:
+        scalar = 1
+        units = "Hz"
+    elif max_freq > 10e-3:
+        scalar = 1e3
+        units = "mHz"
+    elif max_freq > 10e-6:
+        scalar = 1e6
+        units = "μHz"
+
+    return units, scalar
