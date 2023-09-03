@@ -37,7 +37,8 @@ class ReplicaCorrelator:
 
         where $\mathcal{E}$ is the received energy $\mathcal{E} = \sum\limits_{n=0}^{N-1} \left| s[n] \right|^2$.
 
-        The probability of detection $P_D$ and probability of false alarm $P_{FA}$ are given by:
+        The probability of detection $P_D$, probability of false alarm $P_{FA}$, and detection threshold
+        $\gamma'$ are given by:
 
         $$P_D = Q\left( Q^{-1}(P_{FA}) - \sqrt{\frac{2 \mathcal{E}}{\sigma^2}} \right)$$
         $$P_{FA} = Q\left(\frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E} / 2}}\right)$$
