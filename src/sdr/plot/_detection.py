@@ -71,7 +71,7 @@ def p_d(
     Arguments:
         x: The SNR or ENR in dB.
         p_d: The probability of detection $P_D$.
-        x_axis: The x-axis label to use.
+        x_label: The x-axis label to use.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
