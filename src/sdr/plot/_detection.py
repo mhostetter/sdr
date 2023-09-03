@@ -14,7 +14,7 @@ from ._rc_params import RC_PARAMS
 @export
 def roc(
     p_fa: npt.ArrayLike,
-    p_d: npt.ArrayLike,
+    p_d: npt.ArrayLike,  # pylint: disable=redefined-outer-name
     type: Literal["linear", "semilogx", "semilogy", "loglog"] = "semilogx",  # pylint: disable=redefined-builtin
     **kwargs,
 ):
@@ -61,7 +61,7 @@ def roc(
 @export
 def p_d(
     x: npt.ArrayLike,
-    p_d: npt.ArrayLike,
+    p_d: npt.ArrayLike,  # pylint: disable=redefined-outer-name
     x_label: Literal["snr", "enr"] = "snr",
     **kwargs,
 ):
