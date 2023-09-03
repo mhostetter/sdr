@@ -28,14 +28,14 @@ class ReplicaCorrelator:
 
         $$T(x) = \mathrm{Re}\left( \sum\limits_{n=0}^{N-1} x[n]s^*[n] \right) > \gamma'$$
         $$
-        T \sim
+        T(x) \sim
         \begin{cases}
         \mathcal{N}\left(0, \sigma^2 \mathcal{E} / 2 \right) & \text{under } \mathcal{H}_0 \\
         \mathcal{N}\left(\mathcal{E}, \sigma^2 \mathcal{E} / 2 \right) & \text{under } \mathcal{H}_1 \\
         \end{cases}
         $$
 
-        where $\mathcal{E}$ is the received energy $\mathcal{E} = \sum\limits_{n=0}^{N-1} \| s[n] \|^2$.
+        where $\mathcal{E}$ is the received energy $\mathcal{E} = \sum\limits_{n=0}^{N-1} \left| s[n] \right|^2$.
 
         The probability of detection $P_D$ and probability of false alarm $P_{FA}$ are given by:
 
@@ -110,7 +110,7 @@ class ReplicaCorrelator:
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(0), label="ENR = 0 dB"); \
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(5), label="ENR = 5 dB"); \
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(10), label="ENR = 10 dB"); \
-                sdr.plot.roc(*sdr.ReplicaCorrelator.roc(15), label="ENR = 15 dB"); \
+                sdr.plot.roc(*sdr.ReplicaCorrelator.roc(15), label="ENR = 15 dB");
         """
         if not isinstance(enr, (int, float)):
             raise TypeError(f"Argument 'enr' must be a number, not {type(enr)}.")
@@ -174,13 +174,13 @@ class ReplicaCorrelator:
 
         enr_linear = linear(enr)
 
-        # Compute the deflection coefficient
-        if complex:
-            d2 = 2 * enr_linear
+        if not complex:
+            d2 = enr_linear  # Deflection coefficient
         else:
-            d2 = enr_linear
+            d2 = 2 * enr_linear  # Deflection coefficient
+        p_d = Q(Qinv(p_fa) - np.sqrt(d2))
 
-        return Q(Qinv(p_fa) - np.sqrt(d2))
+        return p_d
 
     @staticmethod
     def p_fa(
@@ -194,7 +194,7 @@ class ReplicaCorrelator:
 
         Arguments:
             threshold: The threshold $\gamma'$.
-            energy: The received energy $\mathcal{E} = \sum_{i=0}^{N-1} |s[n]|^2$.
+            energy: The received energy $\mathcal{E} = \sum_{i=0}^{N-1} \left| s[n] \right|^2$.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
 
@@ -218,13 +218,12 @@ class ReplicaCorrelator:
         energy = np.asarray(energy)
         sigma2 = np.asarray(sigma2)
 
-        # Compute the variance of the test statistic
-        if complex:
-            T_sigma2 = energy * sigma2 / 2
+        if not complex:
+            p_fa = Q(threshold / np.sqrt(energy * sigma2))
         else:
-            T_sigma2 = energy * sigma2
+            p_fa = Q(threshold / np.sqrt(energy * sigma2 / 2))
 
-        return Q(threshold / np.sqrt(T_sigma2))
+        return p_fa
 
     @staticmethod
     def threshold(
@@ -238,7 +237,7 @@ class ReplicaCorrelator:
 
         Arguments:
             p_fa: The probability of false alarm $P_{FA}$.
-            energy: The received energy $\mathcal{E} = \sum_{i=0}^{N-1} |s[n]|^2$.
+            energy: The received energy $\mathcal{E} = \sum_{i=0}^{N-1} \left| s[n] \right|^2$.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
 
@@ -263,12 +262,12 @@ class ReplicaCorrelator:
         sigma2 = np.asarray(sigma2)
 
         # Compute the variance of the test statistic
-        if complex:
-            T_sigma2 = energy * sigma2 / 2
+        if not complex:
+            gamma_prime = np.sqrt(energy * sigma2) * Qinv(p_fa)
         else:
-            T_sigma2 = energy * sigma2
+            gamma_prime = np.sqrt(energy * sigma2 / 2) * Qinv(p_fa)
 
-        return np.sqrt(T_sigma2) * Qinv(p_fa)
+        return gamma_prime
 
     # def test_statistic(self, x: npt.ArrayLike) -> np.ndarray:
     #     """
