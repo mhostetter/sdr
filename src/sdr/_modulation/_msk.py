@@ -118,6 +118,9 @@ class MSK(OQPSK):
                   and going counter-clockwise around the unit circle.
 
             sps: The number of samples per symbol $f_s / f_{sym}$.
+
+        See Also:
+            sdr.half_sine
         """
         pulse_shape = half_sine(sps)
 
