@@ -52,6 +52,9 @@ class LinearModulation:
             span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
                 If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
             alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
+
+        See Also:
+            sdr.rectangular, sdr.raised_cosine, sdr.root_raised_cosine
         """
         symbol_map = np.asarray(symbol_map)
         if not symbol_map.ndim == 1:

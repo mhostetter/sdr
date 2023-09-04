@@ -136,6 +136,9 @@ class PSK(LinearModulation):
             span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
                 If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
             alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
+
+        See Also:
+            sdr.rectangular, sdr.raised_cosine, sdr.root_raised_cosine
         """
         # Define the base PSK symbol map
         base_symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(phase_offset)))
@@ -565,6 +568,9 @@ class PiMPSK(PSK):
             span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
                 If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
             alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
+
+        See Also:
+            sdr.rectangular, sdr.raised_cosine, sdr.root_raised_cosine
         """
         super().__init__(
             order,
@@ -727,6 +733,9 @@ class OQPSK(PSK):
             span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
                 If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
             alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
+
+        See Also:
+            sdr.rectangular, sdr.raised_cosine, sdr.root_raised_cosine
         """
         super().__init__(
             4,
