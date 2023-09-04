@@ -6,6 +6,11 @@ Linear modulations
 
 .. python-apigen-group:: modulation-linear
 
+Continuous-phase modulations
+----------------------------
+
+.. python-apigen-group:: modulation-continuous-phase
+
 Orthogonal modulations
 ----------------------
 
