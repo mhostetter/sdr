@@ -101,7 +101,9 @@ class PSK(LinearModulation):
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
         sps: int = 8,
-        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
+        pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
+        span: int | None = None,
+        alpha: float | None = None,
     ):
         r"""
         Creates a new PSK object.
@@ -122,14 +124,13 @@ class PSK(LinearModulation):
 
                 - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
-                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
-                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
-                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
-                  and span of 10 symbols. This option is for convenience. Users can design their own RC
-                  pulse shape with :func:`sdr.raised_cosine()`.
-                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
-                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
-                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
+                - `"rect"`: Rectangular pulse shape.
+                - `"rc"`: Raised cosine pulse shape.
+                - `"srrc"`: Square-root raised cosine pulse shape.
+
+            span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
+                If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
+            alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
         """
         # Define the base PSK symbol map
         base_symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(phase_offset)))
@@ -139,6 +140,8 @@ class PSK(LinearModulation):
             phase_offset=phase_offset,
             sps=sps,
             pulse_shape=pulse_shape,
+            span=span,
+            alpha=alpha,
         )
 
         if symbol_labels == "bin":
@@ -523,7 +526,9 @@ class PiMPSK(PSK):
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
         sps: int = 8,
-        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
+        pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
+        span: int | None = None,
+        alpha: float | None = None,
     ):
         r"""
         Creates a new $\pi/M$ PSK object.
@@ -544,14 +549,13 @@ class PiMPSK(PSK):
 
                 - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
-                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
-                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
-                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
-                  and span of 10 symbols. This option is for convenience. Users can design their own RC
-                  pulse shape with :func:`sdr.raised_cosine()`.
-                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
-                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
-                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
+                - `"rect"`: Rectangular pulse shape.
+                - `"rc"`: Raised cosine pulse shape.
+                - `"srrc"`: Square-root raised cosine pulse shape.
+
+            span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
+                If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
+            alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
         """
         super().__init__(
             order,
@@ -675,7 +679,9 @@ class OQPSK(PSK):
         phase_offset: float = 45,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
         sps: int = 8,
-        pulse_shape: npt.ArrayLike | Literal["rect", "sine", "rc", "srrc"] = "rect",
+        pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
+        span: int | None = None,
+        alpha: float | None = None,
     ):
         r"""
         Creates a new OQPSK object.
@@ -695,14 +701,13 @@ class OQPSK(PSK):
 
                 - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
-                - `"rect"`: Rectangular pulse shaping with `sps` samples per symbol, see :func:`sdr.rectangular()`.
-                - `"sine"`: Half-sine pulse shaping with `sps` samples per symbol, see :func:`sdr.half_sine()`.
-                - `"rc"`: Raised cosine pulse shaping with `sps` samples per symbol, roll-off factor of 0.2,
-                  and span of 10 symbols. This option is for convenience. Users can design their own RC
-                  pulse shape with :func:`sdr.raised_cosine()`.
-                - `"srrc"`: Square-root raised cosine pulse shaping with `sps` samples per symbol, roll-off
-                  factor of 0.2, and span of 10 symbols. This option is for convenience. Users can design their
-                  own SRRC pulse shape with :func:`sdr.root_raised_cosine()`.
+                - `"rect"`: Rectangular pulse shape.
+                - `"rc"`: Raised cosine pulse shape.
+                - `"srrc"`: Square-root raised cosine pulse shape.
+
+            span: The span of the pulse shape in symbols. This is only used if `pulse_shape` is a string.
+                If `None`, 1 is used for `"rect"` and 10 is used for `"rc"` and `"srrc"`.
+            alpha: The roll-off factor of the pulse shape. If `None`, 0.2 is used for `"rc"` and `"srrc"`.
         """
         super().__init__(
             4,
@@ -710,6 +715,8 @@ class OQPSK(PSK):
             symbol_labels=symbol_labels,
             sps=sps,
             pulse_shape=pulse_shape,
+            span=span,
+            alpha=alpha,
         )
 
         if sps > 1 and sps % 2 != 0:
