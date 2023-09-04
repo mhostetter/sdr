@@ -1,0 +1,168 @@
+---
+tocdepth: 2
+---
+
+# v0.0
+
+## v0.0.8
+
+*Released September 4, 2023*
+
+### Changes
+
+- Added minimum-shift keying (MSK) in `sdr.MSK`.
+- Added pulse shape customization to linear modulations.
+- Added theoretic detection performance of a matched filter in `sdr.ReplicaCorrelator` and an energy detector
+  in `sdr.EnergyDetector`.
+- Added Albersheim's minimum required SNR approximation in `sdr.albersheim()`.
+- Added plotting of receiver operating characteristic (ROC) curves in `sdr.plot.roc()`.
+- Added plotting of probability of detection curves in `sdr.plot.p_d()`.
+- Added plotting of phase trees of continuous-phase modulation (CPM) in `sdr.plot.phase_tree()`.
+- Added sensible time and frequency units to plots.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.7
+
+*Released August 27, 2023*
+
+### Changes
+
+- Added generic linear modulation schemes in `sdr.LinearModulation`.
+- Added $\pi/M$ PSK modulation in `sdr.PiMPSK`.
+- Added offset QPSK modulation in `sdr.OQPSK`.
+- Added rectangular pulse shapes in `sdr.rectangular()`.
+- Added half-sine pulse shapes in `sdr.half_sine()`.
+- Added pulse shaping in linear modulations. Now `map_symbols()` and `decide_symbols()` operate on 1 sample per symbol
+  and `modulate()` and `demodulate()` operate on multiple samples per symbol.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.6
+
+*Released August 20, 2023*
+
+### Changes
+
+- Added raster plots in `sdr.plot.raster()`.
+- Added eye diagrams in `sdr.plot.eye()`.
+- Added upsampling (without anti-aliasing filtering) in `sdr.upsample()`.
+- Added downsampling (without anti-aliasing filtering) in `sdr.downsample()`.
+- Added wavelength calculation in `sdr.wavelength()`.
+- Supported real sinusoid mixing.
+- Supported returning measurements in dB.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.5
+
+*Released August 13, 2023*
+
+### Changes
+
+- Added polyphase FIR decimator in `sdr.Decimator()`.
+- Added multirate FIR filter design in `sdr.multirate_taps()`.
+- Added polyphase decomposition in `sdr.polyphase_matrix()`.
+- Added linear to decibel conversion in `sdr.db()`.
+- Added decibel to linear conversion in `sdr.linear()`.
+- Added linear and zero-order hold polyphase FIR interpolators.
+- Added a `state` property to FIR filters.
+- Added a `flush()` method to FIR filters.
+- Added support for passing filter objects into filter plotting functions.
+- Added ability to center or offset a time-domain plot.
+- Improved the string representation of classes.
+- Renamed `sdr.plot.frequency_response()` to `sdr.plot.magnitude_response()`.
+- Removed superfluous methods like `FIR.filter()` and replaced with `FIR.__call__()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.4
+
+*Released August 6, 2023*
+
+### Changes
+
+- Added error vector magnitude measurement in `sdr.evm()`.
+- Added complex mixing (frequency translation) in `sdr.mix()`.
+- Added real passband to complex baseband conversion in `sdr.to_complex_bb()`.
+- Added complex baseband to real passband conversion in `sdr.to_real_pb()`.
+- Added binary and bipolar Barker sequences in `sdr.barker()`.
+- Added complex-valued Zadoff-Chu sequences in `sdr.zadoff_chu()`.
+- Added theoretical BER/SER for DE-PSK.
+- Fixed theoretical BER/SER for PSK.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.3
+
+*Released July 30, 2023*
+
+### Changes
+
+- Added PSK modulation in `sdr.PSK`.
+- Added symbol mapping: `sdr.binary_code()`, `sdr.gray_code()`.
+- Added differential codes: `sdr.diff_encode()`, `sdr.diff_decode()`.
+- Added a FIR interpolating filter in `sdr.FIRInterpolator`.
+- Added error rate measurement in `sdr.ErrorRate`.
+- Added signal measurement functions: `sdr.energy()`, `sdr.peak_power()`, `sdr.average_power()`, `sdr.papr()`, `sdr.peak_voltage()`, `sdr.rms_voltage()`, `sdr.crest_factor()`.
+- Added channel models: `sdr.bec()`, `sdr.bsc()`, `sdr.dmc()`.
+- Added signal impairments: `sdr.awgn()`, `sdr.frequency_offset()`, `sdr.sample_rate_offset()`,  `sdr.iq_imbalance()`.
+- Added probability functions: `sdr.Q()`, `sdr.Qinv()`.
+- Added link budget functions: `sdr.fpsl()`, `sdr.parabolic_antenna()`.
+- Added channel capacity functions: `sdr.awgn_capacity()`, `sdr.bec_capacity()`, `sdr.bsc_capacity()`.
+- Added SNR conversion functions: `sdr.ebn0_to_esn0()`, `sdr.ebn0_to_snr()`, `sdr.esn0_to_ebn0()`, `sdr.esn0_to_snr()`, `sdr.snr_to_ebn0()`, `sdr.snr_to_esn0()`.
+- Added plotting functions for modulation: `sdr.plot.ber()`, `sdr.plot.ser()`, `sdr.plot.constellation()`, `sdr.plot.symbol_map()`.
+- Added more filter plotting functions: `sdr.plot.phase_response()`, `sdr.plot.phase_delay()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.2
+
+*Released July 16, 2023*
+
+### Changes
+
+- Added finite impulse response (FIR) filters in `sdr.FIR`.
+- Added pulse shapes: `sdr.raised_cosine()`, `sdr.root_raised_cosine()`, `sdr.gaussian()`.
+- Added plotting helper functions in `sdr.plot`:
+  - `sdr.plot.time_domain()`
+  - `sdr.plot.periodogram()`, `sdr.plot.spectrogram()`
+  - `sdr.plot.filter()`, `sdr.plot.frequency_response`, `sdr.plot.group_delay()`,
+    `sdr.plot.impulse_response()`, `sdr.plot.step_response()`, `sdr.plot.zeros_poles()`
+- Added measurement functions: `sdr.papr()`, `sdr.crest_factor()`.
+- Added bit packing and unpacking functions: `sdr.pack()`, `sdr.unpack()`.
+- Added hexdump helper function in `sdr.hexdump()`.
+- Improved type annotations.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
+## v0.0.1
+
+*Released July 9, 2023*
+
+### Changes
+
+- Added Farrow arbitrary resampling in `sdr.FarrowResampler`. ([#1](https://github.com/mhostetter/sdr/pull/1))
+- Added infinite impulse response (IIR) filters in `sdr.IIR`. ([#3](https://github.com/mhostetter/sdr/pull/3))
+- Added numerically-controlled oscillators (NCO) in `sdr.NCO`. ([#4](https://github.com/mhostetter/sdr/pull/4))
+- Added direct digital synthesizers (DDS) in `sdr.DDS`. ([#4](https://github.com/mhostetter/sdr/pull/4))
+- Added 2nd order, proportional-plus-integrator loop filters in `sdr.LoopFilter`. ([#4](https://github.com/mhostetter/sdr/pull/4))
+- Added closed-loop PLL analysis in `sdr.ClosedLoopPLL`. ([#5](https://github.com/mhostetter/sdr/pull/5))
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
