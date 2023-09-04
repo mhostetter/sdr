@@ -64,6 +64,10 @@ class PSK(LinearModulation):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(tx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
+            @savefig sdr_PSK_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.eye(tx_samples[5*qpsk.sps : -5*qpsk.sps], qpsk.sps);
+
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
@@ -72,7 +76,7 @@ class PSK(LinearModulation):
             snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=qpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_PSK_4.png
+            @savefig sdr_PSK_5.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
@@ -85,7 +89,7 @@ class PSK(LinearModulation):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_PSK_5.png
+            @savefig sdr_PSK_6.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.constellation(rx_complex_symbols);
 
@@ -489,6 +493,10 @@ class PiMPSK(PSK):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
+            @savefig sdr_PiMPSK_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.eye(tx_samples[5*pi4_qpsk.sps : -5*pi4_qpsk.sps], pi4_qpsk.sps);
+
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
@@ -497,7 +505,7 @@ class PiMPSK(PSK):
             snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=pi4_qpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_PiMPSK_4.png
+            @savefig sdr_PiMPSK_5.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
@@ -510,7 +518,7 @@ class PiMPSK(PSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_PiMPSK_5.png
+            @savefig sdr_PiMPSK_6.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.constellation(rx_complex_symbols);
 
@@ -643,6 +651,16 @@ class OQPSK(PSK):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
+            @savefig sdr_OQPSK_4.png
+            plt.figure(figsize=(8, 6)); \
+            plt.subplot(2, 1, 1); \
+            sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps].real, oqpsk.sps); \
+            plt.title("In-phase channel, $I$"); \
+            plt.subplot(2, 1, 2); \
+            sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps].imag, oqpsk.sps); \
+            plt.title("Quadrature channel, $Q$"); \
+            plt.tight_layout();
+
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
@@ -651,7 +669,7 @@ class OQPSK(PSK):
             snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=oqpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_OQPSK_4.png
+            @savefig sdr_OQPSK_5.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
@@ -664,7 +682,7 @@ class OQPSK(PSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_OQPSK_5.png
+            @savefig sdr_OQPSK_6.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.constellation(rx_complex_symbols);
 
