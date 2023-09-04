@@ -57,6 +57,10 @@ class MSK(OQPSK):
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(tx_samples[0:50*msk.sps], sample_rate=msk.sps);
 
+        MSK, like OQPSK, has I and Q channels that are offset by half a symbol period.
+
+        .. ipython:: python
+
             @savefig sdr_MSK_4.png
             plt.figure(figsize=(8, 6)); \
             plt.subplot(2, 1, 1); \
@@ -67,6 +71,16 @@ class MSK(OQPSK):
             plt.title("Quadrature channel, $Q$"); \
             plt.tight_layout();
 
+        The phase trajectory of MSK is linear and continuous. Although, it should be noted that the phase is not
+        differentiable at the symbol boundaries. This leads to lower spectral efficiency than, for instance,
+        GMSK.
+
+        .. ipython:: python
+
+            @savefig sdr_MSK_5.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.phase_tree(tx_samples[msk.sps:], msk.sps);
+
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
         .. ipython:: python
@@ -75,7 +89,7 @@ class MSK(OQPSK):
             snr = sdr.ebn0_to_snr(ebn0, bps=msk.bps, sps=msk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_MSK_5.png
+            @savefig sdr_MSK_6.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(rx_samples[0:50*msk.sps], sample_rate=msk.sps);
 
@@ -88,7 +102,7 @@ class MSK(OQPSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_MSK_6.png
+            @savefig sdr_MSK_7.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.constellation(rx_complex_symbols);
 
