@@ -95,7 +95,7 @@ class MSK(OQPSK):
         See the :ref:`psk` example.
 
     Group:
-        modulation-linear
+        modulation-continuous-phase
     """
 
     def __init__(
