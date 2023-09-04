@@ -276,6 +276,73 @@ def eye(
 
 
 @export
+def phase_tree(
+    x: npt.ArrayLike,
+    sps: int,
+    span: int = 4,
+    sample_rate: float | None = None,
+    color: Literal["index"] | str = "index",
+    **kwargs,
+):
+    r"""
+    Plots the phase tree of a continuous-phase modulated (CPM) signal signal $x[n]$.
+
+    Arguments:
+        x: The baseband CPM signal $x[n]$.
+        sps: The number of samples per symbol.
+        span: The number of symbols per raster.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Samples".
+        color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
+            If a valid Matplotlib color, the rasters are all colored with that color.
+        kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
+
+    Example:
+        Modulate 100 MSK symbols.
+
+        .. ipython:: python
+
+            msk = sdr.MSK(); \
+            s = np.random.randint(0, msk.order, 100); \
+            x = msk.modulate(s)
+
+        .. ipython:: python
+
+            @savefig sdr_plot_phase_tree_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.phase_tree(x, msk.sps)
+
+    Group:
+        plot-modulation
+    """
+    phase = np.angle(x)
+
+    # Create a strided array of phase values
+    length = sps * span
+    stride = sps
+    N_rasters = (phase.size - length) // stride + 1
+    phase_strided = np.lib.stride_tricks.as_strided(
+        phase, shape=(N_rasters, length), strides=(phase.strides[0] * stride, phase.strides[0]), writeable=False
+    )
+
+    # Unwrap the phase and convert to degrees
+    phase_strided = np.unwrap(phase_strided, axis=1)
+    phase_strided = np.rad2deg(phase_strided)
+
+    raster(phase_strided, sample_rate=sample_rate, color=color, **kwargs)
+
+    # Make y-axis symmetric and have ticks every 180 degrees
+    ax = plt.gca()
+    ymin, ymax = ax.get_ylim()
+    ylim = max(np.abs(ymin), np.abs(ymax))
+    ylim = np.ceil(ylim / 180) * 180
+    ax.set_ylim(-ylim, ylim)
+    ax.set_yticks(np.arange(-ylim, ylim + 1, 180))
+
+    ax.set_ylabel("Phase (deg)")
+
+
+@export
 def ber(
     ebn0: npt.ArrayLike,
     ber: npt.ArrayLike,  # pylint: disable=redefined-outer-name
