@@ -8380,7 +8380,7 @@ If a valid Matplotlib color, the rasters are all colored with that color.</p>
 <p>Modulate 100 QPSK symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">a</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">a</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
