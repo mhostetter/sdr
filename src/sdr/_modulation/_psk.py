@@ -14,7 +14,6 @@ from .._data import unpack
 from .._helper import export, extend_docstring
 from .._probability import Q
 from ._linear import LinearModulation
-from ._pulse_shapes import half_sine
 from ._symbol_mapping import binary_code, gray_code
 
 

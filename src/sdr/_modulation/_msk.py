@@ -133,20 +133,3 @@ class MSK(OQPSK):
 
         if sps > 1 and sps % 2 != 0:
             raise ValueError(f"Argument 'sps' must be even, not {sps}.")
-
-    # def __repr__(self) -> str:
-    #     """
-    #     Returns a code-styled string representation of the object.
-    #     """
-    #     return f"sdr.{type(self).__name__}(phase_offset={self.phase_offset}, symbol_labels={self._symbol_labels_str!r})"
-
-    # def __str__(self) -> str:
-    #     """
-    #     Returns a human-readable string representation of the object.
-    #     """
-    #     string = f"sdr.{type(self).__name__}:"
-    #     string += f"\n  symbol_map: {self.symbol_map.shape} shape"
-    #     string += f"\n    {self.symbol_map.tolist()}"
-    #     string += f"\n  symbol_labels: {self._symbol_labels_str!r}"
-    #     string += f"\n  phase_offset: {self.phase_offset}"
-    #     return string
