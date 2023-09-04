@@ -11,7 +11,7 @@ from typing_extensions import Literal
 
 from .._filter import Decimator, Interpolator
 from .._helper import export
-from ._pulse_shapes import half_sine, raised_cosine, rectangular, root_raised_cosine
+from ._pulse_shapes import raised_cosine, rectangular, root_raised_cosine
 
 
 @export
