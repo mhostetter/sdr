@@ -48,7 +48,7 @@ def constellation(
 
             qpsk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, qpsk.order, 10_000); \
-            x = qpsk.modulate(s); \
+            x = qpsk.map_symbols(s); \
             x_hat = sdr.awgn(x, 6);
 
             @savefig sdr_plot_constellation_1.png
@@ -231,7 +231,7 @@ def eye(
 
             psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 100); \
-            a = psk.modulate(s)
+            a = psk.map_symbols(s)
 
         Apply a raised cosine pulse shape and examine the eye diagram. Since the raised cosine pulse shape
         is a Nyquist filter, there is no intersymbol interference (ISI) at the symbol decisions.
