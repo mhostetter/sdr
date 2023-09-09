@@ -252,6 +252,8 @@ def raised_cosine(
         The raised cosine pulse shape.
 
     Notes:
+        The raised cosine pulse shape has a transfer function of
+
         $$
         H(f) =
         \begin{cases}
@@ -264,10 +266,12 @@ def raised_cosine(
         \end{cases}
         $$
 
+        The impulse response is defined as
+
         $$
         h(t) =
         \frac
-        {\displaystyle \sin(\frac{\pi t}{T_{sym}}) \cos(\frac{\pi \alpha t}{T_{sym}})}
+        {\displaystyle \sin\left(\frac{\pi t}{T_{sym}}\right) \cos\left(\frac{\pi \alpha t}{T_{sym}}\right)}
         {\displaystyle \frac{\pi t}{T_{sym}} \left[1 - \left(\frac{2 \alpha t}{T_{sym}} \right)^2 \right]}
         $$
 
@@ -385,6 +389,8 @@ def root_raised_cosine(
         The square-root raised cosine pulse shape.
 
     Notes:
+        The square root raised cosine pulse shape has a transfer function of
+
         $$
         H(f) =
         \begin{cases}
@@ -397,11 +403,13 @@ def root_raised_cosine(
         \end{cases}
         $$
 
+        The impulse response is defined as
+
         $$
         h(t) =
         \frac{1}{\sqrt{T_{sym}}}
         \frac
-        {\displaystyle \sin(\frac{\pi (1 - \alpha) t}{T_{sym}}) + \frac{4 \alpha t}{T_{sym}}\cos( \frac{\pi (1 + \alpha) t}{T_{sym}})}
+        {\displaystyle \sin\left(\frac{\pi (1 - \alpha) t}{T_{sym}}\right) + \frac{4 \alpha t}{T_{sym}}\cos\left( \frac{\pi (1 + \alpha) t}{T_{sym}}\right)}
         {\displaystyle \frac{\pi t}{T_{sym}} \left[1 - \left(\frac{4 \alpha t}{T_{sym}} \right)^2 \right]}
         $$
 
