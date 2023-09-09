@@ -384,6 +384,27 @@ def root_raised_cosine(
     Returns:
         The square-root raised cosine pulse shape.
 
+    Notes:
+        $$
+        H(f) =
+        \begin{cases}
+        \displaystyle \sqrt{T_{sym}},
+        & \displaystyle 0 \le \left| f \right| \le \frac{1 - \alpha}{2 T_{sym}} \\
+        \displaystyle \sqrt{\frac{T_{sym}}{2} \left[1 + \cos\left(\frac{\pi T_{sym}}{\alpha}\left(\left| f \right| - \frac{1 - \alpha}{2 T_{sym}}\right)\right)\right]},
+        & \displaystyle \frac{1 - \alpha}{2 T_{sym}} \le \left| f \right| \le \frac{1 + \alpha}{2 T_{sym}} \\
+        0,
+        & \displaystyle \left| f \right| \ge \frac{1 + \alpha}{2 T_{sym}}
+        \end{cases}
+        $$
+
+        $$
+        h(t) =
+        \frac{1}{\sqrt{T_{sym}}}
+        \frac
+        {\displaystyle \sin(\frac{\pi (1 - \alpha) t}{T_{sym}}) + \frac{4 \alpha t}{T_{sym}}\cos( \frac{\pi (1 + \alpha) t}{T_{sym}})}
+        {\displaystyle \frac{\pi t}{T_{sym}} \left[1 - \left(\frac{4 \alpha t}{T_{sym}} \right)^2 \right]}
+        $$
+
     References:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Appendix A.
 
@@ -434,7 +455,7 @@ def root_raised_cosine(
 
     Group:
         modulation-pulse-shaping
-    """
+    """  # pylint: disable=line-too-long
     if not isinstance(alpha, (int, float)):
         raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
     if not 0 <= alpha <= 1:
