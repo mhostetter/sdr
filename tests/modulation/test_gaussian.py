@@ -16,14 +16,36 @@ def test_exceptions():
         # Time-bandwidth product must be non-negative
         sdr.gaussian(-0.1, 4, 6)
     with pytest.raises(ValueError):
-        # Need at least 2 symbols
-        sdr.gaussian(0.5, 1, 4)
+        # Need at least 1 symbol
+        sdr.gaussian(0.5, 0, 4)
     with pytest.raises(ValueError):
         # Need at least 1 samples per symbol
         sdr.gaussian(0.5, 6, 1)
     with pytest.raises(ValueError):
         # The filter must have even order
         sdr.gaussian(0.5, 3, 5)
+
+
+def test_0p5_1_8():
+    """
+    Matlab:
+        >> h = gaussdesign(0.5, 1, 8); h'
+    """
+    h = sdr.gaussian(0.5, 1, 8)
+    h_truth = np.array(
+        [
+            0.032792293583565,
+            0.071441541563672,
+            0.124596907332843,
+            0.173956687808182,
+            0.194425139423475,
+            0.173956687808182,
+            0.124596907332843,
+            0.071441541563672,
+            0.032792293583565,
+        ]
+    )
+    np.testing.assert_almost_equal(h, h_truth)
 
 
 def test_0p1_4_8():
