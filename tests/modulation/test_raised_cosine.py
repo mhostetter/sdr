@@ -19,8 +19,8 @@ def test_exceptions():
         # Need at least 1 samples per symbol
         sdr.raised_cosine(0.5, 6, 1)
     with pytest.raises(ValueError):
-        # Need at least 2 symbols
-        sdr.raised_cosine(0.5, 1, 4)
+        # Need at least 1 symbol
+        sdr.raised_cosine(0.5, 0, 4)
     with pytest.raises(ValueError):
         # The filter must have even order
         sdr.raised_cosine(0.5, 5, 3)
@@ -29,6 +29,24 @@ def test_exceptions():
 ##############################################################################
 # Test across alpha, even/odd span, even/odd sos
 ##############################################################################
+
+
+def test_0p5_1_4():
+    """
+    Matlab:
+        >> h = rcosdesign(0.5, 1, 4, 'normal'); h'
+    """
+    h = sdr.raised_cosine(0.5, 1, 4)
+    h_truth = np.array(
+        [
+            0.330661731956741,
+            0.488786570143306,
+            0.550909262704687,
+            0.488786570143306,
+            0.330661731956741,
+        ]
+    )
+    np.testing.assert_almost_equal(h, h_truth)
 
 
 def test_0p1_6_4():
