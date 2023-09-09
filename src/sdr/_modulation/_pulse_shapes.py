@@ -309,8 +309,8 @@ def raised_cosine(
 
     if not isinstance(span, int):
         raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-    if not span > 1:
-        raise ValueError(f"Argument 'span' must be greater than 1, not {span}.")
+    if not span > 0:
+        raise ValueError(f"Argument 'span' must be positive, not {span}.")
 
     if not isinstance(sps, int):
         raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
