@@ -189,6 +189,12 @@ def gaussian(
             sdr.plot.impulse_response(h_0p2, label=r"$B T_{sym} = 0.2$"); \
             sdr.plot.impulse_response(h_0p3, label=r"$B T_{sym} = 0.3$")
 
+            @savefig sdr_gaussian_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(h_0p1, label=r"$B T_{sym} = 0.1$"); \
+            sdr.plot.magnitude_response(h_0p2, label=r"$B T_{sym} = 0.2$"); \
+            sdr.plot.magnitude_response(h_0p3, label=r"$B T_{sym} = 0.3$")
+
         See the :ref:`pulse-shapes` example.
 
     Group:
