@@ -28,7 +28,7 @@ def energy(
         db: Indicates whether to return the result in decibels (dB).
 
     Returns:
-        The energy of $x[n]$ in units^2.
+        The signal energy. If `db=False`, $E$ is returned. If `db=True`, $10 \log_{10} E$ is returned.
 
     Group:
         measurement-energy
