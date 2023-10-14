@@ -19,7 +19,7 @@ def peak_voltage(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
-        db: Indicates whether to return the result in dB.
+        db: Indicates whether to return the result in decibels (dB).
 
     Returns:
         The peak voltage. If `db=False`, $V_{\text{peak}}$ is returned.
@@ -44,7 +44,7 @@ def rms_voltage(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
-        db: Indicates whether to return the result in dB.
+        db: Indicates whether to return the result in decibels (dB).
 
     Returns:
         The root-mean-square voltage. If `db=False`, $V_{\text{rms}}$ is returned.

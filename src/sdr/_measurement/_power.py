@@ -19,7 +19,7 @@ def peak_power(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
-        db: Indicates whether to return the result in dB.
+        db: Indicates whether to return the result in decibels (dB).
 
     Returns:
         The peak power. If `db=False`, $P_{\text{peak}}$ is returned.
@@ -44,7 +44,7 @@ def average_power(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
-        db: Indicates whether to return the result in dB.
+        db: Indicates whether to return the result in decibels (dB).
 
     Returns:
         The average power. If `db=False`, $P_{\text{avg}}$ is returned.
