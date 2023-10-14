@@ -11,7 +11,11 @@ from .._conversion import db as to_db
 
 
 @export
-def energy(x: npt.ArrayLike, db: bool = False) -> float:
+def energy(
+    x: npt.ArrayLike,
+    axis: int | tuple[int, ...] | None = None,
+    db: bool = False,
+) -> float:
     r"""
     Measures the energy of a time-domain signal $x[n]$.
 
@@ -19,6 +23,8 @@ def energy(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
+        axis: Axis or axes along which to compute the energy. The default is `None`, which computes the energy of
+            the entire array.
         db: Indicates whether to return the result in decibels (dB).
 
     Returns:
@@ -28,7 +34,7 @@ def energy(x: npt.ArrayLike, db: bool = False) -> float:
         measurement-energy
     """
     x = np.asarray(x)
-    E = np.sum(np.abs(x) ** 2)
+    E = np.sum(np.abs(x) ** 2, axis=axis)
     if db:
         E = to_db(E)
     return E

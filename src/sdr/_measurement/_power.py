@@ -11,7 +11,11 @@ from .._helper import export
 
 
 @export
-def peak_power(x: npt.ArrayLike, db: bool = False) -> float:
+def peak_power(
+    x: npt.ArrayLike,
+    axis: int | tuple[int, ...] | None = None,
+    db: bool = False,
+) -> float:
     r"""
     Measures the peak power of a time-domain signal $x[n]$.
 
@@ -19,6 +23,8 @@ def peak_power(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
+        axis: Axis or axes along which to compute the peak power. The default is `None`, which computes the peak power
+            of the entire array.
         db: Indicates whether to return the result in decibels (dB).
 
     Returns:
@@ -29,14 +35,18 @@ def peak_power(x: npt.ArrayLike, db: bool = False) -> float:
         measurement-power
     """
     x = np.asarray(x)
-    P_peak = np.max(np.abs(x) ** 2)
+    P_peak = np.max(np.abs(x) ** 2, axis=axis)
     if db:
         P_peak = to_db(P_peak, type="power")
     return P_peak
 
 
 @export
-def average_power(x: npt.ArrayLike, db: bool = False) -> float:
+def average_power(
+    x: npt.ArrayLike,
+    axis: int | tuple[int, ...] | None = None,
+    db: bool = False,
+) -> float:
     r"""
     Measures the average power of a time-domain signal $x[n]$.
 
@@ -44,6 +54,8 @@ def average_power(x: npt.ArrayLike, db: bool = False) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
+        axis: Axis or axes along which to compute the average power. The default is `None`, which computes the average
+            power of the entire array.
         db: Indicates whether to return the result in decibels (dB).
 
     Returns:
@@ -54,14 +66,17 @@ def average_power(x: npt.ArrayLike, db: bool = False) -> float:
         measurement-power
     """
     x = np.asarray(x)
-    P_avg = np.mean(np.abs(x) ** 2)
+    P_avg = np.mean(np.abs(x) ** 2, axis=axis)
     if db:
         P_avg = to_db(P_avg, type="power")
     return P_avg
 
 
 @export
-def papr(x: npt.ArrayLike) -> float:
+def papr(
+    x: npt.ArrayLike,
+    axis: int | tuple[int, ...] | None = None,
+) -> float:
     r"""
     Measures the peak-to-average power ratio (PAPR) of a time-domain signal $x[n]$.
 
@@ -69,6 +84,8 @@ def papr(x: npt.ArrayLike) -> float:
 
     Arguments:
         x: The time-domain signal $x[n]$ to measure.
+        axis: Axis or axes along which to compute the PAPR. The default is `None`, which computes the PAPR of the
+            entire array.
 
     Returns:
         The PAPR of $x[n]$ in dB.
@@ -83,4 +100,4 @@ def papr(x: npt.ArrayLike) -> float:
         measurement-power
     """
     x = np.asarray(x)
-    return to_db(peak_power(x) / average_power(x))
+    return to_db(peak_power(x, axis=axis) / average_power(x, axis=axis))
