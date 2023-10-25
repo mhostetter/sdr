@@ -35,7 +35,7 @@ jobs:
         run: python3 -m pip install .
 
       - name: Lint code with ruff
-        run: python3 -m ruff src/sdr/
+        run: python3 -m ruff check --output-format=github src/sdr/
 
       # - name: Lint tests with ruff
       #   run: python3 -m ruff tests/
