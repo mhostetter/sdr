@@ -107,6 +107,16 @@ disable = [
 min-similarity-lines = 100
 max-line-length = 120
 
+[tool.ruff]
+extend-exclude = ["build", "dist", "docs", "src/sdr/_version.py"]
+line-length = 120
+
+[tool.ruff.lint]
+ignore = ["E713", "E714"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
 [tool.black]
 line-length = 120
 exclude = '''
