@@ -12,7 +12,7 @@ on:
 
 jobs:
   run-linter:
-    name: Lint
+    name: Ruff Lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,11 +34,11 @@ jobs:
       - name: Install the `sdr` package
         run: python3 -m pip install .
 
-      - name: Lint code with pylint
-        run: python3 -m pylint src/sdr/
+      - name: Lint code with ruff
+        run: python3 -m ruff src/sdr/
 
-      # - name: Lint tests with pylint
-      #   run: python3 -m pylint tests/
+      # - name: Lint tests with ruff
+      #   run: python3 -m ruff tests/
 
   run-formatter:
     name: Format
