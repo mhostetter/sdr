@@ -87,7 +87,7 @@ select = [
     # "SIM",# flake8-simplify
     "I", # isort
 ]
-ignore = ["E713", "E714"]
+ignore = ["E501", "E713", "E714"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
