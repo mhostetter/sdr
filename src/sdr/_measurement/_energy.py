@@ -6,8 +6,8 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
 from .._conversion import db as to_db
+from .._helper import export
 
 
 @export
