@@ -158,15 +158,15 @@ X_HAT = np.array(
 def test_exceptions():
     psk = sdr.PSK(4, phase_offset=45)
     with pytest.raises(ValueError):
-        evm = sdr.evm(X_HAT, psk.symbol_map, norm="invalid")
+        sdr.evm(X_HAT, psk.symbol_map, norm="invalid")
     with pytest.raises(ValueError):
-        evm = sdr.evm(X_HAT, psk.symbol_map, output="invalid")
-    with pytest.raises(ValueError):
-        # Output percentile must be in [0, 100]
-        evm = sdr.evm(X_HAT, psk.symbol_map, output=-1)
+        sdr.evm(X_HAT, psk.symbol_map, output="invalid")
     with pytest.raises(ValueError):
         # Output percentile must be in [0, 100]
-        evm = sdr.evm(X_HAT, psk.symbol_map, output=101)
+        sdr.evm(X_HAT, psk.symbol_map, output=-1)
+    with pytest.raises(ValueError):
+        # Output percentile must be in [0, 100]
+        sdr.evm(X_HAT, psk.symbol_map, output=101)
 
 
 def test_average_power_ref():
