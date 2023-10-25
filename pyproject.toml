@@ -75,6 +75,7 @@ where = ["src"]
 universal = false
 
 [tool.ruff]
+src = ["src"]
 extend-include = ["*.ipynb"]
 extend-exclude = ["build", "dist", "docs", "src/sdr/_version.py"]
 line-length = 120
