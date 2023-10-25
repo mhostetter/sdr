@@ -286,7 +286,7 @@ class Interpolator(FIR):
 
     Group:
         dsp-multirate-filtering
-    """  # noqa: E501
+    """
 
     def __init__(
         self,
@@ -635,7 +635,7 @@ class Decimator(FIR):
 
     Group:
         dsp-multirate-filtering
-    """  # noqa: E501
+    """
 
     def __init__(
         self,
