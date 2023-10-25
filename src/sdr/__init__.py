@@ -10,7 +10,8 @@ except ModuleNotFoundError:  # pragma: no cover
     __version_tuple__ = (0, 0, 0)
     warnings.warn(
         "An error occurred during package install where setuptools_scm failed to create a _version.py file. "
-        "Defaulting version to 0.0.0."
+        "Defaulting version to 0.0.0.",
+        stacklevel=3,
     )
 
 from . import plot

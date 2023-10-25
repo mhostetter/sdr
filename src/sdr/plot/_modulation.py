@@ -345,7 +345,7 @@ def phase_tree(
 @export
 def ber(
     ebn0: npt.ArrayLike,
-    ber: npt.ArrayLike,  # pylint: disable=redefined-outer-name
+    ber: npt.ArrayLike,
     **kwargs,
 ):
     r"""
@@ -397,7 +397,7 @@ def ber(
 @export
 def ser(
     esn0: npt.ArrayLike,
-    ser: npt.ArrayLike,  # pylint: disable=redefined-outer-name
+    ser: npt.ArrayLike,
     **kwargs,
 ):
     r"""

@@ -14,8 +14,6 @@ from .._helper import export
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
-# pylint: disable=redefined-builtin,redefined-outer-name
-
 
 def _convert_to_taps(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike]

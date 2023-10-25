@@ -27,7 +27,7 @@ def export(obj):
     # Append this object to the private module's "all" list
     public_members = getattr(module, "__all__", [])
     public_members.append(obj.__name__)
-    setattr(module, "__all__", public_members)
+    module.__all__ = public_members
 
     return obj
 

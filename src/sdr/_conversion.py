@@ -17,7 +17,7 @@ from ._helper import export
 @export
 def db(
     x: npt.ArrayLike,
-    type: Literal["value", "power", "voltage"] = "value",  # pylint: disable=redefined-builtin
+    type: Literal["value", "power", "voltage"] = "value",
 ) -> np.ndarray:
     r"""
     Converts from linear units to decibels.
@@ -79,7 +79,7 @@ def db(
 @export
 def linear(
     x: npt.ArrayLike,
-    type: Literal["value", "power", "voltage"] = "value",  # pylint: disable=redefined-builtin
+    type: Literal["value", "power", "voltage"] = "value",
 ) -> np.ndarray:
     r"""
     Converts from decibels to linear units.
