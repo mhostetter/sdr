@@ -52,18 +52,6 @@ dependencies = [
 ]
 dynamic = ["version"]
 
-# [project.optional-dependencies]
-# dev = [
-#     "pylint >= 2.14",
-#     "black >= 22.8.0",
-#     "pytest",
-#     "pytest-cov[toml]",
-#     "pytest-xdist",
-#     "pytest-benchmark >= 4.0.0",
-#     "requests",
-#     "pdfminer.six"
-# ]
-
 [project.urls]
 Homepage = "https://github.com/mhostetter/sdr"
 Source = "https://github.com/mhostetter/sdr"
@@ -85,27 +73,6 @@ where = ["src"]
 
 [tool.distutils.bdist_wheel]
 universal = false
-
-[tool.pylint]
-ignore-paths = ["src/sdr/_version.py"]
-disable = [
-    "comparison-with-callable",     # pylint doesn't understand metaclass properties
-    "fixme",
-    "global-statement",
-    "invalid-name",
-    "missing-function-docstring",
-    "protected-access",
-    "too-many-ancestors",
-    "too-many-arguments",
-    "too-many-branches",
-    "too-many-instance-attributes",
-    "too-many-lines",
-    "too-many-locals",
-    "too-many-public-methods",
-    "unneeded-not",
-]
-min-similarity-lines = 100
-max-line-length = 120
 
 [tool.ruff]
 extend-exclude = ["build", "dist", "docs", "src/sdr/_version.py"]
