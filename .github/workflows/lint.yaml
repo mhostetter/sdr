@@ -41,7 +41,7 @@ jobs:
       #   run: python3 -m ruff tests/
 
   run-formatter:
-    name: Format
+    name: Ruff Format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -60,5 +60,5 @@ jobs:
       - name: Install the `sdr` package
         run: python3 -m pip install .
 
-      - name: Format with black
-        run: python3 -m black . --check
+      - name: Format with ruff
+        run: python3 -m ruff format --check .
