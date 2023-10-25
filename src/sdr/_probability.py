@@ -35,7 +35,7 @@ def Q(x: npt.ArrayLike) -> np.ndarray:
         probability
     """
     x = np.asarray(x)
-    p = scipy.special.erfc(x / np.sqrt(2)) / 2  # pylint: disable=no-member
+    p = scipy.special.erfc(x / np.sqrt(2)) / 2
     return p
 
 
@@ -64,5 +64,5 @@ def Qinv(p: npt.ArrayLike) -> np.ndarray:
         probability
     """
     p = np.asarray(p)
-    x = np.sqrt(2) * scipy.special.erfcinv(2 * p)  # pylint: disable=no-member
+    x = np.sqrt(2) * scipy.special.erfcinv(2 * p)
     return x

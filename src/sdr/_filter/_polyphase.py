@@ -286,7 +286,7 @@ class Interpolator(FIR):
 
     Group:
         dsp-multirate-filtering
-    """  # pylint: disable=line-too-long
+    """  # noqa: E501
 
     def __init__(
         self,
@@ -411,7 +411,7 @@ class Interpolator(FIR):
                 plt.figure(figsize=(8, 4)); \
                 sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
                 sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="$y[n]$");
-        """  # pylint: disable=line-too-long
+        """
         x = np.atleast_1d(x)
         if not x.ndim == 1:
             raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
@@ -635,7 +635,7 @@ class Decimator(FIR):
 
     Group:
         dsp-multirate-filtering
-    """  # pylint: disable=line-too-long
+    """  # noqa: E501
 
     def __init__(
         self,

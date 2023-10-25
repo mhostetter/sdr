@@ -16,7 +16,7 @@ def mix(
     freq: float = 0,
     phase: float = 0,
     sample_rate: float = 1,
-    complex: bool = True,  # pylint: disable=redefined-builtin
+    complex: bool = True,
 ) -> np.ndarray:
     r"""
     Mixes the time-domain signal $x[n]$ with a complex exponential or real sinusoid.

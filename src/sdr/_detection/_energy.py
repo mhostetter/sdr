@@ -82,7 +82,7 @@ class EnergyDetector:
         snr: float,
         N_nc: float,
         p_fa: npt.ArrayLike | None = None,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> tuple[np.ndarray, np.ndarray]:
         r"""
         Computes the receiver operating characteristic (ROC) curve.
@@ -142,7 +142,7 @@ class EnergyDetector:
         snr: npt.ArrayLike,
         N_nc: npt.ArrayLike,
         p_fa: npt.ArrayLike,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> np.ndarray:
         r"""
         Computes the probability of detection $P_D$.
@@ -206,7 +206,7 @@ class EnergyDetector:
         threshold: npt.ArrayLike,
         N_nc: npt.ArrayLike,
         sigma2: npt.ArrayLike,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> np.ndarray:
         r"""
         Computes the probability of false alarm $P_{FA}$.
@@ -251,7 +251,7 @@ class EnergyDetector:
         N_nc: npt.ArrayLike,
         p_fa: npt.ArrayLike,
         sigma2: npt.ArrayLike,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> np.ndarray:
         r"""
         Computes the threshold $\gamma'$.

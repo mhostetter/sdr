@@ -66,7 +66,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1)
 
     Group:
         detection-theory
-    """  # pylint: disable=line-too-long
+    """  # noqa: E501
     p_d = np.asarray(p_d)
     if not np.all(np.logical_and(0 < p_d, p_d < 1)):
         raise ValueError("Argument 'p_d' must have values in (0, 1).")

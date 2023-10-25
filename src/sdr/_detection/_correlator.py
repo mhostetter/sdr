@@ -86,7 +86,7 @@ class ReplicaCorrelator:
     def roc(
         enr: float,
         p_fa: npt.ArrayLike | None = None,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> tuple[np.ndarray, np.ndarray]:
         r"""
         Computes the receiver operating characteristic (ROC) curve.
@@ -129,7 +129,7 @@ class ReplicaCorrelator:
     def p_d(
         enr: npt.ArrayLike,
         p_fa: npt.ArrayLike,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> np.ndarray:
         r"""
         Computes the probability of detection $P_D$.
@@ -188,7 +188,7 @@ class ReplicaCorrelator:
         threshold: npt.ArrayLike,
         energy: npt.ArrayLike,
         sigma2: npt.ArrayLike,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> np.ndarray:
         r"""
         Computes the probability of false alarm $P_{FA}$.
@@ -231,7 +231,7 @@ class ReplicaCorrelator:
         p_fa: npt.ArrayLike,
         energy: npt.ArrayLike,
         sigma2: npt.ArrayLike,
-        complex: bool = True,  # pylint: disable=redefined-builtin
+        complex: bool = True,
     ) -> np.ndarray:
         r"""
         Computes the threshold $\gamma'$.
