@@ -8508,7 +8508,7 @@ The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_PiMPSK_1.png" src="../../_images/sdr_PiMPSK_1.png" />
+<img alt="savefig/sdr_PiMPSK_1.png" src="savefig/sdr_PiMPSK_1.png" />
 <p>Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">bits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
 <span class="gh">Out[3]: </span><span class="go">array([0, 1, 1, 0, 1, 1, 1, 1])</span>
@@ -8526,7 +8526,7 @@ The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_PiMPSK_2.png" src="../../_images/sdr_PiMPSK_2.png" />
+<img alt="savefig/sdr_PiMPSK_2.png" src="savefig/sdr_PiMPSK_2.png" />
 <p>Modulate and pulse shape the symbols to a complex baseband signal.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">tx_samples</span> <span class="o">=</span> <span class="n">pi4_qpsk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
@@ -8539,8 +8539,8 @@ The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_PiMPSK_3.png" src="../../_images/sdr_PiMPSK_3.png" />
-<img alt="../../_images/sdr_PiMPSK_4.png" src="../../_images/sdr_PiMPSK_4.png" />
+<img alt="savefig/sdr_PiMPSK_3.png" src="savefig/sdr_PiMPSK_3.png" />
+<img alt="savefig/sdr_PiMPSK_4.png" src="savefig/sdr_PiMPSK_4.png" />
 <p>Add AWGN noise such that <span class="math notranslate nohighlight">\(E_b/N_0 = 20\)</span> dB.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [10]: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> \
 <span class="gp">   ....: </span><span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ebn0_to_snr</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="n">pi4_qpsk</span><span class="o">.</span><span class="n">bps</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="n">pi4_qpsk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
@@ -8552,7 +8552,7 @@ The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_PiMPSK_5.png" src="../../_images/sdr_PiMPSK_5.png" />
+<img alt="savefig/sdr_PiMPSK_5.png" src="savefig/sdr_PiMPSK_5.png" />
 <p>Matched filter and demodulate.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [12]: </span><span class="n">rx_symbols</span><span class="p">,</span> <span class="n">rx_complex_symbols</span> <span class="o">=</span> <span class="n">pi4_qpsk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
 
@@ -8565,7 +8565,7 @@ The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_PiMPSK_6.png" src="../../_images/sdr_PiMPSK_6.png" />
+<img alt="savefig/sdr_PiMPSK_6.png" src="savefig/sdr_PiMPSK_6.png" />
 <p>See the <a class="reference internal" href="../../examples/psk/#psk"><span class="std std-ref">Phase-shift keying</span></a> example.</p>
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">

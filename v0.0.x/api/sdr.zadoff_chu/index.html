@@ -8537,7 +8537,7 @@ is a cyclic shift of the root-<span class="math notranslate nohighlight">\(u\)</
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_zadoff_chu_1.png" src="../../_images/sdr_zadoff_chu_1.png" />
+<img alt="savefig/sdr_zadoff_chu_1.png" src="savefig/sdr_zadoff_chu_1.png" />
 <p>The <em>periodic</em> autocorrelation of a Zadoff-Chu sequence has sidelobes of magnitude 0.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="go"># Perform periodic autocorrelation</span>
 <span class="gp">In [3]: </span><span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">),</span> <span class="n">x3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;valid&quot;</span><span class="p">);</span> \
@@ -8554,7 +8554,7 @@ is a cyclic shift of the root-<span class="math notranslate nohighlight">\(u\)</
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_zadoff_chu_2.png" src="../../_images/sdr_zadoff_chu_2.png" />
+<img alt="savefig/sdr_zadoff_chu_2.png" src="savefig/sdr_zadoff_chu_2.png" />
 <p>Create a root-5 Zadoff-Chu sequence <span class="math notranslate nohighlight">\(x_5[n]\)</span> with length 139.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">x5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">zadoff_chu</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
@@ -8565,7 +8565,7 @@ is a cyclic shift of the root-<span class="math notranslate nohighlight">\(u\)</
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_zadoff_chu_3.png" src="../../_images/sdr_zadoff_chu_3.png" />
+<img alt="savefig/sdr_zadoff_chu_3.png" src="savefig/sdr_zadoff_chu_3.png" />
 <p>The <em>periodic</em> cross correlation of two prime-length Zadoff-Chu sequences with different roots has sidelobes
 with magnitude <span class="math notranslate nohighlight">\(1 / \sqrt{N}\)</span>.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="go"># Perform periodic cross correlation</span>
@@ -8583,7 +8583,7 @@ with magnitude <span class="math notranslate nohighlight">\(1 / \sqrt{N}\)</span
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_zadoff_chu_4.png" src="../../_images/sdr_zadoff_chu_4.png" />
+<img alt="savefig/sdr_zadoff_chu_4.png" src="savefig/sdr_zadoff_chu_4.png" />
 </dd></dl>
 
 

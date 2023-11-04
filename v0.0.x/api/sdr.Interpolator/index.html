@@ -8639,7 +8639,7 @@ as is needed in the first case.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_Interpolator_1.png" src="../../_images/sdr_Interpolator_1.png" />
+<img alt="savefig/sdr_Interpolator_1.png" src="savefig/sdr_Interpolator_1.png" />
 <p>Create a streaming polyphase filter that interpolates by 7 using the Kaiser window method. This filter
 preserves state between calls.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">streaming</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span> <span class="n">fir</span>
@@ -8663,7 +8663,7 @@ preserves state between calls.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_Interpolator_2.png" src="../../_images/sdr_Interpolator_2.png" />
+<img alt="savefig/sdr_Interpolator_2.png" src="savefig/sdr_Interpolator_2.png" />
 <p>Create a polyphase filter that interpolates by 7 using linear method.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [8]: </span><span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;linear&quot;</span><span class="p">);</span> <span class="n">fir</span>
 <span class="gh">Out[8]: </span><span class="go">sdr.Interpolator(7, &#39;linear&#39;, streaming=False)</span>
@@ -8678,7 +8678,7 @@ preserves state between calls.</p>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_Interpolator_3.png" src="../../_images/sdr_Interpolator_3.png" />
+<img alt="savefig/sdr_Interpolator_3.png" src="savefig/sdr_Interpolator_3.png" />
 <p>Create a polyphase filter that interpolates by 7 using the zero-order hold method. It is recommended to
 the <code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;full&quot;</span></code> convolution mode. This way the first upsampled symbol has <span class="math notranslate nohighlight">\(r\)</span> samples.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [11]: </span><span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;zoh&quot;</span><span class="p">);</span> <span class="n">fir</span>
@@ -8694,7 +8694,7 @@ the <code class="code highlight python docutils literal highlight-python"><span 
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="../../_images/sdr_Interpolator_4.png" src="../../_images/sdr_Interpolator_4.png" />
+<img alt="savefig/sdr_Interpolator_4.png" src="savefig/sdr_Interpolator_4.png" />
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
