@@ -75,7 +75,7 @@ View all available classes and functions in the `API Reference <https://mhostett
    :hidden:
 
    development/installation.rst
-   development/linter.rst
+   development/formatting.rst
    development/unit-tests.rst
    development/documentation.rst
 
