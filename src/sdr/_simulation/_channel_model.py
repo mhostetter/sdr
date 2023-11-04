@@ -10,7 +10,11 @@ from .._helper import export
 
 
 @export
-def bsc(x: npt.ArrayLike, p: float) -> np.ndarray:
+def bsc(
+    x: npt.ArrayLike,
+    p: float,
+    seed: int | None = None,
+) -> np.ndarray:
     r"""
     Passes the binary input sequence $x$ through a binary symmetric channel (BSC)
     with transition probability $p$.
@@ -18,6 +22,7 @@ def bsc(x: npt.ArrayLike, p: float) -> np.ndarray:
     Arguments:
         x: The input sequence $x$ with $x_i \in \{0, 1\}$.
         p: The probability $p$ of a bit flip.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
 
     Returns:
         The output sequence $y$ with $y_i \in \{0, 1\}$.
@@ -39,14 +44,19 @@ def bsc(x: npt.ArrayLike, p: float) -> np.ndarray:
         raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
 
     x = np.asarray(x)
-    flip = np.random.choice([0, 1], size=x.shape, p=[1 - p, p])
+    rng = np.random.default_rng(seed)
+    flip = rng.choice([0, 1], size=x.shape, p=[1 - p, p])
     y = x ^ flip
 
     return y if y.ndim > 0 else y.item()
 
 
 @export
-def bec(x: npt.ArrayLike, p: float) -> np.ndarray:
+def bec(
+    x: npt.ArrayLike,
+    p: float,
+    seed: int | None = None,
+) -> np.ndarray:
     r"""
     Passes the binary input sequence $x$ through a binary erasure channel (BEC)
     with erasure probability $p$.
@@ -54,6 +64,7 @@ def bec(x: npt.ArrayLike, p: float) -> np.ndarray:
     Arguments:
         x: The input sequence $x$ with $x_i \in \{0, 1\}$.
         p: The probability $p$ of a bit erasure.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
 
     Returns:
         The output sequence $y$ with $y_i \in \{0, 1, e\}$. Erasures $e$ are represented by -1.
@@ -75,14 +86,20 @@ def bec(x: npt.ArrayLike, p: float) -> np.ndarray:
         raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
 
     x = np.asarray(x)
-    y = np.where(np.random.rand(*x.shape) < p, -1, x)
+    rng = np.random.default_rng(seed)
+    random_p = rng.random(x.shape)
+    y = np.where(random_p < p, -1, x)
 
     return y if y.ndim > 0 else y.item()
 
 
 @export
 def dmc(
-    x: npt.ArrayLike, P: npt.ArrayLike, X: npt.ArrayLike | None = None, Y: npt.ArrayLike | None = None
+    x: npt.ArrayLike,
+    P: npt.ArrayLike,
+    X: npt.ArrayLike | None = None,
+    Y: npt.ArrayLike | None = None,
+    seed: int | None = None,
 ) -> np.ndarray:
     r"""
     Passes the input sequence $x$ through a discrete memoryless channel (DMC) with transition
@@ -95,6 +112,7 @@ def dmc(
             $\mathcal{X} = \{0, 1, \ldots, m-1\}$.
         Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that
             $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
 
     Returns:
         The output sequence $y$ with $y_i \in \mathcal{Y}$.
@@ -147,8 +165,9 @@ def dmc(
         raise ValueError(f"Argument 'P' must have {Y.shape[0]} columns, not {P.shape[1]}.")
 
     y = np.zeros_like(x)
+    rng = np.random.default_rng(seed)
     for i, Xi in enumerate(X):
         idxs = np.where(x == Xi)[0]
-        y[idxs] = np.random.choice(Y, size=idxs.shape, p=P[i])
+        y[idxs] = rng.choice(Y, size=idxs.shape, p=P[i])
 
     return y if y.ndim > 0 else y.item()
