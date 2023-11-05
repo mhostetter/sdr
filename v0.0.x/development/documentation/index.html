@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.398fa99f85d7bfbfa.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.015694448f541707f.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
@@ -8417,14 +8417,16 @@ You're not viewing the latest version.
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>docs/requirements.txt<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">sphinx</span> <span class="o">&lt;</span> <span class="mf">5.4</span>
-<span class="n">sphinx</span><span class="o">-</span><span class="n">immaterial</span> <span class="o">==</span> <span class="mf">0.11.5</span>
-<span class="n">myst</span><span class="o">-</span><span class="n">parser</span>
-<span class="n">sphinx</span><span class="o">-</span><span class="n">design</span>
-<span class="n">sphinx</span><span class="o">-</span><span class="n">last</span><span class="o">-</span><span class="n">updated</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">git</span>
-<span class="n">sphinx</span><span class="o">-</span><span class="n">math</span><span class="o">-</span><span class="n">dollar</span>
-<span class="n">ipykernel</span>
-<span class="n">myst</span><span class="o">-</span><span class="n">nb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">sphinx</span> <span class="o">&lt;</span> <span class="mf">7.3</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">immaterial</span> <span class="o">==</span> <span class="mf">0.11.8</span>
+<span class="c1"># For some reason, if the below versions aren&#39;t specified, the dependency resolution takes 18 minutes in CI.</span>
+<span class="n">myst</span><span class="o">-</span><span class="n">parser</span> <span class="o">==</span> <span class="mf">0.18.1</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">design</span>  <span class="o">==</span> <span class="mf">0.5.0</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">last</span><span class="o">-</span><span class="n">updated</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">git</span> <span class="o">==</span> <span class="mf">0.3.6</span>
+<span class="n">sphinx</span><span class="o">-</span><span class="n">math</span><span class="o">-</span><span class="n">dollar</span> <span class="o">==</span> <span class="mf">1.2.1</span>
+<span class="n">ipykernel</span> <span class="o">==</span> <span class="mf">6.26.0</span>
+<span class="n">myst</span><span class="o">-</span><span class="n">nb</span> <span class="o">==</span> <span class="mf">0.17.2</span>
+<span class="n">pickleshare</span> <span class="o">==</span> <span class="mf">0.7.5</span>  <span class="c1"># Needed by ipykernel</span>
 </code></pre></div>
 </div>
 </div>
@@ -8454,7 +8456,7 @@ This is easily done using the built-in Python <code class="code highlight python
   <small>
     
       Last update:
-      Jul 30, 2023
+      Nov 05, 2023
     
   </small>
 </div>

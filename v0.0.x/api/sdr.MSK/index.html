@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.398fa99f85d7bfbfa.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.015694448f541707f.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
@@ -8495,7 +8495,7 @@ equaling half the bit period.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_1.png" src="savefig/sdr_MSK_1.png" />
+<img alt="../../_images/sdr_MSK_1.png" src="../../_images/sdr_MSK_1.png" />
 <p>Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">bits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span> <span class="n">bits</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">]</span>
 <span class="gh">Out[3]: </span><span class="go">array([0, 1, 1, 0, 1, 1, 1, 1])</span>
@@ -8513,7 +8513,7 @@ equaling half the bit period.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_2.png" src="savefig/sdr_MSK_2.png" />
+<img alt="../../_images/sdr_MSK_2.png" src="../../_images/sdr_MSK_2.png" />
 <p>Modulate and pulse shape the symbols to a complex baseband signal.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">tx_samples</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
@@ -8522,7 +8522,7 @@ equaling half the bit period.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_3.png" src="savefig/sdr_MSK_3.png" />
+<img alt="../../_images/sdr_MSK_3.png" src="../../_images/sdr_MSK_3.png" />
 <p>MSK, like OQPSK, has I and Q channels that are offset by half a symbol period.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> \
@@ -8535,7 +8535,7 @@ equaling half the bit period.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_4.png" src="savefig/sdr_MSK_4.png" />
+<img alt="../../_images/sdr_MSK_4.png" src="../../_images/sdr_MSK_4.png" />
 <p>The phase trajectory of MSK is linear and continuous. Although, it should be noted that the phase is not
 differentiable at the symbol boundaries. This leads to lower spectral efficiency than, for instance,
 GMSK.</p>
@@ -8544,7 +8544,7 @@ GMSK.</p>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_5.png" src="savefig/sdr_MSK_5.png" />
+<img alt="../../_images/sdr_MSK_5.png" src="../../_images/sdr_MSK_5.png" />
 <p>Add AWGN noise such that <span class="math notranslate nohighlight">\(E_b/N_0 = 20\)</span> dB.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [11]: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> \
 <span class="gp">   ....: </span><span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ebn0_to_snr</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="n">msk</span><span class="o">.</span><span class="n">bps</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
@@ -8556,7 +8556,7 @@ GMSK.</p>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_6.png" src="savefig/sdr_MSK_6.png" />
+<img alt="../../_images/sdr_MSK_6.png" src="../../_images/sdr_MSK_6.png" />
 <p>Matched filter and demodulate. Note, the first symbol has <span class="math notranslate nohighlight">\(Q = 0\)</span> and the last symbol has <span class="math notranslate nohighlight">\(I = 0\)</span>.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [13]: </span><span class="n">rx_symbols</span><span class="p">,</span> <span class="n">rx_complex_symbols</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
 
@@ -8569,7 +8569,7 @@ GMSK.</p>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
-<img alt="savefig/sdr_MSK_7.png" src="savefig/sdr_MSK_7.png" />
+<img alt="../../_images/sdr_MSK_7.png" src="../../_images/sdr_MSK_7.png" />
 <p>See the <a class="reference internal" href="../../examples/psk/#psk"><span class="std std-ref">Phase-shift keying</span></a> example.</p>
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
