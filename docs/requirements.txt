@@ -1,8 +1,9 @@
-sphinx < 5.4
-sphinx-immaterial == 0.11.5
+sphinx < 7.3
+sphinx-immaterial == 0.11.8
 myst-parser
 sphinx-design
 sphinx-last-updated-by-git
 sphinx-math-dollar
 ipykernel
 myst-nb
+pickleshare  # Needed by ipykernel
