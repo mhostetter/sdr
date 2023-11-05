@@ -215,6 +215,7 @@ autodoc_typehints_format = "short"
 autodoc_type_aliases = {
     "npt.ArrayLike": "~numpy.typing.ArrayLike",
     "npt.DTypeLike": "~numpy.typing.DTypeLike",
+    "npt.NDArray": "~numpy.typing.NDArray",
 }
 
 ipython_execlines = [
