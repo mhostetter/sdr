@@ -203,6 +203,37 @@ def ppm(x: npt.ArrayLike) -> np.ndarray:
     return 1e6 * x
 
 
+@export
+def ppb(x: npt.ArrayLike) -> np.ndarray:
+    r"""
+    Converts from a ratio to parts per billion (ppb).
+
+    Arguments:
+        x: The input ratio.
+
+    Returns:
+        The parts per billion (ppb).
+
+    Examples:
+        Convert 0.000005 to 5000 ppb.
+
+        .. ipython:: python
+
+            sdr.ppb(0.000005)
+
+        Convert 0.000000025 to 25 ppb.
+
+        .. ipython:: python
+
+            sdr.ppb(0.000000025)
+
+    Group:
+        conversions-ratios
+    """
+    x = np.asarray(x)
+    return 1e9 * x
+
+
 ##############################################################################
 # From Eb/N0
 ##############################################################################
