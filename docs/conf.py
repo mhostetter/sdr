@@ -188,6 +188,7 @@ nitpicky = True
 nitpick_ignore = [
     ("py:class", "numpy.typing.ArrayLike"),  # Wish this would work
     ("py:class", "numpy.typing.DTypeLike"),  # Wish this would work
+    ("py:class", "numpy.typing.NDArray"),  # Wish this would work
 ]
 
 
