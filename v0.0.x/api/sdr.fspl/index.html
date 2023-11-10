@@ -7481,15 +7481,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-d" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.d (Python parameter) — The distance $d$ in meters between the transmitter and receiver." class="md-ellipsis">d</span>
+  <a href="#p-distance" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.distance (Python parameter) — The distance $d$ in meters between the transmitter and receiver." class="md-ellipsis">distance</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#p-f" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.f (Python parameter) — The frequency $f$ in Hz of the signal." class="md-ellipsis">f</span>
+  <a href="#p-freq" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.freq (Python parameter) — The frequency $f$ in Hz of the signal." class="md-ellipsis">freq</span>
   </a>
   
 </li>
@@ -8490,15 +8490,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-d" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.d (Python parameter) — The distance $d$ in meters between the transmitter and receiver." class="md-ellipsis">d</span>
+  <a href="#p-distance" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.distance (Python parameter) — The distance $d$ in meters between the transmitter and receiver." class="md-ellipsis">distance</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#p-f" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.f (Python parameter) — The frequency $f$ in Hz of the signal." class="md-ellipsis">f</span>
+  <a href="#p-freq" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.fspl.freq (Python parameter) — The frequency $f$ in Hz of the signal." class="md-ellipsis">freq</span>
   </a>
   
 </li>
@@ -8538,7 +8538,7 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">fspl</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-d" title="sdr.fspl.d (Python parameter) — The distance $d$ in meters between the transmitter and receiver."><span class="n"><span class="pre">d</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-f" title="sdr.fspl.f (Python parameter) — The frequency $f$ in Hz of the signal."><span class="n"><span class="pre">f</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">fspl</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-distance" title="sdr.fspl.distance (Python parameter) — The distance $d$ in meters between the transmitter and receiver."><span class="n"><span class="pre">distance</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-freq" title="sdr.fspl.freq (Python parameter) — The frequency $f$ in Hz of the signal."><span class="n"><span class="pre">freq</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float_</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Calculates the free-space path loss (FSPL) in dB.</p>
 <p><div class="math notranslate nohighlight">
 \[\text{FSPL} = 10 \log_{10} \left( \frac{4 \pi d f}{c} \right)^2\]</div>
@@ -8546,9 +8546,9 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-d"><span class="n sig-name">d</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-d" title="Permalink to this definition">¶</a></dt><dd><p>The distance <span class="math notranslate nohighlight">\(d\)</span> in meters between the transmitter and receiver.</p>
+<dt id="p-distance"><span class="n sig-name">distance</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-distance" title="Permalink to this definition">¶</a></dt><dd><p>The distance <span class="math notranslate nohighlight">\(d\)</span> in meters between the transmitter and receiver.</p>
 </dd>
-<dt id="p-f"><span class="n sig-name">f</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-f" title="Permalink to this definition">¶</a></dt><dd><p>The frequency <span class="math notranslate nohighlight">\(f\)</span> in Hz of the signal.</p>
+<dt id="p-freq"><span class="n sig-name">freq</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-freq" title="Permalink to this definition">¶</a></dt><dd><p>The frequency <span class="math notranslate nohighlight">\(f\)</span> in Hz of the signal.</p>
 </dd>
 </dl>
 </dd>
