@@ -14,7 +14,7 @@ def bsc(
     x: npt.ArrayLike,
     p: float,
     seed: int | None = None,
-) -> np.ndarray:
+) -> npt.NDArray[np.int_]:
     r"""
     Passes the binary input sequence $x$ through a binary symmetric channel (BSC)
     with transition probability $p$.
@@ -56,7 +56,7 @@ def bec(
     x: npt.ArrayLike,
     p: float,
     seed: int | None = None,
-) -> np.ndarray:
+) -> npt.NDArray[np.int_]:
     r"""
     Passes the binary input sequence $x$ through a binary erasure channel (BEC)
     with erasure probability $p$.
@@ -100,7 +100,7 @@ def dmc(
     X: npt.ArrayLike | None = None,
     Y: npt.ArrayLike | None = None,
     seed: int | None = None,
-) -> np.ndarray:
+) -> npt.NDArray[np.int_]:
     r"""
     Passes the input sequence $x$ through a discrete memoryless channel (DMC) with transition
     probability matrix $P$.

@@ -11,7 +11,7 @@ from ._helper import export
 
 
 @export
-def Q(x: npt.ArrayLike) -> np.ndarray:
+def Q(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
     r"""
     Computes the complementary cumulative distribution function $Q(x)$
     of the standard normal distribution $\mathcal{N}(0, 1)$.
@@ -40,7 +40,7 @@ def Q(x: npt.ArrayLike) -> np.ndarray:
 
 
 @export
-def Qinv(p: npt.ArrayLike) -> np.ndarray:
+def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
     r"""
     Computes the inverse complementary cumulative distribution function $Q^{-1}(p)$
     of the standard normal distribution $\mathcal{N}(0, 1)$.

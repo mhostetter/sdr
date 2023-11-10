@@ -12,12 +12,12 @@ from ._helper import export
 
 @export
 def mix(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     freq: float = 0,
     phase: float = 0,
     sample_rate: float = 1,
     complex: bool = True,
-) -> np.ndarray:
+) -> npt.NDArray:
     r"""
     Mixes the time-domain signal $x[n]$ with a complex exponential or real sinusoid.
 
@@ -65,8 +65,6 @@ def mix(
     Group:
         dsp-signal-manipulation
     """
-    x = np.asarray(x)
-
     if not isinstance(freq, (int, float)):
         raise TypeError(f"Argument 'freq' must be a number, not {type(freq)}.")
     if not isinstance(phase, (int, float)):
@@ -93,7 +91,7 @@ def mix(
 
 
 @export
-def to_complex_bb(x_r: npt.ArrayLike) -> np.ndarray:
+def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
     r"""
     Converts the real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a
     complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
@@ -155,8 +153,6 @@ def to_complex_bb(x_r: npt.ArrayLike) -> np.ndarray:
     Group:
         dsp-signal-manipulation
     """
-    x_r = np.asarray(x_r)
-
     if not x_r.ndim == 1:
         raise ValueError(f"Argument 'x_r' must be a 1D array, not {x_r.ndim}D.")
     if not np.isrealobj(x_r):
@@ -180,7 +176,7 @@ def to_complex_bb(x_r: npt.ArrayLike) -> np.ndarray:
 
 
 @export
-def to_real_pb(x_c: npt.ArrayLike) -> np.ndarray:
+def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float_]:
     r"""
     Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a
     real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
@@ -241,8 +237,6 @@ def to_real_pb(x_c: npt.ArrayLike) -> np.ndarray:
     Group:
         dsp-signal-manipulation
     """
-    x_c = np.asarray(x_c)
-
     if not x_c.ndim == 1:
         raise ValueError(f"Argument 'x_c' must be a 1D array, not {x_c.ndim}D.")
     if not np.iscomplexobj(x_c):
@@ -261,7 +255,7 @@ def to_real_pb(x_c: npt.ArrayLike) -> np.ndarray:
 
 
 @export
-def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
+def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
     r"""
     Upsamples the time-domain signal $x[n]$ by the factor $r$.
 
@@ -322,8 +316,6 @@ def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
     Group:
         dsp-signal-manipulation
     """
-    x = np.asarray(x)
-
     if not isinstance(rate, int):
         raise TypeError(f"Argument 'rate' must be an int, not {type(rate)}.")
     if not rate > 0:
@@ -336,7 +328,7 @@ def upsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
 
 
 @export
-def downsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
+def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
     r"""
     Downsamples the time-domain signal $x[n]$ by the factor $r$.
 
@@ -399,8 +391,6 @@ def downsample(x: npt.ArrayLike, rate: int) -> np.ndarray:
     Group:
         dsp-signal-manipulation
     """
-    x = np.asarray(x)
-
     if not isinstance(rate, int):
         raise TypeError(f"Argument 'rate' must be an int, not {type(rate)}.")
     if not rate > 0:

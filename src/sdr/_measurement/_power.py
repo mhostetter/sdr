@@ -12,7 +12,7 @@ from .._helper import export
 
 @export
 def peak_power(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     axis: int | tuple[int, ...] | None = None,
     db: bool = False,
 ) -> float:
@@ -34,7 +34,6 @@ def peak_power(
     Group:
         measurement-power
     """
-    x = np.asarray(x)
     P_peak = np.max(np.abs(x) ** 2, axis=axis)
     if db:
         P_peak = to_db(P_peak, type="power")
@@ -43,7 +42,7 @@ def peak_power(
 
 @export
 def average_power(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     axis: int | tuple[int, ...] | None = None,
     db: bool = False,
 ) -> float:
@@ -65,7 +64,6 @@ def average_power(
     Group:
         measurement-power
     """
-    x = np.asarray(x)
     P_avg = np.mean(np.abs(x) ** 2, axis=axis)
     if db:
         P_avg = to_db(P_avg, type="power")
@@ -74,7 +72,7 @@ def average_power(
 
 @export
 def papr(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     axis: int | tuple[int, ...] | None = None,
 ) -> float:
     r"""
@@ -99,5 +97,4 @@ def papr(
     Group:
         measurement-power
     """
-    x = np.asarray(x)
     return to_db(peak_power(x, axis=axis) / average_power(x, axis=axis))

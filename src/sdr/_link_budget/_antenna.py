@@ -12,7 +12,7 @@ from .._helper import export
 
 
 @export
-def wavelength(freq: float) -> float:
+def wavelength(freq: npt.ArrayLike) -> npt.NDArray[np.float_]:
     r"""
     Calculates the wavelength $\lambda$ of an electromagnetic wave with frequency $f$.
 
@@ -40,10 +40,10 @@ def wavelength(freq: float) -> float:
 
 @export
 def parabolic_antenna(
-    freq: float,
-    diameter: float,
-    efficiency: float = 0.55,
-) -> tuple[npt.ArrayLike, npt.ArrayLike]:
+    freq: npt.ArrayLike,
+    diameter: npt.ArrayLike,
+    efficiency: npt.ArrayLike = 0.55,
+) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.float_]]:
     r"""
     Calculates the gain $G$ and beamwidth $\theta$ of a parabolic reflector.
 
@@ -80,14 +80,16 @@ def parabolic_antenna(
         link-budget-antennas
     """
     freq = np.asarray(freq)
+    if not np.all(freq > 0):
+        raise ValueError("Argument 'freq' must be positive, not {freq}.")
 
     diameter = np.asarray(diameter)
     if not np.all(diameter > 0):
-        raise ValueError("Argument 'diameter' must be positive.")
+        raise ValueError("Argument 'diameter' must be positive, not {diameter}.")
 
     efficiency = np.asarray(efficiency)
     if not np.all((0 <= efficiency) & (efficiency <= 1)):
-        raise ValueError("Argument 'efficiency' must be between 0 and 1.")
+        raise ValueError("Argument 'efficiency' must be between 0 and 1, not {efficiency}.")
 
     lambda_ = wavelength(freq)  # Wavelength in meters
     G = (np.pi * diameter / lambda_) ** 2 * efficiency  # Gain in linear units

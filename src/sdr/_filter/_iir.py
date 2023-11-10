@@ -53,7 +53,7 @@ class IIR:
         self._a_taps = np.asarray(a)
         self._streaming = streaming
 
-        self._state: np.ndarray  # The filter state. Will be updated in reset().
+        self._state: npt.NDArray  # The filter state. Will be updated in reset().
         self.reset()
 
         # Compute the zeros and poles of the transfer function
@@ -86,7 +86,7 @@ class IIR:
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray:
         r"""
         Filters the input signal $x[n]$ with the IIR filter.
 
@@ -181,7 +181,7 @@ class IIR:
         return self._streaming
 
     @property
-    def state(self) -> np.ndarray:
+    def state(self) -> npt.NDArray:
         """
         The filter state.
 
@@ -197,7 +197,7 @@ class IIR:
     # Methods
     ##############################################################################
 
-    def impulse_response(self, N: int = 100) -> np.ndarray:
+    def impulse_response(self, N: int = 100) -> npt.NDArray:
         r"""
         Returns the impulse response $h[n]$ of the IIR filter. The impulse response $h[n]$ is the
         filter output when the input is an impulse $\delta[n]$.
@@ -224,7 +224,7 @@ class IIR:
 
         return h
 
-    def step_response(self, N: int = 100) -> np.ndarray:
+    def step_response(self, N: int = 100) -> npt.NDArray:
         """
         Returns the step response $s[n]$ of the IIR filter. The step response $s[n]$ is the
         filter output when the input is a unit step $u[n]$.
@@ -250,7 +250,7 @@ class IIR:
 
         return s
 
-    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[np.ndarray, np.ndarray]:
+    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
         Returns the frequency response $H(\omega)$ of the IIR filter.
 
@@ -268,7 +268,7 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)  # type: ignore
 
         w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
         w = np.fft.fftshift(w)
@@ -278,7 +278,7 @@ class IIR:
 
     def frequency_response_log(
         self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
-    ) -> tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
         Returns the frequency response $H(\omega)$ of the IIR filter on a logarithmic frequency axis.
 
@@ -298,7 +298,7 @@ class IIR:
             See the :ref:`iir-filters` example.
         """
         w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)
+        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)  # type: ignore
 
         return w, H
 
@@ -307,7 +307,7 @@ class IIR:
     ##############################################################################
 
     @property
-    def b_taps(self) -> np.ndarray:
+    def b_taps(self) -> npt.NDArray:
         """
         The feedforward taps $b_i$ for $i = 0,...,M$.
 
@@ -317,7 +317,7 @@ class IIR:
         return self._b_taps
 
     @property
-    def a_taps(self) -> np.ndarray:
+    def a_taps(self) -> npt.NDArray:
         """
         The feedback taps $a_j$ for $j = 0,...,N$.
 
@@ -337,7 +337,7 @@ class IIR:
         return self._a_taps.size - 1
 
     @property
-    def zeros(self) -> np.ndarray:
+    def zeros(self) -> npt.NDArray:
         """
         The zeros of the IIR filter.
 
@@ -347,7 +347,7 @@ class IIR:
         return self._zeros
 
     @property
-    def poles(self) -> np.ndarray:
+    def poles(self) -> npt.NDArray:
         """
         The poles of the IIR filter.
 

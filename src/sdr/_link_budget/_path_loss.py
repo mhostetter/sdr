@@ -11,15 +11,15 @@ from .._helper import export
 
 
 @export
-def fspl(d: npt.ArrayLike, f: npt.ArrayLike) -> np.ndarray:
+def fspl(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float_]:
     r"""
     Calculates the free-space path loss (FSPL) in dB.
 
     $$\text{FSPL} = 10 \log_{10} \left( \frac{4 \pi d f}{c} \right)^2$$
 
     Arguments:
-        d: The distance $d$ in meters between the transmitter and receiver.
-        f: The frequency $f$ in Hz of the signal.
+        distance: The distance $d$ in meters between the transmitter and receiver.
+        freq: The frequency $f$ in Hz of the signal.
 
     Returns:
         The free-space path loss (FSPL) in dB.
@@ -68,16 +68,21 @@ def fspl(d: npt.ArrayLike, f: npt.ArrayLike) -> np.ndarray:
     Group:
         link-budget-path-losses
     """
-    d = np.asarray(d)
-    f = np.asarray(f)
+    distance = np.asarray(distance)
+    if not np.all(distance >= 0):
+        raise ValueError(f"Argument 'distance' must be non-negative, not {distance}.")
+
+    freq = np.asarray(freq)
+    if not np.all(freq > 0):
+        raise ValueError(f"Argument 'freq' must be positive, not {freq}.")
 
     # The free-space path loss equation is only valid in the far field. For very small distances, the FSPL
     # equation could have a negative result, implying a path gain. This is not possible. So for distances less
     # than lambda / (4 * pi), the path loss is set to 0 dB.
-    lambda_ = scipy.constants.speed_of_light / f
-    d = np.maximum(d, lambda_ / (4 * np.pi))
+    lambda_ = scipy.constants.speed_of_light / freq
+    distance = np.maximum(distance, lambda_ / (4 * np.pi))
 
     # The free-space path loss equation
-    loss = 20 * np.log10(4 * np.pi * d * f / scipy.constants.speed_of_light)
+    loss = 20 * np.log10(4 * np.pi * distance * freq / scipy.constants.speed_of_light)
 
-    return loss
+    return loss  # type: ignore

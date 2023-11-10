@@ -10,7 +10,7 @@ from .._helper import export
 
 
 @export
-def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
+def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
     """
     Differentially encodes the input data $x[k]$.
 
@@ -65,7 +65,7 @@ def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
 
 
 @export
-def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> np.ndarray:
+def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
     """
     Differentially decodes the input data $y[k]$.
 
