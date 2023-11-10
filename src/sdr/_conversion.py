@@ -172,6 +172,37 @@ def percent(x: npt.ArrayLike) -> np.ndarray:
     return 100 * x
 
 
+@export
+def ppm(x: npt.ArrayLike) -> np.ndarray:
+    r"""
+    Converts from a ratio to parts per million (ppm).
+
+    Arguments:
+        x: The input ratio.
+
+    Returns:
+        The parts per million (ppm).
+
+    Examples:
+        Convert 0.005 to 5000 ppm.
+
+        .. ipython:: python
+
+            sdr.ppm(0.005)
+
+        Convert 0.000025 to 25 ppm.
+
+        .. ipython:: python
+
+            sdr.ppm(0.000025)
+
+    Group:
+        conversions-ratios
+    """
+    x = np.asarray(x)
+    return 1e6 * x
+
+
 ##############################################################################
 # From Eb/N0
 ##############################################################################
