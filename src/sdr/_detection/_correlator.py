@@ -87,7 +87,7 @@ class ReplicaCorrelator:
         enr: float,
         p_fa: npt.ArrayLike | None = None,
         complex: bool = True,
-    ) -> tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.float_]]:
         r"""
         Computes the receiver operating characteristic (ROC) curve.
 
@@ -130,7 +130,7 @@ class ReplicaCorrelator:
         enr: npt.ArrayLike,
         p_fa: npt.ArrayLike,
         complex: bool = True,
-    ) -> np.ndarray:
+    ) -> npt.NDArray[np.float_]:
         r"""
         Computes the probability of detection $P_D$.
 
@@ -189,7 +189,7 @@ class ReplicaCorrelator:
         energy: npt.ArrayLike,
         sigma2: npt.ArrayLike,
         complex: bool = True,
-    ) -> np.ndarray:
+    ) -> npt.NDArray[np.float_]:
         r"""
         Computes the probability of false alarm $P_{FA}$.
 
@@ -232,7 +232,7 @@ class ReplicaCorrelator:
         energy: npt.ArrayLike,
         sigma2: npt.ArrayLike,
         complex: bool = True,
-    ) -> np.ndarray:
+    ) -> npt.NDArray[np.float_]:
         r"""
         Computes the threshold $\gamma'$.
 
@@ -270,7 +270,7 @@ class ReplicaCorrelator:
 
         return gamma_prime
 
-    # def test_statistic(self, x: npt.ArrayLike) -> np.ndarray:
+    # def test_statistic(self, x: npt.ArrayLike) -> npt.NDArray[np.float_]:
     #     """
     #     Computes the test statistic $T(x)$.
 
@@ -287,7 +287,7 @@ class ReplicaCorrelator:
 
     #     return self._fir(np.abs(x) ** 2, mode="same")
 
-    # def detect(self, x: npt.ArrayLike, sigma2: float) -> np.ndarray:
+    # def detect(self, x: npt.ArrayLike, sigma2: float) -> npt.NDArray[np.float_]:
     #     r"""
     #     Detects the presence of a signal.
 

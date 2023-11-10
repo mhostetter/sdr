@@ -14,11 +14,11 @@ from .._measurement import average_power
 
 @export
 def awgn(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     snr: float | None = None,
     noise: float | None = None,
     seed: int | None = None,
-) -> np.ndarray:
+) -> npt.NDArray:
     r"""
     Adds additive white Gaussian noise (AWGN) to the time-domain signal $x[n]$.
 
@@ -85,7 +85,6 @@ def awgn(
     Group:
         simulation-impairments
     """
-    x = np.asarray(x)
     if snr is not None:
         snr_linear = linear(snr)
         signal_power = average_power(x)
@@ -105,7 +104,7 @@ def awgn(
 
 
 @export
-def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.ndarray:
+def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0) -> npt.NDArray:
     r"""
     Applies IQ imbalance to the complex time-domain signal $x[n]$.
 
@@ -175,7 +174,6 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
     Group:
         simulation-impairments
     """
-    x = np.asarray(x)
     if not np.iscomplexobj(x):
         raise ValueError("Argument 'x' must be complex.")
 
@@ -191,7 +189,7 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0) -> np.nda
 
 
 @export
-def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
+def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
     r"""
     Applies a sample rate offset to the time-domain signal $x[n]$.
 
@@ -242,7 +240,6 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
     Group:
         simulation-impairments
     """
-    x = np.asarray(x)
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
 
@@ -260,12 +257,12 @@ def sample_rate_offset(x: npt.ArrayLike, ppm: float) -> np.ndarray:
 
 @export
 def frequency_offset(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     freq: npt.ArrayLike,
     freq_rate: npt.ArrayLike = 0,
     phase: npt.ArrayLike = 0,
     sample_rate: float = 1,
-) -> np.ndarray:
+) -> npt.NDArray:
     r"""
     Applies a frequency and phase offset to the time-domain signal $x[n]$.
 
@@ -320,7 +317,6 @@ def frequency_offset(
     Group:
         simulation-impairments
     """
-    x = np.asarray(x)
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
 

@@ -50,14 +50,14 @@ class FIR:
         self._taps = np.asarray(h)
         self._streaming = streaming
 
-        self._state: np.ndarray  # The filter state. Will be updated in reset().
+        self._state: npt.NDArray  # The filter state. Will be updated in reset().
         self.reset()
 
     ##############################################################################
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> npt.NDArray:
         r"""
         Filters the input signal $x[n]$ with the FIR filter.
 
@@ -151,7 +151,7 @@ class FIR:
         """
         self._state = np.zeros(self.taps.size - 1, dtype=self.taps.dtype)
 
-    def flush(self) -> np.ndarray:
+    def flush(self) -> npt.NDArray:
         """
         Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
 
@@ -184,7 +184,7 @@ class FIR:
         return self._streaming
 
     @property
-    def state(self) -> np.ndarray:
+    def state(self) -> npt.NDArray:
         """
         The filter state consisting of the previous $N$ inputs.
 
@@ -200,7 +200,7 @@ class FIR:
     # Methods
     ##############################################################################
 
-    def impulse_response(self, N: int | None = None) -> np.ndarray:
+    def impulse_response(self, N: int | None = None) -> npt.NDArray:
         r"""
         Returns the impulse response $h[n]$ of the FIR filter. The impulse response $h[n]$ is the
         filter output when the input is an impulse $\delta[n]$.
@@ -231,7 +231,7 @@ class FIR:
 
         return h
 
-    def step_response(self, N: int | None = None) -> np.ndarray:
+    def step_response(self, N: int | None = None) -> npt.NDArray:
         """
         Returns the step response $s[n]$ of the FIR filter. The step response $s[n]$ is the
         filter output when the input is a unit step $u[n]$.
@@ -261,7 +261,7 @@ class FIR:
 
         return s
 
-    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[np.ndarray, np.ndarray]:
+    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
         Returns the frequency response $H(\omega)$ of the FIR filter.
 
@@ -289,7 +289,7 @@ class FIR:
 
     def frequency_response_log(
         self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
-    ) -> tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
         Returns the frequency response $H(\omega)$ of the FIR filter on a logarithmic frequency axis.
 
@@ -318,7 +318,7 @@ class FIR:
     ##############################################################################
 
     @property
-    def taps(self) -> np.ndarray:
+    def taps(self) -> npt.NDArray:
         """
         The feedforward taps $h_i$ for $i = 0,...,N$.
 

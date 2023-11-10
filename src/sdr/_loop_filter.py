@@ -3,7 +3,6 @@ A module for discrete-time loop filters.
 """
 from __future__ import annotations
 
-import numpy as np
 import numpy.typing as npt
 
 from ._filter import IIR
@@ -100,7 +99,7 @@ class LoopFilter:
         """
         self.iir.reset()
 
-    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.NDArray) -> npt.NDArray:
         """
         Filters the input signal $x[n]$.
 

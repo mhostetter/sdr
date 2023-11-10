@@ -16,7 +16,7 @@ from ._time_domain import raster
 
 @export
 def constellation(
-    x_hat: npt.ArrayLike,
+    x_hat: npt.NDArray[np.complex_],
     heatmap: bool = False,
     limits: tuple[float, float] | None = None,
     **kwargs,
@@ -66,8 +66,6 @@ def constellation(
     Group:
         plot-modulation
     """
-    x_hat = np.asarray(x_hat)
-
     # Set the axis limits to 10% larger than the maximum value
     if limits is None:
         lim = np.max(np.abs(x_hat)) * 1.1
@@ -103,7 +101,7 @@ def constellation(
 
 @export
 def symbol_map(
-    modulation: LinearModulation | npt.ArrayLike,
+    modulation: LinearModulation | npt.NDArray[np.complex_],
     annotate: bool | Literal["bin"] = True,
     limits: tuple[float, float] | None = None,
     **kwargs,
@@ -203,7 +201,7 @@ def symbol_map(
 
 @export
 def eye(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     sps: int,
     span: int = 2,
     sample_rate: float | None = None,
@@ -277,7 +275,7 @@ def eye(
 
 @export
 def phase_tree(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     sps: int,
     span: int = 4,
     sample_rate: float | None = None,
@@ -344,8 +342,8 @@ def phase_tree(
 
 @export
 def ber(
-    ebn0: npt.ArrayLike,
-    ber: npt.ArrayLike,
+    ebn0: npt.NDArray[np.float_],
+    ber: npt.NDArray[np.float_],
     **kwargs,
 ):
     r"""
@@ -396,8 +394,8 @@ def ber(
 
 @export
 def ser(
-    esn0: npt.ArrayLike,
-    ser: npt.ArrayLike,
+    esn0: npt.NDArray[np.float_],
+    ser: npt.NDArray[np.float_],
     **kwargs,
 ):
     r"""

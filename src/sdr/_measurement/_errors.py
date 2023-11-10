@@ -133,7 +133,7 @@ class ErrorRate:
         """
         return self._counts.get(snr, 0)
 
-    def error_rate(self, snr: float | None) -> float:
+    def error_rate(self, snr: float) -> float:
         """
         Returns the error rate at the specified signal-to-noise ratio (SNR).
 
@@ -149,7 +149,7 @@ class ErrorRate:
         """
         return self.errors(snr) / self.counts(snr)
 
-    def error_rates(self) -> tuple[np.ndarray, np.ndarray]:
+    def error_rates(self) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.float_]]:
         r"""
         Returns all signal-to-noise ratios (SNRs) in ascending order and their corresponding error rates.
 

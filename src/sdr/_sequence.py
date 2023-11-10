@@ -4,15 +4,27 @@ A module containing various bipolar and binary sequences.
 from __future__ import annotations
 
 import math
+from typing import Any, overload
 
 import numpy as np
+import numpy.typing as npt
 from typing_extensions import Literal
 
 from ._helper import export
 
 
+@overload
+def barker(length: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+    ...
+
+
+@overload
+def barker(length: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+    ...
+
+
 @export
-def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.ndarray:
+def barker(length: Any, output: Any = "bipolar") -> Any:
     r"""
     Returns the Barker code/sequence of length $N$.
 
@@ -85,7 +97,7 @@ def barker(length: int, output: Literal["binary", "bipolar"] = "bipolar") -> np.
 
 
 @export
-def zadoff_chu(length: int, root: int, shift: int = 0) -> np.ndarray:
+def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex_]:
     r"""
     Returns the root-$u$ Zadoff-Chu sequence of length $N$.
 

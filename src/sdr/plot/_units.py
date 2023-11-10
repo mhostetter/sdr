@@ -7,11 +7,10 @@ import numpy as np
 import numpy.typing as npt
 
 
-def time_units(time: npt.ArrayLike) -> tuple[str, float]:
+def time_units(time: npt.NDArray[np.float_]) -> tuple[str, float]:
     """
     Determines the appropriate time units to use for a given time array.
     """
-    time = np.asarray(time)
     max_time = np.nanmax(np.abs(time))
 
     if max_time > 1:
@@ -36,11 +35,10 @@ def time_units(time: npt.ArrayLike) -> tuple[str, float]:
     return units, scalar
 
 
-def freq_units(freq: npt.ArrayLike) -> tuple[str, float]:
+def freq_units(freq: npt.NDArray[np.float_]) -> tuple[str, float]:
     """
     Determines the appropriate frequency units to use for a given frequency array.
     """
-    freq = np.asarray(freq)
     max_freq = np.nanmax(np.abs(freq))
 
     if max_freq > 10e12:

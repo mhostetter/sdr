@@ -4,6 +4,7 @@ A module containing various discrete-time pulse shapes.
 from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._helper import export
@@ -14,7 +15,7 @@ def rectangular(
     sps: int,
     span: int = 1,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> np.ndarray:
+) -> npt.NDArray[np.float_]:
     r"""
     Returns a rectangular pulse shape.
 
@@ -75,7 +76,7 @@ def half_sine(
     sps: int,
     span: int = 1,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> np.ndarray:
+) -> npt.NDArray[np.float_]:
     r"""
     Returns a half-sine pulse shape.
 
@@ -137,7 +138,7 @@ def gaussian(
     span: int,
     sps: int,
     norm: Literal["power", "energy", "passband"] = "passband",
-) -> np.ndarray:
+) -> npt.NDArray[np.float_]:
     r"""
     Returns a Gaussian pulse shape.
 
@@ -232,7 +233,7 @@ def raised_cosine(
     span: int,
     sps: int,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> np.ndarray:
+) -> npt.NDArray[np.float_]:
     r"""
     Returns a raised cosine (RC) pulse shape.
 
@@ -345,7 +346,7 @@ def root_raised_cosine(
     span: int,
     sps: int,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> np.ndarray:
+) -> npt.NDArray[np.float_]:
     r"""
     Returns a square root raised cosine (SRRC) pulse shape.
 
@@ -454,7 +455,7 @@ def root_raised_cosine(
     return h
 
 
-def _normalize(h: np.ndarray, norm: Literal["power", "energy", "passband"]) -> np.ndarray:
+def _normalize(h: npt.NDArray[np.float_], norm: Literal["power", "energy", "passband"]) -> npt.NDArray[np.float_]:
     if norm == "power":
         h /= np.sqrt(np.max(np.abs(h) ** 2))
     elif norm == "energy":

@@ -20,7 +20,7 @@ def multirate_taps(
     Q: int = 1,
     half_length: int = 12,
     A_stop: float = 80,
-) -> np.ndarray:
+) -> npt.NDArray:
     r"""
     Computes the multirate FIR filter that achieves rational resampling by $P/Q$.
 
@@ -105,7 +105,7 @@ def multirate_taps(
 
 
 @export
-def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> np.ndarray:
+def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> npt.NDArray:
     """
     Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves
     rational resampling by $P/Q$.
@@ -344,7 +344,7 @@ class Interpolator(FIR):
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
         r"""
         Interpolates and filters the input signal $x[n]$ with the polyphase FIR filter.
 
@@ -455,7 +455,7 @@ class Interpolator(FIR):
                 fir
         """
         if self.method == "custom":
-            h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
+            h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
         else:
             h_str = repr(self.method)
         return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
@@ -505,7 +505,7 @@ class Interpolator(FIR):
         return self._method
 
     @property
-    def taps(self) -> np.ndarray:
+    def taps(self) -> npt.NDArray:
         """
         The prototype feedforward taps $h_i$.
 
@@ -528,7 +528,7 @@ class Interpolator(FIR):
         return self._taps
 
     @property
-    def polyphase_taps(self) -> np.ndarray:
+    def polyphase_taps(self) -> npt.NDArray:
         """
         The polyphase feedforward taps $h_{i, j}$.
 
@@ -683,7 +683,7 @@ class Decimator(FIR):
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> np.ndarray:
+    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
         """
         Filters and decimates the input signal $x[n]$ with the polyphase FIR filter.
 
@@ -758,7 +758,7 @@ class Decimator(FIR):
                 fir
         """
         if self.method == "custom":
-            h_str = np.array2string(self.taps, max_line_width=1e6, separator=", ", suppress_small=True)
+            h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
         else:
             h_str = repr(self.method)
         return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
@@ -808,7 +808,7 @@ class Decimator(FIR):
         return self._method
 
     @property
-    def taps(self) -> np.ndarray:
+    def taps(self) -> npt.NDArray:
         """
         The prototype feedforward taps $h_i$.
 
@@ -831,7 +831,7 @@ class Decimator(FIR):
         return self._taps
 
     @property
-    def polyphase_taps(self) -> np.ndarray:
+    def polyphase_taps(self) -> npt.NDArray:
         """
         The polyphase feedforward taps $h_{i, j}$.
 

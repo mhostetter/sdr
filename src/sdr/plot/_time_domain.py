@@ -16,7 +16,7 @@ from ._units import time_units
 
 @export
 def time_domain(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     sample_rate: float | None = None,
     centered: bool = False,
     offset: float = 0,
@@ -78,7 +78,6 @@ def time_domain(
     Group:
         plot-time-domain
     """
-    x = np.asarray(x)
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
 
@@ -135,7 +134,7 @@ def time_domain(
 
 @export
 def raster(
-    x: npt.ArrayLike,
+    x: npt.NDArray,
     length: int | None = None,
     stride: int | None = None,
     sample_rate: float | None = None,
@@ -167,7 +166,6 @@ def raster(
     Group:
         plot-time-domain
     """
-    x = np.asarray(x)
     if not x.ndim in [1, 2]:
         raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
 
