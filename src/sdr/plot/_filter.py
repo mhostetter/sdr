@@ -17,7 +17,7 @@ from ._units import freq_units, time_units
 
 def _convert_to_taps(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike]
-) -> tuple[np.ndarray, np.ndarray]:
+) -> tuple[npt.NDArray, npt.NDArray]:
     if isinstance(filter, FIR):
         b = filter.taps
         a = np.array([1])

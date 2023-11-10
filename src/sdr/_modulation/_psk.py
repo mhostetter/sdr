@@ -187,7 +187,7 @@ class PSK(LinearModulation):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def ber(self, ebn0: npt.ArrayLike | None = None, diff_encoded: bool = False) -> np.ndarray:
+    def ber(self, ebn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float_]:
         r"""
         Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
 
@@ -276,7 +276,7 @@ class PSK(LinearModulation):
 
         return Pbe
 
-    def ser(self, esn0: npt.ArrayLike | None = None, diff_encoded: bool = False) -> np.ndarray:
+    def ser(self, esn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float_]:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 
@@ -434,7 +434,7 @@ class PSK(LinearModulation):
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
         """,
     )
-    def symbol_map(self) -> np.ndarray:
+    def symbol_map(self) -> npt.NDArray[np.complex_]:
         return super().symbol_map
 
 
@@ -579,7 +579,7 @@ class PiMPSK(PSK):
             pulse_shape=pulse_shape,
         )
 
-    def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
         s = super()._map_symbols(s)
 
         # Rotate odd symbols by pi/M
@@ -588,9 +588,7 @@ class PiMPSK(PSK):
 
         return s_rotated
 
-    def _decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
-        a_hat = np.asarray(a_hat)
-
+    def _decide_symbols(self, a_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
         # Rotate odd symbols by -pi/M
         a_hat_derotated = a_hat.copy()
         a_hat_derotated[1::2] *= np.exp(-1j * np.pi / self.order)
@@ -766,7 +764,7 @@ class OQPSK(PSK):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
         a = super()._map_symbols(s)
 
         a_I = np.repeat(a.real, 2)
@@ -780,8 +778,7 @@ class OQPSK(PSK):
 
         return a
 
-    def _tx_pulse_shape(self, a: npt.ArrayLike) -> np.ndarray:
-        a = np.asarray(a)  # Complex symbols
+    def _tx_pulse_shape(self, a: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
         a_I, a_Q = a.real, a.imag
 
         # Shift Q symbols by -1/2 symbol and grab 1 sample per symbol
@@ -799,7 +796,7 @@ class OQPSK(PSK):
 
         return x
 
-    def _decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+    def _decide_symbols(self, a_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
         a_hat = np.asarray(a_hat)
         a_hat_I, a_hat_Q = a_hat.real, a_hat.imag
 
@@ -811,8 +808,7 @@ class OQPSK(PSK):
 
         return super()._decide_symbols(a_hat)
 
-    def _rx_matched_filter(self, x_hat: npt.ArrayLike) -> np.ndarray:
-        x_hat = np.asarray(x_hat)
+    def _rx_matched_filter(self, x_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
         x_hat_I, x_hat_Q = x_hat.real, x_hat.imag
 
         # Shift Q samples by -1/2 symbol

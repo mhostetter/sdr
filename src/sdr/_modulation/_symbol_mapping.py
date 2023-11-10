@@ -4,12 +4,13 @@ A module containing functions for various symbol mapping schemes.
 from __future__ import annotations
 
 import numpy as np
+import numpy.typing as npt
 
 from .._helper import export
 
 
 @export
-def binary_code(n: int) -> np.ndarray:
+def binary_code(n: int) -> npt.NDArray[np.int_]:
     """
     Generates a binary code of length $2^n$.
 
@@ -37,7 +38,7 @@ def binary_code(n: int) -> np.ndarray:
 
 
 @export
-def gray_code(n: int) -> np.ndarray:
+def gray_code(n: int) -> npt.NDArray[np.int_]:
     """
     Generates a Gray code of length $2^n$.
 

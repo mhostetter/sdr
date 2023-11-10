@@ -37,7 +37,7 @@ class FarrowResampler:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         self._streaming = streaming
-        self._x_prev: np.ndarray  # FIR filter state. Will be updated in reset().
+        self._x_prev: npt.NDArray  # FIR filter state. Will be updated in reset().
         self._mu_next: float  # The next fractional sample delay value
 
         # Construct the four FIR filter taps
@@ -75,7 +75,7 @@ class FarrowResampler:
         # Initial fractional sample delay accounts for filter delay
         self._mu_next = self._taps.shape[1] // 2
 
-    def __call__(self, x: npt.ArrayLike, rate: float) -> np.ndarray:
+    def __call__(self, x: npt.NDArray, rate: float) -> npt.NDArray:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
@@ -140,7 +140,7 @@ class FarrowResampler:
         return y
 
     @property
-    def taps(self) -> np.ndarray:
+    def taps(self) -> npt.NDArray:
         """
         The Farrow filter taps.
 

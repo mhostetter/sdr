@@ -120,7 +120,7 @@ class LinearModulation:
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
+    def map_symbols(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
         r"""
         Converts the decimal symbols $s[k]$ to complex symbols $a[k]$.
 
@@ -130,14 +130,14 @@ class LinearModulation:
         Returns:
             The complex symbols $a[k]$.
         """
+        s = np.asarray(s)  # Decimal symbols
         return self._map_symbols(s)
 
-    def _map_symbols(self, s: npt.ArrayLike) -> np.ndarray:
-        s = np.asarray(s)  # Decimal symbols
+    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
         a = self.symbol_map[s]  # Complex symbols
         return a
 
-    def decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+    def decide_symbols(self, a_hat: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
         Converts the received complex symbols $\hat{a}[k]$ into decimal symbol decisions $\hat{s}[k]$
         using maximum-likelihood estimation (MLE).
@@ -148,14 +148,15 @@ class LinearModulation:
         Returns:
             The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
         """
+        a_hat = np.asarray(a_hat)  # Complex symbols
         return self._decide_symbols(a_hat)
 
-    def _decide_symbols(self, a_hat: npt.ArrayLike) -> np.ndarray:
+    def _decide_symbols(self, a_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
         error_vectors = np.subtract.outer(a_hat, self.symbol_map)
         s_hat = np.argmin(np.abs(error_vectors), axis=-1)
         return s_hat
 
-    def modulate(self, s: npt.ArrayLike) -> np.ndarray:
+    def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
         r"""
         Modulates the decimal symbols $s[k]$ into pulse-shaped complex samples $x[n]$.
 
@@ -166,19 +167,19 @@ class LinearModulation:
             The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol
             and length `sps * s.size + pulse_shape.size - 1`.
         """
+        s = np.asarray(s)  # Decimal symbols
         return self._modulate(s)
 
-    def _modulate(self, s: npt.ArrayLike) -> np.ndarray:
+    def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
         a = self._map_symbols(s)  # Complex symbols
         x = self._tx_pulse_shape(a)  # Complex samples
         return x
 
-    def _tx_pulse_shape(self, a: npt.ArrayLike) -> np.ndarray:
-        a = np.asarray(a)  # Complex symbols
+    def _tx_pulse_shape(self, a: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
         x = self._tx_filter(a, mode="full")  # Complex samples
         return x
 
-    def demodulate(self, x_hat: npt.ArrayLike) -> tuple[np.ndarray, np.ndarray]:
+    def demodulate(self, x_hat: npt.ArrayLike) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
         r"""
         Demodulates the pulse-shaped complex samples $\hat{x}[n]$ into decimal symbol decisions $\hat{s}[k]$
         using matched filtering and maximum-likelihood estimation.
@@ -191,17 +192,15 @@ class LinearModulation:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
             - The matched filter outputs $\hat{a}[k]$.
         """
+        x_hat = np.asarray(x_hat)  # Complex samples
         return self._demodulate(x_hat)
 
-    def _demodulate(self, x_hat: npt.ArrayLike) -> tuple[np.ndarray, np.ndarray]:
-        x_hat = np.asarray(x_hat)  # Complex samples
+    def _demodulate(self, x_hat: npt.NDArray[np.complex_]) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
         a_hat = self._rx_matched_filter(x_hat)  # Complex symbols
         s_hat = self._decide_symbols(a_hat)  # Decimal symbols
         return s_hat, a_hat
 
-    def _rx_matched_filter(self, x_hat: npt.ArrayLike) -> np.ndarray:
-        x_hat = np.asarray(x_hat)  # Complex samples
-
+    def _rx_matched_filter(self, x_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
         if self.pulse_shape.size % self.sps == 0:
             x_hat = np.insert(x_hat, 0, 0)
 
@@ -221,7 +220,7 @@ class LinearModulation:
         return a_hat
 
     @abc.abstractmethod
-    def ber(self, ebn0: npt.ArrayLike | None = None) -> np.ndarray:
+    def ber(self, ebn0: npt.ArrayLike) -> npt.NDArray[np.float_]:
         r"""
         Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
 
@@ -237,7 +236,7 @@ class LinearModulation:
         raise NotImplementedError("Bit error rate calculation for arbitrary linear modulations is not supported.")
 
     @abc.abstractmethod
-    def ser(self, esn0: npt.ArrayLike) -> np.ndarray:
+    def ser(self, esn0: npt.ArrayLike) -> npt.NDArray[np.float_]:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 
@@ -274,7 +273,7 @@ class LinearModulation:
         return self._phase_offset
 
     @property
-    def symbol_map(self) -> np.ndarray:
+    def symbol_map(self) -> npt.NDArray[np.complex_]:
         r"""
         The symbol map $\{0, \dots, M-1\} \mapsto \mathbb{C}$. This maps decimal symbols from $0$ to $M-1$
         to complex symbols.
@@ -289,7 +288,7 @@ class LinearModulation:
         return self._sps
 
     @property
-    def pulse_shape(self) -> np.ndarray:
+    def pulse_shape(self) -> npt.NDArray[np.float_]:
         r"""
         The pulse shape $h[n]$ of the modulated signal.
         """

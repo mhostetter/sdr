@@ -10,7 +10,7 @@ from ._helper import export
 
 
 @export
-def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np.ndarray:
+def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> npt.NDArray[np.int_]:
     """
     Packs a binary array into an array with multiple bits per element.
 
@@ -66,7 +66,7 @@ def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np.n
 
 
 @export
-def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np.ndarray:
+def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> npt.NDArray[np.int_]:
     """
     Unpacks an array with multiple bits per element into a binary array.
 

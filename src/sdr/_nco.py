@@ -72,7 +72,7 @@ class NCO:
         """
         self._y_prev = 0.0
 
-    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.NDArray) -> npt.NDArray:
         """
         Steps the NCO with the variable-increment signal $x[n]$.
 
@@ -102,7 +102,7 @@ class NCO:
 
         return y
 
-    def step(self, N: int) -> np.ndarray:
+    def step(self, N: int) -> npt.NDArray:
         """
         Steps the NCO forward by $N$ samples.
 
@@ -222,7 +222,7 @@ class DDS:
         """
         self.nco.reset()
 
-    def __call__(self, x: npt.ArrayLike) -> np.ndarray:
+    def __call__(self, x: npt.NDArray) -> npt.NDArray:
         """
         Steps the DDS with the variable phase increment signal $x[n]$.
 
@@ -239,7 +239,7 @@ class DDS:
         y = np.exp(1j * phase)
         return y
 
-    def step(self, N: int) -> np.ndarray:
+    def step(self, N: int) -> npt.NDArray:
         """
         Steps the DDS forward by $N$ samples.
 
