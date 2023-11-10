@@ -14,7 +14,7 @@ from .._helper import export
 @export
 def wavelength(freq: float) -> float:
     r"""
-    Calculates the wavelength $\lambda$ of a electromagnetic wave with frequency $f$.
+    Calculates the wavelength $\lambda$ of an electromagnetic wave with frequency $f$.
 
     $$\lambda = \frac{c}{f}$$
 
