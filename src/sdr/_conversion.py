@@ -137,6 +137,42 @@ def linear(
 
 
 ##############################################################################
+# Ratios
+##############################################################################
+
+
+@export
+def percent(x: npt.ArrayLike) -> np.ndarray:
+    r"""
+    Converts from a ratio to a percentage.
+
+    Arguments:
+        x: The input ratio.
+
+    Returns:
+        The percentage.
+
+    Examples:
+        Convert 0.5 to 50%.
+
+        .. ipython:: python
+
+            sdr.percent(0.5)
+
+        Convert 0.25 to 25%.
+
+        .. ipython:: python
+
+            sdr.percent(0.25)
+
+    Group:
+        conversions-ratios
+    """
+    x = np.asarray(x)
+    return 100 * x
+
+
+##############################################################################
 # From Eb/N0
 ##############################################################################
 

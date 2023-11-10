@@ -6,6 +6,11 @@ Decibels
 
 .. python-apigen-group:: conversions-decibels
 
+Ratios
+------
+
+.. python-apigen-group:: conversions-ratios
+
 From $E_b/N_0$
 --------------
 
