@@ -46,8 +46,7 @@ View all available classes and functions in the `API Reference <https://mhostett
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, rectangular pulse shape, half-sine pulse shape,
   raised cosine pulse shape, root raised cosine pulse shape, Gaussian pulse shape, binary and Gray symbol mapping,
   differential encoding.
-- **Synchronization**: Numerically-controlled oscillators (NCO), direct digital synthesizers (DDS), loop filters,
-  closed-loop PLL analysis.
+- **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop PLL analysis.
 - **Measurement**: Energy, power, voltage, bit/symbol error rate, error vector magnitude (EVM).
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
 - **Simulation**: Binary symmetric channel (BSC), binary erasure channel (BEC), discrete memoryless channel (DMC),
