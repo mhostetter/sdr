@@ -5336,12 +5336,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.NCO.__call__ (Python method) — Steps the NCO with the variable-increment signal $x[n]$." class="md-ellipsis">__<wbr>call__<wbr></span>
+          <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.NCO.__call__ (Python method) — Steps the NCO with variable frequency and/or phase signals." class="md-ellipsis">__<wbr>call__<wbr></span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.NCO.__call__ (Python method) — Steps the NCO with the variable-increment signal $x[n]$." class="md-ellipsis">__<wbr>call__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.NCO.__call__ (Python method) — Steps the NCO with variable frequency and/or phase signals." class="md-ellipsis">__<wbr>call__<wbr></span>
       </a>
       
         
@@ -5367,8 +5367,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-x" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.NCO.__call__.x (Python parameter) — The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the NCO." class="md-ellipsis">x</span>
+  <a href="#p-freq" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.NCO.__call__.freq (Python parameter) — The variable frequency signal $f[n]$ in radians/sample. This input signal varies the per-sample phase increment of the NCO. If None, the signal is all zeros." class="md-ellipsis">freq</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-phase" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.NCO.__call__.phase (Python parameter) — The variable phase signal $p[n]$ in radians. This input signal varies the per-sample phase offset of the NCO. If None, the signal is all zeros." class="md-ellipsis">phase</span>
   </a>
   
 </li>
@@ -5530,7 +5537,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.NCO.increment/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.increment (Python property) — The constant accumulation $omega$ of the NCO in units/sample." class="md-ellipsis">increment</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.increment (Python property) — The constant phase accumulation $omega$ of the NCO in radians/sample." class="md-ellipsis">increment</span>
       </a>
     </li>
   
@@ -5545,7 +5552,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.NCO.offset/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.offset (Python property) — The absolute offset $theta$ of the NCO in units." class="md-ellipsis">offset</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.NCO.offset (Python property) — The absolute phase offset $theta$ of the NCO in radians." class="md-ellipsis">offset</span>
       </a>
     </li>
   
@@ -5583,7 +5590,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)." class="md-ellipsis">DDS</span></a>
+          <a href="../sdr.ClosedLoopPLL/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span></a>
           
             <label for="__nav_3_5_3">
               <span class="md-nav__icon md-icon"></span>
@@ -5591,10 +5598,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="DDS" data-md-level="3">
+      <nav class="md-nav" aria-label="ClosedLoopPLL" data-md-level="3">
         <label class="md-nav__title" for="__nav_3_5_3">
           <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.DDS (Python class) — Implements a direct digital synthesizer (DDS)." class="md-ellipsis">DDS</span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -5613,7 +5620,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#constructors"><span class="md-ellipsis">Constructors</span></a>
+          <a href="../sdr.ClosedLoopPLL/#constructors"><span class="md-ellipsis">Constructors</span></a>
           
             <label for="__nav_3_5_3_1">
               <span class="md-nav__icon md-icon"></span>
@@ -5623,271 +5630,6 @@ You're not viewing the latest version.
       
       <nav class="md-nav" aria-label="Constructors" data-md-level="4">
         <label class="md-nav__title" for="__nav_3_5_3_1">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Constructors</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.__init__ (Python method) — Creates a direct digital synthesizer (DDS)." class="md-ellipsis">__<wbr>init__<wbr></span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_3_2" type="checkbox" id="__nav_3_5_3_2" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#special-methods"><span class="md-ellipsis">Special methods</span></a>
-          
-            <label for="__nav_3_5_3_2">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Special methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_5_3_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Special methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.__call__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.__call__ (Python method) — Steps the DDS with the variable phase increment signal $x[n]$." class="md-ellipsis">__<wbr>call__<wbr></span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_3_3" type="checkbox" id="__nav_3_5_3_3" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#methods"><span class="md-ellipsis">Methods</span></a>
-          
-            <label for="__nav_3_5_3_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_5_3_3">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.reset (Python method) — Resets the DDS." class="md-ellipsis">reset</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.step/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.DDS.step (Python method) — Steps the DDS forward by $N$ samples." class="md-ellipsis">step</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_3_4" type="checkbox" id="__nav_3_5_3_4" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.DDS/#properties"><span class="md-ellipsis">Properties</span></a>
-          
-            <label for="__nav_3_5_3_4">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Properties" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_5_3_4">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Properties</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.DDS.nco/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.DDS.nco (Python property) — The numerically-controlled oscillator (NCO) used by the DDS." class="md-ellipsis">nco</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_4" type="checkbox" id="__nav_3_5_4" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.ClosedLoopPLL/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span></a>
-          
-            <label for="__nav_3_5_4">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="ClosedLoopPLL" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_5_4">
-          <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL." class="md-ellipsis">Closed<wbr>Loop<wbr>PLL</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_4_1" type="checkbox" id="__nav_3_5_4_1" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.ClosedLoopPLL/#constructors"><span class="md-ellipsis">Constructors</span></a>
-          
-            <label for="__nav_3_5_4_1">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
-      <nav class="md-nav" aria-label="Constructors" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_5_4_1">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Constructors</span>
         </label>
@@ -5925,7 +5667,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_4_2" type="checkbox" id="__nav_3_5_4_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_3_2" type="checkbox" id="__nav_3_5_3_2" >
       
       
       
@@ -5933,14 +5675,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.ClosedLoopPLL/#methods"><span class="md-ellipsis">Methods</span></a>
           
-            <label for="__nav_3_5_4_2">
+            <label for="__nav_3_5_3_2">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Methods" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_5_4_2">
+        <label class="md-nav__title" for="__nav_3_5_3_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Methods</span>
         </label>
@@ -6023,7 +5765,7 @@ You're not viewing the latest version.
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_4_3" type="checkbox" id="__nav_3_5_4_3" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_3_3" type="checkbox" id="__nav_3_5_3_3" >
       
       
       
@@ -6031,14 +5773,14 @@ You're not viewing the latest version.
         <div class="md-nav__link md-nav__link--index ">
           <a href="../sdr.ClosedLoopPLL/#properties"><span class="md-ellipsis">Properties</span></a>
           
-            <label for="__nav_3_5_4_3">
+            <label for="__nav_3_5_3_3">
               <span class="md-nav__icon md-icon"></span>
             </label>
           
         </div>
       
       <nav class="md-nav" aria-label="Properties" data-md-level="4">
-        <label class="md-nav__title" for="__nav_3_5_4_3">
+        <label class="md-nav__title" for="__nav_3_5_3_3">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Properties</span>
         </label>
@@ -8485,8 +8227,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-x" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.NCO.__call__.x (Python parameter) — The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the NCO." class="md-ellipsis">x</span>
+  <a href="#p-freq" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.NCO.__call__.freq (Python parameter) — The variable frequency signal $f[n]$ in radians/sample. This input signal varies the per-sample phase increment of the NCO. If None, the signal is all zeros." class="md-ellipsis">freq</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-phase" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.NCO.__call__.phase (Python parameter) — The variable phase signal $p[n]$ in radians. This input signal varies the per-sample phase offset of the NCO. If None, the signal is all zeros." class="md-ellipsis">phase</span>
   </a>
   
 </li>
@@ -8525,18 +8274,22 @@ You're not viewing the latest version.
 
 
 <dl class="py method objdesc">
-<dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">NCO.</span></span><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.NCO.__call__.x (Python parameter) — The variable-increment signal $x[n]$. This input signal varies the per-sample increment of the NCO."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
-<dd><p>Steps the NCO with the variable-increment signal <span class="math notranslate nohighlight">\(x[n]\)</span>.</p>
+<dt class="sig sig-object highlight sig-wrap py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">NCO.</span></span><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-freq" title="sdr.NCO.__call__.freq (Python parameter) — The variable frequency signal $f[n]$ in radians/sample. This input signal varies the per-sample phase increment of the NCO. If None, the signal is all zeros."><span class="n"><span class="pre">freq</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float_</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase" title="sdr.NCO.__call__.phase (Python parameter) — The variable phase signal $p[n]$ in radians. This input signal varies the per-sample phase offset of the NCO. If None, the signal is all zeros."><span class="n"><span class="pre">phase</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float_</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex_</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Steps the NCO with variable frequency and/or phase signals.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">NDArray</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p>The variable-increment signal <span class="math notranslate nohighlight">\(x[n]\)</span>. This input signal varies the per-sample increment of the NCO.</p>
+<dt id="p-freq"><span class="n sig-name">freq</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">NDArray<span class="p">[</span>float_<span class="p">]</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-freq" title="Permalink to this definition">¶</a></dt><dd><p>The variable frequency signal <span class="math notranslate nohighlight">\(f[n]\)</span> in radians/sample. This input signal varies the per-sample
+phase increment of the NCO. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, the signal is all zeros.</p>
+</dd>
+<dt id="p-phase"><span class="n sig-name">phase</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">NDArray<span class="p">[</span>float_<span class="p">]</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-phase" title="Permalink to this definition">¶</a></dt><dd><p>The variable phase signal <span class="math notranslate nohighlight">\(p[n]\)</span> in radians. This input signal varies the per-sample phase offset
+of the NCO. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, the signal is all zeros.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="returns">Returns<span class="colon">:</span><a class="headerlink" href="#returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The output signal <span class="math notranslate nohighlight">\(y[n]\)</span>.</p>
+<dd class="field-even"><p>The output complex signal <span class="math notranslate nohighlight">\(y[n]\)</span>.</p>
 </dd>
 </dl>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
