@@ -23,18 +23,20 @@ class ClosedLoopPLL:
         .. code-block:: text
             :caption: Closed-Loop PLL Block Diagram
 
-                         bb[n]
+                        bb[n]    phase_err[n]
                     +---+    +-----+    +----+
             x[n] -->| X |--->| PED |--->| LF |---+
                     +---+    +-----+    +----+   |
-                      ^                          |
-                      |  +---------+   +-----+   |
-               lo[n]  +--| e^(-j.) |<--| NCO |<--+
-                         +---------+   +-----+
+                      ^                          | phase_est[n]
+                      |      +-----+             |
+               lo[n]  +------| NCO |<------------+
+                             +-----+
 
             x[n] = Input signal
-            lo[n] = Local oscillator signal
             bb[n] = Baseband signal
+            phase_err[n] = Phase error signal
+            phase_est[n] = Phase estimate signal
+            lo[n] = Local oscillator signal
             PED = Phase error detector
             LF = Loop filter
             NCO = Numerically-controlled oscillator
