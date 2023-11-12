@@ -20,7 +20,7 @@ def multirate_taps(
     Q: int = 1,
     half_length: int = 12,
     A_stop: float = 80,
-) -> npt.NDArray:
+) -> npt.NDArray[np.float_]:
     r"""
     Computes the multirate FIR filter that achieves rational resampling by $P/Q$.
 
@@ -104,6 +104,18 @@ def multirate_taps(
     return h
 
 
+def multirate_taps_linear(rate: int) -> npt.NDArray[np.float_]:
+    h = np.zeros(2 * rate, dtype=float)
+    h[:rate] = np.arange(1, rate + 1) / rate
+    h[rate:] = np.arange(rate - 1, -1, -1) / rate
+    return h
+
+
+def multirate_taps_zoh(rate: int) -> npt.NDArray[np.float_]:
+    h = np.ones(rate, dtype=float)
+    return h
+
+
 @export
 def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> npt.NDArray:
     """
@@ -176,7 +188,7 @@ def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> npt.NDArray:
 @export
 class Interpolator(FIR):
     r"""
-    Implements a polyphase finite impulse response (FIR) interpolating filter.
+    Implements a polyphase interpolating finite impulse response (FIR) filter.
 
     Notes:
         The polyphase interpolating filter is equivalent to first upsampling the input signal $x[n]$ by $r$
@@ -304,7 +316,7 @@ class Interpolator(FIR):
                 - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_taps()`
                   with arguments `rate` and 1.
                 - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
-                  The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
+                  The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [1, ..., r-1, r, r-1, ..., 0]$.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$r$ array of ones.
                 - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
@@ -327,12 +339,10 @@ class Interpolator(FIR):
             taps = multirate_taps(rate, 1)
         elif taps == "linear":
             self._method = "linear"
-            taps = np.zeros(2 * rate, dtype=float)
-            taps[:rate] = np.arange(0, rate) / rate
-            taps[rate:] = np.arange(rate, 0, -1) / rate
+            taps = multirate_taps_linear(rate)
         elif taps == "zoh":
             self._method = "zoh"
-            taps = np.ones(rate, dtype=float)
+            taps = multirate_taps_zoh(rate)
         else:
             raise ValueError(f"Argument 'taps' must be 'kaiser', 'linear', 'zoh', or an array-like, not {taps}.")
 
@@ -554,7 +564,7 @@ class Interpolator(FIR):
 @export
 class Decimator(FIR):
     r"""
-    Implements a polyphase finite impulse response (FIR) decimating filter.
+    Implements a polyphase decimating finite impulse response (FIR) filter.
 
     Notes:
         The polyphase decimating filter is equivalent to first filtering the input signal $x[n]$ with the

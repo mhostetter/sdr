@@ -4,6 +4,16 @@ import scipy.signal
 import sdr
 
 
+def debug_plot(y, y_truth):
+    import matplotlib.pyplot as plt
+
+    plt.figure()
+    sdr.plot.time_domain(y, label="Test")
+    sdr.plot.time_domain(y_truth, label="Truth")
+    plt.legend()
+    plt.show()
+
+
 def test_non_streaming_rate():
     mode = "rate"
     N = 50
@@ -14,7 +24,11 @@ def test_non_streaming_rate():
     y = fir(x, mode)
 
     # The output should align with the input. Every r-th sample should match.
-    np.testing.assert_array_almost_equal(y[::r], x)
+    y = y[::r]
+    y_truth = x
+
+    # debug_plot(y, y_truth)
+    np.testing.assert_array_almost_equal(y, y_truth)
 
 
 def test_non_streaming_full():
@@ -28,10 +42,11 @@ def test_non_streaming_full():
 
     xr = np.zeros(N * r, dtype=complex)
     xr[::r] = x[:]
-    y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)
-
     # Given the polyphase decomposition, the polyphase output is slightly shorter
-    np.testing.assert_array_almost_equal(y, y_truth[: y.size])
+    y_truth = scipy.signal.convolve(xr, fir.taps, mode=mode)[: y.size]
+
+    # debug_plot(y, y_truth)
+    np.testing.assert_array_almost_equal(y, y_truth)
 
 
 def test_streaming():
@@ -50,6 +65,7 @@ def test_streaming():
     xr[::r] = x[:]
     y_truth = scipy.signal.convolve(xr, fir.taps, mode="full")[0 : N * r]
 
+    # debug_plot(y, y_truth)
     np.testing.assert_array_almost_equal(y, y_truth)
 
 
@@ -147,6 +163,7 @@ def test_3_kaiser():
     fir = sdr.Interpolator(3, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -226,9 +243,8 @@ def test_3_linear():
     fir = sdr.Interpolator(3, "linear", streaming=True)
     y = fir(x)
 
-    # NOTE: Matlab starts with the first interpolated sample as 1/N not 0/N.
-    #       We are using 0/N since it aligns better with the input data.
-    np.testing.assert_almost_equal(y[1:], y_truth[:-1])
+    # debug_plot(y, y_truth)
+    np.testing.assert_almost_equal(y, y_truth)
 
 
 def test_3_zoh():
@@ -307,6 +323,7 @@ def test_3_zoh():
     fir = sdr.Interpolator(3, "zoh", streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -411,6 +428,7 @@ def test_srrc_0p5_6():
     fir = sdr.Interpolator(4, h, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -521,6 +539,7 @@ def test_srrc_0p9_4():
     fir = sdr.Interpolator(5, h, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -663,4 +682,5 @@ def test_srrc_0p1_7():
     fir = sdr.Interpolator(6, h, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
