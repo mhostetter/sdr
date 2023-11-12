@@ -365,3 +365,77 @@ class IIR:
             See the :ref:`iir-filters` example.
         """
         return self._gain
+
+
+@export
+class Integrator(IIR):
+    r"""
+    Implements an integrator IIR filter.
+
+    Notes:
+        A discrete-time integrator is an IIR filter with the transfer function
+
+        $$H(z) = \frac{1}{1 - z^{-1}} .$$
+
+        .. code-block:: text
+            :caption: IIR Integrator Block Diagram
+
+            x[n] -->@---------------+--> y[n]
+                    ^               |
+                 -1 |   +------+    |
+                    +---| z^-1 |<---+
+                        +------+
+
+    Examples:
+        Create an integrating IIR filter.
+
+        .. ipython:: python
+
+            iir = sdr.Integrator()
+
+        Integrate a Gaussian pulse.
+
+        .. ipython:: python
+
+            x = sdr.gaussian(0.3, 5, 10); \
+            y = iir(x)
+
+            @savefig sdr_Integrator_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, label="Input"); \
+            sdr.plot.time_domain(y, label="Integral"); \
+            plt.title("Discrete-time integration of a Gaussian pulse"); \
+            plt.tight_layout();
+
+        Integrate a raised cosine pulse.
+
+        .. ipython:: python
+
+            x = sdr.root_raised_cosine(0.1, 8, 10); \
+            y = iir(x)
+
+            @savefig sdr_Integrator_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, label="Input"); \
+            sdr.plot.time_domain(y, label="Integral"); \
+            plt.title("Discrete-time integration of a raised cosine pulse"); \
+            plt.tight_layout();
+
+    Group:
+        dsp-filtering-applications
+    """
+
+    def __init__(self, streaming: bool = False):
+        """
+        Creates an integrating IIR filter.
+
+        Arguments:
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
+                preserved between calls to :meth:`~Integrator.__call__()`.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        super().__init__([1], [1, -1], streaming=streaming)
+
+    # TODO: Use np.cumsum() if it is faster
