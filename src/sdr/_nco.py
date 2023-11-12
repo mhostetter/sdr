@@ -63,13 +63,16 @@ class NCO:
         self.reset()
 
     def reset(self):
-        """
+        r"""
         Resets the NCO.
+
+        The internal accumulator is set to $-\omega$ radians such that the phase of the first output sample
+        is $\theta$ radians.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        self._z_prev = 0.0
+        self._z_prev = -self.increment
 
     def __call__(
         self,
@@ -104,6 +107,7 @@ class NCO:
 
         # Scale the input by the NCO gain and add the constant accumulation to every sample
         z = freq * self.K0 + self.increment
+        z = np.atleast_1d(z)
 
         # Increment the first sample by the previous output. Then run a cumulative sum over all samples.
         z[0] += self._z_prev
@@ -114,6 +118,9 @@ class NCO:
         y = z + self.offset + phase
 
         y = np.exp(1j * y)
+
+        if y.size == 1:
+            y = y[0]
 
         return y
 
