@@ -22,7 +22,7 @@ class FarrowResampler:
         See the :ref:`farrow-arbitrary-resampler` example.
 
     Group:
-        resampling
+        dsp-arbitrary-resampling
     """
 
     def __init__(self, streaming: bool = False):
