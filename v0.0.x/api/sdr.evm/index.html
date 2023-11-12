@@ -2093,6 +2093,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Interpolator.delay/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Interpolator.delay (Python property) — The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the first input sample." class="md-ellipsis">delay</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -2450,6 +2465,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.Decimator.polyphase_taps/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Decimator.polyphase_taps (Python property) — The polyphase feedforward taps $h_{i, j}$." class="md-ellipsis">polyphase_<wbr>taps</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.Decimator.delay/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Decimator.delay (Python property) — The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the first input sample." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -2857,7 +2887,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.Resampler.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Resampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.Resampler.delay (Python property) — The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the first input sample." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -8773,25 +8803,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">64.72054562264887</span>
+<span class="gh">Out[3]: </span><span class="go">64.77950430359519</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">9.980052996078825</span>
+<span class="gh">Out[4]: </span><span class="go">9.95572708643668</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">182.04864939013262</span>
+<span class="gh">Out[5]: </span><span class="go">182.52304424100592</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">142.05971743961175</span>
+<span class="gh">Out[6]: </span><span class="go">138.91481157212743</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">68.7565813117864</span>
+<span class="gh">Out[7]: </span><span class="go">68.88862147351092</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
