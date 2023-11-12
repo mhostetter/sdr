@@ -5,7 +5,7 @@ import sdr
 
 def test_1():
     """
-    Matlab:
+    MATLAB:
         >> convertSNR(0:10, 'esno', 'snr', 'SamplesPerSymbol', 1)'
     """
     esn0 = np.arange(0, 11)
@@ -30,7 +30,7 @@ def test_1():
 
 def test_2():
     """
-    Matlab:
+    MATLAB:
         >> convertSNR(0:10, 'esno', 'snr', 'SamplesPerSymbol', 2)'
     """
     esn0 = np.arange(0, 11)
@@ -55,7 +55,7 @@ def test_2():
 
 def test_3():
     """
-    Matlab:
+    MATLAB:
         >> convertSNR(0:10, 'esno', 'snr', 'SamplesPerSymbol', 4)'
     """
     esn0 = np.arange(0, 11)

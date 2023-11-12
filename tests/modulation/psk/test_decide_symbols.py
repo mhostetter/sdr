@@ -1,5 +1,5 @@
 """
-Matlab:
+MATLAB:
     x_hat = exp(1i * 2 * pi * rand(1, 20));
     disp(transpose(x_hat))
     for M = [2 4 8 16]

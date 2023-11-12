@@ -1,5 +1,5 @@
 """
-Matlab:
+MATLAB:
     for M = [2 4]
         disp(M)
         ebn0 = -10:0.5:10;
@@ -118,4 +118,4 @@ def test_qpsk():
     np.testing.assert_almost_equal(ser, ser_truth)
 
 
-# NOTE: Matlab only support DE-BPSK and DE-QPSK
+# NOTE: MATLAB only support DE-BPSK and DE-QPSK

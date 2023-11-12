@@ -1,5 +1,5 @@
 """
-Matlab:
+MATLAB:
     for N = [1, 2, 3, 4, 5, 7, 11, 13]
         barker = comm.BarkerCode("Length", N, "SamplesPerFrame", N);
         disp(N)

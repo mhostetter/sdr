@@ -5,7 +5,7 @@ import sdr
 
 def test_Q():
     """
-    Matlab:
+    MATLAB:
         >> x = -3:0.2:3;
         >> qfunc(x)'
     """
@@ -58,7 +58,7 @@ def test_Q():
 
 def test_Qinv():
     """
-    Matlab:
+    MATLAB:
         >> p = 0:0.05:1;
         >> qfuncinv(p)'
     """
