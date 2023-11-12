@@ -5,7 +5,7 @@ import sdr
 
 def test_1():
     """
-    Matlab:
+    MATLAB:
         >> convertSNR(0:10, 'ebno', 'esno', 'BitsPerSymbol', 2, 'CodingRate', 1/3)'
     """
     ebn0 = np.arange(0, 11)
@@ -30,7 +30,7 @@ def test_1():
 
 def test_2():
     """
-    Matlab:
+    MATLAB:
         >> convertSNR(0:10, 'ebno', 'esno', 'BitsPerSymbol', 3, 'CodingRate', 1/2)'
     """
     ebn0 = np.arange(0, 11)
@@ -55,7 +55,7 @@ def test_2():
 
 def test_3():
     """
-    Matlab:
+    MATLAB:
         >> convertSNR(0:10, 'ebno', 'esno', 'BitsPerSymbol', 4, 'CodingRate', 2/3)'
     """
     ebn0 = np.arange(0, 11)

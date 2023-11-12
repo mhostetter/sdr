@@ -82,7 +82,7 @@ def debug_plot(y, y_truth):
 
 def test_7_5_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:19)');
         >> fir = dsp.FIRRateConverter(7, 5);
         >> y = fir(x);
@@ -130,7 +130,7 @@ def test_7_5_kaiser():
 
 def test_7_5_linear():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:19)');
         >> fir = dsp.FIRRateConverter(7, 5, 'linear');
         >> y = fir(x);
@@ -178,7 +178,7 @@ def test_7_5_linear():
 
 def test_7_5_zoh():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:19)');
         >> fir = dsp.FIRRateConverter(7, 5, 'zoh');
         >> y = fir(x);
@@ -226,7 +226,7 @@ def test_7_5_zoh():
 
 def test_5_7_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:20)');
         >> fir = dsp.FIRRateConverter(5, 7);
         >> y = fir(x);
@@ -261,7 +261,7 @@ def test_5_7_kaiser():
 
 def test_5_7_linear():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:20)');
         >> fir = dsp.FIRRateConverter(5, 7, 'linear');
         >> y = fir(x);
@@ -296,7 +296,7 @@ def test_5_7_linear():
 
 def test_5_7_zoh():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:20)');
         >> fir = dsp.FIRRateConverter(5, 7, 'zoh');
         >> y = fir(x);

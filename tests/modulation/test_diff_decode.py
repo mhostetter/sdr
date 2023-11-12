@@ -21,7 +21,7 @@ def test_exceptions():
 
 def test_decode_1():
     """
-    Matlab:
+    MATLAB:
         >> diff_dec = comm.DifferentialDecoder;
         >> y = randi([0 1], 10, 1); y
         >> diff_dec(y)
@@ -32,4 +32,4 @@ def test_decode_1():
     assert np.array_equal(x, x_truth)
 
 
-# TODO: Add more Matlab tests
+# TODO: Add more MATLAB tests

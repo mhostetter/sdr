@@ -8,7 +8,7 @@ in Python. The library relies on and is designed to be interoperable with `NumPy
 Performance is also very important. So, where possible, `Numba`_ is used to accelerate computationally-intensive
 functions.
 
-Additionally, the library aims to replicate relevant functionality from Matlab's `Communications`_ and
+Additionally, the library aims to replicate relevant functionality from MATLAB's `Communications`_ and
 `DSP`_ Toolboxes.
 
 We are progressively adding functionality to the library. If there is something you'd like to see included
