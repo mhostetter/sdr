@@ -13,10 +13,10 @@ Multirate filtering
 
 .. python-apigen-group:: dsp-multirate-filtering
 
-Resampling
-----------
+Arbitrary resampling
+--------------------
 
-.. python-apigen-group:: resampling
+.. python-apigen-group:: dsp-arbitrary-resampling
 
 Correlation
 -----------
