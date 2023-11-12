@@ -346,3 +346,88 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         return self.taps.size // 2
+
+
+@export
+class Differentiator(FIR):
+    r"""
+    Implements a differentiator FIR filter.
+
+    Notes:
+        A differentiator FIR filter is defined by its feedforward coefficients $h_i$.
+
+        $$y[n] = \sum_{i=0}^{N} h_i x[n-i] .$$
+
+        The feedforward coefficients are
+
+        $$h = \{1, -1\} .$$
+
+        The transfer function of the filter is
+
+        $$H(z) = 1 - z^{-1} .$$
+
+        .. code-block:: text
+            :caption: FIR Differentiator Block Diagram
+
+                       +------+
+            x[n] --+-->| z^-1 |-----+
+                   |   +------+     |
+                 1 |                | -1
+                   |                v
+                   +----------------@--> y[n]
+
+    Examples:
+
+        Create a differentiator FIR filter.
+
+        .. ipython:: python
+
+            fir = sdr.Differentiator()
+
+        Differentiate a Gaussian pulse.
+
+        .. ipython:: python
+
+            x = sdr.gaussian(0.3, 5, 10); \
+            x_prime = fir(x)
+
+            @savefig sdr_Differentiator_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker=".", label="Input"); \
+            sdr.plot.time_domain(x_prime, offset=-fir.delay, marker=".", label="Derivative"); \
+            plt.title("Discrete-time differentiation of a Gaussian pulse"); \
+            plt.tight_layout();
+
+        Differentiate a raised cosine pulse.
+
+        .. ipython:: python
+
+            x = sdr.root_raised_cosine(0.1, 8, 10); \
+            x_prime = fir(x)
+
+            @savefig sdr_Differentiator_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker=".", label="Input"); \
+            sdr.plot.time_domain(x_prime, offset=-fir.delay, marker=".", label="Derivative"); \
+            plt.title("Discrete-time differentiation of a raised cosine pulse"); \
+            plt.tight_layout();
+
+    Group:
+        dsp-filtering-applications
+    """
+
+    def __init__(self, streaming: bool = False):
+        """
+        Creates a differentiator FIR filter with order $N$.
+
+        Arguments:
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`~sdr.Differentiator.__call__()`.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        h = np.array([1, -1], dtype=float)
+        super().__init__(h, streaming=streaming)
+
+    # TODO: Use np.diff() if it is faster
