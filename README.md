@@ -61,7 +61,7 @@ View all available classes and functions in the [API Reference](https://mhostett
 - **Simulation**: Binary symmetric channel (BSC), binary erasure channel (BEC), discrete memoryless channel (DMC),
   additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
 - **Link budgets**: Channel capacities, free-space path loss, antenna gains.
-- **Data manipulation**: Packing and unpacking binary data, hexdumping binary data.
+- **Data manipulation**: Packing and unpacking binary data, hexdump of binary data.
 - **Plotting**: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram,
   bit error rate (BER), symbol error rate (SER), impulse response, step response, magnitude response, phase response,
   phase delay, group delay, and zeros/poles.
