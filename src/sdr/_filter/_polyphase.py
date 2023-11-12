@@ -605,6 +605,14 @@ class Interpolator(FIR):
         """
         return self._polyphase_taps
 
+    @property
+    def delay(self) -> int:
+        """
+        The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
+        first input sample.
+        """
+        return super().delay
+
 
 def _polyphase_decimate(
     x: npt.NDArray,
@@ -726,11 +734,11 @@ class Decimator(FIR):
             @savefig sdr_Decimator_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
-            sdr.plot.time_domain(y1, sample_rate=1/fir.rate, offset=-fir.delay + 0, marker="o", label="Decimated $y_1[n]$"); \
-            sdr.plot.time_domain(y2, sample_rate=1/fir.rate, offset=-fir.delay + 70, marker="o", label="Decimated $y_2[n]$"); \
-            sdr.plot.time_domain(y3, sample_rate=1/fir.rate, offset=-fir.delay + 140, marker="o", label="Decimated $y_3[n]$"); \
-            sdr.plot.time_domain(y4, sample_rate=1/fir.rate, offset=-fir.delay + 210, marker="o", label="Decimated $y_4[n]$"); \
-            sdr.plot.time_domain(y5, sample_rate=1/fir.rate, offset=-fir.delay + 280, marker="o", label="Decimated $y_5[n]$"); \
+            sdr.plot.time_domain(y1, sample_rate=1/fir.rate, offset=-fir.delay*fir.rate + 0, marker="o", label="Decimated $y_1[n]$"); \
+            sdr.plot.time_domain(y2, sample_rate=1/fir.rate, offset=-fir.delay*fir.rate + 70, marker="o", label="Decimated $y_2[n]$"); \
+            sdr.plot.time_domain(y3, sample_rate=1/fir.rate, offset=-fir.delay*fir.rate + 140, marker="o", label="Decimated $y_3[n]$"); \
+            sdr.plot.time_domain(y4, sample_rate=1/fir.rate, offset=-fir.delay*fir.rate + 210, marker="o", label="Decimated $y_4[n]$"); \
+            sdr.plot.time_domain(y5, sample_rate=1/fir.rate, offset=-fir.delay*fir.rate + 280, marker="o", label="Decimated $y_5[n]$"); \
             plt.title("Streaming decimation by 7 with the Kaiser window method"); \
             plt.tight_layout();
 
@@ -919,6 +927,15 @@ class Decimator(FIR):
                 fir.polyphase_taps
         """
         return self._polyphase_taps
+
+    @property
+    def delay(self) -> int:
+        """
+        The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
+        first input sample.
+        """
+        assert super().delay % self.rate == 0, f"This should always be true. {super().delay} % {self.rate} != 0"
+        return super().delay // self.rate
 
 
 @export
@@ -1242,5 +1259,10 @@ class Resampler(FIR):
         return self._polyphase_taps
 
     @property
-    def delay(self) -> float:
-        return super().delay / self.down
+    def delay(self) -> int:
+        """
+        The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
+        first input sample.
+        """
+        assert super().delay % self.down == 0, f"This should always be true. {super().delay} % {self.down} != 0"
+        return super().delay // self.down
