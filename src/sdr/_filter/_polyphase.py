@@ -247,7 +247,7 @@ def _polyphase_interpolate(
 @export
 class Interpolator(FIR):
     r"""
-    Implements a polyphase interpolating finite impulse response (FIR) filter.
+    Implements a polyphase interpolating FIR filter.
 
     Notes:
         The polyphase interpolating filter is equivalent to first upsampling the input signal $x[n]$ by $r$
@@ -662,7 +662,7 @@ def _polyphase_decimate(
 @export
 class Decimator(FIR):
     r"""
-    Implements a polyphase decimating finite impulse response (FIR) filter.
+    Implements a polyphase decimating FIR filter.
 
     Notes:
         The polyphase decimating filter is equivalent to first filtering the input signal $x[n]$ with the
@@ -941,7 +941,7 @@ class Decimator(FIR):
 @export
 class Resampler(FIR):
     r"""
-    Implements a polyphase rational resampling finite impulse response (FIR) filter.
+    Implements a polyphase rational resampling FIR filter.
 
     Notes:
         The polyphase rational resampling filter is equivalent to first upsampling the input signal $x[n]$ by $P$
