@@ -421,6 +421,14 @@ class Integrator(IIR):
             plt.title("Discrete-time integration of a raised cosine pulse"); \
             plt.tight_layout();
 
+        Plot the frequency response.
+
+        .. ipython:: python
+
+            @savefig sdr_Integrator_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(iir);
+
     Group:
         dsp-filtering-applications
     """

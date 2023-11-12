@@ -402,6 +402,14 @@ class Differentiator(FIR):
             plt.title("Discrete-time differentiation of a raised cosine pulse"); \
             plt.tight_layout();
 
+        Plot the frequency response.
+
+        .. ipython:: python
+
+            @savefig sdr_Differentiator_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(fir);
+
     Group:
         dsp-filtering-applications
     """
