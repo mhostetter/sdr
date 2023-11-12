@@ -41,7 +41,7 @@ View all available classes and functions in the `API Reference <https://mhostett
 
 - **Digital signal processing**: Finite impulse response (FIR) filters, infinite impulse response (IIR) filters,
   polyphase interpolator, polyphase decimator, polyphase resampler, Farrow arbitrary resampler,
-  complex mixing, real/complex conversion.
+  FIR differentiator, IIR integrator, complex mixing, real/complex conversion.
 - **Sequences**: Barker, Zadoff-Chu.
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, rectangular pulse shape, half-sine pulse shape,
   raised cosine pulse shape, root raised cosine pulse shape, Gaussian pulse shape, binary and Gray symbol mapping,
