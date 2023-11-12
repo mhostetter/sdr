@@ -2,6 +2,17 @@ import numpy as np
 
 import sdr
 
+
+def debug_plot(y, y_truth):
+    import matplotlib.pyplot as plt
+
+    plt.figure()
+    sdr.plot.time_domain(y, label="Test")
+    sdr.plot.time_domain(y_truth, label="Truth")
+    plt.legend()
+    plt.show()
+
+
 # def test_non_streaming_rate():
 #     mode = "rate"
 #     N = 50
@@ -195,6 +206,7 @@ def test_3_kaiser():
     fir = sdr.Decimator(3, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -304,6 +316,7 @@ def test_4_kaiser():
     fir = sdr.Decimator(4, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -395,6 +408,7 @@ def test_5_kaiser():
     fir = sdr.Decimator(5, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
 
@@ -474,4 +488,5 @@ def test_6_kaiser():
     fir = sdr.Decimator(6, streaming=True)
     y = fir(x)
 
+    # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
