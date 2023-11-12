@@ -104,14 +104,34 @@ def multirate_taps(
     return h
 
 
-def multirate_taps_linear(rate: int) -> npt.NDArray[np.float_]:
+def _multirate_taps_linear(rate: int) -> npt.NDArray[np.float_]:
+    r"""
+    The multirate filter is designed to linearly interpolate between samples. The filter coefficients are a
+    length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$. The first output sample aligns with the
+    first input sample.
+    """
+    h = np.zeros(2 * rate, dtype=float)
+    h[:rate] = np.arange(0, rate) / rate
+    h[rate:] = np.arange(rate, 0, -1) / rate
+    return h
+
+
+def _multirate_taps_linear_matlab(rate: int) -> npt.NDArray[np.float_]:
+    r"""
+    The multirate filter is designed to linearly interpolate between samples. The filter coefficients are a
+    length-$2r$ linear ramp $\frac{1}{r} [1, ..., r-1, r, r-1, ..., 0]$. This is method MATLAB uses. The first
+    output sample is advanced from the first input sample.
+    """
     h = np.zeros(2 * rate, dtype=float)
     h[:rate] = np.arange(1, rate + 1) / rate
     h[rate:] = np.arange(rate - 1, -1, -1) / rate
     return h
 
 
-def multirate_taps_zoh(rate: int) -> npt.NDArray[np.float_]:
+def _multirate_taps_zoh(rate: int) -> npt.NDArray[np.float_]:
+    """
+    The multirate filter is designed to be a zero-order hold. The filter coefficients are a length-$r$ array of ones.
+    """
     h = np.ones(rate, dtype=float)
     return h
 
@@ -281,7 +301,7 @@ class Interpolator(FIR):
             plt.title("Interpolation by 7 with the linear method"); \
             plt.tight_layout();
 
-        Create a polyphase filter that interpolates by 7 using the zero-order hold method. It is recommended to
+        Create a polyphase filter that interpolates by 7 using the zero-order hold method. It is recommended to use
         the `"full"` convolution mode. This way the first upsampled symbol has $r$ samples.
 
         .. ipython:: python
@@ -303,7 +323,7 @@ class Interpolator(FIR):
     def __init__(
         self,
         rate: int,
-        taps: Literal["kaiser", "linear", "zoh"] | npt.ArrayLike = "kaiser",
+        taps: Literal["kaiser", "linear", "linear-matlab", "zoh"] | npt.ArrayLike = "kaiser",
         streaming: bool = False,
     ):
         r"""
@@ -316,7 +336,11 @@ class Interpolator(FIR):
                 - `"kaiser"`: The multirate filter is designed using :func:`~sdr.multirate_taps()`
                   with arguments `rate` and 1.
                 - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
+                  The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
+                  The first output sample aligns with the first input sample.
+                - `"linear-matlab"`: The multirate filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [1, ..., r-1, r, r-1, ..., 0]$.
+                  This is method MATLAB uses. The first output sample is advanced from the first input sample.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$r$ array of ones.
                 - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
@@ -329,7 +353,7 @@ class Interpolator(FIR):
         if not rate >= 1:
             raise ValueError(f"Argument 'rate' must be at least 1, not {rate}.")
         self._rate = rate
-        self._method: Literal["kaiser", "linear", "zoh", "custom"]
+        self._method: Literal["kaiser", "linear", "linear-matlab", "zoh", "custom"]
 
         if not isinstance(taps, str):
             self._method = "custom"
@@ -339,12 +363,17 @@ class Interpolator(FIR):
             taps = multirate_taps(rate, 1)
         elif taps == "linear":
             self._method = "linear"
-            taps = multirate_taps_linear(rate)
+            taps = _multirate_taps_linear(rate)
+        elif taps == "linear-matlab":
+            self._method = "linear-matlab"
+            taps = _multirate_taps_linear_matlab(rate)
         elif taps == "zoh":
             self._method = "zoh"
-            taps = multirate_taps_zoh(rate)
+            taps = _multirate_taps_zoh(rate)
         else:
-            raise ValueError(f"Argument 'taps' must be 'kaiser', 'linear', 'zoh', or an array-like, not {taps}.")
+            raise ValueError(
+                f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
+            )
 
         self._polyphase_taps = polyphase_matrix(rate, 1, taps)
 
@@ -508,7 +537,7 @@ class Interpolator(FIR):
         return self._rate
 
     @property
-    def method(self) -> Literal["kaiser", "linear", "zoh", "custom"]:
+    def method(self) -> Literal["kaiser", "linear", "linear-matlab", "zoh", "custom"]:
         """
         The method used to design the multirate filter.
         """
