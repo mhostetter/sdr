@@ -137,7 +137,7 @@ class NCO:
     @property
     def K0(self) -> float:
         """
-        The NCO gain $K_0$.
+        (Settable) The NCO gain $K_0$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -151,7 +151,7 @@ class NCO:
     @property
     def increment(self) -> float:
         r"""
-        The constant phase accumulation $\omega$ of the NCO in radians/sample.
+        (Settable) The constant phase accumulation $\omega$ of the NCO in radians/sample.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -165,7 +165,7 @@ class NCO:
     @property
     def offset(self) -> float:
         r"""
-        The absolute phase offset $\theta$ of the NCO in radians.
+        (Settable) The absolute phase offset $\theta$ of the NCO in radians.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
