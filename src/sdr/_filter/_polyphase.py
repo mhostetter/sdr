@@ -314,6 +314,7 @@ class Interpolator(FIR):
 
             @savefig sdr_Interpolator_2.png
             plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Interpolated $y_1[n]$"); \
             sdr.plot.time_domain(y2, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 10, marker=".", label="Interpolated $y_2[n]$"); \
             sdr.plot.time_domain(y3, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 20, marker=".", label="Interpolated $y_3[n]$"); \
@@ -700,8 +701,8 @@ class Decimator(FIR):
 
             @savefig sdr_Decimator_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=1/fir.rate, marker=".", label="Decimated"); \
+            sdr.plot.time_domain(x, marker=".", label="Input"); \
+            sdr.plot.time_domain(y, sample_rate=1/fir.rate, marker="o", label="Decimated"); \
             plt.title("Decimation by 7 with the Kaiser window method"); \
             plt.tight_layout();
 
@@ -720,11 +721,12 @@ class Decimator(FIR):
 
             @savefig sdr_Decimator_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y1, sample_rate=1/fir.rate, offset=-fir.delay + 0, marker=".", label="Decimated $y_1[n]$"); \
-            sdr.plot.time_domain(y2, sample_rate=1/fir.rate, offset=-fir.delay + 70, marker=".", label="Decimated $y_2[n]$"); \
-            sdr.plot.time_domain(y3, sample_rate=1/fir.rate, offset=-fir.delay + 140, marker=".", label="Decimated $y_3[n]$"); \
-            sdr.plot.time_domain(y4, sample_rate=1/fir.rate, offset=-fir.delay + 210, marker=".", label="Decimated $y_4[n]$"); \
-            sdr.plot.time_domain(y5, sample_rate=1/fir.rate, offset=-fir.delay + 280, marker=".", label="Decimated $y_5[n]$"); \
+            sdr.plot.time_domain(x, marker=".", label="Input"); \
+            sdr.plot.time_domain(y1, sample_rate=1/fir.rate, offset=-fir.delay + 0, marker="o", label="Decimated $y_1[n]$"); \
+            sdr.plot.time_domain(y2, sample_rate=1/fir.rate, offset=-fir.delay + 70, marker="o", label="Decimated $y_2[n]$"); \
+            sdr.plot.time_domain(y3, sample_rate=1/fir.rate, offset=-fir.delay + 140, marker="o", label="Decimated $y_3[n]$"); \
+            sdr.plot.time_domain(y4, sample_rate=1/fir.rate, offset=-fir.delay + 210, marker="o", label="Decimated $y_4[n]$"); \
+            sdr.plot.time_domain(y5, sample_rate=1/fir.rate, offset=-fir.delay + 280, marker="o", label="Decimated $y_5[n]$"); \
             plt.title("Streaming decimation by 7 with the Kaiser window method"); \
             plt.tight_layout();
 
