@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import numpy.typing as npt
 
-from ._filter import IIR
-from ._helper import export
+from .._filter import IIR
+from .._helper import export
 
 
 @export
