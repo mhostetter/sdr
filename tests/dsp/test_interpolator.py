@@ -89,7 +89,7 @@ def test_streaming_match_full():
 
 def test_3_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:19)');
         >> fir = dsp.Interpolator(3);
         >> y = fir(x);
@@ -169,7 +169,7 @@ def test_3_kaiser():
 
 def test_3_linear():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:19)');
         >> fir = dsp.Interpolator(3, 'Linear');
         >> y = fir(x);
@@ -249,7 +249,7 @@ def test_3_linear():
 
 def test_3_zoh():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/4*(0:19)');
         >> fir = dsp.Interpolator(3, 'ZOH');
         >> y = fir(x);
@@ -329,7 +329,7 @@ def test_3_zoh():
 
 def test_srrc_0p5_6():
     """
-    Matlab:
+    MATLAB:
         >> sps = 4;
         >> h = rcosdesign(0.5, 6, sps);
         >> s = randi([0 3], 10, 1);
@@ -434,7 +434,7 @@ def test_srrc_0p5_6():
 
 def test_srrc_0p9_4():
     """
-    Matlab:
+    MATLAB:
         >> sps = 5;
         >> h = rcosdesign(0.9, 4, sps);
         >> s = randi([0 3], 10, 1);
@@ -545,7 +545,7 @@ def test_srrc_0p9_4():
 
 def test_srrc_0p1_7():
     """
-    Matlab:
+    MATLAB:
         >> sps = 6;
         >> h = rcosdesign(0.1, 7, sps);
         >> s = randi([0 3], 10, 1);

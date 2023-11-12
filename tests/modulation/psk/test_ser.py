@@ -1,5 +1,5 @@
 """
-Matlab:
+MATLAB:
     for M = [2 4 8 16]
         disp(M)
         ebn0 = -10:0.5:10;

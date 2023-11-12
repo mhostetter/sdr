@@ -6,7 +6,7 @@ import sdr
 
 def test_250_MHz():
     """
-    Matlab:
+    MATLAB:
         >> d = logspace(1, 6, 20); d'
         >> L = fspl(d, physconst('LightSpeed')/250e6); L'
     """
@@ -47,7 +47,7 @@ def test_250_MHz():
 
 def test_7p5_GHz():
     """
-    Matlab:
+    MATLAB:
         >> d = logspace(1, 6, 20); d'
         >> L = fspl(d, physconst('LightSpeed')/7.5e9); L'
     """
@@ -88,7 +88,7 @@ def test_7p5_GHz():
 
 def test_28p25_GHz():
     """
-    Matlab:
+    MATLAB:
         >> d = logspace(1, 6, 20); d'
         >> L = fspl(d, physconst('LightSpeed')/28.25e9); L'
     """
@@ -129,7 +129,7 @@ def test_28p25_GHz():
 
 def test_300_MHz_near_field():
     """
-    Matlab:
+    MATLAB:
         >> d = linspace(0, 0.25, 20); d'
         >> L = fspl(d, physconst('LightSpeed')/300e6); L'
     """

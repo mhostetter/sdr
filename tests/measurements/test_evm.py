@@ -1,5 +1,5 @@
 """
-Matlab:
+MATLAB:
     symbol_map = pskmod(0:3, 4, pi/4, "gray");
     s = randi([0 3], 50, 1);
     x = pskmod(s, 4, pi/4, "gray");
@@ -199,7 +199,7 @@ def test_peak_power():
     assert evm == pytest.approx(8.102616784925608)
 
 
-# TODO: For some reason Matlab computes percentiles differently??
+# TODO: For some reason MATLAB computes percentiles differently??
 
 # def test_10th_percentile():
 #     psk = sdr.PSK(4, phase_offset=45)

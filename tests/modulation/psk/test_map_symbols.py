@@ -1,5 +1,5 @@
 """
-Matlab:
+MATLAB:
     for M = [2 4 8 16]
         for map = ["bin", "gray"]
             disp(M)

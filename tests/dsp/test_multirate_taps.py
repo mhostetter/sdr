@@ -5,7 +5,7 @@ import sdr
 
 def test_3_1():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(3, 1))
     """
     h = sdr.multirate_taps(3, 1)
@@ -90,7 +90,7 @@ def test_3_1():
 
 def test_1_3():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(1, 3))
     """
     h = sdr.multirate_taps(1, 3)
@@ -175,7 +175,7 @@ def test_1_3():
 
 def test_3_2():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(3, 2))
     """
     h = sdr.multirate_taps(3, 2)
@@ -260,7 +260,7 @@ def test_3_2():
 
 def test_2_3():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(2, 3))
     """
     h = sdr.multirate_taps(2, 3)
@@ -321,7 +321,7 @@ def test_2_3():
 
 def test_3_2_20():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(3, 2, 20))
     """
     h = sdr.multirate_taps(3, 2, half_length=20)
@@ -454,7 +454,7 @@ def test_3_2_20():
 
 def test_2_3_20():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(2, 3, 20))
     """
     h = sdr.multirate_taps(2, 3, half_length=20)
@@ -548,7 +548,7 @@ def test_2_3_20():
 
 def test_3_2_15_120():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(3, 2, 15, 120))
     """
     h = sdr.multirate_taps(3, 2, half_length=15, A_stop=120)
@@ -651,7 +651,7 @@ def test_3_2_15_120():
 
 def test_2_3_15_120():
     """
-    Matlab:
+    MATLAB:
         >> transpose(designMultirateFIR(2, 3, 15, 120))
     """
     h = sdr.multirate_taps(2, 3, half_length=15, A_stop=120)

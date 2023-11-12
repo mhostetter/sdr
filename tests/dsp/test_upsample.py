@@ -17,7 +17,7 @@ def test_exceptions():
 
 def test_1():
     """
-    Matlab:
+    MATLAB:
         >> x = 0:9;
         >> upsample(x, 4)'
     """

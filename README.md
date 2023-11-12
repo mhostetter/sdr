@@ -24,7 +24,7 @@ in Python. The library relies on and is designed to be interoperable with NumPy,
 Performance is also very important. So, where possible, Numba is used to accelerate computationally-intensive
 functions.
 
-Additionally, the library aims to replicate relevant functionality from Matlab's Communications and
+Additionally, the library aims to replicate relevant functionality from MATLAB's Communications and
 DSP Toolboxes.
 
 We are progressively adding functionality to the library. If there is something you'd like to see included

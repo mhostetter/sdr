@@ -72,7 +72,7 @@ def test_streaming_match_full():
 
 def test_3_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/7.123456*(0:359)');
         >> fir = dsp.FIRDecimator(3);
         >> y = fir(x);
@@ -212,7 +212,7 @@ def test_3_kaiser():
 
 def test_4_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/7.123456*(0:359)');
         >> fir = dsp.FIRDecimator(4);
         >> y = fir(x);
@@ -322,7 +322,7 @@ def test_4_kaiser():
 
 def test_5_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/7.123456*(0:359)');
         >> fir = dsp.FIRDecimator(5);
         >> y = fir(x);
@@ -414,7 +414,7 @@ def test_5_kaiser():
 
 def test_6_kaiser():
     """
-    Matlab:
+    MATLAB:
         >> x = cos(pi/7.123456*(0:359)');
         >> fir = dsp.FIRDecimator(6);
         >> y = fir(x);

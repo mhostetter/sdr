@@ -33,7 +33,7 @@ def test_exceptions():
 
 def test_0p1_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.1, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.1, 6, 4)
@@ -71,7 +71,7 @@ def test_0p1_6_4():
 
 def test_0p5_5_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.5, 5, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.5, 5, 4)
@@ -105,7 +105,7 @@ def test_0p5_5_4():
 
 def test_0p9_6_5():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.9, 6, 5, 'normal'); h'
     """
     h = sdr.raised_cosine(0.9, 6, 5)
@@ -154,7 +154,7 @@ def test_0p9_6_5():
 
 def test_0p0_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.0, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.0, 6, 4)
@@ -195,7 +195,7 @@ def test_0p0_6_4():
 
 def test_0p2_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.2, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.2, 6, 4)
@@ -233,7 +233,7 @@ def test_0p2_6_4():
 
 def test_0p3_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.3, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.3, 6, 4)
@@ -271,7 +271,7 @@ def test_0p3_6_4():
 
 def test_0p4_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.4, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.4, 6, 4)
@@ -309,7 +309,7 @@ def test_0p4_6_4():
 
 def test_0p5_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.5, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.5, 6, 4)
@@ -347,7 +347,7 @@ def test_0p5_6_4():
 
 def test_0p6_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.6, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.6, 6, 4)
@@ -385,7 +385,7 @@ def test_0p6_6_4():
 
 def test_0p7_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.7, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.7, 6, 4)
@@ -423,7 +423,7 @@ def test_0p7_6_4():
 
 def test_0p8_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.8, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.8, 6, 4)
@@ -461,7 +461,7 @@ def test_0p8_6_4():
 
 def test_0p9_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(0.9, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(0.9, 6, 4)
@@ -499,7 +499,7 @@ def test_0p9_6_4():
 
 def test_1p0_6_4():
     """
-    Matlab:
+    MATLAB:
         >> h = rcosdesign(1.0, 6, 4, 'normal'); h'
     """
     h = sdr.raised_cosine(1.0, 6, 4)

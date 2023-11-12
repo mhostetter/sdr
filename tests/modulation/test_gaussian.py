@@ -28,7 +28,7 @@ def test_exceptions():
 
 def test_0p1_4_8():
     """
-    Matlab:
+    MATLAB:
         >> h = gaussdesign(0.1, 4, 8); h'
     """
     h = sdr.gaussian(0.1, 4, 8)
@@ -74,7 +74,7 @@ def test_0p1_4_8():
 
 def test_0p2_5_8():
     """
-    Matlab:
+    MATLAB:
         >> h = gaussdesign(0.2, 5, 8); h'
     """
     h = sdr.gaussian(0.2, 5, 8)
@@ -128,7 +128,7 @@ def test_0p2_5_8():
 
 def test_0p3_4_9():
     """
-    Matlab:
+    MATLAB:
         >> h = gaussdesign(0.3, 4, 9); h'
     """
     h = sdr.gaussian(0.3, 4, 9)
