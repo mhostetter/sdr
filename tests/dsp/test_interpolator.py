@@ -240,7 +240,7 @@ def test_3_linear():
         ]
     )
 
-    fir = sdr.Interpolator(3, "linear", streaming=True)
+    fir = sdr.Interpolator(3, "linear-matlab", streaming=True)
     y = fir(x)
 
     # debug_plot(y, y_truth)
