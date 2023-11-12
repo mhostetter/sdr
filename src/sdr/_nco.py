@@ -28,7 +28,7 @@ class NCO:
                              +---| z^-1 |---+
                                  +------+
 
-            f[n] = Input signal (radians/sample)
+            f[n] = Input frequency signal (radians/sample)
             p[n] = Input phase signal (radians)
             y[n] = Output complex signal
             K0 = NCO gain
@@ -38,6 +38,52 @@ class NCO:
             @ = Adder
 
     Examples:
+        Create an NCO with a constant phase increment of $2 \pi / 20$ radians/sample and a constant phase offset
+        of $\pi$ radians.
+
+        .. ipython:: python
+
+            nco = sdr.NCO(increment=2 * np.pi / 20, offset=np.pi); \
+            y = nco.step(100)
+
+            @savefig sdr_NCO_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y, marker="."); \
+            plt.title("Constant frequency NCO"); \
+            plt.tight_layout();
+
+        Create an NCO with a constant phase increment of 0 radians/sample and a constant phase offset
+        of 0 radians. Then step the NCO with a FSK frequency signal.
+
+        .. ipython:: python
+
+            nco = sdr.NCO(); \
+            freq = np.array([1, 2, -3, 0, 2, -1]) * 2 * np.pi / 60; \
+            freq = np.repeat(freq, 20); \
+            y = nco(freq=freq)
+
+            @savefig sdr_NCO_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y, marker="."); \
+            plt.title("NCO implementing CP-FSK modulation"); \
+            plt.tight_layout();
+
+        Create an NCO with a constant phase increment of $2 \pi / 57$ radians/sample and a constant phase offset
+        of 0 radians. Then step the NCO with a BPSK phase signal.
+
+        .. ipython:: python
+
+            nco = sdr.NCO(increment=2 * np.pi / 57); \
+            phase = np.array([0, 1, 0, 1, 0, 1]) * np.pi; \
+            phase = np.repeat(phase, 20); \
+            y = nco(phase=phase)
+
+            @savefig sdr_NCO_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y, marker="."); \
+            plt.title("NCO implementing BPSK modulation"); \
+            plt.tight_layout();
+
         See the :ref:`phase-locked-loop` example.
 
     Group:
