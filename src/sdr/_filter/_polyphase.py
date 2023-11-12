@@ -16,8 +16,8 @@ from ._fir import FIR
 
 @export
 def multirate_taps(
-    P: int,
-    Q: int = 1,
+    up: int,
+    down: int = 1,
     half_length: int = 12,
     A_stop: float = 80,
 ) -> npt.NDArray[np.float_]:
@@ -28,8 +28,8 @@ def multirate_taps(
         This filter can be used with :class:`sdr.Interpolator`, :class:`sdr.Decimator`, or :class:`sdr.Resampler`.
 
     Arguments:
-        P: The interpolation rate $P$.
-        Q: The decimation rate $Q$.
+        up: The interpolation rate $P$.
+        down: The decimation rate $Q$.
         half_length: The half-length of the polyphase filters.
         A_stop: The stopband attenuation $A_{\text{stop}}$ in dB.
 
@@ -58,15 +58,17 @@ def multirate_taps(
     Group:
         dsp-multirate-filtering
     """
-    if not isinstance(P, int):
-        raise TypeError(f"Argument 'P' must be an integer, not {P}.")
-    if not P >= 1:
-        raise ValueError(f"Argument 'P' must be at least 1, not {P}.")
+    if not isinstance(up, int):
+        raise TypeError(f"Argument 'up' must be an integer, not {up}.")
+    if not up >= 1:
+        raise ValueError(f"Argument 'up' must be at least 1, not {up}.")
+    P = up
 
-    if not isinstance(Q, int):
-        raise TypeError(f"Argument 'Q' must be an integer, not {Q}.")
-    if not Q >= 1:
-        raise ValueError(f"Argument 'Q' must be at least 1, not {Q}.")
+    if not isinstance(down, int):
+        raise TypeError(f"Argument 'down' must be an integer, not {down}.")
+    if not down >= 1:
+        raise ValueError(f"Argument 'down' must be at least 1, not {down}.")
+    Q = down
 
     B = P if P > 1 else Q  # The number of polyphase branches
     R = max(P, Q)  # Inverse of the filter's fractional bandwidth
@@ -137,14 +139,14 @@ def _multirate_taps_zoh(rate: int) -> npt.NDArray[np.float_]:
 
 
 @export
-def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> npt.NDArray:
+def polyphase_matrix(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
     """
     Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves
     rational resampling by $P/Q$.
 
     Arguments:
-        P: The interpolation rate $P$.
-        Q: The decimation rate $Q$.
+        up: The interpolation rate $P$.
+        down: The decimation rate $Q$.
         taps: The multirate FIR filter taps $h_i$.
 
     Returns:
@@ -181,15 +183,17 @@ def polyphase_matrix(P: int, Q: int, taps: npt.ArrayLike) -> npt.NDArray:
     Group:
         dsp-multirate-filtering
     """
-    if not isinstance(P, int):
-        raise TypeError(f"Argument 'P' must be an integer, not {P}.")
-    if not P >= 1:
-        raise ValueError(f"Argument 'P' must be at least 1, not {P}.")
+    if not isinstance(up, int):
+        raise TypeError(f"Argument 'up' must be an integer, not {up}.")
+    if not up >= 1:
+        raise ValueError(f"Argument 'up' must be at least 1, not {up}.")
+    P = up
 
-    if not isinstance(Q, int):
-        raise TypeError(f"Argument 'Q' must be an integer, not {Q}.")
-    if not Q >= 1:
-        raise ValueError(f"Argument 'Q' must be at least 1, not {Q}.")
+    if not isinstance(down, int):
+        raise TypeError(f"Argument 'down' must be an integer, not {down}.")
+    if not down >= 1:
+        raise ValueError(f"Argument 'down' must be at least 1, not {down}.")
+    Q = down
 
     taps = np.asarray(taps)
 
