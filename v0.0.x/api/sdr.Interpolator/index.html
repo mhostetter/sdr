@@ -9081,13 +9081,15 @@ the output signal <span class="math notranslate nohighlight">\(y[n]\)</span>. Th
 as is needed in the first case.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
-</span>Polyphase 2x Interpolating FIR Filter Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
+</span>Polyphase 3x Interpolating FIR Filter Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>                       +------------------------+
-                   +--&gt;| h[0], h[2], h[4], h[6] |--&gt; ..., y[2], y[0]
+                   +--&gt;| h[0], h[3], h[6], h[9] |--&gt; ..., y[3], y[0]
                    |   +------------------------+
- ..., x[1], x[0] --+
                    |   +------------------------+
-                   +--&gt;| h[1], h[3], h[5], 0    |--&gt; ..., y[3], y[1]
+ ..., x[1], x[0] --+--&gt;| h[1], h[4], h[7], 0    |--&gt; ..., y[4], y[1]
+                   |   +------------------------+
+                   |   +------------------------+
+                   +--&gt;| h[2], h[5], h[8], 0    |--&gt; ..., y[5], y[2]
                        +------------------------+
 
  Input Hold                                          Output Commutator

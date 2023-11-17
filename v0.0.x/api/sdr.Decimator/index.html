@@ -9080,16 +9080,18 @@ commutated input signal <span class="math notranslate nohighlight">\(x[n]\)</spa
 This prevents the need to compute outputs that will be discarded, as is done in the first case.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
-</span>Polyphase 2x Decimating FIR Filter Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
+</span>Polyphase 3x Decimating FIR Filter Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>                          +------------------------+
- ..., x[4], x[2], x[0] --&gt;| h[0], h[2], h[4], h[6] |--+
-                          +------------------------+  |
-                                                      @--&gt; ..., y[1], y[0]
-                          +------------------------+  |
- ..., x[3], x[1], 0    --&gt;| h[1], h[3], h[5], 0    |--+
+ ..., x[6], x[3], x[0] --&gt;| h[0], h[3], h[6], h[9] |---+
+                          +------------------------+   |
+                          +------------------------+   v
+ ..., x[5], x[2], 0    --&gt;| h[1], h[4], h[7], 0    |--&gt;@--&gt; ..., y[1], y[0]
+                          +------------------------+   ^
+                          +------------------------+   |
+ ..., x[4], x[1], 0    --&gt;| h[2], h[5], h[8], 0    |---+
                           +------------------------+
 
- Input Commutator                                      Output Summation
+ Input Commutator                                           Output Summation
  (bottom-to-top)
 
  x[n] = Input signal with sample rate fs

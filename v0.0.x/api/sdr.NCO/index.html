@@ -9017,14 +9017,14 @@ You're not viewing the latest version.
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>Numerically-Controlled Oscillator Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>               constant          constant
-              increment           offset   p[n]
-                  |                 |        |
-         +----+   v                 v        v  +--------+
- f[n] --&gt;| K0 |--&gt;@--------------+--@--------@--| e^(j.) |--&gt; y[n]
-         +----+   ^              |              +--------+
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>               constant           constant
+              increment            offset    p[n]
+                  |                  |         |
+         +----+   v                  v         v   +--------+
+ f[n] --&gt;| K0 |--&gt;@--------------+--&gt;@--------&gt;@--&gt;| e^(j.) |--&gt; y[n]
+         +----+   ^              |                 +--------+
                   |   +------+   |
-                  +---| z^-1 |---+
+                  +---| z^-1 |&lt;--+
                       +------+
 
  f[n] = Input frequency signal (radians/sample)
