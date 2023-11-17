@@ -261,14 +261,16 @@ class Interpolator(FIR):
         as is needed in the first case.
 
         .. code-block:: text
-           :caption: Polyphase 2x Interpolating FIR Filter Block Diagram
+           :caption: Polyphase 3x Interpolating FIR Filter Block Diagram
 
                                   +------------------------+
-                              +-->| h[0], h[2], h[4], h[6] |--> ..., y[2], y[0]
+                              +-->| h[0], h[3], h[6], h[9] |--> ..., y[3], y[0]
                               |   +------------------------+
-            ..., x[1], x[0] --+
                               |   +------------------------+
-                              +-->| h[1], h[3], h[5], 0    |--> ..., y[3], y[1]
+            ..., x[1], x[0] --+-->| h[1], h[4], h[7], 0    |--> ..., y[4], y[1]
+                              |   +------------------------+
+                              |   +------------------------+
+                              +-->| h[2], h[5], h[8], 0    |--> ..., y[5], y[2]
                                   +------------------------+
 
             Input Hold                                          Output Commutator
@@ -675,17 +677,19 @@ class Decimator(FIR):
         This prevents the need to compute outputs that will be discarded, as is done in the first case.
 
         .. code-block:: text
-           :caption: Polyphase 2x Decimating FIR Filter Block Diagram
+           :caption: Polyphase 3x Decimating FIR Filter Block Diagram
 
                                      +------------------------+
-            ..., x[4], x[2], x[0] -->| h[0], h[2], h[4], h[6] |--+
-                                     +------------------------+  |
-                                                                 @--> ..., y[1], y[0]
-                                     +------------------------+  |
-            ..., x[3], x[1], 0    -->| h[1], h[3], h[5], 0    |--+
+            ..., x[6], x[3], x[0] -->| h[0], h[3], h[6], h[9] |---+
+                                     +------------------------+   |
+                                     +------------------------+   v
+            ..., x[5], x[2], 0    -->| h[1], h[4], h[7], 0    |-->@--> ..., y[1], y[0]
+                                     +------------------------+   ^
+                                     +------------------------+   |
+            ..., x[4], x[1], 0    -->| h[2], h[5], h[8], 0    |---+
                                      +------------------------+
 
-            Input Commutator                                      Output Summation
+            Input Commutator                                           Output Summation
             (bottom-to-top)
 
             x[n] = Input signal with sample rate fs
@@ -956,17 +960,19 @@ class Resampler(FIR):
         as is needed in the first case.
 
         .. code-block:: text
-           :caption: Polyphase 2/3 Resampling FIR Filter Block Diagram
+           :caption: Polyphase 3/2 Resampling FIR Filter Block Diagram
 
                                   +------------------------+
-                              +-->| h[0], h[2], h[4], h[6] |--> ..., ____, y[0]
+                              +-->| h[0], h[3], h[6], h[9] |--> ..., ____, y[0]
                               |   +------------------------+
-            ..., x[1], x[0] --+
                               |   +------------------------+
-                              +-->| h[1], h[3], h[5], 0    |--> ..., y[1], ____
+            ..., x[1], x[0] --+-->| h[1], h[4], h[7], 0    |--> ..., y[2], ____
+                              |   +------------------------+
+                              |   +------------------------+
+                              +-->| h[2], h[5], h[8], 0    |--> ..., ____, y[1]
                                   +------------------------+
 
-            Input Hold                                          Output Commutator by 3
+            Input Hold                                          Output Commutator by 2
                                                                 (top-to-bottom)
 
             x[n] = Input signal with sample rate fs
