@@ -361,7 +361,7 @@ class Differentiator(FIR):
         .. code-block:: text
             :caption: FIR Differentiator Block Diagram
 
-            x[n] --+---------------@--> y[n]
+            x[n] --+-------------->@--> y[n]
                    |               ^
                    |   +------+    | -1
                    +-->| z^-1 |----+
