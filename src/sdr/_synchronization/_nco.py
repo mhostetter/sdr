@@ -18,14 +18,14 @@ class NCO:
         .. code-block:: text
            :caption: Numerically-Controlled Oscillator Block Diagram
 
-                          constant          constant
-                         increment           offset   p[n]
-                             |                 |        |
-                    +----+   v                 v        v  +--------+
-            f[n] -->| K0 |-->@--------------+--@--------@--| e^(j.) |--> y[n]
-                    +----+   ^              |              +--------+
+                          constant           constant
+                         increment            offset    p[n]
+                             |                  |         |
+                    +----+   v                  v         v   +--------+
+            f[n] -->| K0 |-->@--------------+-->@-------->@-->| e^(j.) |--> y[n]
+                    +----+   ^              |                 +--------+
                              |   +------+   |
-                             +---| z^-1 |---+
+                             +---| z^-1 |<--+
                                  +------+
 
             f[n] = Input frequency signal (radians/sample)
