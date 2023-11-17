@@ -64,7 +64,7 @@ def evm(
 
             psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1000); \
-            x = psk.modulate(s); \
+            x = psk.map_symbols(s); \
             x_hat = sdr.awgn(x, 20)
 
             @savefig sdr_evm_1.png
