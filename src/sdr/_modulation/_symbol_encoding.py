@@ -81,7 +81,7 @@ def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
             :caption: Differential Decoder Block Diagram
 
                        +------+  y[k-1]
-            y[k] --+-->| z^-1 |----------@--> x[k]
+            y[k] --+-->| z^-1 |--------->@--> x[k]
                    |   +------+          ^
                    |                     |
                    +---------------------+
