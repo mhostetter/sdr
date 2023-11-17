@@ -72,7 +72,7 @@ def awgn(
 
             psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1_000); \
-            x = psk.modulate(s); \
+            x = psk.map_symbols(s); \
             y = sdr.awgn(x, snr=10)
 
             @savefig sdr_awgn_2.png
@@ -133,7 +133,7 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0) -> npt.NDAr
 
             psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, 4, 1_000); \
-            x = psk.modulate(s); \
+            x = psk.map_symbols(s); \
             y1 = sdr.iq_imbalance(x, 5, 0); \
             y2 = sdr.iq_imbalance(x, -5, 0)
 
@@ -207,7 +207,7 @@ def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
 
             psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1_000); \
-            x = psk.modulate(s)
+            x = psk.map_symbols(s)
 
         Add 10 ppm of sample rate offset.
 
@@ -283,7 +283,7 @@ def frequency_offset(
 
             psk = sdr.PSK(4, phase_offset=45); \
             s = np.random.randint(0, psk.order, 1_000); \
-            x = psk.modulate(s)
+            x = psk.map_symbols(s)
 
         Add a frequency offset of 1 cycle per 10,000 symbols.
 
