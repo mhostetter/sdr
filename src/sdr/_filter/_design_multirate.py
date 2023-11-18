@@ -134,9 +134,9 @@ def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float_]:
 
 
 @export
-def polyphase_matrix(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
+def polyphase_decompose(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
     """
-    Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves
+    Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves
     rational resampling by $P/Q$.
 
     Arguments:
@@ -172,8 +172,8 @@ def polyphase_matrix(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
         .. ipython:: python
 
             h = np.arange(0, 20)
-            sdr.polyphase_matrix(3, 4, h)
-            sdr.polyphase_matrix(1, 6, h)
+            sdr.polyphase_decompose(3, 4, h)
+            sdr.polyphase_decompose(1, 6, h)
 
     Group:
         dsp-multirate-filtering
