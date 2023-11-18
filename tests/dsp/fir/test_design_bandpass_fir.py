@@ -3,6 +3,8 @@ import pytest
 
 import sdr
 
+from .helper import verify_impulse_response
+
 
 def test_exceptions():
     with pytest.raises(TypeError):
@@ -70,15 +72,7 @@ def test_custom():
             -0.017963811098946,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
+    verify_impulse_response(h, h_truth)
 
 
 def test_hamming():
@@ -123,15 +117,7 @@ def test_hamming():
             -0.001295920763505,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
+    verify_impulse_response(h, h_truth)
 
 
 def test_hann():
@@ -176,15 +162,7 @@ def test_hann():
             0,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
+    verify_impulse_response(h, h_truth)
 
 
 def test_blackman():
@@ -229,15 +207,7 @@ def test_blackman():
             0.000000000000000,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
+    verify_impulse_response(h, h_truth)
 
 
 def test_blackman_harris():
@@ -282,15 +252,7 @@ def test_blackman_harris():
             -0.000001060796132,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
+    verify_impulse_response(h, h_truth)
 
 
 def test_chebyshev():
@@ -335,15 +297,7 @@ def test_chebyshev():
             -0.000309113441909,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
+    verify_impulse_response(h, h_truth)
 
 
 def test_kaiser():
@@ -388,28 +342,4 @@ def test_kaiser():
             -0.016765450319470,
         ]
     )
-
-    # debug_plot(h, h_truth)
-
-    # NOTE: MATLAB doesn't have perfectly 0 dB gain in the passband, but we do.
-    #       Normalize the gains for comparison.
-    h *= np.max(h_truth) / np.max(h)
-
-    assert h.shape == h_truth.shape
-    assert np.allclose(h, h_truth)
-
-
-def debug_plot(h, h_truth):
-    import matplotlib.pyplot as plt
-
-    plt.figure()
-    sdr.plot.time_domain(h_truth, marker=".", label="h_truth")
-    sdr.plot.time_domain(h, marker="x", label="h")
-    plt.legend()
-
-    plt.figure()
-    sdr.plot.magnitude_response(h_truth, label="h_truth")
-    sdr.plot.magnitude_response(h, label="h")
-    plt.legend()
-
-    plt.show()
+    verify_impulse_response(h, h_truth)
