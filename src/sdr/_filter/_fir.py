@@ -32,7 +32,7 @@ class FIR:
         See the :ref:`fir-filters` example.
 
     Group:
-        dsp-filtering
+        dsp-fir-filtering
     """
 
     def __init__(self, h: npt.ArrayLike, streaming: bool = False):
@@ -411,7 +411,7 @@ class Differentiator(FIR):
             sdr.plot.magnitude_response(fir);
 
     Group:
-        dsp-filtering-applications
+        dsp-fir-filtering
     """
 
     def __init__(self, streaming: bool = False):
