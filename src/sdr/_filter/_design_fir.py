@@ -34,6 +34,14 @@ def _ideal_lowpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
     return h_ideal
 
 
+def _ideal_bandpass(order: int, center_freq: float, bandwidth: float) -> npt.NDArray[np.float_]:
+    """
+    Returns the ideal bandpass filter impulse response.
+    """
+    h_ideal = _ideal_lowpass(order, center_freq + bandwidth / 2) - _ideal_lowpass(order, center_freq - bandwidth / 2)
+    return h_ideal
+
+
 def _window(
     order: int,
     window: Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
@@ -248,7 +256,7 @@ def design_bandpass_fir(
     if not 0 <= center_freq - bandwidth / 2 <= 1:
         raise ValueError(f"Argument 'bandwidth' must be between 0 and 'center_freq', not {bandwidth}.")
 
-    h_ideal = _ideal_lowpass(order, center_freq + bandwidth / 2) - _ideal_lowpass(order, center_freq - bandwidth / 2)
+    h_ideal = _ideal_bandpass(order, center_freq, bandwidth)
     h_window = _window(order, window)
     h_window = _normalize(h_window, "power")
     h = h_ideal * h_window
