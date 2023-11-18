@@ -3185,8 +3185,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.polyphase_matrix/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.polyphase_matrix (Python function) — Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves rational resampling by $P/Q$." class="md-ellipsis">polyphase_<wbr>matrix</span>
+      <a href="../sdr.polyphase_decompose/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.polyphase_decompose (Python function) — Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ with $B$ phases." class="md-ellipsis">polyphase_<wbr>decompose</span>
       </a>
     </li>
   
@@ -4666,8 +4666,8 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
-  <a href="../sdr.polyphase_matrix/" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.polyphase_matrix (Python function) — Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves rational resampling by $P/Q$." class="md-ellipsis">polyphase_<wbr>matrix</span>
+  <a href="../sdr.polyphase_decompose/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.polyphase_decompose (Python function) — Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ with $B$ phases." class="md-ellipsis">polyphase_<wbr>decompose</span>
   </a>
   
 </li>
@@ -10178,9 +10178,8 @@ You're not viewing the latest version.
 
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.polyphase_matrix/" title="sdr.polyphase_matrix (Python function) — Converts the multirate FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves rational resampling by $P/Q$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">polyphase_matrix</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.polyphase_matrix/#p-up" title="sdr.polyphase_matrix.up (Python parameter) — The interpolation rate $P$."><span class="n"><span class="pre">up</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.polyphase_matrix/#p-down" title="sdr.polyphase_matrix.down (Python parameter) — The decimation rate $Q$."><span class="n"><span class="pre">down</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.polyphase_matrix/#p-taps" title="sdr.polyphase_matrix.taps (Python parameter) — The multirate FIR filter taps $h_i$."><span class="n"><span class="pre">taps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
-<dd><p>Converts the multirate FIR filter taps <span class="math notranslate nohighlight">\(h_i\)</span> into the polyphase matrix <span class="math notranslate nohighlight">\(H_{i, j}\)</span> that achieves
-rational resampling by <span class="math notranslate nohighlight">\(P/Q\)</span>.</p>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.polyphase_decompose/" title="sdr.polyphase_decompose (Python function) — Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ with $B$ phases."><span class="sig-name descname pseudo-toc-entry"><span class="pre">polyphase_decompose</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.polyphase_decompose/#p-taps" title="sdr.polyphase_decompose.taps (Python parameter) — The multirate FIR filter taps $h_i$."><span class="n"><span class="pre">taps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.polyphase_decompose/#p-phases" title="sdr.polyphase_decompose.phases (Python parameter) — The number of phases $B$."><span class="n"><span class="pre">phases</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
+<dd><p>Decomposes the FIR filter taps <span class="math notranslate nohighlight">\(h_i\)</span> into the polyphase matrix <span class="math notranslate nohighlight">\(H_{i, j}\)</span> with <span class="math notranslate nohighlight">\(B\)</span> phases.</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">
