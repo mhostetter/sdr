@@ -8,7 +8,7 @@ def test_3_1():
     MATLAB:
         >> transpose(designMultirateFIR(3, 1))
     """
-    h = sdr.multirate_taps(3, 1)
+    h = sdr.design_multirate_fir(3, 1)
     h_truth = np.array(
         [
             0,
@@ -93,7 +93,7 @@ def test_1_3():
     MATLAB:
         >> transpose(designMultirateFIR(1, 3))
     """
-    h = sdr.multirate_taps(1, 3)
+    h = sdr.design_multirate_fir(1, 3)
     h_truth = np.array(
         [
             0,
@@ -178,7 +178,7 @@ def test_3_2():
     MATLAB:
         >> transpose(designMultirateFIR(3, 2))
     """
-    h = sdr.multirate_taps(3, 2)
+    h = sdr.design_multirate_fir(3, 2)
     h_truth = np.array(
         [
             0,
@@ -263,7 +263,7 @@ def test_2_3():
     MATLAB:
         >> transpose(designMultirateFIR(2, 3))
     """
-    h = sdr.multirate_taps(2, 3)
+    h = sdr.design_multirate_fir(2, 3)
     h_truth = np.array(
         [
             0,
@@ -324,7 +324,7 @@ def test_3_2_20():
     MATLAB:
         >> transpose(designMultirateFIR(3, 2, 20))
     """
-    h = sdr.multirate_taps(3, 2, half_length=20)
+    h = sdr.design_multirate_fir(3, 2, half_length=20)
     h_truth = np.array(
         [
             0,
@@ -457,7 +457,7 @@ def test_2_3_20():
     MATLAB:
         >> transpose(designMultirateFIR(2, 3, 20))
     """
-    h = sdr.multirate_taps(2, 3, half_length=20)
+    h = sdr.design_multirate_fir(2, 3, half_length=20)
     h_truth = np.array(
         [
             -0.000036875262276,
@@ -551,7 +551,7 @@ def test_3_2_15_120():
     MATLAB:
         >> transpose(designMultirateFIR(3, 2, 15, 120))
     """
-    h = sdr.multirate_taps(3, 2, half_length=15, A_stop=120)
+    h = sdr.design_multirate_fir(3, 2, half_length=15, A_stop=120)
     h_truth = np.array(
         [
             0,
@@ -654,7 +654,7 @@ def test_2_3_15_120():
     MATLAB:
         >> transpose(designMultirateFIR(2, 3, 15, 120))
     """
-    h = sdr.multirate_taps(2, 3, half_length=15, A_stop=120)
+    h = sdr.design_multirate_fir(2, 3, half_length=15, A_stop=120)
     h_truth = np.array(
         [
             0,
