@@ -101,11 +101,11 @@ def design_lowpass_fir(
         - https://www.mathworks.com/help/dsp/ref/designlowpassfir.html
 
     Examples:
-        Design a length-33 lowpass FIR filter with cutoff frequency $f_c = 0.2 \cdot f_s / 2$, using a Hamming window.
+        Design a length-101 lowpass FIR filter with cutoff frequency $f_c = 0.2 \cdot f_s / 2$, using a Hamming window.
 
         .. ipython:: python
 
-            h_hamming = sdr.design_lowpass_fir(32, 0.2, window="hamming")
+            h_hamming = sdr.design_lowpass_fir(100, 0.2, window="hamming")
 
             @savefig sdr_design_lowpass_fir_1.png
             plt.figure(figsize=(8, 4)); \
@@ -119,11 +119,11 @@ def design_lowpass_fir(
 
         .. ipython:: python
 
-            h_hann = sdr.design_lowpass_fir(32, 0.2, window="hann"); \
-            h_blackman = sdr.design_lowpass_fir(32, 0.2, window="blackman"); \
-            h_blackman_harris = sdr.design_lowpass_fir(32, 0.2, window="blackman-harris"); \
-            h_chebyshev = sdr.design_lowpass_fir(32, 0.2, window="chebyshev"); \
-            h_kaiser = sdr.design_lowpass_fir(32, 0.2, window="kaiser")
+            h_hann = sdr.design_lowpass_fir(100, 0.2, window="hann"); \
+            h_blackman = sdr.design_lowpass_fir(100, 0.2, window="blackman"); \
+            h_blackman_harris = sdr.design_lowpass_fir(100, 0.2, window="blackman-harris"); \
+            h_chebyshev = sdr.design_lowpass_fir(100, 0.2, window="chebyshev"); \
+            h_kaiser = sdr.design_lowpass_fir(100, 0.2, window="kaiser")
 
             @savefig sdr_design_lowpass_fir_3.png
             plt.figure(figsize=(8, 4)); \
