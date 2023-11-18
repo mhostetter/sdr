@@ -1368,6 +1368,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.design_bandpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_bandpass_fir (Python function) — Designs a bandpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>bandpass_<wbr>fir</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -9008,8 +9023,8 @@ is 60 dB.</p></li>
 <li><p><a class="reference external" href="https://www.mathworks.com/help/dsp/ref/designlowpassfir.html">https://www.mathworks.com/help/dsp/ref/designlowpassfir.html</a></p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
-<p>Design a length-33 lowpass FIR filter with cutoff frequency <span class="math notranslate nohighlight">\(f_c = 0.2 \cdot f_s / 2\)</span>, using a Hamming window.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">h_hamming</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hamming&quot;</span><span class="p">)</span>
+<p>Design a length-101 lowpass FIR filter with cutoff frequency <span class="math notranslate nohighlight">\(f_c = 0.2 \cdot f_s / 2\)</span>, using a Hamming window.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">h_hamming</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hamming&quot;</span><span class="p">)</span>
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">h_hamming</span><span class="p">);</span>
@@ -9023,11 +9038,11 @@ is 60 dB.</p></li>
 <img alt="../../_images/sdr_design_lowpass_fir_1.png" src="../../_images/sdr_design_lowpass_fir_1.png" />
 <img alt="../../_images/sdr_design_lowpass_fir_2.png" src="../../_images/sdr_design_lowpass_fir_2.png" />
 <p>Compare filter designs using different windows.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">h_hann</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hann&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">h_blackman</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;blackman&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">h_blackman_harris</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;blackman-harris&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">h_chebyshev</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;chebyshev&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">h_kaiser</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;kaiser&quot;</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">h_hann</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;hann&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">h_blackman</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;blackman&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">h_blackman_harris</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;blackman-harris&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">h_chebyshev</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;chebyshev&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">h_kaiser</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">design_lowpass_fir</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="s2">&quot;kaiser&quot;</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
@@ -9091,13 +9106,13 @@ is 60 dB.</p></li>
       
       
         
-        <a href="../sdr.IIR/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.IIR" rel="next">
+        <a href="../sdr.design_bandpass_fir/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.design_bandpass_fir" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              sdr.IIR
+              sdr.design_bandpass_fir
             </div>
           </div>
           <div class="md-footer__button md-icon">
