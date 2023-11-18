@@ -42,11 +42,11 @@ def design_multirate_fir(
 
             h = sdr.design_multirate_fir(11, 3)
 
-            @savefig sdr_multirate_fir_1.png
+            @savefig sdr_design_multirate_fir_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.impulse_response(h);
 
-            @savefig sdr_multirate_fir_2.png
+            @savefig sdr_design_multirate_fir_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.magnitude_response(h);
 
