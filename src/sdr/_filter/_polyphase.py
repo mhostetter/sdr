@@ -14,7 +14,7 @@ from ._design_multirate import (
     design_multirate_fir_linear,
     design_multirate_fir_linear_matlab,
     design_multirate_fir_zoh,
-    polyphase_matrix,
+    polyphase_decompose,
 )
 from ._fir import FIR
 
@@ -227,7 +227,7 @@ class Interpolator(FIR):
                 f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
             )
 
-        self._polyphase_taps = polyphase_matrix(rate, 1, taps)
+        self._polyphase_taps = polyphase_decompose(rate, 1, taps)
 
         super().__init__(taps, streaming=streaming)
 
@@ -598,7 +598,7 @@ class Decimator(FIR):
 
         # N = math.ceil(self.taps.size / rate) * rate
         # self._polyphase_taps = np.pad(self.taps, (0, N - self.taps.size), mode="constant").reshape(-1, rate).T
-        self._polyphase_taps = polyphase_matrix(1, rate, taps)
+        self._polyphase_taps = polyphase_decompose(1, rate, taps)
 
         super().__init__(taps, streaming=streaming)
 
@@ -930,7 +930,7 @@ class Resampler(FIR):
                 f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
             )
 
-        self._polyphase_taps = polyphase_matrix(up, down, taps)
+        self._polyphase_taps = polyphase_decompose(up, down, taps)
 
         super().__init__(taps, streaming=streaming)
 
