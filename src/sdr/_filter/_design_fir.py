@@ -24,13 +24,6 @@ def _normalize(h: npt.NDArray[np.float_], norm: Literal["power", "energy", "pass
     return h
 
 
-def _normalize_passband(h: npt.NDArray[np.float_], center_freq: float) -> npt.NDArray[np.float_]:
-    order = h.size - 1
-    lo = np.exp(-1j * np.pi * center_freq * np.arange(-order // 2, order // 2 + 1))
-    h = h / np.abs(np.sum(h * lo))
-    return h
-
-
 def _ideal_lowpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
     """
     Returns the ideal lowpass filter impulse response.
@@ -102,7 +95,7 @@ def design_lowpass_fir(
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
 
     Returns:
-        The filter impulse response $h[n]$ with length $N + 1$.
+        The filter impulse response $h[n]$ with length $N + 1$. The average passband gain is 0 dB.
 
     References:
         - https://www.mathworks.com/help/dsp/ref/designlowpassfir.html
@@ -158,8 +151,8 @@ def design_lowpass_fir(
 
     h_ideal = _ideal_lowpass(order, cutoff_freq)
     h_window = _window(order, window)
+    h_window = _normalize(h_window, "power")
     h = h_ideal * h_window
-    h = _normalize(h, "passband")
 
     return h
 
@@ -193,7 +186,7 @@ def design_bandpass_fir(
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
 
     Returns:
-        The filter impulse response $h[n]$ with length $N + 1$.
+        The filter impulse response $h[n]$ with length $N + 1$. The average passband gain is 0 dB.
 
     References:
         - https://www.mathworks.com/help/dsp/ref/designbandpassfir.html
@@ -257,7 +250,7 @@ def design_bandpass_fir(
 
     h_ideal = _ideal_lowpass(order, center_freq + bandwidth / 2) - _ideal_lowpass(order, center_freq - bandwidth / 2)
     h_window = _window(order, window)
+    h_window = _normalize(h_window, "power")
     h = h_ideal * h_window
-    h = _normalize_passband(h, center_freq)
 
     return h
