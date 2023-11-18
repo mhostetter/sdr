@@ -134,15 +134,13 @@ def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float_]:
 
 
 @export
-def polyphase_decompose(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
+def polyphase_decompose(taps: npt.ArrayLike, phases: int) -> npt.NDArray:
     """
-    Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ that achieves
-    rational resampling by $P/Q$.
+    Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ with $B$ phases.
 
     Arguments:
-        up: The interpolation rate $P$.
-        down: The decimation rate $Q$.
         taps: The multirate FIR filter taps $h_i$.
+        phases: The number of phases $B$.
 
     Returns:
         The polyphase matrix $H_{i, j}$.
@@ -152,7 +150,7 @@ def polyphase_decompose(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
         $H_{i, j}$ as follows:
 
         .. code-block:: text
-            :caption: Polyphase Matrix
+            :caption: Polyphase Matrix with 3 Phases
 
             +------+------+------+------+
             | h[0] | h[3] | h[6] | h[9] |
@@ -166,33 +164,26 @@ def polyphase_decompose(up: int, down: int, taps: npt.ArrayLike) -> npt.NDArray:
         - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters
 
     Examples:
-        Convert the multirate FIR filter (notional taps for demonstration) into a polyphase matrix
-        for rational resampling by 3/4 and 1/6.
+        Decompose the multirate FIR filter (notional taps for demonstration) into polyphase matrices
+        with 3 and 6 phases.
 
         .. ipython:: python
 
             h = np.arange(0, 20)
-            sdr.polyphase_decompose(3, 4, h)
-            sdr.polyphase_decompose(1, 6, h)
+            sdr.polyphase_decompose(h, 3)
+            sdr.polyphase_decompose(h, 6)
 
     Group:
         dsp-multirate-filtering
     """
-    if not isinstance(up, int):
-        raise TypeError(f"Argument 'up' must be an integer, not {up}.")
-    if not up >= 1:
-        raise ValueError(f"Argument 'up' must be at least 1, not {up}.")
-    P = up
-
-    if not isinstance(down, int):
-        raise TypeError(f"Argument 'down' must be an integer, not {down}.")
-    if not down >= 1:
-        raise ValueError(f"Argument 'down' must be at least 1, not {down}.")
-    Q = down
-
     taps = np.asarray(taps)
 
-    B = P if P > 1 else Q  # The number of polyphase branches
+    if not isinstance(phases, int):
+        raise TypeError(f"Argument 'phases' must be an integer, not {phases}.")
+    if not phases >= 1:
+        raise ValueError(f"Argument 'phases' must be at least 1, not {phases}.")
+    B = phases
+
     N = math.ceil(taps.size / B) * B  # Filter length
 
     # Append zeros to the end of the taps so that the filter length is a multiple of B
