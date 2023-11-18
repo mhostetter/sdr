@@ -3,8 +3,13 @@
 Digital signal processing
 =========================
 
-Filtering
----------
+FIR filtering
+-------------
+
+.. python-apigen-group:: dsp-fir-filtering
+
+IIR filtering
+-------------
 
 .. python-apigen-group:: dsp-filtering
 
