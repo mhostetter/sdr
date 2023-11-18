@@ -3247,8 +3247,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.multirate_taps/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multirate_taps (Python function) — Computes the multirate FIR filter that achieves rational resampling by $P/Q$." class="md-ellipsis">multirate_<wbr>taps</span>
+      <a href="../sdr.design_multirate_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_multirate_fir (Python function) — Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">design_<wbr>multirate_<wbr>fir</span>
       </a>
     </li>
   
@@ -8976,7 +8976,7 @@ You're not viewing the latest version.
 </dd>
 <dt id="p-taps"><span class="n sig-name">taps</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'kaiser'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'linear'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'linear-matlab'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'zoh'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span>ArrayLike</span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;kaiser&#39;</span></code><a class="headerlink" href="#p-taps" title="Permalink to this definition">¶</a></dt><dd><p><p>The multirate filter design specification.</p>
 <ul class="simple">
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;kaiser&quot;</span></code>: The multirate filter is designed using <a class="reference internal" href="../sdr.multirate_taps/" title="sdr.multirate_taps (Python function) — Computes the multirate FIR filter that achieves rational resampling by $P/Q$."><code class="xref py py-func docutils literal notranslate"><span class="pre">multirate_taps()</span></code></a>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;kaiser&quot;</span></code>: The multirate filter is designed using <a class="reference internal" href="../sdr.design_multirate_fir/" title="sdr.design_multirate_fir (Python function) — Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method."><code class="xref py py-func docutils literal notranslate"><span class="pre">design_multirate_fir()</span></code></a>
 with arguments <code class="code highlight python docutils literal highlight-python"><span class="n">up</span></code> and <code class="code highlight python docutils literal highlight-python"><span class="n">down</span></code>.</p></li>
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;linear&quot;</span></code>: The multirate filter is designed to linearly interpolate between samples.
 The filter coefficients are a length-<span class="math notranslate nohighlight">\(2P\)</span> linear ramp <span class="math notranslate nohighlight">\(\frac{1}{P} [0, ..., P-1, P, P-1, ..., 1]\)</span>.
