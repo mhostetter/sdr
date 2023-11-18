@@ -11,7 +11,7 @@ FIR filtering
 IIR filtering
 -------------
 
-.. python-apigen-group:: dsp-filtering
+.. python-apigen-group:: dsp-iir-filtering
 
 Multirate filtering
 -------------------
@@ -22,11 +22,6 @@ Arbitrary resampling
 --------------------
 
 .. python-apigen-group:: dsp-arbitrary-resampling
-
-Filtering applications
-----------------------
-
-.. python-apigen-group:: dsp-filtering-applications
 
 Correlation
 -----------

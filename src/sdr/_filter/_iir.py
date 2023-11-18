@@ -33,7 +33,7 @@ class IIR:
         See the :ref:`iir-filters` example.
 
     Group:
-        dsp-filtering
+        dsp-iir-filtering
     """
 
     def __init__(self, b: npt.ArrayLike, a: npt.ArrayLike, streaming: bool = False):
@@ -430,7 +430,7 @@ class Integrator(IIR):
             sdr.plot.magnitude_response(iir);
 
     Group:
-        dsp-filtering-applications
+        dsp-iir-filtering
     """
 
     def __init__(self, streaming: bool = False):
