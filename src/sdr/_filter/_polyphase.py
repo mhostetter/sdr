@@ -227,7 +227,8 @@ class Interpolator(FIR):
                 f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
             )
 
-        self._polyphase_taps = polyphase_decompose(rate, 1, taps)
+        phases = rate
+        self._polyphase_taps = polyphase_decompose(taps, phases)
 
         super().__init__(taps, streaming=streaming)
 
@@ -596,9 +597,8 @@ class Decimator(FIR):
         else:
             raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps}.")
 
-        # N = math.ceil(self.taps.size / rate) * rate
-        # self._polyphase_taps = np.pad(self.taps, (0, N - self.taps.size), mode="constant").reshape(-1, rate).T
-        self._polyphase_taps = polyphase_decompose(1, rate, taps)
+        phases = rate
+        self._polyphase_taps = polyphase_decompose(taps, phases)
 
         super().__init__(taps, streaming=streaming)
 
@@ -930,7 +930,8 @@ class Resampler(FIR):
                 f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
             )
 
-        self._polyphase_taps = polyphase_decompose(up, down, taps)
+        phases = up if up > 1 else down
+        self._polyphase_taps = polyphase_decompose(taps, phases)
 
         super().__init__(taps, streaming=streaming)
 
