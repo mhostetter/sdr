@@ -39,15 +39,17 @@ Features
 
 View all available classes and functions in the `API Reference <https://mhostetter.github.io/sdr/latest/api/dsp/>`_.
 
-- **Digital signal processing**: Finite impulse response (FIR) filters, infinite impulse response (IIR) filters,
-  polyphase interpolator, polyphase decimator, polyphase resampler, Farrow arbitrary resampler,
-  FIR differentiator, IIR integrator, complex mixing, real/complex conversion.
+- **Digital signal processing**: Finite impulse response (FIR) filters, FIR filter design,
+  infinite impulse response (IIR) filters, polyphase interpolator, polyphase decimator, polyphase resampler,
+  Farrow arbitrary resampler, fractional delay filter design, FIR differentiator, IIR integrator, complex mixing,
+  real/complex conversion.
 - **Sequences**: Barker, Zadoff-Chu.
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, rectangular pulse shape, half-sine pulse shape,
   raised cosine pulse shape, root raised cosine pulse shape, Gaussian pulse shape, binary and Gray symbol mapping,
   differential encoding.
 - **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop PLL analysis.
-- **Measurement**: Energy, power, voltage, bit/symbol error rate, error vector magnitude (EVM).
+- **Measurement**: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
+  error vector magnitude (EVM).
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
 - **Simulation**: Binary symmetric channel (BSC), binary erasure channel (BEC), discrete memoryless channel (DMC),
   additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
