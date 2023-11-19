@@ -11,8 +11,10 @@ from .._helper import export
 
 @export
 def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
-    """
+    r"""
     Differentially encodes the input data $x[k]$.
+
+    $$y[k] = x[k] \oplus y[k-1]$$
 
     Args:
         x: The input uncoded data $x[k]$.
@@ -66,8 +68,10 @@ def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
 
 @export
 def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
-    """
+    r"""
     Differentially decodes the input data $y[k]$.
+
+    $$x[k] = y[k] \oplus y[k-1]$$
 
     Arguments:
         y: The input encoded data $y[k]$.
