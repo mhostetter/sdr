@@ -161,7 +161,7 @@ def design_lowpass_fir(
 
             @savefig sdr_design_lowpass_fir_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming);
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided");
 
         Compare filter designs using different windows.
 
@@ -175,12 +175,12 @@ def design_lowpass_fir(
 
             @savefig sdr_design_lowpass_fir_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
-            sdr.plot.magnitude_response(h_hann, label="Hann"); \
-            sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
-            sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
-            sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
-            sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided", label="Hamming"); \
+            sdr.plot.magnitude_response(h_hann, x_axis="one-sided", label="Hann"); \
+            sdr.plot.magnitude_response(h_blackman, x_axis="one-sided", label="Blackman"); \
+            sdr.plot.magnitude_response(h_blackman_harris, x_axis="one-sided", label="Blackman-Harris"); \
+            sdr.plot.magnitude_response(h_chebyshev, x_axis="one-sided", label="Chebyshev"); \
+            sdr.plot.magnitude_response(h_kaiser, x_axis="one-sided", label="Kaiser"); \
             plt.legend(); \
             plt.ylim(-100, 10);
 
@@ -257,7 +257,7 @@ def design_highpass_fir(
 
             @savefig sdr_design_highpass_fir_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming);
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided");
 
         Compare filter designs using different windows.
 
@@ -271,12 +271,12 @@ def design_highpass_fir(
 
             @savefig sdr_design_highpass_fir_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
-            sdr.plot.magnitude_response(h_hann, label="Hann"); \
-            sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
-            sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
-            sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
-            sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided", label="Hamming"); \
+            sdr.plot.magnitude_response(h_hann, x_axis="one-sided", label="Hann"); \
+            sdr.plot.magnitude_response(h_blackman, x_axis="one-sided", label="Blackman"); \
+            sdr.plot.magnitude_response(h_blackman_harris, x_axis="one-sided", label="Blackman-Harris"); \
+            sdr.plot.magnitude_response(h_chebyshev, x_axis="one-sided", label="Chebyshev"); \
+            sdr.plot.magnitude_response(h_kaiser, x_axis="one-sided", label="Kaiser"); \
             plt.legend(); \
             plt.ylim(-100, 10);
 
@@ -356,7 +356,7 @@ def design_bandpass_fir(
 
             @savefig sdr_design_bandpass_fir_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming);
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided");
 
         Compare filter designs using different windows.
 
@@ -370,12 +370,12 @@ def design_bandpass_fir(
 
             @savefig sdr_design_bandpass_fir_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
-            sdr.plot.magnitude_response(h_hann, label="Hann"); \
-            sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
-            sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
-            sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
-            sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided", label="Hamming"); \
+            sdr.plot.magnitude_response(h_hann, x_axis="one-sided", label="Hann"); \
+            sdr.plot.magnitude_response(h_blackman, x_axis="one-sided", label="Blackman"); \
+            sdr.plot.magnitude_response(h_blackman_harris, x_axis="one-sided", label="Blackman-Harris"); \
+            sdr.plot.magnitude_response(h_chebyshev, x_axis="one-sided", label="Chebyshev"); \
+            sdr.plot.magnitude_response(h_kaiser, x_axis="one-sided", label="Kaiser"); \
             plt.legend(); \
             plt.ylim(-100, 10);
 
@@ -462,7 +462,7 @@ def design_bandstop_fir(
 
             @savefig sdr_design_bandstop_fir_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming);
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided");
 
         Compare filter designs using different windows.
 
@@ -476,12 +476,12 @@ def design_bandstop_fir(
 
             @savefig sdr_design_bandstop_fir_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
-            sdr.plot.magnitude_response(h_hann, label="Hann"); \
-            sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
-            sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
-            sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
-            sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
+            sdr.plot.magnitude_response(h_hamming, x_axis="one-sided", label="Hamming"); \
+            sdr.plot.magnitude_response(h_hann, x_axis="one-sided", label="Hann"); \
+            sdr.plot.magnitude_response(h_blackman, x_axis="one-sided", label="Blackman"); \
+            sdr.plot.magnitude_response(h_blackman_harris, x_axis="one-sided", label="Blackman-Harris"); \
+            sdr.plot.magnitude_response(h_chebyshev, x_axis="one-sided", label="Chebyshev"); \
+            sdr.plot.magnitude_response(h_kaiser, x_axis="one-sided", label="Kaiser"); \
             plt.legend(); \
             plt.ylim(-100, 10);
 
