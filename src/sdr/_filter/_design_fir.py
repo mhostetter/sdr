@@ -24,6 +24,13 @@ def _normalize(h: npt.NDArray[np.float_], norm: Literal["power", "energy", "pass
     return h
 
 
+def _normalize_passband(h: npt.NDArray[np.float_], center_freq: float) -> npt.NDArray[np.float_]:
+    order = h.size - 1
+    lo = np.exp(-1j * np.pi * center_freq * np.arange(-order // 2, order // 2 + 1))
+    h = h / np.abs(np.sum(h * lo))
+    return h
+
+
 def _ideal_lowpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
     """
     Returns the ideal lowpass filter impulse response.
@@ -38,7 +45,9 @@ def _ideal_bandpass(order: int, center_freq: float, bandwidth: float) -> npt.NDA
     """
     Returns the ideal bandpass filter impulse response.
     """
-    h_ideal = _ideal_lowpass(order, center_freq + bandwidth / 2) - _ideal_lowpass(order, center_freq - bandwidth / 2)
+    h_lp1 = _ideal_lowpass(order, center_freq + bandwidth / 2)
+    h_lp2 = _ideal_lowpass(order, center_freq - bandwidth / 2)
+    h_ideal = h_lp1 - h_lp2
     return h_ideal
 
 
@@ -103,7 +112,7 @@ def design_lowpass_fir(
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
 
     Returns:
-        The filter impulse response $h[n]$ with length $N + 1$. The average passband gain is 0 dB.
+        The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
 
     References:
         - https://www.mathworks.com/help/dsp/ref/designlowpassfir.html
@@ -155,12 +164,12 @@ def design_lowpass_fir(
     if not isinstance(cutoff_freq, (int, float)):
         raise TypeError(f"Argument 'cutoff_freq' must be a number, not {type(cutoff_freq).__name__}.")
     if not 0 <= cutoff_freq <= 1:
-        raise ValueError(f"Argument 'cutoff_freq' must be between 0 and 0.5, not {cutoff_freq}.")
+        raise ValueError(f"Argument 'cutoff_freq' must be between 0 and 1, not {cutoff_freq}.")
 
     h_ideal = _ideal_lowpass(order, cutoff_freq)
     h_window = _window(order, window)
-    h_window = _normalize(h_window, "power")
     h = h_ideal * h_window
+    h = _normalize_passband(h, 0)
 
     return h
 
@@ -194,7 +203,7 @@ def design_bandpass_fir(
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
 
     Returns:
-        The filter impulse response $h[n]$ with length $N + 1$. The average passband gain is 0 dB.
+        The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
 
     References:
         - https://www.mathworks.com/help/dsp/ref/designbandpassfir.html
@@ -247,7 +256,7 @@ def design_bandpass_fir(
     if not isinstance(center_freq, (int, float)):
         raise TypeError(f"Argument 'center_freq' must be a number, not {type(center_freq).__name__}.")
     if not 0 <= center_freq <= 1:
-        raise ValueError(f"Argument 'center_freq' must be between 0 and 0.5, not {center_freq}.")
+        raise ValueError(f"Argument 'center_freq' must be between 0 and 1, not {center_freq}.")
 
     if not isinstance(bandwidth, (int, float)):
         raise TypeError(f"Argument 'bandwidth' must be a number, not {type(bandwidth).__name__}.")
@@ -258,7 +267,7 @@ def design_bandpass_fir(
 
     h_ideal = _ideal_bandpass(order, center_freq, bandwidth)
     h_window = _window(order, window)
-    h_window = _normalize(h_window, "power")
     h = h_ideal * h_window
+    h = _normalize_passband(h, center_freq)
 
     return h
