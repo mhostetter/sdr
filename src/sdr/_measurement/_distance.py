@@ -47,7 +47,7 @@ def hamming(
     r"""
     Measures the Hamming distance between two signals $x[n]$ and $y[n]$.
 
-    $$d = \sum_{n=0}^{N-1} x[n] ^ y[n]$$
+    $$d = \sum_{n=0}^{N-1} x[n] \oplus y[n]$$
 
     Arguments:
         x: The time-domain signal $x[n]$.
