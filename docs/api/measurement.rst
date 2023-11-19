@@ -16,6 +16,11 @@ Voltage
 
 .. python-apigen-group:: measurement-voltage
 
+Distance
+--------
+
+.. python-apigen-group:: measurement-distance
+
 Modulation
 ----------
 
