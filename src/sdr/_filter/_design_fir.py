@@ -530,19 +530,22 @@ def design_frac_delay_fir(
     Designs a fractional delay FIR filter impulse response $h[n]$ using the Kaiser window method.
 
     Arguments:
-        length: The filter length $N + 1$. Filters with even length have best performance.
+        length: The filter length $L$. Filters with even length have best performance.
             Filters with odd length are equivalent to an even-length filter with an appended zero.
-        delay: The fractional delay $0 \le \tau \le 1$.
+        delay: The fractional delay $0 \le \Delta n \le 1$.
 
     Returns:
-        The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
+        The filter impulse response $h[n]$ with length $L$. The center of the passband has 0 dB gain.
+
+    Notes:
+        The filter group delay is $\tau = L_{even}/2 - 1 + \Delta n$ at DC.
 
     References:
         - https://www.mathworks.com/help/dsp/ref/designfracdelayfir.html
 
     Examples:
-        Design a $\tau = 0.25$ delay filter with length 8. Observe the width and flatness of the frequency response
-        passband. Also observe the group delay of 4.25 at the center of the passband.
+        Design a $\Delta n = 0.25$ delay filter with length 8. Observe the width and flatness of the frequency
+        response passband. Also observe the group delay of 3.25 at DC.
 
         .. ipython:: python
 
