@@ -302,7 +302,8 @@ def test_kaiser30_0p1():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.1, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.1, "kaiser")
+    # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
+    h = sdr.design_lowpass_fir(30, 0.1, "kaiser", atten=21.542)
     h_truth = np.array(
         [
             -0.019837202437853,
@@ -347,7 +348,8 @@ def test_kaiser_30_0p2():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window="kaiser")
+    # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
+    h = sdr.design_lowpass_fir(30, 0.2, window="kaiser", atten=21.542)
     h_truth = np.array(
         [
             0.000000000000000,
@@ -392,7 +394,8 @@ def test_kaiser30_0p3():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.3, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.3, "kaiser")
+    # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
+    h = sdr.design_lowpass_fir(30, 0.3, "kaiser", atten=21.542)
     h_truth = np.array(
         [
             0.019631739746596,
@@ -437,7 +440,8 @@ def test_kaiser_60_0p2():
         >> h = designLowpassFIR(FilterOrder=60, CutoffFrequency=0.2, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(60, 0.2, "kaiser")
+    # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
+    h = sdr.design_lowpass_fir(60, 0.2, "kaiser", atten=21.542)
     h_truth = np.array(
         [
             -0.000000000000000,
