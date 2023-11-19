@@ -65,6 +65,7 @@ def _window(
     window: Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike
     | None = None,
+    atten: float = 60,
 ) -> npt.NDArray[np.float_]:
     if window is None:
         h_window = np.ones(order + 1)
@@ -78,9 +79,9 @@ def _window(
         elif window == "blackman-harris":
             h_window = scipy.signal.windows.blackmanharris(order + 1)
         elif window == "chebyshev":
-            h_window = scipy.signal.windows.chebwin(order + 1, at=60)
+            h_window = scipy.signal.windows.chebwin(order + 1, at=atten)
         elif window == "kaiser":
-            beta = 0.5  # Beta was reverse-engineered from MATLAB's outputs
+            beta = scipy.signal.kaiser_beta(atten)
             h_window = scipy.signal.windows.kaiser(order + 1, beta=beta)
         else:
             raise ValueError(
@@ -101,6 +102,7 @@ def design_lowpass_fir(
     window: None
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
+    atten: float = 60,
 ) -> npt.NDArray[np.float_]:
     r"""
     Designs a lowpass FIR filter impulse response $h[n]$ using the window method.
@@ -115,10 +117,11 @@ def design_lowpass_fir(
             - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
             - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
             - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`. The sidelobe attenuation
-              is 60 dB.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`. The beta parameter is 0.5.
+            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
+            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
+
+        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
@@ -175,8 +178,13 @@ def design_lowpass_fir(
     if not 0 <= cutoff_freq <= 1:
         raise ValueError(f"Argument 'cutoff_freq' must be between 0 and 1, not {cutoff_freq}.")
 
+    if not isinstance(atten, (int, float)):
+        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
+    if not 0 <= atten:
+        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+
     h_ideal = _ideal_lowpass(order, cutoff_freq)
-    h_window = _window(order, window)
+    h_window = _window(order, window, atten=atten)
     h = h_ideal * h_window
     h = _normalize_passband(h, 0)
 
@@ -190,6 +198,7 @@ def design_highpass_fir(
     window: None
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
+    atten: float = 60,
 ) -> npt.NDArray[np.float_]:
     r"""
     Designs a highpass FIR filter impulse response $h[n]$ using the window method.
@@ -204,10 +213,11 @@ def design_highpass_fir(
             - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
             - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
             - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`. The sidelobe attenuation
-              is 60 dB.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`. The beta parameter is 0.5.
+            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
+            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
+
+        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
@@ -264,8 +274,13 @@ def design_highpass_fir(
     if not 0 <= cutoff_freq <= 1:
         raise ValueError(f"Argument 'cutoff_freq' must be between 0 and 1, not {cutoff_freq}.")
 
+    if not isinstance(atten, (int, float)):
+        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
+    if not 0 <= atten:
+        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+
     h_ideal = _ideal_highpass(order, cutoff_freq)
-    h_window = _window(order, window)
+    h_window = _window(order, window, atten=atten)
     h = h_ideal * h_window
     h = _normalize_passband(h, 1)
 
@@ -280,6 +295,7 @@ def design_bandpass_fir(
     window: None
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
+    atten: float = 60,
 ) -> npt.NDArray[np.float_]:
     r"""
     Designs a bandpass FIR filter impulse response $h[n]$ using the window method.
@@ -295,10 +311,11 @@ def design_bandpass_fir(
             - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
             - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
             - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`. The sidelobe attenuation
-              is 60 dB.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`. The beta parameter is 0.5.
+            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
+            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
             - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
+
+        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
@@ -363,8 +380,13 @@ def design_bandpass_fir(
     if not 0 <= center_freq - bandwidth / 2 <= 1:
         raise ValueError(f"Argument 'bandwidth' must be between 0 and 'center_freq', not {bandwidth}.")
 
+    if not isinstance(atten, (int, float)):
+        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
+    if not 0 <= atten:
+        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+
     h_ideal = _ideal_bandpass(order, center_freq, bandwidth)
-    h_window = _window(order, window)
+    h_window = _window(order, window, atten=atten)
     h = h_ideal * h_window
     h = _normalize_passband(h, center_freq)
 

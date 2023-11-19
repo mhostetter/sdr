@@ -306,7 +306,8 @@ def test_kaiser():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="kaiser")
+    # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
+    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="kaiser", atten=21.542)
     h_truth = np.array(
         [
             -0.016765450319470,
