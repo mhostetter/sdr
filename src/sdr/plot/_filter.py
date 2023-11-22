@@ -277,7 +277,7 @@ def magnitude_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
     N: int = 1024,
-    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
     decades: int = 4,
     **kwargs,
@@ -297,7 +297,8 @@ def magnitude_response(
             be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
-            one-sided spectrum with a logarithmic frequency axis.
+            one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
+            for real-valued filters and `"two-sided"` for complex-valued filters.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic magnitude response.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
@@ -331,7 +332,7 @@ def magnitude_response(
 
             @savefig sdr_plot_magnitude_response_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(h_srrc, x_axis="one-sided")
+            sdr.plot.magnitude_response(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
@@ -342,12 +343,15 @@ def magnitude_response(
     Group:
         plot-filter
     """
-    if not x_axis in ["one-sided", "two-sided", "log"]:
-        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
     if not y_axis in ["linear", "log"]:
         raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
 
     b, a = _convert_to_taps(filter)
+
+    if x_axis == "auto":
+        x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
     if sample_rate is None:
         sample_rate_provided = False
@@ -411,7 +415,7 @@ def phase_response(
     sample_rate: float | None = None,
     N: int = 1024,
     unwrap: bool = True,
-    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
     **kwargs,
 ):
@@ -431,7 +435,8 @@ def phase_response(
         N: The number of samples $N$ in the phase response.
         unwrap: Indicates whether to unwrap the phase response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
-            one-sided spectrum with a logarithmic frequency axis.
+            one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
+            for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -461,7 +466,7 @@ def phase_response(
 
             @savefig sdr_plot_phase_response_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.phase_response(h_srrc, x_axis="one-sided")
+            sdr.plot.phase_response(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
@@ -472,10 +477,13 @@ def phase_response(
     Group:
         plot-filter
     """
-    if not x_axis in ["one-sided", "two-sided", "log"]:
-        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
 
     b, a = _convert_to_taps(filter)
+
+    if x_axis == "auto":
+        x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
     if sample_rate is None:
         sample_rate_provided = False
@@ -531,7 +539,7 @@ def phase_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
     N: int = 1024,
-    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
     **kwargs,
 ):
@@ -550,7 +558,8 @@ def phase_delay(
             be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the phase delay.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
-            one-sided spectrum with a logarithmic frequency axis.
+            one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
+            for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -580,7 +589,7 @@ def phase_delay(
 
             @savefig sdr_plot_phase_delay_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.phase_delay(h_srrc, x_axis="one-sided")
+            sdr.plot.phase_delay(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
@@ -591,10 +600,13 @@ def phase_delay(
     Group:
         plot-filter
     """
-    if not x_axis in ["one-sided", "two-sided", "log"]:
-        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
 
     b, a = _convert_to_taps(filter)
+
+    if x_axis == "auto":
+        x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
     if sample_rate is None:
         sample_rate_provided = False
@@ -649,7 +661,7 @@ def group_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
     N: int = 1024,
-    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
     **kwargs,
 ):
@@ -668,7 +680,8 @@ def group_delay(
             be labeled as "Normalized Frequency".
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
-            one-sided spectrum with a logarithmic frequency axis.
+            one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
+            for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -695,13 +708,29 @@ def group_delay(
             plt.figure(figsize=(8, 4)); \
             sdr.plot.group_delay(iir)
 
+        .. ipython:: python
+
+            @savefig sdr_plot_group_delay_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.group_delay(h_srrc, x_axis="two-sided"); \
+            plt.ylim(48, 52)
+
+        .. ipython:: python
+
+            @savefig sdr_plot_group_delay_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.group_delay(iir, x_axis="log", decades=3)
+
     Group:
         plot-filter
     """
-    if not x_axis in ["one-sided", "two-sided", "log"]:
-        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
 
     b, a = _convert_to_taps(filter)
+
+    if x_axis == "auto":
+        x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
     if sample_rate is None:
         sample_rate_provided = False
