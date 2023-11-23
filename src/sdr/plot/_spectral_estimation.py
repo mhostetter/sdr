@@ -25,6 +25,7 @@ def periodogram(
     detrend: Literal["constant", "linear", False] = False,
     average: Literal["mean", "median"] = "mean",
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    y_axis: Literal["linear", "log"] = "log",
     **kwargs,
 ):
     r"""
@@ -46,6 +47,7 @@ def periodogram(
         average: The type of averaging to use. Options are to average the periodograms using the mean or median.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
+        y_axis: The y-axis scaling. Options are to display a linear or logarithmic power spectral density.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Note:
@@ -54,6 +56,11 @@ def periodogram(
     Group:
         plot-spectral-estimation
     """
+    if not x_axis in ["one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if not y_axis in ["linear", "log"]:
+        raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
+
     if sample_rate is None:
         sample_rate_provided = False
         sample_rate = 1
@@ -73,7 +80,9 @@ def periodogram(
         return_onesided=x_axis != "two-sided",
         average=average,
     )
-    Pxx = 10 * np.log10(Pxx)
+
+    if y_axis == "log":
+        Pxx = 10 * np.log10(Pxx)
 
     if x_axis == "two-sided":
         f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
@@ -103,7 +112,12 @@ def periodogram(
             plt.xlabel(f"Frequency ({units}), $f$")
         else:
             plt.xlabel("Normalized Frequency, $f /f_s$")
-        plt.ylabel("Power density (dB/Hz)")
+
+        if y_axis == "log":
+            plt.ylabel("Power density (dB/Hz)")
+        else:
+            plt.ylabel("Power density (W/Hz)")
+
         plt.title("Power spectral density")
         plt.tight_layout()
 
