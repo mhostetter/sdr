@@ -278,6 +278,7 @@ def magnitude_response(
     sample_rate: float | None = None,
     N: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    y_axis: Literal["linear", "log"] = "log",
     decades: int = 4,
     **kwargs,
 ):
@@ -297,6 +298,7 @@ def magnitude_response(
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
+        y_axis: The y-axis scaling. Options are to display a linear or logarithmic magnitude response.
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -340,6 +342,11 @@ def magnitude_response(
     Group:
         plot-filter
     """
+    if not x_axis in ["one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if not y_axis in ["linear", "log"]:
+        raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
+
     b, a = _convert_to_taps(filter)
 
     if sample_rate is None:
@@ -364,7 +371,10 @@ def magnitude_response(
         units, scalar = freq_units(f)
         f *= scalar
 
-    H = 10 * np.log10(np.abs(H) ** 2)
+    if y_axis == "log":
+        H = 10 * np.log10(np.abs(H) ** 2)
+    else:
+        H = np.abs(H) ** 2
 
     with plt.rc_context(RC_PARAMS):
         if x_axis == "log":
@@ -380,11 +390,17 @@ def magnitude_response(
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
+
         if sample_rate_provided:
             plt.xlabel(f"Frequency ({units}), $f$")
         else:
             plt.xlabel("Normalized Frequency, $f /f_s$")
-        plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
+
+        if y_axis == "log":
+            plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
+        else:
+            plt.ylabel(r"Power, $|H(\omega)|^2$")
+
         plt.title(r"Magnitude Response, $|H(\omega)|^2$")
         plt.tight_layout()
 
@@ -456,6 +472,9 @@ def phase_response(
     Group:
         plot-filter
     """
+    if not x_axis in ["one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+
     b, a = _convert_to_taps(filter)
 
     if sample_rate is None:
@@ -572,6 +591,9 @@ def phase_delay(
     Group:
         plot-filter
     """
+    if not x_axis in ["one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+
     b, a = _convert_to_taps(filter)
 
     if sample_rate is None:
@@ -676,6 +698,9 @@ def group_delay(
     Group:
         plot-filter
     """
+    if not x_axis in ["one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+
     b, a = _convert_to_taps(filter)
 
     if sample_rate is None:
