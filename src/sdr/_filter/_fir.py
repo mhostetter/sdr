@@ -313,6 +313,32 @@ class FIR:
 
         return w, H
 
+    def group_delay(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
+        r"""
+        Returns the group delay $\tau_g(\omega)$ of the FIR filter.
+
+        Arguments:
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
+            N: The number of samples in the group delay.
+
+        Returns:
+            - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
+            - The group delay of the FIR filter $\tau_g(\omega)$.
+
+        See Also:
+            sdr.plot.group_delay
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        w, gd = scipy.signal.group_delay((self.taps, 1), w=N, whole=True, fs=sample_rate)
+
+        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        w = np.fft.fftshift(w)
+        gd = np.fft.fftshift(gd)
+
+        return w, gd
+
     ##############################################################################
     # Properties
     ##############################################################################
