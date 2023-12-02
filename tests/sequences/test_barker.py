@@ -20,6 +20,9 @@ def test_exceptions():
         # Barker code of length 6 does not exist
         sdr.barker(6)
 
+    with pytest.raises(ValueError):
+        sdr.barker(13, output="invalid")
+
 
 def test_1():
     seq = sdr.barker(1)

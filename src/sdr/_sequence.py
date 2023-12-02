@@ -66,6 +66,8 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
     """
     if not isinstance(length, int):
         raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
+    if not output in ("binary", "bipolar"):
+        raise ValueError(f"Argument 'output' must be either 'binary' or 'bipolar', not {output}.")
 
     if length == 1:
         code = np.array([1])
