@@ -13,6 +13,30 @@ from typing_extensions import Literal
 from ._helper import export
 
 
+def _code_to_sequence(code: npt.NDArray[np.int_]) -> npt.NDArray[np.float_]:
+    r"""
+    Converts a binary code to a bipolar sequence.
+
+    Notes:
+        The mapping is equivalent to BPSK: 0 -> 1, 1 -> -1.
+    """
+    sequence = 1 - 2 * code
+    sequence = sequence.astype(float)
+    return sequence
+
+
+def _sequence_to_code(sequence: npt.NDArray[np.float_]) -> npt.NDArray[np.int_]:
+    r"""
+    Converts a bipolar sequence to a binary code.
+
+    Notes:
+        The mapping is equivalent to BPSK: 1 -> 0, -1 -> 1.
+    """
+    code = (1 - sequence) / 2
+    code = code.astype(int)
+    return code
+
+
 @overload
 def barker(length: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
     ...
@@ -91,11 +115,7 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
     if output == "binary":
         return code
 
-    # Map binary Barker code to bipolar. The mapping is equivalent to BPSK: 0 -> 1, 1 -> -1.
-    sequence = 1 - 2 * code
-    sequence = sequence.astype(float)
-
-    return sequence
+    return _code_to_sequence(code)
 
 
 @export
