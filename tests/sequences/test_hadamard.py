@@ -37,10 +37,16 @@ def test_exceptions():
         sdr.hadamard(16, 16)
 
 
-def verify_code(length, index, code_truth):
-    code = sdr.hadamard(length, index)
+def verify_code(length, index, sequence_truth):
+    sequence_truth = np.array(sequence_truth)
+
+    sequence = sdr.hadamard(length, index)
+    assert isinstance(sequence, np.ndarray)
+    assert np.array_equal(sequence, sequence_truth)
+
+    code = sdr.hadamard(length, index, output="binary")
     assert isinstance(code, np.ndarray)
-    assert np.array_equal(code, code_truth)
+    assert np.array_equal(code, (1 - sequence_truth) // 2)
 
 
 def test_length_2():

@@ -24,73 +24,45 @@ def test_exceptions():
         sdr.barker(13, output="invalid")
 
 
-def test_1():
-    seq = sdr.barker(1)
-    seq_truth = np.array([-1])
-    assert np.array_equal(seq, seq_truth)
+def verify_code(length, sequence_truth):
+    sequence_truth = np.array(sequence_truth)
 
-    code = sdr.barker(1, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    sequence = sdr.barker(length)
+    assert isinstance(sequence, np.ndarray)
+    assert np.array_equal(sequence, sequence_truth)
+
+    code = sdr.barker(length, output="binary")
+    assert isinstance(code, np.ndarray)
+    assert np.array_equal(code, (1 - sequence_truth) // 2)
+
+
+def test_1():
+    verify_code(1, [-1])
 
 
 def test_2():
-    seq = sdr.barker(2)
-    seq_truth = np.array([-1, 1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(2, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(2, [-1, 1])
 
 
 def test_3():
-    seq = sdr.barker(3)
-    seq_truth = np.array([-1, -1, 1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(3, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(3, [-1, -1, 1])
 
 
 def test_4():
-    seq = sdr.barker(4)
-    seq_truth = np.array([-1, -1, 1, -1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(4, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(4, [-1, -1, 1, -1])
 
 
 def test_5():
-    seq = sdr.barker(5)
-    seq_truth = np.array([-1, -1, -1, 1, -1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(5, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(5, [-1, -1, -1, 1, -1])
 
 
 def test_7():
-    seq = sdr.barker(7)
-    seq_truth = np.array([-1, -1, -1, 1, 1, -1, 1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(7, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(7, [-1, -1, -1, 1, 1, -1, 1])
 
 
 def test_11():
-    seq = sdr.barker(11)
-    seq_truth = np.array([-1, -1, -1, 1, 1, 1, -1, 1, 1, -1, 1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(11, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(11, [-1, -1, -1, 1, 1, 1, -1, 1, 1, -1, 1])
 
 
 def test_13():
-    seq = sdr.barker(13)
-    seq_truth = np.array([-1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1])
-    assert np.array_equal(seq, seq_truth)
-
-    code = sdr.barker(13, output="binary")
-    assert np.array_equal(code, (1 - seq_truth) // 2)
+    verify_code(13, [-1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1])
