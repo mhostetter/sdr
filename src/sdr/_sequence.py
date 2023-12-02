@@ -11,6 +11,7 @@ import numpy.typing as npt
 import scipy.linalg
 from typing_extensions import Literal
 
+from ._data import pack, unpack
 from ._helper import export
 
 
@@ -231,6 +232,134 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
     H = scipy.linalg.hadamard(length)
     sequence = H[index]
+    sequence = sequence.astype(float)
+
+    if output == "bipolar":
+        return sequence
+
+    return _sequence_to_code(sequence)
+
+
+@overload
+def walsh(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+    ...
+
+
+@overload
+def walsh(length: int, index: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+    ...
+
+
+@export
+def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
+    r"""
+    Returns the Walsh code/sequence of length $N$.
+
+    Arguments:
+        length: The length $N$ of the Walsh code/sequence. Must be a power of 2.
+        index: The index $i$ of the Walsh code. Indicates how many transitions there are in the code.
+        output: The output format of the Walsh code/sequence.
+
+            - `"binary"`: The Walsh code with binary values of 0 and 1.
+            - `"bipolar"`: The Walsh sequence with bipolar values of 1 and -1.
+
+    Returns:
+        The Walsh code/sequence of length $N$ and index $i$.
+
+    References:
+        - https://www.mathworks.com/help/comm/ref/comm.walshcode-system-object.html
+
+    Examples:
+        Create a Walsh code and sequence of length 16. The code index 4 indicates that there are 4 transitions
+        in the code.
+
+        .. ipython:: python
+
+            code = sdr.walsh(16, 4, output="binary"); code
+            seq = sdr.walsh(16, 4); seq
+
+        Walsh sequences have zero cross correlation when time aligned.
+
+        .. ipython:: python
+
+            seq1 = sdr.walsh(16, 4); \
+            seq2 = sdr.walsh(16, 10); \
+            seq3 = sdr.walsh(16, 15);
+
+            @savefig sdr_walsh_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(seq1 - 3, label="Index 4"); \
+            sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
+            sdr.plot.time_domain(seq3 + 3, label="Index 15");
+
+        Walsh sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
+        large when time misaligned. Because of this, Walsh sequences for spreading codes are useful only when
+        precise time information is known.
+
+        .. ipython:: python
+
+            lag = np.arange(-seq1.size + 1, seq1.size); \
+            xcorr12 = np.correlate(seq1, seq2, mode="full"); \
+            xcorr13 = np.correlate(seq1, seq3, mode="full"); \
+            xcorr23 = np.correlate(seq2, seq3, mode="full");
+
+            @savefig sdr_walsh_2.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(lag, np.abs(xcorr12), label="4 and 10"); \
+            plt.plot(lag, np.abs(xcorr13), label="4 and 15"); \
+            plt.plot(lag, np.abs(xcorr23), label="10 and 15"); \
+            plt.xlabel("Lag"); \
+            plt.ylabel("Magnitude"); \
+            plt.title("Cross correlation of length-16 Walsh sequences"); \
+            plt.tight_layout();
+
+        Walsh sequence autocorrelation sidelobes are not uniform as a function of sequence index.
+        In fact, the sidelobes can be quite high.
+
+        .. ipython:: python
+
+            lag = np.arange(-seq1.size + 1, seq1.size); \
+            acorr1 = np.correlate(seq1, seq1, mode="full"); \
+            acorr2 = np.correlate(seq2, seq2, mode="full"); \
+            acorr3 = np.correlate(seq3, seq3, mode="full");
+
+            @savefig sdr_walsh_3.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(lag, np.abs(acorr1), label="Index 4"); \
+            plt.plot(lag, np.abs(acorr2), label="Index 10"); \
+            plt.plot(lag, np.abs(acorr3), label="Index 15"); \
+            plt.xlabel("Lag"); \
+            plt.ylabel("Magnitude"); \
+            plt.title("Autocorrelation of length-16 Walsh sequences"); \
+            plt.tight_layout();
+
+    Group:
+        sequences
+    """
+    if not isinstance(length, int):
+        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
+    if not length >= 2:
+        raise ValueError(f"Argument 'length' must be greater than or equal to 1, not {length}.")
+    if not length & (length - 1) == 0:
+        raise ValueError(f"Argument 'length' must be a power of 2, not {length}.")
+
+    if not isinstance(index, int):
+        raise TypeError(f"Argument 'index' must be an integer, not {type(index).__name__}.")
+    if not 0 <= index < length:
+        raise ValueError(f"Argument 'index' must be between 0 and {length - 1}, not {index}.")
+
+    if not output in ("binary", "bipolar"):
+        raise ValueError(f"Argument 'output' must be either 'binary' or 'bipolar', not {output}.")
+
+    H = scipy.linalg.hadamard(length)
+
+    # Find the index of the Hadamard matrix that corresponds to `index` transitions
+    bits = int(math.log2(length))
+    index_bits = unpack(index, bits)
+    h_index_bits = np.concatenate(([index_bits[0]], np.bitwise_xor(index_bits[:-1], index_bits[1:])))[::-1]
+    h_index = pack(h_index_bits, bits)[0]
+
+    sequence = H[h_index]
     sequence = sequence.astype(float)
 
     if output == "bipolar":
