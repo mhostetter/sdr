@@ -157,6 +157,13 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
             code = sdr.hadamard(16, 4, output="binary"); code
             seq = sdr.hadamard(16, 4); seq
 
+        The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
+
+        .. ipython:: python
+
+            np.array_equal(sdr.hadamard(16, 3), sdr.walsh(16, 8))
+            np.array_equal(sdr.hadamard(16, 11), sdr.walsh(16, 9))
+
         Hadamard sequences have zero cross correlation when time aligned.
 
         .. ipython:: python
@@ -167,9 +174,9 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
             @savefig sdr_hadamard_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(seq1 - 3, label="Index 4"); \
+            sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
             sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
-            sdr.plot.time_domain(seq3 + 3, label="Index 15");
+            sdr.plot.time_domain(seq3 - 3, label="Index 15");
 
         Hadamard sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Hadamard sequences for spreading codes are useful only when
@@ -278,6 +285,13 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
             code = sdr.walsh(16, 4, output="binary"); code
             seq = sdr.walsh(16, 4); seq
 
+        The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
+
+        .. ipython:: python
+
+            np.array_equal(sdr.hadamard(16, 3), sdr.walsh(16, 8))
+            np.array_equal(sdr.hadamard(16, 11), sdr.walsh(16, 9))
+
         Walsh sequences have zero cross correlation when time aligned.
 
         .. ipython:: python
@@ -288,9 +302,9 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
             @savefig sdr_walsh_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(seq1 - 3, label="Index 4"); \
+            sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
             sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
-            sdr.plot.time_domain(seq3 + 3, label="Index 15");
+            sdr.plot.time_domain(seq3 - 3, label="Index 15");
 
         Walsh sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Walsh sequences for spreading codes are useful only when
