@@ -11,7 +11,7 @@ from typing_extensions import Literal
 
 from .._filter import FIR, IIR
 from .._helper import export
-from ._helper import real_or_complex_plot
+from ._helper import min_ylim, real_or_complex_plot
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -618,6 +618,8 @@ def phase_delay(
         else:
             plt.plot(f, tau_phi, **kwargs)
 
+        min_ylim(tau_phi, 2 / sample_rate, sample_rate)
+
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
@@ -668,8 +670,7 @@ def group_delay(
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
             @savefig sdr_plot_group_delay_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.group_delay(h_srrc); \
-            plt.ylim(48, 52)
+            sdr.plot.group_delay(h_srrc);
 
         See the :ref:`iir-filters` example.
 
@@ -687,8 +688,7 @@ def group_delay(
 
             @savefig sdr_plot_group_delay_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.group_delay(h_srrc, x_axis="two-sided"); \
-            plt.ylim(48, 52)
+            sdr.plot.group_delay(h_srrc, x_axis="two-sided");
 
         .. ipython:: python
 
@@ -738,6 +738,8 @@ def group_delay(
             plt.semilogx(f, tau_g, **kwargs)
         else:
             plt.plot(f, tau_g, **kwargs)
+
+        min_ylim(tau_g, 2 / sample_rate, sample_rate)
 
         plt.grid(True, which="both")
         if "label" in kwargs:
