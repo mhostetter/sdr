@@ -33,3 +33,13 @@ def real_or_complex_plot(
 
     if label:
         plt.legend()
+
+
+def min_ylim(y: npt.NDArray, separation: float, sample_rate: float):
+    ymin, ymax = plt.gca().get_ylim()
+    if ymax - ymin < separation:
+        # Find the mean of the signal rounded to the nearest sample
+        mean = int(round(np.mean(y) / sample_rate))
+        ymin = mean - separation / 2
+        ymax = mean + separation / 2
+        plt.gca().set_ylim(ymin, ymax)
