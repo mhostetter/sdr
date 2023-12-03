@@ -11,6 +11,7 @@ from typing_extensions import Literal
 
 from .._filter import FIR, IIR
 from .._helper import export
+from ._helper import real_or_complex_plot
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -96,23 +97,10 @@ def impulse_response(
     # Filter the impulse
     zi = scipy.signal.lfiltic(b, a, y=[], x=[])
     h, zi = scipy.signal.lfilter(b, a, d, zi=zi)
+    t = np.arange(h.size)
 
     with plt.rc_context(RC_PARAMS):
-        label = kwargs.pop("label", None)
-        if np.iscomplexobj(h):
-            if label is None:
-                label = "real"
-                label2 = "imag"
-            else:
-                label = label + " (real)"
-                label2 = label + " (imag)"
-            plt.plot(np.arange(h.size), h.real, label=label, **kwargs)
-            plt.plot(np.arange(h.size), h.imag, label=label2, **kwargs)
-        else:
-            plt.plot(np.arange(h.size), h, label=label, **kwargs)
-
-        if label:
-            plt.legend()
+        real_or_complex_plot(t, h, **kwargs)
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Impulse Response, $h[n]$")
@@ -181,23 +169,10 @@ def step_response(
     # Filter the impulse
     zi = scipy.signal.lfiltic(b, a, y=[], x=[])
     s, zi = scipy.signal.lfilter(b, a, u, zi=zi)
+    t = np.arange(s.size)
 
     with plt.rc_context(RC_PARAMS):
-        label = kwargs.pop("label", None)
-        if np.iscomplexobj(s):
-            if label is None:
-                label = "real"
-                label2 = "imag"
-            else:
-                label = label + " (real)"
-                label2 = label + " (imag)"
-            plt.plot(np.arange(s.size), s.real, label=label, **kwargs)
-            plt.plot(np.arange(s.size), s.imag, label=label2, **kwargs)
-        else:
-            plt.plot(np.arange(s.size), s, label=label, **kwargs)
-
-        if label:
-            plt.legend()
+        real_or_complex_plot(t, s, **kwargs)
         plt.xlabel("Sample")
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
