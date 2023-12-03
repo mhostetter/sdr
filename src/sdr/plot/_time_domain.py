@@ -3,6 +3,8 @@ A module containing time-domain plotting functions.
 """
 from __future__ import annotations
 
+from typing import overload
+
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
@@ -14,9 +16,34 @@ from ._rc_params import RC_PARAMS
 from ._units import time_units
 
 
-@export
+@overload
 def time_domain(
     x: npt.NDArray,
+    *,
+    sample_rate: float | None = None,
+    centered: bool = False,
+    offset: float = 0,
+    diff: Literal["color", "line"] = "color",
+    **kwargs,
+):
+    ...
+
+
+@overload
+def time_domain(
+    t: npt.NDArray,
+    x: npt.NDArray,
+    *,
+    sample_rate: float | None = None,
+    diff: Literal["color", "line"] = "color",
+    **kwargs,
+):
+    ...
+
+
+@export
+def time_domain(
+    *args,
     sample_rate: float | None = None,
     centered: bool = False,
     offset: float = 0,
@@ -27,6 +54,7 @@ def time_domain(
     Plots a time-domain signal $x[n]$.
 
     Arguments:
+        t: The time signal $t[n]$. The units are assumed to be $1/f_s$.
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Samples".
@@ -41,43 +69,56 @@ def time_domain(
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
+        Plot a square-root raised cosine (SRRC) pulse shape centered about 0.
+
         .. ipython:: python
 
-            # Create a BPSK impulse signal
-            x = np.zeros(1000); \
-            symbol_map = np.array([1, -1]); \
-            x[::10] = symbol_map[np.random.randint(0, 2, 100)]
-
-            # Pulse shape the signal with a square-root raised cosine filter
-            h_srrc = sdr.root_raised_cosine(0.5, 7, 10); \
-            y = np.convolve(x, h_srrc)
+            qpsk = sdr.PSK(4, phase_offset=45, sps=10, pulse_shape="srrc"); \
+            pulse_shape = qpsk.pulse_shape
 
             @savefig sdr_plot_time_domain_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y, sample_rate=10e3); \
-            plt.title("SRRC pulse-shaped BPSK"); \
+            sdr.plot.time_domain(pulse_shape, centered=True); \
+            plt.title("SRRC pulse shape"); \
             plt.tight_layout()
+
+        Plot an imaginary QPSK signal at 10 kS/s.
 
         .. ipython:: python
 
-            # Create a QPSK impulse signal
-            x = np.zeros(1000, dtype=complex); \
-            symbol_map = np.exp(1j * np.pi / 4) * np.array([1, 1j, -1, -1j]); \
-            x[::10] = symbol_map[np.random.randint(0, 4, 100)]
-
-            # Pulse shape the signal with a square-root raised cosine filter
-            h_srrc = sdr.root_raised_cosine(0.5, 7, 10); \
-            y = np.convolve(x, h_srrc)
+            symbols = np.random.randint(0, 4, 50); \
+            x = qpsk.modulate(symbols)
 
             @savefig sdr_plot_time_domain_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y, sample_rate=10e3); \
+            sdr.plot.time_domain(x, sample_rate=10e3); \
             plt.title("SRRC pulse-shaped QPSK"); \
+            plt.tight_layout()
+
+        Plot non-uniformly sampled data.
+
+        .. ipython:: python
+
+            t = np.array([0, 1, 2, 3, 5, 8, 13, 21, 34, 55]); \
+            x = np.random.randn(t.size)
+
+            @savefig sdr_plot_time_domain_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(t, x, marker="."); \
+            plt.title("Non-uniformly sampled data"); \
             plt.tight_layout()
 
     Group:
         plot-time-domain
     """
+    if len(args) == 1:
+        x = args[0]
+        t = None
+    elif len(args) == 2:
+        t, x = args
+    else:
+        raise ValueError(f"Expected 1 or 2 positional arguments, got {len(args)}.")
+
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
 
@@ -89,13 +130,14 @@ def time_domain(
         if not isinstance(sample_rate, (int, float)):
             raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
 
-    if centered:
-        if x.size % 2 == 0:
-            t = np.arange(-x.size // 2, x.size // 2) / sample_rate
+    if t is None:
+        if centered:
+            if x.size % 2 == 0:
+                t = np.arange(-x.size // 2, x.size // 2) / sample_rate
+            else:
+                t = np.arange(-(x.size - 1) // 2, (x.size + 1) // 2) / sample_rate
         else:
-            t = np.arange(-(x.size - 1) // 2, (x.size + 1) // 2) / sample_rate
-    else:
-        t = np.arange(x.size) / sample_rate + offset
+            t = np.arange(x.size) / sample_rate + offset
 
     if sample_rate_provided:
         units, scalar = time_units(t)
