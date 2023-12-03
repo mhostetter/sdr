@@ -3,12 +3,15 @@ A module for infinite impulse response (IIR) filters.
 """
 from __future__ import annotations
 
+from typing import Any, overload
+
 import numpy as np
 import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Self
 
 from .._helper import export
+from ._common import frequency_response
 
 
 @export
@@ -250,57 +253,99 @@ class IIR:
 
         return s
 
-    def frequency_response(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
+    @overload
+    def frequency_response(
+        self,
+        freqs: int = 1024,
+        sample_rate: float = 1.0,
+        whole: bool = True,
+        decades: int | None = None,
+    ) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.complex_]]:
+        ...
+
+    @overload
+    def frequency_response(
+        self,
+        freqs: float | npt.NDArray[np.float_],
+        sample_rate: float = 1.0,
+    ) -> complex:
+        ...
+
+    @overload
+    def frequency_response(
+        self,
+        freqs: npt.NDArray[np.float_],
+        sample_rate: float = 1.0,
+    ) -> npt.NDArray[np.complex_]:
+        ...
+
+    def frequency_response(
+        self,
+        freqs: Any = 1024,
+        sample_rate: Any = 1.0,
+        whole: Any = True,
+        decades: Any | None = None,
+    ) -> Any:
         r"""
         Returns the frequency response $H(\omega)$ of the IIR filter.
 
         Arguments:
+            freqs: The frequency specification.
+
+                - `int`: The number of frequency points. The endpoint is not included.
+                - `float`: A single frequency.
+                - `npt.NDArray[float]`: Multiple frequencies.
+
             sample_rate: The sample rate $f_s$ of the filter in samples/s.
-            N: The number of samples in the frequency response.
+            whole: Only used if `freqs` is an integer.
+
+                - `True`: The maximum frequency is `max_f = sample_rate`.
+                - `False`: The maximum frequency is `max_f = sample_rate / 2`.
+
+            decades: Only used if `freqs` is an integer.
+
+                - `None`: `f = np.linspace(0, max_f, freqs, endpoint=False)`.
+                - `int`: `f = np.logspace(np.log10(max_f) - decades), np.log10(max_f), freqs, endpoint=False)`.
 
         Returns:
-            - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
+            - The frequency vector $f$, only if `freqs` is an integer.
             - The frequency response of the IIR filter $H(\omega)$.
 
         See Also:
             sdr.plot.magnitude_response, sdr.plot.phase_response
 
         Examples:
-            See the :ref:`iir-filters` example.
+            .. ipython:: python
+
+                zero = 0.6; \
+                pole = 0.8 * np.exp(1j * np.pi / 8); \
+                iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
+
+            Compute the frequency response at 1024 evenly-spaced frequencies.
+
+            .. ipython:: python
+
+                iir.frequency_response()
+
+            Compute the frequency response at 0.0 rad/s.
+
+            .. ipython:: python
+
+                iir.frequency_response(0.0)
+
+            Compute the frequency response at several frequencies in Hz.
+
+            .. ipython:: python
+
+                iir.frequency_response([100, 200, 300, 400], sample_rate=1000)
         """
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=N, whole=True, fs=sample_rate)  # type: ignore
-
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
-        H = np.fft.fftshift(H)
-
-        return w, H
-
-    def frequency_response_log(
-        self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
-    ) -> tuple[npt.NDArray, npt.NDArray]:
-        r"""
-        Returns the frequency response $H(\omega)$ of the IIR filter on a logarithmic frequency axis.
-
-        Arguments:
-            sample_rate: The sample rate $f_s$ of the filter in samples/s.
-            N: The number of samples in the frequency response.
-            decades: The number of frequency decades to plot.
-
-        Returns:
-            - The frequencies $f$ from $0$ to $f_s/2$ in Hz. The frequencies are logarithmically-spaced.
-            - The frequency response of the IIR filter $H(\omega)$.
-
-        See Also:
-            sdr.plot.magnitude_response, sdr.plot.phase_response
-
-        Examples:
-            See the :ref:`iir-filters` example.
-        """
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(self.b_taps, self.a_taps, worN=w, whole=False, fs=sample_rate)  # type: ignore
-
-        return w, H
+        f, H = frequency_response(self.b_taps, self.a_taps, freqs, sample_rate, whole, decades)
+        if isinstance(freqs, int):
+            return f, H
+        elif isinstance(freqs, float):
+            return H[0]
+        else:
+            return H
 
     ##############################################################################
     # Properties
