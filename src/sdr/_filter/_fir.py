@@ -279,13 +279,13 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        w, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
+        f, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
 
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
+        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        f = np.fft.fftshift(f)
         H = np.fft.fftshift(H)
 
-        return w, H
+        return f, H
 
     def frequency_response_log(
         self, sample_rate: float = 1.0, N: int = 1024, decades: int = 4
@@ -308,10 +308,10 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        w = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-        w, H = scipy.signal.freqz(self.taps, 1, worN=w, whole=False, fs=sample_rate)
+        f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+        f, H = scipy.signal.freqz(self.taps, 1, worN=f, whole=False, fs=sample_rate)
 
-        return w, H
+        return f, H
 
     def group_delay(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
@@ -331,13 +331,13 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        w, gd = scipy.signal.group_delay((self.taps, 1), w=N, whole=True, fs=sample_rate)
+        f, gd = scipy.signal.group_delay((self.taps, 1), w=N, whole=True, fs=sample_rate)
 
-        w[w >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        w = np.fft.fftshift(w)
+        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+        f = np.fft.fftshift(f)
         gd = np.fft.fftshift(gd)
 
-        return w, gd
+        return f, gd
 
     ##############################################################################
     # Properties
