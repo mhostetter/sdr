@@ -12,6 +12,7 @@ from matplotlib.collections import LineCollection
 from typing_extensions import Literal
 
 from .._helper import export
+from ._helper import real_or_complex_plot
 from ._rc_params import RC_PARAMS
 from ._units import time_units
 
@@ -145,27 +146,7 @@ def time_domain(
 
     # with plt.style.context(Path(__file__).parent / ".." / "presentation.mplstyle"):
     with plt.rc_context(RC_PARAMS):
-        label = kwargs.pop("label", None)
-        if np.iscomplexobj(x):
-            if label is None:
-                label, label2 = "real", "imag"
-            else:
-                label, label2 = label + " (real)", label + " (imag)"
-
-            if diff == "color":
-                plt.plot(t, x.real, label=label, **kwargs)
-                plt.plot(t, x.imag, label=label2, **kwargs)
-            elif diff == "line":
-                (real,) = plt.plot(t, x.real, "-", label=label, **kwargs)
-                kwargs.pop("color", None)
-                plt.plot(t, x.imag, "--", color=real.get_color(), label=label2, **kwargs)
-            else:
-                raise ValueError(f"Argument 'diff' must be 'color' or 'line', not {diff}.")
-        else:
-            plt.plot(t, x, label=label, **kwargs)
-
-        if label:
-            plt.legend()
+        real_or_complex_plot(t, x, diff=diff, **kwargs)
         if sample_rate_provided:
             plt.xlabel(f"Time ({units})")
         else:
