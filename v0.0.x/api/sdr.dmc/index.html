@@ -1065,8 +1065,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIR.frequency_response_log/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the FIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
+      <a href="../sdr.FIR.group_delay/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.group_delay (Python method) — Returns the group delay $tau_g(omega)$ of the FIR filter." class="md-ellipsis">group_<wbr>delay</span>
       </a>
     </li>
   
@@ -1080,8 +1080,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIR.group_delay/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.group_delay (Python method) — Returns the group delay $tau_g(omega)$ of the FIR filter." class="md-ellipsis">group_<wbr>delay</span>
+      <a href="../sdr.FIR.phase_delay/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.phase_delay (Python method) — Returns the phase delay $tau_{phi}(omega)$ of the FIR filter." class="md-ellipsis">phase_<wbr>delay</span>
       </a>
     </li>
   
@@ -1747,21 +1747,6 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.IIR.frequency_response/" class="md-nav__link">
         <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.frequency_response_log/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the IIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
       </a>
     </li>
   
@@ -9195,13 +9180,13 @@ probability matrix <span class="math notranslate nohighlight">\(P\)</span>.</p>
 <span class="gp">In [3]: </span><span class="n">P</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">]]</span>
 
 <span class="gp">In [4]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">dmc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span> <span class="n">y</span>
-<span class="gh">Out[4]: </span><span class="go">array([0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0])</span>
+<span class="gh">Out[4]: </span><span class="go">array([0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1])</span>
 
 <span class="gp">In [5]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[5]: </span>
-<span class="go">array([ True, False,  True,  True,  True, False,  True,  True,  True,</span>
-<span class="go">        True,  True, False,  True,  True,  True,  True,  True,  True,</span>
-<span class="go">        True, False])</span>
+<span class="go">array([ True,  True,  True, False,  True,  True,  True, False,  True,</span>
+<span class="go">        True,  True,  True,  True,  True,  True,  True,  True,  True,</span>
+<span class="go">       False,  True])</span>
 </code></pre></div>
 </div>
 <p>Define the binary erasure channel (BEC) with erasure probability <span class="math notranslate nohighlight">\(p=0.25\)</span>.</p>
@@ -9215,13 +9200,13 @@ probability matrix <span class="math notranslate nohighlight">\(P\)</span>.</p>
 <span class="go"># Specify the erasure as -1</span>
 <span class="gp">In [9]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">dmc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]);</span> <span class="n">y</span>
 <span class="gh">Out[9]: </span>
-<span class="go">array([ 0,  1,  1, -1,  1,  1,  1,  1,  1,  1,  1,  0,  0, -1,  0,  0, -1,</span>
-<span class="go">        0,  0,  1])</span>
+<span class="go">array([ 0,  1,  1, -1,  1,  1, -1, -1, -1,  1,  1,  0, -1, -1,  0,  0,  0,</span>
+<span class="go">       -1,  0,  1])</span>
 
 <span class="gp">In [10]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[10]: </span>
-<span class="go">array([ True,  True,  True, False,  True,  True,  True,  True,  True,</span>
-<span class="go">        True,  True,  True,  True, False,  True,  True, False,  True,</span>
+<span class="go">array([ True,  True,  True, False,  True,  True, False, False, False,</span>
+<span class="go">        True,  True,  True, False, False,  True,  True,  True, False,</span>
 <span class="go">        True,  True])</span>
 </code></pre></div>
 </div>

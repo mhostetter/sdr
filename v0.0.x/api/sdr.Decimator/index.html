@@ -1067,8 +1067,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIR.frequency_response_log/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the FIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
+      <a href="../sdr.FIR.group_delay/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.group_delay (Python method) — Returns the group delay $tau_g(omega)$ of the FIR filter." class="md-ellipsis">group_<wbr>delay</span>
       </a>
     </li>
   
@@ -1082,8 +1082,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FIR.group_delay/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.group_delay (Python method) — Returns the group delay $tau_g(omega)$ of the FIR filter." class="md-ellipsis">group_<wbr>delay</span>
+      <a href="../sdr.FIR.phase_delay/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.phase_delay (Python method) — Returns the phase delay $tau_{phi}(omega)$ of the FIR filter." class="md-ellipsis">phase_<wbr>delay</span>
       </a>
     </li>
   
@@ -1749,21 +1749,6 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.IIR.frequency_response/" class="md-nav__link">
         <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.IIR.frequency_response_log/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the IIR filter on a logarithmic frequency axis." class="md-ellipsis">frequency_<wbr>response_<wbr>log</span>
       </a>
     </li>
   
@@ -9420,21 +9405,25 @@ filter output when the input is a unit step <span class="math notranslate nohigh
 </dd></dl>
 
 <dl class="py method summary objdesc">
+<dt class="sig sig-object highlight sig-wrap py">
+<a class="sig-name descname reference internal" href="../sdr.FIR.frequency_response/" title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the FIR filter."><span class="sig-name descname"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">numpy.dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">numpy.dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">numpy.complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.FIR.frequency_response/" title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the FIR filter."><span class="sig-name descname"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<a class="sig-name descname reference internal" href="../sdr.FIR.frequency_response/" title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the FIR filter."><span class="sig-name descname"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.FIR.frequency_response/#p-freqs" title="sdr.FIR.frequency_response.freqs (Python parameter) — The frequency specification."><span class="n"><span class="pre">freqs</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#complex" title="(in Python v3.12)"><span class="pre">complex</span></a></span></span></span></dt>
+<dt class="sig sig-object highlight py">
+<a class="sig-name descname reference internal" href="../sdr.FIR.frequency_response/" title="sdr.FIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the FIR filter."><span class="sig-name descname"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.FIR.frequency_response/#p-freqs" title="sdr.FIR.frequency_response.freqs (Python parameter) — The frequency specification."><span class="n"><span class="pre">freqs</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.26)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Returns the frequency response <span class="math notranslate nohighlight">\(H(\omega)\)</span> of the FIR filter.</p>
-</dd></dl>
-
-<dl class="py method summary objdesc">
-<dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.FIR.frequency_response_log/" title="sdr.FIR.frequency_response_log (Python method) — Returns the frequency response $H(omega)$ of the FIR filter on a logarithmic frequency axis."><span class="sig-name descname"><span class="pre">frequency_response_log</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Returns the frequency response <span class="math notranslate nohighlight">\(H(\omega)\)</span> of the FIR filter on a logarithmic frequency axis.</p>
 </dd></dl>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname reference internal" href="../sdr.FIR.group_delay/" title="sdr.FIR.group_delay (Python method) — Returns the group delay $tau_g(omega)$ of the FIR filter."><span class="sig-name descname"><span class="pre">group_delay</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Returns the group delay <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span> of the FIR filter.</p>
+</dd></dl>
+
+<dl class="py method summary objdesc">
+<dt class="sig sig-object highlight py">
+<a class="sig-name descname reference internal" href="../sdr.FIR.phase_delay/" title="sdr.FIR.phase_delay (Python method) — Returns the phase delay $tau_{phi}(omega)$ of the FIR filter."><span class="sig-name descname"><span class="pre">phase_delay</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Returns the phase delay <span class="math notranslate nohighlight">\(\tau_{\phi}(\omega)\)</span> of the FIR filter.</p>
 </dd></dl>
 
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
