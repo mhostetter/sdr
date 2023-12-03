@@ -339,6 +339,36 @@ class FIR:
 
         return f, gd
 
+    def phase_delay(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
+        r"""
+        Returns the phase delay $\tau_{\phi}(\omega)$ of the FIR filter.
+
+        Arguments:
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
+            N: The number of samples in the phase delay.
+
+        Returns:
+            - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
+            - The phase delay of the FIR filter $\tau_{\phi}(\omega)$.
+
+        See Also:
+            sdr.plot.phase_delay
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        f, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
+
+        f -= sample_rate / 2
+        H = np.fft.fftshift(H)
+
+        theta = np.unwrap(np.angle(H), period=np.pi)
+        theta -= theta[np.argmin(np.abs(f))]  # Set omega=0 to have phase of 0
+        tau_phi = -theta / (2 * np.pi * f)
+        tau_phi[np.argmin(np.abs(f))] = np.nan  # Avoid crazy result when dividing by near zero
+
+        return f, tau_phi
+
     ##############################################################################
     # Properties
     ##############################################################################
