@@ -77,10 +77,11 @@ universal = false
 [tool.ruff]
 src = ["src"]
 extend-include = ["*.ipynb"]
-extend-exclude = ["build", "dist", "docs", "src/sdr/_version.py"]
+extend-exclude = ["build", "dist", "src/sdr/_version.py"]
 line-length = 120
 
 [tool.ruff.lint]
+exclude = ["docs/*"]
 select = [
     "E",  # pycodestyle
     "F",  # Pyflakes
