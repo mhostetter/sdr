@@ -278,9 +278,6 @@ def magnitude_response(
         decades: The number of decades to plot when `x_axis="log"`.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    Note:
-        The default y-axis lower limit is set to the 10th percentile. This is to crop any deep nulls.
-
     Examples:
         See the :ref:`fir-filters` example.
 
@@ -360,11 +357,6 @@ def magnitude_response(
             plt.semilogx(f, H, **kwargs)
         else:
             plt.plot(f, H, **kwargs)
-
-        # Avoid deep nulls
-        y_max = plt.gca().get_ylim()[1]
-        y_min = np.percentile(H, 10)
-        plt.ylim(y_min, y_max)
 
         plt.grid(True, which="both")
         if "label" in kwargs:
