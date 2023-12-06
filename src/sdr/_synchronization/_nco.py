@@ -3,8 +3,11 @@ A module for numerically-controlled oscillators (NCO).
 """
 from __future__ import annotations
 
+from typing import Any, overload
+
 import numpy as np
 import numpy.typing as npt
+from typing_extensions import Literal
 
 from .._helper import export
 
@@ -120,11 +123,30 @@ class NCO:
         """
         self._z_prev = -self.increment
 
+    @overload
     def __call__(
         self,
         freq: npt.NDArray[np.float_] | None = None,
         phase: npt.NDArray[np.float_] | None = None,
+        output: Literal["phase", "sine", "cosine"] = "complex-exp",
+    ) -> npt.NDArray[np.float_]:
+        ...
+
+    @overload
+    def __call__(
+        self,
+        freq: npt.NDArray[np.float_] | None = None,
+        phase: npt.NDArray[np.float_] | None = None,
+        output: Literal["complex-exp"] = "complex-exp",
     ) -> npt.NDArray[np.complex_]:
+        ...
+
+    def __call__(
+        self,
+        freq: Any = None,
+        phase: Any = None,
+        output: Any = "complex-exp",
+    ) -> Any:
         """
         Steps the NCO with variable frequency and/or phase signals.
 
@@ -133,9 +155,11 @@ class NCO:
                 phase increment of the NCO. If `None`, the signal is all zeros.
             phase: The variable phase signal $p[n]$ in radians. This input signal varies the per-sample phase offset
                 of the NCO. If `None`, the signal is all zeros.
+            output: The format of the output signal $y[n]$. Options are the accumulated phase, sine, cosine, or
+                complex exponential.
 
         Returns:
-            The output complex signal $y[n]$.
+            The output signal $y[n]$.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -163,7 +187,18 @@ class NCO:
         # Add the absolute offset to every sample
         y = z + self.offset + phase
 
-        y = np.exp(1j * y)
+        if output == "phase":
+            pass
+        elif output == "complex-exp":
+            y = np.exp(1j * y)
+        elif output == "sine":
+            y = np.sin(y)
+        elif output == "cosine":
+            y = np.cos(y)
+        else:
+            raise ValueError(
+                f"Argument 'output' must be one of 'phase', 'sine', 'cosine', or 'complex-exp', not {output!r}."
+            )
 
         if y.size == 1:
             y = y[0]
