@@ -9068,6 +9068,7 @@ You're not viewing the latest version.
 <span class="kn">import</span> <span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># %matplotlib widget</span>
 </code></pre></div>
 </div>
@@ -9114,7 +9115,7 @@ This is achieved using the <a class="reference internal" href="../../api/sdr.rai
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/126b8b984451637ccebe0c070a316a3856574fe60b037054a58546e3f7a92698.png" src="../../_images/126b8b984451637ccebe0c070a316a3856574fe60b037054a58546e3f7a92698.png" />
+<img alt="../../_images/e82818f4396da7f4bb8ed21293ad391ebb67947a5020c6410a36afa294222e03.png" src="../../_images/e82818f4396da7f4bb8ed21293ad391ebb67947a5020c6410a36afa294222e03.png" />
 </div>
 </div>
 <p>The raised cosine filter is a Nyquist filter. This means that the impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is zero at adjacent symbols.
@@ -9135,7 +9136,7 @@ Specifically, <span class="math notranslate nohighlight">\(h[n] = 0\)</span> for
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/a012abe85873b8a1b48595ac3a046864f25e8f6b995556084e0eb162fca5afb7.png" src="../../_images/a012abe85873b8a1b48595ac3a046864f25e8f6b995556084e0eb162fca5afb7.png" />
+<img alt="../../_images/7203326f9703b91067febbd609566949d71917d78cd1744f5da173080cc61a83.png" src="../../_images/7203326f9703b91067febbd609566949d71917d78cd1744f5da173080cc61a83.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9145,15 +9146,13 @@ Specifically, <span class="math notranslate nohighlight">\(h[n] = 0\)</span> for
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">rc_0p1</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.1$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">rc_0p5</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.5$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">rc_0p9</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.9$&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e06e030c8ace0656381395bf1416058beb73832651198e0a4c78be89953e7192.png" src="../../_images/e06e030c8ace0656381395bf1416058beb73832651198e0a4c78be89953e7192.png" />
+<img alt="../../_images/3af47d79784ec06e6f3e6c75d2a1018c8c9e8ea7b1e2187a5e91e72d935e7c84.png" src="../../_images/3af47d79784ec06e6f3e6c75d2a1018c8c9e8ea7b1e2187a5e91e72d935e7c84.png" />
 </div>
 </div>
 <p>Notice the raised cosine pulse with excess bandwidth <span class="math notranslate nohighlight">\(\alpha = 0.1\)</span> has a total bandwidth of nearly <span class="math notranslate nohighlight">\(f_{sym}\)</span>.
@@ -9191,7 +9190,7 @@ Compare this to <span class="math notranslate nohighlight">\(\alpha = 0.9\)</spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ca0d983f4bb1b89561baca3408d037954be0d8abaea5847446aeba62bdef7f9e.png" src="../../_images/ca0d983f4bb1b89561baca3408d037954be0d8abaea5847446aeba62bdef7f9e.png" />
+<img alt="../../_images/2f5a5158417a6248c06df2121f01426c6036209c1004d3ec604cb87083bb7ac6.png" src="../../_images/2f5a5158417a6248c06df2121f01426c6036209c1004d3ec604cb87083bb7ac6.png" />
 </div>
 </div>
 <h2 id="square-root-raised-cosine">Square-root raised cosine<a class="headerlink" href="#square-root-raised-cosine" title="Permalink to this heading">¶</a></h2>
@@ -9219,7 +9218,7 @@ This is achieved using the <a class="reference internal" href="../../api/sdr.roo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/aeb70cea381c82c0d14e357f79c1c489c401ec293a79838d721c9c84fb4e83e2.png" src="../../_images/aeb70cea381c82c0d14e357f79c1c489c401ec293a79838d721c9c84fb4e83e2.png" />
+<img alt="../../_images/83277068aa887a7c9561e854ab3bc5dae38f9acfd353430a202b39c52967db90.png" src="../../_images/83277068aa887a7c9561e854ab3bc5dae38f9acfd353430a202b39c52967db90.png" />
 </div>
 </div>
 <p>The square-root raised cosine filter is not a Nyquist filter.
@@ -9240,7 +9239,7 @@ Therefore, the impulse response <span class="math notranslate nohighlight">\(h[n
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c0d6808ab2801537662666d7dc99813fe64b27126560cec3a25f87ee792c25bc.png" src="../../_images/c0d6808ab2801537662666d7dc99813fe64b27126560cec3a25f87ee792c25bc.png" />
+<img alt="../../_images/f228c58166e854c513c8b56cb721c0bcdca10d1fbfcfab39cfdcd89a1d0b63a3.png" src="../../_images/f228c58166e854c513c8b56cb721c0bcdca10d1fbfcfab39cfdcd89a1d0b63a3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9251,15 +9250,13 @@ Therefore, the impulse response <span class="math notranslate nohighlight">\(h[n
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">srrc_0p5</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.5$&quot;</span><span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">srrc_0p9</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sps</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha = 0.9$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Normalized frequency, $f/f_</span><span class="si">{sym}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6195e2583e90eab36ff165b093e3593ca867a8140176c71a70c84302fc6dbfc2.png" src="../../_images/6195e2583e90eab36ff165b093e3593ca867a8140176c71a70c84302fc6dbfc2.png" />
+<img alt="../../_images/bc3e6f90e3f0de63c9644609d49634361caa786557a36666b9802b4344318eab.png" src="../../_images/bc3e6f90e3f0de63c9644609d49634361caa786557a36666b9802b4344318eab.png" />
 </div>
 </div>
 <p>While the bandwidths of the square-root raised cosine filter are similar to the raised cosine filter,
@@ -9297,7 +9294,7 @@ This is due to this filter not being a Nyquist filter.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/31504f6100a6f81cf6de94e100356c95cb54ddf9e2560ead194f524ed05101b7.png" src="../../_images/31504f6100a6f81cf6de94e100356c95cb54ddf9e2560ead194f524ed05101b7.png" />
+<img alt="../../_images/063e7e7676dedbe508960cc2018ac44432e2d84f5c89121589d22568f84b719d.png" src="../../_images/063e7e7676dedbe508960cc2018ac44432e2d84f5c89121589d22568f84b719d.png" />
 </div>
 </div>
 <h2 id="gaussian">Gaussian<a class="headerlink" href="#gaussian" title="Permalink to this heading">¶</a></h2>
@@ -9323,7 +9320,7 @@ This is achieved using the <a class="reference internal" href="../../api/sdr.gau
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/38dab7fa6c1f34f5fbda7334a9f862f379d0344d976d0985300271ff9d37b888.png" src="../../_images/38dab7fa6c1f34f5fbda7334a9f862f379d0344d976d0985300271ff9d37b888.png" />
+<img alt="../../_images/e3ddbbe9379e1482f7113b6c19110c36a4ee074420ac13f5d24073431421bbba.png" src="../../_images/e3ddbbe9379e1482f7113b6c19110c36a4ee074420ac13f5d24073431421bbba.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9339,7 +9336,7 @@ This is achieved using the <a class="reference internal" href="../../api/sdr.gau
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d1579d91a88568226a6aebd8f6e3897c2880c1fac5dd6d702027a6de80c88c25.png" src="../../_images/d1579d91a88568226a6aebd8f6e3897c2880c1fac5dd6d702027a6de80c88c25.png" />
+<img alt="../../_images/70a19a319ee55a061f0854b0b58a1c76e7bcc99b1933e23367981199350524b8.png" src="../../_images/70a19a319ee55a061f0854b0b58a1c76e7bcc99b1933e23367981199350524b8.png" />
 </div>
 </div>
 
@@ -9349,7 +9346,7 @@ This is achieved using the <a class="reference internal" href="../../api/sdr.gau
   <small>
     
       Last update:
-      Aug 19, 2023
+      Dec 06, 2023
     
   </small>
 </div>

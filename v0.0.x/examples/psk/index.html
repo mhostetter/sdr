@@ -9175,6 +9175,7 @@ You're not viewing the latest version.
 <span class="kn">import</span> <span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># %matplotlib widget</span>
 </code></pre></div>
 </div>
@@ -9188,7 +9189,7 @@ You're not viewing the latest version.
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">)</span>
 
     <span class="c1"># Modulate decimal symbols to complex symbols</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
     <span class="c1"># Add AWGN to complex symbols to achieve desired Es/N0</span>
     <span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">esn0_to_snr</span><span class="p">(</span><span class="n">esn0</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -9204,10 +9205,10 @@ You're not viewing the latest version.
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-    <span class="n">sps</span> <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">h_srrc</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">sps</span><span class="p">)</span>
-    <span class="n">tx_mf</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">sps</span><span class="p">,</span> <span class="n">h_srrc</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">tx_mf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="c1"># h_srrc = sdr.root_raised_cosine(0.1, 6, sps)</span>
+    <span class="c1"># tx_mf = sdr.Interpolator(sps, h_srrc)</span>
+    <span class="c1"># y = tx_mf(x)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
     <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1000</span><span class="p">])</span>
@@ -9220,53 +9221,53 @@ You're not viewing the latest version.
 <h3 id="bpsk">BPSK<a class="headerlink" href="#bpsk" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
 <span class="n">analyze_psk</span><span class="p">(</span><span class="n">bpsk</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c1ce68a9fd6db55655be6a14273e979a978e417914d720ee377de9c9b53ef4ef.png" src="../../_images/c1ce68a9fd6db55655be6a14273e979a978e417914d720ee377de9c9b53ef4ef.png" />
-<img alt="../../_images/1632e6f6a6acbdcf25a2d5ffc2e3d2fae064e731c11803041c1050aae7f4503d.png" src="../../_images/1632e6f6a6acbdcf25a2d5ffc2e3d2fae064e731c11803041c1050aae7f4503d.png" />
+<img alt="../../_images/bf0d3a8cdd15fab98d985799ea5cd3a6856c8198767d8f95fa8aedb431f01a52.png" src="../../_images/bf0d3a8cdd15fab98d985799ea5cd3a6856c8198767d8f95fa8aedb431f01a52.png" />
+<img alt="../../_images/aa7f8e21f8ed094ad5e33e0328c8900b4e62239497a5ad612cd9e6db452c0c7b.png" src="../../_images/aa7f8e21f8ed094ad5e33e0328c8900b4e62239497a5ad612cd9e6db452c0c7b.png" />
 </div>
 </div>
 <h3 id="qpsk">QPSK<a class="headerlink" href="#qpsk" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
 <span class="n">analyze_psk</span><span class="p">(</span><span class="n">qpsk</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1f71763be5d46f0e6aaecd2141d94f06e2fcdc6d752f2431ca38c95a169d4e9f.png" src="../../_images/1f71763be5d46f0e6aaecd2141d94f06e2fcdc6d752f2431ca38c95a169d4e9f.png" />
-<img alt="../../_images/44d0e523e0f008ee0c48fb2993b3ee41a15dccf40d6df85f6da827861f02ce2d.png" src="../../_images/44d0e523e0f008ee0c48fb2993b3ee41a15dccf40d6df85f6da827861f02ce2d.png" />
+<img alt="../../_images/84516be78fe1c427c67cf263a5ebeaf5d882fba05892f236c35c167dae6b6c49.png" src="../../_images/84516be78fe1c427c67cf263a5ebeaf5d882fba05892f236c35c167dae6b6c49.png" />
+<img alt="../../_images/802ecbab7a9b5d6e2048bed8cfaa123edf626b12463925fa2b612b69f2f8f6be.png" src="../../_images/802ecbab7a9b5d6e2048bed8cfaa123edf626b12463925fa2b612b69f2f8f6be.png" />
 </div>
 </div>
 <h3 id="id1">8-PSK<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk8</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk8</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
 <span class="n">analyze_psk</span><span class="p">(</span><span class="n">psk8</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f788ac494eff7a7543e918c67483398dfd7d5047dd6a513cf394e3308311fdc5.png" src="../../_images/f788ac494eff7a7543e918c67483398dfd7d5047dd6a513cf394e3308311fdc5.png" />
-<img alt="../../_images/86b74d303713a7a7badbb566d47ba5e2253a73e919578cfe80de376b1c333f6b.png" src="../../_images/86b74d303713a7a7badbb566d47ba5e2253a73e919578cfe80de376b1c333f6b.png" />
+<img alt="../../_images/0b8c888a25df3d413f792cd29be1e2c2a99d68ae5bfb36589519f576258548a7.png" src="../../_images/0b8c888a25df3d413f792cd29be1e2c2a99d68ae5bfb36589519f576258548a7.png" />
+<img alt="../../_images/ef1e5ffcb6a4b88e222d8e2d58c171cc47ef66172e20a4fb81edfe839c780ae5.png" src="../../_images/ef1e5ffcb6a4b88e222d8e2d58c171cc47ef66172e20a4fb81edfe839c780ae5.png" />
 </div>
 </div>
 <h3 id="id2">16-PSK<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk16</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk16</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
 <span class="n">analyze_psk</span><span class="p">(</span><span class="n">psk16</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d8533739f6a399d1afb6477387c39955cf13dcac9600a4cb584cb16d5cb91eac.png" src="../../_images/d8533739f6a399d1afb6477387c39955cf13dcac9600a4cb584cb16d5cb91eac.png" />
-<img alt="../../_images/ac5f64f2229ae1cad7f2e3e2abdf7f61c9d5cc0f66da73fc54201e9ed08262bc.png" src="../../_images/ac5f64f2229ae1cad7f2e3e2abdf7f61c9d5cc0f66da73fc54201e9ed08262bc.png" />
+<img alt="../../_images/6d261471ebd1769e444f944154505043034f81a7b7a1fc7a1b082bbc43a4d8d5.png" src="../../_images/6d261471ebd1769e444f944154505043034f81a7b7a1fc7a1b082bbc43a4d8d5.png" />
+<img alt="../../_images/e323d7ddff9ed7b3418a1da9f9a6982cd812e92790677f9d395df425a1f2300d.png" src="../../_images/e323d7ddff9ed7b3418a1da9f9a6982cd812e92790677f9d395df425a1f2300d.png" />
 </div>
 </div>
 <h2 id="error-rate-curves">Error rate curves<a class="headerlink" href="#error-rate-curves" title="Permalink to this heading">¶</a></h2>
@@ -9281,9 +9282,9 @@ You're not viewing the latest version.
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">snr</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e6</span><span class="p">))</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="n">x_hat</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">snr</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">s_hat</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">x_hat</span><span class="p">)</span>
+        <span class="n">s_hat</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">decide_symbols</span><span class="p">(</span><span class="n">x_hat</span><span class="p">)</span>
 
         <span class="n">ber</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ebn0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sdr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">bps</span><span class="p">),</span> <span class="n">sdr</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="n">s_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">bps</span><span class="p">))</span>
         <span class="n">ser</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">esn0</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="p">,</span> <span class="n">s_hat</span><span class="p">)</span>
@@ -9327,7 +9328,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/71cc0bb4e7111d9bc13d8b5d45d44a7cd6d3ed7d89a9a8114afbf080b0a831fb.png" src="../../_images/71cc0bb4e7111d9bc13d8b5d45d44a7cd6d3ed7d89a9a8114afbf080b0a831fb.png" />
+<img alt="../../_images/e7fa3581a71020c3ef95a63499c93dadb4a7bf102c143d486a5137fb0c6f844a.png" src="../../_images/e7fa3581a71020c3ef95a63499c93dadb4a7bf102c143d486a5137fb0c6f844a.png" />
 </div>
 </div>
 <h3 id="symbol-error-rate-curves">Symbol error rate curves<a class="headerlink" href="#symbol-error-rate-curves" title="Permalink to this heading">¶</a></h3>
@@ -9352,7 +9353,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/3aefa82071764fc0b28c8d4206073a97f4077a04bb4a6137e11fc251e78c7501.png" src="../../_images/3aefa82071764fc0b28c8d4206073a97f4077a04bb4a6137e11fc251e78c7501.png" />
+<img alt="../../_images/d82c5a2ac850a64b32b6947f81fff0738b1b33403f0d62627df4df292dbfbb34.png" src="../../_images/d82c5a2ac850a64b32b6947f81fff0738b1b33403f0d62627df4df292dbfbb34.png" />
 </div>
 </div>
 <h2 id="symbol-mapping">Symbol mapping<a class="headerlink" href="#symbol-mapping" title="Permalink to this heading">¶</a></h2>
@@ -9382,7 +9383,7 @@ This is generally accomplished using a Gray code (the default in :class:<code cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/772721577c2900d4abbe3ca510758d8997ac16c059e0c178a41f661bc2a64968.png" src="../../_images/772721577c2900d4abbe3ca510758d8997ac16c059e0c178a41f661bc2a64968.png" />
+<img alt="../../_images/a3c2b8d900462bceb7efa1b4608b1ae4f00c4f34d3aff540305f9a0af6905093.png" src="../../_images/a3c2b8d900462bceb7efa1b4608b1ae4f00c4f34d3aff540305f9a0af6905093.png" />
 </div>
 </div>
 <p>Since adjacent symbol errors can lead to multiple bit errors, binary-coded 8-PSK has worse bit error performance.</p>
@@ -9399,7 +9400,7 @@ This is generally accomplished using a Gray code (the default in :class:<code cl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ad609c142343c13cc06d28baf02d21688bb47faf8321a32a71f47d4fdd3f7123.png" src="../../_images/ad609c142343c13cc06d28baf02d21688bb47faf8321a32a71f47d4fdd3f7123.png" />
+<img alt="../../_images/a5be79c9cc2ca103234c35416d9d2a12a0f89eb82000110001a1fff534093269.png" src="../../_images/a5be79c9cc2ca103234c35416d9d2a12a0f89eb82000110001a1fff534093269.png" />
 </div>
 </div>
 
@@ -9409,7 +9410,7 @@ This is generally accomplished using a Gray code (the default in :class:<code cl
   <small>
     
       Last update:
-      Aug 13, 2023
+      Dec 06, 2023
     
   </small>
 </div>

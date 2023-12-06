@@ -9129,12 +9129,13 @@ You're not viewing the latest version.
 <h1 id="phase-locked-loops"><span id="phase-locked-loop"></span>Phase-locked loops<a class="headerlink" href="#phase-locked-loops" title="Permalink to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># %matplotlib widget</span>
 </code></pre></div>
 </div>
@@ -9172,7 +9173,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x000002276D2BCC08&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7fad2956d4d0&gt;
 </code></pre></div>
 </div>
 </div>
@@ -9186,7 +9187,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4a1191124cd4fb703cb66cb8d9c6f0187bb1efe1f01ba460fb01815478df2d0b.png" src="../../_images/4a1191124cd4fb703cb66cb8d9c6f0187bb1efe1f01ba460fb01815478df2d0b.png" />
+<img alt="../../_images/57c72558556f706245da20cfc02d5e31576a5fc1f3c6bdb426e5bfa6d046e25a.png" src="../../_images/57c72558556f706245da20cfc02d5e31576a5fc1f3c6bdb426e5bfa6d046e25a.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-phase-domain">Implement a PLL in the phase domain<a class="headerlink" href="#implement-a-pll-in-the-phase-domain" title="Permalink to this heading">¶</a></h2>
@@ -9216,9 +9217,11 @@ z^-1 = Unit delay
     <span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">loop_filter</span><span class="p">(</span><span class="n">phase_error</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
     <span class="c1"># Process the variable phase increment through the NCO</span>
-    <span class="n">y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nco</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nco</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span>
 </code></pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <div class="cell docutils container">
@@ -9248,7 +9251,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6bc4bb14a51c79193ccf60f838bf7c2b48482498a8fca2a649828be8d176ec36.png" src="../../_images/6bc4bb14a51c79193ccf60f838bf7c2b48482498a8fca2a649828be8d176ec36.png" />
+<img alt="../../_images/83c93458a5af4e53cb5785ad3c2fb9d593c4884b4513627a6f4563ee0987fb37.png" src="../../_images/83c93458a5af4e53cb5785ad3c2fb9d593c4884b4513627a6f4563ee0987fb37.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-time-domain">Implement a PLL in the time domain<a class="headerlink" href="#implement-a-pll-in-the-time-domain" title="Permalink to this heading">¶</a></h2>
@@ -9265,9 +9268,9 @@ z^-1 = Unit delay
 <span class="c1"># noise bandwidth of 0.05 and a damping factor of 1 (critically damped)</span>
 <span class="n">loop_filter</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LoopFilter</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Create a direct digital synthesizer (DDS) with NCO gain of 1</span>
+<span class="c1"># Create a numerically controlled oscillator (NCO) with NCO gain of 1</span>
 <span class="c1"># and a constant phase accumulation of theta_0 radians/sample</span>
-<span class="n">dds</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">DDS</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta_0</span><span class="p">)</span>
+<span class="n">nco</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">NCO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta_0</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="c1"># Phase error detector (PED)</span>
@@ -9277,9 +9280,11 @@ z^-1 = Unit delay
     <span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">loop_filter</span><span class="p">(</span><span class="n">phase_error</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
     <span class="c1"># Process the variable phase increment through the DDS</span>
-    <span class="n">y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dds</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">nco</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </code></pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
 </div>
 </div>
 <div class="cell docutils container">
@@ -9318,19 +9323,20 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b5be9a9e51f269d8a6faf75034b77594b6c97d5ef9383c998e95d49beb4abbf7.png" src="../../_images/b5be9a9e51f269d8a6faf75034b77594b6c97d5ef9383c998e95d49beb4abbf7.png" />
+<img alt="../../_images/b7d0b6236602541411d90e07f428bf2af52eb1d0ea61cea1659c06f9b9c80d48.png" src="../../_images/b7d0b6236602541411d90e07f428bf2af52eb1d0ea61cea1659c06f9b9c80d48.png" />
 </div>
 </div>
 <h2 id="analyze-pll-closed-loop-performance">Analyze PLL closed-loop performance<a class="headerlink" href="#analyze-pll-closed-loop-performance" title="Permalink to this heading">¶</a></h2>
 <p>A closed-loop PLL has the following configuration.</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>             bb[n]
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>            bb[n]    phase_err[n]
         +---+    +-----+    +----+
 x[n] --&gt;| X |---&gt;| PED |---&gt;| LF |---+
         +---+    +-----+    +----+   |
-          ^                          |
-          |  +---------+   +-----+   |
-   lo[n]  +--| e^(-j.) |&lt;--| NCO |&lt;--+
-             +---------+   +-----+
+          ^                          | phase_est[n]
+          |      +-----+             |
+   lo[n]  +------| NCO |&lt;------------+
+                 +-----+
+
 
 x[n] = Input signal
 lo[n] = Local oscillator signal
@@ -9361,7 +9367,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/106565cd6bd3585c9dcbbb207f8275c5beca754ac9cd69580886ee35e0c2d2a1.png" src="../../_images/106565cd6bd3585c9dcbbb207f8275c5beca754ac9cd69580886ee35e0c2d2a1.png" />
+<img alt="../../_images/6c64d1a7dfb8ef7caeae2091231c5810d60e3aa88fcd1815ebb780a647a9133c.png" src="../../_images/6c64d1a7dfb8ef7caeae2091231c5810d60e3aa88fcd1815ebb780a647a9133c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9380,7 +9386,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1c5969fcb6cc07800106c121a35fc96d3a39abe90b666084a4a0a5a2266dd635.png" src="../../_images/1c5969fcb6cc07800106c121a35fc96d3a39abe90b666084a4a0a5a2266dd635.png" />
+<img alt="../../_images/10c0cc8ce7564a8b5d927cc6d0c92376c679846fead329173684d961aee9de59.png" src="../../_images/10c0cc8ce7564a8b5d927cc6d0c92376c679846fead329173684d961aee9de59.png" />
 </div>
 </div>
 <h3 id="compare-step-and-frequency-response-across-b-n-t">Compare step and frequency response across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-b-n-t" title="Permalink to this heading">¶</a></h3>
@@ -9397,7 +9403,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/947ce69b2fe6501891790988dbbd01fce52336c8425c58825fad111b0333568f.png" src="../../_images/947ce69b2fe6501891790988dbbd01fce52336c8425c58825fad111b0333568f.png" />
+<img alt="../../_images/29a2ab6c8a031f80ca83c72e4ec065d7285dbe84882558a71abbdf868c624801.png" src="../../_images/29a2ab6c8a031f80ca83c72e4ec065d7285dbe84882558a71abbdf868c624801.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9414,7 +9420,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e13d23d6c6f2556f740e6bad60a1effecffe42af0e300744274d41084bebf365.png" src="../../_images/e13d23d6c6f2556f740e6bad60a1effecffe42af0e300744274d41084bebf365.png" />
+<img alt="../../_images/11ffecc4d4db88442d682b220496703f253edcb21cf781cfd5ec026a1ae220b9.png" src="../../_images/11ffecc4d4db88442d682b220496703f253edcb21cf781cfd5ec026a1ae220b9.png" />
 </div>
 </div>
 <h3 id="compare-lock-time-across-b-n-t">Compare lock time across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-lock-time-across-b-n-t" title="Permalink to this heading">¶</a></h3>
@@ -9437,7 +9443,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/223685444920ed001da1ab2cbccd82924b479d77499f000b6d88545a11f8b8e8.png" src="../../_images/223685444920ed001da1ab2cbccd82924b479d77499f000b6d88545a11f8b8e8.png" />
+<img alt="../../_images/554534e0167fa9740651d03a05bd442aafdaada2f3926bb433abeaeb3496e8af.png" src="../../_images/554534e0167fa9740651d03a05bd442aafdaada2f3926bb433abeaeb3496e8af.png" />
 </div>
 </div>
 
@@ -9447,7 +9453,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
   <small>
     
       Last update:
-      Aug 16, 2023
+      Dec 06, 2023
     
   </small>
 </div>

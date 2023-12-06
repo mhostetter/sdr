@@ -9081,6 +9081,7 @@ You're not viewing the latest version.
 <span class="kn">import</span> <span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># %matplotlib widget</span>
 </code></pre></div>
 </div>
@@ -9092,7 +9093,7 @@ You're not viewing the latest version.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
 <span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">1_000</span>
 <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </code></pre></div>
 </div>
 </div>
@@ -9150,7 +9151,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4a83d8b95471af52dec662011519ede8abdb2dcb87b5bc673b31d893298ada0f.png" src="../../_images/4a83d8b95471af52dec662011519ede8abdb2dcb87b5bc673b31d893298ada0f.png" />
+<img alt="../../_images/22e49a3108ec1ed9c3fd9ead6b5311a3d5591aa463667bb12bfdab6e44cc936a.png" src="../../_images/22e49a3108ec1ed9c3fd9ead6b5311a3d5591aa463667bb12bfdab6e44cc936a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9169,7 +9170,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/eead71d6823c0216e24f19ed07ed0d924b6e23d2ad664b4b926b943d9238f057.png" src="../../_images/eead71d6823c0216e24f19ed07ed0d924b6e23d2ad664b4b926b943d9238f057.png" />
+<img alt="../../_images/c0e165cd8adc27033ae5ae441d881330545b24e1dfccb6c5dc1e4c500024dcf2.png" src="../../_images/c0e165cd8adc27033ae5ae441d881330545b24e1dfccb6c5dc1e4c500024dcf2.png" />
 </div>
 </div>
 <h2 id="examine-frequency-domain">Examine frequency domain<a class="headerlink" href="#examine-frequency-domain" title="Permalink to this heading">¶</a></h2>
@@ -9186,7 +9187,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/48c071f80ddb5ea5f727d9b7fa95055561020497ab471e4861bf291b08e06217.png" src="../../_images/48c071f80ddb5ea5f727d9b7fa95055561020497ab471e4861bf291b08e06217.png" />
+<img alt="../../_images/38f17113b89697767f366706180f1e9488379d7628a1ee3bd9538d89c38d8425.png" src="../../_images/38f17113b89697767f366706180f1e9488379d7628a1ee3bd9538d89c38d8425.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9226,7 +9227,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/449b23d51286b6b4fd6a92c921fa84e6c01cb3a4fbf1e15a11475d81b1b24350.png" src="../../_images/449b23d51286b6b4fd6a92c921fa84e6c01cb3a4fbf1e15a11475d81b1b24350.png" />
+<img alt="../../_images/150451b4b1c7b6e30481d843b55b3e1094059b52f19050b32878640760100627.png" src="../../_images/150451b4b1c7b6e30481d843b55b3e1094059b52f19050b32878640760100627.png" />
 </div>
 </div>
 <h2 id="plot-across-excess-bandwidth">Plot across excess bandwidth<a class="headerlink" href="#plot-across-excess-bandwidth" title="Permalink to this heading">¶</a></h2>
@@ -9236,7 +9237,7 @@ You're not viewing the latest version.
     <span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
     <span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">1_000</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
     <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
     <span class="n">bb_papr</span> <span class="o">=</span> <span class="p">[]</span>
@@ -9284,7 +9285,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fbfc8251e73c6c68363d58fbf0e19d32cc9d9572edf507dfbe8ff45136a9c219.png" src="../../_images/fbfc8251e73c6c68363d58fbf0e19d32cc9d9572edf507dfbe8ff45136a9c219.png" />
+<img alt="../../_images/c4f20f490c7bc948cebaf73fb52558ced1da8dca4110f257cb902b2a7390b59b.png" src="../../_images/c4f20f490c7bc948cebaf73fb52558ced1da8dca4110f257cb902b2a7390b59b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -9304,7 +9305,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d0ac7291e85ac18321d63b625b51be44170a8dd73ef09185de9c137983161d7b.png" src="../../_images/d0ac7291e85ac18321d63b625b51be44170a8dd73ef09185de9c137983161d7b.png" />
+<img alt="../../_images/3456910fc88c15d1b925710998eb76308d124af232327ab88d56ef3057810fb7.png" src="../../_images/3456910fc88c15d1b925710998eb76308d124af232327ab88d56ef3057810fb7.png" />
 </div>
 </div>
 
@@ -9314,7 +9315,7 @@ You're not viewing the latest version.
   <small>
     
       Last update:
-      Aug 13, 2023
+      Dec 06, 2023
     
   </small>
 </div>

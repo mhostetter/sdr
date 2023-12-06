@@ -9103,12 +9103,13 @@ You're not viewing the latest version.
 <h1 id="fir-filters"><span id="id1"></span>FIR filters<a class="headerlink" href="#fir-filters" title="Permalink to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="c1"># %matplotlib widget</span>
 </code></pre></div>
 </div>
@@ -9141,9 +9142,9 @@ The impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> 
  -0.0017044   0.00254816  0.00721645  0.0112324   0.01342358  0.01273202
   0.00845058  0.0004368  -0.01073669 -0.02372977 -0.03650247 -0.04650654
  -0.05098525 -0.04734644 -0.03355896 -0.00851486  0.02769991  0.07367348
-  0.12670447  0.1830132   0.23810898  0.28727058  0.3260799   0.3509384
-  0.35949665  0.3509384   0.3260799   0.28727058  0.23810898  0.1830132
-  0.12670447  0.07367348  0.02769991 -0.00851486 -0.03355896 -0.04734644
+  0.12670446  0.18301321  0.23810898  0.28727058  0.32607991  0.35093841
+  0.35949665  0.35093841  0.32607991  0.28727058  0.23810898  0.18301321
+  0.12670446  0.07367348  0.02769991 -0.00851486 -0.03355896 -0.04734644
  -0.05098525 -0.04650654 -0.03650247 -0.02372977 -0.01073669  0.0004368
   0.00845058  0.01273202  0.01342358  0.0112324   0.00721645  0.00254816
  -0.0017044  -0.00474595 -0.006151   -0.0058825  -0.00423921 -0.00175012
@@ -9162,7 +9163,7 @@ The impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d090b9292bfe1d4d6359ba4c0239193cd79ff37c3f23be202afb8c6e5a4db755.png" src="../../_images/d090b9292bfe1d4d6359ba4c0239193cd79ff37c3f23be202afb8c6e5a4db755.png" />
+<img alt="../../_images/c71ba336d92dce1a786bc662fe521320d3bdf597dbab0ae3b803051768bee4a7.png" src="../../_images/c71ba336d92dce1a786bc662fe521320d3bdf597dbab0ae3b803051768bee4a7.png" />
 </div>
 </div>
 <h2 id="examine-the-step-response-s-n">Examine the step response, <span class="math notranslate nohighlight">\(s[n]\)</span><a class="headerlink" href="#examine-the-step-response-s-n" title="Permalink to this heading">¶</a></h2>
@@ -9180,9 +9181,9 @@ The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is 
  -0.0017044   0.00254816  0.00721645  0.0112324   0.01342358  0.01273202
   0.00845058  0.0004368  -0.01073669 -0.02372977 -0.03650247 -0.04650654
  -0.05098525 -0.04734644 -0.03355896 -0.00851486  0.02769991  0.07367348
-  0.12670447  0.1830132   0.23810898  0.28727058  0.3260799   0.3509384
-  0.35949665  0.3509384   0.3260799   0.28727058  0.23810898  0.1830132
-  0.12670447  0.07367348  0.02769991 -0.00851486 -0.03355896 -0.04734644
+  0.12670446  0.18301321  0.23810898  0.28727058  0.32607991  0.35093841
+  0.35949665  0.35093841  0.32607991  0.28727058  0.23810898  0.18301321
+  0.12670446  0.07367348  0.02769991 -0.00851486 -0.03355896 -0.04734644
  -0.05098525 -0.04650654 -0.03650247 -0.02372977 -0.01073669  0.0004368
   0.00845058  0.01273202  0.01342358  0.0112324   0.00721645  0.00254816
  -0.0017044  -0.00474595 -0.006151   -0.0058825  -0.00423921 -0.00175012
@@ -9201,7 +9202,7 @@ The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2bfc5b1a9fdb42ba10d1549a576fcee9e5829cf0bfc51a77dc7be83a64556adb.png" src="../../_images/2bfc5b1a9fdb42ba10d1549a576fcee9e5829cf0bfc51a77dc7be83a64556adb.png" />
+<img alt="../../_images/f9046eba9fbf8e8895d89bd575ab883bccf080c18ceff86463abe26e7dc9706a.png" src="../../_images/f9046eba9fbf8e8895d89bd575ab883bccf080c18ceff86463abe26e7dc9706a.png" />
 </div>
 </div>
 <h2 id="examine-the-frequency-response-h-omega">Examine the frequency response, <span class="math notranslate nohighlight">\(H(\omega)\)</span><a class="headerlink" href="#examine-the-frequency-response-h-omega" title="Permalink to this heading">¶</a></h2>
@@ -9217,7 +9218,7 @@ The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5a9df9b7f5b9a1c8d422157357e8025666774717057e4155c351b916d7dede28.png" src="../../_images/5a9df9b7f5b9a1c8d422157357e8025666774717057e4155c351b916d7dede28.png" />
+<img alt="../../_images/c8897188084d79d5063663eee10b52406015e27fe32b96869c9c2deb19fd855b.png" src="../../_images/c8897188084d79d5063663eee10b52406015e27fe32b96869c9c2deb19fd855b.png" />
 </div>
 </div>
 <p>The one-sided frequency response, with logarithmic scale, can be plotted using the <code class="docutils literal notranslate"><span class="pre">x_axis=&quot;log&quot;</span></code> keyword argument.</p>
@@ -9230,7 +9231,7 @@ The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e643eef552062ff3e70e82fa8c6b84d13c7fba966f864a09fe1622e48574729e.png" src="../../_images/e643eef552062ff3e70e82fa8c6b84d13c7fba966f864a09fe1622e48574729e.png" />
+<img alt="../../_images/1dc26c3939f9873e4f8dc4c4fbad614bd23c7767d580b301f2f2d17d09cc869d.png" src="../../_images/1dc26c3939f9873e4f8dc4c4fbad614bd23c7767d580b301f2f2d17d09cc869d.png" />
 </div>
 </div>
 <h2 id="examine-the-group-delay-tau-g-omega">Examine the group delay, <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span><a class="headerlink" href="#examine-the-group-delay-tau-g-omega" title="Permalink to this heading">¶</a></h2>
@@ -9241,24 +9242,26 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">group_delay</span><span class="p">(</span><span class="n">fir</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6d71f512dacc86919e2dd219d44e1b5bdb72697f8078de45686469b533c80c23.png" src="../../_images/6d71f512dacc86919e2dd219d44e1b5bdb72697f8078de45686469b533c80c23.png" />
+<img alt="../../_images/a0d3b23397d18d0400e8b5736b896cede789da2e163b4d6b38798c2b7a5d59c8.png" src="../../_images/a0d3b23397d18d0400e8b5736b896cede789da2e163b4d6b38798c2b7a5d59c8.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">group_delay</span><span class="p">(</span><span class="n">fir</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/21748dda776aecac74d47797264d07100184dc628d6b25ab33d950b17d7fc6ee.png" src="../../_images/21748dda776aecac74d47797264d07100184dc628d6b25ab33d950b17d7fc6ee.png" />
+<img alt="../../_images/bb9d5178457f414a2702f5de1474a75cef5240967aa471401f3e2cd5b2f7a3dc.png" src="../../_images/bb9d5178457f414a2702f5de1474a75cef5240967aa471401f3e2cd5b2f7a3dc.png" />
 </div>
 </div>
 <h2 id="fully-analyze-a-fir-filter">Fully analyze a FIR filter<a class="headerlink" href="#fully-analyze-a-fir-filter" title="Permalink to this heading">¶</a></h2>
@@ -9281,7 +9284,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5107596e51db47a4d171c2d5d7ffef4b3911e76dff6b32a5b7b3505f62328cdb.png" src="../../_images/5107596e51db47a4d171c2d5d7ffef4b3911e76dff6b32a5b7b3505f62328cdb.png" />
+<img alt="../../_images/838712c1c82f8ed766dabe853d4cff41782b1abb27d54ffff0694a883c122588.png" src="../../_images/838712c1c82f8ed766dabe853d4cff41782b1abb27d54ffff0694a883c122588.png" />
 </div>
 </div>
 
@@ -9291,7 +9294,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
   <small>
     
       Last update:
-      Dec 03, 2023
+      Dec 06, 2023
     
   </small>
 </div>
