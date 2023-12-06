@@ -50,9 +50,6 @@ def periodogram(
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic power spectral density.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
-    Note:
-        The default y-axis lower limit is set to the 10th percentile. This is to crop any deep nulls.
-
     Group:
         plot-spectral-estimation
     """
@@ -102,11 +99,6 @@ def periodogram(
         plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
-
-        # Avoid deep nulls
-        y_max = plt.gca().get_ylim()[1]
-        y_min = np.percentile(Pxx, 10)
-        plt.ylim(y_min, y_max)
 
         if sample_rate_provided:
             plt.xlabel(f"Frequency ({units}), $f$")
