@@ -4,10 +4,12 @@ import pytest
 import sdr
 
 
-def test_call_no_args():
+def test_call_exceptions():
     nco = sdr.NCO()
     with pytest.raises(ValueError):
         nco()
+    with pytest.raises(ValueError):
+        nco(np.array([1, 2, 3]), output="invalid")
 
 
 def test_initial_phase_is_offset():
