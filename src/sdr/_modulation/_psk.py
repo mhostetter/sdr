@@ -31,6 +31,13 @@ class PSK(LinearModulation):
 
         $$a[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
 
+    Note:
+        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
+        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
+        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
+        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
+        sample index.
+
     Examples:
         Create a QPSK modem whose constellation has a 45° phase offset.
 
@@ -84,7 +91,7 @@ class PSK(LinearModulation):
 
         .. ipython:: python
 
-            rx_symbols, rx_complex_symbols = qpsk.demodulate(rx_samples)
+            rx_symbols, rx_complex_symbols, _ = qpsk.demodulate(rx_samples)
 
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
@@ -463,6 +470,13 @@ class PiMPSK(PSK):
         \end{cases}
         $$
 
+    Note:
+        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
+        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
+        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
+        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
+        sample index.
+
     Examples:
         Create a $\pi/4$ QPSK modem.
 
@@ -516,7 +530,7 @@ class PiMPSK(PSK):
 
         .. ipython:: python
 
-            rx_symbols, rx_complex_symbols = pi4_qpsk.demodulate(rx_samples)
+            rx_symbols, rx_complex_symbols, _ = pi4_qpsk.demodulate(rx_samples)
 
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
@@ -580,20 +594,22 @@ class PiMPSK(PSK):
         )
 
     def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
-        s = super()._map_symbols(s)
+        a = super()._map_symbols(s)
 
         # Rotate odd symbols by pi/M
-        s_rotated = s.copy()
-        s_rotated[1::2] *= np.exp(1j * np.pi / self.order)
+        a_rotated = a.copy()
+        a_rotated[1::2] *= np.exp(1j * np.pi / self.order)
 
-        return s_rotated
+        return a_rotated
 
-    def _decide_symbols(self, a_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
+    def _decide_symbols(
+        self, a_tilde: npt.NDArray[np.complex_]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
         # Rotate odd symbols by -pi/M
-        a_hat_derotated = a_hat.copy()
-        a_hat_derotated[1::2] *= np.exp(-1j * np.pi / self.order)
+        a_tilde_derotated = a_tilde.copy()
+        a_tilde_derotated[1::2] *= np.exp(-1j * np.pi / self.order)
 
-        return super()._decide_symbols(a_hat_derotated)
+        return super()._decide_symbols(a_tilde_derotated)
 
 
 @export
@@ -621,6 +637,13 @@ class OQPSK(PSK):
         a[k + 3/2] &= I[k + 1] + jQ[k + 1] \\
         \end{align}
         $$
+
+    Note:
+        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
+        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
+        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
+        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
+        sample index.
 
     Examples:
         Create a OQPSK modem.
@@ -681,7 +704,7 @@ class OQPSK(PSK):
 
         .. ipython:: python
 
-            rx_symbols, rx_complex_symbols = oqpsk.demodulate(rx_samples)
+            rx_symbols, rx_complex_symbols, _ = oqpsk.demodulate(rx_samples)
 
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
@@ -796,38 +819,40 @@ class OQPSK(PSK):
 
         return x
 
-    def _decide_symbols(self, a_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
-        a_hat = np.asarray(a_hat)
-        a_hat_I, a_hat_Q = a_hat.real, a_hat.imag
+    def _decide_symbols(
+        self, a_tilde: npt.NDArray[np.complex_]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+        a_tilde = np.asarray(a_tilde)
+        a_tilde_I, a_tilde_Q = a_tilde.real, a_tilde.imag
 
         # Shift Q symbols by -1/2 symbol and grab 1 sample per symbol
-        a_hat_I = a_hat_I[:-1:2]
-        a_hat_Q = a_hat_Q[1::2]
+        a_tilde_I = a_tilde_I[:-1:2]
+        a_tilde_Q = a_tilde_Q[1::2]
 
-        a_hat = a_hat_I + 1j * a_hat_Q
+        a_tilde = a_tilde_I + 1j * a_tilde_Q
 
-        return super()._decide_symbols(a_hat)
+        return super()._decide_symbols(a_tilde)
 
-    def _rx_matched_filter(self, x_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
-        x_hat_I, x_hat_Q = x_hat.real, x_hat.imag
+    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+        x_tilde_I, x_tilde_Q = x_tilde.real, x_tilde.imag
 
         # Shift Q samples by -1/2 symbol
-        x_hat_I = x_hat_I[: -self.sps // 2]
-        x_hat_Q = x_hat_Q[self.sps // 2 :]
+        x_tilde_I = x_tilde_I[: -self.sps // 2]
+        x_tilde_Q = x_tilde_Q[self.sps // 2 :]
 
-        a_hat_I = super()._rx_matched_filter(x_hat_I)  # Complex samples
-        a_hat_Q = super()._rx_matched_filter(x_hat_Q)  # Complex samples
+        a_tilde_I = super()._rx_matched_filter(x_tilde_I)  # Complex samples
+        a_tilde_Q = super()._rx_matched_filter(x_tilde_Q)  # Complex samples
 
-        a_hat_I = np.repeat(a_hat_I, 2)
-        a_hat_Q = np.repeat(a_hat_Q, 2)
+        a_tilde_I = np.repeat(a_tilde_I, 2)
+        a_tilde_Q = np.repeat(a_tilde_Q, 2)
 
         # Shift Q symbols by 1/2 symbol
-        a_hat_I = np.append(a_hat_I, 0)
-        a_hat_Q = np.insert(a_hat_Q, 0, 0)
+        a_tilde_I = np.append(a_tilde_I, 0)
+        a_tilde_Q = np.insert(a_tilde_Q, 0, 0)
 
-        a_hat = a_hat_I + 1j * a_hat_Q
+        a_tilde = a_tilde_I + 1j * a_tilde_Q
 
-        return a_hat
+        return a_tilde
 
 
 def Pk(M: int, esn0_linear: float, j: int) -> float:
