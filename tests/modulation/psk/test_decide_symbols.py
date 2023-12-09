@@ -46,7 +46,7 @@ X_HAT = np.array(
 def test_bpsk_bin():
     phi = np.rad2deg(-2.394815492222444)
     psk = sdr.PSK(2, phase_offset=phi, symbol_labels="bin")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0])
     assert np.array_equal(s, s_truth)
 
@@ -54,7 +54,7 @@ def test_bpsk_bin():
 def test_bpsk_gray():
     phi = np.rad2deg(-0.753083802680199)
     psk = sdr.PSK(2, phase_offset=phi, symbol_labels="gray")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1])
     assert np.array_equal(s, s_truth)
 
@@ -62,7 +62,7 @@ def test_bpsk_gray():
 def test_qpsk_bin():
     phi = np.rad2deg(1.965584775048307)
     psk = sdr.PSK(4, phase_offset=phi, symbol_labels="bin")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([1, 0, 0, 2, 2, 2, 2, 3, 1, 1, 2, 1, 0, 2, 2, 1, 3, 2, 3, 1])
     assert np.array_equal(s, s_truth)
 
@@ -70,7 +70,7 @@ def test_qpsk_bin():
 def test_qpsk_gray():
     phi = np.rad2deg(-1.607892783327202)
     psk = sdr.PSK(4, phase_offset=phi, symbol_labels="gray")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([2, 3, 3, 1, 1, 0, 1, 3, 2, 0, 1, 0, 2, 0, 0, 2, 1, 1, 1, 2])
     assert np.array_equal(s, s_truth)
 
@@ -78,7 +78,7 @@ def test_qpsk_gray():
 def test_8psk_bin():
     phi = np.rad2deg(2.415398803363657)
     psk = sdr.PSK(8, phase_offset=phi, symbol_labels="bin")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([1, 7, 7, 4, 4, 3, 4, 6, 1, 2, 4, 2, 0, 3, 3, 2, 6, 4, 5, 1])
     assert np.array_equal(s, s_truth)
 
@@ -86,7 +86,7 @@ def test_8psk_bin():
 def test_8psk_gray():
     phi = np.rad2deg(1.336099216449522)
     psk = sdr.PSK(8, phase_offset=phi, symbol_labels="gray")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([2, 0, 1, 5, 7, 7, 5, 0, 3, 2, 5, 6, 1, 6, 7, 2, 4, 5, 4, 2])
     assert np.array_equal(s, s_truth)
 
@@ -94,7 +94,7 @@ def test_8psk_gray():
 def test_16psk_bin():
     phi = np.rad2deg(-0.765615943499161)
     psk = sdr.PSK(16, phase_offset=phi, symbol_labels="bin")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([11, 6, 7, 1, 0, 15, 1, 5, 10, 12, 1, 13, 8, 14, 15, 12, 3, 1, 3, 10])
     assert np.array_equal(s, s_truth)
 
@@ -102,6 +102,6 @@ def test_16psk_bin():
 def test_16psk_gray():
     phi = np.rad2deg(-1.577584611111288)
     psk = sdr.PSK(16, phase_offset=phi, symbol_labels="gray")
-    s = psk.decide_symbols(X_HAT)
+    s, _ = psk.decide_symbols(X_HAT)
     s_truth = np.array([11, 12, 13, 2, 3, 1, 2, 4, 10, 9, 2, 8, 15, 0, 1, 9, 7, 2, 7, 10])
     assert np.array_equal(s, s_truth)

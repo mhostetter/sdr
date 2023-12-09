@@ -16,8 +16,15 @@ from ._pulse_shapes import raised_cosine, rectangular, root_raised_cosine
 
 @export
 class LinearModulation:
-    """
+    r"""
     Implements linear phase/amplitude modulation with arbitrary symbol mapping.
+
+    Note:
+        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
+        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
+        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
+        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
+        sample index.
 
     Group:
         modulation-linear
@@ -137,24 +144,28 @@ class LinearModulation:
         a = self.symbol_map[s]  # Complex symbols
         return a
 
-    def decide_symbols(self, a_hat: npt.ArrayLike) -> npt.NDArray[np.int_]:
+    def decide_symbols(self, a_tilde: npt.ArrayLike) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
         r"""
-        Converts the received complex symbols $\hat{a}[k]$ into decimal symbol decisions $\hat{s}[k]$
-        using maximum-likelihood estimation (MLE).
+        Converts the received complex symbols $\tilde{a}[k]$ into decimal symbol decisions $\hat{s}[k]$
+        and complex symbol decisions $\hat{a}[k]$ using maximum-likelihood estimation (MLE).
 
         Arguments:
-            a_hat: The received complex symbols $\hat{a}[k]$.
+            a_tilde: The received complex symbols $\tilde{a}[k]$.
 
         Returns:
-            The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
+            - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
+            - The complex symbol decisions $\hat{a}[k]$.
         """
-        a_hat = np.asarray(a_hat)  # Complex symbols
-        return self._decide_symbols(a_hat)
+        a_tilde = np.asarray(a_tilde)  # Complex symbols
+        return self._decide_symbols(a_tilde)
 
-    def _decide_symbols(self, a_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
-        error_vectors = np.subtract.outer(a_hat, self.symbol_map)
+    def _decide_symbols(
+        self, a_tilde: npt.NDArray[np.complex_]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+        error_vectors = np.subtract.outer(a_tilde, self.symbol_map)
         s_hat = np.argmin(np.abs(error_vectors), axis=-1)
-        return s_hat
+        a_hat = self.symbol_map[s_hat]
+        return s_hat, a_hat
 
     def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
         r"""
@@ -179,45 +190,50 @@ class LinearModulation:
         x = self._tx_filter(a, mode="full")  # Complex samples
         return x
 
-    def demodulate(self, x_hat: npt.ArrayLike) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+    def demodulate(
+        self, x_tilde: npt.ArrayLike
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_], npt.NDArray[np.complex_]]:
         r"""
-        Demodulates the pulse-shaped complex samples $\hat{x}[n]$ into decimal symbol decisions $\hat{s}[k]$
+        Demodulates the pulse-shaped complex samples $\tilde{x}[n]$ into decimal symbol decisions $\hat{s}[k]$
         using matched filtering and maximum-likelihood estimation.
 
         Arguments:
-            x_hat: The received pulse-shaped complex samples $\hat{x}[n]$ to demodulate, with :obj:`sps`
+            x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`sps`
                 samples per symbol and length `sps * s_hat.size + pulse_shape.size - 1`.
 
         Returns:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
-            - The matched filter outputs $\hat{a}[k]$.
+            - The matched filter outputs $\tilde{a}[k]$.
+            - The complex symbol decisions $\hat{a}[k]$.
         """
-        x_hat = np.asarray(x_hat)  # Complex samples
-        return self._demodulate(x_hat)
+        x_tilde = np.asarray(x_tilde)  # Complex samples
+        return self._demodulate(x_tilde)
 
-    def _demodulate(self, x_hat: npt.NDArray[np.complex_]) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
-        a_hat = self._rx_matched_filter(x_hat)  # Complex symbols
-        s_hat = self._decide_symbols(a_hat)  # Decimal symbols
-        return s_hat, a_hat
+    def _demodulate(
+        self, x_tilde: npt.NDArray[np.complex_]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_], npt.NDArray[np.complex_]]:
+        a_tilde = self._rx_matched_filter(x_tilde)  # Complex symbols
+        s_hat, a_hat = self._decide_symbols(a_tilde)  # Decimal symbols
+        return s_hat, a_tilde, a_hat
 
-    def _rx_matched_filter(self, x_hat: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
         if self.pulse_shape.size % self.sps == 0:
-            x_hat = np.insert(x_hat, 0, 0)
+            x_tilde = np.insert(x_tilde, 0, 0)
 
-        a_hat = self._rx_filter(x_hat, mode="full")  # Complex symbols
+        a_tilde = self._rx_filter(x_tilde, mode="full")  # Complex symbols
 
         span = self.pulse_shape.size // self.sps
         if span == 1:
-            N_symbols = x_hat.size // self.sps
+            N_symbols = x_tilde.size // self.sps
             offset = span
         else:
-            N_symbols = x_hat.size // self.sps - span
+            N_symbols = x_tilde.size // self.sps - span
             offset = span
 
         # Select the symbol decisions from the output of the decimating filter
-        a_hat = a_hat[offset : offset + N_symbols]
+        a_tilde = a_tilde[offset : offset + N_symbols]
 
-        return a_hat
+        return a_tilde
 
     @abc.abstractmethod
     def ber(self, ebn0: npt.ArrayLike) -> npt.NDArray[np.float_]:

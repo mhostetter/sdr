@@ -24,6 +24,13 @@ class MSK(OQPSK):
         MSK can also be consider as continuous-phase frequency-shift keying (CPFSK) with the frequency separation
         equaling half the bit period.
 
+    Note:
+        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
+        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
+        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
+        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
+        sample index.
+
     Examples:
         Create a MSK modem.
 
@@ -97,7 +104,7 @@ class MSK(OQPSK):
 
         .. ipython:: python
 
-            rx_symbols, rx_complex_symbols = msk.demodulate(rx_samples)
+            rx_symbols, rx_complex_symbols, _ = msk.demodulate(rx_samples)
 
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)

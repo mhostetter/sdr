@@ -55,7 +55,7 @@ def _verify_demodulation(psk: sdr.PSK):
     s = np.random.randint(0, psk.order, 20)
     a = psk.map_symbols(s)
     x = psk.modulate(s)
-    s_hat, a_hat = psk.demodulate(x)
+    s_hat, a_tilde, a_hat = psk.demodulate(x)
 
     assert np.array_equal(s, s_hat)
     np.testing.assert_array_almost_equal(a, a_hat, decimal=3)
