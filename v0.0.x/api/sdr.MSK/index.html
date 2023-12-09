@@ -4046,7 +4046,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.decide_symbols/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $tilde{a}[k]$ into decimal symbol decisions $hat{s}[k]$ and complex symbol decisions $hat{a}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
       </a>
     </li>
   
@@ -4076,7 +4076,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $hat{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $tilde{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -9134,6 +9134,14 @@ shape is a half sine wave. This results in a constant envelope signal, which res
 peak-to-average power ratio (PAPR).</p>
 <p>MSK can also be consider as continuous-phase frequency-shift keying (CPFSK) with the frequency separation
 equaling half the bit period.</p>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>The nomenclature for variable names in linear modulators is as follows: <span class="math notranslate nohighlight">\(s[k]\)</span> are decimal symbols,
+<span class="math notranslate nohighlight">\(\hat{s}[k]\)</span> are decimal symbol decisions, <span class="math notranslate nohighlight">\(a[k]\)</span> are complex symbols, <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span> are received complex
+symbols, <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span> are complex symbol decisions, <span class="math notranslate nohighlight">\(x[n]\)</span> are pulse-shaped complex samples, and
+<span class="math notranslate nohighlight">\(\tilde{x}[n]\)</span> are received pulse-shaped complex samples. <span class="math notranslate nohighlight">\(k\)</span> indicates a symbol index and <span class="math notranslate nohighlight">\(n\)</span> indicates a
+sample index.</p>
+</div>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Create a MSK modem.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">msk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">MSK</span><span class="p">();</span> <span class="n">msk</span>
@@ -9207,7 +9215,7 @@ GMSK.</p>
 </div>
 <img alt="../../_images/sdr_MSK_6.png" src="../../_images/sdr_MSK_6.png" />
 <p>Matched filter and demodulate. Note, the first symbol has <span class="math notranslate nohighlight">\(Q = 0\)</span> and the last symbol has <span class="math notranslate nohighlight">\(I = 0\)</span>.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [13]: </span><span class="n">rx_symbols</span><span class="p">,</span> <span class="n">rx_complex_symbols</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [13]: </span><span class="n">rx_symbols</span><span class="p">,</span> <span class="n">rx_complex_symbols</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
 
 <span class="go"># The symbol decisions are error-free</span>
 <span class="gp">In [14]: </span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">rx_symbols</span><span class="p">)</span>
@@ -9263,9 +9271,9 @@ GMSK.</p>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.LinearModulation.decide_symbols/" title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)."><span class="sig-name descname"><span class="pre">decide_symbols</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LinearModulation.decide_symbols/#p-a_hat" title="sdr.LinearModulation.decide_symbols.a_hat (Python parameter) — The received complex symbols $hat{a}[k]$."><span class="n"><span class="pre">a_hat</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Converts the received complex symbols <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span> into decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>
-using maximum-likelihood estimation (MLE).</p>
+<a class="sig-name descname reference internal" href="../sdr.LinearModulation.decide_symbols/" title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $tilde{a}[k]$ into decimal symbol decisions $hat{s}[k]$ and complex symbol decisions $hat{a}[k]$ using maximum-likelihood estimation (MLE)."><span class="sig-name descname"><span class="pre">decide_symbols</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LinearModulation.decide_symbols/#p-a_tilde" title="sdr.LinearModulation.decide_symbols.a_tilde (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">a_tilde</span></span></a></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex_</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Converts the received complex symbols <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span> into decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>
+and complex symbol decisions <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span> using maximum-likelihood estimation (MLE).</p>
 </dd></dl>
 
 <dl class="py method summary objdesc">
@@ -9275,9 +9283,9 @@ using maximum-likelihood estimation (MLE).</p>
 </dd></dl>
 
 <dl class="py method summary objdesc">
-<dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.LinearModulation.demodulate/" title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $hat{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation."><span class="sig-name descname"><span class="pre">demodulate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LinearModulation.demodulate/#p-x_hat" title="sdr.LinearModulation.demodulate.x_hat (Python parameter) — The received pulse-shaped complex samples $hat{x}[n]$ to demodulate, with sps samples per symbol and length sps * s_hat.size + pulse_shape.size - 1."><span class="n"><span class="pre">x_hat</span></span></a></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex_</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Demodulates the pulse-shaped complex samples <span class="math notranslate nohighlight">\(\hat{x}[n]\)</span> into decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>
+<dt class="sig sig-object highlight sig-wrap py">
+<a class="sig-name descname reference internal" href="../sdr.LinearModulation.demodulate/" title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $tilde{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation."><span class="sig-name descname"><span class="pre">demodulate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex_</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex_</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Demodulates the pulse-shaped complex samples <span class="math notranslate nohighlight">\(\tilde{x}[n]\)</span> into decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>
 using matched filtering and maximum-likelihood estimation.</p>
 </dd></dl>
 

@@ -4044,7 +4044,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.decide_symbols/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $tilde{a}[k]$ into decimal symbol decisions $hat{s}[k]$ and complex symbol decisions $hat{a}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
       </a>
     </li>
   
@@ -4074,7 +4074,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $hat{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $tilde{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -9196,25 +9196,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">10.166146144493075</span>
+<span class="gh">Out[3]: </span><span class="go">9.942169082146334</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">10.166146144493075</span>
+<span class="gh">Out[4]: </span><span class="go">9.942169082146334</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">10.113821569208557</span>
+<span class="gh">Out[5]: </span><span class="go">9.893076810822665</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">8.121100084320112</span>
+<span class="gh">Out[6]: </span><span class="go">7.97228871438601</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">17.50165162779493</span>
+<span class="gh">Out[7]: </span><span class="go">17.43825505944573</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>

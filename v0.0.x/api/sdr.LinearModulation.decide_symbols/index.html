@@ -4059,12 +4059,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
+          <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $tilde{a}[k]$ into decimal symbol decisions $hat{s}[k]$ and complex symbol decisions $hat{a}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $tilde{a}[k]$ into decimal symbol decisions $hat{s}[k]$ and complex symbol decisions $hat{a}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
       </a>
       
         
@@ -4090,8 +4090,8 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-a_hat" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.LinearModulation.decide_symbols.a_hat (Python parameter) — The received complex symbols $hat{a}[k]$." class="md-ellipsis">a_<wbr>hat</span>
+  <a href="#p-a_tilde" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.LinearModulation.decide_symbols.a_tilde (Python parameter) — The received complex symbols $tilde{a}[k]$." class="md-ellipsis">a_<wbr>tilde</span>
   </a>
   
 </li>
@@ -4140,7 +4140,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.LinearModulation.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $hat{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $tilde{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -9046,8 +9046,8 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-a_hat" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.LinearModulation.decide_symbols.a_hat (Python parameter) — The received complex symbols $hat{a}[k]$." class="md-ellipsis">a_<wbr>hat</span>
+  <a href="#p-a_tilde" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.LinearModulation.decide_symbols.a_tilde (Python parameter) — The received complex symbols $tilde{a}[k]$." class="md-ellipsis">a_<wbr>tilde</span>
   </a>
   
 </li>
@@ -9079,19 +9079,23 @@ You're not viewing the latest version.
 
 
 <dl class="py method objdesc">
-<dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">LinearModulation.</span></span><span class="sig-name descname"><span class="pre">decide_symbols</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-a_hat" title="sdr.LinearModulation.decide_symbols.a_hat (Python parameter) — The received complex symbols $hat{a}[k]$."><span class="n"><span class="pre">a_hat</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Converts the received complex symbols <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span> into decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>
-using maximum-likelihood estimation (MLE).</p>
+<dt class="sig sig-object highlight sig-wrap py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">LinearModulation.</span></span><span class="sig-name descname"><span class="pre">decide_symbols</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-a_tilde" title="sdr.LinearModulation.decide_symbols.a_tilde (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">a_tilde</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex_</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Converts the received complex symbols <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span> into decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>
+and complex symbol decisions <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span> using maximum-likelihood estimation (MLE).</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-a_hat"><span class="n sig-name">a_hat</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-a_hat" title="Permalink to this definition">¶</a></dt><dd><p>The received complex symbols <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span>.</p>
+<dt id="p-a_tilde"><span class="n sig-name">a_tilde</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-a_tilde" title="Permalink to this definition">¶</a></dt><dd><p>The received complex symbols <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even" id="returns">Returns<span class="colon">:</span><a class="headerlink" href="#returns" title="Permalink to this headline">¶</a></dt>
-<dd class="field-even"><p>The decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>, <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(M-1\)</span>.</p>
+<dd class="field-even"><p><ul class="simple">
+<li><p>The decimal symbol decisions <span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>, <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(M-1\)</span>.</p></li>
+<li><p>The complex symbol decisions <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span>.</p></li>
+</ul>
+</p>
 </dd>
 </dl>
 </dd></dl>

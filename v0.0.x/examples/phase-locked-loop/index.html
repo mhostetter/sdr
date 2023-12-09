@@ -4130,7 +4130,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../../api/sdr.LinearModulation.decide_symbols/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $hat{a}[k]$ into decimal symbol decisions $hat{s}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols $tilde{a}[k]$ into decimal symbol decisions $hat{s}[k]$ and complex symbol decisions $hat{a}[k]$ using maximum-likelihood estimation (MLE)." class="md-ellipsis">decide_<wbr>symbols</span>
       </a>
     </li>
   
@@ -4160,7 +4160,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../../api/sdr.LinearModulation.demodulate/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $hat{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples $tilde{x}[n]$ into decimal symbol decisions $hat{s}[k]$ using matched filtering and maximum-likelihood estimation." class="md-ellipsis">demodulate</span>
       </a>
     </li>
   
@@ -9173,7 +9173,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7fad2956d4d0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7fa73fea5a10&gt;
 </code></pre></div>
 </div>
 </div>
@@ -9205,9 +9205,10 @@ z^-1 = Unit delay
 <span class="c1"># noise bandwidth of 0.05 and a damping factor of 1 (critically damped)</span>
 <span class="n">loop_filter</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LoopFilter</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Create a numerically controlled oscillator (NCO) with NCO gain of 1</span>
-<span class="c1"># and a constant phase accumulation of theta_0 radians/sample</span>
-<span class="n">nco</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">NCO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta_0</span><span class="p">)</span>
+<span class="c1"># Create a numerically controlled oscillator (NCO) with NCO gain of 1,</span>
+<span class="c1"># constant phase accumulation of theta_0 radians/sample, and initial phase</span>
+<span class="c1"># offset of theta_0 radians.</span>
+<span class="n">nco</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">NCO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">increment</span><span class="o">=</span><span class="n">theta_0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">theta_0</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="c1"># Phase error detector (PED)</span>
@@ -9251,7 +9252,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/83c93458a5af4e53cb5785ad3c2fb9d593c4884b4513627a6f4563ee0987fb37.png" src="../../_images/83c93458a5af4e53cb5785ad3c2fb9d593c4884b4513627a6f4563ee0987fb37.png" />
+<img alt="../../_images/4f5329475ff841f881a138d337c800b8c8721f823d113feaea65133b3286c402.png" src="../../_images/4f5329475ff841f881a138d337c800b8c8721f823d113feaea65133b3286c402.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-time-domain">Implement a PLL in the time domain<a class="headerlink" href="#implement-a-pll-in-the-time-domain" title="Permalink to this heading">¶</a></h2>
@@ -9268,9 +9269,10 @@ z^-1 = Unit delay
 <span class="c1"># noise bandwidth of 0.05 and a damping factor of 1 (critically damped)</span>
 <span class="n">loop_filter</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LoopFilter</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Create a numerically controlled oscillator (NCO) with NCO gain of 1</span>
-<span class="c1"># and a constant phase accumulation of theta_0 radians/sample</span>
-<span class="n">nco</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">NCO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">theta_0</span><span class="p">)</span>
+<span class="c1"># Create a numerically controlled oscillator (NCO) with NCO gain of 1,</span>
+<span class="c1"># constant phase accumulation of theta_0 radians/sample, and initial phase</span>
+<span class="c1"># offset of theta_0 radians.</span>
+<span class="n">nco</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">NCO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">increment</span><span class="o">=</span><span class="n">theta_0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">theta_0</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="c1"># Phase error detector (PED)</span>
@@ -9323,7 +9325,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b7d0b6236602541411d90e07f428bf2af52eb1d0ea61cea1659c06f9b9c80d48.png" src="../../_images/b7d0b6236602541411d90e07f428bf2af52eb1d0ea61cea1659c06f9b9c80d48.png" />
+<img alt="../../_images/1bf1a1afcbc62b525c579ec17fcfb4786c4fc08862832ae49e3a7eb48ca5619d.png" src="../../_images/1bf1a1afcbc62b525c579ec17fcfb4786c4fc08862832ae49e3a7eb48ca5619d.png" />
 </div>
 </div>
 <h2 id="analyze-pll-closed-loop-performance">Analyze PLL closed-loop performance<a class="headerlink" href="#analyze-pll-closed-loop-performance" title="Permalink to this heading">¶</a></h2>
@@ -9453,7 +9455,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
   <small>
     
       Last update:
-      Dec 06, 2023
+      Dec 09, 2023
     
   </small>
 </div>
