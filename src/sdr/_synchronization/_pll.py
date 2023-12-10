@@ -85,8 +85,8 @@ class ClosedLoopPLL:
             See the :ref:`phase-locked-loop` example.
         """
         lf = LoopFilter(noise_bandwidth, damping_factor, K0, Kp)
-        K1 = lf.K1
-        K2 = lf.K2
+        K1 = lf.proportional_gain
+        K2 = lf.integral_gain
 
         # b0 = 0
         b1 = Kp * K0 * (K1 + K2)
