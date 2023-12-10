@@ -46,7 +46,7 @@ class PED:
             plt.figure(figsize=(8, 4)); \
             plt.plot(error, da_error, label="Data-aided"); \
             plt.plot(error, dd_error, label="Decision-directed"); \
-            plt.grid(True); \
+            plt.grid(True, linestyle="--"); \
             plt.legend(); \
             plt.xlabel("Phase of received symbols (radians)"); \
             plt.ylabel("Phase error (radians)"); \
@@ -90,11 +90,11 @@ class PED:
         self, modem: LinearModulation, n_points: int = 1000
     ) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.float_]]:
         r"""
-        Measures the average phase error of the data-aided PED using the specified modulation scheme.
+        Simulates the average phase error of the data-aided PED using the specified modulation scheme.
 
         Arguments:
             modem: The linear modulation scheme.
-            n_points: The number of points to use to measure the phase error.
+            n_points: The number of points in the simulation.
 
         Returns:
             - The true phase error in radians.
@@ -106,11 +106,11 @@ class PED:
         self, modem: LinearModulation, n_points: int = 1000
     ) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.float_]]:
         r"""
-        Measures the average phase error of the decision-directed PED using the specified modulation scheme.
+        Simulates the average phase error of the decision-directed PED using the specified modulation scheme.
 
         Arguments:
             modem: The linear modulation scheme.
-            n_points: The number of points to use to measure the phase error.
+            n_points: The number of points in the simulation.
 
         Returns:
             - The true phase error in radians.
@@ -163,7 +163,7 @@ class MLPED(PED):
             plt.figure(figsize=(8, 4)); \
             plt.plot(error, da_error, label="Data-aided"); \
             plt.plot(error, dd_error, label="Decision-directed"); \
-            plt.grid(True); \
+            plt.grid(True, linestyle="--"); \
             plt.legend(); \
             plt.xlabel("Phase of received symbols (radians)"); \
             plt.ylabel("Phase error (radians)"); \
