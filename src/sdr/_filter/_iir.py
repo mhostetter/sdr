@@ -499,3 +499,86 @@ class Integrator(IIR):
         super().__init__([1], [1, -1], streaming=streaming)
 
     # TODO: Use np.cumsum() if it is faster
+
+
+@export
+class LeakyIntegrator(IIR):
+    r"""
+    Implements a leaky integrator IIR filter.
+
+    Notes:
+        A discrete-time leaky integrator is an IIR filter that continuously accumulates the input signal, but
+        remembers the past with a leaky factor $\alpha$. When $\alpha = 1$, the filter is an integrator.
+        When $\alpha = 0$, the filter is a pass-through.
+
+        The difference equation is
+
+        $$y[n] = \alpha \cdot y[n-1] + x[n] .$$
+
+        The transfer functions is
+
+        $$H(z) = \frac{1}{1 - \alpha z^{-1}} .$$
+
+        .. code-block:: text
+            :caption: IIR Integrator Block Diagram
+
+            x[n] -->@---------------+--> y[n]
+                    ^               |
+              alpha |   +------+    |
+                    +---| z^-1 |<---+
+                        +------+
+
+    Examples:
+        Compare leaky integrators with various leaky factors.
+
+        .. ipython:: python
+
+            iir_0p9 = sdr.LeakyIntegrator(0.9); \
+            iir_0p75 = sdr.LeakyIntegrator(0.75); \
+            iir_0p5 = sdr.LeakyIntegrator(0.5); \
+            iir_0p25 = sdr.LeakyIntegrator(0.25)
+
+        Plot the impulse responses.
+
+        .. ipython:: python
+
+            @savefig sdr_LeakyIntegrator_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(iir_0p9, label=r"$\alpha=0.9$"); \
+            sdr.plot.impulse_response(iir_0p75, label=r"$\alpha=0.75$"); \
+            sdr.plot.impulse_response(iir_0p5, label=r"$\alpha=0.5$"); \
+            sdr.plot.impulse_response(iir_0p25, label=r"$\alpha=0.25$"); \
+            plt.tight_layout();
+
+        Plot the frequency responses.
+
+        .. ipython:: python
+
+            @savefig sdr_LeakyIntegrator_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(iir_0p9, label=r"$\alpha=0.9$"); \
+            sdr.plot.magnitude_response(iir_0p75, label=r"$\alpha=0.75$"); \
+            sdr.plot.magnitude_response(iir_0p5, label=r"$\alpha=0.5$"); \
+            sdr.plot.magnitude_response(iir_0p25, label=r"$\alpha=0.25$"); \
+            plt.tight_layout();
+
+    Group:
+        dsp-iir-filtering
+    """
+
+    def __init__(self, alpha: float, streaming: bool = False):
+        r"""
+        Creates a leaky integrator IIR filter.
+
+        Arguments:
+            alpha: The leaky factor $\alpha$. The leaky factor indicates how much of the previous output to preserve.
+                When $\alpha = 1$, the filter is an integrator. When $\alpha = 0$, the filter is a pass-through.
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
+                preserved between calls to :meth:`~LeakyIntegrator.__call__()`.
+
+        Examples:
+            See the :ref:`iir-filters` example.
+        """
+        super().__init__([1], [1, -alpha], streaming=streaming)
+
+    # TODO: Use np.cumsum() if it is faster
