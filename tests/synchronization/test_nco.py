@@ -13,12 +13,12 @@ def test_call_exceptions():
 
 
 def test_initial_phase_is_offset():
-    K0 = 1
+    gain = 1
     increment = 2 * np.pi / 10
     offset = np.pi / 2
-    nco = sdr.NCO(K0, increment, offset)
+    nco = sdr.NCO(gain, increment, offset)
 
-    assert nco.K0 == K0
+    assert nco.gain == gain
     assert nco.increment == increment
     assert nco.offset == offset
 
@@ -28,12 +28,12 @@ def test_initial_phase_is_offset():
 
 
 def test_constant_increment():
-    K0 = 1
+    gain = 1
     increment = 0.1
     offset = 0
-    nco = sdr.NCO(K0, increment, offset)
+    nco = sdr.NCO(gain, increment, offset)
 
-    assert nco.K0 == K0
+    assert nco.gain == gain
     assert nco.increment == increment
     assert nco.offset == offset
 
@@ -44,12 +44,12 @@ def test_constant_increment():
 
 
 def test_constant_increment_constant_offset():
-    K0 = 1
+    gain = 1
     increment = 0.1
     offset = 0.5
-    nco = sdr.NCO(K0, increment, offset)
+    nco = sdr.NCO(gain, increment, offset)
 
-    assert nco.K0 == K0
+    assert nco.gain == gain
     assert nco.increment == increment
     assert nco.offset == offset
 

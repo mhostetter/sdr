@@ -93,19 +93,19 @@ class NCO:
         pll
     """
 
-    def __init__(self, K0: float = 1.0, increment: float = 0.0, offset: float = 0.0):
+    def __init__(self, gain: float = 1.0, increment: float = 0.0, offset: float = 0.0):
         r"""
         Creates a numerically-controlled oscillator (NCO).
 
         Arguments:
-            K0: The NCO gain $K_0$.
+            gain: The NCO gain $K_0$.
             increment: The constant accumulation $\omega$ of the NCO in radians/sample.
             offset: The absolute offset $\theta$ of the NCO in radians.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        self._K0 = K0
+        self._K0 = gain
         self._increment = increment
         self._offset = offset
         self._z_prev: float  # Will be updated in reset()
@@ -176,7 +176,7 @@ class NCO:
             raise ValueError(f"Arguments 'freq' and 'phase' must have the same size, not {freq.size} and {phase.size}.")
 
         # Scale the input by the NCO gain and add the constant accumulation to every sample
-        z = freq * self.K0 + self.increment
+        z = freq * self.gain + self.increment
         z = np.atleast_1d(z)
 
         # Increment the first sample by the previous output. Then run a cumulative sum over all samples.
@@ -223,7 +223,7 @@ class NCO:
         return y
 
     @property
-    def K0(self) -> float:
+    def gain(self) -> float:
         """
         (Settable) The NCO gain $K_0$.
 
@@ -232,8 +232,8 @@ class NCO:
         """
         return self._K0
 
-    @K0.setter
-    def K0(self, value: float):
+    @gain.setter
+    def gain(self, value: float):
         self._K0 = value
 
     @property
