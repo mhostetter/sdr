@@ -137,7 +137,7 @@ class LoopFilter:
         return self._zeta
 
     @property
-    def K1(self) -> float:
+    def proportional_gain(self) -> float:
         """
         The proportional gain $K_1$ of the loop filter.
 
@@ -147,7 +147,7 @@ class LoopFilter:
         return self._K1
 
     @property
-    def K2(self) -> float:
+    def integral_gain(self) -> float:
         """
         The integral gain $K_2$ of the loop filter.
 

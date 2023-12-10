@@ -14,8 +14,10 @@ def test_ppi_gains_1():
     K0 = 1  # NCO gain
     Kp = 2  # PED gain
     lf = sdr.LoopFilter(BnT, zeta, K0=K0, Kp=Kp)
-    assert lf.K1 == pytest.approx(2.6e-2, rel=3)
-    assert lf.K2 == pytest.approx(6.9e-4, rel=3)
+    K1 = lf.proportional_gain
+    K2 = lf.integral_gain
+    assert K1 == pytest.approx(2.6e-2, rel=3)
+    assert K2 == pytest.approx(6.9e-4, rel=3)
 
 
 def test_ppi_gains_2():
@@ -28,8 +30,10 @@ def test_ppi_gains_2():
     K0 = 16  # NCO gain
     Kp = 2  # PED gain
     lf = sdr.LoopFilter(BnT, zeta, K0=K0, Kp=Kp)
-    assert lf.K1 == pytest.approx(1.7e-3, rel=3)
-    assert lf.K2 == pytest.approx(2.8e-6, rel=3)
+    K1 = lf.proportional_gain
+    K2 = lf.integral_gain
+    assert K1 == pytest.approx(1.7e-3, rel=3)
+    assert K2 == pytest.approx(2.8e-6, rel=3)
 
 
 def test_ppi_gains_3():
@@ -42,5 +46,7 @@ def test_ppi_gains_3():
     K0 = 1  # NCO gain
     Kp = 1  # PED gain
     lf = sdr.LoopFilter(BnT, zeta, K0=K0, Kp=Kp)
-    assert lf.K1 == pytest.approx(0.1479, rel=3)
-    assert lf.K2 == pytest.approx(0.0059, rel=3)
+    K1 = lf.proportional_gain
+    K2 = lf.integral_gain
+    assert K1 == pytest.approx(0.1479, rel=3)
+    assert K2 == pytest.approx(0.0059, rel=3)
