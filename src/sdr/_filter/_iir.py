@@ -418,7 +418,14 @@ class Integrator(IIR):
     Implements an integrator IIR filter.
 
     Notes:
-        A discrete-time integrator is an IIR filter with the transfer function
+        A discrete-time integrator is an IIR filter that continuously accumulates the input signal.
+        Accordingly, it has infinite gain at DC.
+
+        The difference equation is
+
+        $$y[n] = y[n-1] + x[n] .$$
+
+        The transfer functions is
 
         $$H(z) = \frac{1}{1 - z^{-1}} .$$
 
@@ -427,7 +434,7 @@ class Integrator(IIR):
 
             x[n] -->@---------------+--> y[n]
                     ^               |
-                 -1 |   +------+    |
+                    |   +------+    |
                     +---| z^-1 |<---+
                         +------+
 
