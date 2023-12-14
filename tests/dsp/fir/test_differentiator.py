@@ -4,7 +4,7 @@ import pytest
 import sdr
 
 
-def test_exception():
+def test_exceptions():
     with pytest.raises(TypeError):
         sdr.Differentiator(4.0)
     with pytest.raises(ValueError):
