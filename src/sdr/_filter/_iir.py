@@ -8,7 +8,7 @@ from typing import Any, overload
 import numpy as np
 import numpy.typing as npt
 import scipy.signal
-from typing_extensions import Self
+from typing_extensions import Literal, Self
 
 from .._helper import export
 from ._common import frequency_response
@@ -421,41 +421,45 @@ class Integrator(IIR):
         A discrete-time integrator is an IIR filter that continuously accumulates the input signal.
         Accordingly, it has infinite gain at DC.
 
-        The difference equation is
+        The backward integrator is defined by:
 
-        $$y[n] = y[n-1] + x[n] .$$
+        $$y[n] = y[n-1] + x[n-1]$$
+        $$H(z) = \frac{z^{-1}}{1 - z^{-1}}$$
 
-        The transfer functions is
+        The trapezoidal integrator is defined by:
 
-        $$H(z) = \frac{1}{1 - z^{-1}} .$$
+        $$y[n] = y[n-1] + \frac{1}{2}x[n] + \frac{1}{2}x[n-1]$$
+        $$H(z) = \frac{1}{2} \frac{1 + z^{-1}}{1 - z^{-1}}$$
 
-        .. code-block:: text
-            :caption: IIR Integrator Block Diagram
+        The forward integrator is defined by:
 
-            x[n] -->@---------------+--> y[n]
-                    ^               |
-                    |   +------+    |
-                    +---| z^-1 |<---+
-                        +------+
+        $$y[n] = y[n-1] + x[n]$$
+        $$H(z) = \frac{1}{1 - z^{-1}}$$
 
     Examples:
-        Create an integrating IIR filter.
+        Create integrating IIR filters.
 
         .. ipython:: python
 
-            iir = sdr.Integrator()
+            iir_back = sdr.Integrator("backward"); \
+            iir_trap = sdr.Integrator("trapezoidal"); \
+            iir_forw = sdr.Integrator("forward")
 
         Integrate a Gaussian pulse.
 
         .. ipython:: python
 
             x = sdr.gaussian(0.3, 5, 10); \
-            y = iir(x)
+            y_back = iir_back(x); \
+            y_trap = iir_trap(x); \
+            y_forw = iir_forw(x)
 
             @savefig sdr_Integrator_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, label="Input"); \
-            sdr.plot.time_domain(y, label="Integral"); \
+            sdr.plot.time_domain(y_back, label="Integral (backward)"); \
+            sdr.plot.time_domain(y_trap, label="Integral (trapezoidal)"); \
+            sdr.plot.time_domain(y_forw, label="Integral (forward)"); \
             plt.title("Discrete-time integration of a Gaussian pulse"); \
             plt.tight_layout();
 
@@ -464,39 +468,63 @@ class Integrator(IIR):
         .. ipython:: python
 
             x = sdr.root_raised_cosine(0.1, 8, 10); \
-            y = iir(x)
+            y_back = iir_back(x); \
+            y_trap = iir_trap(x); \
+            y_forw = iir_forw(x)
 
             @savefig sdr_Integrator_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, label="Input"); \
-            sdr.plot.time_domain(y, label="Integral"); \
+            sdr.plot.time_domain(y_back, label="Integral (backward)"); \
+            sdr.plot.time_domain(y_trap, label="Integral (trapezoidal)"); \
+            sdr.plot.time_domain(y_forw, label="Integral (forward)"); \
             plt.title("Discrete-time integration of a raised cosine pulse"); \
             plt.tight_layout();
 
-        Plot the frequency response.
+        Plot the frequency responses.
 
         .. ipython:: python
 
             @savefig sdr_Integrator_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(iir);
+            sdr.plot.magnitude_response(iir_back, label="Backward"); \
+            sdr.plot.magnitude_response(iir_trap, label="Trapezoidal"); \
+            sdr.plot.magnitude_response(iir_forw, label="Forward"); \
+            f = np.linspace(0, 0.5, 100); \
+            plt.plot(f, sdr.db(np.abs(1/(2 * np.pi * f))**2), color="k", linestyle="--", label="Theory"); \
+            plt.legend(); \
+            plt.title("Magnitude response of integrating IIR filters"); \
+            plt.tight_layout();
 
     Group:
         dsp-iir-filtering
     """
 
-    def __init__(self, streaming: bool = False):
+    def __init__(self, method: Literal["backward", "trapezoidal", "forward"] = "trapezoidal", streaming: bool = False):
         """
         Creates an integrating IIR filter.
 
         Arguments:
+            method: The integration method.
+
+                - `"backward"`: Rectangular integration with height $x[n-1]$.
+                - `"trapezoidal"`: Trapezoidal integration with heights $x[n-1]$ and $x[n]$.
+                - `"forward"`: Rectangular integration with height $x[n]$.
+
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
                 preserved between calls to :meth:`~Integrator.__call__()`.
 
         Examples:
             See the :ref:`iir-filters` example.
         """
-        super().__init__([1], [1, -1], streaming=streaming)
+        if method == "backward":
+            super().__init__([0, 1], [1, -1], streaming=streaming)
+        elif method == "forward":
+            super().__init__([1], [1, -1], streaming=streaming)
+        elif method == "trapezoidal":
+            super().__init__([0.5, 0.5], [1, -1], streaming=streaming)
+        else:
+            raise ValueError(f"Argument 'method' must be 'backward', 'forward', or 'trapezoidal', not {method!r}.")
 
     # TODO: Use np.cumsum() if it is faster
 
