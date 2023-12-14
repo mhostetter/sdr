@@ -454,18 +454,14 @@ class Differentiator(FIR):
     Implements a differentiator FIR filter.
 
     Notes:
-        A discrete-time differentiator is a FIR filter with the transfer function
+        A discrete-time differentiator is a FIR filter with impulse response
 
-        $$H(z) = 1 - z^{-1} .$$
+        $$h[n] = \frac{(-1)^n}{n} \cdot h_{win}[n], \quad -\frac{N}{2} \le n \le \frac{N}{2} .$$
 
-        .. code-block:: text
-            :caption: FIR Differentiator Block Diagram
+        The truncated impulse response is multiplied by the windowing function $h_{win}[n]$.
 
-            x[n] --+-------------->@--> y[n]
-                   |               ^
-                   |   +------+    | -1
-                   +-->| z^-1 |----+
-                       +------+
+    References:
+        - Michael Rice, *Digital Communications: A Discrete Time Approach*, Section 3.3.3.
 
     Examples:
         Create a differentiator FIR filter.
@@ -479,12 +475,12 @@ class Differentiator(FIR):
         .. ipython:: python
 
             x = sdr.gaussian(0.3, 5, 10); \
-            y = fir(x)
+            y = fir(x, "same")
 
             @savefig sdr_Differentiator_1.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, label="Input"); \
-            sdr.plot.time_domain(y, offset=-fir.delay, label="Derivative"); \
+            sdr.plot.time_domain(y, label="Derivative"); \
             plt.title("Discrete-time differentiation of a Gaussian pulse"); \
             plt.tight_layout();
 
@@ -493,39 +489,75 @@ class Differentiator(FIR):
         .. ipython:: python
 
             x = sdr.root_raised_cosine(0.1, 8, 10); \
-            y = fir(x)
+            y = fir(x, "same")
 
             @savefig sdr_Differentiator_2.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, label="Input"); \
-            sdr.plot.time_domain(y, offset=-fir.delay, label="Derivative"); \
+            sdr.plot.time_domain(y, label="Derivative"); \
             plt.title("Discrete-time differentiation of a raised cosine pulse"); \
             plt.tight_layout();
 
-        Plot the frequency response.
+        Plot the frequency response across filter order.
 
         .. ipython:: python
 
+            fir_2 = sdr.Differentiator(2); \
+            fir_6 = sdr.Differentiator(6); \
+            fir_10 = sdr.Differentiator(10); \
+            fir_20 = sdr.Differentiator(20); \
+            fir_40 = sdr.Differentiator(40); \
+            fir_80 = sdr.Differentiator(80)
+
             @savefig sdr_Differentiator_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(fir);
+            sdr.plot.magnitude_response(fir_2, y_axis="linear", label="N=2"); \
+            sdr.plot.magnitude_response(fir_6, y_axis="linear", label="N=6"); \
+            sdr.plot.magnitude_response(fir_10, y_axis="linear", label="N=10"); \
+            sdr.plot.magnitude_response(fir_20, y_axis="linear", label="N=20"); \
+            sdr.plot.magnitude_response(fir_40, y_axis="linear", label="N=40"); \
+            sdr.plot.magnitude_response(fir_80, y_axis="linear", label="N=80"); \
+            f = np.linspace(0, 0.5, 100); \
+            plt.plot(f, np.abs(2 * np.pi * f)**2, color="k", linestyle="--", label="Theory"); \
+            plt.legend(); \
+            plt.title("Magnitude response of differentiator FIR filters"); \
+            plt.tight_layout();
 
     Group:
         dsp-fir-filtering
     """
 
-    def __init__(self, streaming: bool = False):
+    def __init__(self, order: int = 20, window: str | float | tuple | None = "blackman", streaming: bool = False):
         """
         Creates a differentiator FIR filter.
 
         Arguments:
+            order: The order of the FIR differentiator $N$. The filter length is $N + 1$.
+                Increasing the filter order increases the bandwidth of the differentiator.
+            window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+                If `None`, no window is applied.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~sdr.Differentiator.__call__()`.
 
         Examples:
             See the :ref:`fir-filters` example.
         """
-        h = np.array([1, -1], dtype=float)
+        if not isinstance(order, int):
+            raise TypeError("Argument 'order' must be an integer, not {type(order).__name__}.")
+        if not order > 0:
+            raise ValueError(f"Argument 'order' must be positive, not {order}.")
+        if not order % 2 == 0:
+            raise ValueError(f"Argument 'order' must be even, not {order}.")
+
+        n = np.arange(-order // 2, order // 2 + 1)  # Sample index centered about 0
+        with np.errstate(divide="ignore"):
+            h = (-1.0) ** n / n  # Impulse response
+        h[order // 2] = 0
+
+        if window is not None:
+            h_win = scipy.signal.windows.get_window(window, order + 1, fftbins=False)
+            h *= h_win
+
         super().__init__(h, streaming=streaming)
 
     # TODO: Use np.diff() if it is faster
