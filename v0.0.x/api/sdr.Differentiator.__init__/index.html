@@ -1301,6 +1301,20 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#p-order" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Differentiator.__init__.order (Python parameter) — The order of the FIR differentiator $N$. The filter length is $N + 1$. Increasing the filter order increases the bandwidth of the differentiator." class="md-ellipsis">order</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-window" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Differentiator.__init__.window (Python parameter) — The SciPy window definition. See scipy.signal.windows.get_window() for details. If None, no window is applied." class="md-ellipsis">window</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#p-streaming" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Differentiator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()." class="md-ellipsis">streaming</span>
   </a>
@@ -9735,6 +9749,20 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#p-order" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Differentiator.__init__.order (Python parameter) — The order of the FIR differentiator $N$. The filter length is $N + 1$. Increasing the filter order increases the bandwidth of the differentiator." class="md-ellipsis">order</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-window" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Differentiator.__init__.window (Python parameter) — The SciPy window definition. See scipy.signal.windows.get_window() for details. If None, no window is applied." class="md-ellipsis">window</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#p-streaming" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Differentiator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()." class="md-ellipsis">streaming</span>
   </a>
@@ -9768,12 +9796,18 @@ You're not viewing the latest version.
 
 
 <dl class="py method objdesc">
-<dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Differentiator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-streaming" title="sdr.Differentiator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object highlight sig-wrap py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Differentiator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-order" title="sdr.Differentiator.__init__.order (Python parameter) — The order of the FIR differentiator $N$. The filter length is $N + 1$. Increasing the filter order increases the bandwidth of the differentiator."><span class="n"><span class="pre">order</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">20</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-window" title="sdr.Differentiator.__init__.window (Python parameter) — The SciPy window definition. See scipy.signal.windows.get_window() for details. If None, no window is applied."><span class="n"><span class="pre">window</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;blackman&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-streaming" title="sdr.Differentiator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates a differentiator FIR filter.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="p-order"><span class="n sig-name">order</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">20</span></code><a class="headerlink" href="#p-order" title="Permalink to this definition">¶</a></dt><dd><p>The order of the FIR differentiator <span class="math notranslate nohighlight">\(N\)</span>. The filter length is <span class="math notranslate nohighlight">\(N + 1\)</span>.
+Increasing the filter order increases the bandwidth of the differentiator.</p>
+</dd>
+<dt id="p-window"><span class="n sig-name">window</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)">tuple</a><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;blackman&#39;</span></code><a class="headerlink" href="#p-window" title="Permalink to this definition">¶</a></dt><dd><p>The SciPy window definition. See <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.windows.get_window.html#scipy.signal.windows.get_window" title="(in SciPy v1.11.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.windows.get_window()</span></code></a> for details.
+If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, no window is applied.</p>
+</dd>
 <dt id="p-streaming"><span class="n sig-name">streaming</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code><a class="headerlink" href="#p-streaming" title="Permalink to this definition">¶</a></dt><dd><p>Indicates whether to use streaming mode. In streaming mode, previous inputs are
 preserved between calls to <code class="xref py py-meth docutils literal notranslate"><span class="pre">__call__()</span></code>.</p>
 </dd>
@@ -9912,6 +9946,9 @@ preserved between calls to <code class="xref py py-meth docutils literal notrans
       
         <script src="../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
         <script src="../../_static/design-tabs.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>
