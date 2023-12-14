@@ -9848,38 +9848,47 @@ You're not viewing the latest version.
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
 <p>A discrete-time integrator is an IIR filter that continuously accumulates the input signal.
 Accordingly, it has infinite gain at DC.</p>
-<p>The difference equation is</p>
+<p>The backward integrator is defined by:</p>
 <p><div class="math notranslate nohighlight">
-\[y[n] = y[n-1] + x[n] .\]</div>
+\[y[n] = y[n-1] + x[n-1]\]</div>
+
+<div class="math notranslate nohighlight">
+\[H(z) = \frac{z^{-1}}{1 - z^{-1}}\]</div>
 </p>
-<p>The transfer functions is</p>
+<p>The trapezoidal integrator is defined by:</p>
 <p><div class="math notranslate nohighlight">
-\[H(z) = \frac{1}{1 - z^{-1}} .\]</div>
+\[y[n] = y[n-1] + \frac{1}{2}x[n] + \frac{1}{2}x[n-1]\]</div>
+
+<div class="math notranslate nohighlight">
+\[H(z) = \frac{1}{2} \frac{1 + z^{-1}}{1 - z^{-1}}\]</div>
 </p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
-</span>IIR Integrator Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>x[n] --&gt;@---------------+--&gt; y[n]
-        ^               |
-        |   +------+    |
-        +---| z^-1 |&lt;---+
-            +------+
-</code></pre></div>
-</div>
-</div>
+<p>The forward integrator is defined by:</p>
+<p><div class="math notranslate nohighlight">
+\[y[n] = y[n-1] + x[n]\]</div>
+
+<div class="math notranslate nohighlight">
+\[H(z) = \frac{1}{1 - z^{-1}}\]</div>
+</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
-<p>Create an integrating IIR filter.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">iir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Integrator</span><span class="p">()</span>
+<p>Create integrating IIR filters.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">iir_back</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Integrator</span><span class="p">(</span><span class="s2">&quot;backward&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">iir_trap</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Integrator</span><span class="p">(</span><span class="s2">&quot;trapezoidal&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">iir_forw</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Integrator</span><span class="p">(</span><span class="s2">&quot;forward&quot;</span><span class="p">)</span>
+<span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <p>Integrate a Gaussian pulse.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [2]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">y</span> <span class="o">=</span> <span class="n">iir</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">y_back</span> <span class="o">=</span> <span class="n">iir_back</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_trap</span> <span class="o">=</span> <span class="n">iir_trap</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_forw</span> <span class="o">=</span> <span class="n">iir_forw</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_back</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral (backward)&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_trap</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral (trapezoidal)&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_forw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral (forward)&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Discrete-time integration of a Gaussian pulse&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ...: </span>
@@ -9888,21 +9897,32 @@ Accordingly, it has infinite gain at DC.</p>
 <img alt="../../_images/sdr_Integrator_1.png" src="../../_images/sdr_Integrator_1.png" />
 <p>Integrate a raised cosine pulse.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">y</span> <span class="o">=</span> <span class="n">iir</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">y_back</span> <span class="o">=</span> <span class="n">iir_back</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_trap</span> <span class="o">=</span> <span class="n">iir_trap</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_forw</span> <span class="o">=</span> <span class="n">iir_forw</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_back</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral (backward)&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_trap</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral (trapezoidal)&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_forw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Integral (forward)&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Discrete-time integration of a raised cosine pulse&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_Integrator_2.png" src="../../_images/sdr_Integrator_2.png" />
-<p>Plot the frequency response.</p>
+<p>Plot the frequency responses.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir</span><span class="p">);</span>
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_back</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Backward&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_trap</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trapezoidal&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_forw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forward&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theory&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Magnitude response of integrating IIR filters&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
@@ -9910,7 +9930,7 @@ Accordingly, it has infinite gain at DC.</p>
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.Integrator.__init__/" title="sdr.Integrator.__init__ (Python method) — Creates an integrating IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">Integrator</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.Integrator.__init__/#p-streaming" title="sdr.Integrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.Integrator.__init__/" title="sdr.Integrator.__init__ (Python method) — Creates an integrating IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">Integrator</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates an integrating IIR filter.</p>
 </dd></dl>
 

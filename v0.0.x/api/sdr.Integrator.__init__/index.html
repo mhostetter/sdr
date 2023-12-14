@@ -2011,6 +2011,13 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#p-method" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Integrator.__init__.method (Python parameter) — The integration method." class="md-ellipsis">method</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#p-streaming" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Integrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()." class="md-ellipsis">streaming</span>
   </a>
@@ -9735,6 +9742,13 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#p-method" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Integrator.__init__.method (Python parameter) — The integration method." class="md-ellipsis">method</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#p-streaming" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Integrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()." class="md-ellipsis">streaming</span>
   </a>
@@ -9768,12 +9782,20 @@ You're not viewing the latest version.
 
 
 <dl class="py method objdesc">
-<dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Integrator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-streaming" title="sdr.Integrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object highlight sig-wrap py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Integrator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-method" title="sdr.Integrator.__init__.method (Python parameter) — The integration method."><span class="n"><span class="pre">method</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'backward'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'trapezoidal'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="s"><span class="pre">'forward'</span></span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;trapezoidal&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-streaming" title="sdr.Integrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates an integrating IIR filter.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
+<dt id="p-method"><span class="n sig-name">method</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'backward'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'trapezoidal'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'forward'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;trapezoidal&#39;</span></code><a class="headerlink" href="#p-method" title="Permalink to this definition">¶</a></dt><dd><p><p>The integration method.</p>
+<ul class="simple">
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;backward&quot;</span></code>: Rectangular integration with height <span class="math notranslate nohighlight">\(x[n-1]\)</span>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;trapezoidal&quot;</span></code>: Trapezoidal integration with heights <span class="math notranslate nohighlight">\(x[n-1]\)</span> and <span class="math notranslate nohighlight">\(x[n]\)</span>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;forward&quot;</span></code>: Rectangular integration with height <span class="math notranslate nohighlight">\(x[n]\)</span>.</p></li>
+</ul>
+</p>
+</dd>
 <dt id="p-streaming"><span class="n sig-name">streaming</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code><a class="headerlink" href="#p-streaming" title="Permalink to this definition">¶</a></dt><dd><p>Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
 preserved between calls to <code class="xref py py-meth docutils literal notranslate"><span class="pre">__call__()</span></code>.</p>
 </dd>
@@ -9912,6 +9934,9 @@ preserved between calls to <code class="xref py py-meth docutils literal notrans
       
         <script src="../../_static/sphinx_immaterial_theme.1b5b7a2d5891aec19.min.js"></script>
         <script src="../../_static/design-tabs.js"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
     
   </body>
 </html>
