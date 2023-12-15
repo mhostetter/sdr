@@ -347,72 +347,43 @@ class LeakyIntegrator(IIR):
                                  +------+
 
     Examples:
-        Compare leaky integrators with various leaky factors.
+        Create a FIR moving average filter and a IIR leaky integrator filter.
 
         .. ipython:: python
 
-            iir_0p99 = sdr.LeakyIntegrator(0.99); \
-            iir_0p9 = sdr.LeakyIntegrator(0.9); \
-            iir_0p75 = sdr.LeakyIntegrator(0.75); \
-            iir_0p5 = sdr.LeakyIntegrator(0.5)
+            fir = sdr.MovingAverage(30)
+            iir = sdr.LeakyIntegrator(1 - 2 / 30)
 
-        Plot the impulse responses.
+        Compare the step responses.
 
         .. ipython:: python
 
-            @savefig sdr_LeakyIntegrator_1.png
+            @savefig sdr_MovingAverage_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.impulse_response(iir_0p99, label=r"$\alpha=0.99$"); \
-            sdr.plot.impulse_response(iir_0p9, label=r"$\alpha=0.9$"); \
-            sdr.plot.impulse_response(iir_0p75, label=r"$\alpha=0.75$"); \
-            sdr.plot.impulse_response(iir_0p5, label=r"$\alpha=0.5$"); \
-            plt.xlim(0, 50); \
-            plt.tight_layout();
+            sdr.plot.step_response(fir, N=100, label="Moving Average"); \
+            sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
 
-        Plot the step responses.
+        Compare the magnitude responses.
 
         .. ipython:: python
 
-            @savefig sdr_LeakyIntegrator_2.png
+            @savefig sdr_MovingAverage_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.step_response(iir_0p99, label=r"$\alpha=0.99$"); \
-            sdr.plot.step_response(iir_0p9, label=r"$\alpha=0.9$"); \
-            sdr.plot.step_response(iir_0p75, label=r"$\alpha=0.75$"); \
-            sdr.plot.step_response(iir_0p5, label=r"$\alpha=0.5$"); \
-            plt.xlim(0, 50); \
-            plt.tight_layout();
+            sdr.plot.magnitude_response(fir, label="Moving Average"); \
+            sdr.plot.magnitude_response(iir, label="Leaky Integrator");
 
-        Plot the frequency responses.
+        Compare the output of the two filters to a Gaussian random process.
 
         .. ipython:: python
 
-            @savefig sdr_LeakyIntegrator_3.png
+            x = np.random.randn(1_000) + 2.0; \
+            y_fir = fir(x); \
+            y_iir = iir(x)
+
+            @savefig sdr_MovingAverage_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(iir_0p99, label=r"$\alpha=0.99$"); \
-            sdr.plot.magnitude_response(iir_0p9, label=r"$\alpha=0.9$"); \
-            sdr.plot.magnitude_response(iir_0p75, label=r"$\alpha=0.75$"); \
-            sdr.plot.magnitude_response(iir_0p5, label=r"$\alpha=0.5$"); \
-            plt.tight_layout();
-
-        Integrate a raised cosine pulse.
-
-        .. ipython:: python
-
-            x = sdr.root_raised_cosine(0.1, 8, 10); \
-            y_0p99 = iir_0p99(x); \
-            y_0p9 = iir_0p9(x); \
-            y_0p75 = iir_0p75(x); \
-            y_0p5 = iir_0p5(x)
-
-            @savefig sdr_LeakyIntegrator_4.png
-            plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(x, label="Input"); \
-            sdr.plot.time_domain(y_0p99, label=r"$\alpha=0.99$ Integral"); \
-            sdr.plot.time_domain(y_0p9, label=r"$\alpha=0.9$ Integral"); \
-            sdr.plot.time_domain(y_0p75, label=r"$\alpha=0.75$ Integral"); \
-            sdr.plot.time_domain(y_0p5, label=r"$\alpha=0.5$ Integral"); \
-            plt.title("Discrete-time integration of a raised cosine pulse"); \
-            plt.tight_layout();
+            sdr.plot.time_domain(y_fir, label="Moving Average"); \
+            sdr.plot.time_domain(y_iir, label="Leaky Integrator");
 
     Group:
         dsp-filter-applications
