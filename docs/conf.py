@@ -335,44 +335,14 @@ sphinx_immaterial_custom_admonitions = [
 # ]
 
 
-# def autodoc_skip_member(app, what, name, obj, skip, options):
-#     """
-#     Instruct autodoc to skip members that are inherited from np.ndarray.
-#     """
-#     if skip:
-#         # Continue skipping things Sphinx already wants to skip
-#         return skip
+def autodoc_skip_member(app, what, name, obj, skip, options):
+    """
+    Instruct autodoc to skip members that are inherited from np.ndarray.
+    """
+    if name in ["__str__", "__repr__"]:
+        return True
 
-#     if name == "__init__":
-#         return False
-#     elif hasattr(obj, "__objclass__"):
-#         # This is a NumPy method, don't include docs
-#         return True
-#     elif getattr(obj, "__qualname__", None) in ["FunctionMixin.dot", "Array.astype"]:
-#         # NumPy methods that were overridden, don't include docs
-#         return True
-#     elif (
-#         hasattr(obj, "__qualname__")
-#         and getattr(obj, "__qualname__").split(".")[0] == "FieldArray"
-#         and hasattr(numpy.ndarray, name)
-#     ):
-#         if name in ["__repr__", "__str__"]:
-#             # Specifically allow these methods to be documented
-#             return False
-#         else:
-#             # This is a NumPy method that was overridden in one of our ndarray subclasses. Also don't include
-#             # these docs.
-#             return True
-
-#     if name in SPECIAL_MEMBERS:
-#         # Don't skip members in "special-members"
-#         return False
-
-#     if name[0] == "_":
-#         # For some reason we need to tell Sphinx to hide private members
-#         return True
-
-#     return skip
+    return skip
 
 
 def autodoc_process_bases(app, name, obj, options, bases):
@@ -488,6 +458,6 @@ def monkey_patch_parse_see_also():
 def setup(app):
     monkey_patch_parse_see_also()
 
-    #     app.connect("autodoc-skip-member", autodoc_skip_member)
+    app.connect("autodoc-skip-member", autodoc_skip_member)
     app.connect("autodoc-process-bases", autodoc_process_bases)
     app.connect("autodoc-process-signature", autodoc_process_signature)

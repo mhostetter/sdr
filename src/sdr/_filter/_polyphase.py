@@ -313,15 +313,6 @@ class Interpolator(FIR):
         return y
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Interpolator(7)
-                fir
-        """
         if self.method == "custom":
             h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
         else:
@@ -329,15 +320,6 @@ class Interpolator(FIR):
         return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Interpolator(7)
-                print(fir)
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  rate: {self.rate}"
@@ -637,15 +619,6 @@ class Decimator(FIR):
         return y
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Decimator(7)
-                fir
-        """
         if self.method == "custom":
             h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
         else:
@@ -653,15 +626,6 @@ class Decimator(FIR):
         return f"sdr.{type(self).__name__}({self.rate}, {h_str}, streaming={self.streaming})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Decimator(7)
-                print(fir)
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  rate: {self.rate}"
@@ -956,15 +920,6 @@ class Resampler(FIR):
         return y
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Resampler(4, 3)
-                fir
-        """
         if self.method == "custom":
             h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
         else:
@@ -972,15 +927,6 @@ class Resampler(FIR):
         return f"sdr.{type(self).__name__}({self.up}, {self.down}, {h_str}, streaming={self.streaming})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Resampler(4, 3)
-                print(fir)
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  rate: {self.up} / {self.down}"
