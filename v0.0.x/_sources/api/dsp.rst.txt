@@ -13,6 +13,11 @@ IIR filtering
 
 .. python-apigen-group:: dsp-iir-filtering
 
+Filter applications
+-------------------
+
+.. python-apigen-group:: dsp-filter-applications
+
 Multirate filtering
 -------------------
 
