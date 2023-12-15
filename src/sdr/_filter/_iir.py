@@ -535,36 +535,36 @@ class LeakyIntegrator(IIR):
     Implements a leaky integrator IIR filter.
 
     Notes:
-        A discrete-time leaky integrator is an IIR filter that continuously accumulates the input signal, but
-        remembers the past with a leaky factor $\alpha$. When $\alpha = 1$, the filter is an integrator.
-        When $\alpha = 0$, the filter is a pass-through.
+        A discrete-time leaky integrator is an IIR filter that approximates an FIR moving average.
+        The previous output is remembered with the leaky factor $\alpha$ and the new input is scaled with $1 - \alpha$.
 
         The difference equation is
 
-        $$y[n] = \alpha \cdot y[n-1] + x[n] .$$
+        $$y[n] = \alpha \cdot y[n-1] + (1 - \alpha) \cdot x[n] .$$
 
         The transfer functions is
 
-        $$H(z) = \frac{1}{1 - \alpha z^{-1}} .$$
+        $$H(z) = \frac{1 - \alpha}{1 - \alpha z^{-1}} .$$
 
         .. code-block:: text
             :caption: IIR Integrator Block Diagram
 
-            x[n] -->@---------------+--> y[n]
-                    ^               |
-              alpha |   +------+    |
-                    +---| z^-1 |<---+
-                        +------+
+                  1 - alpha
+            x[n] ----------->@---------------+--> y[n]
+                             ^               |
+                       alpha |   +------+    |
+                             +---| z^-1 |<---+
+                                 +------+
 
     Examples:
         Compare leaky integrators with various leaky factors.
 
         .. ipython:: python
 
+            iir_0p99 = sdr.LeakyIntegrator(0.99); \
             iir_0p9 = sdr.LeakyIntegrator(0.9); \
             iir_0p75 = sdr.LeakyIntegrator(0.75); \
-            iir_0p5 = sdr.LeakyIntegrator(0.5); \
-            iir_0p25 = sdr.LeakyIntegrator(0.25)
+            iir_0p5 = sdr.LeakyIntegrator(0.5)
 
         Plot the impulse responses.
 
@@ -572,22 +572,56 @@ class LeakyIntegrator(IIR):
 
             @savefig sdr_LeakyIntegrator_1.png
             plt.figure(figsize=(8, 4)); \
+            sdr.plot.impulse_response(iir_0p99, label=r"$\alpha=0.99$"); \
             sdr.plot.impulse_response(iir_0p9, label=r"$\alpha=0.9$"); \
             sdr.plot.impulse_response(iir_0p75, label=r"$\alpha=0.75$"); \
             sdr.plot.impulse_response(iir_0p5, label=r"$\alpha=0.5$"); \
-            sdr.plot.impulse_response(iir_0p25, label=r"$\alpha=0.25$"); \
+            plt.xlim(0, 50); \
+            plt.tight_layout();
+
+        Plot the step responses.
+
+        .. ipython:: python
+
+            @savefig sdr_LeakyIntegrator_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.step_response(iir_0p99, label=r"$\alpha=0.99$"); \
+            sdr.plot.step_response(iir_0p9, label=r"$\alpha=0.9$"); \
+            sdr.plot.step_response(iir_0p75, label=r"$\alpha=0.75$"); \
+            sdr.plot.step_response(iir_0p5, label=r"$\alpha=0.5$"); \
+            plt.xlim(0, 50); \
             plt.tight_layout();
 
         Plot the frequency responses.
 
         .. ipython:: python
 
-            @savefig sdr_LeakyIntegrator_2.png
+            @savefig sdr_LeakyIntegrator_3.png
             plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(iir_0p99, label=r"$\alpha=0.99$"); \
             sdr.plot.magnitude_response(iir_0p9, label=r"$\alpha=0.9$"); \
             sdr.plot.magnitude_response(iir_0p75, label=r"$\alpha=0.75$"); \
             sdr.plot.magnitude_response(iir_0p5, label=r"$\alpha=0.5$"); \
-            sdr.plot.magnitude_response(iir_0p25, label=r"$\alpha=0.25$"); \
+            plt.tight_layout();
+
+        Integrate a raised cosine pulse.
+
+        .. ipython:: python
+
+            x = sdr.root_raised_cosine(0.1, 8, 10); \
+            y_0p99 = iir_0p99(x); \
+            y_0p9 = iir_0p9(x); \
+            y_0p75 = iir_0p75(x); \
+            y_0p5 = iir_0p5(x)
+
+            @savefig sdr_LeakyIntegrator_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, label="Input"); \
+            sdr.plot.time_domain(y_0p99, label=r"$\alpha=0.99$ Integral"); \
+            sdr.plot.time_domain(y_0p9, label=r"$\alpha=0.9$ Integral"); \
+            sdr.plot.time_domain(y_0p75, label=r"$\alpha=0.75$ Integral"); \
+            sdr.plot.time_domain(y_0p5, label=r"$\alpha=0.5$ Integral"); \
+            plt.title("Discrete-time integration of a raised cosine pulse"); \
             plt.tight_layout();
 
     Group:
@@ -599,14 +633,16 @@ class LeakyIntegrator(IIR):
         Creates a leaky integrator IIR filter.
 
         Arguments:
-            alpha: The leaky factor $\alpha$. The leaky factor indicates how much of the previous output to preserve.
-                When $\alpha = 1$, the filter is an integrator. When $\alpha = 0$, the filter is a pass-through.
+            alpha: The leaky factor $\alpha$. An FIR moving average with length $L$ is approximated when
+                $\alpha = 1 - 2/L$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are
                 preserved between calls to :meth:`~LeakyIntegrator.__call__()`.
 
         Examples:
             See the :ref:`iir-filters` example.
         """
-        super().__init__([1], [1, -alpha], streaming=streaming)
+        b = [1 - alpha]
+        a = [1, -alpha]
+        super().__init__(b, a, streaming=streaming)
 
     # TODO: Use np.cumsum() if it is faster
