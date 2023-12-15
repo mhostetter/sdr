@@ -9846,63 +9846,96 @@ You're not viewing the latest version.
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">LeakyIntegrator</span></span><span class="p"><span class="pre">(</span></span><span class="desctype"><a class="reference internal" href="../sdr.IIR/" title="sdr.IIR (Python class) — Implements an infinite impulse response (IIR) filter."><span class="pre">sdr.IIR</span></a></span><span class="p"><span class="pre">)</span></span></dt>
 <dd><p>Implements a leaky integrator IIR filter.</p>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
-<p>A discrete-time leaky integrator is an IIR filter that continuously accumulates the input signal, but
-remembers the past with a leaky factor <span class="math notranslate nohighlight">\(\alpha\)</span>. When <span class="math notranslate nohighlight">\(\alpha = 1\)</span>, the filter is an integrator.
-When <span class="math notranslate nohighlight">\(\alpha = 0\)</span>, the filter is a pass-through.</p>
+<p>A discrete-time leaky integrator is an IIR filter that approximates an FIR moving average.
+The previous output is remembered with the leaky factor <span class="math notranslate nohighlight">\(\alpha\)</span> and the new input is scaled with <span class="math notranslate nohighlight">\(1 - \alpha\)</span>.</p>
 <p>The difference equation is</p>
 <p><div class="math notranslate nohighlight">
-\[y[n] = \alpha \cdot y[n-1] + x[n] .\]</div>
+\[y[n] = \alpha \cdot y[n-1] + (1 - \alpha) \cdot x[n] .\]</div>
 </p>
 <p>The transfer functions is</p>
 <p><div class="math notranslate nohighlight">
-\[H(z) = \frac{1}{1 - \alpha z^{-1}} .\]</div>
+\[H(z) = \frac{1 - \alpha}{1 - \alpha z^{-1}} .\]</div>
 </p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>IIR Integrator Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>x[n] --&gt;@---------------+--&gt; y[n]
-        ^               |
-  alpha |   +------+    |
-        +---| z^-1 |&lt;---+
-            +------+
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>      1 - alpha
+x[n] -----------&gt;@---------------+--&gt; y[n]
+                 ^               |
+           alpha |   +------+    |
+                 +---| z^-1 |&lt;---+
+                     +------+
 </code></pre></div>
 </div>
 </div>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Compare leaky integrators with various leaky factors.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">iir_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.9</span><span class="p">);</span> \
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">iir_0p99</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.99</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">iir_0p9</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.9</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">iir_0p75</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.75</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">iir_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">iir_0p25</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">iir_0p5</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <p>Plot the impulse responses.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">iir_0p99</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.99$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">iir_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.9$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">iir_0p75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.75$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">iir_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.5$&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">impulse_response</span><span class="p">(</span><span class="n">iir_0p25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.25$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_LeakyIntegrator_1.png" src="../../_images/sdr_LeakyIntegrator_1.png" />
-<p>Plot the frequency responses.</p>
+<p>Plot the step responses.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.9$&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.75$&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.5$&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.25$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">iir_0p99</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.99$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">iir_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.9$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">iir_0p75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.75$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">iir_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.5$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_LeakyIntegrator_2.png" src="../../_images/sdr_LeakyIntegrator_2.png" />
+<p>Plot the frequency responses.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p99</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.99$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.9$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.75$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.5$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+<span class="gp">   ...: </span>
+</code></pre></div>
+</div>
+<img alt="../../_images/sdr_LeakyIntegrator_3.png" src="../../_images/sdr_LeakyIntegrator_3.png" />
+<p>Integrate a raised cosine pulse.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">root_raised_cosine</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_0p99</span> <span class="o">=</span> <span class="n">iir_0p99</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_0p9</span> <span class="o">=</span> <span class="n">iir_0p9</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_0p75</span> <span class="o">=</span> <span class="n">iir_0p75</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y_0p5</span> <span class="o">=</span> <span class="n">iir_0p5</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_0p99</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.99$ Integral&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_0p9</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.9$ Integral&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_0p75</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.75$ Integral&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y_0p5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\alpha=0.5$ Integral&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Discrete-time integration of a raised cosine pulse&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
+<span class="gp">   ...: </span>
+</code></pre></div>
+</div>
+<img alt="../../_images/sdr_LeakyIntegrator_4.png" src="../../_images/sdr_LeakyIntegrator_4.png" />
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.LeakyIntegrator.__init__/" title="sdr.LeakyIntegrator.__init__ (Python method) — Creates a leaky integrator IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">LeakyIntegrator</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LeakyIntegrator.__init__/#p-alpha" title="sdr.LeakyIntegrator.__init__.alpha (Python parameter) — The leaky factor $alpha$. The leaky factor indicates how much of the previous output to preserve. When $alpha = 1$, the filter is an integrator. When $alpha = 0$, the filter is a pass-through."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LeakyIntegrator.__init__/#p-streaming" title="sdr.LeakyIntegrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.LeakyIntegrator.__init__/" title="sdr.LeakyIntegrator.__init__ (Python method) — Creates a leaky integrator IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">LeakyIntegrator</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LeakyIntegrator.__init__/#p-alpha" title="sdr.LeakyIntegrator.__init__.alpha (Python parameter) — The leaky factor $alpha$. An FIR moving average with length $L$ is approximated when $alpha = 1 - 2/L$."><span class="n"><span class="pre">alpha</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LeakyIntegrator.__init__/#p-streaming" title="sdr.LeakyIntegrator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates a leaky integrator IIR filter.</p>
 </dd></dl>
 
