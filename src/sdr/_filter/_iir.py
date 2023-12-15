@@ -641,8 +641,14 @@ class LeakyIntegrator(IIR):
         Examples:
             See the :ref:`iir-filters` example.
         """
+        if not isinstance(alpha, float):
+            raise TypeError(f"Argument 'alpha' must be a float, not {type(alpha).__name__}.")
+        if not 0 <= alpha <= 1:
+            raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
+
         b = [1 - alpha]
         a = [1, -alpha]
+
         super().__init__(b, a, streaming=streaming)
 
     # TODO: Use np.cumsum() if it is faster
