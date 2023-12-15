@@ -13,7 +13,7 @@ from ._iir import IIR
 
 
 @export
-class MovingAverage(FIR):
+class MovingAverager(FIR):
     r"""
     Implements a moving average FIR filter.
 
@@ -27,7 +27,7 @@ class MovingAverage(FIR):
 
         .. ipython:: python
 
-            fir = sdr.MovingAverage(30)
+            fir = sdr.MovingAverager(30)
             iir = sdr.LeakyIntegrator(1 - 2 / 30)
 
         Compare the step responses.
@@ -72,7 +72,7 @@ class MovingAverage(FIR):
         Arguments:
             length: The length of the moving average filter $L$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~sdr.MovingAverage.__call__()`.
+                preserved between calls to :meth:`~sdr.MovingAverager.__call__()`.
 
         Examples:
             See the :ref:`fir-filters` example.
@@ -351,7 +351,7 @@ class LeakyIntegrator(IIR):
 
         .. ipython:: python
 
-            fir = sdr.MovingAverage(30)
+            fir = sdr.MovingAverager(30)
             iir = sdr.LeakyIntegrator(1 - 2 / 30)
 
         Compare the step responses.
