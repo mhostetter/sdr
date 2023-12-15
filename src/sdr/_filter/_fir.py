@@ -449,6 +449,81 @@ class FIR:
 
 
 @export
+class MovingAverage(FIR):
+    r"""
+    Implements a moving average FIR filter.
+
+    Notes:
+        A discrete-time moving average with length $L$ is a FIR filter with impulse response
+
+        $$h[n] = \frac{1}{L}, \quad 0 \le n \le L - 1 .$$
+
+    Examples:
+        Create a FIR moving average filter and a IIR leaky integrator filter.
+
+        .. ipython:: python
+
+            fir = sdr.MovingAverage(30)
+            iir = sdr.LeakyIntegrator(1 - 2 / 30)
+
+        Compare the step responses.
+
+        .. ipython:: python
+
+            @savefig sdr_MovingAverage_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.step_response(fir, N=100, label="Moving Average"); \
+            sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
+
+        Compare the magnitude responses.
+
+        .. ipython:: python
+
+            @savefig sdr_MovingAverage_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.magnitude_response(fir, label="Moving Average"); \
+            sdr.plot.magnitude_response(iir, label="Leaky Integrator");
+
+        Compare the output of the two filters to a Gaussian random process.
+
+        .. ipython:: python
+
+            x = np.random.randn(1_000) + 2.0; \
+            y_fir = fir(x); \
+            y_iir = iir(x)
+
+            @savefig sdr_MovingAverage_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(y_fir, label="Moving Average"); \
+            sdr.plot.time_domain(y_iir, label="Leaky Integrator");
+
+    Group:
+        dsp-fir-filtering
+    """
+
+    def __init__(self, length: int, streaming: bool = False):
+        """
+        Creates a moving average FIR filter.
+
+        Arguments:
+            length: The length of the moving average filter $L$.
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`~sdr.MovingAverage.__call__()`.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        if not isinstance(length, int):
+            raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
+        if not length > 1:
+            raise ValueError(f"Argument 'length' must be greater than 1, not {length}.")
+
+        h = np.ones(length) / length
+
+        super().__init__(h, streaming=streaming)
+
+
+@export
 class Differentiator(FIR):
     r"""
     Implements a differentiator FIR filter.
