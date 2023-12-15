@@ -34,19 +34,20 @@ class MovingAverager(FIR):
 
         .. ipython:: python
 
-            @savefig sdr_MovingAverage_1.png
+            @savefig sdr_MovingAverager_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.step_response(fir, N=100, label="Moving Average"); \
+            sdr.plot.step_response(fir, N=100, label="Moving Averager"); \
             sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
 
         Compare the magnitude responses.
 
         .. ipython:: python
 
-            @savefig sdr_MovingAverage_2.png
+            @savefig sdr_MovingAverager_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(fir, label="Moving Average"); \
-            sdr.plot.magnitude_response(iir, label="Leaky Integrator");
+            sdr.plot.magnitude_response(fir, label="Moving Averager"); \
+            sdr.plot.magnitude_response(iir, label="Leaky Integrator"); \
+            plt.ylim(-35, 5);
 
         Compare the output of the two filters to a Gaussian random process.
 
@@ -56,9 +57,9 @@ class MovingAverager(FIR):
             y_fir = fir(x); \
             y_iir = iir(x)
 
-            @savefig sdr_MovingAverage_3.png
+            @savefig sdr_MovingAverager_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y_fir, label="Moving Average"); \
+            sdr.plot.time_domain(y_fir, label="Moving Averager"); \
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");
 
     Group:
@@ -358,19 +359,20 @@ class LeakyIntegrator(IIR):
 
         .. ipython:: python
 
-            @savefig sdr_MovingAverage_1.png
+            @savefig sdr_LeakyIntegrator_1.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.step_response(fir, N=100, label="Moving Average"); \
+            sdr.plot.step_response(fir, N=100, label="Moving Averager"); \
             sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
 
         Compare the magnitude responses.
 
         .. ipython:: python
 
-            @savefig sdr_MovingAverage_2.png
+            @savefig sdr_LeakyIntegrator_2.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.magnitude_response(fir, label="Moving Average"); \
-            sdr.plot.magnitude_response(iir, label="Leaky Integrator");
+            sdr.plot.magnitude_response(fir, label="Moving Averager"); \
+            sdr.plot.magnitude_response(iir, label="Leaky Integrator"); \
+            plt.ylim(-35, 5);
 
         Compare the output of the two filters to a Gaussian random process.
 
@@ -380,9 +382,9 @@ class LeakyIntegrator(IIR):
             y_fir = fir(x); \
             y_iir = iir(x)
 
-            @savefig sdr_MovingAverage_3.png
+            @savefig sdr_LeakyIntegrator_3.png
             plt.figure(figsize=(8, 4)); \
-            sdr.plot.time_domain(y_fir, label="Moving Average"); \
+            sdr.plot.time_domain(y_fir, label="Moving Averager"); \
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");
 
     Group:
