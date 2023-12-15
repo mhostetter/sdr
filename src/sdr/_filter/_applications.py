@@ -62,7 +62,7 @@ class MovingAverage(FIR):
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");
 
     Group:
-        dsp-fir-filtering
+        dsp-filter-applications
     """
 
     def __init__(self, length: int, streaming: bool = False):
@@ -163,7 +163,7 @@ class Differentiator(FIR):
             plt.tight_layout();
 
     Group:
-        dsp-fir-filtering
+        dsp-filter-applications
     """
 
     def __init__(self, order: int = 20, window: str | float | tuple | None = "blackman", streaming: bool = False):
@@ -287,7 +287,7 @@ class Integrator(IIR):
             plt.tight_layout();
 
     Group:
-        dsp-iir-filtering
+        dsp-filter-applications
     """
 
     def __init__(self, method: Literal["backward", "trapezoidal", "forward"] = "trapezoidal", streaming: bool = False):
@@ -415,7 +415,7 @@ class LeakyIntegrator(IIR):
             plt.tight_layout();
 
     Group:
-        dsp-iir-filtering
+        dsp-filter-applications
     """
 
     def __init__(self, alpha: float, streaming: bool = False):
