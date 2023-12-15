@@ -114,31 +114,9 @@ class IIR:
         return y
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                zero = 0.6
-                pole = 0.8 * np.exp(1j * np.pi / 8)
-                iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
-                iir
-        """
         return f"sdr.{type(self).__name__}({self.b_taps.tolist()}, {self.a_taps.tolist()}, streaming={self.streaming})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                zero = 0.6
-                pole = 0.8 * np.exp(1j * np.pi / 8)
-                iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
-                print(iir)
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  b_taps: {self.b_taps.shape} shape"

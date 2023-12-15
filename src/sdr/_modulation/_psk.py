@@ -174,18 +174,12 @@ class PSK(LinearModulation):
         self._symbol_map[self._symbol_labels] = self._symbol_map.copy()
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-        """
         return (
             f"sdr.{type(self).__name__}({self.order}, phase_offset={self.phase_offset}, "
             + f"symbol_labels={self._symbol_labels_str!r})"
         )
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  symbol_map: {self.symbol_map.shape} shape"
@@ -771,15 +765,9 @@ class OQPSK(PSK):
             raise ValueError(f"Argument 'sps' must be even, not {sps}.")
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-        """
         return f"sdr.{type(self).__name__}(phase_offset={self.phase_offset}, symbol_labels={self._symbol_labels_str!r})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  symbol_map: {self.symbol_map.shape} shape"
         string += f"\n    {self.symbol_map.tolist()}"

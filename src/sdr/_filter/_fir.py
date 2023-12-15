@@ -98,29 +98,9 @@ class FIR:
         return y
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                h = sdr.root_raised_cosine(0.5, 6, 5)
-                fir = sdr.FIR(h)
-                fir
-        """
         return f"sdr.{type(self).__name__}({self.taps.tolist()}, streaming={self.streaming})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-
-        Examples:
-            .. ipython:: python
-
-                h = sdr.root_raised_cosine(0.5, 6, 5)
-                fir = sdr.FIR(h)
-                print(fir)
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  taps: {self.taps.shape} shape"

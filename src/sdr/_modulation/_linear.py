@@ -111,15 +111,9 @@ class LinearModulation:
         self._rx_filter = Decimator(self.sps, self.pulse_shape[::-1].conj())  # Receive matched filter
 
     def __repr__(self) -> str:
-        """
-        Returns a code-styled string representation of the object.
-        """
         return f"sdr.{type(self).__name__}({self.symbol_map.tolist()}, phase_offset={self.phase_offset})"
 
     def __str__(self) -> str:
-        """
-        Returns a human-readable string representation of the object.
-        """
         string = f"sdr.{type(self).__name__}:"
         string += f"\n  order: {self.order}"
         string += f"\n  symbol_map: {self.symbol_map.shape} shape"
