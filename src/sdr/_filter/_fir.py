@@ -40,7 +40,7 @@ class FIR:
 
     def __init__(self, h: npt.ArrayLike, streaming: bool = False):
         """
-        Creates a FIR filter with feedforward coefficients $h_i$.
+        Creates an FIR filter with feedforward coefficients $h_i$.
 
         Arguments:
             h: The feedforward coefficients $h_i$ for $i = 0,...N$.
