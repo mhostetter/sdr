@@ -340,12 +340,12 @@ class LeakyIntegrator(IIR):
         .. code-block:: text
             :caption: IIR Integrator Block Diagram
 
-                  1 - alpha
-            x[n] ----------->@---------------+--> y[n]
-                             ^               |
-                       alpha |   +------+    |
-                             +---| z^-1 |<---+
-                                 +------+
+                  1 - α
+            x[n] ------->@---------------+--> y[n]
+                         ^               |
+                       α |   +------+    |
+                         +---| z^-1 |<---+
+                             +------+
 
     Examples:
         Create an FIR moving average filter and an IIR leaky integrator filter.
