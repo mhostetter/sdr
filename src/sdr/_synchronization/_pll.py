@@ -23,14 +23,14 @@ class ClosedLoopPLL:
         .. code-block:: text
             :caption: Closed-Loop PLL Block Diagram
 
-                        bb[n]    phase_err[n]
-                    +---+    +-----+    +----+
-            x[n] -->| X |--->| PED |--->| LF |---+
-                    +---+    +-----+    +----+   |
-                      ^                          | phase_est[n]
-                      |      +-----+             |
-               lo[n]  +------| NCO |<------------+
-                             +-----+
+                     bb[n]    phase_err[n]
+                         +-----+    +----+
+            x[n] -->X--->| PED |--->| LF |---+
+                    ^    +-----+    +----+   |
+                    |                        | phase_est[n]
+                    |    +-----+             |
+             lo[n]  +----| NCO |<------------+
+                         +-----+
 
             x[n] = Input signal
             bb[n] = Baseband signal
@@ -40,6 +40,7 @@ class ClosedLoopPLL:
             PED = Phase error detector
             LF = Loop filter
             NCO = Numerically-controlled oscillator
+            X = Complex multiplier
 
         The transfer function of the 2nd order, proportional-plus-integrator loop filter is
 
