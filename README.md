@@ -49,14 +49,15 @@ python3 -m pip install sdr
 View all available classes and functions in the [API Reference](https://mhostetter.github.io/sdr/latest/api/dsp/).
 
 - **Digital signal processing**: Finite impulse response (FIR) filters, FIR filter design,
-  infinite impulse response (IIR) filters, polyphase interpolator, polyphase decimator, polyphase resampler,
-  Farrow arbitrary resampler, fractional delay filter design, FIR differentiator, IIR integrator, complex mixing,
-  real/complex conversion.
-- **Sequences**: Barker, Zadoff-Chu.
+  infinite impulse response (IIR) filters, moving average, differentiator, integrator, leaky integrator,
+  polyphase interpolator, polyphase decimator, polyphase resampler, Farrow arbitrary resampler,
+  fractional delay filter design, FIR differentiator, IIR integrator, complex mixing, real/complex conversion.
+- **Sequences**: Barker, Hadamard, Walsh, Zadoff-Chu.
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, rectangular pulse shape, half-sine pulse shape,
   raised cosine pulse shape, root raised cosine pulse shape, Gaussian pulse shape, binary and Gray symbol mapping,
   differential encoding.
-- **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop PLL analysis.
+- **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
+  analysis, automatic gain control (AGC), phase error detectors (PEDs).
 - **Measurement**: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
   error vector magnitude (EVM).
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
