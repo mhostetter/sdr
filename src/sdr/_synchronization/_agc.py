@@ -3,6 +3,7 @@ A module for signal amplitude synchronization.
 """
 from __future__ import annotations
 
+import numba
 import numpy as np
 import numpy.typing as npt
 
@@ -112,7 +113,7 @@ class AGC:
         if not self.streaming:
             self.reset()
 
-        y, self._gain = _agc_loop(x, self.attack, self.decay, self.reference, self._gain)
+        y, self._gain = _numba_agc_loop(x, self.attack, self.decay, self.reference, self._gain)
 
         return y
 
@@ -198,8 +199,13 @@ class AGC:
         self._reference = value
 
 
-def _agc_loop(
-    x: npt.NDArray[np.complex_], attack: float, decay: float, reference: float, gain: float
+@numba.jit(nopython=True, cache=True)
+def _numba_agc_loop(
+    x: npt.NDArray[np.complex_],
+    attack: float,
+    decay: float,
+    reference: float,
+    gain: float,
 ) -> tuple[npt.NDArray[np.complex_], float]:
     y = np.zeros_like(x)
     reference = np.log(reference)
