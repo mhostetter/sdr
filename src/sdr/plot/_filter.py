@@ -101,7 +101,7 @@ def impulse_response(
 
     with plt.rc_context(RC_PARAMS):
         real_or_complex_plot(t, h, **kwargs)
-        plt.xlabel("Sample")
+        plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
         plt.title("Impulse Response, $h[n]$")
         plt.tight_layout()
@@ -173,7 +173,7 @@ def step_response(
 
     with plt.rc_context(RC_PARAMS):
         real_or_complex_plot(t, s, **kwargs)
-        plt.xlabel("Sample")
+        plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
         plt.tight_layout()
