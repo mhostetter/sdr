@@ -18,12 +18,12 @@ class MovingAverager(FIR):
     Implements a moving average FIR filter.
 
     Notes:
-        A discrete-time moving average with length $L$ is a FIR filter with impulse response
+        A discrete-time moving average with length $L$ is an FIR filter with impulse response
 
         $$h[n] = \frac{1}{L}, \quad 0 \le n \le L - 1 .$$
 
     Examples:
-        Create a FIR moving average filter and a IIR leaky integrator filter.
+        Create an FIR moving average filter and an IIR leaky integrator filter.
 
         .. ipython:: python
 
@@ -94,7 +94,7 @@ class Differentiator(FIR):
     Implements a differentiator FIR filter.
 
     Notes:
-        A discrete-time differentiator is a FIR filter with impulse response
+        A discrete-time differentiator is an FIR filter with impulse response
 
         $$h[n] = \frac{(-1)^n}{n} \cdot h_{win}[n], \quad -\frac{N}{2} \le n \le \frac{N}{2} .$$
 
@@ -348,7 +348,7 @@ class LeakyIntegrator(IIR):
                                  +------+
 
     Examples:
-        Create a FIR moving average filter and a IIR leaky integrator filter.
+        Create an FIR moving average filter and an IIR leaky integrator filter.
 
         .. ipython:: python
 
