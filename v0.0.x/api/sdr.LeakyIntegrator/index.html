@@ -736,7 +736,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates a FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -9430,17 +9430,17 @@ The previous output is remembered with the leaky factor <span class="math notran
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>IIR Integrator Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>      1 - alpha
-x[n] -----------&gt;@---------------+--&gt; y[n]
-                 ^               |
-           alpha |   +------+    |
-                 +---| z^-1 |&lt;---+
-                     +------+
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>      1 - α
+x[n] -------&gt;@---------------+--&gt; y[n]
+             ^               |
+           α |   +------+    |
+             +---| z^-1 |&lt;---+
+                 +------+
 </code></pre></div>
 </div>
 </div>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
-<p>Create a FIR moving average filter and a IIR leaky integrator filter.</p>
+<p>Create an FIR moving average filter and an IIR leaky integrator filter.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">MovingAverager</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 
 <span class="gp">In [2]: </span><span class="n">iir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LeakyIntegrator</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">30</span><span class="p">)</span>
