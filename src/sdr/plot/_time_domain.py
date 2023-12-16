@@ -150,7 +150,7 @@ def time_domain(
         if sample_rate_provided:
             plt.xlabel(f"Time ({units})")
         else:
-            plt.xlabel("Samples")
+            plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
         plt.tight_layout()
 
@@ -274,6 +274,6 @@ def raster(
         if sample_rate_provided:
             plt.xlabel(f"Time ({units})")
         else:
-            plt.xlabel("Samples")
+            plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
         plt.tight_layout()
