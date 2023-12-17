@@ -63,6 +63,7 @@ class FIR:
         """
         self._taps = np.asarray(h)
         self._streaming = streaming
+        self._delay = self.taps.size // 2
 
         self._state: npt.NDArray  # The filter state. Will be updated in reset().
         self.reset()
@@ -436,4 +437,4 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        return self.taps.size // 2
+        return self._delay
