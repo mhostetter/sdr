@@ -12,44 +12,159 @@ from ._helper import export
 
 @export
 class FarrowResampler:
-    """
-    Implements a cubic Farrow arbitrary resampler.
+    r"""
+    Implements a piecewise polynomial Farrow arbitrary resampler.
 
     References:
         - https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/
 
     Examples:
+        Create a sine wave with angular frequency $\omega = 2 \pi / 5.179$. Interpolate the signal by
+        $r = 3.1415926$ using Farrow piecewise polynomial Farrow resamplers.
+
+        .. ipython:: python
+
+            x = np.cos(2 * np.pi / 5.179 * np.arange(11))
+            rate = 3.1415926
+
+        Create a linear Farrow piecewise polynomial interpolator.
+
+        .. ipython:: python
+
+            farrow1 = sdr.FarrowResampler(1)
+            y1 = farrow1(x, rate)
+
+            @savefig sdr_FarrowResampler_1.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
+            sdr.plot.time_domain(y1, sample_rate=rate, marker=".", label="Output"); \
+            plt.title("Linear Farrow Resampler"); \
+            plt.tight_layout();
+
+        Create a quadratic Farrow piecewise polynomial interpolator.
+
+        .. ipython:: python
+
+            farrow2 = sdr.FarrowResampler(2)
+            y2 = farrow2(x, rate)
+
+            @savefig sdr_FarrowResampler_2.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
+            sdr.plot.time_domain(y2, sample_rate=rate, marker=".", label="Output"); \
+            plt.title("Quadratic Farrow Resampler"); \
+            plt.tight_layout();
+
+        Create a cubic Farrow piecewise polynomial interpolator.
+
+        .. ipython:: python
+
+            farrow3 = sdr.FarrowResampler(3)
+            y3 = farrow3(x, rate)
+
+            @savefig sdr_FarrowResampler_3.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
+            sdr.plot.time_domain(y3, sample_rate=rate, marker=".", label="Output"); \
+            plt.title("Cubic Farrow Resampler"); \
+            plt.tight_layout();
+
+        Create a quartic Farrow piecewise polynomial interpolator.
+
+        .. ipython:: python
+
+            farrow4 = sdr.FarrowResampler(4)
+            y4 = farrow4(x, rate)
+
+            @savefig sdr_FarrowResampler_4.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
+            sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Output"); \
+            plt.title("Quartic Farrow Resampler"); \
+            plt.tight_layout();
+
+        Compare the outputs of the Farrow resamplers with varying polynomial order.
+
+        .. ipython:: python
+
+            @savefig sdr_FarrowResampler_5.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
+            sdr.plot.time_domain(y1, sample_rate=rate, marker=".", label="Linear"); \
+            sdr.plot.time_domain(y2, sample_rate=rate, marker=".", label="Quadratic"); \
+            sdr.plot.time_domain(y3, sample_rate=rate, marker=".", label="Cubic"); \
+            sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Quartic"); \
+            plt.title("Comparison of Farrow Resamplers"); \
+            plt.tight_layout();
+
         See the :ref:`farrow-arbitrary-resampler` example.
 
     Group:
         dsp-arbitrary-resampling
     """
 
-    def __init__(self, streaming: bool = False):
+    def __init__(self, order: int = 3, streaming: bool = False):
         """
         Creates a new Farrow arbitrary resampler.
 
         Arguments:
+            order: The order of the piecewise polynomial. Must be between 1 and 4.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
+        if not isinstance(order, int):
+            raise TypeError(f"Argument 'order' must be an integer, not {type(order).__name__}.")
+        if not 1 <= order <= 4:
+            raise ValueError("Argument 'order' must be in the range [1, 4], not {order}.")
+        self._order = order
+
         self._streaming = streaming
         self._x_prev: npt.NDArray  # FIR filter state. Will be updated in reset().
         self._mu_next: float  # The next fractional sample delay value
 
-        # Construct the four FIR filter taps
-        self._taps = np.array(
-            [
-                [-1 / 6, 1 / 2, -1 / 2, 1 / 6],
-                [0, 1 / 2, -1, 1 / 2],
-                [1 / 6, -1, 1 / 2, 1 / 3],
-                [0, 0, 1, 0],
-            ],
-            dtype=float,
-        )
+        if self.order == 1:
+            self._delay = 1
+            self._taps = np.array(
+                [
+                    [-1, 1],
+                    [1, 0],
+                ]
+            ).T
+        elif self.order == 2:
+            self._delay = 2
+            self._taps = np.array(
+                [
+                    [1 / 2, -1 / 2, 0],
+                    [-1, 0, 1],
+                    [1 / 2, 1 / 2, 0],
+                ]
+            ).T
+        elif self.order == 3:
+            self._delay = 2
+            self._taps = np.array(
+                [
+                    [-1 / 6, 1 / 2, -1 / 3, 0],
+                    [1 / 2, -1, -1 / 2, 1],
+                    [-1 / 2, 1 / 2, 1, 0],
+                    [1 / 6, 0, -1 / 6, 0],
+                ]
+            ).T
+        elif self.order == 4:
+            self._delay = 3
+            self._taps = np.array(
+                [
+                    [1 / 24, -1 / 12, -1 / 24, 1 / 12, 0],
+                    [-1 / 6, 1 / 6, 2 / 3, -2 / 3, 0],
+                    [1 / 4, 0, -5 / 4, 0, 1],
+                    [-1 / 6, -1 / 6, 2 / 3, 2 / 3, 0],
+                    [1 / 24, 1 / 12, -1 / 24, -1 / 12, 0],
+                ]
+            ).T
+        else:
+            raise ValueError(f"Argument 'order' must be in the range [1, 4], not {order}.")
 
         self.reset()
 
@@ -65,7 +180,7 @@ class FarrowResampler:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         if state is None:
-            self._x_prev = np.zeros(self._taps.shape[1] - 1)
+            self._x_prev = np.array([])
         else:
             state = np.asarray(state)
             if not state.size == self._taps.shape[1] - 1:
@@ -73,7 +188,7 @@ class FarrowResampler:
             self._x_prev = state
 
         # Initial fractional sample delay accounts for filter delay
-        self._mu_next = self._taps.shape[1] // 2
+        self._mu_next = 0
 
     def __call__(self, x: npt.NDArray, rate: float) -> npt.NDArray:
         r"""
@@ -90,54 +205,67 @@ class FarrowResampler:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         if not isinstance(rate, (int, float)):
-            raise TypeError("Argument 'rate' must be an integer or float.")
+            raise TypeError(f"Argument 'rate' must be an integer or float, not {type(rate).__name__}.")
         if not rate > 0:
-            raise ValueError("Argument 'rate' must be positive.")
+            raise ValueError(f"Argument 'rate' must be positive, not {rate}.")
 
         x = np.atleast_1d(x)
         if self.streaming:
             # Prepend previous inputs from last streaming call
             x_pad = np.concatenate((self._x_prev, x))
 
-            # Compute the four FIR filter outputs, but only keep the valid outputs
-            y0 = scipy.signal.convolve(x_pad, self._taps[0, :], mode="valid")
-            y1 = scipy.signal.convolve(x_pad, self._taps[1, :], mode="valid")
-            y2 = scipy.signal.convolve(x_pad, self._taps[2, :], mode="valid")
-            y3 = scipy.signal.convolve(x_pad, self._taps[3, :], mode="valid")
+            # Compute the FIR filter outputs for the entire input signal
+            ys = []
+            for i in range(self.order + 1):
+                yi = scipy.signal.convolve(x_pad, self._taps[i, :], mode="full")
+                ys.append(yi)
 
             # Compute the fractional sample indices for each output sample. We want to step from mu_next to
-            # y0.size in steps of 1 / rate. We configure the arange() such that the step is at least 1.
-            if rate > 1:
-                mu = np.arange(self._mu_next * rate, y0.size * rate) / rate
-            else:
-                mu = np.arange(self._mu_next, y0.size, 1 / rate)
+            # y0.size in steps of 1 / rate.
+            frac_idxs = np.arange(
+                self._mu_next,
+                x_pad.size,
+                1 / rate,
+            )
 
             # Store the previous inputs and next fractional sample index for the next call to __call__()
             self._x_prev = x_pad[-(self._taps.shape[1] - 1) :]
-            self._mu_next = (mu[-1] + 1 / rate) - y0.size
+            self._mu_next = (frac_idxs[-1] + 1 / rate) - x_pad.size + (self._taps.shape[1] - 1)
         else:
-            # Compute the four FIR filter outputs for the entire input signal
-            y0 = scipy.signal.convolve(x, self._taps[0, :], mode="full")
-            y1 = scipy.signal.convolve(x, self._taps[1, :], mode="full")
-            y2 = scipy.signal.convolve(x, self._taps[2, :], mode="full")
-            y3 = scipy.signal.convolve(x, self._taps[3, :], mode="full")
+            # Compute the FIR filter outputs for the entire input signal
+            ys = []
+            for i in range(self.order + 1):
+                yi = scipy.signal.convolve(x, self._taps[i, :], mode="full")
+                ys.append(yi)
 
             # Compute the fractional sample indices for each output sample
-            mu = np.arange(
-                self._taps.shape[1] // 2,  # Account for filter delay
-                self._taps.shape[1] // 2 + x.size,
+            frac_idxs = np.arange(
+                self._delay,  # Account for filter delay
+                self._delay + x.size - 1,
                 1 / rate,
             )
 
         # Convert the fractional indices to integer indices and fractional indices
-        idxs = (mu // 1.0).astype(int)
-        mu = mu - idxs
+        int_idxs = (frac_idxs // 1.0).astype(int)
+        mu = frac_idxs - int_idxs
         mu *= -1  # TODO: Why is this the case?
 
         # Interpolate the output samples using the Horner method
-        y = mu * (mu * (mu * y0[idxs] + y1[idxs]) + y2[idxs]) + y3[idxs]
+        y = ys[0][int_idxs]
+        for i in range(1, self.order + 1):
+            y += mu * y + ys[i][int_idxs]
 
         return y
+
+    @property
+    def order(self) -> int:
+        """
+        The order of the piecewise polynomial.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+        """
+        return self._order
 
     @property
     def taps(self) -> npt.NDArray:
@@ -150,16 +278,6 @@ class FarrowResampler:
         return self._taps
 
     @property
-    def order(self) -> int:
-        """
-        The order of the filter.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-        """
-        return self._taps.shape[1] - 1
-
-    @property
     def streaming(self) -> bool:
         """
         Indicates whether the filter is in streaming mode.
@@ -170,3 +288,10 @@ class FarrowResampler:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._streaming
+
+    @property
+    def delay(self) -> int:
+        r"""
+        The delay of the FIR filter $d = \lfloor \frac{N + 1}{2} \rfloor$ in samples.
+        """
+        return self._delay
