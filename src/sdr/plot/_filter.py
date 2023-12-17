@@ -38,6 +38,7 @@ def _convert_to_taps(
 def impulse_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
+    offset: float = 0,
     **kwargs,
 ):
     r"""
@@ -55,6 +56,8 @@ def impulse_response(
 
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
+        offset: The x-axis offset to apply to the first sample. Can be useful for comparing the impulse
+            response of filters with different lengths.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -97,7 +100,7 @@ def impulse_response(
     # Filter the impulse
     zi = scipy.signal.lfiltic(b, a, y=[], x=[])
     h, zi = scipy.signal.lfilter(b, a, d, zi=zi)
-    t = np.arange(h.size)
+    t = np.arange(h.size) + offset
 
     with plt.rc_context(RC_PARAMS):
         real_or_complex_plot(t, h, **kwargs)
