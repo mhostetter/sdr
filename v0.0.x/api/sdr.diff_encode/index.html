@@ -3153,7 +3153,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FarrowResampler/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FarrowResampler (Python class) — Implements a cubic Farrow arbitrary resampler." class="md-ellipsis">Farrow<wbr>Resampler</span></a>
+          <a href="../sdr.FarrowResampler/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FarrowResampler (Python class) — Implements a piecewise polynomial Farrow arbitrary resampler." class="md-ellipsis">Farrow<wbr>Resampler</span></a>
           
             <label for="__nav_3_1_5_1">
               <span class="md-nav__icon md-icon"></span>
@@ -3164,7 +3164,7 @@ You're not viewing the latest version.
       <nav class="md-nav" aria-label="FarrowResampler" data-md-level="4">
         <label class="md-nav__title" for="__nav_3_1_5_1">
           <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FarrowResampler (Python class) — Implements a cubic Farrow arbitrary resampler." class="md-ellipsis">Farrow<wbr>Resampler</span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.FarrowResampler (Python class) — Implements a piecewise polynomial Farrow arbitrary resampler." class="md-ellipsis">Farrow<wbr>Resampler</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -3289,7 +3289,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../sdr.FarrowResampler/#methods"><span class="md-ellipsis">Methods</span></a>
+          <a href="../sdr.FarrowResampler/#streaming-mode-only"><span class="md-ellipsis">Streaming mode only</span></a>
           
             <label for="__nav_3_1_5_1_3">
               <span class="md-nav__icon md-icon"></span>
@@ -3297,10 +3297,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Methods" data-md-level="5">
+      <nav class="md-nav" aria-label="Streaming mode only" data-md-level="5">
         <label class="md-nav__title" for="__nav_3_1_5_1_3">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Methods</span>
+          <span class="md-ellipsis">Streaming mode only</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -3312,7 +3312,52 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.reset/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FarrowResampler.reset (Python method) — Streaming-mode only: Resets the filter state and fractional sample index." class="md-ellipsis">reset</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FarrowResampler.reset (Python method) — Resets the filter state and fractional sample index." class="md-ellipsis">reset</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FarrowResampler.flush/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FarrowResampler.flush (Python method) — Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode." class="md-ellipsis">flush</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FarrowResampler.streaming/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FarrowResampler.state/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.state (Python property) — The filter state consisting of the previous $N$ inputs." class="md-ellipsis">state</span>
       </a>
     </li>
   
@@ -3364,6 +3409,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.FarrowResampler.order/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.order (Python property) — The order of the piecewise polynomial." class="md-ellipsis">order</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.taps/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.taps (Python property) — The Farrow filter taps." class="md-ellipsis">taps</span>
       </a>
@@ -3379,23 +3439,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.FarrowResampler.order/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.order (Python property) — The order of the filter." class="md-ellipsis">order</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.FarrowResampler.streaming/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.streaming (Python property) — Indicates whether the filter is in streaming mode." class="md-ellipsis">streaming</span>
+      <a href="../sdr.FarrowResampler.delay/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
       </a>
     </li>
   
