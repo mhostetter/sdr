@@ -16,6 +16,7 @@ class FarrowResampler:
     Implements a piecewise polynomial Farrow arbitrary resampler.
 
     References:
+        - Michael Rice, *Digital Communications: A Discrete Time Approach*, Section 8.4.2.
         - https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/
 
     Examples:
@@ -94,7 +95,29 @@ class FarrowResampler:
             sdr.plot.time_domain(y2, sample_rate=rate, marker=".", label="Quadratic"); \
             sdr.plot.time_domain(y3, sample_rate=rate, marker=".", label="Cubic"); \
             sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Quartic"); \
+            plt.xlim(1.5, 3.5); \
             plt.title("Comparison of Farrow Resamplers"); \
+            plt.tight_layout();
+
+        Run a Farrow resampler with quartic polynomial order in streaming mode.
+
+        .. ipython:: python
+
+            x = np.cos(2 * np.pi / 5.179 * np.arange(40))
+            farrow4 = sdr.FarrowResampler(4, streaming=True)
+
+            y1 = farrow4(x[0:10], rate); \
+            y2 = farrow4(x[10:20], rate); \
+            y3 = farrow4(x[20:30], rate); \
+            y4 = farrow4(x[30:40], rate); \
+            y5 = farrow4.flush(rate); \
+            y = np.concatenate((y1, y2, y3, y4, y5))
+
+            @savefig sdr_FarrowResampler_6.png
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
+            sdr.plot.time_domain(y, sample_rate=rate, offset=-farrow4._delay, marker=".", label="Quartic concatenated"); \
+            plt.title("Quartic Farrow Resampler Concatenated Outputs"); \
             plt.tight_layout();
 
         See the :ref:`farrow-arbitrary-resampler` example.
@@ -122,7 +145,7 @@ class FarrowResampler:
         self._order = order
 
         self._streaming = streaming
-        self._x_prev: npt.NDArray  # FIR filter state. Will be updated in reset().
+        self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
         self._mu_next: float  # The next fractional sample delay value
 
         if self.order == 1:
@@ -168,27 +191,9 @@ class FarrowResampler:
 
         self.reset()
 
-    def reset(self, state: npt.ArrayLike | None = None):
-        """
-        *Streaming-mode only:* Resets the filter state and fractional sample index.
-
-        Arguments:
-            state: The filter state to reset to. The state vector should equal the previous three
-                inputs. If `None`, the filter state will be reset to zero.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-        """
-        if state is None:
-            self._x_prev = np.array([])
-        else:
-            state = np.asarray(state)
-            if not state.size == self._taps.shape[1] - 1:
-                raise ValueError(f"Argument 'state' must have {self._taps.shape[1]} elements, not {state.size}.")
-            self._x_prev = state
-
-        # Initial fractional sample delay accounts for filter delay
-        self._mu_next = 0
+    ##############################################################################
+    # Special methods
+    ##############################################################################
 
     def __call__(self, x: npt.NDArray, rate: float) -> npt.NDArray:
         r"""
@@ -212,7 +217,7 @@ class FarrowResampler:
         x = np.atleast_1d(x)
         if self.streaming:
             # Prepend previous inputs from last streaming call
-            x_pad = np.concatenate((self._x_prev, x))
+            x_pad = np.concatenate((self._state, x))
 
             # Compute the FIR filter outputs for the entire input signal
             ys = []
@@ -229,7 +234,7 @@ class FarrowResampler:
             )
 
             # Store the previous inputs and next fractional sample index for the next call to __call__()
-            self._x_prev = x_pad[-(self._taps.shape[1] - 1) :]
+            self._state = x_pad[-(self._taps.shape[1] - 1) :]
             self._mu_next = (frac_idxs[-1] + 1 / rate) - x_pad.size + (self._taps.shape[1] - 1)
         else:
             # Compute the FIR filter outputs for the entire input signal
@@ -257,6 +262,87 @@ class FarrowResampler:
 
         return y
 
+    ##############################################################################
+    # Streaming mode
+    ##############################################################################
+
+    def reset(self, state: npt.ArrayLike | None = None):
+        """
+        Resets the filter state and fractional sample index.
+
+        Arguments:
+            state: The filter state to reset to. The state vector should equal the previous three
+                inputs. If `None`, the filter state will be reset to zero.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+
+        Group:
+            Streaming mode only
+        """
+        if state is None:
+            self._state = np.array([])
+        else:
+            state = np.asarray(state)
+            if not state.size == self._taps.shape[1] - 1:
+                raise ValueError(f"Argument 'state' must have {self._taps.shape[1]} elements, not {state.size}.")
+            self._state = state
+
+        # Initial fractional sample delay accounts for filter delay
+        self._mu_next = 0
+
+    def flush(self, rate: float) -> npt.NDArray:
+        """
+        Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
+
+        Arguments:
+            rate: The resampling rate $r$.
+
+        Returns:
+            The remaining resampled signal $y[n]$.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+
+        Group:
+            Streaming mode only
+        """
+        x = np.zeros_like(self.state)
+        y = self(x, rate)
+        return y
+
+    @property
+    def streaming(self) -> bool:
+        """
+        Indicates whether the filter is in streaming mode.
+
+        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.__call__()`.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+
+        Group:
+            Streaming mode only
+        """
+        return self._streaming
+
+    @property
+    def state(self) -> npt.NDArray:
+        """
+        The filter state consisting of the previous $N$ inputs.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+
+        Group:
+            Streaming mode only
+        """
+        return self._state
+
+    ##############################################################################
+    # Properties
+    ##############################################################################
+
     @property
     def order(self) -> int:
         """
@@ -276,18 +362,6 @@ class FarrowResampler:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._taps
-
-    @property
-    def streaming(self) -> bool:
-        """
-        Indicates whether the filter is in streaming mode.
-
-        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.__call__()`.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-        """
-        return self._streaming
 
     @property
     def delay(self) -> int:
