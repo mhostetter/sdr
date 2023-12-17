@@ -9,6 +9,7 @@ import scipy.signal
 
 from .._helper import export
 from ._design_fir import _normalize_passband
+from ._fir import FIR
 
 
 def _ideal_frac_delay(length: int, delay: float) -> npt.NDArray[np.float_]:
@@ -120,3 +121,68 @@ def design_frac_delay_fir(
     h = _normalize_passband(h, 0)
 
     return h
+
+
+@export
+class FractionalDelay(FIR):
+    r"""
+    Implements a fractional delay FIR filter.
+
+    Examples:
+        Design $\Delta n = 0.21719$ delay filters with various lengths.
+        Examine the width and flatness of the frequency response passband.
+
+        .. ipython:: python
+
+            plt.figure(figsize=(8, 4));
+            for length in [4, 8, 16, 32, 64, 128]:
+                fir = sdr.FractionalDelay(length, 0.21719)
+                sdr.plot.magnitude_response(fir, label=f"$L = {length}$")
+            @savefig sdr_FractionalDelay_1.png
+            plt.legend(loc="lower left");
+
+        Design filters with length $L = 8$ and various fractional delays.
+        Examine the effects on the magnitude response outside the passband as a function of the fractional delay.
+        Note the symmetry about $\Delta n = 0.5$ and that the out-of-band magnitude response is worst at
+        $\Delta n = 0.5$.
+
+        .. ipython:: python
+
+            plt.figure(figsize=(8, 4));
+            for delay in np.arange(0.1, 1, 0.1):
+                fir = sdr.FractionalDelay(8, delay)
+                sdr.plot.magnitude_response(fir, label=f"$\Delta n = {delay:0.1f}$")
+            @savefig sdr_FractionalDelay_2.png
+            plt.ylim(-10, 1); \
+            plt.legend(loc="lower left");
+
+        Examine the effects on the group delay outside the passband as a function of the fractional delay.
+        Note the symmetry about $\Delta n = 0.5$. The out-of-band group delay is worst around $\Delta n \approx 0.5$,
+        however the group delay is perfectly flat at exactly $\Delta n = 0.5$.
+
+        .. ipython:: python
+
+            plt.figure(figsize=(8, 4));
+            for delay in np.arange(0.1, 1, 0.1):
+                fir = sdr.FractionalDelay(8, delay)
+                sdr.plot.group_delay(fir, label=f"$\Delta n = {delay:0.1f}$")
+            @savefig sdr_FractionalDelay_3.png
+            plt.legend(loc="lower left");
+
+    Group:
+        dsp-arbitrary-resampling
+    """
+
+    def __init__(self, length: int, delay: float):
+        r"""
+        Creates a fractional delay FIR filter.
+
+        Arguments:
+            length: The filter length $L$. Filters with even length have best performance.
+                Filters with odd length are equivalent to an even-length filter with an appended zero.
+            delay: The fractional delay $0 \le \Delta n \le 1$.
+        """
+        h = design_frac_delay_fir(length, delay)
+        super().__init__(h)
+
+        self._delay = length // 2 - 1 + delay
