@@ -13,15 +13,15 @@ IIR filtering
 
 .. python-apigen-group:: dsp-iir-filtering
 
+Polyphase FIR filtering
+-----------------------
+
+.. python-apigen-group:: dsp-polyphase-filtering
+
 Filter applications
 -------------------
 
 .. python-apigen-group:: dsp-filter-applications
-
-Multirate filtering
--------------------
-
-.. python-apigen-group:: dsp-multirate-filtering
 
 Arbitrary resampling
 --------------------
