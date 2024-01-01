@@ -51,7 +51,7 @@ def design_multirate_fir(
             sdr.plot.magnitude_response(h);
 
     Group:
-        dsp-multirate-filtering
+        dsp-polyphase-filtering
     """
     if not isinstance(up, int):
         raise TypeError(f"Argument 'up' must be an integer, not {up}.")
@@ -174,7 +174,7 @@ def polyphase_decompose(taps: npt.ArrayLike, phases: int) -> npt.NDArray:
             sdr.polyphase_decompose(h, 6)
 
     Group:
-        dsp-multirate-filtering
+        dsp-polyphase-filtering
     """
     taps = np.asarray(taps)
 

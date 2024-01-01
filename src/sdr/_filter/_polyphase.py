@@ -229,7 +229,7 @@ class PolyphaseFIR(FIR):
                     +------------------------+
 
     Group:
-        dsp-multirate-filtering
+        dsp-polyphase-filtering
     """
 
     def __init__(
@@ -565,7 +565,7 @@ class Interpolator(PolyphaseFIR):
             plt.tight_layout();
 
     Group:
-        dsp-multirate-filtering
+        dsp-polyphase-filtering
     """
 
     def __init__(
@@ -783,7 +783,7 @@ class Decimator(PolyphaseFIR):
             plt.tight_layout();
 
     Group:
-        dsp-multirate-filtering
+        dsp-polyphase-filtering
     """
 
     def __init__(
@@ -1008,7 +1008,7 @@ class Resampler(PolyphaseFIR):
             plt.tight_layout();
 
     Group:
-        dsp-multirate-filtering
+        dsp-polyphase-filtering
     """
 
     def __init__(
