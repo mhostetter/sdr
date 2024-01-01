@@ -273,7 +273,7 @@ class PolyphaseFIR(FIR):
         self._branches = branches
 
         self._taps = np.asarray(taps)
-        self._polyphase_taps = polyphase_decompose(self.taps, self.branches)
+        self._polyphase_taps = polyphase_decompose(self.branches, self.taps)
 
         if not input in ["hold", "top-to-bottom", "bottom-to-top"]:
             raise ValueError(f"Argument 'input' must be 'hold', 'top-to-bottom', or 'bottom-to-top', not {input!r}.")
