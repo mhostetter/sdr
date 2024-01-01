@@ -19,6 +19,437 @@ from ._design_multirate import (
 from ._fir import FIR
 
 
+def _polyphase_input_hold(
+    x: npt.NDArray,
+    state: npt.NDArray,
+    H: npt.NDArray,
+    mode: Literal["rate", "full"],
+    streaming: bool,
+) -> tuple[npt.NDArray, npt.NDArray]:
+    B, M = H.shape  # Number of polyphase branches, polyphase filter length
+    dtype = np.result_type(x, H)
+
+    if streaming:
+        x_pad = np.concatenate((state, x))  # Prepend previous inputs from last __call__() call
+
+        Y = np.zeros((B, x.size), dtype=dtype)
+        for i in range(B):
+            Y[i] = scipy.signal.convolve(x_pad, H[i], mode="valid")
+
+        state = x_pad[-(M - 1) :]
+    else:
+        if mode == "full":
+            Y = np.zeros((B, x.size + M - 1), dtype=dtype)
+            for i in range(B):
+                Y[i] = scipy.signal.convolve(x, H[i], mode="full")
+        elif mode == "rate":
+            Y = np.zeros((B, x.size), dtype=dtype)
+            for i in range(B):
+                corr = scipy.signal.convolve(x, H[i], mode="full")
+                Y[i] = corr[M // 2 : M // 2 + x.size]
+        else:
+            raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
+
+    return Y, state
+
+
+def _polyphase_input_commutate(
+    x: npt.NDArray,
+    state: npt.NDArray,
+    H: npt.NDArray,
+    mode: Literal["rate", "full"],
+    bottom_to_top: bool,
+    streaming: bool,
+) -> tuple[npt.NDArray, npt.NDArray]:
+    B, M = H.shape  # Number of polyphase branches, polyphase filter length
+    dtype = np.result_type(x, H)
+
+    if streaming:
+        x_pad = np.concatenate((state, x))  # Prepend previous inputs from last __call__() call
+        X_cols = x_pad.size // B
+        X_pad = x_pad[0 : X_cols * B].reshape(X_cols, B).T  # Commutate across polyphase filters
+        if bottom_to_top:
+            X_pad = np.flipud(X_pad)  # Commutate from bottom to top
+
+        Y = np.zeros((B, X_cols - M + 1), dtype=dtype)
+        for i in range(B):
+            Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="valid")
+
+        state = x_pad[-(B * M - 1) :]
+    else:
+        # Prepend zeros to so the first sample is alone in the first commutated column
+        x_pad = np.insert(x, 0, np.zeros(B - 1))
+        # Append zeros to input signal to distribute evenly across the B branches
+        x_pad = np.append(x_pad, np.zeros(B - (x_pad.size % B), dtype=dtype))
+        X_cols = x_pad.size // B
+        X_pad = x_pad.reshape(X_cols, B).T  # Commutate across polyphase filters
+        if bottom_to_top:
+            X_pad = np.flipud(X_pad)  # Commutate from bottom to top
+
+        if mode == "full":
+            Y = np.zeros((B, X_cols + M - 1), dtype=dtype)
+            for i in range(B):
+                Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="full")
+        elif mode == "rate":
+            Y = np.zeros((B, X_cols), dtype=dtype)
+            for i in range(B):
+                corr = scipy.signal.convolve(X_pad[i], H[i], mode="full")
+                Y[i] = corr[M // 2 : M // 2 + X_cols]
+        else:
+            raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
+
+    return Y, state
+
+
+@export
+class PolyphaseFIR(FIR):
+    r"""
+    Implements a generic polyphase FIR filter.
+
+    Notes:
+        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$, given the
+        number of polyphase branches $B$, by
+
+        $$H_{i, j} = h_{i + j B} .$$
+
+        The input signal $x[n]$ can be passed to each polyphase partition (used in interpolation) or commutated from
+        bottom to top (used in decimation).
+
+        .. md-tab-set::
+
+            .. md-tab-item:: `input="hold"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Input Hold
+
+                                          +------------------------+
+                                      +-->| h[0], h[3], h[6], h[9] |
+                                      |   +------------------------+
+                                      |   +------------------------+
+                    ..., x[1], x[0] --+-->| h[1], h[4], h[7], 0    |
+                                      |   +------------------------+
+                                      |   +------------------------+
+                                      +-->| h[2], h[5], h[8], 0    |
+                                          +------------------------+
+
+            .. md-tab-item:: `input="top-to-bottom"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Input Commutation (Top to Bottom)
+
+                                             +------------------------+
+                    ..., x[4], x[1], 0    -->| h[0], h[3], h[6], h[9] |
+                                             +------------------------+
+                                             +------------------------+
+                    ..., x[5], x[2], 0    -->| h[1], h[4], h[7], 0    |
+                                             +------------------------+
+                                             +------------------------+
+                    ..., x[6], x[3], x[0] -->| h[2], h[5], h[8], 0    |
+                                             +------------------------+
+
+            .. md-tab-item:: `input="bottom-to-top"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Input Commutation (Bottom to Top)
+
+                                             +------------------------+
+                    ..., x[6], x[3], x[0] -->| h[0], h[3], h[6], h[9] |
+                                             +------------------------+
+                                             +------------------------+
+                    ..., x[5], x[2], 0    -->| h[1], h[4], h[7], 0    |
+                                             +------------------------+
+                                             +------------------------+
+                    ..., x[4], x[1], 0    -->| h[2], h[5], h[8], 0    |
+                                             +------------------------+
+
+        The output of each polyphase partition can be summed to produce the output signal $y[n]$ (used in decimation),
+        commutated from top to bottom (used in interpolation), or taken as parallel outputs $y_i[n]$ (used in
+        channelization).
+
+        .. md-tab-set::
+
+            .. md-tab-item:: `output="sum"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Output Summation
+
+                    +------------------------+
+                    | h[0], h[3], h[6], h[9] |--+
+                    +------------------------+  |
+                    +------------------------+  v
+                    | h[1], h[4], h[7], 0    |--@--> ..., y[1], y[0]
+                    +------------------------+  ^
+                    +------------------------+  |
+                    | h[2], h[5], h[8], 0    |--+
+                    +------------------------+
+
+            .. md-tab-item:: `output="top-to-bottom"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Output Commutation (Top to Bottom)
+
+                    +------------------------+
+                    | h[0], h[3], h[6], h[9] |--> ..., y[3], y[0]
+                    +------------------------+
+                    +------------------------+
+                    | h[1], h[4], h[7], 0    |--> ..., y[4], y[1]
+                    +------------------------+
+                    +------------------------+
+                    | h[2], h[5], h[8], 0    |--> ..., y[5], y[2]
+                    +------------------------+
+
+            .. md-tab-item:: `output="bottom-to-top"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Output Commutation (Bottom to Top)
+
+                    +------------------------+
+                    | h[0], h[3], h[6], h[9] |--> ..., y[5], y[2]
+                    +------------------------+
+                    +------------------------+
+                    | h[1], h[4], h[7], 0    |--> ..., y[4], y[1]
+                    +------------------------+
+                    +------------------------+
+                    | h[2], h[5], h[8], 0    |--> ..., y[3], y[0]
+                    +------------------------+
+
+            .. md-tab-item:: `output="all"`
+
+                .. code-block:: text
+                   :caption: Polyphase FIR Filter with Parallel Outputs
+
+                    +------------------------+
+                    | h[0], h[3], h[6], h[9] |--> ..., y[0,1], y[0,0]
+                    +------------------------+
+                    +------------------------+
+                    | h[1], h[4], h[7], 0    |--> ..., y[1,1], y[1,0]
+                    +------------------------+
+                    +------------------------+
+                    | h[2], h[5], h[8], 0    |--> ..., y[2,1], y[2,0]
+                    +------------------------+
+
+    Group:
+        dsp-multirate-filtering
+    """
+
+    def __init__(
+        self,
+        branches: int,
+        taps: npt.ArrayLike,
+        input: Literal["hold", "top-to-bottom", "bottom-to-top"] = "hold",
+        output: Literal["sum", "top-to-bottom", "bottom-to-top", "all"] = "sum",
+        streaming: bool = False,
+    ):
+        r"""
+        Creates a polyphase FIR filter.
+
+        Arguments:
+            branches: The number of polyphase branches $B$.
+            taps: The prototype filter feedforward coefficients $h$.
+            input: The input connection method.
+
+                - `"hold"`: The input signal $x[n]$ is passed to each polyphase partition (used in interpolation).
+                - `"top-to-bottom"`: The input signal $x[n]$ is commutated across the polyphase partitions from
+                  top to bottom.
+                - `"bottom-to-top"`: The input signal $x[n]$ is commutated across the polyphase partitions from
+                  bottom to top (used in decimation).
+
+            output: The output connection method.
+
+                - `"sum"`: The output of each polyphase partition is summed to produce the output signal $y[n]$ (used
+                  in decimation).
+                - `"top-to-bottom"`: The output of each polyphase partition is commutated from top to bottom (used in
+                  interpolation).
+                - `"bottom-to-top"`: The output of each polyphase partition is commutated from bottom to top.
+                - `"all"`: The outputs of each polyphase partition are used in parallel (used in channelization).
+
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`~PolyphaseFIR.__call__()`.
+        """
+        if not isinstance(branches, int):
+            raise TypeError("Argument 'branches' must be an integer.")
+        if not branches >= 1:
+            raise ValueError(f"Argument 'branches' must be at least 1, not {branches}.")
+        self._branches = branches
+
+        self._taps = np.asarray(taps)
+        self._polyphase_taps = polyphase_decompose(self.taps, self.branches)
+
+        if not input in ["hold", "top-to-bottom", "bottom-to-top"]:
+            raise ValueError(f"Argument 'input' must be 'hold', 'top-to-bottom', or 'bottom-to-top', not {input!r}.")
+        self._input = input
+
+        if not output in ["sum", "top-to-bottom", "bottom-to-top", "all"]:
+            raise ValueError(
+                f"Argument 'output' must be 'sum', 'top-to-bottom', 'bottom-to-top', or 'all', not {output!r}."
+            )
+        self._output = output
+
+        super().__init__(taps, streaming=streaming)
+
+    ##############################################################################
+    # Special methods
+    ##############################################################################
+
+    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
+        r"""
+        Filters the input signal $x[n]$ with the polyphase FIR filter.
+
+        Arguments:
+            x: The input signal $x[n]$.
+
+        Returns:
+            The filtered signal $y[n]$.
+        """
+        x = np.atleast_1d(x)
+        if not x.ndim == 1:
+            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
+
+        if self.input == "hold":
+            Y, self._state = _polyphase_input_hold(x, self._state, self.polyphase_taps, mode, self.streaming)
+        elif self.input == "top-to-bottom":
+            Y, self._state = _polyphase_input_commutate(
+                x, self._state, self.polyphase_taps, mode, False, self.streaming
+            )
+        elif self.input == "bottom-to-top":
+            Y, self._state = _polyphase_input_commutate(x, self._state, self.polyphase_taps, mode, True, self.streaming)
+        else:
+            raise NotImplementedError(f"Input connection type {self.input!r} is not supported.")
+
+        if self.output == "sum":
+            y = np.sum(Y, axis=0)
+        elif self.output == "bottom-to-top":
+            y = np.flipud(Y).T.flatten()
+        elif self.output == "top-to-bottom":
+            y = Y.T.flatten()
+        elif self.output == "all":
+            y = Y
+        else:
+            raise NotImplementedError(f"Output connection type {self.output!r} is not supported.")
+
+        return y
+
+    def __repr__(self) -> str:
+        if self.method == "custom":
+            h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
+        else:
+            h_str = repr(self.method)
+        return f"sdr.{type(self).__name__}({self.branches}, {h_str}, streaming={self.streaming})"
+
+    def __str__(self) -> str:
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
+        string += f"\n  branches: {self.branches}"
+        string += f"\n  method: {self._method!r}"
+        string += f"\n  polyphase_taps: {self.polyphase_taps.shape} shape"
+        string += f"\n  delay: {self.delay}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
+    ##############################################################################
+    # Streaming mode
+    ##############################################################################
+
+    def reset(self):
+        self._state = np.zeros(self.polyphase_taps.shape[1] - 1)
+
+    ##############################################################################
+    # Properties
+    ##############################################################################
+
+    @property
+    def branches(self) -> int:
+        """
+        The number of polyphase branches $B$.
+        """
+        return self._branches
+
+    @property
+    def taps(self) -> npt.NDArray:
+        """
+        The prototype feedforward taps $h$.
+
+        Notes:
+            The prototype feedforward taps $h$ are the feedforward taps of the FIR filter before
+            polyphase decomposition. The polyphase feedforward taps $H$ are the feedforward taps
+            of the FIR filter after polyphase decomposition.
+
+            The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$, given the
+            number of polyphase branches $B$, by
+
+            $$H_{i, j} = h_{i + j B} .$$
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.PolyphaseFIR(3, np.arange(10))
+                fir.taps
+                fir.polyphase_taps
+        """
+        return self._taps
+
+    @property
+    def polyphase_taps(self) -> npt.NDArray:
+        """
+        The polyphase feedforward taps $H$.
+
+        Notes:
+            The prototype feedforward taps $h$ are the feedforward taps of the FIR filter before
+            polyphase decomposition. The polyphase feedforward taps $H$ are the feedforward taps
+            of the FIR filter after polyphase decomposition.
+
+            The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$, given the
+            number of polyphase branches $B$, by
+
+            $$H_{i, j} = h_{i + j B} .$$
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.PolyphaseFIR(3, np.arange(10))
+                fir.taps
+                fir.polyphase_taps
+        """
+        return self._polyphase_taps
+
+    @property
+    def input(self) -> Literal["hold", "top-to-bottom", "bottom-to-top"]:
+        """
+        The input connection method.
+
+        Notes:
+
+            - `"hold"`: The input signal $x[n]$ is passed to each polyphase partition (used in interpolation).
+            - `"top-to-bottom"`: The input signal $x[n]$ is commutated from top to bottom.
+            - `"bottom-to-top"`: The input signal $x[n]$ is commutated from bottom to top (used in decimation).
+        """
+        return self._input
+
+    @property
+    def output(self) -> Literal["sum", "top-to-bottom", "bottom-to-top", "all"]:
+        """
+        The output connection method.
+
+        Notes:
+
+            - `"sum"`: The output of each polyphase partition is summed to produce the output signal $y[n]$ (used in
+              decimation).
+            - `"top-to-bottom"`: The output of each polyphase partition is commutated from top to bottom (used in
+              interpolation).
+            - `"bottom-to-top"`: The output of each polyphase partition is commutated from bottom to top.
+            - `"all"`: The outputs of each polyphase partition are used in parallel (used in channelization).
+        """
+        return self._output
+
+    @property
+    def delay(self) -> int:
+        """
+        The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
+        first input sample.
+        """
+        return super().delay
+
+
 def _polyphase_interpolate(
     x: npt.NDArray,
     state: npt.NDArray,
