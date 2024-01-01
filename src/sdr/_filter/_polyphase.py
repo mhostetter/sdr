@@ -844,7 +844,7 @@ class Decimator(PolyphaseFIR):
 
                 - `"rate"`: The output signal $y[n]$ has length $L / r$, proportional to the decimation rate $r$.
                   Output sample 0 aligns with input sample 0.
-                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $(L + N) r$,
+                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $(L + N) / r$,
                   where $N$ is the order of the multirate filter. Output sample :obj:`~sdr.Decimator.delay` aligns
                   with input sample 0.
 
@@ -1184,3 +1184,220 @@ class Resampler(PolyphaseFIR):
         """
         assert super().delay % self.down == 0, f"This should always be true. {super().delay} % {self.down} != 0"
         return super().delay // self.down
+
+
+@export
+class Channelizer(PolyphaseFIR):
+    r"""
+    Implements a polyphase channelizer FIR filter.
+
+    Notes:
+        The polyphase channelizer efficiently splits the input signal $x[n]$ with sample rate $f_s$ into $C$
+        equally-spaced channels. Each channel has a bandwidth of $f_s / C$.
+
+        The polyphase channelizer is equivalent to first mixing the input signal $x[n]$ with $C$ complex exponentials
+        with frequencies $f_i = -i \cdot f_s / C$, filtering the mixed signals with the prototype FIR filter
+        with feedforward coefficients $h[n]$, and then decimating the filtered signals by $C$ (by discarding $C-1$
+        samples between each sample).
+
+        Instead, the polyphase channelizer first decomposes the prototype FIR filter into $C$ polyphase filters with
+        feedforward coefficients $h_i[n]$. The polyphase filters are then applied to the commutated input signal $x[n]$
+        in parallel. The outputs of the polyphase filters are then inverse Discrete Fourier transformed (IDFT) to
+        produce the $C$ channelized output signals $y_i[n]$.
+
+        .. code-block:: text
+           :caption: Polyphase Channelizer FIR Filter Block Diagram
+
+                                                                  +------+
+                                     +------------------------+   |      |
+            ..., x[6], x[3], x[0] -->| h[0], h[3], h[6], h[9] |-->|      |--> ..., y[0,1], y[0,0]
+                                     +------------------------+   |      |
+                                     +------------------------+   |      |
+            ..., x[5], x[2], 0    -->| h[1], h[4], h[7], 0    |-->| IDFT |--> ..., y[1,1], y[1,0]
+                                     +------------------------+   |      |
+                                     +------------------------+   |      |
+            ..., x[4], x[1], 0    -->| h[2], h[5], h[8], 0    |-->|      |--> ..., y[2,1], y[2,0]
+                                     +------------------------+   |      |
+                                                                  +------+
+
+            Input Commutator                                                 Parallel Outputs
+            (bottom-to-top)
+
+            x[n] = Input signal with sample rate fs
+            y[i,n] = Channel i output signal with sample rate fs / C
+            h[n] = Prototype FIR filter
+
+        The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$ by
+
+        $$h_i[j] = h[i + j C] .$$
+
+    References:
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 6.1: Channelizer.
+
+    Examples:
+        Create a channelizer with 10 channels.
+
+        .. ipython:: python
+
+            C = 10
+            channelizer = sdr.Channelizer(C); channelizer
+
+        Create an input signal. Each channel has a tone with increasing frequency. The amplitude of each tone also
+        increases by 2 dB for each channel.
+
+        .. ipython:: python
+
+            x = np.random.randn(10_000) + 1j * np.random.randn(10_000)
+            for i in range(C):
+                x += sdr.linear(10 + 2 * i) * np.exp(1j * 2 * np.pi * (i + 0.25 / C * i) / C * np.arange(10_000))
+
+        Plot the input signal and overlay the channel boundaries. Note, Channel 5 is centered at $f = 0.5$. So, it
+        wraps from positive to negative frequencies.
+
+        .. ipython:: python
+
+            plt.figure(figsize=(8, 4)); \
+            sdr.plot.periodogram(x, fft=1024, color="k", label="Input $x[n]$");
+            for i in range(C):
+                f_start = (i - 0.5) / C
+                f_stop = (i + 0.5) / C
+                if f_start > 0.5:
+                    f_start -= 1
+                    f_stop -= 1
+                plt.fill_betweenx([0, 80], f_start, f_stop, alpha=0.2, label=f"Channel {i}")
+            @savefig sdr_Channelizer_1.png
+            plt.xticks(np.arange(-0.5, 0.6, 0.1)); \
+            plt.legend(); \
+            plt.title("Input signals spread across 10 channels");
+
+        Channelize the input signal with sample rate $f_s$ into 10 channels, each with sample rate $f_s / 10$.
+
+        .. ipython:: python
+
+            Y = channelizer(x)
+            x.shape, Y.shape
+
+        .. ipython:: python
+
+            plt.figure(figsize=(8, 4));
+            for i in range(C):
+                sdr.plot.periodogram(Y[i, :], fft=1024, label=f"Channel {i}")
+            @savefig sdr_Channelizer_2.png
+            plt.xticks(np.arange(-0.5, 0.6, 0.1)); \
+            plt.title("Output signals from 10 channels");
+
+    Group:
+        dsp-polyphase-filtering
+    """
+
+    def __init__(
+        self,
+        channels: int,
+        taps: Literal["kaiser"] | npt.ArrayLike = "kaiser",
+        streaming: bool = False,
+    ):
+        r"""
+        Creates a polyphase FIR channelizing filter.
+
+        Arguments:
+            channels: The number of channels $C$.
+            taps: The multirate filter design specification.
+
+                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
+                  with arguments 1 and `rate`.
+                - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
+
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`~Channelizer.__call__()`.
+        """
+        if not isinstance(channels, int):
+            raise TypeError("Argument 'channels' must be an integer.")
+        if not channels >= 1:
+            raise ValueError(f"Argument 'channels' must be at least 1, not {channels}.")
+        self._channels = channels
+        self._method: Literal["kaiser", "custom"]
+
+        if not isinstance(taps, str):
+            self._method = "custom"
+            taps = np.asarray(taps)
+        elif taps == "kaiser":
+            self._method = "kaiser"
+            taps = design_multirate_fir(1, channels)
+        else:
+            raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps!r}.")
+
+        super().__init__(channels, taps, input="bottom-to-top", output="all", streaming=streaming)
+
+    ##############################################################################
+    # Special methods
+    ##############################################################################
+
+    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> np.ndarray:
+        r"""
+        Channelizes the input signal $x[n]$ with the polyphase FIR filter.
+
+        Arguments:
+            x: The input signal $x[n]$ with sample rate $f_s$ and length $L$.
+            mode: The non-streaming convolution mode.
+
+                - `"rate"`: The output signals $y_i[n]$ have length $L / C$, proportional to the number of channels $C$.
+                  Output sample 0 aligns with input sample 0.
+                - `"full"`: The full convolution is performed. The output signals $y_i[n]$ have length $(L + N) / C$,
+                  where $N$ is the order of the multirate filter. Output sample :obj:`~sdr.Channelizer.delay` aligns
+                  with input sample 0.
+
+                In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
+                only $L / C$ output samples are produced per call. A final call to :meth:`~Channelizer.flush()`
+                is required to flush the filter state.
+
+        Returns:
+            A 2-D array of channelized signals $y_i[n]$ with sample rate $f_s / C$. The output length is dictated by
+            the `mode` argument.
+        """
+        Y = super().__call__(x, mode)
+        Y = np.fft.ifft(Y, axis=0)
+        return Y
+
+    def __repr__(self) -> str:
+        if self.method == "custom":
+            h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
+        else:
+            h_str = repr(self.method)
+        return f"sdr.{type(self).__name__}({self.channels}, {h_str}, streaming={self.streaming})"
+
+    def __str__(self) -> str:
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
+        string += f"\n  channels: {self.channels}"
+        string += f"\n  method: {self._method!r}"
+        string += f"\n  polyphase_taps: {self.polyphase_taps.shape} shape"
+        string += f"\n  delay: {self.delay}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
+    ##############################################################################
+    # Properties
+    ##############################################################################
+
+    @property
+    def channels(self) -> float:
+        """
+        The number of channels $C$.
+        """
+        return self._channels
+
+    @property
+    def method(self) -> Literal["kaiser", "custom"]:
+        """
+        The method used to design the multirate filter.
+        """
+        return self._method
+
+    @property
+    def delay(self) -> int:
+        """
+        The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
+        first input sample.
+        """
+        assert super().delay % self.channels == 0, f"This should always be true. {super().delay} % {self.channels} != 0"
+        return super().delay // self.channels
