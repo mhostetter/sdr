@@ -450,53 +450,18 @@ class PolyphaseFIR(FIR):
         return super().delay
 
 
-def _polyphase_interpolate(
-    x: npt.NDArray,
-    state: npt.NDArray,
-    H: npt.NDArray,
-    mode: Literal["rate", "full"],
-    streaming: bool,
-) -> tuple[npt.NDArray, npt.NDArray]:
-    B, M = H.shape  # Number of polyphase branches, polyphase filter length
-    dtype = np.result_type(x, H)
-
-    if streaming:
-        x_pad = np.concatenate((state, x))  # Prepend previous inputs from last __call__() call
-        Y = np.zeros((B, x.size), dtype=dtype)
-        for i in range(B):
-            Y[i] = scipy.signal.convolve(x_pad, H[i], mode="valid")
-        state = x_pad[-(M - 1) :]
-    else:
-        if mode == "full":
-            Y = np.zeros((B, x.size + M - 1), dtype=dtype)
-            for i in range(B):
-                Y[i] = scipy.signal.convolve(x, H[i], mode="full")
-        elif mode == "rate":
-            Y = np.zeros((B, x.size), dtype=dtype)
-            for i in range(B):
-                corr = scipy.signal.convolve(x, H[i], mode="full")
-                Y[i] = corr[M // 2 : M // 2 + x.size]
-        else:
-            raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
-
-    # Commutate the outputs of the polyphase filters
-    y = Y.T.flatten()
-
-    return y, state
-
-
 @export
-class Interpolator(FIR):
+class Interpolator(PolyphaseFIR):
     r"""
     Implements a polyphase interpolating FIR filter.
 
     Notes:
         The polyphase interpolating filter is equivalent to first upsampling the input signal $x[n]$ by $r$
         (by inserting $r-1$ zeros between each sample) and then filtering the upsampled signal with the
-        prototype FIR filter with feedforward coefficients $h_{i}$.
+        prototype FIR filter with feedforward coefficients $h$.
 
         Instead, the polyphase interpolating filter first decomposes the prototype FIR filter into $r$ polyphase
-        filters with feedforward coefficients $h_{i, j}$. The polyphase filters are then applied to the
+        filters with feedforward coefficients $H_i$. The polyphase filters are then applied to the
         input signal $x[n]$ in parallel. The output of the polyphase filters are then commutated to produce
         the output signal $y[n]$. This prevents the need to multiply with zeros in the upsampled input,
         as is needed in the first case.
@@ -521,9 +486,9 @@ class Interpolator(FIR):
             y[n] = Output signal with sample rate fs * r
             h[n] = Prototype FIR filter
 
-        The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
+        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$ by
 
-        $$h_{i, j} = h_{i + j r} .$$
+        $$H_{i, j} = h_{i + j r} .$$
 
     Examples:
         Create an input signal to interpolate.
@@ -626,7 +591,7 @@ class Interpolator(FIR):
                   This is method MATLAB uses. The first output sample is advanced from the first input sample.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$r$ array of ones.
-                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
+                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Interpolator.__call__()`.
@@ -658,10 +623,7 @@ class Interpolator(FIR):
                 f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
             )
 
-        phases = rate
-        self._polyphase_taps = polyphase_decompose(taps, phases)
-
-        super().__init__(taps, streaming=streaming)
+        super().__init__(rate, taps, input="hold", output="top-to-bottom", streaming=streaming)
 
     ##############################################################################
     # Special methods
@@ -675,73 +637,21 @@ class Interpolator(FIR):
             x: The input signal $x[n]$ with sample rate $f_s$ and length $L$.
             mode: The non-streaming convolution mode.
 
-                - `"rate"`: The output signal $y[n]$ has length $L r$ proportional to the interpolation rate $r$.
-                  Output sample 0 aligns with input sample 0.
+                - `"rate"`: The output signal $y[n]$ has length $L \cdot r$, proportional to the interpolation rate
+                  $r$. Output sample 0 aligns with input sample 0.
                 - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $(L + N) r$,
                   where $N$ is the order of the multirate filter. Output sample :obj:`~sdr.Interpolator.delay` aligns
                   with input sample 0.
 
                 In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
-                only $L r$ output samples are produced per call. A final call to :meth:`~Interpolator.flush()`
+                only $L \cdot r$ output samples are produced per call. A final call to :meth:`~Interpolator.flush()`
                 is required to flush the filter state.
 
         Returns:
-            The filtered signal $y[n]$ with sample rate $f_s r$. The output length is dictated by
+            The filtered signal $y[n]$ with sample rate $f_s \cdot r$. The output length is dictated by
             the `mode` argument.
-
-        Examples:
-            Create an input signal to interpolate.
-
-            .. ipython:: python
-
-                x = np.cos(np.pi / 4 * np.arange(20))
-
-            Interpolate the signal using the `"same"` mode.
-
-            .. ipython:: python
-
-                fir = sdr.Interpolator(4); fir
-                y = fir(x)
-
-                @savefig sdr_Interpolator_call_1.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
-                sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="$y[n]$");
-
-            Interpolate the signal using the `"full"` mode.
-
-            .. ipython:: python
-
-                y = fir(x, mode="full")
-
-                @savefig sdr_Interpolator_call_2.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
-                sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="$y[n]$");
-
-            Interpolate the signal iteratively using the streaming mode.
-
-            .. ipython:: python
-
-                fir = sdr.Interpolator(4, streaming=True); fir
-
-                y1 = fir(x[:10]); \
-                y2 = fir(x[10:]); \
-                y3 = fir(np.zeros(fir.polyphase_taps.shape[1])); \
-                y = np.concatenate((y1, y2, y3))
-
-                @savefig sdr_Interpolator_call_3.png
-                plt.figure(figsize=(8, 4)); \
-                sdr.plot.time_domain(x, marker="o", label="$x[n]$"); \
-                sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="$y[n]$");
         """
-        x = np.atleast_1d(x)
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
-
-        y, self._state = _polyphase_interpolate(x, self._state, self.polyphase_taps, mode, self.streaming)
-
-        return y
+        return super().__call__(x, mode)
 
     def __repr__(self) -> str:
         if self.method == "custom":
@@ -759,13 +669,6 @@ class Interpolator(FIR):
         string += f"\n  delay: {self.delay}"
         string += f"\n  streaming: {self.streaming}"
         return string
-
-    ##############################################################################
-    # Streaming mode
-    ##############################################################################
-
-    def reset(self):
-        self._state = np.zeros(self.polyphase_taps.shape[1] - 1)
 
     ##############################################################################
     # Properties
@@ -786,52 +689,6 @@ class Interpolator(FIR):
         return self._method
 
     @property
-    def taps(self) -> npt.NDArray:
-        """
-        The prototype feedforward taps $h_i$.
-
-        Notes:
-            The prototype feedforward taps $h_i$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $h_{i, j}$ are the feedforward taps
-            of the FIR filter after polyphase decomposition.
-
-            The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
-
-            $$h_{i, j} = h_{i + j r} .$$
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Interpolator(3, np.arange(10))
-                fir.taps
-                fir.polyphase_taps
-        """
-        return self._taps
-
-    @property
-    def polyphase_taps(self) -> npt.NDArray:
-        """
-        The polyphase feedforward taps $h_{i, j}$.
-
-        Notes:
-            The prototype feedforward taps $h_i$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $h_{i, j}$ are the feedforward taps
-            of the FIR filter after polyphase decomposition.
-
-            The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
-
-            $$h_{i, j} = h_{i + j r} .$$
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Interpolator(3, np.arange(10))
-                fir.taps
-                fir.polyphase_taps
-        """
-        return self._polyphase_taps
-
-    @property
     def delay(self) -> int:
         """
         The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
@@ -840,63 +697,18 @@ class Interpolator(FIR):
         return super().delay
 
 
-def _polyphase_decimate(
-    x: npt.NDArray,
-    state: npt.NDArray,
-    H: npt.NDArray,
-    mode: Literal["rate", "full"],
-    streaming: bool,
-) -> tuple[npt.NDArray, npt.NDArray]:
-    B, M = H.shape  # Number of polyphase branches, polyphase filter length
-    dtype = np.result_type(x, H)
-
-    if streaming:
-        x_pad = np.concatenate((state, x))  # Prepend previous inputs from last __call__() call
-        X_cols = x_pad.size // B
-        X_pad = x_pad[0 : X_cols * B].reshape(X_cols, B).T  # Commutate across polyphase filters
-        X_pad = np.flipud(X_pad)  # Commutate from bottom to top
-        Y = np.zeros((B, X_cols - M + 1), dtype=dtype)
-        for i in range(B):
-            Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="valid")
-        state = x_pad[-(B * M - 1) :]
-    else:
-        # Prepend zeros to so the first sample is alone in the first commutated column
-        x_pad = np.insert(x, 0, np.zeros(B - 1))
-        # Append zeros to input signal to distribute evenly across the B branches
-        x_pad = np.append(x_pad, np.zeros(B - (x_pad.size % B), dtype=dtype))
-        X_cols = x_pad.size // B
-        X_pad = x_pad.reshape(X_cols, B).T  # Commutate across polyphase filters
-        X_pad = np.flipud(X_pad)  # Commutate from bottom to top
-        if mode == "full":
-            Y = np.zeros((B, X_cols + M - 1), dtype=dtype)
-            for i in range(B):
-                Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="full")
-        elif mode == "rate":
-            Y = np.zeros((B, X_cols), dtype=dtype)
-            for i in range(B):
-                corr = scipy.signal.convolve(X_pad[i], H[i], mode="full")
-                Y[i] = corr[M // 2 : M // 2 + X_cols]
-        else:
-            raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
-
-    # Sum the outputs of the polyphase filters
-    y = np.sum(Y, axis=0)
-
-    return y, state
-
-
 @export
-class Decimator(FIR):
+class Decimator(PolyphaseFIR):
     r"""
     Implements a polyphase decimating FIR filter.
 
     Notes:
         The polyphase decimating filter is equivalent to first filtering the input signal $x[n]$ with the
-        prototype FIR filter with feedforward coefficients $h_{i}$ and then decimating the filtered signal
+        prototype FIR filter with feedforward coefficients $h$ and then decimating the filtered signal
         by $r$ (by discarding $r-1$ samples between each sample).
 
         Instead, the polyphase decimating filter first decomposes the prototype FIR filter into $r$ polyphase
-        filters with feedforward coefficients $h_{i, j}$. The polyphase filters are then applied to the
+        filters with feedforward coefficients $H$. The polyphase filters are then applied to the
         commutated input signal $x[n]$ in parallel. The outputs of the polyphase filters are then summed.
         This prevents the need to compute outputs that will be discarded, as is done in the first case.
 
@@ -921,9 +733,9 @@ class Decimator(FIR):
             h[n] = Prototype FIR filter
             @ = Adder
 
-        The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
+        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$ by
 
-        $$h_{i, j} = h_{i + j r} .$$
+        $$H_{i, j} = h_{i + j r} .$$
 
     Examples:
         Create an input signal to interpolate.
@@ -989,7 +801,7 @@ class Decimator(FIR):
 
                 - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
                   with arguments 1 and `rate`.
-                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
+                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Decimator.__call__()`.
@@ -1008,46 +820,37 @@ class Decimator(FIR):
             self._method = "kaiser"
             taps = design_multirate_fir(1, rate)
         else:
-            raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps}.")
+            raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps!r}.")
 
-        phases = rate
-        self._polyphase_taps = polyphase_decompose(taps, phases)
-
-        super().__init__(taps, streaming=streaming)
+        super().__init__(rate, taps, input="bottom-to-top", output="sum", streaming=streaming)
 
     ##############################################################################
     # Special methods
     ##############################################################################
 
     def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
-        """
+        r"""
         Filters and decimates the input signal $x[n]$ with the polyphase FIR filter.
 
         Arguments:
             x: The input signal $x[n]$ with sample rate $f_s$ and length $L$.
             mode: The non-streaming convolution mode.
 
-                - `"rate"`: The output signal $y[n]$ has length $L / r$ proportional to the decimation rate $r$.
+                - `"rate"`: The output signal $y[n]$ has length $L / r$, proportional to the decimation rate $r$.
                   Output sample 0 aligns with input sample 0.
                 - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $(L + N) r$,
-                  where $N$ is the order of the multirate filter. Output sample :obj:`~sdr.Interpolator.delay` aligns
+                  where $N$ is the order of the multirate filter. Output sample :obj:`~sdr.Decimator.delay` aligns
                   with input sample 0.
 
                 In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
-                only $L / r$ output samples are produced per call. A final call with input zeros is required to flush
-                the filter state.
+                only $L / r$ output samples are produced per call. A final call to :meth:`~Decimator.flush()`
+                is required to flush the filter state.
 
         Returns:
             The filtered signal $y[n]$ with sample rate $f_s / r$. The output length is dictated by
             the `mode` argument.
         """
-        x = np.atleast_1d(x)
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
-
-        y, self._state = _polyphase_decimate(x, self._state, self.polyphase_taps, mode, self.streaming)
-
-        return y
+        return super().__call__(x, mode)
 
     def __repr__(self) -> str:
         if self.method == "custom":
@@ -1092,52 +895,6 @@ class Decimator(FIR):
         return self._method
 
     @property
-    def taps(self) -> npt.NDArray:
-        """
-        The prototype feedforward taps $h_i$.
-
-        Notes:
-            The prototype feedforward taps $h_i$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $h_{i, j}$ are the feedforward taps
-            of the FIR filter after polyphase decomposition.
-
-            The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
-
-            $$h_{i, j} = h_{i + j r} .$$
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Decimator(3, np.arange(10))
-                fir.taps
-                fir.polyphase_taps
-        """
-        return self._taps
-
-    @property
-    def polyphase_taps(self) -> npt.NDArray:
-        """
-        The polyphase feedforward taps $h_{i, j}$.
-
-        Notes:
-            The prototype feedforward taps $h_i$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $h_{i, j}$ are the feedforward taps
-            of the FIR filter after polyphase decomposition.
-
-            The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
-
-            $$h_{i, j} = h_{i + j r} .$$
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Decimator(3, np.arange(10))
-                fir.taps
-                fir.polyphase_taps
-        """
-        return self._polyphase_taps
-
-    @property
     def delay(self) -> int:
         """
         The delay of FIR filter in samples. The delay indicates the output sample index that corresponds to the
@@ -1148,18 +905,18 @@ class Decimator(FIR):
 
 
 @export
-class Resampler(FIR):
+class Resampler(PolyphaseFIR):
     r"""
     Implements a polyphase rational resampling FIR filter.
 
     Notes:
         The polyphase rational resampling filter is equivalent to first upsampling the input signal $x[n]$ by $P$
         (by inserting $P-1$ zeros between each sample), filtering the upsampled signal with the prototype FIR filter
-        with feedforward coefficients $h_{i}$, and then decimating the filtered signal by $Q$ (by discarding $Q-1$
+        with feedforward coefficients $h$, and then decimating the filtered signal by $Q$ (by discarding $Q-1$
         samples between each sample).
 
         Instead, the polyphase rational resampling filter first decomposes the prototype FIR filter into $P$ polyphase
-        filters with feedforward coefficients $h_{i, j}$. The polyphase filters are then applied to the
+        filters with feedforward coefficients $H$. The polyphase filters are then applied to the
         input signal $x[n]$ in parallel. The output of the polyphase filters are then commutated by $Q$ to produce
         the output signal $y[n]$. This prevents the need to multiply with zeros in the upsampled input,
         as is needed in the first case.
@@ -1184,9 +941,9 @@ class Resampler(FIR):
             y[n] = Output signal with sample rate fs * P / Q
             h[n] = Prototype FIR filter
 
-        The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
+        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$ by
 
-        $$h_{i, j} = h_{i + j P} .$$
+        $$H_{i, j} = h_{i + j P} .$$
 
         If the interpolation rate $P$ is 1, then the polyphase rational resampling filter is equivalent to the
         polyphase decimating filter. See :class:`~sdr.Decimator`.
@@ -1279,7 +1036,7 @@ class Resampler(FIR):
                   This is method MATLAB uses. The first output sample is advanced from the first input sample.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$P$ array of ones.
-                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h_i$.
+                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Resampler.__call__()`.
@@ -1322,13 +1079,11 @@ class Resampler(FIR):
             taps = design_multirate_fir_zoh(up)
         else:
             raise ValueError(
-                f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
+                f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps!r}."
             )
 
-        phases = up if up > 1 else down
-        self._polyphase_taps = polyphase_decompose(taps, phases)
-
-        super().__init__(taps, streaming=streaming)
+        branches = up if up > 1 else down
+        super().__init__(branches, taps, input="hold", output="top-to-bottom", streaming=streaming)
 
     ##############################################################################
     # Special methods
@@ -1337,15 +1092,28 @@ class Resampler(FIR):
     def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> np.ndarray:
         r"""
         Resamples and filters the input signal $x[n]$ with the polyphase FIR filter.
-        """
-        x = np.atleast_1d(x)
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
 
-        if self.up == 1:
-            y, self._state = _polyphase_decimate(x, self._state, self.polyphase_taps, mode, self.streaming)
-        else:
-            y, self._state = _polyphase_interpolate(x, self._state, self.polyphase_taps, mode, self.streaming)
+        Arguments:
+            x: The input signal $x[n]$ with sample rate $f_s$ and length $L$.
+            mode: The non-streaming convolution mode.
+
+                - `"rate"`: The output signal $y[n]$ has length $L \cdot P/Q$, proportional to the resampling rate
+                  $P / Q$. Output sample 0 aligns with input sample 0.
+                - `"full"`: The full convolution is performed. The output signal $y[n]$ has length $(L + N) P/Q$,
+                  where $N$ is the order of the multirate filter. Output sample :obj:`~sdr.Resampler.delay` aligns
+                  with input sample 0.
+
+                In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
+                only $L \cdot P/Q$ output samples are produced per call. A final call to :meth:`~Resampler.flush()`
+                is required to flush the filter state.
+
+        Returns:
+            The filtered signal $y[n]$ with sample rate $f_s \cdot P/Q$. The output length is dictated by
+            the `mode` argument.
+        """
+        y = super().__call__(x, mode)
+
+        if self.up > 1:
             y = y[:: self.down]  # Downsample the interpolated output
 
         return y
@@ -1366,13 +1134,6 @@ class Resampler(FIR):
         string += f"\n  delay: {self.delay}"
         string += f"\n  streaming: {self.streaming}"
         return string
-
-    ##############################################################################
-    # Streaming mode
-    ##############################################################################
-
-    def reset(self):
-        self._state = np.zeros(self.polyphase_taps.shape[1] - 1)
 
     ##############################################################################
     # Properties
@@ -1405,52 +1166,6 @@ class Resampler(FIR):
         The method used to design the multirate filter.
         """
         return self._method
-
-    @property
-    def taps(self) -> npt.NDArray:
-        """
-        The prototype feedforward taps $h_i$.
-
-        Notes:
-            The prototype feedforward taps $h_i$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $h_{i, j}$ are the feedforward taps
-            of the FIR filter after polyphase decomposition.
-
-            The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
-
-            $$h_{i, j} = h_{i + j P} .$$
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Resampler(4, 3, np.arange(10))
-                fir.taps
-                fir.polyphase_taps
-        """
-        return self._taps
-
-    @property
-    def polyphase_taps(self) -> npt.NDArray:
-        """
-        The polyphase feedforward taps $h_{i, j}$.
-
-        Notes:
-            The prototype feedforward taps $h_i$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $h_{i, j}$ are the feedforward taps
-            of the FIR filter after polyphase decomposition.
-
-            The polyphase feedforward taps $h_{i, j}$ are related to the prototype feedforward taps $h_i$ by
-
-            $$h_{i, j} = h_{i + j P} .$$
-
-        Examples:
-            .. ipython:: python
-
-                fir = sdr.Resampler(4, 3, np.arange(10))
-                fir.taps
-                fir.polyphase_taps
-        """
-        return self._polyphase_taps
 
     @property
     def delay(self) -> int:
