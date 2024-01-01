@@ -134,13 +134,13 @@ def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float_]:
 
 
 @export
-def polyphase_decompose(taps: npt.ArrayLike, phases: int) -> npt.NDArray:
+def polyphase_decompose(branches: int, taps: npt.ArrayLike) -> npt.NDArray:
     r"""
     Decomposes the prototype filter taps $h[n]$ into the polyphase matrix $h_i[n]$ with $B$ phases.
 
     Arguments:
+        branches: The number of polyphase branches $B$.
         taps: The prototype filter feedforward coefficients $h[n]$.
-        phases: The number of phases $B$.
 
     Returns:
         The polyphase matrix $h_i[n]$.
@@ -170,19 +170,21 @@ def polyphase_decompose(taps: npt.ArrayLike, phases: int) -> npt.NDArray:
         .. ipython:: python
 
             h = np.arange(0, 20)
-            sdr.polyphase_decompose(h, 3)
-            sdr.polyphase_decompose(h, 6)
+            sdr.polyphase_decompose(3, h)
+            sdr.polyphase_decompose(6, h)
 
     Group:
         dsp-polyphase-filtering
     """
-    taps = np.asarray(taps)
+    if not isinstance(branches, int):
+        raise TypeError(f"Argument 'branches' must be an integer, not {branches}.")
+    if not branches >= 1:
+        raise ValueError(f"Argument 'branches' must be at least 1, not {branches}.")
+    B = branches
 
-    if not isinstance(phases, int):
-        raise TypeError(f"Argument 'phases' must be an integer, not {phases}.")
-    if not phases >= 1:
-        raise ValueError(f"Argument 'phases' must be at least 1, not {phases}.")
-    B = phases
+    taps = np.asarray(taps)
+    if not taps.ndim == 1:
+        raise ValueError(f"Argument 'taps' must be a 1-D array, not {taps.ndim}-D.")
 
     N = math.ceil(taps.size / B) * B  # Filter length
 
