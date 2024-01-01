@@ -413,6 +413,38 @@ class PolyphaseFIR(FIR):
         return self._polyphase_taps
 
     @property
+    def order(self) -> int:
+        """
+        The order $N = (M + 1)B - 1$ of the FIR prototype filter $h[n]$.
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.PolyphaseFIR(3, np.arange(10))
+                fir.taps
+                fir.polyphase_taps
+                fir.order
+                fir.polyphase_order
+        """
+        return self.taps.size - 1
+
+    @property
+    def polyphase_order(self) -> int:
+        """
+        The order $M = (N + 1)/B - 1$ of each FIR polyphase filter $h_i[n]$.
+
+        Examples:
+            .. ipython:: python
+
+                fir = sdr.PolyphaseFIR(3, np.arange(10))
+                fir.taps
+                fir.polyphase_taps
+                fir.order
+                fir.polyphase_order
+        """
+        return self.polyphase_taps.shape[1] - 1
+
+    @property
     def input(self) -> Literal["hold", "top-to-bottom", "bottom-to-top"]:
         """
         The input connection method.
