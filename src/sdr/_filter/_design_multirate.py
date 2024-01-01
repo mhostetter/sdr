@@ -32,7 +32,7 @@ def design_multirate_fir(
         The multirate filter impulse response $h[n]$.
 
     References:
-        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters.
         - https://www.mathworks.com/help/dsp/ref/designmultiratefir.html
 
     Examples:
@@ -161,7 +161,7 @@ def polyphase_decompose(branches: int, taps: npt.ArrayLike) -> npt.NDArray:
             +------+------+------+------+
 
     References:
-        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters.
 
     Examples:
         Decompose the multirate FIR filter (notional taps for demonstration) into polyphase matrices

@@ -490,6 +490,9 @@ class Interpolator(PolyphaseFIR):
 
         $$h_i[j] = h[i + j r] .$$
 
+    References:
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters.
+
     Examples:
         Create an input signal to interpolate.
 
@@ -737,6 +740,9 @@ class Decimator(PolyphaseFIR):
 
         $$h_i[j] = h[i + j r] .$$
 
+    References:
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters.
+
     Examples:
         Create an input signal to interpolate.
 
@@ -947,6 +953,9 @@ class Resampler(PolyphaseFIR):
 
         If the interpolation rate $P$ is 1, then the polyphase rational resampling filter is equivalent to the
         polyphase decimating filter. See :class:`~sdr.Decimator`.
+
+    References:
+        - fred harris, *Multirate Signal Processing for Communication Systems*, Chapter 7: Resampling Filters.
 
     Examples:
         Create an input signal to resample.
