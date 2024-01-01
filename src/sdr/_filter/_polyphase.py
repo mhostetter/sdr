@@ -582,17 +582,17 @@ class Interpolator(PolyphaseFIR):
 
         Arguments:
             rate: The interpolation rate $r$.
-            taps: The multirate filter design specification.
+            taps: The prototype filter design specification.
 
-                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
                   with arguments `rate` and 1.
-                - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
+                - `"linear"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
                   The first output sample aligns with the first input sample.
-                - `"linear-matlab"`: The multirate filter is designed to linearly interpolate between samples.
+                - `"linear-matlab"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [1, ..., r-1, r, r-1, ..., 0]$.
                   This is method MATLAB uses. The first output sample is advanced from the first input sample.
-                - `"zoh"`: The multirate filter is designed to be a zero-order hold.
+                - `"zoh"`: The prototype filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$r$ array of ones.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
@@ -803,9 +803,9 @@ class Decimator(PolyphaseFIR):
 
         Arguments:
             rate: The decimation rate $r$.
-            taps: The multirate filter design specification.
+            taps: The prototype filter design specification.
 
-                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
                   with arguments 1 and `rate`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
@@ -1033,17 +1033,17 @@ class Resampler(PolyphaseFIR):
         Arguments:
             up: The interpolation rate $P$.
             down: The decimation rate $Q$.
-            taps: The multirate filter design specification.
+            taps: The prototype filter design specification.
 
-                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
                   with arguments `up` and `down`.
-                - `"linear"`: The multirate filter is designed to linearly interpolate between samples.
+                - `"linear"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2P$ linear ramp $\frac{1}{P} [0, ..., P-1, P, P-1, ..., 1]$.
                   The first output sample aligns with the first input sample.
-                - `"linear-matlab"`: The multirate filter is designed to linearly interpolate between samples.
+                - `"linear-matlab"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2P$ linear ramp $\frac{1}{P} [1, ..., P-1, P, P-1, ..., 0]$.
                   This is method MATLAB uses. The first output sample is advanced from the first input sample.
-                - `"zoh"`: The multirate filter is designed to be a zero-order hold.
+                - `"zoh"`: The prototype filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$P$ array of ones.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
@@ -1301,9 +1301,9 @@ class Channelizer(PolyphaseFIR):
 
         Arguments:
             channels: The number of channels $C$.
-            taps: The multirate filter design specification.
+            taps: The prototype filter design specification.
 
-                - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
                   with arguments 1 and `rate`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
