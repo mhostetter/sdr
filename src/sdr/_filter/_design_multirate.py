@@ -135,19 +135,19 @@ def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float_]:
 
 @export
 def polyphase_decompose(taps: npt.ArrayLike, phases: int) -> npt.NDArray:
-    """
-    Decomposes the FIR filter taps $h_i$ into the polyphase matrix $H_{i, j}$ with $B$ phases.
+    r"""
+    Decomposes the prototype filter taps $h[n]$ into the polyphase matrix $h_i[n]$ with $B$ phases.
 
     Arguments:
-        taps: The multirate FIR filter taps $h_i$.
+        taps: The prototype filter feedforward coefficients $h[n]$.
         phases: The number of phases $B$.
 
     Returns:
-        The polyphase matrix $H_{i, j}$.
+        The polyphase matrix $h_i[n]$.
 
     Notes:
-        The multirate FIR filter taps $h_i$ are arranged down the columns of the polyphase matrix
-        $H_{i, j}$ as follows:
+        The multirate FIR filter taps $h[n]$ are arranged down the columns of the polyphase matrix
+        $h_i[n]$ as follows:
 
         .. code-block:: text
             :caption: Polyphase Matrix with 3 Phases

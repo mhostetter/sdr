@@ -107,10 +107,10 @@ class PolyphaseFIR(FIR):
     Implements a generic polyphase FIR filter.
 
     Notes:
-        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$, given the
+        The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$, given the
         number of polyphase branches $B$, by
 
-        $$H_{i, j} = h_{i + j B} .$$
+        $$h_i[j] = h[i + j B] .$$
 
         The input signal $x[n]$ can be passed to each polyphase partition (used in interpolation) or commutated from
         bottom to top (used in decimation).
@@ -245,7 +245,7 @@ class PolyphaseFIR(FIR):
 
         Arguments:
             branches: The number of polyphase branches $B$.
-            taps: The prototype filter feedforward coefficients $h$.
+            taps: The prototype filter feedforward coefficients $h[n]$.
             input: The input connection method.
 
                 - `"hold"`: The input signal $x[n]$ is passed to each polyphase partition (used in interpolation).
@@ -367,17 +367,17 @@ class PolyphaseFIR(FIR):
     @property
     def taps(self) -> npt.NDArray:
         """
-        The prototype feedforward taps $h$.
+        The prototype feedforward taps $h[n]$.
 
         Notes:
-            The prototype feedforward taps $h$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $H$ are the feedforward taps
+            The prototype feedforward taps $h[n]$ are the feedforward taps of the FIR filter before
+            polyphase decomposition. The polyphase feedforward taps $h_i[n]$ are the feedforward taps
             of the FIR filter after polyphase decomposition.
 
-            The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$, given the
+            The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$, given the
             number of polyphase branches $B$, by
 
-            $$H_{i, j} = h_{i + j B} .$$
+            $$h_i[j] = h[i + j B] .$$
 
         Examples:
             .. ipython:: python
@@ -391,17 +391,17 @@ class PolyphaseFIR(FIR):
     @property
     def polyphase_taps(self) -> npt.NDArray:
         """
-        The polyphase feedforward taps $H$.
+        The polyphase feedforward taps $h_i[n]$.
 
         Notes:
-            The prototype feedforward taps $h$ are the feedforward taps of the FIR filter before
-            polyphase decomposition. The polyphase feedforward taps $H$ are the feedforward taps
+            The prototype feedforward taps $h[n]$ are the feedforward taps of the FIR filter before
+            polyphase decomposition. The polyphase feedforward taps $h_i[n]$ are the feedforward taps
             of the FIR filter after polyphase decomposition.
 
-            The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$, given the
+            The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$, given the
             number of polyphase branches $B$, by
 
-            $$H_{i, j} = h_{i + j B} .$$
+            $$h_i[j] = h[i + j B] .$$
 
         Examples:
             .. ipython:: python
@@ -458,7 +458,7 @@ class Interpolator(PolyphaseFIR):
     Notes:
         The polyphase interpolating filter is equivalent to first upsampling the input signal $x[n]$ by $r$
         (by inserting $r-1$ zeros between each sample) and then filtering the upsampled signal with the
-        prototype FIR filter with feedforward coefficients $h$.
+        prototype FIR filter with feedforward coefficients $h[n]$.
 
         Instead, the polyphase interpolating filter first decomposes the prototype FIR filter into $r$ polyphase
         filters with feedforward coefficients $H_i$. The polyphase filters are then applied to the
@@ -486,9 +486,9 @@ class Interpolator(PolyphaseFIR):
             y[n] = Output signal with sample rate fs * r
             h[n] = Prototype FIR filter
 
-        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$ by
+        The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$ by
 
-        $$H_{i, j} = h_{i + j r} .$$
+        $$h_i[j] = h[i + j r] .$$
 
     Examples:
         Create an input signal to interpolate.
@@ -591,7 +591,7 @@ class Interpolator(PolyphaseFIR):
                   This is method MATLAB uses. The first output sample is advanced from the first input sample.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$r$ array of ones.
-                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h$.
+                - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Interpolator.__call__()`.
@@ -704,11 +704,11 @@ class Decimator(PolyphaseFIR):
 
     Notes:
         The polyphase decimating filter is equivalent to first filtering the input signal $x[n]$ with the
-        prototype FIR filter with feedforward coefficients $h$ and then decimating the filtered signal
+        prototype FIR filter with feedforward coefficients $h[n]$ and then decimating the filtered signal
         by $r$ (by discarding $r-1$ samples between each sample).
 
         Instead, the polyphase decimating filter first decomposes the prototype FIR filter into $r$ polyphase
-        filters with feedforward coefficients $H$. The polyphase filters are then applied to the
+        filters with feedforward coefficients $h_i[n]$. The polyphase filters are then applied to the
         commutated input signal $x[n]$ in parallel. The outputs of the polyphase filters are then summed.
         This prevents the need to compute outputs that will be discarded, as is done in the first case.
 
@@ -733,9 +733,9 @@ class Decimator(PolyphaseFIR):
             h[n] = Prototype FIR filter
             @ = Adder
 
-        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$ by
+        The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$ by
 
-        $$H_{i, j} = h_{i + j r} .$$
+        $$h_i[j] = h[i + j r] .$$
 
     Examples:
         Create an input signal to interpolate.
@@ -801,7 +801,7 @@ class Decimator(PolyphaseFIR):
 
                 - `"kaiser"`: The multirate filter is designed using :func:`~sdr.design_multirate_fir()`
                   with arguments 1 and `rate`.
-                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h$.
+                - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Decimator.__call__()`.
@@ -912,11 +912,11 @@ class Resampler(PolyphaseFIR):
     Notes:
         The polyphase rational resampling filter is equivalent to first upsampling the input signal $x[n]$ by $P$
         (by inserting $P-1$ zeros between each sample), filtering the upsampled signal with the prototype FIR filter
-        with feedforward coefficients $h$, and then decimating the filtered signal by $Q$ (by discarding $Q-1$
+        with feedforward coefficients $h[n]$, and then decimating the filtered signal by $Q$ (by discarding $Q-1$
         samples between each sample).
 
         Instead, the polyphase rational resampling filter first decomposes the prototype FIR filter into $P$ polyphase
-        filters with feedforward coefficients $H$. The polyphase filters are then applied to the
+        filters with feedforward coefficients $h_i[n]$. The polyphase filters are then applied to the
         input signal $x[n]$ in parallel. The output of the polyphase filters are then commutated by $Q$ to produce
         the output signal $y[n]$. This prevents the need to multiply with zeros in the upsampled input,
         as is needed in the first case.
@@ -941,9 +941,9 @@ class Resampler(PolyphaseFIR):
             y[n] = Output signal with sample rate fs * P / Q
             h[n] = Prototype FIR filter
 
-        The polyphase feedforward taps $H$ are related to the prototype feedforward taps $h$ by
+        The polyphase feedforward taps $h_i[n]$ are related to the prototype feedforward taps $h[n]$ by
 
-        $$H_{i, j} = h_{i + j P} .$$
+        $$h_i[j] = h[i + j P] .$$
 
         If the interpolation rate $P$ is 1, then the polyphase rational resampling filter is equivalent to the
         polyphase decimating filter. See :class:`~sdr.Decimator`.
@@ -1036,7 +1036,7 @@ class Resampler(PolyphaseFIR):
                   This is method MATLAB uses. The first output sample is advanced from the first input sample.
                 - `"zoh"`: The multirate filter is designed to be a zero-order hold.
                   The filter coefficients are a length-$P$ array of ones.
-                - `npt.ArrayLike`: The multirate filter feedforward coefficients $h$.
+                - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Resampler.__call__()`.
