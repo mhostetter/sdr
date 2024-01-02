@@ -607,6 +607,8 @@ class Interpolator(PolyphaseFIR):
         self,
         rate: int,
         taps: Literal["kaiser", "linear", "linear-matlab", "zoh"] | npt.ArrayLike = "kaiser",
+        polyphase_order: int = 23,
+        atten: float = 80,
         streaming: bool = False,
     ):
         r"""
@@ -628,6 +630,9 @@ class Interpolator(PolyphaseFIR):
                   The filter coefficients are a length-$r$ array of ones.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
+            polyphase_order: The order of each polyphase filter. Must be odd, such that the filter lengths are even.
+                Only used when `taps="kaiser"`.
+            atten: The stopband attenuation $A_{\text{stop}}$ in dB. Only used when `taps="kaiser"`.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Interpolator.__call__()`.
         """
@@ -643,7 +648,7 @@ class Interpolator(PolyphaseFIR):
             taps = np.asarray(taps)
         elif taps == "kaiser":
             self._method = "kaiser"
-            taps = design_multirate_fir(rate, 1)
+            taps = design_multirate_fir(rate, 1, polyphase_order, atten)
         elif taps == "linear":
             self._method = "linear"
             taps = design_multirate_fir_linear(rate)
@@ -828,6 +833,8 @@ class Decimator(PolyphaseFIR):
         self,
         rate: int,
         taps: Literal["kaiser"] | npt.ArrayLike = "kaiser",
+        polyphase_order: int = 23,
+        atten: float = 80,
         streaming: bool = False,
     ):
         r"""
@@ -841,6 +848,9 @@ class Decimator(PolyphaseFIR):
                   with arguments 1 and `rate`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
+            polyphase_order: The order of each polyphase filter. Must be odd, such that the filter lengths are even.
+                Only used when `taps="kaiser"`.
+            atten: The stopband attenuation $A_{\text{stop}}$ in dB. Only used when `taps="kaiser"`.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Decimator.__call__()`.
         """
@@ -856,7 +866,7 @@ class Decimator(PolyphaseFIR):
             taps = np.asarray(taps)
         elif taps == "kaiser":
             self._method = "kaiser"
-            taps = design_multirate_fir(1, rate)
+            taps = design_multirate_fir(1, rate, polyphase_order, atten)
         else:
             raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps!r}.")
 
@@ -1057,6 +1067,8 @@ class Resampler(PolyphaseFIR):
         up: int,
         down: int,
         taps: Literal["kaiser", "linear", "linear-matlab", "zoh"] | npt.ArrayLike = "kaiser",
+        polyphase_order: int = 23,
+        atten: float = 80,
         streaming: bool = False,
     ):
         r"""
@@ -1079,6 +1091,9 @@ class Resampler(PolyphaseFIR):
                   The filter coefficients are a length-$P$ array of ones.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
+            polyphase_order: The order of each polyphase filter. Must be odd, such that the filter lengths are even.
+                Only used when `taps="kaiser"`.
+            atten: The stopband attenuation $A_{\text{stop}}$ in dB. Only used when `taps="kaiser"`.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Resampler.__call__()`.
         """
@@ -1102,7 +1117,7 @@ class Resampler(PolyphaseFIR):
             taps = np.asarray(taps)
         elif taps == "kaiser":
             self._method = "kaiser"
-            taps = design_multirate_fir(up, down)
+            taps = design_multirate_fir(up, down, polyphase_order, atten)
         elif taps == "linear":
             if not up > 1:
                 raise ValueError(f"Argument 'up' must be greater than 1 to use the 'linear' method, not {up}.")
@@ -1326,6 +1341,8 @@ class Channelizer(PolyphaseFIR):
         self,
         channels: int,
         taps: Literal["kaiser"] | npt.ArrayLike = "kaiser",
+        polyphase_order: int = 23,
+        atten: float = 80,
         streaming: bool = False,
     ):
         r"""
@@ -1339,6 +1356,9 @@ class Channelizer(PolyphaseFIR):
                   with arguments 1 and `rate`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
+            polyphase_order: The order of each polyphase filter. Must be odd, such that the filter lengths are even.
+                Only used when `taps="kaiser"`.
+            atten: The stopband attenuation $A_{\text{stop}}$ in dB. Only used when `taps="kaiser"`.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Channelizer.__call__()`.
         """
@@ -1354,7 +1374,7 @@ class Channelizer(PolyphaseFIR):
             taps = np.asarray(taps)
         elif taps == "kaiser":
             self._method = "kaiser"
-            taps = design_multirate_fir(1, channels)
+            taps = design_multirate_fir(1, channels, polyphase_order, atten)
         else:
             raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps!r}.")
 
