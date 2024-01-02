@@ -17,7 +17,7 @@ def design_multirate_fir(
     up: int,
     down: int = 1,
     polyphase_order: int = 23,
-    A_stop: float = 80,
+    atten: float = 80,
 ) -> npt.NDArray[np.float_]:
     r"""
     Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method.
@@ -26,7 +26,7 @@ def design_multirate_fir(
         up: The interpolation rate $P$.
         down: The decimation rate $Q$.
         polyphase_order: The order of each polyphase filter. Must be odd, such that the filter length is even.
-        A_stop: The stopband attenuation $A_{\text{stop}}$ in dB.
+        atten: The stopband attenuation $A_{\text{stop}}$ in dB.
 
     Returns:
         The multirate filter impulse response $h[n]$.
@@ -84,11 +84,11 @@ def design_multirate_fir(
     h = P / R * np.sinc((n - N // 2) / R)
 
     # Compute Kaiser window
-    # beta = scipy.signal.windows.kaiser_beta(A_stop)
-    if A_stop >= 50:
-        beta = 0.1102 * (A_stop - 8.71)  # TODO: MATLAB uses 8.71 and SciPy uses 8.7
-    elif A_stop > 21:
-        beta = 0.5842 * (A_stop - 21) ** 0.4 + 0.07886 * (A_stop - 21)
+    # beta = scipy.signal.windows.kaiser_beta(atten)
+    if atten >= 50:
+        beta = 0.1102 * (atten - 8.71)  # TODO: MATLAB uses 8.71 and SciPy uses 8.7
+    elif atten > 21:
+        beta = 0.5842 * (atten - 21) ** 0.4 + 0.07886 * (atten - 21)
     else:
         beta = 0
     w = scipy.signal.windows.kaiser(N + 1, beta)

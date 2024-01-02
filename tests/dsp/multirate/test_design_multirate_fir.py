@@ -551,7 +551,7 @@ def test_3_2_15_120():
     MATLAB:
         >> transpose(designMultirateFIR(3, 2, 15, 120))
     """
-    h = sdr.design_multirate_fir(3, 2, polyphase_order=29, A_stop=120)
+    h = sdr.design_multirate_fir(3, 2, polyphase_order=29, atten=120)
     h_truth = np.array(
         [
             0,
@@ -654,7 +654,7 @@ def test_2_3_15_120():
     MATLAB:
         >> transpose(designMultirateFIR(2, 3, 15, 120))
     """
-    h = sdr.design_multirate_fir(2, 3, polyphase_order=29, A_stop=120)
+    h = sdr.design_multirate_fir(2, 3, polyphase_order=29, atten=120)
     h_truth = np.array(
         [
             0,
