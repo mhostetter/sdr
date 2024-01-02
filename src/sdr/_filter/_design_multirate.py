@@ -25,7 +25,7 @@ def design_multirate_fir(
     Arguments:
         up: The interpolation rate $P$.
         down: The decimation rate $Q$.
-        polyphase_order: The order of each polyphase filter. Must be odd, such that the filter length is even.
+        polyphase_order: The order of each polyphase filter. Must be odd, such that the filter lengths are even.
         atten: The stopband attenuation $A_{\text{stop}}$ in dB.
 
     Returns:
