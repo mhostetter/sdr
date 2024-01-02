@@ -16,7 +16,7 @@ from .._helper import export
 def design_multirate_fir(
     up: int,
     down: int = 1,
-    half_length: int = 12,
+    polyphase_order: int = 23,
     A_stop: float = 80,
 ) -> npt.NDArray[np.float_]:
     r"""
@@ -25,7 +25,7 @@ def design_multirate_fir(
     Arguments:
         up: The interpolation rate $P$.
         down: The decimation rate $Q$.
-        half_length: The half-length of the polyphase filters.
+        polyphase_order: The order of each polyphase filter. Must be odd, such that the filter length is even.
         A_stop: The stopband attenuation $A_{\text{stop}}$ in dB.
 
     Returns:
@@ -64,6 +64,14 @@ def design_multirate_fir(
     if not down >= 1:
         raise ValueError(f"Argument 'down' must be at least 1, not {down}.")
     Q = down
+
+    if not isinstance(polyphase_order, int):
+        raise TypeError(f"Argument 'polyphase_order' must be an integer, not {polyphase_order}.")
+    if not polyphase_order >= 1:
+        raise ValueError(f"Argument 'polyphase_order' must be at least 1, not {polyphase_order}.")
+    if not (polyphase_order + 1) % 2 == 0:
+        raise ValueError(f"Argument 'polyphase_order' must be odd, not {polyphase_order}.")
+    half_length = (polyphase_order + 1) // 2
 
     B = P if P > 1 else Q  # The number of polyphase branches
     R = max(P, Q)  # Inverse of the filter's fractional bandwidth
