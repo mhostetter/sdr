@@ -1983,6 +1983,36 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.PolyphaseFIR.order/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PolyphaseFIR.order (Python property) — The order $N = (M + 1)B - 1$ of the FIR prototype filter $h[n]$." class="md-ellipsis">order</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.PolyphaseFIR.polyphase_order/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PolyphaseFIR.polyphase_order (Python property) — The order $M = (N + 1)/B - 1$ of each FIR polyphase filter $h_i[n]$." class="md-ellipsis">polyphase_<wbr>order</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.PolyphaseFIR.input/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PolyphaseFIR.input (Python property) — The input connection method." class="md-ellipsis">input</span>
       </a>
@@ -2383,6 +2413,20 @@ You're not viewing the latest version.
           <li class="md-nav__item">
   <a href="#p-taps" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Decimator.__init__.taps (Python parameter) — The prototype filter design specification." class="md-ellipsis">taps</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-polyphase_order" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Decimator.__init__.polyphase_order (Python parameter) — The order of each polyphase filter. Must be odd, such that the filter lengths are even. Only used when taps=&#34;kaiser&#34;." class="md-ellipsis">polyphase_<wbr>order</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-atten" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Decimator.__init__.atten (Python parameter) — The stopband attenuation $A_{text{stop}}$ in dB. Only used when taps=&#34;kaiser&#34;." class="md-ellipsis">atten</span>
   </a>
   
 </li>
@@ -10219,6 +10263,20 @@ You're not viewing the latest version.
 </li>
         
           <li class="md-nav__item">
+  <a href="#p-polyphase_order" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Decimator.__init__.polyphase_order (Python parameter) — The order of each polyphase filter. Must be odd, such that the filter lengths are even. Only used when taps=&#34;kaiser&#34;." class="md-ellipsis">polyphase_<wbr>order</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p-atten" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Decimator.__init__.atten (Python parameter) — The stopband attenuation $A_{text{stop}}$ in dB. Only used when taps=&#34;kaiser&#34;." class="md-ellipsis">atten</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#p-streaming" class="md-nav__link">
     <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.Decimator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()." class="md-ellipsis">streaming</span>
   </a>
@@ -10246,7 +10304,7 @@ You're not viewing the latest version.
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Decimator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-rate" title="sdr.Decimator.__init__.rate (Python parameter) — The decimation rate $r$."><span class="n"><span class="pre">rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-taps" title="sdr.Decimator.__init__.taps (Python parameter) — The prototype filter design specification."><span class="n"><span class="pre">taps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'kaiser'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;kaiser&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-streaming" title="sdr.Decimator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Decimator</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-rate" title="sdr.Decimator.__init__.rate (Python parameter) — The decimation rate $r$."><span class="n"><span class="pre">rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-taps" title="sdr.Decimator.__init__.taps (Python parameter) — The prototype filter design specification."><span class="n"><span class="pre">taps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="s"><span class="pre">'kaiser'</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;kaiser&#39;</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-polyphase_order" title="sdr.Decimator.__init__.polyphase_order (Python parameter) — The order of each polyphase filter. Must be odd, such that the filter lengths are even. Only used when taps=&quot;kaiser&quot;."><span class="n"><span class="pre">polyphase_order</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">23</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-atten" title="sdr.Decimator.__init__.atten (Python parameter) — The stopband attenuation $A_{text{stop}}$ in dB. Only used when taps=&quot;kaiser&quot;."><span class="n"><span class="pre">atten</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">80</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-streaming" title="sdr.Decimator.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates a polyphase FIR decimating filter.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
@@ -10260,6 +10318,11 @@ with arguments 1 and <code class="code highlight python docutils literal highlig
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="n">npt</span><span class="o">.</span><span class="n">ArrayLike</span></code>: The prototype filter feedforward coefficients <span class="math notranslate nohighlight">\(h[n]\)</span>.</p></li>
 </ul>
 </p>
+</dd>
+<dt id="p-polyphase_order"><span class="n sig-name">polyphase_order</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">23</span></code><a class="headerlink" href="#p-polyphase_order" title="Permalink to this definition">¶</a></dt><dd><p>The order of each polyphase filter. Must be odd, such that the filter lengths are even.
+Only used when <code class="code highlight python docutils literal highlight-python"><span class="n">taps</span><span class="o">=</span><span class="s2">&quot;kaiser&quot;</span></code>.</p>
+</dd>
+<dt id="p-atten"><span class="n sig-name">atten</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">80</span></code><a class="headerlink" href="#p-atten" title="Permalink to this definition">¶</a></dt><dd><p>The stopband attenuation <span class="math notranslate nohighlight">\(A_{\text{stop}}\)</span> in dB. Only used when <code class="code highlight python docutils literal highlight-python"><span class="n">taps</span><span class="o">=</span><span class="s2">&quot;kaiser&quot;</span></code>.</p>
 </dd>
 <dt id="p-streaming"><span class="n sig-name">streaming</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)">bool</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code><a class="headerlink" href="#p-streaming" title="Permalink to this definition">¶</a></dt><dd><p>Indicates whether to use streaming mode. In streaming mode, previous inputs are
 preserved between calls to <a class="reference internal" href="../sdr.Decimator.__call__/" title="sdr.Decimator.__call__ (Python method) — Filters and decimates the input signal $x[n]$ with the polyphase FIR filter."><code class="xref py py-meth docutils literal notranslate"><span class="pre">__call__()</span></code></a>.</p>

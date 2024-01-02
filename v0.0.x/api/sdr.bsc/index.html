@@ -1979,6 +1979,36 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.PolyphaseFIR.order/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PolyphaseFIR.order (Python property) — The order $N = (M + 1)B - 1$ of the FIR prototype filter $h[n]$." class="md-ellipsis">order</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.PolyphaseFIR.polyphase_order/" class="md-nav__link">
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PolyphaseFIR.polyphase_order (Python property) — The order $M = (N + 1)/B - 1$ of each FIR polyphase filter $h_i[n]$." class="md-ellipsis">polyphase_<wbr>order</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.PolyphaseFIR.input/" class="md-nav__link">
         <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.PolyphaseFIR.input (Python property) — The input connection method." class="md-ellipsis">input</span>
       </a>
@@ -10295,12 +10325,12 @@ roughly 5 bits are flipped at the output.</p>
 <span class="gh">Out[1]: </span><span class="go">array([0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1])</span>
 
 <span class="gp">In [2]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">bsc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">);</span> <span class="n">y</span>
-<span class="gh">Out[2]: </span><span class="go">array([0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1])</span>
+<span class="gh">Out[2]: </span><span class="go">array([0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1])</span>
 
 <span class="gp">In [3]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[3]: </span>
-<span class="go">array([ True,  True, False,  True, False,  True, False,  True,  True,</span>
-<span class="go">       False,  True,  True,  True,  True, False,  True,  True, False,</span>
+<span class="go">array([ True, False, False,  True,  True, False,  True,  True, False,</span>
+<span class="go">        True,  True, False,  True, False,  True,  True,  True,  True,</span>
 <span class="go">       False,  True])</span>
 </code></pre></div>
 </div>
