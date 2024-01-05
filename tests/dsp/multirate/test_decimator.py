@@ -206,6 +206,9 @@ def test_3_kaiser():
     fir = sdr.Decimator(3, streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 1
+    assert fir.decimation == 3
+    assert fir.rate == 1 / 3
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -316,6 +319,9 @@ def test_4_kaiser():
     fir = sdr.Decimator(4, streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 1
+    assert fir.decimation == 4
+    assert fir.rate == 1 / 4
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -408,6 +414,9 @@ def test_5_kaiser():
     fir = sdr.Decimator(5, streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 1
+    assert fir.decimation == 5
+    assert fir.rate == 1 / 5
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -488,5 +497,8 @@ def test_6_kaiser():
     fir = sdr.Decimator(6, streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 1
+    assert fir.decimation == 6
+    assert fir.rate == 1 / 6
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
