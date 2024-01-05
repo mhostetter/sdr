@@ -14,8 +14,8 @@ from .._helper import export
 
 @export
 def design_multirate_fir(
-    up: int,
-    down: int = 1,
+    interpolation: int,
+    decimation: int = 1,
     polyphase_order: int = 23,
     atten: float = 80,
 ) -> npt.NDArray[np.float_]:
@@ -23,8 +23,8 @@ def design_multirate_fir(
     Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method.
 
     Arguments:
-        up: The interpolation rate $P$.
-        down: The decimation rate $Q$.
+        interpolation: The interpolation rate $P$.
+        decimation: The decimation rate $Q$.
         polyphase_order: The order of each polyphase filter. Must be odd, such that the filter lengths are even.
         atten: The stopband attenuation $A_{\text{stop}}$ in dB.
 
@@ -53,17 +53,17 @@ def design_multirate_fir(
     Group:
         dsp-polyphase-filtering
     """
-    if not isinstance(up, int):
-        raise TypeError(f"Argument 'up' must be an integer, not {up}.")
-    if not up >= 1:
-        raise ValueError(f"Argument 'up' must be at least 1, not {up}.")
-    P = up
+    if not isinstance(interpolation, int):
+        raise TypeError(f"Argument 'interpolation' must be an integer, not {interpolation}.")
+    if not interpolation >= 1:
+        raise ValueError(f"Argument 'interpolation' must be at least 1, not {interpolation}.")
+    P = interpolation
 
-    if not isinstance(down, int):
-        raise TypeError(f"Argument 'down' must be an integer, not {down}.")
-    if not down >= 1:
-        raise ValueError(f"Argument 'down' must be at least 1, not {down}.")
-    Q = down
+    if not isinstance(decimation, int):
+        raise TypeError(f"Argument 'decimation' must be an integer, not {decimation}.")
+    if not decimation >= 1:
+        raise ValueError(f"Argument 'decimation' must be at least 1, not {decimation}.")
+    Q = decimation
 
     if not isinstance(polyphase_order, int):
         raise TypeError(f"Argument 'polyphase_order' must be an integer, not {polyphase_order}.")
