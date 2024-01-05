@@ -257,7 +257,7 @@ def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float_]:
 @export
 def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
     r"""
-    Upsamples the time-domain signal $x[n]$ by the factor $r$.
+    Upsamples the time-domain signal $x[n]$ by the factor $r$, by inserting $r-1$ zeros between each sample.
 
     Warning:
         This function does not perform any anti-aliasing filtering. The upsampled signal $y[n]$ will have
@@ -303,6 +303,7 @@ def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
             plt.xlim(-sample_rate*2, sample_rate*2); \
+            plt.ylim(-100, 0); \
             plt.title("Input signal $x[n]$"); \
             plt.tight_layout();
 
@@ -310,6 +311,7 @@ def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate*4); \
             plt.xlim(-sample_rate*2, sample_rate*2); \
+            plt.ylim(-100, 0); \
             plt.title("Upsampled signal $y[n]$"); \
             plt.tight_layout();
 
@@ -330,7 +332,7 @@ def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
 @export
 def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
     r"""
-    Downsamples the time-domain signal $x[n]$ by the factor $r$.
+    Downsamples the time-domain signal $x[n]$ by the factor $r$, by discarding $r-1$ samples every $r$ samples.
 
     Warning:
         This function does not perform any anti-aliasing filtering. The downsampled signal $y[n]$ will have
@@ -378,6 +380,7 @@ def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
             plt.xlim(-sample_rate/2, sample_rate/2); \
+            plt.ylim(-100, 0); \
             plt.title("Input signal $x[n]$"); \
             plt.tight_layout();
 
@@ -385,6 +388,7 @@ def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
             plt.figure(figsize=(8, 4)); \
             sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate/4); \
             plt.xlim(-sample_rate/2, sample_rate/2); \
+            plt.ylim(-100, 0); \
             plt.title("Downsampled signal $y[n]$"); \
             plt.tight_layout();
 
