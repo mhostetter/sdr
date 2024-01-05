@@ -124,6 +124,9 @@ def test_7_5_kaiser():
     fir = sdr.Resampler(7, 5, streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 7
+    assert fir.decimation == 5
+    assert fir.rate == 7 / 5
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -172,6 +175,9 @@ def test_7_5_linear():
     fir = sdr.Resampler(7, 5, "linear-matlab", streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 7
+    assert fir.decimation == 5
+    assert fir.rate == 7 / 5
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -220,6 +226,9 @@ def test_7_5_zoh():
     fir = sdr.Resampler(7, 5, "zoh", streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 7
+    assert fir.decimation == 5
+    assert fir.rate == 7 / 5
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -255,6 +264,9 @@ def test_5_7_kaiser():
     fir = sdr.Resampler(5, 7, streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 5
+    assert fir.decimation == 7
+    assert fir.rate == 5 / 7
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -290,6 +302,9 @@ def test_5_7_linear():
     fir = sdr.Resampler(5, 7, "linear-matlab", streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 5
+    assert fir.decimation == 7
+    assert fir.rate == 5 / 7
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
 
@@ -325,5 +340,8 @@ def test_5_7_zoh():
     fir = sdr.Resampler(5, 7, "zoh", streaming=True)
     y = fir(x)
 
+    assert fir.interpolation == 5
+    assert fir.decimation == 7
+    assert fir.rate == 5 / 7
     # debug_plot(y, y_truth)
     np.testing.assert_almost_equal(y, y_truth)
