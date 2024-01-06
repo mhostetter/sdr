@@ -23,13 +23,13 @@ class FIR:
     and streamed filtering.
 
     Notes:
-        A FIR filter is defined by its feedforward coefficients $h_i$.
+        A FIR filter is defined by its feedforward coefficients $h[n]$.
 
-        $$y[n] = \sum_{i=0}^{N} h_i x[n-i] .$$
+        $$y[n] = \sum_{i=0}^{N} h[i] \cdot x[n-i] .$$
 
         The transfer function of the filter is
 
-        $$H(z) = \sum\limits_{i=0}^{N} h_i z^{-i} .$$
+        $$H(z) = \sum\limits_{i=0}^{N} h[i] \cdot z^{-i} .$$
 
         .. code-block:: text
             :caption: FIR Block Diagram
@@ -51,10 +51,10 @@ class FIR:
 
     def __init__(self, h: npt.ArrayLike, streaming: bool = False):
         """
-        Creates an FIR filter with feedforward coefficients $h_i$.
+        Creates an FIR filter.
 
         Arguments:
-            h: The feedforward coefficients $h_i$ for $i = 0,...N$.
+            h: The feedforward coefficients $h[n]$.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FIR.__call__()`.
 
@@ -412,7 +412,7 @@ class FIR:
     @property
     def taps(self) -> npt.NDArray:
         """
-        The feedforward taps $h_i$ for $i = 0,...,N$.
+        The feedforward taps $h[n]$ with length $N + 1$.
 
         Examples:
             See the :ref:`fir-filters` example.
