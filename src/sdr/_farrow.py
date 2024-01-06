@@ -21,12 +21,12 @@ class FarrowResampler:
 
     Examples:
         Create a sine wave with angular frequency $\omega = 2 \pi / 5.179$. Interpolate the signal by
-        $r = 3.1415926$ using Farrow piecewise polynomial Farrow resamplers.
+        $r = \pi$ using Farrow piecewise polynomial Farrow resamplers.
 
         .. ipython:: python
 
             x = np.cos(2 * np.pi / 5.179 * np.arange(11))
-            rate = 3.1415926
+            rate = np.pi
 
         Create a linear Farrow piecewise polynomial interpolator.
 
@@ -96,6 +96,7 @@ class FarrowResampler:
             sdr.plot.time_domain(y3, sample_rate=rate, marker=".", label="Cubic"); \
             sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Quartic"); \
             plt.xlim(1.5, 3.5); \
+            plt.ylim(-1.0, -0.2); \
             plt.title("Comparison of Farrow Resamplers"); \
             plt.tight_layout();
 
@@ -116,7 +117,7 @@ class FarrowResampler:
             @savefig sdr_FarrowResampler_6.png
             plt.figure(figsize=(8, 4)); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
-            sdr.plot.time_domain(y, sample_rate=rate, offset=-farrow4._delay, marker=".", label="Quartic concatenated"); \
+            sdr.plot.time_domain(y, sample_rate=rate, offset=-farrow4.delay, marker=".", label="Quartic concatenated"); \
             plt.title("Quartic Farrow Resampler Concatenated Outputs"); \
             plt.tight_layout();
 
@@ -366,6 +367,10 @@ class FarrowResampler:
     @property
     def delay(self) -> int:
         r"""
-        The delay of the FIR filter $d = \lfloor \frac{N + 1}{2} \rfloor$ in samples.
+        The delay $d$ of the Farrow FIR filters in samples. Output sample $d \cdot r$, corresponds to the first
+        input sample, where $r$ is the current resampling rate.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._delay
