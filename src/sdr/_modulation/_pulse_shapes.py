@@ -331,7 +331,7 @@ def raised_cosine(
 
     Group:
         modulation-pulse-shaping
-    """  # pylint: disable=line-too-long
+    """
     if not isinstance(alpha, (int, float)):
         raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
     if not 0 <= alpha <= 1:
@@ -469,7 +469,7 @@ def root_raised_cosine(
 
     Group:
         modulation-pulse-shaping
-    """  # pylint: disable=line-too-long
+    """
     if not isinstance(alpha, (int, float)):
         raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
     if not 0 <= alpha <= 1:
