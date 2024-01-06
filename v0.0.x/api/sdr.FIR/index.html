@@ -741,7 +741,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1073,7 +1073,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -1176,7 +1176,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.__init__/" class="md-nav__link">
-    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+    <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter." class="md-ellipsis">__<wbr>init__<wbr></span>
   </a>
   
 </li>
@@ -1312,7 +1312,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FIR.taps/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
   </a>
   
 </li>
@@ -3856,7 +3856,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -10253,13 +10253,13 @@ You're not viewing the latest version.
 <p>This class is a wrapper for the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.html#scipy.signal.convolve" title="(in SciPy v1.11.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.convolve()</span></code></a> function. It supports one-time filtering
 and streamed filtering.</p>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
-<p>A FIR filter is defined by its feedforward coefficients <span class="math notranslate nohighlight">\(h_i\)</span>.</p>
+<p>A FIR filter is defined by its feedforward coefficients <span class="math notranslate nohighlight">\(h[n]\)</span>.</p>
 <p><div class="math notranslate nohighlight">
-\[y[n] = \sum_{i=0}^{N} h_i x[n-i] .\]</div>
+\[y[n] = \sum_{i=0}^{N} h[i] \cdot x[n-i] .\]</div>
 </p>
 <p>The transfer function of the filter is</p>
 <p><div class="math notranslate nohighlight">
-\[H(z) = \sum\limits_{i=0}^{N} h_i z^{-i} .\]</div>
+\[H(z) = \sum\limits_{i=0}^{N} h[i] \cdot z^{-i} .\]</div>
 </p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
@@ -10279,8 +10279,8 @@ x[n] --+-&gt;| z^-1 |-+-&gt;| z^-1 |-+--...--+-&gt;| z^-1 |-+-&gt;| z^-1 |-+
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FIR.__init__/" title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">FIR</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.FIR.__init__/#p-h" title="sdr.FIR.__init__.h (Python parameter) — The feedforward coefficients $h_i$ for $i = 0,...N$."><span class="n"><span class="pre">h</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.FIR.__init__/#p-streaming" title="sdr.FIR.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
-<dd><p>Creates an FIR filter with feedforward coefficients <span class="math notranslate nohighlight">\(h_i\)</span>.</p>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FIR.__init__/" title="sdr.FIR.__init__ (Python method) — Creates an FIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">FIR</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.FIR.__init__/#p-h" title="sdr.FIR.__init__.h (Python parameter) — The feedforward coefficients $h[n]$."><span class="n"><span class="pre">h</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.FIR.__init__/#p-streaming" title="sdr.FIR.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
+<dd><p>Creates an FIR filter.</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">
@@ -10369,8 +10369,8 @@ filter output when the input is a unit step <span class="math notranslate nohigh
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FIR.taps/" title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">NDArray</span></span></dt>
-<dd><p>The feedforward taps <span class="math notranslate nohighlight">\(h_i\)</span> for <span class="math notranslate nohighlight">\(i = 0,...,N\)</span>.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FIR.taps/" title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">NDArray</span></span></dt>
+<dd><p>The feedforward taps <span class="math notranslate nohighlight">\(h[n]\)</span> with length <span class="math notranslate nohighlight">\(N + 1\)</span>.</p>
 </dd></dl>
 
 <dl class="py property summary objdesc">

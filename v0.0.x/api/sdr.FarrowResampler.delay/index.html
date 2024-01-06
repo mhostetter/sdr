@@ -76,6 +76,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#examples" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -731,7 +736,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1063,7 +1068,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -3639,9 +3644,39 @@ You're not viewing the latest version.
       
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">Examples</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -9962,6 +9997,21 @@ You're not viewing the latest version.
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">Examples</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -9977,7 +10027,10 @@ You're not viewing the latest version.
 <dl class="py property objdesc">
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">FarrowResampler.</span></span><span class="sig-name descname"><span class="pre">delay</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></dt>
-<dd><p>The delay of the FIR filter <span class="math notranslate nohighlight">\(d = \lfloor \frac{N + 1}{2} \rfloor\)</span> in samples.</p>
+<dd><p>The delay <span class="math notranslate nohighlight">\(d\)</span> of the Farrow FIR filters in samples. Output sample <span class="math notranslate nohighlight">\(d \cdot r\)</span>, corresponds to the first
+input sample, where <span class="math notranslate nohighlight">\(r\)</span> is the current resampling rate.</p>
+<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p>See the <a class="reference internal" href="../../examples/farrow-resampler/#farrow-arbitrary-resampler"><span class="std std-ref">Farrow arbitrary resampler</span></a> example.</p>
 </dd></dl>
 
 

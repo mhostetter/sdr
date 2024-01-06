@@ -740,7 +740,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1081,12 +1081,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+          <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
       </a>
       
         
@@ -3676,7 +3676,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -10027,7 +10027,7 @@ You're not viewing the latest version.
 <dl class="py property objdesc">
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">FIR.</span></span><span class="sig-name descname"><span class="pre">taps</span></span><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">NDArray</span></span></dt>
-<dd><p>The feedforward taps <span class="math notranslate nohighlight">\(h_i\)</span> for <span class="math notranslate nohighlight">\(i = 0,...,N\)</span>.</p>
+<dd><p>The feedforward taps <span class="math notranslate nohighlight">\(h[n]\)</span> with length <span class="math notranslate nohighlight">\(N + 1\)</span>.</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>See the <a class="reference internal" href="../../examples/fir-filters/#fir-filters"><span class="std std-ref">FIR filters</span></a> example.</p>
 </dd></dl>

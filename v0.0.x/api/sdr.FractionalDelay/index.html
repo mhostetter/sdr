@@ -736,7 +736,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1068,7 +1068,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -3634,7 +3634,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -10246,8 +10246,8 @@ filter output when the input is a unit step <span class="math notranslate nohigh
 <h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname reference internal" href="../sdr.FIR.taps/" title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$."><span class="sig-name descname"><span class="pre">taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">NDArray</span></span></dt>
-<dd><p>The feedforward taps <span class="math notranslate nohighlight">\(h_i\)</span> for <span class="math notranslate nohighlight">\(i = 0,...,N\)</span>.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname reference internal" href="../sdr.FIR.taps/" title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$."><span class="sig-name descname"><span class="pre">taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">NDArray</span></span></dt>
+<dd><p>The feedforward taps <span class="math notranslate nohighlight">\(h[n]\)</span> with length <span class="math notranslate nohighlight">\(N + 1\)</span>.</p>
 </dd></dl>
 
 <dl class="py property summary objdesc">

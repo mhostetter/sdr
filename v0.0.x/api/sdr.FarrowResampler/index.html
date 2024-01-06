@@ -736,7 +736,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter with feedforward coefficients $h_i$." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.__init__ (Python method) — Creates an FIR filter." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -1068,7 +1068,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FIR.taps/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h_i$ for $i = 0,...,N$." class="md-ellipsis">taps</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FIR.taps (Python property) — The feedforward taps $h[n]$ with length $N + 1$." class="md-ellipsis">taps</span>
       </a>
     </li>
   
@@ -3637,7 +3637,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.FarrowResampler.delay/" class="md-nav__link">
-        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+        <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
       </a>
     </li>
   
@@ -3805,7 +3805,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.FarrowResampler.delay/" class="md-nav__link">
-    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples." class="md-ellipsis">delay</span>
+    <span aria-label="Python property" class="objinfo-icon objinfo-icon__alias" title="Python property">P</span><span title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate." class="md-ellipsis">delay</span>
   </a>
   
 </li>
@@ -10195,10 +10195,10 @@ You're not viewing the latest version.
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Create a sine wave with angular frequency <span class="math notranslate nohighlight">\(\omega = 2 \pi / 5.179\)</span>. Interpolate the signal by
-<span class="math notranslate nohighlight">\(r = 3.1415926\)</span> using Farrow piecewise polynomial Farrow resamplers.</p>
+<span class="math notranslate nohighlight">\(r = \pi\)</span> using Farrow piecewise polynomial Farrow resamplers.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">5.179</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">11</span><span class="p">))</span>
 
-<span class="gp">In [2]: </span><span class="n">rate</span> <span class="o">=</span> <span class="mf">3.1415926</span>
+<span class="gp">In [2]: </span><span class="n">rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 </code></pre></div>
 </div>
 <p>Create a linear Farrow piecewise polynomial interpolator.</p>
@@ -10265,6 +10265,7 @@ You're not viewing the latest version.
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y3</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Cubic&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y4</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Quartic&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Comparison of Farrow Resamplers&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ....: </span>
@@ -10286,7 +10287,7 @@ You're not viewing the latest version.
 
 <span class="gp">In [19]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Input&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=-</span><span class="n">farrow4</span><span class="o">.</span><span class="n">_delay</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Quartic concatenated&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">rate</span><span class="p">,</span> <span class="n">offset</span><span class="o">=-</span><span class="n">farrow4</span><span class="o">.</span><span class="n">delay</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Quartic concatenated&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Quartic Farrow Resampler Concatenated Outputs&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span>
 <span class="gp">   ....: </span>
@@ -10354,8 +10355,9 @@ You're not viewing the latest version.
 
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FarrowResampler.delay/" title="sdr.FarrowResampler.delay (Python property) — The delay of the FIR filter $d = lfloor frac{N + 1}{2} rfloor$ in samples."><span class="sig-name descname pseudo-toc-entry"><span class="pre">delay</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></dt>
-<dd><p>The delay of the FIR filter <span class="math notranslate nohighlight">\(d = \lfloor \frac{N + 1}{2} \rfloor\)</span> in samples.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.FarrowResampler.delay/" title="sdr.FarrowResampler.delay (Python property) — The delay $d$ of the Farrow FIR filters in samples. Output sample $d cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate."><span class="sig-name descname pseudo-toc-entry"><span class="pre">delay</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></dt>
+<dd><p>The delay <span class="math notranslate nohighlight">\(d\)</span> of the Farrow FIR filters in samples. Output sample <span class="math notranslate nohighlight">\(d \cdot r\)</span>, corresponds to the first
+input sample, where <span class="math notranslate nohighlight">\(r\)</span> is the current resampling rate.</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">
