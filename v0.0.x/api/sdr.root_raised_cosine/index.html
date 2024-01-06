@@ -5149,6 +5149,13 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">References</span>
   </a>
@@ -10103,6 +10110,13 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">References</span>
   </a>
@@ -10158,6 +10172,31 @@ The filter order <code class="code highlight python docutils literal highlight-p
 <dd class="field-even"><p>The square-root raised cosine pulse shape.</p>
 </dd>
 </dl>
+<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p>The square root raised cosine pulse shape has a transfer function of</p>
+<p><div class="math notranslate nohighlight">
+\[\begin{split}
+H(f) =
+\begin{cases}
+\displaystyle \sqrt{T_{sym}},
+&amp; \displaystyle 0 \le \left| f \right| \le \frac{1 - \alpha}{2 T_{sym}} \\
+\displaystyle \sqrt{\frac{T_{sym}}{2} \left[1 + \cos\left(\frac{\pi T_{sym}}{\alpha}\left(\left| f \right| - \frac{1 - \alpha}{2 T_{sym}}\right)\right)\right]},
+&amp; \displaystyle \frac{1 - \alpha}{2 T_{sym}} \le \left| f \right| \le \frac{1 + \alpha}{2 T_{sym}} \\
+0,
+&amp; \displaystyle \left| f \right| \ge \frac{1 + \alpha}{2 T_{sym}}
+\end{cases}
+\end{split}\]</div>
+</p>
+<p>The impulse response is defined as</p>
+<p><div class="math notranslate nohighlight">
+\[
+h(t) =
+\frac{1}{\sqrt{T_{sym}}}
+\frac
+{\displaystyle \sin\left(\frac{\pi (1 - \alpha) t}{T_{sym}}\right) + \frac{4 \alpha t}{T_{sym}}\cos\left( \frac{\pi (1 + \alpha) t}{T_{sym}}\right)}
+{\displaystyle \frac{\pi t}{T_{sym}} \left[1 - \left(\frac{4 \alpha t}{T_{sym}} \right)^2 \right]}
+\]</div>
+</p>
 <p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
 <ul class="simple">
 <li><p>Michael Rice, <em>Digital Communications: A Discrete Time Approach</em>, Appendix A.</p></li>
