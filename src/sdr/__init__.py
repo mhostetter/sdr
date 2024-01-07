@@ -23,6 +23,7 @@ from ._filter import *
 from ._link_budget import *
 from ._measurement import *
 from ._modulation import *
+from ._nco import *
 from ._probability import *
 from ._sequence import *
 from ._signal import *
