@@ -4,6 +4,31 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.12
+
+*Released January 7, 2024*
+
+### Changes
+
+- Added automatic gain control in `sdr.AGC`.
+- Added fractional delay FIR filters in `sdr.FractionalDelay`.
+- Added generic polyphase FIR filters in `sdr.PolyphaseFIR`.
+- Added polyphase FIR channelizers in `sdr.Channelizer`.
+- Added linear, quadratic, and quartic polynomials to `sdr.FarrowResampler`.
+- Added `FarrowResampler.flush()` method.
+- Added `offset` keyword argument `sdr.plot.impulse_response()`.
+- Added Numba dependency with minimum version 0.55.
+- Modified `design_multirate_taps()` and `polyphase_decompose()` APIs.
+- Enabled Kaiser-method prototype filter design using `polyphase_order` and `atten` keyword arguments to
+  polyphase FIR classes.
+- Standardized `interpolation`, `decimation`, `rate`, and `delay` properties of polyphase FIR classes.
+- Supported span of 1 for all pulse shape functions.
+- Fixed bug in phase of first NCO output sample.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.11
 
 *Released December 14, 2023*
