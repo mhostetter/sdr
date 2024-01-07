@@ -9,7 +9,7 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from .._helper import export
+from ._helper import export
 
 
 @export
@@ -24,12 +24,11 @@ class NCO:
                           constant           constant
                          increment            offset    p[n]
                              |                  |         |
-                    +----+   v                  v         v   +--------+
-            f[n] -->| K0 |-->@--------------+-->@-------->@-->| e^(j.) |--> y[n]
-                    +----+   ^              |                 +--------+
-                             |   +------+   |
-                             +---| z^-1 |<--+
-                                 +------+
+                    +----+   v   +------+       v         v   +-----------+
+            f[n] -->| K0 |-->@-->| z^-1 |---+-->@-------->@-->| output(.) |--> y[n]
+                    +----+   ^   +------+   |                 +-----------+
+                             |              |
+                             +--------------+
 
             f[n] = Input frequency signal (radians/sample)
             p[n] = Input phase signal (radians)
@@ -37,6 +36,7 @@ class NCO:
             K0 = NCO gain
             increment = Constant phase accumulation (radians/sample)
             offset = Absolute phase offset (radians)
+            output(.) = Phase-to-output mapping function, either: ., sin(.), cos(.), exp(j .)
             z^-1 = Unit delay
             @ = Adder
 
@@ -115,13 +115,10 @@ class NCO:
         r"""
         Resets the NCO.
 
-        The internal accumulator is set to $-\omega$ radians such that the phase of the first output sample
-        is $\theta$ radians.
-
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        self._z_prev = -self.increment
+        self._z_prev = 0.0
 
     @overload
     def __call__(
@@ -179,10 +176,10 @@ class NCO:
         z = freq * self.gain + self.increment
         z = np.atleast_1d(z)
 
-        # Increment the first sample by the previous output. Then run a cumulative sum over all samples.
-        z[0] += self._z_prev
+        # Insert the previous output in front of the current input. Then run a cumulative sum over all samples.
+        z = np.insert(z, 0, self._z_prev)
         z = np.cumsum(z)
-        self._z_prev = z[-1]
+        z, self._z_prev = z[0:-1], z[-1]
 
         # Add the absolute offset to every sample
         y = z + self.offset + phase
