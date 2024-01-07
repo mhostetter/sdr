@@ -55,22 +55,22 @@ Features
 
 View all available classes and functions in the `API Reference <https://mhostetter.github.io/sdr/latest/api/dsp/>`_.
 
-- **Digital signal processing**: Finite impulse response (FIR) filters, FIR filter design,
-  infinite impulse response (IIR) filters, moving average, differentiator, integrator, leaky integrator,
-  polyphase interpolator, polyphase decimator, polyphase resampler, Farrow arbitrary resampler,
-  fractional delay filter design, FIR differentiator, IIR integrator, complex mixing, real/complex conversion.
+- **Digital signal processing**: Finite impulse response (FIR) filter, FIR filter design,
+  infinite impulse response (IIR) filter, polyphase interpolator, polyphase decimator, polyphase resampler,
+  polyphase channelizer, Farrow arbitrary resampler, fractional delay FIR filter, FIR moving average,
+  FIR differentiator, IIR integrator, IIR leaky integrator, complex mixing, real/complex conversion.
 - **Sequences**: Barker, Hadamard, Walsh, Zadoff-Chu.
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, rectangular pulse shape, half-sine pulse shape,
   raised cosine pulse shape, root raised cosine pulse shape, Gaussian pulse shape, binary and Gray symbol mapping,
   differential encoding.
-- **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
-  analysis, automatic gain control (AGC), phase error detectors (PEDs).
+- **Synchronization**: Numerically-controlled oscillator (NCO), loop filter, closed-loop phase-locked loop (PLL)
+  analysis, automatic gain control (AGC), phase error detector (PEDs).
 - **Measurement**: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
   error vector magnitude (EVM).
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
 - **Simulation**: Binary symmetric channel (BSC), binary erasure channel (BEC), discrete memoryless channel (DMC),
   additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
-- **Link budgets**: Channel capacities, free-space path loss, antenna gains.
+- **Link budgets**: Channel capacity, free-space path loss, antenna gain.
 - **Data manipulation**: Packing and unpacking binary data, hexdump of binary data.
 - **Plotting**: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram,
   bit error rate (BER), symbol error rate (SER), impulse response, step response, magnitude response, phase response,
