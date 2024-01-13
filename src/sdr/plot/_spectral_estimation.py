@@ -59,7 +59,7 @@ def periodogram(
     if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
         raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
     if x_axis == "auto":
-        x_axis = "one-sided" if np.isrealobj(x) and np.isrealobj(x) else "two-sided"
+        x_axis = "one-sided" if np.isrealobj(x) else "two-sided"
 
     if not y_axis in ["linear", "log"]:
         raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
@@ -129,7 +129,7 @@ def spectrogram(
     overlap: int | None = None,
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
-    y_axis: Literal["one-sided", "two-sided"] = "two-sided",
+    y_axis: Literal["auto", "one-sided", "two-sided"] = "two-sided",
     **kwargs,
 ):
     r"""
@@ -147,7 +147,9 @@ def spectrogram(
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
         detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
-        y_axis: The y-axis scaling. Options are to display a one-sided spectrum or two-sided spectrum.
+        y_axis: The y-axis scaling. Options are to display a one-sided spectrum or a two-sided spectrum.
+            The default is `"auto"` which selects `"one-sided"` for real-valued signals and `"two-sided"` for
+            complex-valued signals.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
@@ -158,6 +160,13 @@ def spectrogram(
     Group:
         plot-spectral-estimation
     """
+    x = np.asarray(x)
+
+    if not y_axis in ["auto", "one-sided", "two-sided"]:
+        raise ValueError(f"Argument 'y_axis' must be 'auto', 'one-sided', or 'two-sided', not {y_axis!r}.")
+    if y_axis == "auto":
+        y_axis = "one-sided" if np.isrealobj(x) else "two-sided"
+
     if sample_rate is None:
         sample_rate_provided = False
         sample_rate = 1
