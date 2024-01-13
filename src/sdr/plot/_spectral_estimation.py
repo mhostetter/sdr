@@ -24,7 +24,7 @@ def periodogram(
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
     average: Literal["mean", "median"] = "mean",
-    x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
+    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "two-sided",
     y_axis: Literal["linear", "log"] = "log",
     **kwargs,
 ):
@@ -46,15 +46,21 @@ def periodogram(
         detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
         average: The type of averaging to use. Options are to average the periodograms using the mean or median.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
-            one-sided spectrum with a logarithmic frequency axis.
+            one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
+            for real-valued signals and `"two-sided"` for complex-valued signals.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic power spectral density.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
         plot-spectral-estimation
     """
-    if not x_axis in ["one-sided", "two-sided", "log"]:
-        raise ValueError(f"Argument 'x_axis' must be 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    x = np.asarray(x)
+
+    if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
+        raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    if x_axis == "auto":
+        x_axis = "one-sided" if np.isrealobj(x) and np.isrealobj(x) else "two-sided"
+
     if not y_axis in ["linear", "log"]:
         raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
 
