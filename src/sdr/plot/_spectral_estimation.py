@@ -129,7 +129,7 @@ def spectrogram(
     overlap: int | None = None,
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
-    x_axis: Literal["one-sided", "two-sided"] = "two-sided",
+    y_axis: Literal["one-sided", "two-sided"] = "two-sided",
     **kwargs,
 ):
     r"""
@@ -147,7 +147,7 @@ def spectrogram(
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
         detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
-        x_axis: The x-axis scaling. Options are to display a one-sided spectrum or two-sided spectrum.
+        y_axis: The y-axis scaling. Options are to display a one-sided spectrum or two-sided spectrum.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
@@ -174,16 +174,16 @@ def spectrogram(
         noverlap=overlap,
         nfft=fft,
         detrend=detrend,
-        return_onesided=x_axis != "two-sided",
+        return_onesided=y_axis != "two-sided",
         mode="psd",
     )
     Sxx = 10 * np.log10(Sxx)
 
-    if x_axis == "one-sided" and np.iscomplexobj(x):
+    if y_axis == "one-sided" and np.iscomplexobj(x):
         # If complex data, the spectrogram always returns a two-sided spectrum. So we need to remove the second half.
         f = f[0 : f.size // 2]
         Sxx = Sxx[0 : Sxx.shape[0] // 2, :]
-    if x_axis == "two-sided":
+    if y_axis == "two-sided":
         # f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
         f = np.fft.fftshift(f)
         Sxx = np.fft.fftshift(Sxx)
