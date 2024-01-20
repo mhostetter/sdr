@@ -9,10 +9,13 @@ from .._helper import export
 
 RC_PARAMS = {
     "axes.grid": True,
+    "axes.grid.which": "both",
     # "axes.xmargin": 0,
     # "axes.ymargin": 0,
     # "axes.zmargin": 0,
-    "figure.autolayout": True,
+    "figure.constrained_layout.use": True,
+    "figure.constrained_layout.h_pad": 0.1,
+    "figure.constrained_layout.w_pad": 0.1,
     "figure.figsize": (8, 4),
     "figure.max_open_warning": 0,
     "figure.titleweight": "bold",
