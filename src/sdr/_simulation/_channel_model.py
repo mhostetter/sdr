@@ -526,3 +526,142 @@ class BinaryErasureChannel(Channel):
         The capacity $C$ of the instantiated channel in bits/channel use.
         """
         return BinaryErasureChannel.capacities(self.p)
+
+
+@export
+class DiscreteMemorylessChannel(Channel):
+    r"""
+    Implements a discrete memoryless channel (DMC).
+
+    Notes:
+        The inputs to the DMC are $x_i \in \mathcal{X}$ and the outputs are $y_i \in \mathcal{Y}$.
+        The capacity of the DMC is
+
+        $$C = \max_{p(x)} I(X; Y) \ \ \text{bits/channel use} ,$$
+
+        where $I(X; Y)$ is the mutual information between the input $X$ and output $Y$ of the channel.
+
+    References:
+        - John Proakis, *Digital Communications*, Chapter 6.5-1: Channel Models.
+
+    Examples:
+        Define the binary symmetric channel (BSC) with transition probability $p=0.25$.
+
+        .. ipython:: python
+
+            p = 0.25
+            dmc = sdr.DiscreteMemorylessChannel([[1 - p, p], [p, 1 - p]], seed=1)
+            dmc.P
+            x = np.random.randint(0, 2, 20); x
+            y = dmc(x); y
+            np.count_nonzero(x != y)
+
+        Define the binary erasure channel (BEC) with erasure probability $p=0.25$.
+
+        .. ipython:: python
+
+            p = 0.25
+            dmc = sdr.DiscreteMemorylessChannel([[1 - p, 0, p], [0, 1 - p, p]], Y=[0, 1, -1], seed=1)
+            x = np.random.randint(0, 2, 20); x
+            y = dmc(x); y
+            np.count_nonzero(x != y)
+
+    Group:
+        simulation-channel-models
+    """
+
+    def __init__(
+        self,
+        P: npt.ArrayLike,
+        X: npt.ArrayLike | None = None,
+        Y: npt.ArrayLike | None = None,
+        seed: int | None = None,
+    ):
+        r"""
+        Creates a new discrete memoryless channel (DMC).
+
+        Arguments:
+            P: The $m \times n$ transition probability matrix $P$, where $P = \Pr(Y = y_j | X = x_i)$.
+            X: The input alphabet $\mathcal{X}$ of size $m$. If `None`, it is assumed that $\mathcal{X} = \{0, 1, \ldots, m-1\}$.
+            Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        """
+        super().__init__(seed=seed)
+
+        P = np.asarray(P)
+        if not P.ndim == 2:
+            raise ValueError(f"Argument 'P' must be a 2D array, not {P.ndim}D.")
+        if not np.all(P >= 0):
+            raise ValueError(f"Argument 'P' must have non-negative entires, not {P}.")
+        if not np.allclose(P.sum(axis=1), 1):
+            raise ValueError(f"Argument 'P' must have row that sum to 1, not {P.sum(axis=1)}.")
+        self._P = P
+
+        X = np.asarray(X) if X is not None else np.arange(P.shape[0])
+        if not X.ndim == 1:
+            raise ValueError(f"Argument 'X' must be a 1D array, not {X.ndim}D.")
+        if not P.shape[0] == X.shape[0]:
+            raise ValueError(f"Argument 'P' must have {X.shape[0]} rows, not {P.shape[0]}.")
+        self._X = X
+
+        Y = np.asarray(Y) if Y is not None else np.arange(P.shape[1])
+        if not Y.ndim == 1:
+            raise ValueError(f"Argument 'Y' must be a 1D array, not {Y.ndim}D.")
+        if not P.shape[1] == Y.shape[0]:
+            raise ValueError(f"Argument 'P' must have {Y.shape[0]} columns, not {P.shape[1]}.")
+        self._Y = Y
+
+    @overload
+    def __call__(self, x: int) -> int:
+        ...
+
+    @overload
+    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
+        ...
+
+    def __call__(self, x: Any) -> Any:
+        r"""
+        Passes the input sequence $x$ through the channel.
+
+        Arguments:
+            x: The input sequence $x$ with $x_i \in \mathcal{X}$.
+
+        Returns:
+            The output sequence $y$ with $y_i \in \mathcal{Y}$.
+        """
+        x = np.asarray(x)
+        y = np.zeros_like(x)
+        for i, Xi in enumerate(self.X):
+            idxs = np.where(x == Xi)[0]
+            y[idxs] = self._rng.choice(self.Y, size=idxs.shape, p=self.P[i])
+
+        return y if y.ndim > 0 else y.item()
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(P={self.P}, X={self.X}, Y={self.Y})"
+
+    def __str__(self) -> str:
+        string = super().__str__()
+        string += f" P={self.P}, X={self.X}, Y={self.Y}"
+        return string
+
+    @property
+    def X(self) -> npt.NDArray[np.int_]:
+        r"""
+        The input alphabet $\mathcal{X}$ of the DMC channel.
+        """
+        return self._X
+
+    @property
+    def Y(self) -> npt.NDArray[np.int_]:
+        r"""
+        The output alphabet $\mathcal{Y}$ of the DMC channel.
+        """
+        return self._Y
+
+    @property
+    def P(self) -> npt.NDArray[np.float_]:
+        """
+        The transition probability matrix $P$ of the DMC channel.
+        """
+        return self._P
