@@ -64,7 +64,7 @@ def db(
         conversions-decibels
     """
     x = np.asarray(x)
-    if not np.all(x >= 0):
+    if np.any(x < 0):
         raise ValueError("Argument 'x' must be non-negative.")
 
     if type in ["value", "power"]:
