@@ -39,11 +39,11 @@ def rectangular(
             h_rect = sdr.rectangular(10)
 
             @savefig sdr_rectangular_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_rect);
 
             @savefig sdr_rectangular_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_rect);
 
         See the :ref:`pulse-shapes` example.
@@ -100,11 +100,11 @@ def half_sine(
             h_half_sine = sdr.half_sine(10)
 
             @savefig sdr_half_sine_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_half_sine);
 
             @savefig sdr_half_sine_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_half_sine);
 
         See the :ref:`pulse-shapes` example.
@@ -184,13 +184,13 @@ def gaussian(
             h_0p3 = sdr.gaussian(0.3, 5, 10);
 
             @savefig sdr_gaussian_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_0p1, label=r"$B T_{sym} = 0.1$"); \
             sdr.plot.impulse_response(h_0p2, label=r"$B T_{sym} = 0.2$"); \
             sdr.plot.impulse_response(h_0p3, label=r"$B T_{sym} = 0.3$")
 
             @savefig sdr_gaussian_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_0p1, label=r"$B T_{sym} = 0.1$"); \
             sdr.plot.magnitude_response(h_0p2, label=r"$B T_{sym} = 0.2$"); \
             sdr.plot.magnitude_response(h_0p3, label=r"$B T_{sym} = 0.3$")
@@ -295,13 +295,13 @@ def raised_cosine(
             h_0p9 = sdr.raised_cosine(0.9, 8, 10)
 
             @savefig sdr_raised_cosine_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
             sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$")
 
             @savefig sdr_raised_cosine_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.magnitude_response(h_0p5, label=r"$\alpha = 0.5$"); \
             sdr.plot.magnitude_response(h_0p9, label=r"$\alpha = 0.9$")
@@ -316,13 +316,13 @@ def raised_cosine(
             h_16 = sdr.raised_cosine(0.1, 16, 10)
 
             @savefig sdr_raised_cosine_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_4, label="span = 4"); \
             sdr.plot.impulse_response(h_8, label="span = 8"); \
             sdr.plot.impulse_response(h_16, label="span = 16")
 
             @savefig sdr_raised_cosine_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_4, label="span = 4"); \
             sdr.plot.magnitude_response(h_8, label="span = 8"); \
             sdr.plot.magnitude_response(h_16, label="span = 16")
@@ -433,13 +433,13 @@ def root_raised_cosine(
             h_0p9 = sdr.root_raised_cosine(0.9, 8, 10)
 
             @savefig sdr_root_raised_cosine_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.impulse_response(h_0p5, label=r"$\alpha = 0.5$"); \
             sdr.plot.impulse_response(h_0p9, label=r"$\alpha = 0.9$")
 
             @savefig sdr_root_raised_cosine_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_0p1, label=r"$\alpha = 0.1$"); \
             sdr.plot.magnitude_response(h_0p5, label=r"$\alpha = 0.5$"); \
             sdr.plot.magnitude_response(h_0p9, label=r"$\alpha = 0.9$")
@@ -454,13 +454,13 @@ def root_raised_cosine(
             h_16 = sdr.root_raised_cosine(0.1, 16, 10)
 
             @savefig sdr_root_raised_cosine_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_4, label="span = 4"); \
             sdr.plot.impulse_response(h_8, label="span = 8"); \
             sdr.plot.impulse_response(h_16, label="span = 16")
 
             @savefig sdr_root_raised_cosine_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_4, label="span = 4"); \
             sdr.plot.magnitude_response(h_8, label="span = 8"); \
             sdr.plot.magnitude_response(h_16, label="span = 16")

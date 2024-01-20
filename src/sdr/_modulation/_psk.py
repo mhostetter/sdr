@@ -46,7 +46,7 @@ class PSK(LinearModulation):
             qpsk = sdr.PSK(4, phase_offset=45, pulse_shape="srrc"); qpsk
 
             @savefig sdr_PSK_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.symbol_map(qpsk);
 
         Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
@@ -58,7 +58,7 @@ class PSK(LinearModulation):
             complex_symbols = qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PSK_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
         Modulate and pulse shape the symbols to a complex baseband signal.
@@ -68,11 +68,11 @@ class PSK(LinearModulation):
             tx_samples = qpsk.modulate(symbols)
 
             @savefig sdr_PSK_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
             @savefig sdr_PSK_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.eye(tx_samples[5*qpsk.sps : -5*qpsk.sps], qpsk.sps);
 
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
@@ -84,7 +84,7 @@ class PSK(LinearModulation):
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PSK_5.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
 
         Matched filter and demodulate.
@@ -97,7 +97,7 @@ class PSK(LinearModulation):
             np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_PSK_6.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.
@@ -221,24 +221,22 @@ class PSK(LinearModulation):
                 ebn0 = np.linspace(-2, 10, 100)
 
                 @savefig sdr_psk_ber_1.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK"); \
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
                 sdr.plot.ber(ebn0, psk8.ber(ebn0), label="8-PSK"); \
                 sdr.plot.ber(ebn0, psk16.ber(ebn0), label="16-PSK"); \
-                plt.title("BER curves for PSK modulation in an AWGN channel"); \
-                plt.tight_layout();
+                plt.title("BER curves for PSK modulation in an AWGN channel");
 
             Compare the bit error rate of QPSK and DE-QPSK in an AWGN channel.
 
             .. ipython:: python
 
                 @savefig sdr_psk_ber_2.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0, diff_encoded=True), label="DE-QPSK"); \
-                plt.title("BER curves for PSK and DE-PSK modulation in an AWGN channel"); \
-                plt.tight_layout();
+                plt.title("BER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
         M = self.order
         k = self.bps
@@ -310,24 +308,22 @@ class PSK(LinearModulation):
                 esn0 = np.linspace(-2, 10, 100)
 
                 @savefig sdr_psk_ser_1.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.ser(esn0, bpsk.ser(esn0), label="BPSK"); \
                 sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
                 sdr.plot.ser(esn0, psk8.ser(esn0), label="8-PSK"); \
                 sdr.plot.ser(esn0, psk16.ser(esn0), label="16-PSK"); \
-                plt.title("SER curves for PSK modulation in an AWGN channel"); \
-                plt.tight_layout();
+                plt.title("SER curves for PSK modulation in an AWGN channel");
 
             Compare the symbol error rate of QPSK and DE-QPSK in an AWGN channel.
 
             .. ipython:: python
 
                 @savefig sdr_psk_ser_2.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
                 sdr.plot.ser(esn0, qpsk.ser(esn0, diff_encoded=True), label="DE-QPSK"); \
-                plt.title("SER curves for PSK and DE-PSK modulation in an AWGN channel"); \
-                plt.tight_layout();
+                plt.title("SER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
         M = self.order
         k = self.bps
@@ -386,7 +382,7 @@ class PSK(LinearModulation):
                 psk.phase_offset
 
                 @savefig sdr_psk_phase_offset_1.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map);
 
             Create a QPSK constellation with 45° phase offset.
@@ -397,7 +393,7 @@ class PSK(LinearModulation):
                 psk.phase_offset
 
                 @savefig sdr_psk_phase_offset_2.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map);
         """,
     )
@@ -420,7 +416,7 @@ class PSK(LinearModulation):
                 psk.symbol_map
 
                 @savefig sdr_psk_symbol_map_1.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
 
             The binary-coded symbols. Adjacent symbols may differ by more than one bit.
@@ -431,7 +427,7 @@ class PSK(LinearModulation):
                 psk.symbol_map
 
                 @savefig sdr_psk_symbol_map_2.png
-                plt.figure(figsize=(8, 4)); \
+                plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
         """,
     )
@@ -479,7 +475,7 @@ class PiMPSK(PSK):
             pi4_qpsk = sdr.PiMPSK(4, pulse_shape="srrc"); pi4_qpsk
 
             @savefig sdr_PiMPSK_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.symbol_map(pi4_qpsk);
 
         Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
@@ -491,7 +487,7 @@ class PiMPSK(PSK):
             complex_symbols = pi4_qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PiMPSK_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
         Modulate and pulse shape the symbols to a complex baseband signal.
@@ -501,11 +497,11 @@ class PiMPSK(PSK):
             tx_samples = pi4_qpsk.modulate(symbols)
 
             @savefig sdr_PiMPSK_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
             @savefig sdr_PiMPSK_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.eye(tx_samples[5*pi4_qpsk.sps : -5*pi4_qpsk.sps], pi4_qpsk.sps);
 
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
@@ -517,7 +513,7 @@ class PiMPSK(PSK):
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PiMPSK_5.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
 
         Matched filter and demodulate.
@@ -530,7 +526,7 @@ class PiMPSK(PSK):
             np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_PiMPSK_6.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.
@@ -647,7 +643,7 @@ class OQPSK(PSK):
             oqpsk = sdr.OQPSK(pulse_shape="srrc"); oqpsk
 
             @savefig sdr_OQPSK_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.symbol_map(oqpsk);
 
         Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
@@ -659,7 +655,7 @@ class OQPSK(PSK):
             complex_symbols = oqpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_OQPSK_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
         Modulate and pulse shape the symbols to a complex baseband signal.
@@ -669,7 +665,7 @@ class OQPSK(PSK):
             tx_samples = oqpsk.modulate(symbols)
 
             @savefig sdr_OQPSK_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
             @savefig sdr_OQPSK_4.png
@@ -679,8 +675,7 @@ class OQPSK(PSK):
             plt.title("In-phase channel, $I$"); \
             plt.subplot(2, 1, 2); \
             sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps].imag, oqpsk.sps); \
-            plt.title("Quadrature channel, $Q$"); \
-            plt.tight_layout();
+            plt.title("Quadrature channel, $Q$");
 
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
 
@@ -691,7 +686,7 @@ class OQPSK(PSK):
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_OQPSK_5.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
 
         Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
@@ -704,7 +699,7 @@ class OQPSK(PSK):
             np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_OQPSK_6.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.

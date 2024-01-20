@@ -76,16 +76,14 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            corr = np.correlate(seq, seq, mode="full"); \
+            corr = np.correlate(seq, seq, mode="full")
             lag = np.arange(-seq.size + 1, seq.size)
 
             @savefig sdr_barker_1.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(corr)); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(corr)); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title("Autocorrelation of length-13 Barker sequence"); \
-            plt.tight_layout();
+            plt.title("Autocorrelation of length-13 Barker sequence");
 
     Group:
         sequences
@@ -173,10 +171,10 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
             seq3 = sdr.hadamard(16, 15);
 
             @savefig sdr_hadamard_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
             sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
-            sdr.plot.time_domain(seq3 - 3, label="Index 15");
+            sdr.plot.time_domain(seq3 - 3, label="Index 15")
 
         Hadamard sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Hadamard sequences for spreading codes are useful only when
@@ -190,14 +188,12 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
             xcorr23 = np.correlate(seq2, seq3, mode="full");
 
             @savefig sdr_hadamard_2.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(xcorr12), label="4 and 10"); \
-            plt.plot(lag, np.abs(xcorr13), label="4 and 15"); \
-            plt.plot(lag, np.abs(xcorr23), label="10 and 15"); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(xcorr12), label="4 and 10"); \
+            sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
+            sdr.plot.time_domain(lag, np.abs(xcorr23), label="10 and 15"); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title("Cross correlation of length-16 Hadamard sequences"); \
-            plt.tight_layout();
+            plt.title("Cross correlation of length-16 Hadamard sequences");
 
         Hadamard sequence autocorrelation sidelobes are not uniform as a function of sequence index.
         In fact, the sidelobes can be quite high.
@@ -210,14 +206,12 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
             acorr3 = np.correlate(seq3, seq3, mode="full");
 
             @savefig sdr_hadamard_3.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(acorr1), label="Index 4"); \
-            plt.plot(lag, np.abs(acorr2), label="Index 10"); \
-            plt.plot(lag, np.abs(acorr3), label="Index 15"); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(acorr1), label="Index 4"); \
+            sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
+            sdr.plot.time_domain(lag, np.abs(acorr3), label="Index 15"); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title("Autocorrelation of length-16 Hadamard sequences"); \
-            plt.tight_layout();
+            plt.title("Autocorrelation of length-16 Hadamard sequences");
 
     Group:
         sequences
@@ -301,10 +295,10 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
             seq3 = sdr.walsh(16, 15);
 
             @savefig sdr_walsh_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
             sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
-            sdr.plot.time_domain(seq3 - 3, label="Index 15");
+            sdr.plot.time_domain(seq3 - 3, label="Index 15")
 
         Walsh sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Walsh sequences for spreading codes are useful only when
@@ -318,14 +312,12 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
             xcorr23 = np.correlate(seq2, seq3, mode="full");
 
             @savefig sdr_walsh_2.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(xcorr12), label="4 and 10"); \
-            plt.plot(lag, np.abs(xcorr13), label="4 and 15"); \
-            plt.plot(lag, np.abs(xcorr23), label="10 and 15"); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(xcorr12), label="4 and 10"); \
+            sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
+            sdr.plot.time_domain(lag, np.abs(xcorr23), label="10 and 15"); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title("Cross correlation of length-16 Walsh sequences"); \
-            plt.tight_layout();
+            plt.title("Cross correlation of length-16 Walsh sequences");
 
         Walsh sequence autocorrelation sidelobes are not uniform as a function of sequence index.
         In fact, the sidelobes can be quite high.
@@ -338,14 +330,12 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
             acorr3 = np.correlate(seq3, seq3, mode="full");
 
             @savefig sdr_walsh_3.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(acorr1), label="Index 4"); \
-            plt.plot(lag, np.abs(acorr2), label="Index 10"); \
-            plt.plot(lag, np.abs(acorr3), label="Index 15"); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(acorr1), label="Index 4"); \
+            sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
+            sdr.plot.time_domain(lag, np.abs(acorr3), label="Index 15"); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title("Autocorrelation of length-16 Walsh sequences"); \
-            plt.tight_layout();
+            plt.title("Autocorrelation of length-16 Walsh sequences");
 
     Group:
         sequences
@@ -412,31 +402,28 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex
 
         .. ipython:: python
 
-            N = 139; \
+            N = 139
             x3 = sdr.zadoff_chu(N, 3)
 
             @savefig sdr_zadoff_chu_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(x3, linestyle="-", linewidth=0.5); \
-            plt.title(f"Root-3 Zadoff-Chu sequence of length {N}"); \
-            plt.tight_layout();
+            plt.title(f"Root-3 Zadoff-Chu sequence of length {N}");
 
         The *periodic* autocorrelation of a Zadoff-Chu sequence has sidelobes of magnitude 0.
 
         .. ipython:: python
 
             # Perform periodic autocorrelation
-            corr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x3, mode="valid"); \
+            corr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x3, mode="valid")
             lag = np.arange(-N//2 + 1, N//2 + 2)
 
             @savefig sdr_zadoff_chu_2.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(corr) / N); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(corr) / N); \
             plt.ylim(0, 1); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title(f"Periodic autocorrelation of root-3 Zadoff-Chu sequence of length {N}"); \
-            plt.tight_layout();
+            plt.title(f"Periodic autocorrelation of root-3 Zadoff-Chu sequence of length {N}");
 
         Create a root-5 Zadoff-Chu sequence $x_5[n]$ with length 139.
 
@@ -445,10 +432,9 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex
             x5 = sdr.zadoff_chu(N, 5)
 
             @savefig sdr_zadoff_chu_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(x5, linestyle="-", linewidth=0.5); \
-            plt.title(f"Root-5 Zadoff-Chu sequence of length {N}"); \
-            plt.tight_layout();
+            plt.title(f"Root-5 Zadoff-Chu sequence of length {N}");
 
         The *periodic* cross correlation of two prime-length Zadoff-Chu sequences with different roots has sidelobes
         with magnitude $1 / \sqrt{N}$.
@@ -456,17 +442,15 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex
         .. ipython:: python
 
             # Perform periodic cross correlation
-            xcorr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x5, mode="valid"); \
+            xcorr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x5, mode="valid")
             lag = np.arange(-N//2 + 1, N//2 + 2)
 
             @savefig sdr_zadoff_chu_4.png
-            plt.figure(figsize=(8, 4)); \
-            plt.plot(lag, np.abs(xcorr) / N); \
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(xcorr) / N); \
             plt.ylim(0, 1); \
             plt.xlabel("Lag"); \
-            plt.ylabel("Magnitude"); \
-            plt.title(f"Periodic cross correlation of root-3 and root-5 Zadoff-Chu sequences of length {N}"); \
-            plt.tight_layout();
+            plt.title(f"Periodic cross correlation of root-3 and root-5 Zadoff-Chu sequences of length {N}");
 
     Group:
         sequences

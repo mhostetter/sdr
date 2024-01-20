@@ -58,12 +58,10 @@ def fspl(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float_]
             fspl = sdr.fspl(d, 1e9)  # dB
 
             @savefig sdr_fspl_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(d, fspl); \
             plt.xlabel('Distance (m)'); \
-            plt.ylabel('Free-space path loss (dB)'); \
-            plt.grid(True); \
-            plt.tight_layout()
+            plt.ylabel('Free-space path loss (dB)');
 
     Group:
         link-budget-path-losses

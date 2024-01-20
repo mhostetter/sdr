@@ -45,10 +45,9 @@ def mix(
             x = np.exp(1j * (2 * np.pi * 10 * np.arange(N) / sample_rate + np.pi/4))
 
             @savefig sdr_mix_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=sample_rate); \
-            plt.title(r"Complex exponential with $f=10$ Hz and $\phi=45$ degrees"); \
-            plt.tight_layout();
+            plt.title(r"Complex exponential with $f=10$ Hz and $\phi=45$ degrees");
 
         Mix the signal to baseband by removing the frequency rotation and the phase offset.
 
@@ -57,10 +56,9 @@ def mix(
             y = sdr.mix(x, freq=-10, phase=-45, sample_rate=sample_rate)
 
             @savefig sdr_mix_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y, sample_rate=sample_rate); \
-            plt.title(r"Baseband signal with $f=0$ Hz and $\phi=0$ degrees"); \
-            plt.tight_layout();
+            plt.title(r"Baseband signal with $f=0$ Hz and $\phi=0$ degrees");
 
     Group:
         dsp-signal-manipulation
@@ -118,16 +116,14 @@ def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
             x_r = sdr.awgn(x_r, snr=30)
 
             @savefig sdr_to_complex_bb_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
-            plt.title("Time-domain signal $x_r[n]$"); \
-            plt.tight_layout();
+            plt.title("Time-domain signal $x_r[n]$");
 
             @savefig sdr_to_complex_bb_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
-            plt.title("Periodogram of $x_r[n]$"); \
-            plt.tight_layout();
+            plt.title("Periodogram of $x_r[n]$");
 
         Convert the real passband signal to a complex baseband signal with sample rate 500 sps and center of 0 Hz.
         Notice the spectrum is no longer complex-conjugate symmetric.
@@ -139,16 +135,14 @@ def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
             sample_rate /= 2
 
             @savefig sdr_to_complex_bb_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
-            plt.title("Time-domain signal $x_c[n]$"); \
-            plt.tight_layout();
+            plt.title("Time-domain signal $x_c[n]$");
 
             @savefig sdr_to_complex_bb_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
-            plt.title("Periodogram of $x_c[n]$"); \
-            plt.tight_layout();
+            plt.title("Periodogram of $x_c[n]$");
 
     Group:
         dsp-signal-manipulation
@@ -202,16 +196,14 @@ def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float_]:
             x_c = sdr.awgn(x_c, snr=30)
 
             @savefig sdr_to_real_pb_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
-            plt.title("Time-domain signal $x_c[n]$"); \
-            plt.tight_layout();
+            plt.title("Time-domain signal $x_c[n]$");
 
             @savefig sdr_to_real_pb_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
-            plt.title("Periodogram of $x_c[n]$"); \
-            plt.tight_layout();
+            plt.title("Periodogram of $x_c[n]$");
 
         Convert the complex baseband signal to a real passband signal with sample rate 1 ksps and center of 250 Hz.
         Notice the spectrum is now complex-conjugate symmetric.
@@ -223,16 +215,14 @@ def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float_]:
             sample_rate *= 2
 
             @savefig sdr_to_real_pb_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
-            plt.title("Time-domain signal $x_r[n]$"); \
-            plt.tight_layout();
+            plt.title("Time-domain signal $x_r[n]$");
 
             @savefig sdr_to_real_pb_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
-            plt.title("Periodogram of $x_r[n]$"); \
-            plt.tight_layout();
+            plt.title("Periodogram of $x_r[n]$");
 
     Group:
         dsp-signal-manipulation
@@ -284,36 +274,32 @@ def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
             y = sdr.upsample(x, 4)
 
             @savefig sdr_upsample_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=sample_rate); \
-            plt.title("Input signal $x[n]$"); \
-            plt.tight_layout();
+            plt.title("Input signal $x[n]$");
 
             @savefig sdr_upsample_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y, sample_rate=sample_rate*4); \
-            plt.title("Upsampled signal $y[n]$"); \
-            plt.tight_layout();
+            plt.title("Upsampled signal $y[n]$");
 
         The spectrum of $y[n]$ has 3 additional copies of the spectrum of $x[n]$.
 
         .. ipython:: python
 
             @savefig sdr_upsample_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
             plt.xlim(-sample_rate*2, sample_rate*2); \
             plt.ylim(-100, 0); \
-            plt.title("Input signal $x[n]$"); \
-            plt.tight_layout();
+            plt.title("Input signal $x[n]$");
 
             @savefig sdr_upsample_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate*4); \
             plt.xlim(-sample_rate*2, sample_rate*2); \
             plt.ylim(-100, 0); \
-            plt.title("Upsampled signal $y[n]$"); \
-            plt.tight_layout();
+            plt.title("Upsampled signal $y[n]$");
 
     Group:
         dsp-signal-manipulation
@@ -359,16 +345,14 @@ def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
             y = sdr.downsample(x, 4)
 
             @savefig sdr_downsample_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=sample_rate); \
-            plt.title("Input signal $x[n]$"); \
-            plt.tight_layout();
+            plt.title("Input signal $x[n]$");
 
             @savefig sdr_downsample_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y, sample_rate=sample_rate/4); \
-            plt.title("Downsampled signal $y[n]$"); \
-            plt.tight_layout();
+            plt.title("Downsampled signal $y[n]$");
 
         The spectrum of $x[n]$ has aliased. Any spectral content above the Nyquist frequency of $f_s / 2$
         will *fold* into the spectrum of $y[n]$. The CW at 0 Hz remains at 0 Hz (unaliased).
@@ -377,20 +361,18 @@ def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
         .. ipython:: python
 
             @savefig sdr_downsample_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
             plt.xlim(-sample_rate/2, sample_rate/2); \
             plt.ylim(-100, 0); \
-            plt.title("Input signal $x[n]$"); \
-            plt.tight_layout();
+            plt.title("Input signal $x[n]$");
 
             @savefig sdr_downsample_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate/4); \
             plt.xlim(-sample_rate/2, sample_rate/2); \
             plt.ylim(-100, 0); \
-            plt.title("Downsampled signal $y[n]$"); \
-            plt.tight_layout();
+            plt.title("Downsampled signal $y[n]$");
 
     Group:
         dsp-signal-manipulation

@@ -66,8 +66,9 @@ def impulse_response(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_impulse_response_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_srrc)
 
         See the :ref:`iir-filters` example.
@@ -79,7 +80,7 @@ def impulse_response(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_impulse_response_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(iir, N=30)
 
     Group:
@@ -107,7 +108,6 @@ def impulse_response(
         plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
         plt.title("Impulse Response, $h[n]$")
-        plt.tight_layout()
 
 
 @export
@@ -139,8 +139,9 @@ def step_response(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_step_response_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.step_response(h_srrc)
 
         See the :ref:`iir-filters` example.
@@ -152,7 +153,7 @@ def step_response(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_step_response_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.step_response(iir, N=30)
 
     Group:
@@ -179,7 +180,6 @@ def step_response(
         plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
         plt.title("Step Response, $s[n]$")
-        plt.tight_layout()
 
 
 @export
@@ -206,8 +206,9 @@ def zeros_poles(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_zeros_poles_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.zeros_poles(h_srrc)
 
         See the :ref:`iir-filters` example.
@@ -219,7 +220,7 @@ def zeros_poles(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_zeros_poles_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.zeros_poles(iir)
 
     Group:
@@ -247,7 +248,6 @@ def zeros_poles(
         plt.xlabel("Real")
         plt.ylabel("Imaginary")
         plt.title("Zeros and Poles of $H(z)$")
-        plt.tight_layout()
 
 
 @export
@@ -287,8 +287,9 @@ def magnitude_response(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_magnitude_response_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_srrc)
 
         See the :ref:`iir-filters` example.
@@ -300,19 +301,19 @@ def magnitude_response(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_magnitude_response_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(iir)
 
         .. ipython:: python
 
             @savefig sdr_plot_magnitude_response_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
             @savefig sdr_plot_magnitude_response_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(iir, x_axis="log", decades=3)
 
     Group:
@@ -376,7 +377,6 @@ def magnitude_response(
             plt.ylabel(r"Power, $|H(\omega)|^2$")
 
         plt.title(r"Magnitude Response, $|H(\omega)|^2$")
-        plt.tight_layout()
 
 
 @export
@@ -416,8 +416,9 @@ def phase_response(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_phase_response_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_response(h_srrc)
 
         See the :ref:`iir-filters` example.
@@ -429,19 +430,19 @@ def phase_response(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_phase_response_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_response(iir)
 
         .. ipython:: python
 
             @savefig sdr_plot_phase_response_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_response(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
             @savefig sdr_plot_phase_response_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_response(iir, x_axis="log", decades=3)
 
     Group:
@@ -501,7 +502,6 @@ def phase_response(
             plt.xlabel("Normalized Frequency, $f /f_s$")
         plt.ylabel(r"Phase (deg), $\angle H(\omega)$")
         plt.title(r"Phase Response, $\angle H(\omega)$")
-        plt.tight_layout()
 
 
 @export
@@ -539,8 +539,9 @@ def phase_delay(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_phase_delay_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_delay(h_srrc)
 
         See the :ref:`iir-filters` example.
@@ -552,19 +553,19 @@ def phase_delay(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_phase_delay_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_delay(iir)
 
         .. ipython:: python
 
             @savefig sdr_plot_phase_delay_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_delay(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
             @savefig sdr_plot_phase_delay_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_delay(iir, x_axis="log", decades=3)
 
     Group:
@@ -625,7 +626,6 @@ def phase_delay(
             plt.xlabel("Normalized Frequency, $f /f_s$")
             plt.ylabel("Phase Delay (samples)")
         plt.title(r"Phase Delay, $\tau_{\phi}(\omega)$")
-        plt.tight_layout()
 
 
 @export
@@ -663,8 +663,9 @@ def group_delay(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_group_delay_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.group_delay(h_srrc);
 
         See the :ref:`iir-filters` example.
@@ -676,19 +677,19 @@ def group_delay(
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
             @savefig sdr_plot_group_delay_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.group_delay(iir)
 
         .. ipython:: python
 
             @savefig sdr_plot_group_delay_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.group_delay(h_srrc, x_axis="two-sided");
 
         .. ipython:: python
 
             @savefig sdr_plot_group_delay_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.group_delay(iir, x_axis="log", decades=3)
 
     Group:
@@ -746,7 +747,6 @@ def group_delay(
             plt.xlabel("Normalized Frequency, $f /f_s$")
             plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
         plt.title(r"Group Delay, $\tau_g(\omega)$")
-        plt.tight_layout()
 
 
 @export
@@ -785,6 +785,7 @@ def filter(
         .. ipython:: python
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
+
             @savefig sdr_plot_filter_1.png
             plt.figure(figsize=(8, 6)); \
             sdr.plot.filter(h_srrc)
@@ -818,5 +819,3 @@ def filter(
 
         plt.subplot2grid((4, 3), (3, 1), 1, 2)
         step_response((b, a), N=N_time)
-
-        plt.tight_layout()

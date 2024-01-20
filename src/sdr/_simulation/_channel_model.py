@@ -285,13 +285,11 @@ class BinarySymmetricChannel(Channel):
             C = sdr.BinarySymmetricChannel.capacities(p)
 
             @savefig sdr_BinarySymmetricChannel_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Transition probability, $p$"); \
             plt.ylabel("Capacity (bits/channel use), $C$"); \
-            plt.title("Capacity of the Binary Symmetric Channel"); \
-            plt.grid(True); \
-            plt.tight_layout()
+            plt.title("Capacity of the Binary Symmetric Channel");
 
     Group:
         simulation-channel-models
@@ -427,13 +425,11 @@ class BinaryErasureChannel(Channel):
             C = sdr.BinaryErasureChannel.capacities(p)
 
             @savefig sdr_BinaryErasureChannel_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Erasure probability, $p$"); \
             plt.ylabel("Capacity (bits/channel use), $C$"); \
-            plt.title("Capacity of the Binary Erasure Channel"); \
-            plt.grid(True); \
-            plt.tight_layout()
+            plt.title("Capacity of the Binary Erasure Channel");
 
     Group:
         simulation-channel-models
