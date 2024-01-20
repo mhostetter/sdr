@@ -3,10 +3,13 @@ A module containing various channel models.
 """
 from __future__ import annotations
 
+from typing import Any, overload
+
 import numpy as np
 import numpy.typing as npt
 
 from .._helper import export
+from .._link_budget._capacity import Hb
 
 
 @export
@@ -237,3 +240,128 @@ class Channel:
         The channel capacity $C$ in bits/2D of the instantiated channel.
         """
         raise NotImplementedError
+
+
+@export
+class BinarySymmetricChannel(Channel):
+    r"""
+    Implements a binary symmetric channel (BSC).
+
+    Notes:
+        The inputs to the BSC are $x_i \in \{0, 1\}$ and the outputs are $y_i \in \{0, 1\}$.
+        The capacity of the BSC is
+
+        $$C = 1 - H_b(p) \ \ \text{bits/channel use} .$$
+
+    Examples:
+        When 20 bits are passed through a BSC with transition probability $p=0.25$, roughly 5 bits are flipped
+        at the output.
+
+        .. ipython:: python
+
+            bsc = sdr.BinarySymmetricChannel(0.25, seed=1)
+            x = np.random.randint(0, 2, 20); x
+            y = bsc(x); y
+            np.count_nonzero(x != y)
+
+        The capacity of this BSC is 0.189 bits/channel use.
+
+        .. ipython:: python
+
+            bsc.capacity
+
+        When the probability $p$ of bit error is 0, the capacity of the channel is 1 bit/channel use.
+        However, as the probability of bit error approaches 0.5, the capacity of the channel approaches
+        0.
+
+        .. ipython:: python
+
+            p = np.linspace(0, 1, 100); \
+            C = sdr.BinarySymmetricChannel.capacities(p)
+
+            @savefig sdr_BinarySymmetricChannel_1.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(p, C); \
+            plt.xlabel("Transition probability, $p$"); \
+            plt.ylabel("Capacity (bits/channel use), $C$"); \
+            plt.title("Capacity of the Binary Symmetric Channel"); \
+            plt.grid(True); \
+            plt.tight_layout()
+
+    Group:
+        simulation-channel-models
+    """
+
+    def __init__(self, p: float, seed: int | None = None):
+        """
+        Creates a new binary symmetric channel (BSC).
+
+        Arguments:
+            p: The transition probability $p$ of the BSC channel.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        """
+        super().__init__(seed=seed)
+
+        if not 0 <= p <= 1:
+            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+        self._p = p
+
+    @overload
+    def __call__(self, x: int) -> int:
+        ...
+
+    @overload
+    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
+        ...
+
+    def __call__(self, x: Any) -> Any:
+        r"""
+        Passes the binary input sequence $x$ through the channel.
+
+        Arguments:
+            x: The input sequence $x$ with $x_i \in \{0, 1\}$.
+
+        Returns:
+            The output sequence $y$ with $y_i \in \{0, 1\}$.
+        """
+        x = np.asarray(x)
+        flip = self._rng.choice([0, 1], size=x.shape, p=[1 - self.p, self.p])
+        y = x ^ flip
+
+        return y if y.ndim > 0 else y.item()
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(p={self.p})"
+
+    def __str__(self) -> str:
+        string = super().__str__()
+        string += f" p={self.p}"
+        return string
+
+    @staticmethod
+    def capacities(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+        """
+        Calculates the capacity of BSC channels.
+
+        Returns:
+            The capacity $C$ of the channel in bits/channel use.
+        """
+        p = np.asarray(p)
+        if not (np.all(0 <= p) and np.all(p <= 1)):
+            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+
+        return 1 - Hb(p)
+
+    @property
+    def capacity(self) -> float:
+        """
+        The capacity $C$ of the instantiated channel in bits/channel use.
+        """
+        return BinarySymmetricChannel.capacities(self.p)
+
+    @property
+    def p(self) -> float:
+        """
+        The transition probability $p$ of the BSC channel.
+        """
+        return self._p
