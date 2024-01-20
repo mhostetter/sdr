@@ -147,11 +147,11 @@ def design_lowpass_fir(
             h_hamming = sdr.design_lowpass_fir(100, 0.2, window="hamming")
 
             @savefig sdr_design_lowpass_fir_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
             @savefig sdr_design_lowpass_fir_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
         Compare filter designs using different windows.
@@ -165,14 +165,13 @@ def design_lowpass_fir(
             h_kaiser = sdr.design_lowpass_fir(100, 0.2, window="kaiser")
 
             @savefig sdr_design_lowpass_fir_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
             sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
             sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
             sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
             sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
-            plt.legend(); \
             plt.ylim(-100, 10);
 
     Group:
@@ -243,11 +242,11 @@ def design_highpass_fir(
             h_hamming = sdr.design_highpass_fir(100, 0.7, window="hamming")
 
             @savefig sdr_design_highpass_fir_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
             @savefig sdr_design_highpass_fir_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
         Compare filter designs using different windows.
@@ -261,14 +260,13 @@ def design_highpass_fir(
             h_kaiser = sdr.design_highpass_fir(100, 0.7, window="kaiser")
 
             @savefig sdr_design_highpass_fir_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
             sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
             sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
             sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
             sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
-            plt.legend(); \
             plt.ylim(-100, 10);
 
     Group:
@@ -342,11 +340,11 @@ def design_bandpass_fir(
             h_hamming = sdr.design_bandpass_fir(100, 0.4, 0.1, window="hamming")
 
             @savefig sdr_design_bandpass_fir_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
             @savefig sdr_design_bandpass_fir_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
         Compare filter designs using different windows.
@@ -360,14 +358,13 @@ def design_bandpass_fir(
             h_kaiser = sdr.design_bandpass_fir(100, 0.4, 0.1, window="kaiser")
 
             @savefig sdr_design_bandpass_fir_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
             sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
             sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
             sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
             sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
-            plt.legend(); \
             plt.ylim(-100, 10);
 
     Group:
@@ -448,11 +445,11 @@ def design_bandstop_fir(
             h_hamming = sdr.design_bandstop_fir(100, 0.4, 0.75, window="hamming")
 
             @savefig sdr_design_bandstop_fir_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
             @savefig sdr_design_bandstop_fir_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
         Compare filter designs using different windows.
@@ -466,14 +463,13 @@ def design_bandstop_fir(
             h_kaiser = sdr.design_bandstop_fir(100, 0.4, 0.75, window="kaiser")
 
             @savefig sdr_design_bandstop_fir_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
             sdr.plot.magnitude_response(h_blackman, label="Blackman"); \
             sdr.plot.magnitude_response(h_blackman_harris, label="Blackman-Harris"); \
             sdr.plot.magnitude_response(h_chebyshev, label="Chebyshev"); \
             sdr.plot.magnitude_response(h_kaiser, label="Kaiser"); \
-            plt.legend(); \
             plt.ylim(-100, 10);
 
     Group:

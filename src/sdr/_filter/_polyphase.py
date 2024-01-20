@@ -578,11 +578,10 @@ class Interpolator(PolyphaseFIR):
             y = fir(x)
 
             @savefig sdr_Interpolator_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Interpolated"); \
-            plt.title("Interpolation by 7 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Interpolation by 7 with the Kaiser window method");
 
         Create a streaming polyphase filter that interpolates by 7 using the Kaiser window method. This filter
         preserves state between calls.
@@ -598,15 +597,14 @@ class Interpolator(PolyphaseFIR):
             y5 = fir.flush()
 
             @savefig sdr_Interpolator_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Interpolated $y_1[n]$"); \
             sdr.plot.time_domain(y2, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 10, marker=".", label="Interpolated $y_2[n]$"); \
             sdr.plot.time_domain(y3, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 20, marker=".", label="Interpolated $y_3[n]$"); \
             sdr.plot.time_domain(y4, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 30, marker=".", label="Interpolated $y_4[n]$"); \
             sdr.plot.time_domain(y5, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 40, marker=".", label="Interpolated $y_5[n]$"); \
-            plt.title("Streaming interpolation by 7 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Streaming interpolation by 7 with the Kaiser window method");
 
         Create a polyphase filter that interpolates by 7 using linear method.
 
@@ -616,11 +614,10 @@ class Interpolator(PolyphaseFIR):
             y = fir(x)
 
             @savefig sdr_Interpolator_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Interpolated"); \
-            plt.title("Interpolation by 7 with the linear method"); \
-            plt.tight_layout();
+            plt.title("Interpolation by 7 with the linear method");
 
         Create a polyphase filter that interpolates by 7 using the zero-order hold method. It is recommended to use
         the `"full"` convolution mode. This way the first upsampled symbol has $r$ samples.
@@ -631,11 +628,10 @@ class Interpolator(PolyphaseFIR):
             y = fir(x, mode="full")
 
             @savefig sdr_Interpolator_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Interpolated"); \
-            plt.title("Interpolation by 7 with the zero-order hold method"); \
-            plt.tight_layout();
+            plt.title("Interpolation by 7 with the zero-order hold method");
 
     Group:
         dsp-polyphase-filtering
@@ -793,11 +789,10 @@ class Decimator(PolyphaseFIR):
             y = fir(x)
 
             @savefig sdr_Decimator_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker="o", label="Decimated"); \
-            plt.title("Decimation by 7 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Decimation by 7 with the Kaiser window method");
 
         Create a streaming polyphase filter that decimates by 7 using the Kaiser window method. This filter
         preserves state between calls.
@@ -813,15 +808,14 @@ class Decimator(PolyphaseFIR):
             y5 = fir.flush()
 
             @savefig sdr_Decimator_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker="o", label="Decimated $y_1[n]$"); \
             sdr.plot.time_domain(y2, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 70, marker="o", label="Decimated $y_2[n]$"); \
             sdr.plot.time_domain(y3, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 140, marker="o", label="Decimated $y_3[n]$"); \
             sdr.plot.time_domain(y4, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 210, marker="o", label="Decimated $y_4[n]$"); \
             sdr.plot.time_domain(y5, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 280, marker="o", label="Decimated $y_5[n]$"); \
-            plt.title("Streaming decimation by 7 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Streaming decimation by 7 with the Kaiser window method");
 
     Group:
         dsp-polyphase-filtering
@@ -971,11 +965,10 @@ class Resampler(PolyphaseFIR):
             y = fir(x)
 
             @savefig sdr_Resampler_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Resampled"); \
-            plt.title("Resampling by 7/3 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Resampling by 7/3 with the Kaiser window method");
 
         Create a streaming polyphase filter that resamples by 7/3 using the Kaiser window method. This filter
         preserves state between calls.
@@ -991,15 +984,14 @@ class Resampler(PolyphaseFIR):
             y5 = fir.flush()
 
             @savefig sdr_Resampler_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Resampled $y_1[n]$"); \
             sdr.plot.time_domain(y2, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 10, marker=".", label="Resampled $y_2[n]$"); \
             sdr.plot.time_domain(y3, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 20, marker=".", label="Resampled $y_3[n]$"); \
             sdr.plot.time_domain(y4, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 30, marker=".", label="Resampled $y_4[n]$"); \
             sdr.plot.time_domain(y5, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 40, marker=".", label="Resampled $y_5[n]$"); \
-            plt.title("Streaming resampling by 7/3 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Streaming resampling by 7/3 with the Kaiser window method");
 
         Create a polyphase filter that resamples by 5/7 using linear method.
 
@@ -1009,11 +1001,10 @@ class Resampler(PolyphaseFIR):
             y = fir(x)
 
             @savefig sdr_Resampler_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker="o", label="Resampled"); \
-            plt.title("Resampling by 5/7 with the Kaiser window method"); \
-            plt.tight_layout();
+            plt.title("Resampling by 5/7 with the Kaiser window method");
 
     Group:
         dsp-polyphase-filtering
@@ -1217,7 +1208,7 @@ class Channelizer(PolyphaseFIR):
 
         .. ipython:: python
 
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.periodogram(x, fft=1024, color="k", label="Input $x[n]$");
             for i in range(C):
                 f_start = (i - 0.5) / C
@@ -1240,7 +1231,7 @@ class Channelizer(PolyphaseFIR):
 
         .. ipython:: python
 
-            plt.figure(figsize=(8, 4));
+            plt.figure();
             for i in range(C):
                 sdr.plot.periodogram(Y[i, :], fft=1024, label=f"Channel {i}")
             @savefig sdr_Channelizer_2.png

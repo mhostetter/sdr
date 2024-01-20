@@ -52,17 +52,15 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1)
             p_fa = np.logspace(-7, -3, 100)
 
             @savefig sdr_albersheim_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=1), label="$N_{NC}$ = 1"); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=2), label="$N_{NC}$ = 2"); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=10), label="$N_{NC}$ = 10"); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=20), label="$N_{NC}$ = 20"); \
             plt.legend(); \
-            plt.grid(True, which="both"); \
             plt.xlabel("Probability of false alarm, $P_{FA}$"); \
             plt.ylabel("Minimum required SNR (dB)"); \
-            plt.title(f"Estimated minimum required SNR across non-coherent combinations for $P_D = 0.9$\nusing Albersheim's approximation"); \
-            plt.tight_layout()
+            plt.title(f"Estimated minimum required SNR across non-coherent combinations for $P_D = 0.9$\nusing Albersheim's approximation");
 
     Group:
         detection-theory

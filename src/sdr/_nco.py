@@ -50,10 +50,9 @@ class NCO:
             y = nco.step(100)
 
             @savefig sdr_NCO_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y, marker="."); \
-            plt.title("Constant frequency NCO"); \
-            plt.tight_layout();
+            plt.title("Constant frequency NCO");
 
         Create an NCO with a constant phase increment of 0 radians/sample and a constant phase offset
         of 0 radians. Then step the NCO with a FSK frequency signal.
@@ -66,10 +65,9 @@ class NCO:
             y = nco(freq=freq)
 
             @savefig sdr_NCO_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y, marker="."); \
-            plt.title("NCO implementing CP-FSK modulation"); \
-            plt.tight_layout();
+            plt.title("NCO implementing CP-FSK modulation");
 
         Create an NCO with a constant phase increment of $2 \pi / 57$ radians/sample and a constant phase offset
         of 0 radians. Then step the NCO with a BPSK phase signal.
@@ -82,10 +80,9 @@ class NCO:
             y = nco(phase=phase)
 
             @savefig sdr_NCO_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y, marker="."); \
-            plt.title("NCO implementing BPSK modulation"); \
-            plt.tight_layout();
+            plt.title("NCO implementing BPSK modulation");
 
         See the :ref:`phase-locked-loop` example.
 

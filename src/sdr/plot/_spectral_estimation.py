@@ -117,7 +117,6 @@ def periodogram(
             plt.ylabel("Power density (W/Hz)")
 
         plt.title("Power spectral density")
-        plt.tight_layout()
 
 
 @export
@@ -218,4 +217,3 @@ def spectrogram(
         plt.xlabel("Samples, $n$")
         plt.ylabel("Normalized Frequency, $f /f_s$")
     plt.title("Spectrogram")
-    plt.tight_layout()

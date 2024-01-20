@@ -39,7 +39,7 @@ class MSK(OQPSK):
             msk = sdr.MSK(); msk
 
             @savefig sdr_MSK_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.symbol_map(msk);
 
         Generate a random bit stream, convert to 2-bit symbols, and map to complex symbols.
@@ -51,7 +51,7 @@ class MSK(OQPSK):
             complex_symbols = msk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_MSK_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
         Modulate and pulse shape the symbols to a complex baseband signal.
@@ -61,7 +61,7 @@ class MSK(OQPSK):
             tx_samples = msk.modulate(symbols)
 
             @savefig sdr_MSK_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*msk.sps], sample_rate=msk.sps);
 
         MSK, like OQPSK, has I and Q channels that are offset by half a symbol period.
@@ -75,8 +75,7 @@ class MSK(OQPSK):
             plt.title("In-phase channel, $I$"); \
             plt.subplot(2, 1, 2); \
             sdr.plot.eye(tx_samples[msk.sps : -msk.sps].imag, msk.sps); \
-            plt.title("Quadrature channel, $Q$"); \
-            plt.tight_layout();
+            plt.title("Quadrature channel, $Q$");
 
         The phase trajectory of MSK is linear and continuous. Although, it should be noted that the phase is not
         differentiable at the symbol boundaries. This leads to lower spectral efficiency than, for instance,
@@ -85,7 +84,7 @@ class MSK(OQPSK):
         .. ipython:: python
 
             @savefig sdr_MSK_5.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_tree(tx_samples[msk.sps:], msk.sps);
 
         Add AWGN noise such that $E_b/N_0 = 20$ dB.
@@ -97,7 +96,7 @@ class MSK(OQPSK):
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_MSK_6.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*msk.sps], sample_rate=msk.sps);
 
         Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
@@ -110,7 +109,7 @@ class MSK(OQPSK):
             np.array_equal(symbols, rx_symbols)
 
             @savefig sdr_MSK_7.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
         See the :ref:`psk` example.

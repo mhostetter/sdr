@@ -48,14 +48,12 @@ def roc(
             )
 
         plt.ylim(0, 1)
-        plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
 
         plt.xlabel("Probability of false alarm, $P_{FA}$")
         plt.ylabel("Probability of detection, $P_{D}$")
         plt.title("Receiver operating characteristic (ROC) curve")
-        plt.tight_layout()
 
 
 @export
@@ -84,7 +82,6 @@ def p_d(
         plt.plot(x, p_d, **kwargs)
 
         plt.ylim(0, 1)
-        plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
 
@@ -97,4 +94,3 @@ def p_d(
 
         plt.ylabel("Probability of detection, $P_{D}$")
         plt.title("Detection performance")
-        plt.tight_layout()

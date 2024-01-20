@@ -43,15 +43,14 @@ class PED:
             error, dd_error = ped.decision_directed_error(qpsk)
 
             @savefig sdr_PED_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(error, da_error, label="Data-aided"); \
             plt.plot(error, dd_error, label="Decision-directed"); \
             plt.grid(True, linestyle="--"); \
             plt.legend(); \
             plt.xlabel("Phase of received symbols (radians)"); \
             plt.ylabel("Phase error (radians)"); \
-            plt.title("Comparison of data-aided and decision-directed PEDs on QPSK"); \
-            plt.tight_layout();
+            plt.title("Comparison of data-aided and decision-directed PEDs on QPSK");
 
         Observe that the slope of the phase error $K_p = 1$ is the same for both the data-aided and decision-directed
         PEDs. Also note that the unambiguous range of the data-aided PED is $[-\pi, \pi)$ and the
@@ -160,15 +159,14 @@ class MLPED(PED):
             error, dd_error = ped.decision_directed_error(qpsk)
 
             @savefig sdr_MLPED_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(error, da_error, label="Data-aided"); \
             plt.plot(error, dd_error, label="Decision-directed"); \
             plt.grid(True, linestyle="--"); \
             plt.legend(); \
             plt.xlabel("Phase of received symbols (radians)"); \
             plt.ylabel("Phase error (radians)"); \
-            plt.title("Comparison of data-aided and decision-directed ML-PEDs on QPSK"); \
-            plt.tight_layout();
+            plt.title("Comparison of data-aided and decision-directed ML-PEDs on QPSK");
 
         Observe that the slope of the phase error $K_p = A_{rx,rms} A_{ref,rms}$ is the same for both the data-aided
         and decision-directed PEDs. It's very important to observe that the gain of the ML-PED is scaled by the

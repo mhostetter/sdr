@@ -59,11 +59,10 @@ def awgn(
             y = sdr.awgn(x, snr=10)
 
             @savefig sdr_awgn_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, label="$x[n]$"); \
             sdr.plot.time_domain(y, label="$y[n]$"); \
-            plt.title("Input signal $x[n]$ and noisy output signal $y[n]$ with 10 dB SNR"); \
-            plt.tight_layout()
+            plt.title("Input signal $x[n]$ and noisy output signal $y[n]$ with 10 dB SNR");
 
         Create a QPSK reference signal and set its $E_s/N_0$ to 10 dB. When the signal has 1 sample per symbol,
         $E_s/N_0$ is equivalent to the discrete-time $S/N$.
@@ -76,11 +75,10 @@ def awgn(
             y = sdr.awgn(x, snr=10)
 
             @savefig sdr_awgn_2.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"QPSK constellations for $x[n]$ with $\infty$ dB $E_s/N_0$\nand $y[n]$ with 10 dB $E_s/N_0$"); \
-            plt.tight_layout()
+            plt.title(f"QPSK constellations for $x[n]$ with $\infty$ dB $E_s/N_0$\nand $y[n]$ with 10 dB $E_s/N_0$");
 
     Group:
         simulation-impairments
@@ -123,7 +121,7 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0) -> npt.NDAr
 
         $$g_I = 10^{(A/2)/20} \exp\left(j \frac{-\phi}{2} \frac{\pi}{180}\right)$$
         $$g_Q = 10^{(-A/2)/20} \exp\left(j \frac{\phi}{2} \frac{\pi}{180}\right)$$
-        $$y[n] = g_I x_I[n] + j g_Q x_Q[n]$$
+        $$y[n] = g_I \cdot x_I[n] + j \cdot g_Q \cdot x_Q[n]$$
 
     Examples:
         Positive amplitude imbalance horizontally stretches the constellation, while negative amplitude imbalance
@@ -138,16 +136,14 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0) -> npt.NDAr
             y2 = sdr.iq_imbalance(x, -5, 0)
 
             @savefig sdr_iq_imbalance_1.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             plt.subplot(1, 2, 1); \
             sdr.plot.constellation(x, label="$x[n]$"); \
             sdr.plot.constellation(y1, label="$y_1[n]$"); \
-            plt.legend(); \
             plt.title("5 dB amplitude imbalance"); \
             plt.subplot(1, 2, 2); \
             sdr.plot.constellation(x, label="$x[n]$"); \
             sdr.plot.constellation(y2, label="$y_2[n]$"); \
-            plt.legend(); \
             plt.title("-5 dB amplitude imbalance");
 
         Positive phase imbalance stretches to the northwest, while negative phase imbalance stretches to the
@@ -159,16 +155,14 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0) -> npt.NDAr
             y2 = sdr.iq_imbalance(x, 0, -20)
 
             @savefig sdr_iq_imbalance_2.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             plt.subplot(1, 2, 1); \
             sdr.plot.constellation(x, label="$x[n]$"); \
             sdr.plot.constellation(y1, label="$y_1[n]$"); \
-            plt.legend(); \
             plt.title("20 deg phase imbalance"); \
             plt.subplot(1, 2, 2); \
             sdr.plot.constellation(x, label="$x[n]$"); \
             sdr.plot.constellation(y2, label="$y_2[n]$"); \
-            plt.legend(); \
             plt.title("-20 deg phase imbalance");
 
     Group:
@@ -217,11 +211,10 @@ def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
             y = sdr.sample_rate_offset(x, ppm)
 
             @savefig sdr_sample_rate_offset_1.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{ppm} ppm sample rate offset"); \
-            plt.tight_layout()
+            plt.title(f"{ppm} ppm sample rate offset");
 
         Add 100 ppm of sample rate offset.
 
@@ -231,11 +224,10 @@ def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
             y = sdr.sample_rate_offset(x, ppm)
 
             @savefig sdr_sample_rate_offset_2.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{ppm} ppm sample rate offset"); \
-            plt.tight_layout()
+            plt.title(f"{ppm} ppm sample rate offset");
 
     Group:
         simulation-impairments
@@ -293,11 +285,10 @@ def frequency_offset(
             y = sdr.frequency_offset(x, freq)
 
             @savefig sdr_frequency_offset_1.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{freq} cycles/sample frequency offset"); \
-            plt.tight_layout()
+            plt.title(f"{freq} cycles/sample frequency offset");
 
         Add a frequency offset of -1 cycle per 20,000 symbols and a phase offset of -45 degrees.
 
@@ -308,11 +299,10 @@ def frequency_offset(
             y = sdr.frequency_offset(x, freq, phase=phase)
 
             @savefig sdr_frequency_offset_2.png
-            plt.figure(figsize=(10, 5)); \
+            plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{freq} cycles/sample frequency and {phase} deg offset"); \
-            plt.tight_layout()
+            plt.title(f"{freq} cycles/sample frequency and {phase} deg offset");
 
     Group:
         simulation-impairments
