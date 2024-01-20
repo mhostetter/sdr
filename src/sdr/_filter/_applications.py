@@ -35,7 +35,7 @@ class MovingAverager(FIR):
         .. ipython:: python
 
             @savefig sdr_MovingAverager_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.step_response(fir, N=100, label="Moving Averager"); \
             sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
 
@@ -44,7 +44,7 @@ class MovingAverager(FIR):
         .. ipython:: python
 
             @savefig sdr_MovingAverager_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(fir, label="Moving Averager"); \
             sdr.plot.magnitude_response(iir, label="Leaky Integrator"); \
             plt.ylim(-35, 5);
@@ -58,7 +58,7 @@ class MovingAverager(FIR):
             y_iir = iir(x)
 
             @savefig sdr_MovingAverager_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y_fir, label="Moving Averager"); \
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");
 
@@ -118,11 +118,10 @@ class Differentiator(FIR):
             y = fir(x, "same")
 
             @savefig sdr_Differentiator_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y, label="Derivative"); \
-            plt.title("Discrete-time differentiation of a Gaussian pulse"); \
-            plt.tight_layout();
+            plt.title("Discrete-time differentiation of a Gaussian pulse");
 
         Differentiate a raised cosine pulse.
 
@@ -132,11 +131,10 @@ class Differentiator(FIR):
             y = fir(x, "same")
 
             @savefig sdr_Differentiator_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y, label="Derivative"); \
-            plt.title("Discrete-time differentiation of a raised cosine pulse"); \
-            plt.tight_layout();
+            plt.title("Discrete-time differentiation of a raised cosine pulse");
 
         Plot the frequency response across filter order.
 
@@ -150,7 +148,7 @@ class Differentiator(FIR):
             fir_80 = sdr.Differentiator(80)
 
             @savefig sdr_Differentiator_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(fir_2, y_axis="linear", label="N=2"); \
             sdr.plot.magnitude_response(fir_6, y_axis="linear", label="N=6"); \
             sdr.plot.magnitude_response(fir_10, y_axis="linear", label="N=10"); \
@@ -160,8 +158,7 @@ class Differentiator(FIR):
             f = np.linspace(0, 0.5, 100); \
             plt.plot(f, np.abs(2 * np.pi * f)**2, color="k", linestyle="--", label="Theory"); \
             plt.legend(); \
-            plt.title("Magnitude response of differentiator FIR filters"); \
-            plt.tight_layout();
+            plt.title("Magnitude response of differentiator FIR filters");
 
     Group:
         dsp-filter-applications
@@ -246,13 +243,12 @@ class Integrator(IIR):
             y_forw = iir_forw(x)
 
             @savefig sdr_Integrator_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y_back, label="Integral (backward)"); \
             sdr.plot.time_domain(y_trap, label="Integral (trapezoidal)"); \
             sdr.plot.time_domain(y_forw, label="Integral (forward)"); \
-            plt.title("Discrete-time integration of a Gaussian pulse"); \
-            plt.tight_layout();
+            plt.title("Discrete-time integration of a Gaussian pulse");
 
         Integrate a raised cosine pulse.
 
@@ -264,28 +260,26 @@ class Integrator(IIR):
             y_forw = iir_forw(x)
 
             @savefig sdr_Integrator_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y_back, label="Integral (backward)"); \
             sdr.plot.time_domain(y_trap, label="Integral (trapezoidal)"); \
             sdr.plot.time_domain(y_forw, label="Integral (forward)"); \
-            plt.title("Discrete-time integration of a raised cosine pulse"); \
-            plt.tight_layout();
+            plt.title("Discrete-time integration of a raised cosine pulse");
 
         Plot the frequency responses.
 
         .. ipython:: python
 
             @savefig sdr_Integrator_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(iir_back, label="Backward"); \
             sdr.plot.magnitude_response(iir_trap, label="Trapezoidal"); \
             sdr.plot.magnitude_response(iir_forw, label="Forward"); \
             f = np.linspace(0, 0.5, 100); \
             plt.plot(f, sdr.db(np.abs(1/(2 * np.pi * f))**2), color="k", linestyle="--", label="Theory"); \
             plt.legend(); \
-            plt.title("Magnitude response of integrating IIR filters"); \
-            plt.tight_layout();
+            plt.title("Magnitude response of integrating IIR filters");
 
     Group:
         dsp-filter-applications
@@ -360,7 +354,7 @@ class LeakyIntegrator(IIR):
         .. ipython:: python
 
             @savefig sdr_LeakyIntegrator_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.step_response(fir, N=100, label="Moving Averager"); \
             sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
 
@@ -369,7 +363,7 @@ class LeakyIntegrator(IIR):
         .. ipython:: python
 
             @savefig sdr_LeakyIntegrator_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(fir, label="Moving Averager"); \
             sdr.plot.magnitude_response(iir, label="Leaky Integrator"); \
             plt.ylim(-35, 5);
@@ -383,7 +377,7 @@ class LeakyIntegrator(IIR):
             y_iir = iir(x)
 
             @savefig sdr_LeakyIntegrator_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y_fir, label="Moving Averager"); \
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");
 

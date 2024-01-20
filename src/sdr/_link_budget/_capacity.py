@@ -48,13 +48,11 @@ def bsc_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
             C = sdr.bsc_capacity(p)
 
             @savefig sdr_bsc_capacity_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Transition probability, $p$"); \
             plt.ylabel("Capacity (bits/channel use), $C$"); \
-            plt.title("Capacity of the Binary Symmetric Channel"); \
-            plt.grid(True); \
-            plt.tight_layout()
+            plt.title("Capacity of the Binary Symmetric Channel");
 
     Group:
         link-budget-channel-capacity
@@ -94,13 +92,11 @@ def bec_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
             C = sdr.bec_capacity(p)
 
             @savefig sdr_bec_capacity_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Erasure probability, $p$"); \
             plt.ylabel("Capacity (bits/channel use), $C$"); \
-            plt.title("Capacity of the Binary Erasure Channel"); \
-            plt.grid(True); \
-            plt.tight_layout()
+            plt.title("Capacity of the Binary Erasure Channel");
 
     Group:
         link-budget-channel-capacity
@@ -149,13 +145,11 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
             C = sdr.awgn_capacity(snr)
 
             @savefig sdr_awgn_capacity_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.plot(snr, C); \
             plt.xlabel("Signal-to-noise ratio (dB), $S/N$"); \
             plt.ylabel("Capacity (bits/2D), $C$"); \
-            plt.title("Capacity of the AWGN Channel"); \
-            plt.grid(True); \
-            plt.tight_layout()
+            plt.title("Capacity of the AWGN Channel");
 
         At capacity, which occurs when $R = C$, $E_b/N_0$ is related to $E_s/N_0$ by
 
@@ -169,13 +163,11 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
             ebn0 = sdr.snr_to_ebn0(snr, C)
 
             @savefig sdr_awgn_capacity_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.semilogy(ebn0, C); \
             plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$"); \
             plt.ylabel("Capacity (bits/2D), $C$"); \
-            plt.title("Capacity of the AWGN Channel"); \
-            plt.grid(True, which="both"); \
-            plt.tight_layout()
+            plt.title("Capacity of the AWGN Channel");
 
     Group:
         link-budget-channel-capacity

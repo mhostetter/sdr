@@ -78,10 +78,9 @@ def time_domain(
             pulse_shape = qpsk.pulse_shape
 
             @savefig sdr_plot_time_domain_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(pulse_shape, centered=True); \
-            plt.title("SRRC pulse shape"); \
-            plt.tight_layout()
+            plt.title("SRRC pulse shape");
 
         Plot an imaginary QPSK signal at 10 kS/s.
 
@@ -91,10 +90,9 @@ def time_domain(
             x = qpsk.modulate(symbols)
 
             @savefig sdr_plot_time_domain_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=10e3); \
-            plt.title("SRRC pulse-shaped QPSK"); \
-            plt.tight_layout()
+            plt.title("SRRC pulse-shaped QPSK");
 
         Plot non-uniformly sampled data.
 
@@ -104,10 +102,9 @@ def time_domain(
             x = np.random.randn(t.size)
 
             @savefig sdr_plot_time_domain_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(t, x, marker="."); \
-            plt.title("Non-uniformly sampled data"); \
-            plt.tight_layout()
+            plt.title("Non-uniformly sampled data");
 
     Group:
         plot-time-domain
@@ -152,7 +149,6 @@ def time_domain(
         else:
             plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
-        plt.tight_layout()
 
 
 @export
@@ -276,4 +272,3 @@ def raster(
         else:
             plt.xlabel("Sample, $n$")
         plt.ylabel("Amplitude")
-        plt.tight_layout()

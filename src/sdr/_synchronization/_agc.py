@@ -55,10 +55,9 @@ class AGC:
             x += 0.001 * (np.random.randn(x.size) + 1j * np.random.randn(x.size))
 
             @savefig sdr_AGC_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x); \
-            plt.title("Input signal"); \
-            plt.tight_layout();
+            plt.title("Input signal");
 
         Create an AGC with an attack rate of $\alpha = 0.5$ and a decay rate of $\beta = 0.01$.
         Notice that over time the noise is amplified (according to the decay rate). Also notice that when the signal
@@ -70,11 +69,10 @@ class AGC:
             y = agc(x)
 
             @savefig sdr_AGC_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(y); \
             plt.ylim(-1.5, 1.5); \
-            plt.title("Output signal"); \
-            plt.tight_layout();
+            plt.title("Output signal");
 
     Group:
         synchronization-amplitude

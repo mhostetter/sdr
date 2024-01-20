@@ -36,11 +36,10 @@ class FarrowResampler:
             y1 = farrow1(x, rate)
 
             @savefig sdr_FarrowResampler_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=rate, marker=".", label="Output"); \
-            plt.title("Linear Farrow Resampler"); \
-            plt.tight_layout();
+            plt.title("Linear Farrow Resampler");
 
         Create a quadratic Farrow piecewise polynomial interpolator.
 
@@ -50,11 +49,10 @@ class FarrowResampler:
             y2 = farrow2(x, rate)
 
             @savefig sdr_FarrowResampler_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y2, sample_rate=rate, marker=".", label="Output"); \
-            plt.title("Quadratic Farrow Resampler"); \
-            plt.tight_layout();
+            plt.title("Quadratic Farrow Resampler");
 
         Create a cubic Farrow piecewise polynomial interpolator.
 
@@ -64,11 +62,10 @@ class FarrowResampler:
             y3 = farrow3(x, rate)
 
             @savefig sdr_FarrowResampler_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y3, sample_rate=rate, marker=".", label="Output"); \
-            plt.title("Cubic Farrow Resampler"); \
-            plt.tight_layout();
+            plt.title("Cubic Farrow Resampler");
 
         Create a quartic Farrow piecewise polynomial interpolator.
 
@@ -78,18 +75,17 @@ class FarrowResampler:
             y4 = farrow4(x, rate)
 
             @savefig sdr_FarrowResampler_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Output"); \
-            plt.title("Quartic Farrow Resampler"); \
-            plt.tight_layout();
+            plt.title("Quartic Farrow Resampler");
 
         Compare the outputs of the Farrow resamplers with varying polynomial order.
 
         .. ipython:: python
 
             @savefig sdr_FarrowResampler_5.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=rate, marker=".", label="Linear"); \
             sdr.plot.time_domain(y2, sample_rate=rate, marker=".", label="Quadratic"); \
@@ -97,8 +93,7 @@ class FarrowResampler:
             sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Quartic"); \
             plt.xlim(1.5, 3.5); \
             plt.ylim(-1.0, -0.2); \
-            plt.title("Comparison of Farrow Resamplers"); \
-            plt.tight_layout();
+            plt.title("Comparison of Farrow Resamplers");
 
         Run a Farrow resampler with quartic polynomial order in streaming mode.
 
@@ -115,11 +110,10 @@ class FarrowResampler:
             y = np.concatenate((y1, y2, y3, y4, y5))
 
             @savefig sdr_FarrowResampler_6.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=rate, offset=-farrow4.delay, marker=".", label="Quartic concatenated"); \
-            plt.title("Quartic Farrow Resampler Concatenated Outputs"); \
-            plt.tight_layout();
+            plt.title("Quartic Farrow Resampler Concatenated Outputs");
 
         See the :ref:`farrow-arbitrary-resampler` example.
 

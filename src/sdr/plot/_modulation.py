@@ -52,16 +52,16 @@ def constellation(
             x_hat = sdr.awgn(x, 6);
 
             @savefig sdr_plot_constellation_1.png
-            plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(x_hat);
+            plt.figure(); \
+            sdr.plot.constellation(x_hat)
 
         Display the symbol constellation using a heatmap.
 
         .. ipython:: python
 
             @savefig sdr_plot_constellation_2.png
-            plt.figure(figsize=(8, 4)); \
-            sdr.plot.constellation(x_hat, heatmap=True);
+            plt.figure(); \
+            sdr.plot.constellation(x_hat, heatmap=True)
 
     Group:
         plot-modulation
@@ -96,7 +96,6 @@ def constellation(
         plt.xlabel("In-phase channel, $I$")
         plt.ylabel("Quadrature channel, $Q$")
         plt.title("Constellation")
-        plt.tight_layout()
 
 
 @export
@@ -130,8 +129,8 @@ def symbol_map(
             qpsk = sdr.PSK(4, phase_offset=45)
 
             @savefig sdr_plot_symbol_map_1.png
-            plt.figure(figsize=(8, 4)); \
-            sdr.plot.symbol_map(qpsk.symbol_map);
+            plt.figure(); \
+            sdr.plot.symbol_map(qpsk.symbol_map)
 
     Group:
         plot-modulation
@@ -190,13 +189,11 @@ def symbol_map(
         plt.axis("square")
         plt.xlim(limits)
         plt.ylim(limits)
-        plt.grid(True)
         if "label" in kwargs:
             plt.legend()
         plt.xlabel("In-phase channel, $I$")
         plt.ylabel("Quadrature channel, $Q$")
         plt.title("Symbol Map")
-        plt.tight_layout()
 
 
 @export
@@ -242,7 +239,7 @@ def eye(
             x = fir(a)
 
             @savefig sdr_plot_eye_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.eye(x, sps)
 
         Apply a root raised cosine pulse shape and examine the eye diagram. The root raised cosine filter
@@ -258,7 +255,7 @@ def eye(
             x = fir(a)
 
             @savefig sdr_plot_eye_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.eye(x, sps)
 
     Group:
@@ -307,7 +304,7 @@ def phase_tree(
         .. ipython:: python
 
             @savefig sdr_plot_phase_tree_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.phase_tree(x, msk.sps)
 
     Group:
@@ -366,13 +363,12 @@ def ber(
             ebn0 = np.linspace(-2, 10, 100)
 
             @savefig sdr_plot_ber_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK"); \
             sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
             sdr.plot.ber(ebn0, psk8.ber(ebn0), label="8-PSK"); \
             sdr.plot.ber(ebn0, psk16.ber(ebn0), label="16-PSK"); \
-            plt.title("BER curves for PSK modulation in an AWGN channel"); \
-            plt.tight_layout();
+            plt.title("BER curves for PSK modulation in an AWGN channel");
 
     Group:
         plot-modulation
@@ -382,14 +378,12 @@ def ber(
         kwargs = {**default_kwargs, **kwargs}
 
         plt.semilogy(ebn0, ber, **kwargs)
-        plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
 
         plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$")
         plt.ylabel("Probability of bit error, $P_{be}$")
         plt.title("Bit error rate curve")
-        plt.tight_layout()
 
 
 @export
@@ -418,13 +412,12 @@ def ser(
             esn0 = np.linspace(-2, 10, 100)
 
             @savefig sdr_psk_ser_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.ser(esn0, bpsk.ser(esn0), label="BPSK"); \
             sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
             sdr.plot.ser(esn0, psk8.ser(esn0), label="8-PSK"); \
             sdr.plot.ser(esn0, psk16.ser(esn0), label="16-PSK"); \
-            plt.title("SER curves for PSK modulation in an AWGN channel"); \
-            plt.tight_layout();
+            plt.title("SER curves for PSK modulation in an AWGN channel");
 
     Group:
         plot-modulation
@@ -434,11 +427,9 @@ def ser(
         kwargs = {**default_kwargs, **kwargs}
 
         plt.semilogy(esn0, ser, **kwargs)
-        plt.grid(True, which="both")
         if "label" in kwargs:
             plt.legend()
 
         plt.xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
         plt.ylabel("Probability of symbol error, $P_{se}$")
         plt.title("Symbol error rate curve")
-        plt.tight_layout()

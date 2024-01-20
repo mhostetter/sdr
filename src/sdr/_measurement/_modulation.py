@@ -68,11 +68,10 @@ def evm(
             x_hat = sdr.awgn(x, 20)
 
             @savefig sdr_evm_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.constellation(x_hat, label=r"$\hat{x}[k]$"); \
             sdr.plot.symbol_map(psk.symbol_map, label=r"Reference"); \
-            plt.title("QPSK Constellation at 20 dB $E_s/N_0$"); \
-            plt.tight_layout();
+            plt.title("QPSK Constellation at 20 dB $E_s/N_0$");
 
         Measure the RMS EVM, normalizing with the average power of the reference symbols.
         Either the symbol map or noiseless transmitted symbols may be passed.
@@ -107,12 +106,11 @@ def evm(
             inst_evm = sdr.evm(x_hat, psk.symbol_map, output="all")
 
             @savefig sdr_evm_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             plt.hist(inst_evm, bins=20); \
             plt.xlabel("RMS EVM (%)"); \
             plt.ylabel("Count"); \
-            plt.title("EVM Histogram"); \
-            plt.tight_layout();
+            plt.title("EVM Histogram");
 
     Group:
         measurement-modulation

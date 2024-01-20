@@ -52,16 +52,16 @@ def design_frac_delay_fir(
             h_8 = sdr.design_frac_delay_fir(8, 0.25)
 
             @savefig sdr_design_frac_delay_fir_1.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.impulse_response(h_8);
 
             @savefig sdr_design_frac_delay_fir_2.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_8); \
             plt.ylim(-4, 1);
 
             @savefig sdr_design_frac_delay_fir_3.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.group_delay(h_8);
 
         Compare the magnitude response and group delay of filters with different lengths.
@@ -73,21 +73,19 @@ def design_frac_delay_fir(
             h_64 = sdr.design_frac_delay_fir(64, 0.25)
 
             @savefig sdr_design_frac_delay_fir_4.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.magnitude_response(h_8, label="Length 8"); \
             sdr.plot.magnitude_response(h_16, label="Length 16"); \
             sdr.plot.magnitude_response(h_32, label="Length 32"); \
             sdr.plot.magnitude_response(h_64, label="Length 64"); \
-            plt.legend(); \
             plt.ylim(-4, 1);
 
             @savefig sdr_design_frac_delay_fir_5.png
-            plt.figure(figsize=(8, 4)); \
+            plt.figure(); \
             sdr.plot.group_delay(h_8, label="Length 8"); \
             sdr.plot.group_delay(h_16, label="Length 16"); \
             sdr.plot.group_delay(h_32, label="Length 32"); \
-            sdr.plot.group_delay(h_64, label="Length 64"); \
-            plt.legend();
+            sdr.plot.group_delay(h_64, label="Length 64");
 
     Group:
         dsp-arbitrary-resampling
@@ -134,7 +132,7 @@ class FractionalDelay(FIR):
 
         .. ipython:: python
 
-            plt.figure(figsize=(8, 4));
+            plt.figure();
             for length in [4, 8, 16, 32, 64, 128]:
                 fir = sdr.FractionalDelay(length, 0.21719)
                 sdr.plot.magnitude_response(fir, label=f"$L = {length}$")
@@ -148,7 +146,7 @@ class FractionalDelay(FIR):
 
         .. ipython:: python
 
-            plt.figure(figsize=(8, 4));
+            plt.figure();
             for delay in np.arange(0.1, 1, 0.1):
                 fir = sdr.FractionalDelay(8, delay)
                 sdr.plot.magnitude_response(fir, label=f"$\Delta n = {delay:0.1f}$")
@@ -162,7 +160,7 @@ class FractionalDelay(FIR):
 
         .. ipython:: python
 
-            plt.figure(figsize=(8, 4));
+            plt.figure();
             for delay in np.arange(0.1, 1, 0.1):
                 fir = sdr.FractionalDelay(8, delay)
                 sdr.plot.group_delay(fir, label=f"$\Delta n = {delay:0.1f}$")
