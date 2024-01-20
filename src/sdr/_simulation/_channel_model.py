@@ -276,7 +276,7 @@ class BinarySymmetricChannel(Channel):
 
         .. ipython:: python
 
-            p = np.linspace(0, 1, 100); \
+            p = np.linspace(0, 1, 101); \
             C = sdr.BinarySymmetricChannel.capacities(p)
 
             @savefig sdr_BinarySymmetricChannel_1.png
@@ -363,5 +363,130 @@ class BinarySymmetricChannel(Channel):
     def p(self) -> float:
         """
         The transition probability $p$ of the BSC channel.
+        """
+        return self._p
+
+
+@export
+class BinaryErasureChannel(Channel):
+    r"""
+    Implements a binary erasure channel (BEC).
+
+    Notes:
+        The inputs to the BEC are $x_i \in \{0, 1\}$ and the outputs are $y_i \in \{0, 1, e\}$.
+        The capacity of the BEC is
+
+        $$C = 1 - p \ \ \text{bits/channel use} .$$
+
+    Examples:
+        When 20 bits are passed through a BEC with erasure probability $p=0.25$, roughly 5 bits are erased
+        at the output.
+
+        .. ipython:: python
+
+            bec = sdr.BinaryErasureChannel(0.25, seed=1)
+            x = np.random.randint(0, 2, 20); x
+            y = bec(x); y
+            np.count_nonzero(x != y)
+
+        The capacity of this BEC is 0.75 bits/channel use.
+
+        .. ipython:: python
+
+            bec.capacity
+
+        When the probability $p$ of bit erasure is 0, the capacity of the channel is 1 bit/channel use.
+        However, as the probability of erasure approaches 1, the capacity of the channel linearly approaches
+        0.
+
+        .. ipython:: python
+
+            p = np.linspace(0, 1, 101); \
+            C = sdr.BinaryErasureChannel.capacities(p)
+
+            @savefig sdr_BinaryErasureChannel_1.png
+            plt.figure(figsize=(8, 4)); \
+            plt.plot(p, C); \
+            plt.xlabel("Erasure probability, $p$"); \
+            plt.ylabel("Capacity (bits/channel use), $C$"); \
+            plt.title("Capacity of the Binary Erasure Channel"); \
+            plt.grid(True); \
+            plt.tight_layout()
+
+    Group:
+        simulation-channel-models
+    """
+
+    def __init__(self, p: float, seed: int | None = None):
+        """
+        Creates a new binary erasure channel (BEC).
+
+        Arguments:
+            p: The erasure probability $p$ of the BEC channel.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        """
+        super().__init__(seed=seed)
+
+        if not 0 <= p <= 1:
+            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+        self._p = p
+
+    @overload
+    def __call__(self, x: int) -> int:
+        ...
+
+    @overload
+    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
+        ...
+
+    def __call__(self, x: Any) -> Any:
+        r"""
+        Passes the binary input sequence $x$ through the channel.
+
+        Arguments:
+            x: The input sequence $x$ with $x_i \in \{0, 1\}$.
+
+        Returns:
+            The output sequence $y$ with $y_i \in \{0, 1, e\}$. Erasures $e$ are represented by -1.
+        """
+        x = np.asarray(x)
+        random_p = self._rng.random(x.shape)
+        y = np.where(random_p < self.p, -1, x)
+
+        return y if y.ndim > 0 else y.item()
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(p={self.p})"
+
+    def __str__(self) -> str:
+        string = super().__str__()
+        string += f" p={self.p}"
+        return string
+
+    @staticmethod
+    def capacities(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+        """
+        Calculates the capacity of BEC channels.
+
+        Returns:
+            The capacity $C$ of the channel in bits/channel use.
+        """
+        p = np.asarray(p)
+        if not (np.all(0 <= p) and np.all(p <= 1)):
+            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+
+        return 1 - p
+
+    @property
+    def capacity(self) -> float:
+        """
+        The capacity $C$ of the instantiated channel in bits/channel use.
+        """
+        return BinaryErasureChannel.capacities(self.p)
+
+    @property
+    def p(self) -> float:
+        """
+        The erasure probability $p$ of the BEC channel.
         """
         return self._p
