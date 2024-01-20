@@ -171,3 +171,69 @@ def dmc(
         y[idxs] = rng.choice(Y, size=idxs.shape, p=P[i])
 
     return y if y.ndim > 0 else y.item()
+
+
+@export
+class Channel:
+    """
+    A base class for wireless channels.
+
+    Group:
+        simulation-channel-models
+    """
+
+    def __init__(self, seed: int | None = None):
+        """
+        Creates a new channel.
+
+        Arguments:
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        """
+        self._rng: np.random.Generator  # Will be set in self.reset()
+
+        self.reset(seed)
+
+    def reset(self, seed: int | None = None) -> None:
+        """
+        Resets the channel with a new seed.
+
+        Arguments:
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        """
+        self._rng = np.random.default_rng(seed)
+
+    def __call__(self, x: npt.NDArray) -> npt.NDArray:
+        """
+        Passes the input sequence $x$ through the channel.
+
+        Arguments:
+            x: The input sequence $x$.
+
+        Returns:
+            The output sequence $y$.
+        """
+        raise NotImplementedError
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}()"
+
+    def __str__(self) -> str:
+        string = f"sdr.{type(self).__name__}:"
+        return string
+
+    @staticmethod
+    def capacities() -> npt.NDArray:
+        """
+        Computes the channel capacity given the channel configuration.
+
+        Returns:
+            The channel capacities $C$ in bits/2D.
+        """
+        raise NotImplementedError
+
+    @property
+    def capacity(self) -> float:
+        """
+        The channel capacity $C$ in bits/2D of the instantiated channel.
+        """
+        raise NotImplementedError
