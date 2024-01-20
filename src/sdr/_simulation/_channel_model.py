@@ -248,10 +248,15 @@ class BinarySymmetricChannel(Channel):
     Implements a binary symmetric channel (BSC).
 
     Notes:
-        The inputs to the BSC are $x_i \in \{0, 1\}$ and the outputs are $y_i \in \{0, 1\}$.
+        The inputs to the BSC are $x_i \in \mathcal{X} = \{0, 1\}$ and the outputs are $y_i \in \mathcal{Y} = \{0, 1\}$.
         The capacity of the BSC is
 
         $$C = 1 - H_b(p) \ \ \text{bits/channel use} .$$
+
+        This is an appropriate channel model for binary modulation with hard decisions at the detector.
+
+    References:
+        - John Proakis, *Digital Communications*, Chapter 6.5-1: Channel Models.
 
     Examples:
         When 20 bits are passed through a BSC with transition probability $p=0.25$, roughly 5 bits are flipped
@@ -319,10 +324,10 @@ class BinarySymmetricChannel(Channel):
         Passes the binary input sequence $x$ through the channel.
 
         Arguments:
-            x: The input sequence $x$ with $x_i \in \{0, 1\}$.
+            x: The input sequence $x$ with $x_i \in \mathcal{X} = \{0, 1\}$.
 
         Returns:
-            The output sequence $y$ with $y_i \in \{0, 1\}$.
+            The output sequence $y$ with $y_i \in \mathcal{Y} = \{0, 1\}$.
         """
         x = np.asarray(x)
         flip = self._rng.choice([0, 1], size=x.shape, p=[1 - self.p, self.p])
@@ -353,11 +358,18 @@ class BinarySymmetricChannel(Channel):
         return 1 - Hb(p)
 
     @property
-    def capacity(self) -> float:
+    def X(self) -> npt.NDArray[np.int_]:
+        r"""
+        The input alphabet $\mathcal{X} = \{0, 1\}$ of the BSC channel.
         """
-        The capacity $C$ of the instantiated channel in bits/channel use.
+        return np.array([0, 1])
+
+    @property
+    def Y(self) -> npt.NDArray[np.int_]:
+        r"""
+        The output alphabet $\mathcal{Y} = \{0, 1\}$ of the BSC channel.
         """
-        return BinarySymmetricChannel.capacities(self.p)
+        return np.array([0, 1])
 
     @property
     def p(self) -> float:
@@ -366,6 +378,13 @@ class BinarySymmetricChannel(Channel):
         """
         return self._p
 
+    @property
+    def capacity(self) -> float:
+        """
+        The capacity $C$ of the instantiated channel in bits/channel use.
+        """
+        return BinarySymmetricChannel.capacities(self.p)
+
 
 @export
 class BinaryErasureChannel(Channel):
@@ -373,10 +392,13 @@ class BinaryErasureChannel(Channel):
     Implements a binary erasure channel (BEC).
 
     Notes:
-        The inputs to the BEC are $x_i \in \{0, 1\}$ and the outputs are $y_i \in \{0, 1, e\}$.
-        The capacity of the BEC is
+        The inputs to the BEC are $x_i \in \mathcal{X} = \{0, 1\}$ and the outputs are
+        $y_i \in \mathcal{Y} = \{0, 1, e\}$. The capacity of the BEC is
 
         $$C = 1 - p \ \ \text{bits/channel use} .$$
+
+    References:
+        - John Proakis, *Digital Communications*, Chapter 6.5-1: Channel Models.
 
     Examples:
         When 20 bits are passed through a BEC with erasure probability $p=0.25$, roughly 5 bits are erased
@@ -444,10 +466,10 @@ class BinaryErasureChannel(Channel):
         Passes the binary input sequence $x$ through the channel.
 
         Arguments:
-            x: The input sequence $x$ with $x_i \in \{0, 1\}$.
+            x: The input sequence $x$ with $x_i \in \mathcal{X} = \{0, 1\}$.
 
         Returns:
-            The output sequence $y$ with $y_i \in \{0, 1, e\}$. Erasures $e$ are represented by -1.
+            The output sequence $y$ with $y_i \in \mathcal{Y} = \{0, 1, e\}$. Erasures $e$ are represented by -1.
         """
         x = np.asarray(x)
         random_p = self._rng.random(x.shape)
@@ -478,11 +500,18 @@ class BinaryErasureChannel(Channel):
         return 1 - p
 
     @property
-    def capacity(self) -> float:
+    def X(self) -> npt.NDArray[np.int_]:
+        r"""
+        The input alphabet $\mathcal{X} = \{0, 1\}$ of the BEC channel.
         """
-        The capacity $C$ of the instantiated channel in bits/channel use.
+        return np.array([0, 1])
+
+    @property
+    def Y(self) -> npt.NDArray[np.int_]:
+        r"""
+        The output alphabet $\mathcal{Y} = \{0, 1, e\}$ of the BEC channel. Erasures $e$ are represented by -1.
         """
-        return BinaryErasureChannel.capacities(self.p)
+        return np.array([0, 1, -1])
 
     @property
     def p(self) -> float:
@@ -490,3 +519,10 @@ class BinaryErasureChannel(Channel):
         The erasure probability $p$ of the BEC channel.
         """
         return self._p
+
+    @property
+    def capacity(self) -> float:
+        """
+        The capacity $C$ of the instantiated channel in bits/channel use.
+        """
+        return BinaryErasureChannel.capacities(self.p)
