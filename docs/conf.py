@@ -226,6 +226,7 @@ ipython_execlines = [
     "import numpy as np",
     "import sdr",
     "np.random.seed(0)",  # Set random seed for reproducibility
+    "sdr.plot.use_style()",  # Use the sdr library matplotlib style
 ]
 ipython_warning_is_error = False
 
