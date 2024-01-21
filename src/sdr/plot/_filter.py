@@ -759,8 +759,7 @@ def filter(
     decades: int = 4,
 ):
     r"""
-    Plots the magnitude response $|H(\omega)|^2$, impulse response $h[n]$, step response $s[n]$,
-    and zeros and poles of the filter.
+    Plots the magnitude response $|H(\omega)|^2$, impulse response $h[n]$, and zeros and poles of the filter.
 
     Arguments:
         filter: The filter definition.
@@ -808,14 +807,11 @@ def filter(
     b, a = _convert_to_taps(filter)
 
     with plt.rc_context(RC_PARAMS):
-        plt.subplot2grid((4, 3), (0, 0), 2, 3)
+        plt.subplot2grid((2, 3), (0, 0), 1, 3)
         magnitude_response((b, a), sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
 
-        plt.subplot2grid((4, 3), (2, 0), 2, 1)
+        plt.subplot2grid((2, 3), (1, 0), 1, 1)
         zeros_poles((b, a))
 
-        plt.subplot2grid((4, 3), (2, 1), 1, 2)
+        plt.subplot2grid((2, 3), (1, 1), 1, 2)
         impulse_response((b, a), N=N_time)
-
-        plt.subplot2grid((4, 3), (3, 1), 1, 2)
-        step_response((b, a), N=N_time)
