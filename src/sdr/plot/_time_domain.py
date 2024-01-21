@@ -187,7 +187,7 @@ def raster(
             - `"linestyles"`: `"solid"`
             - `"cmap"`: `"rainbow"`
 
-            If `persistance=True`, the following keyword arguments are passed to :func:`matplotlib.pcolormesh`.
+            If `persistance=True`, the following keyword arguments are passed to :func:`matplotlib.pyplot.pcolormesh`.
             The defaults may be overwritten.
 
             - `"bins"`: `(800, 200)  # Passed to np.histogram2d()`
