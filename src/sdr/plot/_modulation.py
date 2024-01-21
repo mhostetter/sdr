@@ -17,8 +17,8 @@ from ._time_domain import raster
 @export
 def constellation(
     x_hat: npt.NDArray[np.complex_],
-    heatmap: bool = False,
     limits: tuple[float, float] | None = None,
+    persistence: bool = False,
     colorbar: bool = True,
     **kwargs,
 ):
@@ -27,18 +27,20 @@ def constellation(
 
     Arguments:
         x_hat: The complex symbols $\hat{x}[k]$.
-        heatmap: If `True`, a heatmap is plotted instead of a scatter plot.
         limits: The axis limits, which apply to both the x- and y-axis. If `None`, the axis limits are
             set to 10% larger than the maximum value.
+        persistence: Indicates whether to plot the points as a persistence plot. A persistence plot is a
+            2D histogram of the points.
+        colorbar: Indicates whether to add a colorbar to the plot. This is only added if `persistence=True`.
         kwargs: Additional keyword arguments to pass to Matplotlib functions.
 
-            If `heatmap=False`, the following keyword arguments are passed to :func:`matplotlib.pyplot.scatter()`.
+            If `persistence=False`, the following keyword arguments are passed to :func:`matplotlib.pyplot.scatter()`.
             The defaults may be overwritten.
 
             - `"marker"`: `"."`
             - `"linestyle"`: `"none"`
 
-            If `heatmap=True`, the following keyword arguments are passed to :func:`numpy.histogram2d()` and
+            If `persistence=True`, the following keyword arguments are passed to :func:`numpy.histogram2d()` and
             :func:`matplotlib.pyplot.pcolormesh`. The defaults may be overwritten.
 
             - `"range"`: +/- 10% of the maximum value
@@ -52,21 +54,21 @@ def constellation(
         .. ipython:: python
 
             qpsk = sdr.PSK(4, phase_offset=45); \
-            s = np.random.randint(0, qpsk.order, 10_000); \
+            s = np.random.randint(0, qpsk.order, 100_000); \
             x = qpsk.map_symbols(s); \
             x_hat = sdr.awgn(x, 6);
 
             @savefig sdr_plot_constellation_1.png
             plt.figure(); \
-            sdr.plot.constellation(x_hat)
+            sdr.plot.constellation(x_hat[0:1_000])
 
-        Display the symbol constellation using a heatmap.
+        Display the symbol constellation using a persistence plot.
 
         .. ipython:: python
 
             @savefig sdr_plot_constellation_2.png
             plt.figure(); \
-            sdr.plot.constellation(x_hat, heatmap=True)
+            sdr.plot.constellation(x_hat, persistence=True)
 
     Group:
         plot-modulation
@@ -77,7 +79,7 @@ def constellation(
         limits = (-lim, lim)
 
     with plt.rc_context(RC_PARAMS):
-        if heatmap:
+        if persistence:
             default_kwargs = {
                 "range": (limits, limits),
                 "bins": 100,  # Number of bins per axis
@@ -100,7 +102,7 @@ def constellation(
 
             pcm = plt.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
             if colorbar:
-                plt.colorbar(pcm, label="Points")
+                plt.colorbar(pcm, label="Points", pad=0.05)
         else:
             default_kwargs = {
                 "marker": ".",
