@@ -62,7 +62,7 @@ class MSK(OQPSK):
 
             @savefig sdr_MSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*msk.sps], sample_rate=msk.sps);
+            sdr.plot.time_domain(tx_samples[0:50*msk.sps]);
 
         MSK, like OQPSK, has I and Q channels that are offset by half a symbol period.
 
@@ -70,12 +70,8 @@ class MSK(OQPSK):
 
             @savefig sdr_MSK_4.png
             plt.figure(figsize=(8, 6)); \
-            plt.subplot(2, 1, 1); \
-            sdr.plot.eye(tx_samples[msk.sps : -msk.sps].real, msk.sps); \
-            plt.title("In-phase channel, $I$"); \
-            plt.subplot(2, 1, 2); \
-            sdr.plot.eye(tx_samples[msk.sps : -msk.sps].imag, msk.sps); \
-            plt.title("Quadrature channel, $Q$");
+            sdr.plot.eye(tx_samples[5*msk.sps : -5*msk.sps], msk.sps); \
+            plt.suptitle("Noiseless transmitted signal");
 
         The phase trajectory of MSK is linear and continuous. Although, it should be noted that the phase is not
         differentiable at the symbol boundaries. This leads to lower spectral efficiency than, for instance,
@@ -87,17 +83,29 @@ class MSK(OQPSK):
             plt.figure(); \
             sdr.plot.phase_tree(tx_samples[msk.sps:], msk.sps);
 
-        Add AWGN noise such that $E_b/N_0 = 20$ dB.
+        Add AWGN noise such that $E_b/N_0 = 30$ dB.
 
         .. ipython:: python
 
-            ebn0 = 20; \
+            ebn0 = 30; \
             snr = sdr.ebn0_to_snr(ebn0, bps=msk.bps, sps=msk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_MSK_6.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*msk.sps], sample_rate=msk.sps);
+            sdr.plot.time_domain(rx_samples[0:50*msk.sps]);
+
+        Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal.
+
+        .. ipython:: python
+
+            mf = sdr.FIR(msk.pulse_shape); \
+            mf_samples = mf(rx_samples)
+
+            @savefig sdr_MSK_7.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(mf_samples[10*msk.sps : -10*msk.sps], msk.sps); \
+            plt.suptitle("Noisy received and matched filtered signal");
 
         Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
 
@@ -108,7 +116,7 @@ class MSK(OQPSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_MSK_7.png
+            @savefig sdr_MSK_8.png
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
