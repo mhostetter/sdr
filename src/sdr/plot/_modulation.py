@@ -19,6 +19,7 @@ def constellation(
     x_hat: npt.NDArray[np.complex_],
     heatmap: bool = False,
     limits: tuple[float, float] | None = None,
+    colorbar: bool = True,
     **kwargs,
 ):
     r"""
@@ -37,12 +38,13 @@ def constellation(
             - `"marker"`: `"."`
             - `"linestyle"`: `"none"`
 
-            If `heatmap=True`, the following keyword arguments are passed to :func:`matplotlib.pyplot.hist2d()`.
-            The defaults may be overwritten.
+            If `heatmap=True`, the following keyword arguments are passed to :func:`numpy.histogram2d()` and
+            :func:`matplotlib.pyplot.pcolormesh`. The defaults may be overwritten.
 
             - `"range"`: +/- 10% of the maximum value
             - `"bins"`: `100  # Number of bins per axis`
-            - `"cmap"`: `"turbo"`
+            - `"cmap"`: `"rainbow"`
+            - `"show_zero"`: `False`
 
     Example:
         Display the symbol constellation for Gray-coded QPSK at 6 dB $E_s/N_0$.
@@ -79,10 +81,26 @@ def constellation(
             default_kwargs = {
                 "range": (limits, limits),
                 "bins": 100,  # Number of bins per axis
-                "cmap": "turbo",
+                "cmap": "rainbow",
+                "show_zero": False,
             }
             kwargs = {**default_kwargs, **kwargs}
-            plt.hist2d(x_hat.real, x_hat.imag, **kwargs)
+
+            bins = kwargs.pop("bins")
+            range = kwargs.pop("range")
+            h, t_edges, x_edges = np.histogram2d(x_hat.real, x_hat.imag, bins=bins, range=range)
+
+            cmap = kwargs.pop("cmap")  # Need to pop cmap to avoid passing it twice to pcolormesh
+            cmap = plt.colormaps[cmap]
+            show_zero = kwargs.pop("show_zero")
+            if show_zero:
+                cmap = cmap.with_extremes(bad=cmap(0))
+            else:
+                h[h == 0] = np.nan  # Set 0s to NaNs so they don't show up in the plot
+
+            pcm = plt.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
+            if colorbar:
+                plt.colorbar(pcm, label="Points")
         else:
             default_kwargs = {
                 "marker": ".",
@@ -94,8 +112,6 @@ def constellation(
         plt.axis("square")
         plt.xlim(limits)
         plt.ylim(limits)
-        if heatmap:
-            plt.grid(False)  # Not visually appealing for heatmaps
         if "label" in kwargs:
             plt.legend()
         plt.xlabel("In-phase channel, $I$")
