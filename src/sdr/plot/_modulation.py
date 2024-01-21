@@ -239,7 +239,7 @@ def eye(
         sps: The number of samples per symbol.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Samples".
+            be labeled as "Symbol".
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
         persistence: Indicates whether to plot the raster as a persistence plot. A persistence plot is a
@@ -298,14 +298,16 @@ def eye(
         def _eye(xx):
             raster(
                 xx,
-                span * sps + 1,
+                length=span * sps + 1,
                 stride=sps,
-                sample_rate=sample_rate,
+                sample_rate=sample_rate if sample_rate is not None else sps,
                 color=color,
                 persistence=persistence,
                 colorbar=colorbar,
                 **kwargs,
             )
+            if sample_rate is None:
+                plt.xlabel("Symbol, $k$")
 
             # Make y-axis symmetric
             ax = plt.gca()
