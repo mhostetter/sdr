@@ -380,6 +380,7 @@ def phase_tree(
 
         # Unwrap the phase and convert to degrees
         phase_strided = np.unwrap(phase_strided, axis=1)
+        phase_strided -= phase_strided[:, 0][:, np.newaxis]  # Normalize to 0 degrees at the first sample
         phase_strided = np.rad2deg(phase_strided)
 
         raster(
