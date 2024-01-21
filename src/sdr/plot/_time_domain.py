@@ -187,13 +187,14 @@ def raster(
             - `"linestyles"`: `"solid"`
             - `"cmap"`: `"rainbow"`
 
-            If `persistance=True`, the following keyword arguments are passed to :func:`matplotlib.pyplot.pcolormesh`.
+            If `persistence=True`, the following keyword arguments are passed to :func:`matplotlib.pyplot.pcolormesh`.
             The defaults may be overwritten.
 
             - `"bins"`: `(800, 200)  # Passed to np.histogram2d()`
-            - `"cmap"`: `"turbo"`
+            - `"cmap"`: `"rainbow"`
             - `"norm"`: `"log"`
             - `"rasterized"`: `True`
+            - `"show_zero"`: `False`
 
     Group:
         plot-time-domain
@@ -246,9 +247,10 @@ def raster(
     if persistence:
         default_kwargs = {
             "bins": (800, 200),
-            "cmap": "turbo",
+            "cmap": "rainbow",
             "norm": "log",
             "rasterized": True,
+            "show_zero": False,
         }
         kwargs = {**default_kwargs, **kwargs}
 
@@ -256,17 +258,20 @@ def raster(
         t_fine = np.linspace(t.min(), t.max(), bins[0])
         x_fine = np.concatenate([np.interp(t_fine, t, x_row) for x_row in x_strided])
         t_fine = np.broadcast_to(t_fine, (x_strided.shape[0], bins[0])).ravel()
+        h, t_edges, x_edges = np.histogram2d(t_fine, x_fine, bins=bins)
 
         with plt.rc_context(RC_PARAMS):
             cmap = kwargs.pop("cmap")  # Need to pop cmap to avoid passing it twice to pcolormesh
             cmap = plt.colormaps[cmap]
-            cmap = cmap.with_extremes(bad=cmap(0))
-            h, t_edges, x_edges = np.histogram2d(t_fine, x_fine, bins=bins)
+            show_zero = kwargs.pop("show_zero")
+            if show_zero:
+                cmap = cmap.with_extremes(bad=cmap(0))
+            else:
+                h[h == 0] = np.nan  # Set 0s to NaNs so they don't show up in the plot
 
             pcm = plt.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
-            plt.grid(False)  # Not visually appealing for color meshes
             if colorbar:
-                plt.colorbar(pcm, label="Points", pad=0)
+                plt.colorbar(pcm, label="Points", pad=0.05)
     else:
         segments = [np.column_stack([t, x_raster]) for x_raster in x_strided]
 
@@ -294,7 +299,7 @@ def raster(
             ax.set_ylim(x.min(), x.max())
 
             if colorbar and color == "index":
-                plt.colorbar(line_collection, label="Raster Index", pad=0)
+                plt.colorbar(line_collection, label="Raster Index", pad=0.05)
 
     with plt.rc_context(RC_PARAMS):
         if sample_rate_provided:
