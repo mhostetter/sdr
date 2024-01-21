@@ -331,7 +331,7 @@ def eye(
 def phase_tree(
     x: npt.NDArray,
     sps: int,
-    span: int = 4,
+    span: int = 2,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
     **kwargs,
