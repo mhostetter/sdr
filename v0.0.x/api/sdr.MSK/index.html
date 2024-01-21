@@ -11576,19 +11576,15 @@ sample index.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">tx_samples</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [8]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">tx_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">],</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span>
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">tx_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">]);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_MSK_3.png" src="../../_images/sdr_MSK_3.png" />
 <p>MSK, like OQPSK, has I and Q channels that are offset by half a symbol period.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">tx_samples</span><span class="p">[</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span> <span class="p">:</span> <span class="o">-</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;In-phase channel, $I$&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">tx_samples</span><span class="p">[</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span> <span class="p">:</span> <span class="o">-</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Quadrature channel, $Q$&quot;</span><span class="p">);</span>
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">tx_samples</span><span class="p">[</span><span class="mi">5</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span> <span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">],</span> <span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Noiseless transmitted signal&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
@@ -11602,31 +11598,43 @@ GMSK.</p>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_MSK_5.png" src="../../_images/sdr_MSK_5.png" />
-<p>Add AWGN noise such that <span class="math notranslate nohighlight">\(E_b/N_0 = 20\)</span> dB.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [11]: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> \
+<p>Add AWGN noise such that <span class="math notranslate nohighlight">\(E_b/N_0 = 30\)</span> dB.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [11]: </span><span class="n">ebn0</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span> \
 <span class="gp">   ....: </span><span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ebn0_to_snr</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">bps</span><span class="o">=</span><span class="n">msk</span><span class="o">.</span><span class="n">bps</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">rx_samples</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn</span><span class="p">(</span><span class="n">tx_samples</span><span class="p">,</span> <span class="n">snr</span><span class="o">=</span><span class="n">snr</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
 <span class="gp">In [12]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">],</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span>
+<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">50</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">]);</span>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_MSK_6.png" src="../../_images/sdr_MSK_6.png" />
-<p>Matched filter and demodulate. Note, the first symbol has <span class="math notranslate nohighlight">\(Q = 0\)</span> and the last symbol has <span class="math notranslate nohighlight">\(I = 0\)</span>.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [13]: </span><span class="n">rx_symbols</span><span class="p">,</span> <span class="n">rx_complex_symbols</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
+<p>Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [13]: </span><span class="n">mf</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FIR</span><span class="p">(</span><span class="n">msk</span><span class="o">.</span><span class="n">pulse_shape</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">mf_samples</span> <span class="o">=</span> <span class="n">mf</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
+<span class="gp">   ....: </span>
 
-<span class="go"># The symbol decisions are error-free</span>
-<span class="gp">In [14]: </span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">rx_symbols</span><span class="p">)</span>
-<span class="gh">Out[14]: </span><span class="go">True</span>
-
-<span class="gp">In [15]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">rx_complex_symbols</span><span class="p">);</span>
+<span class="gp">In [14]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span> \
+<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">mf_samples</span><span class="p">[</span><span class="mi">10</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span> <span class="p">:</span> <span class="o">-</span><span class="mi">10</span><span class="o">*</span><span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">],</span> <span class="n">msk</span><span class="o">.</span><span class="n">sps</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Noisy received and matched filtered signal&quot;</span><span class="p">);</span>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_MSK_7.png" src="../../_images/sdr_MSK_7.png" />
+<p>Matched filter and demodulate. Note, the first symbol has <span class="math notranslate nohighlight">\(Q = 0\)</span> and the last symbol has <span class="math notranslate nohighlight">\(I = 0\)</span>.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [15]: </span><span class="n">rx_symbols</span><span class="p">,</span> <span class="n">rx_complex_symbols</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msk</span><span class="o">.</span><span class="n">demodulate</span><span class="p">(</span><span class="n">rx_samples</span><span class="p">)</span>
+
+<span class="go"># The symbol decisions are error-free</span>
+<span class="gp">In [16]: </span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">rx_symbols</span><span class="p">)</span>
+<span class="gh">Out[16]: </span><span class="go">True</span>
+
+<span class="gp">In [17]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">constellation</span><span class="p">(</span><span class="n">rx_complex_symbols</span><span class="p">);</span>
+<span class="gp">   ....: </span>
+</code></pre></div>
+</div>
+<img alt="../../_images/sdr_MSK_8.png" src="../../_images/sdr_MSK_8.png" />
 <p>See the <a class="reference internal" href="../../examples/psk/#psk"><span class="std std-ref">Phase-shift keying</span></a> example.</p>
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
