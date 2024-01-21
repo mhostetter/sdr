@@ -203,71 +203,102 @@ def eye(
     span: int = 2,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
+    persistence: bool = False,
+    colorbar: bool = True,
     **kwargs,
 ):
     r"""
     Plots the eye diagram of the baseband modulated signal $x[n]$.
 
     Arguments:
-        x: The baseband modulated signal $x[n]$. If `x` is complex, the real and imaginary rasters are interleaved.
-            Time order is preserved.
+        x: The baseband modulated signal $x[n]$. If `x` is complex, in-phase and quadrature eye diagrams are plotted
+            in separate subplots.
         sps: The number of samples per symbol.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Samples".
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
+        persistence: Indicates whether to plot the raster as a persistence plot. A persistence plot is a
+            2D histogram of the rasters.
+        colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"` or
+            `persistence=True`.
         kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
 
     Example:
-        Modulate 100 QPSK symbols.
+        Modulate 1,000 QPSK symbols using a square root raised cosine (SRRC) pulse shaping filter. The SRRC pulse shape
+        is not a Nyquist filter, and intersymbol interference (ISI) can be observed in the eye diagram. Plot the eye
+        diagram using index-colored rasters. Note, we are ignoring the transient response of the pulse shaping filter
+        at the beginning and end of the signal.
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, phase_offset=45); \
-            s = np.random.randint(0, psk.order, 100); \
-            a = psk.map_symbols(s)
-
-        Apply a raised cosine pulse shape and examine the eye diagram. Since the raised cosine pulse shape
-        is a Nyquist filter, there is no intersymbol interference (ISI) at the symbol decisions.
-
-        .. ipython:: python
-
-            sps = 25; \
-            h = sdr.raised_cosine(0.5, 6, sps); \
-            fir = sdr.Interpolator(sps, h); \
-            x = fir(a)
+            psk = sdr.PSK(4, phase_offset=45, pulse_shape="srrc"); \
+            sps = psk.sps; \
+            s = np.random.randint(0, psk.order, 1_000); \
+            tx_samples = psk.modulate(s)
 
             @savefig sdr_plot_eye_1.png
-            plt.figure(); \
-            sdr.plot.eye(x, sps)
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(tx_samples[4*sps : -4*sps], sps); \
+            plt.suptitle("Transmitted QPSK symbols with SRRC pulse shape");
 
-        Apply a root raised cosine pulse shape and examine the eye diagram. The root raised cosine filter
-        is not a Nyquist filter, and ISI can be observed. (It should be noted that two cascaded root raised
-        cosine filters, one for transmit and one for receive, is a Nyquist filter. This is why SRRC pulse shaping
-        is often used in practice.)
+        Plot the eye diagram using a persistence plot. This provides insight into the probability density
+        function of the signal.
 
         .. ipython:: python
 
-            sps = 25; \
-            h = sdr.root_raised_cosine(0.5, 6, sps); \
-            fir = sdr.Interpolator(sps, h); \
-            x = fir(a)
-
             @savefig sdr_plot_eye_2.png
-            plt.figure(); \
-            sdr.plot.eye(x, sps)
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(tx_samples[4*sps : -4*sps], sps, persistence=True); \
+            plt.suptitle("Transmitted QPSK symbols with SRRC pulse shape");
+
+        Apply a SRRC matched filter at the receiver. The cascaded transmit and receive SRRC filters are equivalent
+        to a single raised cosine (RC) filter, which is a Nyquist filter. ISI is no longer observed, and the eye is
+        open.
+
+        .. ipython:: python
+
+            mf = sdr.FIR(psk.pulse_shape); \
+            rx_samples = mf(tx_samples, mode="same")
+
+            @savefig sdr_plot_eye_3.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(rx_samples[4*sps : -4*sps], sps, persistence=True); \
+            plt.suptitle("Received and matched filtered QPSK symbols");
 
     Group:
         plot-modulation
     """
-    raster(x, span * sps + 1, stride=sps, sample_rate=sample_rate, color=color, **kwargs)
 
-    # Make y-axis symmetric
-    ax = plt.gca()
-    ymin, ymax = ax.get_ylim()
-    ylim = max(np.abs(ymin), np.abs(ymax))
-    ax.set_ylim(-ylim, ylim)
+    def _eye(xx):
+        raster(
+            xx,
+            span * sps + 1,
+            stride=sps,
+            sample_rate=sample_rate,
+            color=color,
+            persistence=persistence,
+            colorbar=colorbar,
+            **kwargs,
+        )
+
+        # Make y-axis symmetric
+        ax = plt.gca()
+        ymin, ymax = ax.get_ylim()
+        ylim = max(np.abs(ymin), np.abs(ymax))
+        ax.set_ylim(-ylim, ylim)
+
+    if np.iscomplexobj(x):
+        plt.subplot(2, 1, 1)
+        _eye(x.real)
+        plt.title("In-phase eye diagram")
+        plt.subplot(2, 1, 2)
+        _eye(x.imag)
+        plt.title("Quadrature eye diagram")
+    else:
+        _eye(x)
+        plt.title("Eye diagram")
 
 
 @export
