@@ -29,17 +29,20 @@ def constellation(
         heatmap: If `True`, a heatmap is plotted instead of a scatter plot.
         limits: The axis limits, which apply to both the x- and y-axis. If `None`, the axis limits are
             set to 10% larger than the maximum value.
-        kwargs: If `heatmap=False`, additional keyword arguments to pass to :func:`matplotlib.pyplot.scatter()`.
-            The following keyword arguments are set by default. The defaults may be overwritten.
+        kwargs: Additional keyword arguments to pass to Matplotlib functions.
 
-            - `"range"`: +/- 10% of the maximum value
-            - `"bins"`: 75, which is the number of bins per axis
-
-            If `heatmap=True`, additional keyword arguments to pass to :func:`matplotlib.pyplot.hist2d()`.
-            The following keyword arguments are set by default. The defaults may be overwritten.
+            If `heatmap=False`, the following keyword arguments are passed to :func:`matplotlib.pyplot.scatter()`.
+            The defaults may be overwritten.
 
             - `"marker"`: `"."`
             - `"linestyle"`: `"none"`
+
+            If `heatmap=True`, the following keyword arguments are passed to :func:`matplotlib.pyplot.hist2d()`.
+            The defaults may be overwritten.
+
+            - `"range"`: +/- 10% of the maximum value
+            - `"bins"`: `100  # Number of bins per axis`
+            - `"cmap"`: `"turbo"`
 
     Example:
         Display the symbol constellation for Gray-coded QPSK at 6 dB $E_s/N_0$.
@@ -75,7 +78,8 @@ def constellation(
         if heatmap:
             default_kwargs = {
                 "range": (limits, limits),
-                "bins": 75,  # Number of bins per axis
+                "bins": 100,  # Number of bins per axis
+                "cmap": "turbo",
             }
             kwargs = {**default_kwargs, **kwargs}
             plt.hist2d(x_hat.real, x_hat.imag, **kwargs)
