@@ -344,7 +344,7 @@ def phase_tree(
         sps: The number of samples per symbol.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Samples".
+            be labeled as "Symbol".
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
         kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
@@ -382,7 +382,14 @@ def phase_tree(
         phase_strided = np.unwrap(phase_strided, axis=1)
         phase_strided = np.rad2deg(phase_strided)
 
-        raster(phase_strided, sample_rate=sample_rate, color=color, **kwargs)
+        raster(
+            phase_strided,
+            sample_rate=sample_rate if sample_rate is not None else sps,
+            color=color,
+            **kwargs,
+        )
+        if sample_rate is None:
+            plt.xlabel("Symbol, $k$")
 
         # Make y-axis symmetric and have ticks every 180 degrees
         ax = plt.gca()
