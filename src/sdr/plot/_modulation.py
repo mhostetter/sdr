@@ -90,11 +90,12 @@ def constellation(
             }
             kwargs = {**default_kwargs, **kwargs}
             plt.plot(x_hat.real, x_hat.imag, **kwargs)
+
         plt.axis("square")
         plt.xlim(limits)
         plt.ylim(limits)
-        if not heatmap:
-            plt.grid(True)
+        if heatmap:
+            plt.grid(False)  # Not visually appealing for heatmaps
         if "label" in kwargs:
             plt.legend()
         plt.xlabel("In-phase channel, $I$")
