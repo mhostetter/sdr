@@ -24,7 +24,7 @@ def periodogram(
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
     average: Literal["mean", "median"] = "mean",
-    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "two-sided",
+    x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
     **kwargs,
 ):
@@ -128,7 +128,7 @@ def spectrogram(
     overlap: int | None = None,
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
-    y_axis: Literal["auto", "one-sided", "two-sided"] = "two-sided",
+    y_axis: Literal["auto", "one-sided", "two-sided"] = "auto",
     **kwargs,
 ):
     r"""
