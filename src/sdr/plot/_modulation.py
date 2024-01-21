@@ -371,7 +371,7 @@ def phase_tree(
         phase = np.angle(x)
 
         # Create a strided array of phase values
-        length = sps * span
+        length = sps * span + 1
         stride = sps
         N_rasters = (phase.size - length) // stride + 1
         phase_strided = np.lib.stride_tricks.as_strided(
