@@ -69,23 +69,42 @@ class PSK(LinearModulation):
 
             @savefig sdr_PSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
+            sdr.plot.time_domain(tx_samples[0:50*qpsk.sps]);
 
-            @savefig sdr_PSK_4.png
-            plt.figure(); \
-            sdr.plot.eye(tx_samples[5*qpsk.sps : -5*qpsk.sps], qpsk.sps);
-
-        Add AWGN noise such that $E_b/N_0 = 20$ dB.
+        Examine the eye diagram of the pulse-shaped transmitted signal. The SRRC pulse shape is not a Nyquist filter,
+        so ISI is present.
 
         .. ipython:: python
 
-            ebn0 = 20; \
+            @savefig sdr_PSK_4.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(tx_samples[5*qpsk.sps : -5*qpsk.sps], qpsk.sps, persistence=True); \
+            plt.suptitle("Noiseless transmitted signal with ISI");
+
+        Add AWGN noise such that $E_b/N_0 = 30$ dB.
+
+        .. ipython:: python
+
+            ebn0 = 30; \
             snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=qpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PSK_5.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*qpsk.sps], sample_rate=qpsk.sps);
+            sdr.plot.time_domain(rx_samples[0:50*qpsk.sps]);
+
+        Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal. The
+        two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is removed.
+
+        .. ipython:: python
+
+            mf = sdr.FIR(qpsk.pulse_shape); \
+            mf_samples = mf(rx_samples)
+
+            @savefig sdr_PSK_6.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(mf_samples[10*qpsk.sps : -10*qpsk.sps], qpsk.sps, persistence=True); \
+            plt.suptitle("Noisy received and matched filtered signal without ISI");
 
         Matched filter and demodulate.
 
@@ -96,7 +115,7 @@ class PSK(LinearModulation):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_PSK_6.png
+            @savefig sdr_PSK_7.png
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
@@ -498,23 +517,42 @@ class PiMPSK(PSK):
 
             @savefig sdr_PiMPSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
+            sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps]);
 
-            @savefig sdr_PiMPSK_4.png
-            plt.figure(); \
-            sdr.plot.eye(tx_samples[5*pi4_qpsk.sps : -5*pi4_qpsk.sps], pi4_qpsk.sps);
-
-        Add AWGN noise such that $E_b/N_0 = 20$ dB.
+        Examine the eye diagram of the pulse-shaped transmitted signal. The SRRC pulse shape is not a Nyquist filter,
+        so ISI is present.
 
         .. ipython:: python
 
-            ebn0 = 20; \
+            @savefig sdr_PiMPSK_4.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(tx_samples[5*pi4_qpsk.sps : -5*pi4_qpsk.sps], pi4_qpsk.sps, persistence=True); \
+            plt.suptitle("Noiseless transmitted signal with ISI");
+
+        Add AWGN noise such that $E_b/N_0 = 30$ dB.
+
+        .. ipython:: python
+
+            ebn0 = 30; \
             snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=pi4_qpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PiMPSK_5.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps], sample_rate=pi4_qpsk.sps);
+            sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps]);
+
+        Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal. The
+        two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is removed.
+
+        .. ipython:: python
+
+            mf = sdr.FIR(pi4_qpsk.pulse_shape); \
+            mf_samples = mf(rx_samples)
+
+            @savefig sdr_PiMPSK_6.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(mf_samples[10*pi4_qpsk.sps : -10*pi4_qpsk.sps], pi4_qpsk.sps, persistence=True); \
+            plt.suptitle("Noisy received and matched filtered signal without ISI");
 
         Matched filter and demodulate.
 
@@ -525,7 +563,7 @@ class PiMPSK(PSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_PiMPSK_6.png
+            @savefig sdr_PiMPSK_7.png
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
@@ -666,28 +704,42 @@ class OQPSK(PSK):
 
             @savefig sdr_OQPSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
+            sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps]);
 
-            @savefig sdr_OQPSK_4.png
-            plt.figure(figsize=(8, 6)); \
-            plt.subplot(2, 1, 1); \
-            sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps].real, oqpsk.sps); \
-            plt.title("In-phase channel, $I$"); \
-            plt.subplot(2, 1, 2); \
-            sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps].imag, oqpsk.sps); \
-            plt.title("Quadrature channel, $Q$");
-
-        Add AWGN noise such that $E_b/N_0 = 20$ dB.
+        Examine the eye diagram of the pulse-shaped transmitted signal. The SRRC pulse shape is not a Nyquist filter,
+        so ISI is present.
 
         .. ipython:: python
 
-            ebn0 = 20; \
+            @savefig sdr_OQPSK_4.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps], oqpsk.sps, persistence=True); \
+            plt.suptitle("Noiseless transmitted signal with ISI");
+
+        Add AWGN noise such that $E_b/N_0 = 30$ dB.
+
+        .. ipython:: python
+
+            ebn0 = 30; \
             snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=oqpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_OQPSK_5.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps], sample_rate=oqpsk.sps);
+            sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps]);
+
+        Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal. The
+        two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is removed.
+
+        .. ipython:: python
+
+            mf = sdr.FIR(oqpsk.pulse_shape); \
+            mf_samples = mf(rx_samples)
+
+            @savefig sdr_OQPSK_6.png
+            plt.figure(figsize=(8, 6)); \
+            sdr.plot.eye(mf_samples[10*oqpsk.sps : -10*oqpsk.sps], oqpsk.sps, persistence=True); \
+            plt.suptitle("Noisy received and matched filtered signal without ISI");
 
         Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
 
@@ -698,7 +750,7 @@ class OQPSK(PSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_OQPSK_6.png
+            @savefig sdr_OQPSK_7.png
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
