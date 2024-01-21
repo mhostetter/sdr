@@ -73,12 +73,12 @@ def constellation(
     Group:
         plot-modulation
     """
-    # Set the axis limits to 10% larger than the maximum value
-    if limits is None:
-        lim = np.max(np.abs(x_hat)) * 1.1
-        limits = (-lim, lim)
-
     with plt.rc_context(RC_PARAMS):
+        # Set the axis limits to 10% larger than the maximum value
+        if limits is None:
+            lim = np.max(np.abs(x_hat)) * 1.1
+            limits = (-lim, lim)
+
         if persistence:
             default_kwargs = {
                 "range": (limits, limits),
@@ -158,32 +158,32 @@ def symbol_map(
     Group:
         plot-modulation
     """
-    if isinstance(modulation, LinearModulation):
-        symbol_map_ = modulation.symbol_map
-    else:
-        symbol_map_ = np.asarray(modulation)
-    k = int(np.log2(symbol_map_.size))
-
-    if isinstance(modulation, PiMPSK):
-        label = kwargs.pop("label", None)
-        if label:
-            even_label = f"{label} (even)"
-            odd_label = f"{label} (odd)"
-        else:
-            even_label = "even"
-            odd_label = "odd"
-        even_symbol_map = symbol_map_
-        odd_symbol_map = symbol_map_ * np.exp(1j * np.pi / modulation.order)
-        symbol_map(even_symbol_map, annotate=annotate, limits=limits, label=even_label, **kwargs)
-        symbol_map(odd_symbol_map, annotate=annotate, limits=limits, label=odd_label, **kwargs)
-        return
-
-    # Set the axis limits to 50% larger than the maximum value
-    if limits is None:
-        lim = np.max(np.abs(symbol_map_)) * 1.5
-        limits = (-lim, lim)
-
     with plt.rc_context(RC_PARAMS):
+        if isinstance(modulation, LinearModulation):
+            symbol_map_ = modulation.symbol_map
+        else:
+            symbol_map_ = np.asarray(modulation)
+        k = int(np.log2(symbol_map_.size))
+
+        if isinstance(modulation, PiMPSK):
+            label = kwargs.pop("label", None)
+            if label:
+                even_label = f"{label} (even)"
+                odd_label = f"{label} (odd)"
+            else:
+                even_label = "even"
+                odd_label = "odd"
+            even_symbol_map = symbol_map_
+            odd_symbol_map = symbol_map_ * np.exp(1j * np.pi / modulation.order)
+            symbol_map(even_symbol_map, annotate=annotate, limits=limits, label=even_label, **kwargs)
+            symbol_map(odd_symbol_map, annotate=annotate, limits=limits, label=odd_label, **kwargs)
+            return
+
+        # Set the axis limits to 50% larger than the maximum value
+        if limits is None:
+            lim = np.max(np.abs(symbol_map_)) * 1.5
+            limits = (-lim, lim)
+
         default_kwargs = {
             "marker": "x",
             "markersize": 6,
@@ -293,35 +293,36 @@ def eye(
     Group:
         plot-modulation
     """
+    with plt.rc_context(RC_PARAMS):
 
-    def _eye(xx):
-        raster(
-            xx,
-            span * sps + 1,
-            stride=sps,
-            sample_rate=sample_rate,
-            color=color,
-            persistence=persistence,
-            colorbar=colorbar,
-            **kwargs,
-        )
+        def _eye(xx):
+            raster(
+                xx,
+                span * sps + 1,
+                stride=sps,
+                sample_rate=sample_rate,
+                color=color,
+                persistence=persistence,
+                colorbar=colorbar,
+                **kwargs,
+            )
 
-        # Make y-axis symmetric
-        ax = plt.gca()
-        ymin, ymax = ax.get_ylim()
-        ylim = max(np.abs(ymin), np.abs(ymax))
-        ax.set_ylim(-ylim, ylim)
+            # Make y-axis symmetric
+            ax = plt.gca()
+            ymin, ymax = ax.get_ylim()
+            ylim = max(np.abs(ymin), np.abs(ymax))
+            ax.set_ylim(-ylim, ylim)
 
-    if np.iscomplexobj(x):
-        plt.subplot(2, 1, 1)
-        _eye(x.real)
-        plt.title("In-phase eye diagram")
-        plt.subplot(2, 1, 2)
-        _eye(x.imag)
-        plt.title("Quadrature eye diagram")
-    else:
-        _eye(x)
-        plt.title("Eye diagram")
+        if np.iscomplexobj(x):
+            plt.subplot(2, 1, 1)
+            _eye(x.real)
+            plt.title("In-phase eye diagram")
+            plt.subplot(2, 1, 2)
+            _eye(x.imag)
+            plt.title("Quadrature eye diagram")
+        else:
+            _eye(x)
+            plt.title("Eye diagram")
 
 
 @export
@@ -364,31 +365,32 @@ def phase_tree(
     Group:
         plot-modulation
     """
-    phase = np.angle(x)
+    with plt.rc_context(RC_PARAMS):
+        phase = np.angle(x)
 
-    # Create a strided array of phase values
-    length = sps * span
-    stride = sps
-    N_rasters = (phase.size - length) // stride + 1
-    phase_strided = np.lib.stride_tricks.as_strided(
-        phase, shape=(N_rasters, length), strides=(phase.strides[0] * stride, phase.strides[0]), writeable=False
-    )
+        # Create a strided array of phase values
+        length = sps * span
+        stride = sps
+        N_rasters = (phase.size - length) // stride + 1
+        phase_strided = np.lib.stride_tricks.as_strided(
+            phase, shape=(N_rasters, length), strides=(phase.strides[0] * stride, phase.strides[0]), writeable=False
+        )
 
-    # Unwrap the phase and convert to degrees
-    phase_strided = np.unwrap(phase_strided, axis=1)
-    phase_strided = np.rad2deg(phase_strided)
+        # Unwrap the phase and convert to degrees
+        phase_strided = np.unwrap(phase_strided, axis=1)
+        phase_strided = np.rad2deg(phase_strided)
 
-    raster(phase_strided, sample_rate=sample_rate, color=color, **kwargs)
+        raster(phase_strided, sample_rate=sample_rate, color=color, **kwargs)
 
-    # Make y-axis symmetric and have ticks every 180 degrees
-    ax = plt.gca()
-    ymin, ymax = ax.get_ylim()
-    ylim = max(np.abs(ymin), np.abs(ymax))
-    ylim = np.ceil(ylim / 180) * 180
-    ax.set_ylim(-ylim, ylim)
-    ax.set_yticks(np.arange(-ylim, ylim + 1, 180))
+        # Make y-axis symmetric and have ticks every 180 degrees
+        ax = plt.gca()
+        ymin, ymax = ax.get_ylim()
+        ylim = max(np.abs(ymin), np.abs(ymax))
+        ylim = np.ceil(ylim / 180) * 180
+        ax.set_ylim(-ylim, ylim)
+        ax.set_yticks(np.arange(-ylim, ylim + 1, 180))
 
-    ax.set_ylabel("Phase (deg)")
+        ax.set_ylabel("Phase (deg)")
 
 
 @export

@@ -54,49 +54,49 @@ def periodogram(
     Group:
         plot-spectral-estimation
     """
-    x = np.asarray(x)
-
-    if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
-        raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
-    if x_axis == "auto":
-        x_axis = "one-sided" if np.isrealobj(x) else "two-sided"
-
-    if not y_axis in ["linear", "log"]:
-        raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
-
-    if sample_rate is None:
-        sample_rate_provided = False
-        sample_rate = 1
-    else:
-        sample_rate_provided = True
-        if not isinstance(sample_rate, (int, float)):
-            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
-
-    f, Pxx = scipy.signal.welch(
-        x,
-        fs=sample_rate,
-        window=window,
-        nperseg=length,
-        noverlap=overlap,
-        nfft=fft,
-        detrend=detrend,
-        return_onesided=x_axis != "two-sided",
-        average=average,
-    )
-
-    if y_axis == "log":
-        Pxx = 10 * np.log10(Pxx)
-
-    if x_axis == "two-sided":
-        f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        f = np.fft.fftshift(f)
-        Pxx = np.fft.fftshift(Pxx)
-
-    if sample_rate_provided:
-        units, scalar = freq_units(f)
-        f *= scalar
-
     with plt.rc_context(RC_PARAMS):
+        x = np.asarray(x)
+
+        if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
+            raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+        if x_axis == "auto":
+            x_axis = "one-sided" if np.isrealobj(x) else "two-sided"
+
+        if not y_axis in ["linear", "log"]:
+            raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
+
+        if sample_rate is None:
+            sample_rate_provided = False
+            sample_rate = 1
+        else:
+            sample_rate_provided = True
+            if not isinstance(sample_rate, (int, float)):
+                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+        f, Pxx = scipy.signal.welch(
+            x,
+            fs=sample_rate,
+            window=window,
+            nperseg=length,
+            noverlap=overlap,
+            nfft=fft,
+            detrend=detrend,
+            return_onesided=x_axis != "two-sided",
+            average=average,
+        )
+
+        if y_axis == "log":
+            Pxx = 10 * np.log10(Pxx)
+
+        if x_axis == "two-sided":
+            f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+            f = np.fft.fftshift(f)
+            Pxx = np.fft.fftshift(Pxx)
+
+        if sample_rate_provided:
+            units, scalar = freq_units(f)
+            f *= scalar
+
         if x_axis == "log":
             plt.semilogx(f, Pxx, **kwargs)
         else:
@@ -129,6 +129,8 @@ def spectrogram(
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
     y_axis: Literal["auto", "one-sided", "two-sided"] = "auto",
+    persistence: bool = False,
+    colorbar: bool = True,
     **kwargs,
 ):
     r"""
@@ -159,61 +161,62 @@ def spectrogram(
     Group:
         plot-spectral-estimation
     """
-    x = np.asarray(x)
+    with plt.rc_context(RC_PARAMS):
+        x = np.asarray(x)
 
-    if not y_axis in ["auto", "one-sided", "two-sided"]:
-        raise ValueError(f"Argument 'y_axis' must be 'auto', 'one-sided', or 'two-sided', not {y_axis!r}.")
-    if y_axis == "auto":
-        y_axis = "one-sided" if np.isrealobj(x) else "two-sided"
+        if not y_axis in ["auto", "one-sided", "two-sided"]:
+            raise ValueError(f"Argument 'y_axis' must be 'auto', 'one-sided', or 'two-sided', not {y_axis!r}.")
+        if y_axis == "auto":
+            y_axis = "one-sided" if np.isrealobj(x) else "two-sided"
 
-    if sample_rate is None:
-        sample_rate_provided = False
-        sample_rate = 1
-    else:
-        sample_rate_provided = True
-        if not isinstance(sample_rate, (int, float)):
-            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        if sample_rate is None:
+            sample_rate_provided = False
+            sample_rate = 1
+        else:
+            sample_rate_provided = True
+            if not isinstance(sample_rate, (int, float)):
+                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
 
-    f, t, Sxx = scipy.signal.spectrogram(
-        x,
-        fs=sample_rate,
-        window=window,
-        nperseg=length,
-        noverlap=overlap,
-        nfft=fft,
-        detrend=detrend,
-        return_onesided=y_axis != "two-sided",
-        mode="psd",
-    )
-    Sxx = 10 * np.log10(Sxx)
+        f, t, Sxx = scipy.signal.spectrogram(
+            x,
+            fs=sample_rate,
+            window=window,
+            nperseg=length,
+            noverlap=overlap,
+            nfft=fft,
+            detrend=detrend,
+            return_onesided=y_axis != "two-sided",
+            mode="psd",
+        )
+        Sxx = 10 * np.log10(Sxx)
 
-    if y_axis == "one-sided" and np.iscomplexobj(x):
-        # If complex data, the spectrogram always returns a two-sided spectrum. So we need to remove the second half.
-        f = f[0 : f.size // 2]
-        Sxx = Sxx[0 : Sxx.shape[0] // 2, :]
-    if y_axis == "two-sided":
-        # f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
-        f = np.fft.fftshift(f)
-        Sxx = np.fft.fftshift(Sxx)
+        if y_axis == "one-sided" and np.iscomplexobj(x):
+            # If complex data, the spectrogram always returns a two-sided spectrum. So we need to remove the second half.
+            f = f[0 : f.size // 2]
+            Sxx = Sxx[0 : Sxx.shape[0] // 2, :]
+        if y_axis == "two-sided":
+            # f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
+            f = np.fft.fftshift(f)
+            Sxx = np.fft.fftshift(Sxx)
 
-    if sample_rate_provided:
-        f_units, scalar = freq_units(f)
-        f *= scalar
-        t_units, scalar = time_units(t)
-        t *= scalar
+        if sample_rate_provided:
+            f_units, scalar = freq_units(f)
+            f *= scalar
+            t_units, scalar = time_units(t)
+            t *= scalar
 
-    default_kwargs = {
-        "vmin": np.percentile(Sxx, 10),
-        "vmax": np.percentile(Sxx, 100),
-        "shading": "gouraud",
-    }
-    kwargs = {**default_kwargs, **kwargs}
+        default_kwargs = {
+            "vmin": np.percentile(Sxx, 10),
+            "vmax": np.percentile(Sxx, 100),
+            "shading": "gouraud",
+        }
+        kwargs = {**default_kwargs, **kwargs}
 
-    plt.pcolormesh(t, f, Sxx, **kwargs)
-    if sample_rate_provided:
-        plt.xlabel(f"Time ({t_units}), $t$")
-        plt.ylabel(f"Frequency ({f_units}), $f$")
-    else:
-        plt.xlabel("Samples, $n$")
-        plt.ylabel("Normalized Frequency, $f /f_s$")
-    plt.title("Spectrogram")
+        plt.pcolormesh(t, f, Sxx, **kwargs)
+        if sample_rate_provided:
+            plt.xlabel(f"Time ({t_units}), $t$")
+            plt.ylabel(f"Frequency ({f_units}), $f$")
+        else:
+            plt.xlabel("Samples, $n$")
+            plt.ylabel("Normalized Frequency, $f /f_s$")
+        plt.title("Spectrogram")
