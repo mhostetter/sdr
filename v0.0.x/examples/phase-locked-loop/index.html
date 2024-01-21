@@ -11590,7 +11590,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7fd89aa75c50&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7f312e855c90&gt;
 </code></pre></div>
 </div>
 </div>
@@ -11640,7 +11640,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_23333/3044107145.py:25: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_32397/3044107145.py:25: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   freq_estimate[i + 1] = loop_filter(phase_error[i])
 </code></pre></div>
 </div>
@@ -11662,17 +11662,12 @@ z^-1 = Unit delay
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Phase error between input and output phase signals&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Figure C.2.5 from Digital Communications: A Discrete-Time Approach&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_23333/3224992036.py:15: UserWarning: The figure layout has changed to tight
-  plt.tight_layout()
-</code></pre></div>
-</div>
-<img alt="../../_images/1376aea371b97eb83ecd3e9f1c313ee84a45d7a73a6d881fc398269e771a8e80.png" src="../../_images/1376aea371b97eb83ecd3e9f1c313ee84a45d7a73a6d881fc398269e771a8e80.png" />
+<img alt="../../_images/7efde0250eb7273e3e2c8516233407c1fd95c357ee9a0e096c70081eef60d21c.png" src="../../_images/7efde0250eb7273e3e2c8516233407c1fd95c357ee9a0e096c70081eef60d21c.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-time-domain">Implement a PLL in the time domain<a class="headerlink" href="#implement-a-pll-in-the-time-domain" title="Permalink to this heading">¶</a></h2>
@@ -11712,7 +11707,7 @@ but using time-domain signals.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_23333/1093092892.py:28: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_32397/1093092892.py:28: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   freq_estimate[i + 1] = loop_filter(phase_error[i])
 </code></pre></div>
 </div>
@@ -11740,17 +11735,12 @@ but using time-domain signals.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Unwrapped phase of input and output signals&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Figure C.2.5 from Digital Communications: A Discrete-Time Approach&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_23333/1961923732.py:21: UserWarning: The figure layout has changed to tight
-  plt.tight_layout()
-</code></pre></div>
-</div>
-<img alt="../../_images/eb17669c7a0fe40cc0157448b4eda84dd460c6180ee74dd5e41dd3ecc76e2f6a.png" src="../../_images/eb17669c7a0fe40cc0157448b4eda84dd460c6180ee74dd5e41dd3ecc76e2f6a.png" />
+<img alt="../../_images/96fbfb566851353e00b1d30f27ec0944fae088d2b6e7729d3c3b53a277b20614.png" src="../../_images/96fbfb566851353e00b1d30f27ec0944fae088d2b6e7729d3c3b53a277b20614.png" />
 </div>
 </div>
 <p>This section implements Example 7.2.3 from <em>Digital Communications: A Discrete-Time Approach</em>.</p>
@@ -11795,7 +11785,7 @@ but using time-domain signals.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_23333/152932338.py:35: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_32397/152932338.py:35: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   freq_estimate[i + 1] = loop_filter(phase_error[i])
 </code></pre></div>
 </div>
@@ -11824,17 +11814,12 @@ but using time-domain signals.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Phase error between input and output phase signals&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Figure 7.2.6 from Digital Communications: A Discrete-Time Approach&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_23333/2485715567.py:22: UserWarning: The figure layout has changed to tight
-  plt.tight_layout()
-</code></pre></div>
-</div>
-<img alt="../../_images/342f2fad1db5b4a0f6dd83bc905abbc8ee2719405361aaee6d6d1b07aeac62cc.png" src="../../_images/342f2fad1db5b4a0f6dd83bc905abbc8ee2719405361aaee6d6d1b07aeac62cc.png" />
+<img alt="../../_images/c3dc80ed5edf805f2e8c1899c0043e61e64a32489073532a35bea7b4f6be2c07.png" src="../../_images/c3dc80ed5edf805f2e8c1899c0043e61e64a32489073532a35bea7b4f6be2c07.png" />
 </div>
 </div>
 <h2 id="analyze-pll-closed-loop-performance">Analyze PLL closed-loop performance<a class="headerlink" href="#analyze-pll-closed-loop-performance" title="Permalink to this heading">¶</a></h2>
@@ -11959,7 +11944,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
   <small>
     
       Last update:
-      Jan 20, 2024
+      Jan 21, 2024
     
   </small>
 </div>
