@@ -158,6 +158,7 @@ def raster(
     stride: int | None = None,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
+    persistence: bool = False,
     colorbar: bool = True,
     **kwargs,
 ):
@@ -165,8 +166,7 @@ def raster(
     Plots a raster of the time-domain signal $x[n]$.
 
     Arguments:
-        x: The time-domain signal $x[n]$. If `x` is complex, the real and imaginary rasters are interleaved.
-            Time order is preserved. If `x` is 1D, the rastering is determined by `length` and `stride`.
+        x: The real time-domain signal $x[n]$. If `x` is 1D, the rastering is determined by `length` and `stride`.
             If `x` is 2D, the rows correspond to each raster.
         length: The length of each raster in samples. This must be provided if `x` is 1D.
         stride: The stride between each raster in samples. If `None`, the stride is set to `length`.
@@ -174,19 +174,34 @@ def raster(
             be labeled as "Samples".
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
-        colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"`.
-        kwargs: Additional keyword arguments to pass to :obj:`matplotlib.collections.LineCollection`.
-            The following keyword arguments are set by default. The defaults may be overwritten.
+        persistence: Indicates whether to plot the raster as a persistence plot. A persistence plot is a
+            2D histogram of the rasters.
+        colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"` or
+            `persistence=True`.
+        kwargs: Additional keyword arguments to pass to Matplotlib functions.
+
+            If `persistence=False`, the following keyword arguments are passed to
+            :obj:`matplotlib.collections.LineCollection`. The defaults may be overwritten.
 
             - `"linewidths"`: 1
             - `"linestyles"`: `"solid"`
             - `"cmap"`: `"rainbow"`
+
+            If `persistance=True`, the following keyword arguments are passed to :func:`matplotlib.pcolormesh`.
+            The defaults may be overwritten.
+
+            - `"bins"`: `(800, 200)  # Passed to np.histogram2d()`
+            - `"cmap"`: `"turbo"`
+            - `"norm"`: `"log"`
+            - `"rasterized"`: `True`
 
     Group:
         plot-time-domain
     """
     if not x.ndim in [1, 2]:
         raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
+    if np.iscomplexobj(x):
+        raise ValueError("Argument 'x' must be real, not complex.")
 
     if x.ndim == 1:
         if not length is not None:
@@ -228,45 +243,60 @@ def raster(
         units, scalar = time_units(t)
         t *= scalar
 
-    # Interleave the real and imaginary rasters, if necessary
-    if np.iscomplexobj(x):
-        segments_real = [np.column_stack([t, x_raster.real]) for x_raster in x_strided]
-        segments_imag = [np.column_stack([t, x_raster.imag]) for x_raster in x_strided]
+    if persistence:
+        default_kwargs = {
+            "bins": (800, 200),
+            "cmap": "turbo",
+            "norm": "log",
+            "rasterized": True,
+        }
+        kwargs = {**default_kwargs, **kwargs}
 
-        segments = [None] * (2 * N_rasters)
-        segments[::2] = segments_real
-        segments[1::2] = segments_imag
+        bins = kwargs.pop("bins")
+        t_fine = np.linspace(t.min(), t.max(), bins[0])
+        x_fine = np.concatenate([np.interp(t_fine, t, x_row) for x_row in x_strided])
+        t_fine = np.broadcast_to(t_fine, (x_strided.shape[0], bins[0])).ravel()
+
+        with plt.rc_context(RC_PARAMS):
+            cmap = kwargs.pop("cmap")  # Need to pop cmap to avoid passing it twice to pcolormesh
+            cmap = plt.colormaps[cmap]
+            cmap = cmap.with_extremes(bad=cmap(0))
+            h, t_edges, x_edges = np.histogram2d(t_fine, x_fine, bins=bins)
+
+            pcm = plt.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
+            plt.grid(False)  # Not visually appealing for color meshes
+            if colorbar:
+                plt.colorbar(pcm, label="Points", pad=0)
     else:
         segments = [np.column_stack([t, x_raster]) for x_raster in x_strided]
 
-    # Set the default keyword arguments and override with user-specified keyword arguments
-    default_kwargs = {
-        "linewidths": 1,
-        "linestyles": "solid",
-        "cmap": "rainbow",
-    }
-    if color == "index":
-        default_kwargs["array"] = np.arange(N_rasters)
-    else:
-        default_kwargs["colors"] = color
-    kwargs = {**default_kwargs, **kwargs}
+        # Set the default keyword arguments and override with user-specified keyword arguments
+        default_kwargs = {
+            "linewidths": 1,
+            "linestyles": "solid",
+            "cmap": "rainbow",
+        }
+        if color == "index":
+            default_kwargs["array"] = np.arange(N_rasters)
+        else:
+            default_kwargs["colors"] = color
+        kwargs = {**default_kwargs, **kwargs}
 
-    line_collection = LineCollection(
-        segments,
-        **kwargs,
-    )
+        line_collection = LineCollection(
+            segments,
+            **kwargs,
+        )
+
+        with plt.rc_context(RC_PARAMS):
+            ax = plt.gca()
+            ax.add_collection(line_collection)
+            ax.set_xlim(t.min(), t.max())
+            ax.set_ylim(x.min(), x.max())
+
+            if colorbar and color == "index":
+                plt.colorbar(line_collection, label="Raster Index", pad=0)
 
     with plt.rc_context(RC_PARAMS):
-        ax = plt.gca()
-        ax.add_collection(line_collection)
-        ax.set_xlim(t.min(), t.max())
-        ax.set_ylim(x.min(), x.max())
-
-        if colorbar and color == "index":
-            axcb = plt.colorbar(line_collection)
-            axcb.set_label("Raster Index")
-
-        plt.grid(True)
         if sample_rate_provided:
             plt.xlabel(f"Time ({units})")
         else:
