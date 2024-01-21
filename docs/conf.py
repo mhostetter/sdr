@@ -233,7 +233,7 @@ ipython_warning_is_error = False
 myst_enable_extensions = ["dollarmath"]
 
 nb_execution_mode = "off"
-nb_output_stderr = "remove-warn"
+# nb_output_stderr = "remove-warn"
 
 mathjax_config = {
     "tex2jax": {
