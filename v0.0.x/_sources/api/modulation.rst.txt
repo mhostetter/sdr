@@ -21,11 +21,6 @@ Pulse shaping
 
 .. python-apigen-group:: modulation-pulse-shaping
 
-Symbol mapping
---------------
-
-.. python-apigen-group:: modulation-symbol-mapping
-
 Symbol encoding
 ---------------
 
