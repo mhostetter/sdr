@@ -407,7 +407,7 @@ def walsh_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
 
 @export
-def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex_]:
+def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex_]:
     r"""
     Returns the root-$u$ Zadoff-Chu sequence of length $N$.
 
@@ -437,7 +437,7 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex
         .. ipython:: python
 
             N = 139
-            x3 = sdr.zadoff_chu(N, 3)
+            x3 = sdr.zadoff_chu_sequence(N, 3)
 
             @savefig sdr_zadoff_chu_1.png
             plt.figure(); \
@@ -463,7 +463,7 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex
 
         .. ipython:: python
 
-            x5 = sdr.zadoff_chu(N, 5)
+            x5 = sdr.zadoff_chu_sequence(N, 5)
 
             @savefig sdr_zadoff_chu_3.png
             plt.figure(); \
