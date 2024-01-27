@@ -1,7 +1,7 @@
 Sequences
 =========
 
-Symbol mapping sequences
+Symbol-mapping sequences
 ------------------------
 
 .. python-apigen-group:: sequences-symbol-mapping

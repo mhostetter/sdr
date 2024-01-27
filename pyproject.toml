@@ -103,6 +103,7 @@ ignore = [
     "PLR5501", # collapsible-else-if
     "PLR0912", # too-many-branches
     "PLR0915", # too-many-statements
+    "PLW0603", # global-statement
 ]
 
 [tool.ruff.lint.per-file-ignores]
