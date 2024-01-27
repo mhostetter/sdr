@@ -1,5 +1,5 @@
 """
-A module containing various bipolar and binary sequences.
+A module containing various correlation sequences.
 """
 from __future__ import annotations
 
@@ -12,8 +12,8 @@ import numpy.typing as npt
 import scipy.linalg
 from typing_extensions import Literal
 
-from ._data import pack, unpack
-from ._helper import export
+from .._data import pack, unpack
+from .._helper import export
 
 
 def _code_to_sequence(code: npt.NDArray[np.int_]) -> npt.NDArray[np.float_]:
