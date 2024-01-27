@@ -12,8 +12,8 @@ from typing_extensions import Literal
 from .._filter import Decimator, Interpolator
 from .._helper import export
 from .._nco import NCO
+from .._sequence import binary_code, gray_code
 from ._pulse_shapes import rectangular
-from ._symbol_mapping import binary_code, gray_code
 
 
 @export
