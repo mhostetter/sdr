@@ -158,9 +158,9 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            seq1 = sdr.hadamard_code(16, 4, output="bipolar"); \
-            seq2 = sdr.hadamard_code(16, 10, output="bipolar"); \
-            seq3 = sdr.hadamard_code(16, 15, output="bipolar");
+            seq1 = sdr.hadamard_code(32, 4, output="bipolar"); \
+            seq2 = sdr.hadamard_code(32, 10, output="bipolar"); \
+            seq3 = sdr.hadamard_code(32, 15, output="bipolar");
 
             @savefig sdr_hadamard_code_1.png
             plt.figure(); \
@@ -185,7 +185,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
             sdr.plot.time_domain(lag, np.abs(xcorr23), label="10 and 15"); \
             plt.xlabel("Lag"); \
-            plt.title("Cross correlation of length-16 Hadamard sequences");
+            plt.title("Cross correlation of length-32 Hadamard sequences");
 
         Hadamard sequence autocorrelation sidelobes are not uniform as a function of sequence index.
         In fact, the sidelobes can be quite high.
@@ -203,7 +203,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
             sdr.plot.time_domain(lag, np.abs(acorr3), label="Index 15"); \
             plt.xlabel("Lag"); \
-            plt.title("Autocorrelation of length-16 Hadamard sequences");
+            plt.title("Autocorrelation of length-32 Hadamard sequences");
 
     Group:
         sequences-correlation
@@ -290,9 +290,9 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            seq1 = sdr.walsh_code(16, 4, output="bipolar"); \
-            seq2 = sdr.walsh_code(16, 10, output="bipolar"); \
-            seq3 = sdr.walsh_code(16, 15, output="bipolar");
+            seq1 = sdr.walsh_code(32, 4, output="bipolar"); \
+            seq2 = sdr.walsh_code(32, 10, output="bipolar"); \
+            seq3 = sdr.walsh_code(32, 15, output="bipolar");
 
             @savefig sdr_walsh_code_1.png
             plt.figure(); \
@@ -317,7 +317,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
             sdr.plot.time_domain(lag, np.abs(xcorr23), label="10 and 15"); \
             plt.xlabel("Lag"); \
-            plt.title("Cross correlation of length-16 Walsh sequences");
+            plt.title("Cross correlation of length-32 Walsh sequences");
 
         Walsh sequence autocorrelation sidelobes are not uniform as a function of sequence index.
         In fact, the sidelobes can be quite high.
@@ -335,7 +335,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
             sdr.plot.time_domain(lag, np.abs(acorr3), label="Index 15"); \
             plt.xlabel("Lag"); \
-            plt.title("Autocorrelation of length-16 Walsh sequences");
+            plt.title("Autocorrelation of length-32 Walsh sequences");
 
     Group:
         sequences-correlation
