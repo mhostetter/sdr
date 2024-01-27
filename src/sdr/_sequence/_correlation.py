@@ -63,7 +63,7 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
             corr = np.correlate(seq, seq, mode="full")
             lag = np.arange(-seq.size + 1, seq.size)
 
-            @savefig sdr_barker_1.png
+            @savefig sdr_barker_code_1.png
             plt.figure(); \
             sdr.plot.time_domain(lag, np.abs(corr)); \
             plt.xlabel("Lag"); \
@@ -162,7 +162,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             seq2 = sdr.hadamard_code(16, 10, output="bipolar"); \
             seq3 = sdr.hadamard_code(16, 15, output="bipolar");
 
-            @savefig sdr_hadamard_1.png
+            @savefig sdr_hadamard_code_1.png
             plt.figure(); \
             sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
             sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
@@ -179,7 +179,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             xcorr13 = np.correlate(seq1, seq3, mode="full"); \
             xcorr23 = np.correlate(seq2, seq3, mode="full");
 
-            @savefig sdr_hadamard_2.png
+            @savefig sdr_hadamard_code_2.png
             plt.figure(); \
             sdr.plot.time_domain(lag, np.abs(xcorr12), label="4 and 10"); \
             sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
@@ -197,7 +197,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             acorr2 = np.correlate(seq2, seq2, mode="full"); \
             acorr3 = np.correlate(seq3, seq3, mode="full");
 
-            @savefig sdr_hadamard_3.png
+            @savefig sdr_hadamard_code_3.png
             plt.figure(); \
             sdr.plot.time_domain(lag, np.abs(acorr1), label="Index 4"); \
             sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
@@ -294,7 +294,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             seq2 = sdr.walsh_code(16, 10, output="bipolar"); \
             seq3 = sdr.walsh_code(16, 15, output="bipolar");
 
-            @savefig sdr_walsh_1.png
+            @savefig sdr_walsh_code_1.png
             plt.figure(); \
             sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
             sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
@@ -311,7 +311,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             xcorr13 = np.correlate(seq1, seq3, mode="full"); \
             xcorr23 = np.correlate(seq2, seq3, mode="full");
 
-            @savefig sdr_walsh_2.png
+            @savefig sdr_walsh_code_2.png
             plt.figure(); \
             sdr.plot.time_domain(lag, np.abs(xcorr12), label="4 and 10"); \
             sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
@@ -329,7 +329,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             acorr2 = np.correlate(seq2, seq2, mode="full"); \
             acorr3 = np.correlate(seq3, seq3, mode="full");
 
-            @savefig sdr_walsh_3.png
+            @savefig sdr_walsh_code_3.png
             plt.figure(); \
             sdr.plot.time_domain(lag, np.abs(acorr1), label="Index 4"); \
             sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
