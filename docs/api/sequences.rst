@@ -11,6 +11,11 @@ Correlation sequences
 
 .. python-apigen-group:: sequences-correlation
 
+Linear recurrent sequences
+--------------------------
+
+.. python-apigen-group:: sequences-linear-recurrent
+
 Maximal-length sequences
 ------------------------
 
