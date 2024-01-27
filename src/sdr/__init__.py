@@ -15,6 +15,7 @@ except ModuleNotFoundError:  # pragma: no cover
     )
 
 from . import plot
+from ._coding import *
 from ._conversion import *
 from ._data import *
 from ._detection import *
