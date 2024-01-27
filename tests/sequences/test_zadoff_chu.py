@@ -18,30 +18,30 @@ import sdr
 def test_exceptions():
     with pytest.raises(TypeError):
         # N must be an integer
-        sdr.zadoff_chu(13.0, 3)
+        sdr.zadoff_chu_sequence(13.0, 3)
     with pytest.raises(TypeError):
         # R must be an integer
-        sdr.zadoff_chu(13, 3.0)
+        sdr.zadoff_chu_sequence(13, 3.0)
     with pytest.raises(TypeError):
         # Shift must be an integer
-        sdr.zadoff_chu(13, 3, 1.0)
+        sdr.zadoff_chu_sequence(13, 3, 1.0)
 
     with pytest.raises(ValueError):
         # N must be at least 2
-        sdr.zadoff_chu(1, 3)
+        sdr.zadoff_chu_sequence(1, 3)
     with pytest.raises(ValueError):
         # 0 < R < N
-        sdr.zadoff_chu(13, -3)
+        sdr.zadoff_chu_sequence(13, -3)
     with pytest.raises(ValueError):
         # 0 < R < N
-        sdr.zadoff_chu(13, 25)
+        sdr.zadoff_chu_sequence(13, 25)
     with pytest.raises(ValueError):
         # N and R must be coprime
-        sdr.zadoff_chu(15, 3)
+        sdr.zadoff_chu_sequence(15, 3)
 
 
 def test_3_2():
-    seq = sdr.zadoff_chu(3, 2)
+    seq = sdr.zadoff_chu_sequence(3, 2)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -53,7 +53,7 @@ def test_3_2():
 
 
 def test_5_2():
-    seq = sdr.zadoff_chu(5, 2)
+    seq = sdr.zadoff_chu_sequence(5, 2)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -67,7 +67,7 @@ def test_5_2():
 
 
 def test_7_3():
-    seq = sdr.zadoff_chu(7, 3)
+    seq = sdr.zadoff_chu_sequence(7, 3)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -83,7 +83,7 @@ def test_7_3():
 
 
 def test_9_5():
-    seq = sdr.zadoff_chu(9, 5)
+    seq = sdr.zadoff_chu_sequence(9, 5)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -101,7 +101,7 @@ def test_9_5():
 
 
 def test_11_3():
-    seq = sdr.zadoff_chu(11, 3)
+    seq = sdr.zadoff_chu_sequence(11, 3)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -121,7 +121,7 @@ def test_11_3():
 
 
 def test_13_5():
-    seq = sdr.zadoff_chu(13, 5)
+    seq = sdr.zadoff_chu_sequence(13, 5)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -143,7 +143,7 @@ def test_13_5():
 
 
 def test_15_7():
-    seq = sdr.zadoff_chu(15, 7)
+    seq = sdr.zadoff_chu_sequence(15, 7)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -167,7 +167,7 @@ def test_15_7():
 
 
 def test_17_7():
-    seq = sdr.zadoff_chu(17, 7)
+    seq = sdr.zadoff_chu_sequence(17, 7)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -193,7 +193,7 @@ def test_17_7():
 
 
 def test_19_7():
-    seq = sdr.zadoff_chu(19, 7)
+    seq = sdr.zadoff_chu_sequence(19, 7)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -221,7 +221,7 @@ def test_19_7():
 
 
 def test_21_11():
-    seq = sdr.zadoff_chu(21, 11)
+    seq = sdr.zadoff_chu_sequence(21, 11)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -251,7 +251,7 @@ def test_21_11():
 
 
 def test_23_11():
-    seq = sdr.zadoff_chu(23, 11)
+    seq = sdr.zadoff_chu_sequence(23, 11)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -283,7 +283,7 @@ def test_23_11():
 
 
 def test_25_11():
-    seq = sdr.zadoff_chu(25, 11)
+    seq = sdr.zadoff_chu_sequence(25, 11)
     seq_truth = np.array(
         [
             1.000000000000000 + 0.000000000000000j,
@@ -317,8 +317,8 @@ def test_25_11():
 
 
 def test_shift():
-    x = sdr.zadoff_chu(13, 3)
-    x_shift = sdr.zadoff_chu(13, 3, shift=1)
+    x = sdr.zadoff_chu_sequence(13, 3)
+    x_shift = sdr.zadoff_chu_sequence(13, 3, shift=1)
 
     # The shifted version should be a cyclic shift of the original sequence multiplied by a complex value
     y = np.roll(x, -1) / x_shift
