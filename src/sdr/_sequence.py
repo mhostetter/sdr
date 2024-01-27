@@ -6,6 +6,7 @@ from __future__ import annotations
 import math
 from typing import Any, overload
 
+import galois
 import numpy as np
 import numpy.typing as npt
 import scipy.linalg
@@ -27,6 +28,15 @@ def _code_to_sequence(code: npt.NDArray[np.int_]) -> npt.NDArray[np.float_]:
     return sequence
 
 
+def _code_to_field(code: npt.NDArray[np.int_]) -> galois.FieldArray:
+    r"""
+    Converts a binary code to a Galois field array over $\mathrm{GF}(2)$.
+    """
+    GF = galois.GF(2)
+    field = GF(code)
+    return field
+
+
 def _sequence_to_code(sequence: npt.NDArray[np.float_]) -> npt.NDArray[np.int_]:
     r"""
     Converts a bipolar sequence to a binary code.
@@ -45,6 +55,11 @@ def barker(length: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
 
 
 @overload
+def barker(length: int, output: Literal["field"]) -> galois.FieldArray:
+    ...
+
+
+@overload
 def barker(length: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
     ...
 
@@ -59,6 +74,7 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
         output: The output format of the Barker code/sequence.
 
             - `"binary"`: The Barker code with binary values of 0 and 1.
+            - `"field"`: The Barker code as a Galois field array over $\mathrm{GF}(2)$.
             - `"bipolar"`: The Barker sequence with bipolar values of 1 and -1.
 
     Returns:
@@ -90,8 +106,8 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
     """
     if not isinstance(length, int):
         raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
-    if not output in ("binary", "bipolar"):
-        raise ValueError(f"Argument 'output' must be either 'binary' or 'bipolar', not {output}.")
+    if not output in ("binary", "field", "bipolar"):
+        raise ValueError(f"Argument 'output' must be either 'binary', 'field', or 'bipolar', not {output}.")
 
     if length == 1:
         code = np.array([1])
@@ -114,12 +130,19 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
 
     if output == "binary":
         return code
-
-    return _code_to_sequence(code)
+    elif output == "field":
+        return _code_to_field(code)
+    else:
+        return _code_to_sequence(code)
 
 
 @overload
 def hadamard(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+    ...
+
+
+@overload
+def hadamard(length: int, index: int, output: Literal["field"]) -> galois.FieldArray:
     ...
 
 
@@ -139,6 +162,7 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
         output: The output format of the Hadamard code/sequence.
 
             - `"binary"`: The Hadamard code with binary values of 0 and 1.
+            - `"field"`: The Hadamard code as a Galois field array over $\mathrm{GF}(2)$.
             - `"bipolar"`: The Hadamard sequence with bipolar values of 1 and -1.
 
     Returns:
@@ -228,21 +252,28 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
     if not 0 <= index < length:
         raise ValueError(f"Argument 'index' must be between 0 and {length - 1}, not {index}.")
 
-    if not output in ("binary", "bipolar"):
-        raise ValueError(f"Argument 'output' must be either 'binary' or 'bipolar', not {output}.")
+    if not output in ("binary", "field", "bipolar"):
+        raise ValueError(f"Argument 'output' must be either 'binary', 'field', or 'bipolar', not {output}.")
 
     H = scipy.linalg.hadamard(length)
     sequence = H[index]
     sequence = sequence.astype(float)
 
-    if output == "bipolar":
+    if output == "binary":
+        return _sequence_to_code(sequence)
+    elif output == "field":
+        return _code_to_field(_sequence_to_code(sequence))
+    else:
         return sequence
-
-    return _sequence_to_code(sequence)
 
 
 @overload
 def walsh(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+    ...
+
+
+@overload
+def walsh(length: int, index: int, output: Literal["field"]) -> galois.FieldArray:
     ...
 
 
@@ -262,6 +293,7 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
         output: The output format of the Walsh code/sequence.
 
             - `"binary"`: The Walsh code with binary values of 0 and 1.
+            - `"field"`: The Walsh code as a Galois field array over $\mathrm{GF}(2)$.
             - `"bipolar"`: The Walsh sequence with bipolar values of 1 and -1.
 
     Returns:
@@ -352,8 +384,8 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
     if not 0 <= index < length:
         raise ValueError(f"Argument 'index' must be between 0 and {length - 1}, not {index}.")
 
-    if not output in ("binary", "bipolar"):
-        raise ValueError(f"Argument 'output' must be either 'binary' or 'bipolar', not {output}.")
+    if not output in ("binary", "field", "bipolar"):
+        raise ValueError(f"Argument 'output' must be either 'binary', 'field', or 'bipolar', not {output}.")
 
     H = scipy.linalg.hadamard(length)
 
@@ -366,10 +398,12 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
     sequence = H[h_index]
     sequence = sequence.astype(float)
 
-    if output == "bipolar":
+    if output == "binary":
+        return _sequence_to_code(sequence)
+    elif output == "field":
+        return _code_to_field(_sequence_to_code(sequence))
+    else:
         return sequence
-
-    return _sequence_to_code(sequence)
 
 
 @export
