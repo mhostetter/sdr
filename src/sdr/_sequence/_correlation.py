@@ -14,39 +14,7 @@ from typing_extensions import Literal
 
 from .._data import pack, unpack
 from .._helper import export
-
-
-def _code_to_sequence(code: npt.NDArray[np.int_]) -> npt.NDArray[np.float_]:
-    r"""
-    Converts a binary code to a bipolar sequence.
-
-    Notes:
-        The mapping is equivalent to BPSK: 0 -> 1, 1 -> -1.
-    """
-    sequence = 1 - 2 * code
-    sequence = sequence.astype(float)
-    return sequence
-
-
-def _code_to_field(code: npt.NDArray[np.int_]) -> galois.FieldArray:
-    r"""
-    Converts a binary code to a Galois field array over $\mathrm{GF}(2)$.
-    """
-    GF = galois.GF(2)
-    field = GF(code)
-    return field
-
-
-def _sequence_to_code(sequence: npt.NDArray[np.float_]) -> npt.NDArray[np.int_]:
-    r"""
-    Converts a bipolar sequence to a binary code.
-
-    Notes:
-        The mapping is equivalent to BPSK: 1 -> 0, -1 -> 1.
-    """
-    code = (1 - sequence) / 2
-    code = code.astype(int)
-    return code
+from ._conversion import code_to_field, code_to_sequence, sequence_to_code
 
 
 @overload
@@ -131,9 +99,9 @@ def barker_code(length: Any, output: Any = "bipolar") -> Any:
     if output == "binary":
         return code
     elif output == "field":
-        return _code_to_field(code)
+        return code_to_field(code)
     else:
-        return _code_to_sequence(code)
+        return code_to_sequence(code)
 
 
 @overload
@@ -260,9 +228,9 @@ def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
     sequence = sequence.astype(float)
 
     if output == "binary":
-        return _sequence_to_code(sequence)
+        return sequence_to_code(sequence)
     elif output == "field":
-        return _code_to_field(_sequence_to_code(sequence))
+        return code_to_field(sequence_to_code(sequence))
     else:
         return sequence
 
@@ -399,9 +367,9 @@ def walsh_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
     sequence = sequence.astype(float)
 
     if output == "binary":
-        return _sequence_to_code(sequence)
+        return sequence_to_code(sequence)
     elif output == "field":
-        return _code_to_field(_sequence_to_code(sequence))
+        return code_to_field(sequence_to_code(sequence))
     else:
         return sequence
 
