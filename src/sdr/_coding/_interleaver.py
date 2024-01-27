@@ -119,3 +119,51 @@ class Interleaver:
         $\pi^{-1}(j)$-th output position.
         """
         return self._inverse_map
+
+
+@export
+class BlockInterleaver(Interleaver):
+    r"""
+    Implements a block interleaver.
+
+    Notes:
+        A block interleaver feeds the input down the columns of a $R \times C$ matrix and then reads the output
+        across the rows.
+
+    Examples:
+        Create a $3 \times 4$ block interleaver.
+
+        .. ipython:: python
+
+            interleaver = sdr.BlockInterleaver(3, 4)
+            interleaver.map
+            interleaver.inverse_map
+
+        Interleave and deinterleave a sequence.
+
+        .. ipython:: python
+
+            x = np.arange(12); x
+            y = interleaver.interleave(x); y
+            interleaver.deinterleave(y)
+
+    Group:
+        coding-interleavers
+    """
+
+    def __init__(self, rows: int, cols: int):
+        r"""
+        Creates a $R \times C$ block interleaver.
+
+        Arguments:
+            rows: The number of rows $R$ in the interleaver. The row size determines the output separation of
+                consecutive input elements.
+            cols: The number of columns $C$ in the interleaver.
+        """
+        if not isinstance(rows, int):
+            raise TypeError(f"Argument 'rows' must be an integer, not {type(rows)}.")
+        if not isinstance(cols, int):
+            raise TypeError(f"Argument 'cols' must be an integer, not {type(cols)}.")
+
+        map = np.arange(rows * cols).reshape((rows, cols)).T.ravel()
+        super().__init__(map)
