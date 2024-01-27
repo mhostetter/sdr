@@ -50,22 +50,22 @@ def _sequence_to_code(sequence: npt.NDArray[np.float_]) -> npt.NDArray[np.int_]:
 
 
 @overload
-def barker(length: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+def barker_code(length: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
     ...
 
 
 @overload
-def barker(length: int, output: Literal["field"]) -> galois.FieldArray:
+def barker_code(length: int, output: Literal["field"]) -> galois.FieldArray:
     ...
 
 
 @overload
-def barker(length: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+def barker_code(length: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
     ...
 
 
 @export
-def barker(length: Any, output: Any = "bipolar") -> Any:
+def barker_code(length: Any, output: Any = "bipolar") -> Any:
     r"""
     Returns the Barker code/sequence of length $N$.
 
@@ -85,8 +85,8 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            code = sdr.barker(13, output="binary"); code
-            seq = sdr.barker(13); seq
+            code = sdr.barker_code(13, output="binary"); code
+            seq = sdr.barker_code(13); seq
 
         Barker sequences have ideally-minimal autocorrelation sidelobes of +1 or -1.
 
