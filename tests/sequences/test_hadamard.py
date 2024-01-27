@@ -18,33 +18,33 @@ import sdr
 def test_exceptions():
     with pytest.raises(TypeError):
         # Length must be an integer
-        sdr.hadamard(16.0, 1)
+        sdr.hadamard_code(16.0, 1)
     with pytest.raises(ValueError):
         # Length must be greater than or equal to 2
-        sdr.hadamard(1, 1)
+        sdr.hadamard_code(1, 1)
     with pytest.raises(ValueError):
         # Length must be a power of 2
-        sdr.hadamard(5, 1)
+        sdr.hadamard_code(5, 1)
 
     with pytest.raises(TypeError):
         # Index must be an integer
-        sdr.hadamard(16, 1.0)
+        sdr.hadamard_code(16, 1.0)
     with pytest.raises(ValueError):
         # Index must be between 0 and length - 1
-        sdr.hadamard(16, -1)
+        sdr.hadamard_code(16, -1)
     with pytest.raises(ValueError):
         # Index must be between 0 and length - 1
-        sdr.hadamard(16, 16)
+        sdr.hadamard_code(16, 16)
 
 
 def verify_code(length, index, sequence_truth):
     sequence_truth = np.array(sequence_truth)
 
-    sequence = sdr.hadamard(length, index)
+    sequence = sdr.hadamard_code(length, index)
     assert isinstance(sequence, np.ndarray)
     assert np.array_equal(sequence, sequence_truth)
 
-    code = sdr.hadamard(length, index, output="binary")
+    code = sdr.hadamard_code(length, index, output="binary")
     assert isinstance(code, np.ndarray)
     assert np.array_equal(code, (1 - sequence_truth) // 2)
 
