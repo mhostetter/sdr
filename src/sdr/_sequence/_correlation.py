@@ -126,7 +126,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
     Arguments:
         length: The length $N$ of the Hadamard code/sequence. Must be a power of 2.
-        index: The index $i$ of the Hadamard code.
+        index: The index $i$ in $[0, N)$ of the Hadamard code.
         output: The output format of the Hadamard code/sequence.
 
             - `"binary"` (default): The Hadamard code with binary values of 0 and 1.
@@ -257,7 +257,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
     Arguments:
         length: The length $N$ of the Walsh code/sequence. Must be a power of 2.
-        index: The index $i$ of the Walsh code. Indicates how many transitions there are in the code.
+        index: The index $i$ in $[0, N)$ of the Walsh code. Indicates how many transitions there are in the code.
         output: The output format of the Walsh code/sequence.
 
             - `"binary"` (default): The Walsh code with binary values of 0 and 1.
