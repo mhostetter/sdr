@@ -27,7 +27,7 @@ def test_exceptions():
 def verify_code(length, sequence_truth):
     sequence_truth = np.array(sequence_truth)
 
-    sequence = sdr.barker_code(length)
+    sequence = sdr.barker_code(length, output="bipolar")
     assert isinstance(sequence, np.ndarray)
     assert np.array_equal(sequence, sequence_truth)
 
