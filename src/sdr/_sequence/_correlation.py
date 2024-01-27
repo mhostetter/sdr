@@ -137,22 +137,22 @@ def barker_code(length: Any, output: Any = "bipolar") -> Any:
 
 
 @overload
-def hadamard(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+def hadamard_code(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
     ...
 
 
 @overload
-def hadamard(length: int, index: int, output: Literal["field"]) -> galois.FieldArray:
+def hadamard_code(length: int, index: int, output: Literal["field"]) -> galois.FieldArray:
     ...
 
 
 @overload
-def hadamard(length: int, index: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+def hadamard_code(length: int, index: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
     ...
 
 
 @export
-def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
+def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
     r"""
     Returns the Hadamard code/sequence of length $N$.
 
@@ -176,23 +176,23 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            code = sdr.hadamard(16, 4, output="binary"); code
-            seq = sdr.hadamard(16, 4); seq
+            code = sdr.hadamard_code(16, 4, output="binary"); code
+            seq = sdr.hadamard_code(16, 4); seq
 
         The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
 
         .. ipython:: python
 
-            np.array_equal(sdr.hadamard(16, 3), sdr.walsh(16, 8))
-            np.array_equal(sdr.hadamard(16, 11), sdr.walsh(16, 9))
+            np.array_equal(sdr.hadamard_code(16, 3), sdr.walsh(16, 8))
+            np.array_equal(sdr.hadamard_code(16, 11), sdr.walsh(16, 9))
 
         Hadamard sequences have zero cross correlation when time aligned.
 
         .. ipython:: python
 
-            seq1 = sdr.hadamard(16, 4); \
-            seq2 = sdr.hadamard(16, 10); \
-            seq3 = sdr.hadamard(16, 15);
+            seq1 = sdr.hadamard_code(16, 4); \
+            seq2 = sdr.hadamard_code(16, 10); \
+            seq3 = sdr.hadamard_code(16, 15);
 
             @savefig sdr_hadamard_1.png
             plt.figure(); \
@@ -315,8 +315,8 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            np.array_equal(sdr.hadamard(16, 3), sdr.walsh(16, 8))
-            np.array_equal(sdr.hadamard(16, 11), sdr.walsh(16, 9))
+            np.array_equal(sdr.hadamard_code(16, 3), sdr.walsh(16, 8))
+            np.array_equal(sdr.hadamard_code(16, 11), sdr.walsh(16, 9))
 
         Walsh sequences have zero cross correlation when time aligned.
 
