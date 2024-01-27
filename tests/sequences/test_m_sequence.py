@@ -24,14 +24,14 @@ def test_exceptions():
         sdr.m_sequence(6, poly=galois.Poly.Degrees([4, 1, 0]))
 
     with pytest.raises(TypeError):
-        # State must be an integer
-        sdr.m_sequence(6, state=1.0)
+        # Index must be an integer
+        sdr.m_sequence(6, index=1.0)
     with pytest.raises(ValueError):
-        # State must be in [1, q^n - 1]
-        sdr.m_sequence(6, state=0)
+        # Index must be in [1, q^n)
+        sdr.m_sequence(6, index=0)
     with pytest.raises(ValueError):
-        # State must be in [1, q^n - 1]
-        sdr.m_sequence(6, state=2**6)
+        # Index must be in [1, q^n)
+        sdr.m_sequence(6, index=2**6)
 
 
 def test_degree_2():
