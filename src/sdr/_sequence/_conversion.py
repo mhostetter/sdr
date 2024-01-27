@@ -39,3 +39,12 @@ def sequence_to_code(sequence: npt.NDArray[np.float_]) -> npt.NDArray[np.int_]:
     code = (1 - sequence) / 2
     code = code.astype(int)
     return code
+
+
+def field_to_code(field: galois.FieldArray) -> npt.NDArray[np.int_]:
+    r"""
+    Converts a Galois field array over $\mathrm{GF}(2)$ to a binary code.
+    """
+    code = field.view(np.ndarray)
+    code = code.astype(int)
+    return code
