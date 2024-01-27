@@ -19,8 +19,8 @@ class Interleaver:
 
         .. ipython:: python
 
-            map = np.array([0, 3, 1, 2])
-            interleaver = sdr.Interleaver(map)
+            pi = np.array([0, 3, 1, 2])
+            interleaver = sdr.Interleaver(pi)
             interleaver.map
             interleaver.inverse_map
 
@@ -41,15 +41,15 @@ class Interleaver:
         Creates an arbitrary interleaver.
 
         Arguments:
-            map: The interleaver permutation map $\pi[i]$, containing the values $[0, N)$. The value $\pi[i]$
-                indicates that the $i$-th input element will be placed at the $\pi[i]$-th output position.
+            map: The interleaver permutation map $\pi : i \mapsto j$, containing the values $[0, N)$.
+                The $i$-th input element will be placed at the $\pi(i)$-th output position.
         """
         if not isinstance(map, np.ndarray):
-            raise TypeError(f"Argument `map` must be a NumPy array, not {type(map)}.")
+            raise TypeError(f"Argument 'map' must be a NumPy array, not {type(map)}.")
         if not np.issubdtype(map.dtype, np.integer):
-            raise TypeError(f"Argument `map` must be an array of integers, not {map.dtype}.")
+            raise TypeError(f"Argument 'map' must be an array of integers, not {map.dtype}.")
         if not np.all(np.unique(map) == np.arange(len(map))):
-            raise ValueError(f"Argument `map` must contain the integers [0, {len(map)}).")
+            raise ValueError(f"Argument 'map' must contain the integers [0, {len(map)}), not {map}.")
 
         self._map = map
         self._inverse_map = np.argsort(map)
@@ -103,19 +103,19 @@ class Interleaver:
     @property
     def map(self) -> npt.NDArray[np.int_]:
         r"""
-        The interleaver permutation map $\pi[i]$.
+        The interleaver permutation map $\pi$.
 
-        The value $\pi[i]$ indicates that the $i$-th interleaver input will be placed at the $\pi[i]$-th output
-        position.
+        The map $\pi : i \mapsto j$ indicates that the $i$-th interleaver input will be placed at the $\pi(i)$-th
+        output position.
         """
         return self._map
 
     @property
     def inverse_map(self) -> npt.NDArray[np.int_]:
         r"""
-        The inverse interleaver permutation map $\pi^{-1}[i]$.
+        The deinterleaver permutation map $\pi^{-1}$.
 
-        The value $\pi^{-1}[i]$ indicates that the $i$-th deinterleaver input will be placed at the $\pi^{-1}[i]$-th
-        output position.
+        The map $\pi^{-1} : j \mapsto i$ indicates that the $j$-th deinterleaver input will be placed at the
+        $\pi^{-1}(j)$-th output position.
         """
         return self._inverse_map
