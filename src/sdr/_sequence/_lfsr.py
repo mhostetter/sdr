@@ -307,7 +307,7 @@ class FLFSR(_LFSR):
                     lfsr.state
 
     Group:
-        sequences-maximal-length
+        sequences-linear-recurrent
     """
 
     _type = "fibonacci"
@@ -941,7 +941,7 @@ class GLFSR(_LFSR):
                     lfsr.state
 
     Group:
-        sequences-maximal-length
+        sequences-linear-recurrent
     """
 
     _type = "galois"
@@ -1514,7 +1514,7 @@ def berlekamp_massey(sequence, output="minimal"):
             np.array_equal(y, z)
 
     Group:
-        sequences-maximal-length
+        sequences-linear-recurrent
     """
     verify_isinstance(sequence, FieldArray)
     verify_isinstance(output, str)
