@@ -15,23 +15,23 @@ import sdr
 
 def test_exceptions():
     with pytest.raises(TypeError):
-        sdr.barker(13.0)
+        sdr.barker_code(13.0)
     with pytest.raises(ValueError):
         # Barker code of length 6 does not exist
-        sdr.barker(6)
+        sdr.barker_code(6)
 
     with pytest.raises(ValueError):
-        sdr.barker(13, output="invalid")
+        sdr.barker_code(13, output="invalid")
 
 
 def verify_code(length, sequence_truth):
     sequence_truth = np.array(sequence_truth)
 
-    sequence = sdr.barker(length)
+    sequence = sdr.barker_code(length)
     assert isinstance(sequence, np.ndarray)
     assert np.array_equal(sequence, sequence_truth)
 
-    code = sdr.barker(length, output="binary")
+    code = sdr.barker_code(length, output="binary")
     assert isinstance(code, np.ndarray)
     assert np.array_equal(code, (1 - sequence_truth) // 2)
 
