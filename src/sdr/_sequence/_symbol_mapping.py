@@ -29,7 +29,7 @@ def binary_code(n: int) -> npt.NDArray[np.int_]:
             sdr.binary_code(4)
 
     Group:
-        modulation-symbol-mapping
+        sequences-symbol-mapping
     """
     if not n >= 1:
         raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")
@@ -57,7 +57,7 @@ def gray_code(n: int) -> npt.NDArray[np.int_]:
             sdr.gray_code(4)
 
     Group:
-        modulation-symbol-mapping
+        sequences-symbol-mapping
     """
     if not n >= 1:
         raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")

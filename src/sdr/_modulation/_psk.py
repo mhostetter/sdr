@@ -13,8 +13,8 @@ from .._conversion import ebn0_to_esn0, esn0_to_ebn0, linear
 from .._data import unpack
 from .._helper import export, extend_docstring
 from .._probability import Q
+from .._sequence import binary_code, gray_code
 from ._linear import LinearModulation
-from ._symbol_mapping import binary_code, gray_code
 
 
 @export
