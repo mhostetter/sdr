@@ -201,6 +201,7 @@ intersphinx_mapping = {
     "numpy": ("https://numpy.org/doc/stable/", None),
     "scipy": ("http://docs.scipy.org/doc/scipy/reference/", None),
     "matplotlib": ("http://matplotlib.sourceforge.net/", None),
+    "galois": ("https://mhostetter.github.io/galois/latest/", None),
 }
 
 autodoc_default_options = {
