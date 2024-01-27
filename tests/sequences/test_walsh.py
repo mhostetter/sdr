@@ -40,7 +40,7 @@ def test_exceptions():
 def verify_code(length, index, sequence_truth):
     sequence_truth = np.array(sequence_truth)
 
-    sequence = sdr.walsh_code(length, index)
+    sequence = sdr.walsh_code(length, index, output="bipolar")
     assert isinstance(sequence, np.ndarray)
     assert np.array_equal(sequence, sequence_truth)
 

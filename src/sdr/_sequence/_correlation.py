@@ -18,7 +18,7 @@ from ._conversion import code_to_field, code_to_sequence, sequence_to_code
 
 
 @overload
-def barker_code(length: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+def barker_code(length: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]:
     ...
 
 
@@ -28,12 +28,12 @@ def barker_code(length: int, output: Literal["field"]) -> galois.FieldArray:
 
 
 @overload
-def barker_code(length: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float_]:
     ...
 
 
 @export
-def barker_code(length: Any, output: Any = "bipolar") -> Any:
+def barker_code(length: Any, output: Any = "binary") -> Any:
     r"""
     Returns the Barker code/sequence of length $N$.
 
@@ -41,7 +41,7 @@ def barker_code(length: Any, output: Any = "bipolar") -> Any:
         length: The length $N$ of the Barker code/sequence.
         output: The output format of the Barker code/sequence.
 
-            - `"binary"`: The Barker code with binary values of 0 and 1.
+            - `"binary"` (default): The Barker code with binary values of 0 and 1.
             - `"field"`: The Barker code as a Galois field array over $\mathrm{GF}(2)$.
             - `"bipolar"`: The Barker sequence with bipolar values of 1 and -1.
 
@@ -53,8 +53,8 @@ def barker_code(length: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            code = sdr.barker_code(13, output="binary"); code
-            seq = sdr.barker_code(13); seq
+            code = sdr.barker_code(13); code
+            seq = sdr.barker_code(13, output="bipolar"); seq
 
         Barker sequences have ideally-minimal autocorrelation sidelobes of +1 or -1.
 
@@ -105,7 +105,7 @@ def barker_code(length: Any, output: Any = "bipolar") -> Any:
 
 
 @overload
-def hadamard_code(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+def hadamard_code(length: int, index: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]:
     ...
 
 
@@ -115,12 +115,12 @@ def hadamard_code(length: int, index: int, output: Literal["field"]) -> galois.F
 
 
 @overload
-def hadamard_code(length: int, index: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float_]:
     ...
 
 
 @export
-def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
+def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
     r"""
     Returns the Hadamard code/sequence of length $N$.
 
@@ -129,7 +129,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
         index: The index $i$ of the Hadamard code.
         output: The output format of the Hadamard code/sequence.
 
-            - `"binary"`: The Hadamard code with binary values of 0 and 1.
+            - `"binary"` (default): The Hadamard code with binary values of 0 and 1.
             - `"field"`: The Hadamard code as a Galois field array over $\mathrm{GF}(2)$.
             - `"bipolar"`: The Hadamard sequence with bipolar values of 1 and -1.
 
@@ -144,8 +144,8 @@ def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            code = sdr.hadamard_code(16, 4, output="binary"); code
-            seq = sdr.hadamard_code(16, 4); seq
+            code = sdr.hadamard_code(16, 4); code
+            seq = sdr.hadamard_code(16, 4, output="bipolar"); seq
 
         The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
 
@@ -158,9 +158,9 @@ def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            seq1 = sdr.hadamard_code(16, 4); \
-            seq2 = sdr.hadamard_code(16, 10); \
-            seq3 = sdr.hadamard_code(16, 15);
+            seq1 = sdr.hadamard_code(16, 4, output="bipolar"); \
+            seq2 = sdr.hadamard_code(16, 10, output="bipolar"); \
+            seq3 = sdr.hadamard_code(16, 15, output="bipolar");
 
             @savefig sdr_hadamard_1.png
             plt.figure(); \
@@ -236,7 +236,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
 
 @overload
-def walsh_code(length: int, index: int, output: Literal["binary"]) -> npt.NDArray[np.int_]:
+def walsh_code(length: int, index: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]:
     ...
 
 
@@ -246,12 +246,12 @@ def walsh_code(length: int, index: int, output: Literal["field"]) -> galois.Fiel
 
 
 @overload
-def walsh_code(length: int, index: int, output: Literal["bipolar"] = "bipolar") -> npt.NDArray[np.float_]:
+def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float_]:
     ...
 
 
 @export
-def walsh_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
+def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
     r"""
     Returns the Walsh code/sequence of length $N$.
 
@@ -260,7 +260,7 @@ def walsh_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
         index: The index $i$ of the Walsh code. Indicates how many transitions there are in the code.
         output: The output format of the Walsh code/sequence.
 
-            - `"binary"`: The Walsh code with binary values of 0 and 1.
+            - `"binary"` (default): The Walsh code with binary values of 0 and 1.
             - `"field"`: The Walsh code as a Galois field array over $\mathrm{GF}(2)$.
             - `"bipolar"`: The Walsh sequence with bipolar values of 1 and -1.
 
@@ -276,8 +276,8 @@ def walsh_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            code = sdr.walsh_code(16, 4, output="binary"); code
-            seq = sdr.walsh_code(16, 4); seq
+            code = sdr.walsh_code(16, 4); code
+            seq = sdr.walsh_code(16, 4, output="bipolar"); seq
 
         The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
 
@@ -290,9 +290,9 @@ def walsh_code(length: Any, index: Any, output: Any = "bipolar") -> Any:
 
         .. ipython:: python
 
-            seq1 = sdr.walsh_code(16, 4); \
-            seq2 = sdr.walsh_code(16, 10); \
-            seq3 = sdr.walsh_code(16, 15);
+            seq1 = sdr.walsh_code(16, 4, output="bipolar"); \
+            seq2 = sdr.walsh_code(16, 10, output="bipolar"); \
+            seq3 = sdr.walsh_code(16, 15, output="bipolar");
 
             @savefig sdr_walsh_1.png
             plt.figure(); \
