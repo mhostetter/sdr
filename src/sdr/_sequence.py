@@ -102,7 +102,7 @@ def barker(length: Any, output: Any = "bipolar") -> Any:
             plt.title("Autocorrelation of length-13 Barker sequence");
 
     Group:
-        sequences
+        sequences-correlation
     """
     if not isinstance(length, int):
         raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
@@ -238,7 +238,7 @@ def hadamard(length: Any, index: Any, output: Any = "bipolar") -> Any:
             plt.title("Autocorrelation of length-16 Hadamard sequences");
 
     Group:
-        sequences
+        sequences-correlation
     """
     if not isinstance(length, int):
         raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
@@ -370,7 +370,7 @@ def walsh(length: Any, index: Any, output: Any = "bipolar") -> Any:
             plt.title("Autocorrelation of length-16 Walsh sequences");
 
     Group:
-        sequences
+        sequences-correlation
     """
     if not isinstance(length, int):
         raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
@@ -487,7 +487,7 @@ def zadoff_chu(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex
             plt.title(f"Periodic cross correlation of root-3 and root-5 Zadoff-Chu sequences of length {N}");
 
     Group:
-        sequences
+        sequences-correlation
     """
     if not isinstance(length, int):
         raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
