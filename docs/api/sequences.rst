@@ -1,6 +1,11 @@
 Sequences
 =========
 
+Symbol mapping sequences
+------------------------
+
+.. python-apigen-group:: sequences-symbol-mapping
+
 Correlation sequences
 ---------------------
 
