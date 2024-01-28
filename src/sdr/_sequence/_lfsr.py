@@ -64,8 +64,8 @@ class FLFSR:
 
             S[k] = State vector
             T[k] = Taps vector
-            x[n] = Input sequence
-            y[n] = Output sequence
+            x[t] = Input sequence
+            y[t] = Output sequence
             @ = Finite field adder
 
         The shift register taps $T$ are defined left-to-right as $T = [T_0, T_1, \dots, T_{n-2}, T_{n-1}]$.
@@ -798,7 +798,7 @@ class GLFSR:
 
             S[k] = State vector
             T[k] = Taps vector
-            y[n] = Output sequence
+            y[t] = Output sequence
             @ = Finite field adder
 
         The shift register taps $T$ are defined left-to-right as $T = [T_0, T_1, \dots, T_{n-2}, T_{n-1}]$.
