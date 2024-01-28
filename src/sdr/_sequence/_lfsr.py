@@ -4,7 +4,7 @@ sequences.
 """
 from __future__ import annotations
 
-from typing import overload
+from typing import Callable, overload
 
 import numba
 import numpy as np
@@ -16,6 +16,11 @@ from numba import int64
 from typing_extensions import Literal, Self
 
 from .._helper import export
+
+ADD: Callable[[int, int], int]
+SUBTRACT: Callable[[int, int], int]
+MULTIPLY: Callable[[int, int], int]
+RECIPROCAL: Callable[[int], int]
 
 ###############################################################################
 # LFSR base class
@@ -727,12 +732,12 @@ class fibonacci_lfsr_step_forward_jit(Function):
 
     @staticmethod
     def implementation(taps, state, steps):
-        n = taps.size
+        nonzero_tap_idxs = np.where(taps != 0)[0]  # The nonzero taps
         y = np.zeros(steps, dtype=state.dtype)  # The output array
 
         for i in range(steps):
             f = 0  # The feedback value
-            for j in range(n):
+            for j in nonzero_tap_idxs:
                 f = ADD(f, MULTIPLY(state[j], taps[j]))
 
             y[i] = state[-1]  # Output is popped off the shift register
@@ -789,7 +794,7 @@ class fibonacci_lfsr_step_backward_jit(Function):
 
     @staticmethod
     def implementation(taps, state, steps):
-        n = taps.size
+        nonzero_tap_idxs = np.where(taps[:-1] != 0)[0]  # The nonzero taps, except last tap
         y = np.zeros(steps, dtype=state.dtype)  # The output array
 
         for i in range(steps):
@@ -797,9 +802,9 @@ class fibonacci_lfsr_step_backward_jit(Function):
             state[0:-1] = state[1:]  # Shift state leftward
 
             s = f  # The unknown previous state value
-            for j in range(n - 1):
+            for j in nonzero_tap_idxs:
                 s = SUBTRACT(s, MULTIPLY(state[j], taps[j]))
-            s = MULTIPLY(s, RECIPROCAL(taps[n - 1]))
+            s = MULTIPLY(s, RECIPROCAL(taps[-1]))
 
             y[i] = s  # The previous output was the last value in the shift register
             state[-1] = s  # Assign recovered state to the leftmost position
