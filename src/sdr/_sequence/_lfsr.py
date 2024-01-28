@@ -8,6 +8,7 @@ from typing import Callable, overload
 
 import numba
 import numpy as np
+import numpy.typing as npt
 from galois import FieldArray, Poly
 from galois._domains._function import Function
 from galois._helper import verify_isinstance
@@ -22,158 +23,6 @@ SUBTRACT: Callable[[int, int], int]
 MULTIPLY: Callable[[int, int], int]
 RECIPROCAL: Callable[[int], int]
 
-###############################################################################
-# LFSR base class
-###############################################################################
-
-
-class _LFSR:
-    r"""
-    A linear-feedback shift register base object.
-    """
-
-    _type = "fibonacci"
-
-    def __init__(
-        self,
-        feedback_poly: Poly,
-        state: ArrayLike | None = None,
-    ):
-        verify_isinstance(feedback_poly, Poly)
-        if not feedback_poly.coeffs[-1] == 1:
-            raise ValueError(f"Argument 'feedback_poly' must have a 0-th degree term of 1, not {feedback_poly}.")
-
-        self._field = feedback_poly.field
-        self._feedback_poly = feedback_poly
-        self._characteristic_poly = feedback_poly.reverse()
-        self._order = feedback_poly.degree
-
-        if self._type == "fibonacci":
-            # T = [c_n-1, c_n-2, ..., c_1, c_0]
-            # c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}
-            self._taps = -self.characteristic_poly.coeffs[1:]
-        else:
-            # T = [c_0, c_1, ..., c_n-2, c_n-1]
-            # c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}
-            self._taps = -self.characteristic_poly.coeffs[1:][::-1]
-
-        if state is None:
-            state = self.field.Ones(self.order)
-
-        self._initial_state = self._verify_and_convert_state(state)
-        self._state = self.initial_state.copy()
-
-    @classmethod
-    def Taps(cls, taps: FieldArray, state: ArrayLike | None = None) -> Self:
-        verify_isinstance(taps, FieldArray)
-
-        if cls._type == "fibonacci":
-            # T = [c_n-1, c_n-2, ..., c_1, c_0]
-            # f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1
-            coeffs = -taps[::-1]
-            coeffs = np.append(coeffs, 1)  # Add x^0 term
-            feedback_poly = Poly(coeffs)
-        else:
-            # T = [c_0, c_1, ..., c_n-2, c_n-1]
-            # f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1
-            coeffs = -taps
-            coeffs = np.append(coeffs, 1)  # Add x^0 term
-            feedback_poly = Poly(coeffs)
-
-        return cls(feedback_poly, state=state)
-
-    def _verify_and_convert_state(self, state: ArrayLike):
-        verify_isinstance(state, (tuple, list, np.ndarray, FieldArray))
-
-        state = self.field(state)  # Coerce array-like object to field array
-
-        # if not state.size == self.order:
-        if not state.size == self.order:
-            raise ValueError(
-                f"Argument 'state' must have size equal to the degree of the characteristic polynomial, "
-                f"not {state.size} and {self.characteristic_poly.degree}."
-            )
-
-        return state
-
-    def reset(self, state: ArrayLike | None = None):
-        state = self.initial_state if state is None else state
-        self._state = self._verify_and_convert_state(state)
-
-    def step(self, steps: int = 1) -> FieldArray:
-        verify_isinstance(steps, int)
-
-        if steps == 0:
-            y = self.field([])
-        elif steps > 0:
-            y = self._step_forward(steps)
-        else:
-            y = self._step_backward(abs(steps))
-
-        return y
-
-    def _step_forward(self, steps):
-        assert steps > 0
-
-        if self._type == "fibonacci":
-            y, state = fibonacci_lfsr_step_forward_jit(self.field)(self.taps, self.state, steps)
-        else:
-            y, state = galois_lfsr_step_forward_jit(self.field)(self.taps, self.state, steps)
-
-        self._state[:] = state[:]
-        if y.size == 1:
-            y = y[0]
-
-        return y
-
-    def _step_backward(self, steps):
-        assert steps > 0
-
-        if not self.characteristic_poly.coeffs[-1] > 0:
-            raise ValueError(
-                "Can only step the shift register backwards if the c_0 tap is non-zero, "
-                f"not c(x) = {self.characteristic_poly}."
-            )
-
-        if self._type == "fibonacci":
-            y, state = fibonacci_lfsr_step_backward_jit(self.field)(self.taps, self.state, steps)
-        else:
-            y, state = galois_lfsr_step_backward_jit(self.field)(self.taps, self.state, steps)
-
-        self._state[:] = state[:]
-        if y.size == 1:
-            y = y[0]
-
-        return y
-
-    @property
-    def field(self) -> type[FieldArray]:
-        return self._field
-
-    @property
-    def feedback_poly(self) -> Poly:
-        return self._feedback_poly
-
-    @property
-    def characteristic_poly(self) -> Poly:
-        return self._characteristic_poly
-
-    @property
-    def taps(self) -> FieldArray:
-        return self._taps
-
-    @property
-    def order(self) -> int:
-        return self._order
-
-    @property
-    def initial_state(self) -> FieldArray:
-        return self._initial_state.copy()
-
-    @property
-    def state(self) -> FieldArray:
-        return self._state.copy()
-
 
 ###############################################################################
 # Fibonacci LFSR
@@ -181,7 +30,7 @@ class _LFSR:
 
 
 @export
-class FLFSR(_LFSR):
+class FLFSR:
     r"""
     A Fibonacci linear-feedback shift register (LFSR).
 
@@ -203,18 +52,19 @@ class FLFSR(_LFSR):
         .. code-block:: text
            :caption: Fibonacci LFSR Configuration
 
-            +--------------@<-------------@<-------------@<-------------+
-            |              ^              ^              ^              |
-            |              | c_n-1        | c_n-2        | c_1          | c_0
-            |              | T[0]         | T[1]         | T[n-2]       | T[n-1]
-            |              |              |              |              |
-            |  +--------+  |  +--------+  |              |  +--------+  |
-            +->|  S[0]  |--+->|  S[1]  |--+---  ...   ---+->| S[n-1] |--+--> y[t]
-               +--------+     +--------+                    +--------+
-                y[t+n-1]       y[t+n-2]                       y[t+1]
+                    +--------------@<-------------@<------------@<-------------+
+                    |              ^              ^             ^              |
+                    |              | c_n-1        | c_n-2       | c_1          | c_0
+                    |              | T[0]         | T[1]        | T[n-2]       | T[n-1]
+                    |              |              |             |              |
+                    v  +--------+  |  +--------+  |             |  +--------+  |
+            x[t] -->@->|  S[0]  |--+->|  S[1]  |--+---  ...  ---+->| S[n-1] |--+--> y[t]
+                       +--------+     +--------+                   +--------+
+                        y[t+n-1]       y[t+n-2]                      y[t+1]
 
             S[k] = State vector
             T[k] = Taps vector
+            x[n] = Input sequence
             y[n] = Output sequence
             @ = Finite field adder
 
@@ -315,8 +165,6 @@ class FLFSR(_LFSR):
         sequences-linear-recurrent
     """
 
-    _type = "fibonacci"
-
     def __init__(
         self,
         feedback_poly: PolyLike,
@@ -339,7 +187,25 @@ class FLFSR(_LFSR):
             reciprocal as the feedback polynomial. This is because $f(x) = x^n \cdot c(x^{-1})$.
         """
         feedback_poly = Poly._PolyLike(feedback_poly)
-        super().__init__(feedback_poly, state=state)
+
+        verify_isinstance(feedback_poly, Poly)
+        if not feedback_poly.coeffs[-1] == 1:
+            raise ValueError(f"Argument 'feedback_poly' must have a 0-th degree term of 1, not {feedback_poly}.")
+
+        self._field = feedback_poly.field
+        self._feedback_poly = feedback_poly
+        self._characteristic_poly = feedback_poly.reverse()
+        self._order = feedback_poly.degree
+
+        # T = [c_n-1, c_n-2, ..., c_1, c_0]
+        # c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}
+        self._taps = -self.characteristic_poly.coeffs[1:]
+
+        if state is None:
+            state = self.field.Ones(self.order)
+
+        self._initial_state = self._verify_and_convert_state(state)
+        self._state = self.initial_state.copy()
 
     @classmethod
     def Taps(cls, taps: FieldArray, state: ArrayLike | None = None) -> Self:
@@ -362,7 +228,28 @@ class FLFSR(_LFSR):
                 lfsr = sdr.FLFSR.Taps(taps)
                 print(lfsr)
         """
-        return super().Taps(taps, state=state)
+        verify_isinstance(taps, FieldArray)
+
+        # T = [c_n-1, c_n-2, ..., c_1, c_0]
+        # f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1
+        coeffs = -taps[::-1]
+        coeffs = np.append(coeffs, 1)  # Add x^0 term
+        feedback_poly = Poly(coeffs)
+
+        return cls(feedback_poly, state=state)
+
+    def _verify_and_convert_state(self, state: ArrayLike):
+        verify_isinstance(state, (tuple, list, np.ndarray, FieldArray))
+
+        state = self.field(state)  # Coerce array-like object to field array
+
+        if not state.size == self.order:
+            raise ValueError(
+                f"Argument 'state' must have size equal to the degree of the characteristic polynomial, "
+                f"not {state.size} and {self.characteristic_poly.degree}."
+            )
+
+        return state
 
     def __repr__(self) -> str:
         """
@@ -440,7 +327,28 @@ class FLFSR(_LFSR):
                 lfsr.reset([1, 2, 3, 4])
                 lfsr.state
         """
-        return super().reset(state)
+        state = self.initial_state if state is None else state
+        self._state = self._verify_and_convert_state(state)
+
+    def __call__(self, x: npt.NDArray[np.int_]) -> FieldArray:
+        r"""
+        Processes the input symbols $x[n]$ through the Fibonacci LFSR.
+
+        Arguments:
+            x: The input symbols $x[n]$.
+
+        Returns:
+            The output symbols $y[n]$.
+        """
+        verify_isinstance(x, np.ndarray)
+
+        y, state = fibonacci_lfsr_step_forward_jit(self.field)(self.taps, self.state, x)
+
+        self._state[:] = state[:]
+        if y.size == 1:
+            y = y[0]
+
+        return y
 
     def step(self, steps: int = 1) -> FieldArray:
         """
@@ -488,7 +396,27 @@ class FLFSR(_LFSR):
                 lfsr.step(-5)
                 lfsr.state
         """
-        return super().step(steps)
+        verify_isinstance(steps, int)
+
+        if steps == 0:
+            return self.field([])
+
+        x = np.zeros(abs(steps), dtype=self.state.dtype)
+        if steps > 0:
+            y, state = fibonacci_lfsr_step_forward_jit(self.field)(self.taps, self.state, x)
+        else:
+            if not self.characteristic_poly.coeffs[-1] > 0:
+                raise ValueError(
+                    "Can only step the shift register backwards if the c_0 tap is non-zero, "
+                    f"not c(x) = {self.characteristic_poly}."
+                )
+            y, state = fibonacci_lfsr_step_backward_jit(self.field)(self.taps, self.state, x)
+
+        self._state[:] = state[:]
+        if y.size == 1:
+            y = y[0]
+
+        return y
 
     def to_galois_lfsr(self) -> GLFSR:
         """
@@ -551,7 +479,7 @@ class FLFSR(_LFSR):
                 lfsr = sdr.FLFSR(c.reverse()); lfsr
                 lfsr.field
         """
-        return super().field
+        return self._field
 
     @property
     def feedback_poly(self) -> Poly:
@@ -577,7 +505,7 @@ class FLFSR(_LFSR):
         Order:
             61
         """
-        return super().feedback_poly
+        return self._feedback_poly
 
     @property
     def characteristic_poly(self) -> Poly:
@@ -603,7 +531,7 @@ class FLFSR(_LFSR):
         Order:
             61
         """
-        return super().characteristic_poly
+        return self._characteristic_poly
 
     @property
     def taps(self) -> FieldArray:
@@ -619,7 +547,7 @@ class FLFSR(_LFSR):
                 lfsr = sdr.FLFSR.Taps(taps); lfsr
                 lfsr.taps
         """
-        return super().taps
+        return self._taps
 
     @property
     def order(self) -> int:
@@ -627,7 +555,7 @@ class FLFSR(_LFSR):
         The order of the linear recurrence/linear recurrent sequence. The order of a sequence is defined by the
         degree of the minimal polynomial that produces it.
         """
-        return super().order
+        return self._order
 
     @property
     def initial_state(self) -> FieldArray:
@@ -654,7 +582,7 @@ class FLFSR(_LFSR):
         Order:
             62
         """
-        return super().initial_state
+        return self._initial_state.copy()
 
     @property
     def state(self) -> FieldArray:
@@ -681,7 +609,7 @@ class FLFSR(_LFSR):
         Order:
             62
         """
-        return super().state
+        return self._state.copy()
 
 
 class fibonacci_lfsr_step_forward_jit(Function):
@@ -691,14 +619,15 @@ class fibonacci_lfsr_step_forward_jit(Function):
     .. code-block:: text
        :caption: Fibonacci LFSR Configuration
 
-        +--------------+<-------------+<-------------+<-------------+
-        |              ^              ^              ^              |
-        |              | c_n-1        | c_n-2        | c_1          | c_0
-        |              | T[0]         | T[1]         | T[n-2]       | T[n-1]
-        |  +--------+  |  +--------+  |              |  +--------+  |
-        +->|  S[0]  |--+->|  S[1]  |--+---  ...   ---+->| S[n-1] |--+--> y[t]
-           +--------+     +--------+                    +--------+
-            y[t+n-1]       y[t+n-2]                       y[t+1]
+                +--------------@<-------------@<------------@<-------------+
+                |              ^              ^             ^              |
+                |              | c_n-1        | c_n-2       | c_1          | c_0
+                |              | T[0]         | T[1]        | T[n-2]       | T[n-1]
+                |              |              |             |              |
+                v  +--------+  |  +--------+  |             |  +--------+  |
+        x[t] -->@->|  S[0]  |--+->|  S[1]  |--+---  ...  ---+->| S[n-1] |--+--> y[t]
+                   +--------+     +--------+                   +--------+
+                    y[t+n-1]       y[t+n-2]                      y[t+1]
 
     Arguments:
         taps: The set of taps T = [c_n-1, c_n-2, ..., c_1, c_0].
@@ -711,14 +640,22 @@ class fibonacci_lfsr_step_forward_jit(Function):
         The output sequence of size `steps`.
     """
 
-    def __call__(self, taps, state, steps):
+    def __call__(self, taps: npt.NDArray, state: npt.NDArray, x: npt.NDArray):
         if self.field.ufunc_mode != "python-calculate":
             state_ = state.astype(np.int64)  # NOTE: This will be modified
-            y = self.jit(taps.astype(np.int64), state_, steps)
+            y = self.jit(
+                taps.astype(np.int64),
+                state_,
+                x.astype(np.int64),
+            )
             y = y.astype(state.dtype)
         else:
             state_ = state.view(np.ndarray)  # NOTE: This will be modified
-            y = self.python(taps.view(np.ndarray), state_, steps)
+            y = self.python(
+                taps.view(np.ndarray),
+                state_,
+                x.view(np.ndarray),
+            )
         y = self.field._view(y)
 
         return y, state_
@@ -728,15 +665,15 @@ class fibonacci_lfsr_step_forward_jit(Function):
         ADD = self.field._add.ufunc_call_only
         MULTIPLY = self.field._multiply.ufunc_call_only
 
-    _SIGNATURE = numba.types.FunctionType(int64[:](int64[:], int64[:], int64))
+    _SIGNATURE = numba.types.FunctionType(int64[:](int64[:], int64[:], int64[:]))
 
     @staticmethod
-    def implementation(taps, state, steps):
+    def implementation(taps: npt.NDArray, state: npt.NDArray, x: npt.NDArray):
         nonzero_tap_idxs = np.where(taps != 0)[0]  # The nonzero taps
-        y = np.zeros(steps, dtype=state.dtype)  # The output array
+        y = np.zeros(x.size, dtype=state.dtype)  # The output array
 
-        for i in range(steps):
-            f = 0  # The feedback value
+        for i in range(x.size):
+            f = x[i]  # The feedback value (0) added to the input
             for j in nonzero_tap_idxs:
                 f = ADD(f, MULTIPLY(state[j], taps[j]))
 
@@ -754,14 +691,15 @@ class fibonacci_lfsr_step_backward_jit(Function):
     .. code-block:: text
        :caption: Fibonacci LFSR Configuration
 
-        +--------------+<-------------+<-------------+<-------------+
-        |              ^              ^              ^              |
-        |              | c_n-1        | c_n-2        | c_1          | c_0
-        |              | T[0]         | T[1]         | T[n-2]       | T[n-1]
-        |  +--------+  |  +--------+  |              |  +--------+  |
-        +->|  S[0]  |--+->|  S[1]  |--+---  ...   ---+->| S[n-1] |--+--> y[t]
-           +--------+     +--------+                    +--------+
-            y[t+n-1]       y[t+n-2]                       y[t+1]
+                +--------------@<-------------@<------------@<-------------+
+                |              ^              ^             ^              |
+                |              | c_n-1        | c_n-2       | c_1          | c_0
+                |              | T[0]         | T[1]        | T[n-2]       | T[n-1]
+                |              |              |             |              |
+                v  +--------+  |  +--------+  |             |  +--------+  |
+        x[t] -->@->|  S[0]  |--+->|  S[1]  |--+---  ...  ---+->| S[n-1] |--+--> y[t]
+                   +--------+     +--------+                   +--------+
+                    y[t+n-1]       y[t+n-2]                      y[t+1]
 
     Arguments:
         taps: The set of taps T = [c_n-1, c_n-2, ..., c_1, c_0].
@@ -772,14 +710,22 @@ class fibonacci_lfsr_step_backward_jit(Function):
         The output sequence of size `steps`.
     """
 
-    def __call__(self, taps, state, steps):
+    def __call__(self, taps: npt.NDArray, state: npt.NDArray, x: npt.NDArray):
         if self.field.ufunc_mode != "python-calculate":
             state_ = state.astype(np.int64)  # NOTE: This will be modified
-            y = self.jit(taps.astype(np.int64), state_, steps)
+            y = self.jit(
+                taps.astype(np.int64),
+                state_,
+                x.astype(np.int64),
+            )
             y = y.astype(state.dtype)
         else:
             state_ = state.view(np.ndarray)  # NOTE: This will be modified
-            y = self.python(taps.view(np.ndarray), state_, steps)
+            y = self.python(
+                taps.view(np.ndarray),
+                state_,
+                x.view(np.ndarray),
+            )
         y = self.field._view(y)
 
         return y, state_
@@ -790,15 +736,15 @@ class fibonacci_lfsr_step_backward_jit(Function):
         MULTIPLY = self.field._multiply.ufunc_call_only
         RECIPROCAL = self.field._reciprocal.ufunc_call_only
 
-    _SIGNATURE = numba.types.FunctionType(int64[:](int64[:], int64[:], int64))
+    _SIGNATURE = numba.types.FunctionType(int64[:](int64[:], int64[:], int64[:]))
 
     @staticmethod
-    def implementation(taps, state, steps):
+    def implementation(taps: npt.NDArray, state: npt.NDArray, x: npt.NDArray):
         nonzero_tap_idxs = np.where(taps[:-1] != 0)[0]  # The nonzero taps, except last tap
-        y = np.zeros(steps, dtype=state.dtype)  # The output array
+        y = np.zeros(x.size, dtype=state.dtype)  # The output array
 
-        for i in range(steps):
-            f = state[0]  # The feedback value
+        for i in range(x.size):
+            f = SUBTRACT(state[0], x[i])  # The feedback value minus the presumed input
             state[0:-1] = state[1:]  # Shift state leftward
 
             s = f  # The unknown previous state value
@@ -818,7 +764,7 @@ class fibonacci_lfsr_step_backward_jit(Function):
 
 
 @export
-class GLFSR(_LFSR):
+class GLFSR:
     r"""
     A Galois linear-feedback shift register (LFSR).
 
@@ -949,8 +895,6 @@ class GLFSR(_LFSR):
         sequences-linear-recurrent
     """
 
-    _type = "galois"
-
     def __init__(
         self,
         feedback_poly: Poly,
@@ -972,7 +916,26 @@ class GLFSR(_LFSR):
             A Galois LFSR may be constructed from its characteristic polynomial $c(x)$ by passing in its
             reciprocal as the feedback polynomial. This is because $f(x) = x^n \cdot c(x^{-1})$.
         """
-        super().__init__(feedback_poly, state=state)
+        feedback_poly = Poly._PolyLike(feedback_poly)
+
+        verify_isinstance(feedback_poly, Poly)
+        if not feedback_poly.coeffs[-1] == 1:
+            raise ValueError(f"Argument 'feedback_poly' must have a 0-th degree term of 1, not {feedback_poly}.")
+
+        self._field = feedback_poly.field
+        self._feedback_poly = feedback_poly
+        self._characteristic_poly = feedback_poly.reverse()
+        self._order = feedback_poly.degree
+
+        # T = [c_0, c_1, ..., c_n-2, c_n-1]
+        # c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}
+        self._taps = -self.characteristic_poly.coeffs[1:][::-1]
+
+        if state is None:
+            state = self.field.Ones(self.order)
+
+        self._initial_state = self._verify_and_convert_state(state)
+        self._state = self.initial_state.copy()
 
     @classmethod
     def Taps(cls, taps: FieldArray, state: ArrayLike | None = None) -> Self:
@@ -995,7 +958,29 @@ class GLFSR(_LFSR):
                 lfsr = sdr.GLFSR.Taps(taps)
                 print(lfsr)
         """
-        return super().Taps(taps, state=state)
+        verify_isinstance(taps, FieldArray)
+
+        # T = [c_0, c_1, ..., c_n-2, c_n-1]
+        # f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1
+        coeffs = -taps
+        coeffs = np.append(coeffs, 1)  # Add x^0 term
+        feedback_poly = Poly(coeffs)
+
+        return cls(feedback_poly, state=state)
+
+    def _verify_and_convert_state(self, state: ArrayLike):
+        verify_isinstance(state, (tuple, list, np.ndarray, FieldArray))
+
+        state = self.field(state)  # Coerce array-like object to field array
+
+        # if not state.size == self.order:
+        if not state.size == self.order:
+            raise ValueError(
+                f"Argument 'state' must have size equal to the degree of the characteristic polynomial, "
+                f"not {state.size} and {self.characteristic_poly.degree}."
+            )
+
+        return state
 
     def __repr__(self) -> str:
         """
@@ -1073,7 +1058,8 @@ class GLFSR(_LFSR):
                 lfsr.reset([1, 2, 3, 4])
                 lfsr.state
         """
-        return super().reset(state)
+        state = self.initial_state if state is None else state
+        self._state = self._verify_and_convert_state(state)
 
     def step(self, steps: int = 1) -> FieldArray:
         """
@@ -1120,7 +1106,26 @@ class GLFSR(_LFSR):
                 lfsr.step(-5)
                 lfsr.state
         """
-        return super().step(steps)
+        verify_isinstance(steps, int)
+
+        if steps == 0:
+            return self.field([])
+
+        if steps > 0:
+            y, state = galois_lfsr_step_forward_jit(self.field)(self.taps, self.state, steps)
+        else:
+            if not self.characteristic_poly.coeffs[-1] > 0:
+                raise ValueError(
+                    "Can only step the shift register backwards if the c_0 tap is non-zero, "
+                    f"not c(x) = {self.characteristic_poly}."
+                )
+            y, state = galois_lfsr_step_backward_jit(self.field)(self.taps, self.state, abs(steps))
+
+        self._state[:] = state[:]
+        if y.size == 1:
+            y = y[0]
+
+        return y
 
     def to_fibonacci_lfsr(self) -> FLFSR:
         """
@@ -1171,7 +1176,7 @@ class GLFSR(_LFSR):
                 lfsr = sdr.GLFSR(c.reverse()); lfsr
                 lfsr.field
         """
-        return super().field
+        return self._field
 
     @property
     def feedback_poly(self) -> Poly:
@@ -1197,7 +1202,7 @@ class GLFSR(_LFSR):
         Order:
             61
         """
-        return super().feedback_poly
+        return self._feedback_poly
 
     @property
     def characteristic_poly(self) -> Poly:
@@ -1223,7 +1228,7 @@ class GLFSR(_LFSR):
         Order:
             61
         """
-        return super().characteristic_poly
+        return self._characteristic_poly
 
     @property
     def taps(self) -> FieldArray:
@@ -1239,7 +1244,7 @@ class GLFSR(_LFSR):
                 lfsr = sdr.GLFSR.Taps(taps); lfsr
                 lfsr.taps
         """
-        return super().taps
+        return self._taps
 
     @property
     def order(self) -> int:
@@ -1247,7 +1252,7 @@ class GLFSR(_LFSR):
         The order of the linear recurrence/linear recurrent sequence. The order of a sequence is defined by the
         degree of the minimal polynomial that produces it.
         """
-        return super().order
+        return self._order
 
     @property
     def initial_state(self) -> FieldArray:
@@ -1274,7 +1279,7 @@ class GLFSR(_LFSR):
         Order:
             62
         """
-        return super().initial_state
+        return self._initial_state
 
     @property
     def state(self) -> FieldArray:
@@ -1301,7 +1306,7 @@ class GLFSR(_LFSR):
         Order:
             62
         """
-        return super().state
+        return self._state
 
 
 class galois_lfsr_step_forward_jit(Function):
@@ -1329,7 +1334,7 @@ class galois_lfsr_step_forward_jit(Function):
         The output sequence of size `steps`.
     """
 
-    def __call__(self, taps, state, steps):
+    def __call__(self, taps: npt.NDArray, state: npt.NDArray, steps: int):
         if self.field.ufunc_mode != "python-calculate":
             state_ = state.astype(np.int64)  # NOTE: This will be modified
             y = self.jit(taps.astype(np.int64), state_, steps)
@@ -1349,7 +1354,7 @@ class galois_lfsr_step_forward_jit(Function):
     _SIGNATURE = numba.types.FunctionType(int64[:](int64[:], int64[:], int64))
 
     @staticmethod
-    def implementation(taps, state, steps):
+    def implementation(taps: npt.NDArray, state: npt.NDArray, steps: int):
         n = taps.size
         y = np.zeros(steps, dtype=state.dtype)  # The output array
 
@@ -1393,7 +1398,7 @@ class galois_lfsr_step_backward_jit(Function):
         The output sequence of size `steps`.
     """
 
-    def __call__(self, taps, state, steps):
+    def __call__(self, taps: npt.NDArray, state: npt.NDArray, steps: int):
         if self.field.ufunc_mode != "python-calculate":
             state_ = state.astype(np.int64)  # NOTE: This will be modified
             y = self.jit(taps.astype(np.int64), state_, steps)
@@ -1414,7 +1419,7 @@ class galois_lfsr_step_backward_jit(Function):
     _SIGNATURE = numba.types.FunctionType(int64[:](int64[:], int64[:], int64))
 
     @staticmethod
-    def implementation(taps, state, steps):
+    def implementation(taps: npt.NDArray, state: npt.NDArray, steps: int):
         n = taps.size
         y = np.zeros(steps, dtype=state.dtype)  # The output array
 
