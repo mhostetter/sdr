@@ -4,6 +4,31 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.13
+
+*Released January 28, 2024*
+
+### Changes
+
+- Added Fibonacci LFSRs in `sdr.FLFSR`.
+- Added Galois LFSRs in `sdr.GLFSR`.
+- Added maximum-length sequences in `sdr.m_sequence()`.
+- Added additive scrambling in `sdr.AdditiveScrambler`.
+- Added interleavers in `sdr.Interleaver` and `sdr.BlockInterleaver`.
+- Added generic continuous-phase modulation in `sdr.CPM`.
+- Added channel models `sdr.BinarySymmetricChannel`, `sdr.BinaryErasureChannel`, and `sdr.DiscreteMemorylessChannel`.
+- Added the Berlekamp-Massey LFSR synthesis algorithm in `sdr.berlekamp_massey()`.
+- Added persistence plots in `sdr.plot.raster()`, `sdr.plot.eye()`, and `sdr.plot.constellation()`.
+- Added `galois` dependency.
+- Renamed `sdr.barker()` to `sdr.barker_code()`.
+- Renamed `sdr.hadamard()` to `sdr.hadamard_code()`.
+- Renamed `sdr.walsh()` to `sdr.walsh_code()`.
+- Renamed `sdr.zadoff_chu()` to `sdr.zadoff_chu_sequence()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.12
 
 *Released January 7, 2024*
