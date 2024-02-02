@@ -85,7 +85,8 @@ line-length = 120
 [tool.ruff.lint]
 exclude = ["docs/*"]
 select = [
-    "E",  # pycodestyle
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
     "F",  # pyflakes
     "UP", # pyupgrade
     "B",  # flake8-bugbear
