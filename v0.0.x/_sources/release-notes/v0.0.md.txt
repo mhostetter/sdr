@@ -4,6 +4,20 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.14
+
+*Released February 2, 2024*
+
+### Changes
+
+- Added support for Python 3.12.
+- Added support for NumPy 1.26.
+- Pinned `galois` to v0.3.8.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.13
 
 *Released January 28, 2024*
