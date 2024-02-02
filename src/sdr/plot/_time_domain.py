@@ -43,7 +43,7 @@ def time_domain(
 
 
 @export
-def time_domain(
+def time_domain(  # noqa: D417
     *args,
     sample_rate: float | None = None,
     centered: bool = False,

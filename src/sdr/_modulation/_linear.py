@@ -123,7 +123,7 @@ class LinearModulation:
 
     def map_symbols(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
         r"""
-        Converts the decimal symbols $s[k]$ to complex symbols $a[k]$.
+        Converts the decimal symbols into complex symbols.
 
         Arguments:
             s: The decimal symbols $s[k]$ to map, $0$ to $M-1$.
@@ -140,8 +140,9 @@ class LinearModulation:
 
     def decide_symbols(self, a_tilde: npt.ArrayLike) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
         r"""
-        Converts the received complex symbols $\tilde{a}[k]$ into decimal symbol decisions $\hat{s}[k]$
-        and complex symbol decisions $\hat{a}[k]$ using maximum-likelihood estimation (MLE).
+        Converts the received complex symbols into MLE symbol decisions.
+
+        This method uses maximum-likelihood estimation (MLE).
 
         Arguments:
             a_tilde: The received complex symbols $\tilde{a}[k]$.
@@ -163,7 +164,7 @@ class LinearModulation:
 
     def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
         r"""
-        Modulates the decimal symbols $s[k]$ into pulse-shaped complex samples $x[n]$.
+        Modulates the decimal symbols into pulse-shaped complex samples.
 
         Arguments:
             s: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
@@ -188,8 +189,9 @@ class LinearModulation:
         self, x_tilde: npt.ArrayLike
     ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_], npt.NDArray[np.complex_]]:
         r"""
-        Demodulates the pulse-shaped complex samples $\tilde{x}[n]$ into decimal symbol decisions $\hat{s}[k]$
-        using matched filtering and maximum-likelihood estimation.
+        Demodulates the pulse-shaped complex samples.
+
+        This method uses matched filtering and maximum-likelihood estimation.
 
         Arguments:
             x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`sps`
@@ -285,8 +287,9 @@ class LinearModulation:
     @property
     def symbol_map(self) -> npt.NDArray[np.complex_]:
         r"""
-        The symbol map $\{0, \dots, M-1\} \mapsto \mathbb{C}$. This maps decimal symbols from $0$ to $M-1$
-        to complex symbols.
+        The symbol map $\{0, \dots, M-1\} \mapsto \mathbb{C}$.
+
+        This maps decimal symbols from $0$ to $M-1$ to complex symbols.
         """
         return self._symbol_map
 
@@ -307,13 +310,17 @@ class LinearModulation:
     @property
     def tx_filter(self) -> Interpolator:
         r"""
-        The transmit interpolating pulse shaping filter. The filter coefficients are the pulse shape $h[n]$.
+        The transmit interpolating pulse shaping filter.
+
+        The filter coefficients are the pulse shape $h[n]$.
         """
         return self._tx_filter
 
     @property
     def rx_filter(self) -> Decimator:
         r"""
-        The receive decimating matched filter. The filter coefficients are matched to the pulse shape $h[-n]^*$.
+        The receive decimating matched filter.
+
+        The filter coefficients are matched to the pulse shape $h[-n]^*$.
         """
         return self._rx_filter
