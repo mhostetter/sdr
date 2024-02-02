@@ -13,8 +13,10 @@ from ._helper import export
 @export
 def Q(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
     r"""
-    Computes the complementary cumulative distribution function $Q(x)$
-    of the standard normal distribution $\mathcal{N}(0, 1)$.
+    Computes the CCDF of the standard normal distribution $\mathcal{N}(0, 1)$..
+
+    The complementary cumulative distribution function (CCDF) $Q(x)$ is the probability that a random variable
+    exceeds a given value.
 
     Arguments:
         x: The real-valued input $x$.
@@ -42,8 +44,10 @@ def Q(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
 @export
 def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
     r"""
-    Computes the inverse complementary cumulative distribution function $Q^{-1}(p)$
-    of the standard normal distribution $\mathcal{N}(0, 1)$.
+    Computes the inverse CCDF of the standard normal distribution $\mathcal{N}(0, 1)$.
+
+    The inverse complementary cumulative distribution function (CCDF) $Q^{-1}(p)$ is the value that is exceeded
+    with a given probability.
 
     Arguments:
         p: The probability $p$ of exceeding the returned value $x$.

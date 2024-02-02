@@ -129,8 +129,8 @@ def spectrogram(
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
     y_axis: Literal["auto", "one-sided", "two-sided"] = "auto",
-    persistence: bool = False,
-    colorbar: bool = True,
+    # persistence: bool = False,
+    # colorbar: bool = True,
     **kwargs,
 ):
     r"""

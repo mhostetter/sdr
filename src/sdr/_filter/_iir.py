@@ -180,8 +180,9 @@ class IIR:
 
     def impulse_response(self, N: int = 100) -> npt.NDArray:
         r"""
-        Returns the impulse response $h[n]$ of the IIR filter. The impulse response $h[n]$ is the
-        filter output when the input is an impulse $\delta[n]$.
+        Returns the impulse response $h[n]$ of the IIR filter.
+
+        The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
         Arguments:
             N: The number of samples to return.
@@ -207,8 +208,9 @@ class IIR:
 
     def step_response(self, N: int = 100) -> npt.NDArray:
         """
-        Returns the step response $s[n]$ of the IIR filter. The step response $s[n]$ is the
-        filter output when the input is a unit step $u[n]$.
+        Returns the step response $s[n]$ of the IIR filter.
+
+        The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
         Arguments:
             N: The number of samples to return.

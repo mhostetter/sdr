@@ -117,8 +117,9 @@ class LoopFilter:
     @property
     def noise_bandwidth(self) -> float:
         """
-        The normalized noise bandwidth $B_n T$ of the loop filter,
-        where $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds.
+        The normalized noise bandwidth $B_n T$ of the loop filter.
+
+        $B_n$ is the noise bandwidth in Hz and $T$ is the sampling period in seconds.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
@@ -128,8 +129,9 @@ class LoopFilter:
     @property
     def damping_factor(self) -> float:
         r"""
-        The damping factor $\zeta$ of the loop filter. $\zeta = 1$ is critically damped,
-        $\zeta < 1$ is underdamped, and $\zeta > 1$ is overdamped.
+        The damping factor $\zeta$ of the loop filter.
+
+        $\zeta = 1$ is critically damped, $\zeta < 1$ is underdamped, and $\zeta > 1$ is overdamped.
 
         Examples:
             See the :ref:`phase-locked-loop` example.
