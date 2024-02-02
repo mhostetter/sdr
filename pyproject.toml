@@ -97,6 +97,7 @@ select = [
     "PL",  # pylint
     # "NPY", # numpy rules
     # "RUF", # ruff rules
+    "PERF", # perflint
 ]
 ignore = [
     "D200",    # fits-on-one-line
