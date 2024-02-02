@@ -111,9 +111,10 @@ def design_multirate_fir(
 
 def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float_]:
     r"""
-    The multirate filter is designed to linearly interpolate between samples. The filter coefficients are a
-    length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$. The first output sample aligns with the
-    first input sample.
+    The multirate filter is designed to linearly interpolate between samples.
+
+    The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [0, ..., r-1, r, r-1, ..., 1]$.
+    The first output sample aligns with the first input sample.
     """
     h = np.zeros(2 * rate, dtype=float)
     h[:rate] = np.arange(0, rate) / rate
@@ -123,9 +124,10 @@ def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float_]:
 
 def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float_]:
     r"""
-    The multirate filter is designed to linearly interpolate between samples. The filter coefficients are a
-    length-$2r$ linear ramp $\frac{1}{r} [1, ..., r-1, r, r-1, ..., 0]$. This is method MATLAB uses. The first
-    output sample is advanced from the first input sample.
+    The multirate filter is designed to linearly interpolate between samples.
+
+    The filter coefficients are a length-$2r$ linear ramp $\frac{1}{r} [1, ..., r-1, r, r-1, ..., 0]$.
+    This is method MATLAB uses. The first output sample is advanced from the first input sample.
     """
     h = np.zeros(2 * rate, dtype=float)
     h[:rate] = np.arange(1, rate + 1) / rate
@@ -135,7 +137,9 @@ def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float_]:
 
 def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float_]:
     """
-    The multirate filter is designed to be a zero-order hold. The filter coefficients are a length-$r$ array of ones.
+    The multirate filter is designed to be a zero-order hold.
+
+    The filter coefficients are a length-$r$ array of ones.
     """
     h = np.ones(rate, dtype=float)
     return h

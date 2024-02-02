@@ -19,7 +19,7 @@ def mix(
     complex: bool = True,
 ) -> npt.NDArray:
     r"""
-    Mixes the time-domain signal $x[n]$ with a complex exponential or real sinusoid.
+    Mixes a time-domain signal with a complex exponential or real sinusoid.
 
     Arguments:
         x: The time-domain signal $x[n]$.
@@ -91,8 +91,10 @@ def mix(
 @export
 def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
     r"""
-    Converts the real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$ to a
-    complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
+    Converts a real passband signal to a complex baseband signal.
+
+    The real passband signal $x_r[n]$ is centered at $f_{s,r}/4$ with sample rate $f_{s,r}$.
+    The complex baseband signal $x_c[n]$ is centered at $0$ with sample rate $f_{s,c} = f_{s,r}/2$.
 
     Arguments:
         x_r: The real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r}$.
@@ -172,8 +174,10 @@ def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
 @export
 def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float_]:
     r"""
-    Converts the complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$ to a
-    real passband signal $x_r[n]$ centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
+    Converts a complex baseband signal to a real passband signal.
+
+    The complex baseband signal $x_c[n]$ is centered at $0$ with sample rate $f_{s,c}$.
+    The real passband signal $x_r[n]$ is centered at $f_{s,r}/4$ with sample rate $f_{s,r} = 2f_{s,c}$.
 
     Arguments:
         x_c: The complex baseband signal $x_c[n]$ centered at $0$ with sample rate $f_{s,c}$.

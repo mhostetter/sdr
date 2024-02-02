@@ -197,8 +197,9 @@ class FIR:
 
     def impulse_response(self, N: int | None = None) -> npt.NDArray:
         r"""
-        Returns the impulse response $h[n]$ of the FIR filter. The impulse response $h[n]$ is the
-        filter output when the input is an impulse $\delta[n]$.
+        Returns the impulse response $h[n]$ of the FIR filter.
+
+        The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
         Arguments:
             N: The number of samples to return. The default is the filter length.
@@ -228,8 +229,9 @@ class FIR:
 
     def step_response(self, N: int | None = None) -> npt.NDArray:
         """
-        Returns the step response $s[n]$ of the FIR filter. The step response $s[n]$ is the
-        filter output when the input is a unit step $u[n]$.
+        Returns the step response $s[n]$ of the FIR filter.
+
+        The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
         Arguments:
             N: The number of samples to return. The default is the filter length.

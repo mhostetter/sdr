@@ -1,6 +1,5 @@
 """
-A module containing classes and functions for generating and analyzing linear feedback shift registers and their
-sequences.
+A module containing classes and functions for generating and analyzing linear feedback shift registers.
 """
 from __future__ import annotations
 
@@ -484,12 +483,12 @@ class FLFSR:
     @property
     def feedback_poly(self) -> Poly:
         r"""
-        The feedback polynomial
-        $f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1$
-        that defines the feedback arithmetic.
+        The feedback polynomial $f(x)$ that defines the feedback arithmetic.
 
         Notes:
-            The feedback polynomial is the reciprocal of the characteristic polynomial $f(x) = x^n \cdot c(x^{-1})$.
+            The feedback polynomial
+            $f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1$
+            is the reciprocal of the characteristic polynomial $f(x) = x^n \cdot c(x^{-1})$.
 
         Examples:
             .. ipython:: python
@@ -510,12 +509,12 @@ class FLFSR:
     @property
     def characteristic_poly(self) -> Poly:
         r"""
-        The characteristic polynomial
-        $c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}$
-        that defines the linear recurrent sequence.
+        The characteristic polynomial $c(x)$ that defines the linear recurrent sequence.
 
         Notes:
-            The characteristic polynomial is the reciprocal of the feedback polynomial $c(x) = x^n f(x^{-1})$.
+            The characteristic polynomial
+            $c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}$
+            is the reciprocal of the feedback polynomial $c(x) = x^n f(x^{-1})$.
 
         Examples:
             .. ipython:: python
@@ -536,8 +535,9 @@ class FLFSR:
     @property
     def taps(self) -> FieldArray:
         r"""
-        The shift register taps $T = [c_{n-1}, c_{n-2}, \dots, c_1, c_0]$. The taps of the shift register define
-        the linear recurrence relation.
+        The shift register taps $T = [c_{n-1}, c_{n-2}, \dots, c_1, c_0]$.
+
+        The taps of the shift register define the linear recurrence relation.
 
         Examples:
             .. ipython:: python
@@ -552,8 +552,9 @@ class FLFSR:
     @property
     def order(self) -> int:
         """
-        The order of the linear recurrence/linear recurrent sequence. The order of a sequence is defined by the
-        degree of the minimal polynomial that produces it.
+        The order of the linear recurrence/linear recurrent sequence.
+
+        The order of a sequence is defined by the degree of the minimal polynomial that produces it.
         """
         return self._order
 
@@ -1181,12 +1182,12 @@ class GLFSR:
     @property
     def feedback_poly(self) -> Poly:
         r"""
-        The feedback polynomial
-        $f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1$
-        that defines the feedback arithmetic.
+        The feedback polynomial $f(x) that defines the feedback arithmetic.
 
         Notes:
-            The feedback polynomial is the reciprocal of the characteristic polynomial $f(x) = x^n \cdot c(x^{-1})$.
+            The feedback polynomial
+            $f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1$
+            is the reciprocal of the characteristic polynomial $f(x) = x^n \cdot c(x^{-1})$.
 
         Examples:
             .. ipython:: python
@@ -1207,12 +1208,12 @@ class GLFSR:
     @property
     def characteristic_poly(self) -> Poly:
         r"""
-        The characteristic polynomial
-        $c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}$
-        that defines the linear recurrent sequence.
+        The characteristic polynomial $c(x)$ that defines the linear recurrent sequence.
 
         Notes:
-            The characteristic polynomial is the reciprocal of the feedback polynomial $c(x) = x^n f(x^{-1})$.
+            The characteristic polynomial
+            $c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}$
+            is the reciprocal of the feedback polynomial $c(x) = x^n f(x^{-1})$.
 
         Examples:
             .. ipython:: python
@@ -1233,8 +1234,9 @@ class GLFSR:
     @property
     def taps(self) -> FieldArray:
         r"""
-        The shift register taps $T = [c_0, c_1, \dots, c_{n-2}, c_{n-1}]$. The taps of the shift register define
-        the linear recurrence relation.
+        The shift register taps $T = [c_0, c_1, \dots, c_{n-2}, c_{n-1}]$.
+
+        The taps of the shift register define the linear recurrence relation.
 
         Examples:
             .. ipython:: python
@@ -1249,8 +1251,9 @@ class GLFSR:
     @property
     def order(self) -> int:
         """
-        The order of the linear recurrence/linear recurrent sequence. The order of a sequence is defined by the
-        degree of the minimal polynomial that produces it.
+        The order of the linear recurrence/linear recurrent sequence.
+
+        The order of a sequence is defined by the degree of the minimal polynomial that produces it.
         """
         return self._order
 

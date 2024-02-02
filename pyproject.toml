@@ -86,16 +86,19 @@ line-length = 120
 exclude = ["docs/*"]
 select = [
     "E",  # pycodestyle
-    "F",  # Pyflakes
+    "F",  # pyflakes
     "UP", # pyupgrade
     "B",  # flake8-bugbear
     # "SIM", # flake8-simplify
+    "D",  # pydocstyle
     "I",  # isort
     "PL", # pylint
     # "NPY", # numpy rules
     # "RUF", # ruff rules
 ]
 ignore = [
+    "D200",    # fits-on-one-line
+    "D212",    # multi-line-summary-first-line
     "E501",    # line-too-long
     "E713",    # not-in-test
     "E714",    # not-is-test
@@ -106,9 +109,16 @@ ignore = [
     "PLR0915", # too-many-statements
     "PLW0603", # global-statement
 ]
+extend-select = [
+    "D213", # multi-line-summary-second-line
+]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
+"tests/*" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.pytest.ini_options]
 minversion = "6.2"

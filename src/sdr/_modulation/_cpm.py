@@ -52,6 +52,13 @@ class CPM:
             order: The modulation order $M = 2^k$.
             index: The modulation index $h$. The modulation index is the ratio of the frequency deviation to the
                 symbol rate $h = \Delta f / f_{sym}$. The phase change per symbol is $\pi h$.
+            symbol_labels: The decimal symbol labels of consecutive complex symbols.
+
+                - `"bin"`: The symbols are binary-coded. Adjacent symbols may differ by more than one bit.
+                - `"gray":` The symbols are Gray-coded. Adjacent symbols only differ by one bit.
+                - `npt.ArrayLike`: An $M$-length array whose indices are the default symbol labels and whose values are
+                  the new symbol labels.
+
             phase_offset: A phase offset $\phi$ in degrees.
             sps: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the instantaneous frequency of the signal. If a string is passed,
@@ -191,8 +198,9 @@ class CPM:
 
     def demodulate(self, x_tilde: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
-        Demodulates the pulse-shaped complex samples $\tilde{x}[n]$ into decimal symbol decisions $\hat{s}[k]$
-        using matched filtering and maximum-likelihood estimation.
+        Demodulates the pulse-shaped complex samples into decimal symbol decisions.
+
+        This method applies matched filtering and maximum-likelihood estimation.
 
         Arguments:
             x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`sps`

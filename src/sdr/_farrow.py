@@ -361,8 +361,9 @@ class FarrowResampler:
     @property
     def delay(self) -> int:
         r"""
-        The delay $d$ of the Farrow FIR filters in samples. Output sample $d \cdot r$, corresponds to the first
-        input sample, where $r$ is the current resampling rate.
+        The delay $d$ of the Farrow FIR filters in samples.
+
+        Output sample $d \cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.

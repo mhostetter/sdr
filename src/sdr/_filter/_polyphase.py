@@ -467,7 +467,6 @@ class PolyphaseFIR(FIR):
         The input connection method.
 
         Notes:
-
             - `"hold"`: The input signal $x[n]$ is passed to each polyphase partition (used in interpolation).
             - `"top-to-bottom"`: The input signal $x[n]$ is commutated from top to bottom.
             - `"bottom-to-top"`: The input signal $x[n]$ is commutated from bottom to top (used in decimation).
@@ -480,7 +479,6 @@ class PolyphaseFIR(FIR):
         The output connection method.
 
         Notes:
-
             - `"sum"`: The output of each polyphase partition is summed to produce the output signal $y[n]$ (used in
               decimation).
             - `"top-to-bottom"`: The output of each polyphase partition is commutated from top to bottom (used in
@@ -514,8 +512,9 @@ class PolyphaseFIR(FIR):
     @property
     def delay(self) -> int:
         """
-        The delay of polyphase FIR filter in samples. The delay indicates the output sample index that corresponds
-        to the first input sample.
+        The delay of polyphase FIR filter in samples.
+
+        The delay indicates the output sample index that corresponds to the first input sample.
         """
         return super().delay // self.decimation
 

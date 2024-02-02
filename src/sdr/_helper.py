@@ -34,8 +34,9 @@ def export(obj):
 
 def extend_docstring(method, replace=None, docstring=""):
     """
-    A decorator to extend the docstring of `method` with the provided docstring. The decorator also finds
-    and replaces and key-value pair in `replace`.
+    A decorator to extend the docstring of `method` with the provided docstring.
+
+    The decorator also finds and replaces and key-value pair in `replace`.
     """
     replace = {} if replace is None else replace
 

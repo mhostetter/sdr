@@ -12,9 +12,9 @@ from .._helper import export
 @export
 def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1) -> npt.NDArray[np.float_]:
     r"""
-    Estimates the minimum required single-sample SNR, given $N_{NC}$ non-coherent combinations, to achieve
-    a probability of detection $P_D$ and probability of false alarm $P_{FA}$. This function implements
-    Albersheim's equation.
+    Estimates the minimum required single-sample SNR.
+
+    This function implements Albersheim's equation.
 
     Arguments:
         p_d: The desired probability of detection $P_D$ in $(0, 1)$.

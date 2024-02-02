@@ -151,6 +151,7 @@ class EnergyDetector:
             snr: The received signal-to-noise ratio $\sigma_s^2 / \sigma^2$ in dB.
             N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
             p_fa: The probability of false alarm $P_{FA}$.
+            complex: Indicates whether the signal is real or complex.
 
         Returns:
             The probability of detection $P_D$.
