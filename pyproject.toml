@@ -45,10 +45,10 @@ classifiers = [
 ]
 requires-python = ">=3.7"
 dependencies = [
-    "numpy >= 1.21.0",
+    "numpy",                      # Use galois's version limitation
+    "numba",                      # Use galois's version limitation
     "scipy",
     "matplotlib",
-    "numba >= 0.55, < 0.58",      # v0.55 is needed for support of NumPy 1.21
     "galois == 0.3.8",            # Exact match required because of use of internals
     "typing_extensions >= 4.0.0", # v4.0.0 is needed for use of Self (Python 3.11+) and Literal (Python 3.8+)
 ]
