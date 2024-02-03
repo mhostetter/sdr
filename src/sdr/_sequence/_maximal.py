@@ -59,10 +59,8 @@ def m_sequence(
 
     Arguments:
         degree: The degree $n$ of the LFSR.
-        poly: The feedback polynomial of the LFSR over $\mathrm{GF}(q)$. Note, the feedback polynomial
-            is the reciprocal of the characteristic polynomial that defines the linear recurrence relation.
-            The default is `None` which uses the reciprocal primitive polynomial of degree $n$ over $\mathrm{GF}(2)$,
-            `galois.primitive_poly(2, degree).reverse()`.
+        poly: The characteristic polynomial of the LFSR over $\mathrm{GF}(q)$. The default is `None`, which uses the
+            primitive polynomial of degree $n$ over $\mathrm{GF}(2)$, `galois.primitive_poly(2, degree)`.
         index: The index $i$ in $[1, q^{n})$ of the m-sequence. The index represents the initial state of the LFSR.
             The index dictates the phase of the m-sequence. The integer index is interpreted as a polynomial over
             $\mathrm{GF}(q)$, whose coefficients are the shift register values. The default is 1, which corresponds
@@ -92,13 +90,8 @@ def m_sequence(
 
         .. ipython:: python
 
-            # Characteristic polynomial
             c = galois.primitive_poly(3**2, 4); c
-
-            # Feedback polynomial
-            f = c.reverse(); f
-
-            x = sdr.m_sequence(4, poly=f); x
+            x = sdr.m_sequence(4, poly=c); x
             x.size
 
     Group:
@@ -110,8 +103,7 @@ def m_sequence(
         raise ValueError(f"Argument 'degree' must be positive, not {degree}.")
 
     if poly is None:
-        c = galois.primitive_poly(2, degree)  # Characteristic polynomial
-        poly = c.reverse()  # Feedback polynomial
+        poly = galois.primitive_poly(2, degree)  # Characteristic polynomial
     elif isinstance(poly, Poly):
         pass
     else:
