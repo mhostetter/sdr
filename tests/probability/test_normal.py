@@ -50,7 +50,8 @@ def test_Q():
     assert isinstance(p, np.ndarray)
     assert np.allclose(p, p_truth)
 
-    i = np.random.randint(0, x.size)
+    rng = np.random.default_rng()
+    i = rng.integers(0, x.size)
     pi = sdr.Q(x[i])
     assert isinstance(pi, float)
     assert p[i] == pi
@@ -93,7 +94,8 @@ def test_Qinv():
     assert isinstance(x, np.ndarray)
     assert np.allclose(x, x_truth)
 
-    i = np.random.randint(0, p.size)
+    rng = np.random.default_rng()
+    i = rng.integers(0, p.size)
     xi = sdr.Qinv(p[i])
     assert isinstance(xi, float)
     assert x[i] == xi

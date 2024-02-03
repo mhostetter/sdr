@@ -11,11 +11,12 @@ def test_exceptions():
 
 
 def test_real_from_snr():
-    A = np.random.uniform(2, 3)  # Signal amplitude
+    rng = np.random.default_rng()
+    A = rng.uniform(2, 3)  # Signal amplitude
     N = 1000
     x = A * np.ones(N, dtype=float)  # Use a constant signal so the power measurement has no uncertainty
 
-    snr = np.random.uniform(1, 2)  # dB
+    snr = rng.uniform(1, 2)  # dB
     snr_linear = 10 ** (snr / 10)
     signal_power = A**2  # Theoretical power of a constant signal
     noise_std = np.sqrt(signal_power / snr_linear)
@@ -28,11 +29,12 @@ def test_real_from_snr():
 
 
 def test_complex_from_snr():
-    A = np.random.uniform(2, 3)  # Signal amplitude
+    rng = np.random.default_rng()
+    A = rng.uniform(2, 3)  # Signal amplitude
     N = 1000
     x = A * np.ones(N, dtype=complex)  # Use a constant signal so the power measurement has no uncertainty
 
-    snr = np.random.uniform(1, 2)  # dB
+    snr = rng.uniform(1, 2)  # dB
     snr_linear = 10 ** (snr / 10)
     signal_power = A**2  # Theoretical power of a constant signal
     noise_std = np.sqrt(signal_power / snr_linear)
@@ -45,11 +47,12 @@ def test_complex_from_snr():
 
 
 def test_real_from_noise():
-    A = np.random.uniform(2, 3)  # Signal amplitude
+    rng = np.random.default_rng()
+    A = rng.uniform(2, 3)  # Signal amplitude
     N = 1000
     x = A * np.ones(N, dtype=float)  # Use a constant signal so the power measurement has no uncertainty
 
-    noise_std = np.random.uniform(1, 2)
+    noise_std = rng.uniform(1, 2)
     y = sdr.awgn(x, noise=noise_std**2)
 
     # Use standard deviation so the measurement errors aren't compounded
@@ -58,11 +61,12 @@ def test_real_from_noise():
 
 
 def test_complex_from_noise():
-    A = np.random.uniform(2, 3)  # Signal amplitude
+    rng = np.random.default_rng()
+    A = rng.uniform(2, 3)  # Signal amplitude
     N = 1000
     x = A * np.ones(N, dtype=complex)  # Use a constant signal so the power measurement has no uncertainty
 
-    noise_std = np.random.uniform(1, 2)
+    noise_std = rng.uniform(1, 2)
     y = sdr.awgn(x, noise=noise_std**2)
 
     # Use standard deviation so the measurement errors aren't compounded

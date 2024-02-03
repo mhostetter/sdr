@@ -22,8 +22,9 @@ def test_types():
 
 
 def test_bit_flips():
-    p = np.random.uniform(0.2, 0.8)
+    rng = np.random.default_rng()
+    p = rng.uniform(0.2, 0.8)
     N = int(1000 / p)
-    x = np.random.randint(0, 2, N)
+    x = rng.integers(0, 2, N)
     y = sdr.bsc(x, p)
     assert np.count_nonzero(x != y) / N == pytest.approx(p, rel=1e-1)
