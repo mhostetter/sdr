@@ -40,8 +40,7 @@ def test_degree_2():
         >> pn = comm.PNSequence('Polynomial', [2 1 0], 'InitialConditions', [0 1], 'SamplesPerFrame', 2^2 - 1);
         >> pn()
     """
-    # NOTE: MATLAB defines their polynomials as the characteristic, not feedback, polynomial
-    poly = galois.Poly.Degrees([2, 1, 0]).reverse()
+    poly = galois.Poly.Degrees([2, 1, 0])
     seq_truth = np.array([1, 0, 1])
     seq = sdr.m_sequence(2, poly=poly)
     assert np.array_equal(seq, seq_truth)
@@ -53,8 +52,7 @@ def test_degree_3():
         >> pn = comm.PNSequence('Polynomial', [3 1 0], 'InitialConditions', [0 0 1], 'SamplesPerFrame', 2^3 - 1);
         >> pn()
     """
-    # NOTE: MATLAB defines their polynomials as the characteristic, not feedback, polynomial
-    poly = galois.Poly.Degrees([3, 1, 0]).reverse()
+    poly = galois.Poly.Degrees([3, 1, 0])
     seq_truth = np.array([1, 0, 0, 1, 0, 1, 1])
     seq = sdr.m_sequence(3, poly=poly)
     assert np.array_equal(seq, seq_truth)
@@ -66,8 +64,7 @@ def test_degree_4():
         >> pn = comm.PNSequence('Polynomial', [4 1 0], 'InitialConditions', [0 0 0 1], 'SamplesPerFrame', 2^4 - 1);
         >> pn()
     """
-    # NOTE: MATLAB defines their polynomials as the characteristic, not feedback, polynomial
-    poly = galois.Poly.Degrees([4, 1, 0]).reverse()
+    poly = galois.Poly.Degrees([4, 1, 0])
     seq_truth = np.array([1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1])
     seq = sdr.m_sequence(4, poly=poly)
     assert np.array_equal(seq, seq_truth)
@@ -79,8 +76,7 @@ def test_degree_5():
         >> pn = comm.PNSequence('Polynomial', [5 2 0], 'InitialConditions', [0 0 0 0 1], 'SamplesPerFrame', 2^5 - 1);
         >> pn()
     """
-    # NOTE: MATLAB defines their polynomials as the characteristic, not feedback, polynomial
-    poly = galois.Poly.Degrees([5, 2, 0]).reverse()
+    poly = galois.Poly.Degrees([5, 2, 0])
     seq_truth = np.array([1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0])
     seq = sdr.m_sequence(5, poly=poly)
     assert np.array_equal(seq, seq_truth)
@@ -92,8 +88,7 @@ def test_degree_6():
         >> pn = comm.PNSequence('Polynomial', [6 1 0], 'InitialConditions', [0 0 0 0 0 1], 'SamplesPerFrame', 2^6 - 1);
         >> pn()
     """
-    # NOTE: MATLAB defines their polynomials as the characteristic, not feedback, polynomial
-    poly = galois.Poly.Degrees([6, 1, 0]).reverse()
+    poly = galois.Poly.Degrees([6, 1, 0])
     seq_truth = np.array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1])  # fmt: skip
     seq = sdr.m_sequence(6, poly=poly)
     assert np.array_equal(seq, seq_truth)
