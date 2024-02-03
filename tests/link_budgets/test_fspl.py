@@ -39,7 +39,8 @@ def test_250_MHz():
     assert isinstance(fspl, np.ndarray)
     assert np.allclose(fspl, fspl_truth)
 
-    i = np.random.randint(0, d.size)
+    rng = np.random.default_rng()
+    i = rng.integers(0, d.size)
     fspl = sdr.fspl(d[i], 250e6)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
@@ -80,7 +81,8 @@ def test_7p5_GHz():
     assert isinstance(fspl, np.ndarray)
     assert np.allclose(fspl, fspl_truth)
 
-    i = np.random.randint(0, d.size)
+    rng = np.random.default_rng()
+    i = rng.integers(0, d.size)
     fspl = sdr.fspl(d[i], 7.5e9)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
@@ -121,7 +123,8 @@ def test_28p25_GHz():
     assert isinstance(fspl, np.ndarray)
     assert np.allclose(fspl, fspl_truth)
 
-    i = np.random.randint(0, d.size)
+    rng = np.random.default_rng()
+    i = rng.integers(0, d.size)
     fspl = sdr.fspl(d[i], 28.25e9)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
@@ -162,7 +165,8 @@ def test_300_MHz_near_field():
     assert isinstance(fspl, np.ndarray)
     assert np.allclose(fspl, fspl_truth)
 
-    i = np.random.randint(0, d.size)
+    rng = np.random.default_rng()
+    i = rng.integers(0, d.size)
     fspl = sdr.fspl(d[i], 300e6)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])

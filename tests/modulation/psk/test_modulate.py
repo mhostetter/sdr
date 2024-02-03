@@ -4,7 +4,8 @@ import sdr
 
 
 def test_bpsk_rect():
-    phi = np.random.uniform(0, 360)
+    rng = np.random.default_rng()
+    phi = rng.uniform(0, 360)
     sps = 10
     h = sdr.rectangular(sps, norm="power")
     psk = sdr.PSK(2, phase_offset=phi, sps=sps, pulse_shape=h)
@@ -12,7 +13,8 @@ def test_bpsk_rect():
 
 
 def test_bpsk_rc():
-    phi = np.random.uniform(0, 360)
+    rng = np.random.default_rng()
+    phi = rng.uniform(0, 360)
     sps = 10
     h = sdr.raised_cosine(0.5, 16, sps, norm="power")
     psk = sdr.PSK(2, phase_offset=phi, sps=sps, pulse_shape=h)
@@ -20,7 +22,8 @@ def test_bpsk_rc():
 
 
 def test_qpsk_rect():
-    phi = np.random.uniform(0, 360)
+    rng = np.random.default_rng()
+    phi = rng.uniform(0, 360)
     sps = 10
     h = sdr.rectangular(sps, norm="power")
     psk = sdr.PSK(4, phase_offset=phi, sps=sps, pulse_shape=h)
@@ -28,7 +31,8 @@ def test_qpsk_rect():
 
 
 def test_qpsk_rc():
-    phi = np.random.uniform(0, 360)
+    rng = np.random.default_rng()
+    phi = rng.uniform(0, 360)
     sps = 10
     h = sdr.raised_cosine(0.5, 16, sps, norm="power")
     psk = sdr.PSK(4, phase_offset=phi, sps=sps, pulse_shape=h)
@@ -36,7 +40,8 @@ def test_qpsk_rc():
 
 
 def test_8psk_rect():
-    phi = np.random.uniform(0, 360)
+    rng = np.random.default_rng()
+    phi = rng.uniform(0, 360)
     sps = 10
     h = sdr.rectangular(sps, norm="power")
     psk = sdr.PSK(8, phase_offset=phi, sps=sps, pulse_shape=h)
@@ -44,7 +49,8 @@ def test_8psk_rect():
 
 
 def test_8psk_rc():
-    phi = np.random.uniform(0, 360)
+    rng = np.random.default_rng()
+    phi = rng.uniform(0, 360)
     sps = 10
     h = sdr.raised_cosine(0.5, 16, sps, norm="power")
     psk = sdr.PSK(8, phase_offset=phi, sps=sps, pulse_shape=h)
@@ -52,7 +58,8 @@ def test_8psk_rc():
 
 
 def _verify_modulation(psk: sdr.PSK):
-    s = np.random.randint(0, psk.order, 20)
+    rng = np.random.default_rng()
+    s = rng.integers(0, psk.order, 20)
     a = psk.map_symbols(s)
     x = psk.modulate(s)
 

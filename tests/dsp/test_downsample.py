@@ -5,7 +5,8 @@ import sdr
 
 
 def test_exceptions():
-    x = np.random.randn(40)
+    rng = np.random.default_rng()
+    x = rng.standard_normal(40)
 
     with pytest.raises(TypeError):
         # Rate must be an integer
