@@ -8,8 +8,9 @@ import sdr
 @pytest.mark.parametrize("mode", ["full", "valid", "same"])
 def test_non_streaming(mode):
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    h = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    h = rng.standard_normal(10) + 1j * rng.standard_normal(10)  # FIR impulse response
 
     fir = sdr.FIR(h)
     y = fir(x, mode)
@@ -21,8 +22,9 @@ def test_non_streaming(mode):
 
 def test_streaming():
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    h = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    h = rng.standard_normal(10) + 1j * rng.standard_normal(10)  # FIR impulse response
 
     fir = sdr.FIR(h, streaming=True)
 
@@ -39,8 +41,9 @@ def test_streaming():
 
 def test_streaming_match_full():
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    h = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    h = rng.standard_normal(10) + 1j * rng.standard_normal(10)  # FIR impulse response
 
     fir1 = sdr.FIR(h)
     y_full = fir1(x, mode="full")
@@ -56,7 +59,8 @@ def test_streaming_match_full():
 
 
 def test_impulse_response():
-    h_truth = np.random.randn(10) + 1j * np.random.randn(10)  # FIR impulse response
+    rng = np.random.default_rng()
+    h_truth = rng.standard_normal(10) + 1j * rng.standard_normal(10)  # FIR impulse response
     fir = sdr.FIR(h_truth)
 
     h = fir.impulse_response()

@@ -17,8 +17,9 @@ def debug_plot(y, y_truth):
 def test_non_streaming_rate():
     mode = "rate"
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    r = np.random.randint(3, 7)  # Interpolation rate
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    r = rng.integers(3, 7)  # Interpolation rate
 
     fir = sdr.Interpolator(r)
     y = fir(x, mode)
@@ -34,8 +35,9 @@ def test_non_streaming_rate():
 def test_non_streaming_full():
     mode = "full"
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    r = np.random.randint(3, 7)  # Interpolation rate
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    r = rng.integers(3, 7)  # Interpolation rate
 
     fir = sdr.Interpolator(r)
     y = fir(x, mode)
@@ -51,8 +53,9 @@ def test_non_streaming_full():
 
 def test_streaming():
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    r = np.random.randint(3, 7)  # Interpolation rate
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    r = rng.integers(3, 7)  # Interpolation rate
 
     fir = sdr.Interpolator(r, streaming=True)
 
@@ -71,8 +74,9 @@ def test_streaming():
 
 def test_streaming_match_full():
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
-    r = np.random.randint(3, 7)  # Interpolation rate
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
+    r = rng.integers(3, 7)  # Interpolation rate
 
     fir1 = sdr.Interpolator(r)
     y_full = fir1(x, mode="full")

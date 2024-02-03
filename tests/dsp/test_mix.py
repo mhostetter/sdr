@@ -5,7 +5,8 @@ import sdr
 
 
 def test_exceptions():
-    x = np.random.randn(10)
+    rng = np.random.default_rng()
+    x = rng.standard_normal(10)
 
     with pytest.raises(TypeError):
         sdr.mix(x, freq="10")

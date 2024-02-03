@@ -14,7 +14,8 @@ def test_exceptions():
 
 
 def test_dtype():
-    x = np.random.randint(0, 2, 50)
+    rng = np.random.default_rng()
+    x = rng.integers(0, 2, 50)
     assert sdr.pack(x, 7).dtype == np.uint8
     assert sdr.pack(x, 8).dtype == np.uint8
     assert sdr.pack(x, 9).dtype == np.uint16

@@ -28,13 +28,14 @@ def test_single_pole_impulse_response(pole):
 
 def test_streaming_match_full():
     N = 50
-    x = np.random.randn(N) + 1j * np.random.randn(N)  # Input signal
+    rng = np.random.default_rng()
+    x = rng.standard_normal(N) + 1j * rng.standard_normal(N)  # Input signal
 
     # Define random zeros and poles
-    Nz = np.random.randint(1, 5)
-    zeros = np.random.uniform(0.5, 1, size=Nz) * np.exp(1j * np.random.uniform(-np.pi, np.pi, size=Nz))
-    Np = np.random.randint(1, 5)
-    poles = np.random.uniform(0.2, 0.8, size=Np) * np.exp(1j * np.random.uniform(-np.pi, np.pi, size=Np))
+    Nz = rng.integers(1, 5)
+    zeros = rng.uniform(0.5, 1, size=Nz) * np.exp(1j * rng.uniform(-np.pi, np.pi, size=Nz))
+    Np = rng.integers(1, 5)
+    poles = rng.uniform(0.2, 0.8, size=Np) * np.exp(1j * rng.uniform(-np.pi, np.pi, size=Np))
 
     iir1 = sdr.IIR.ZerosPoles(zeros, poles)
     y_full = iir1(x)
