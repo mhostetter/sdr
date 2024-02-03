@@ -191,7 +191,7 @@ class CPM:
         x = self._nco(2 * np.pi * freq_ps, output="complex-exp")  # Complex samples
         return x
 
-    def _tx_pulse_shape(self, a: npt.NDArray[np.float_]) -> npt.NDArray[np.float_]:
+    def _tx_pulse_shape(self, a: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
         a = np.asarray(a)  # Complex symbols
         x = self._tx_filter(a, mode="full")  # Complex samples
         return x

@@ -43,7 +43,7 @@ def m_sequence(
     poly: PolyLike | None = None,
     index: int = 1,
     output: Literal["bipolar"] = "decimal",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     ...
 
 

@@ -240,13 +240,13 @@ class IIR:
         sample_rate: float = 1.0,
         whole: bool = True,
         decades: int | None = None,
-    ) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.complex_]]:
+    ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.complex_]]:
         ...
 
     @overload
     def frequency_response(
         self,
-        freqs: float | npt.NDArray[np.float_],
+        freqs: float | npt.NDArray[np.float64],
         sample_rate: float = 1.0,
     ) -> complex:
         ...
@@ -254,7 +254,7 @@ class IIR:
     @overload
     def frequency_response(
         self,
-        freqs: npt.NDArray[np.float_],
+        freqs: npt.NDArray[np.float64],
         sample_rate: float = 1.0,
     ) -> npt.NDArray[np.complex_]:
         ...

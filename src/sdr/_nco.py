@@ -120,17 +120,17 @@ class NCO:
     @overload
     def __call__(
         self,
-        freq: npt.NDArray[np.float_] | None = None,
-        phase: npt.NDArray[np.float_] | None = None,
+        freq: npt.NDArray[np.float64] | None = None,
+        phase: npt.NDArray[np.float64] | None = None,
         output: Literal["phase", "sine", "cosine"] = "complex-exp",
-    ) -> npt.NDArray[np.float_]:
+    ) -> npt.NDArray[np.float64]:
         ...
 
     @overload
     def __call__(
         self,
-        freq: npt.NDArray[np.float_] | None = None,
-        phase: npt.NDArray[np.float_] | None = None,
+        freq: npt.NDArray[np.float64] | None = None,
+        phase: npt.NDArray[np.float64] | None = None,
         output: Literal["complex-exp"] = "complex-exp",
     ) -> npt.NDArray[np.complex_]:
         ...

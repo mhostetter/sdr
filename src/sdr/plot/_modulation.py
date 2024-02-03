@@ -405,8 +405,8 @@ def phase_tree(
 
 @export
 def ber(
-    ebn0: npt.NDArray[np.float_],
-    ber: npt.NDArray[np.float_],
+    ebn0: npt.NDArray[np.float64],
+    ber: npt.NDArray[np.float64],
     **kwargs,
 ):
     r"""
@@ -454,8 +454,8 @@ def ber(
 
 @export
 def ser(
-    esn0: npt.NDArray[np.float_],
-    ser: npt.NDArray[np.float_],
+    esn0: npt.NDArray[np.float64],
+    ser: npt.NDArray[np.float64],
     **kwargs,
 ):
     r"""

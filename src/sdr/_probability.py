@@ -11,7 +11,7 @@ from ._helper import export
 
 
 @export
-def Q(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def Q(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Computes the CCDF of the standard normal distribution $\mathcal{N}(0, 1)$..
 
@@ -42,7 +42,7 @@ def Q(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Computes the inverse CCDF of the standard normal distribution $\mathcal{N}(0, 1)$.
 

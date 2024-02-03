@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 
 
-def code_to_sequence(code: npt.NDArray[np.int_]) -> npt.NDArray[np.float_]:
+def code_to_sequence(code: npt.NDArray[np.int_]) -> npt.NDArray[np.float64]:
     r"""
     Converts a binary code to a bipolar sequence.
 
@@ -29,7 +29,7 @@ def code_to_field(code: npt.NDArray[np.int_]) -> galois.FieldArray:
     return field
 
 
-def sequence_to_code(sequence: npt.NDArray[np.float_]) -> npt.NDArray[np.int_]:
+def sequence_to_code(sequence: npt.NDArray[np.float64]) -> npt.NDArray[np.int_]:
     r"""
     Converts a bipolar sequence to a binary code.
 

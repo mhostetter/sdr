@@ -28,7 +28,7 @@ def barker_code(length: int, output: Literal["field"]) -> galois.FieldArray:
 
 
 @overload
-def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float_]:
+def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]:
     ...
 
 
@@ -115,7 +115,7 @@ def hadamard_code(length: int, index: int, output: Literal["field"]) -> galois.F
 
 
 @overload
-def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float_]:
+def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]:
     ...
 
 
@@ -246,7 +246,7 @@ def walsh_code(length: int, index: int, output: Literal["field"]) -> galois.Fiel
 
 
 @overload
-def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float_]:
+def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]:
     ...
 
 

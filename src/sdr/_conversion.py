@@ -18,7 +18,7 @@ from ._helper import export
 def db(
     x: npt.ArrayLike,
     type: Literal["value", "power", "voltage"] = "value",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from linear units to decibels.
 
@@ -80,7 +80,7 @@ def db(
 def linear(
     x: npt.ArrayLike,
     type: Literal["value", "power", "voltage"] = "value",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from decibels to linear units.
 
@@ -142,7 +142,7 @@ def linear(
 
 
 @export
-def percent(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def percent(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Converts from a ratio to a percentage.
 
@@ -173,7 +173,7 @@ def percent(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def ppm(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def ppm(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Converts from a ratio to parts per million (ppm).
 
@@ -204,7 +204,7 @@ def ppm(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def ppb(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def ppb(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Converts from a ratio to parts per billion (ppb).
 
@@ -240,7 +240,7 @@ def ppb(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np.float_]:
+def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_b/N_0$ to $E_s/N_0$.
 
@@ -280,7 +280,7 @@ def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
 
 
 @export
-def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float_]:
+def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_b/N_0$ to $S/N$.
 
@@ -325,7 +325,7 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
 
 
 @export
-def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np.float_]:
+def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_s/N_0$ to $E_b/N_0$.
 
@@ -365,7 +365,7 @@ def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
 
 
 @export
-def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float_]:
+def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_s/N_0$ to $S/N$.
 
@@ -408,7 +408,7 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float_]:
 
 
 @export
-def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float_]:
+def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $S/N$ to $E_b/N_0$.
 
@@ -449,7 +449,7 @@ def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> np
 
 
 @export
-def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float_]:
+def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $S/N$ to $E_s/N_0$.
 
