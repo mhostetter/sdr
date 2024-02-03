@@ -1212,7 +1212,7 @@ class GLFSR:
     @property
     def feedback_poly(self) -> Poly:
         r"""
-        The feedback polynomial $f(x) that defines the feedback arithmetic.
+        The feedback polynomial $f(x)$ that defines the feedback arithmetic.
 
         Notes:
             The feedback polynomial
