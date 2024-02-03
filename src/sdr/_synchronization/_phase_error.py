@@ -67,7 +67,7 @@ class PED:
         return
 
     def __call__(
-        self, received: npt.NDArray[np.complex_], reference: npt.NDArray[np.complex_]
+        self, received: npt.NDArray[np.complex128], reference: npt.NDArray[np.complex128]
     ) -> npt.NDArray[np.float64]:
         r"""
         Detects the phase error.

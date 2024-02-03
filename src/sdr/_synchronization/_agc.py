@@ -99,7 +99,7 @@ class AGC:
         self._gain: float  # The linear gain state. Will be updated in reset().
         self.reset()
 
-    def __call__(self, x: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+    def __call__(self, x: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
         """
         Performs automatic gain control on the input signal.
 
@@ -200,12 +200,12 @@ class AGC:
 
 @numba.jit(nopython=True, cache=True)
 def _numba_agc_loop(
-    x: npt.NDArray[np.complex_],
+    x: npt.NDArray[np.complex128],
     attack: float,
     decay: float,
     reference: float,
     gain: float,
-) -> tuple[npt.NDArray[np.complex_], float]:
+) -> tuple[npt.NDArray[np.complex128], float]:
     y = np.zeros_like(x)
     reference = np.log(reference)
     gain = np.log(gain)  # Convert to log domain
