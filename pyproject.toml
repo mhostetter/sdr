@@ -95,7 +95,7 @@ select = [
     "D",   # pydocstyle
     "I",   # isort
     "PL",  # pylint
-    # "NPY", # numpy rules
+    "NPY", # numpy rules
     # "RUF", # ruff rules
     "PERF", # perflint
 ]
