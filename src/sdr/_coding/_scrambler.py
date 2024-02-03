@@ -46,13 +46,8 @@ class AdditiveScrambler:
 
         .. ipython:: python
 
-            # The characteristic polynomial
             c = galois.Poly.Degrees([7, 3, 0]); c
-
-            # The feedback polynomial
-            f = c.reverse(); f
-
-            scrambler = sdr.AdditiveScrambler(f)
+            scrambler = sdr.AdditiveScrambler(c)
 
         Scramble and descramble a sequence.
 
@@ -69,19 +64,21 @@ class AdditiveScrambler:
 
     def __init__(
         self,
-        feedback_poly: PolyLike,
+        characteristic_poly: PolyLike | None = None,
+        feedback_poly: PolyLike | None = None,
         state: ArrayLike | None = None,
     ):
         r"""
         Creates an additive scrambler.
 
         Arguments:
+            characteristic_poly: The characteristic polynomial
+                $c(x) = x^{n} - c_{n-1} \cdot x^{n-1} - c_{n-2} \cdot x^{n-2} - \dots - c_{1} \cdot x - c_{0}$.
             feedback_poly: The feedback polynomial
                 $f(x) = -c_{0} \cdot x^{n} - c_{1} \cdot x^{n-1} - \dots - c_{n-2} \cdot x^{2} - c_{n-1} \cdot x + 1$.
 
                 .. note::
-                    The feedback polynomial $f(x) = x^n \cdot c(x^{-1})$ is the reciprocal of the characteristic
-                    polynomial $c(x)$. The reciprocal can be found using :obj:`galois.Poly.reverse`.
+                    Either `characteristic_poly` or `feedback_poly` must be specified, but not both.
 
             state: The initial state vector $S = [S_0, S_1, \dots, S_{n-2}, S_{n-1}]$. The default is `None`
                 which corresponds to all ones.
@@ -89,7 +86,7 @@ class AdditiveScrambler:
         See Also:
             FLFSR, galois.primitive_poly
         """
-        self._lfsr = FLFSR(feedback_poly, state=state)
+        self._lfsr = FLFSR(characteristic_poly, feedback_poly, state=state)
 
     def scramble(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
         r"""
@@ -102,7 +99,7 @@ class AdditiveScrambler:
             The scrambled output sequence $y[n]$.
         """
         self.lfsr.reset()  # Set the initial state
-        shift = self.lfsr.feedback_poly.degree
+        shift = self.lfsr.characteristic_poly.degree
         seq = self.lfsr.step(x.size + shift)
         seq = seq.view(np.ndarray)
         y = np.bitwise_xor(x, seq[shift:])
