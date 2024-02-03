@@ -450,7 +450,7 @@ class PSK(LinearModulation):
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
         """,
     )
-    def symbol_map(self) -> npt.NDArray[np.complex_]:
+    def symbol_map(self) -> npt.NDArray[np.complex128]:
         return super().symbol_map
 
 
@@ -621,7 +621,7 @@ class PiMPSK(PSK):
             pulse_shape=pulse_shape,
         )
 
-    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
+    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         a = super()._map_symbols(s)
 
         # Rotate odd symbols by pi/M
@@ -631,8 +631,8 @@ class PiMPSK(PSK):
         return a_rotated
 
     def _decide_symbols(
-        self, a_tilde: npt.NDArray[np.complex_]
-    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+        self, a_tilde: npt.NDArray[np.complex128]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128]]:
         # Rotate odd symbols by -pi/M
         a_tilde_derotated = a_tilde.copy()
         a_tilde_derotated[1::2] *= np.exp(-1j * np.pi / self.order)
@@ -822,7 +822,7 @@ class OQPSK(PSK):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
+    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         a = super()._map_symbols(s)
 
         a_I = np.repeat(a.real, 2)
@@ -836,7 +836,7 @@ class OQPSK(PSK):
 
         return a
 
-    def _tx_pulse_shape(self, a: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+    def _tx_pulse_shape(self, a: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
         a_I, a_Q = a.real, a.imag
 
         # Shift Q symbols by -1/2 symbol and grab 1 sample per symbol
@@ -855,8 +855,8 @@ class OQPSK(PSK):
         return x
 
     def _decide_symbols(
-        self, a_tilde: npt.NDArray[np.complex_]
-    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+        self, a_tilde: npt.NDArray[np.complex128]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128]]:
         a_tilde = np.asarray(a_tilde)
         a_tilde_I, a_tilde_Q = a_tilde.real, a_tilde.imag
 
@@ -868,7 +868,7 @@ class OQPSK(PSK):
 
         return super()._decide_symbols(a_tilde)
 
-    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
         x_tilde_I, x_tilde_Q = x_tilde.real, x_tilde.imag
 
         # Shift Q samples by -1/2 symbol

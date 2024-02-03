@@ -16,7 +16,7 @@ from ._time_domain import raster
 
 @export
 def constellation(
-    x_hat: npt.NDArray[np.complex_],
+    x_hat: npt.NDArray[np.complex128],
     limits: tuple[float, float] | None = None,
     persistence: bool = False,
     colorbar: bool = True,
@@ -123,7 +123,7 @@ def constellation(
 
 @export
 def symbol_map(
-    modulation: LinearModulation | npt.NDArray[np.complex_],
+    modulation: LinearModulation | npt.NDArray[np.complex128],
     annotate: bool | Literal["bin"] = True,
     limits: tuple[float, float] | None = None,
     **kwargs,

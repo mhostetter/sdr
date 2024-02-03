@@ -121,7 +121,7 @@ class LinearModulation:
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def map_symbols(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
+    def map_symbols(self, s: npt.ArrayLike) -> npt.NDArray[np.complex128]:
         r"""
         Converts the decimal symbols into complex symbols.
 
@@ -134,11 +134,11 @@ class LinearModulation:
         s = np.asarray(s)  # Decimal symbols
         return self._map_symbols(s)
 
-    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
+    def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         a = self.symbol_map[s]  # Complex symbols
         return a
 
-    def decide_symbols(self, a_tilde: npt.ArrayLike) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+    def decide_symbols(self, a_tilde: npt.ArrayLike) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128]]:
         r"""
         Converts the received complex symbols into MLE symbol decisions.
 
@@ -155,14 +155,14 @@ class LinearModulation:
         return self._decide_symbols(a_tilde)
 
     def _decide_symbols(
-        self, a_tilde: npt.NDArray[np.complex_]
-    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_]]:
+        self, a_tilde: npt.NDArray[np.complex128]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128]]:
         error_vectors = np.subtract.outer(a_tilde, self.symbol_map)
         s_hat = np.argmin(np.abs(error_vectors), axis=-1)
         a_hat = self.symbol_map[s_hat]
         return s_hat, a_hat
 
-    def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
+    def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex128]:
         r"""
         Modulates the decimal symbols into pulse-shaped complex samples.
 
@@ -176,18 +176,18 @@ class LinearModulation:
         s = np.asarray(s)  # Decimal symbols
         return self._modulate(s)
 
-    def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
+    def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         a = self._map_symbols(s)  # Complex symbols
         x = self._tx_pulse_shape(a)  # Complex samples
         return x
 
-    def _tx_pulse_shape(self, a: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+    def _tx_pulse_shape(self, a: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
         x = self._tx_filter(a, mode="full")  # Complex samples
         return x
 
     def demodulate(
         self, x_tilde: npt.ArrayLike
-    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_], npt.NDArray[np.complex_]]:
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128], npt.NDArray[np.complex128]]:
         r"""
         Demodulates the pulse-shaped complex samples.
 
@@ -206,13 +206,13 @@ class LinearModulation:
         return self._demodulate(x_tilde)
 
     def _demodulate(
-        self, x_tilde: npt.NDArray[np.complex_]
-    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex_], npt.NDArray[np.complex_]]:
+        self, x_tilde: npt.NDArray[np.complex128]
+    ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128], npt.NDArray[np.complex128]]:
         a_tilde = self._rx_matched_filter(x_tilde)  # Complex symbols
         s_hat, a_hat = self._decide_symbols(a_tilde)  # Decimal symbols
         return s_hat, a_tilde, a_hat
 
-    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex_]) -> npt.NDArray[np.complex_]:
+    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
         if self.pulse_shape.size % self.sps == 0:
             x_tilde = np.insert(x_tilde, 0, 0)
 
@@ -285,7 +285,7 @@ class LinearModulation:
         return self._phase_offset
 
     @property
-    def symbol_map(self) -> npt.NDArray[np.complex_]:
+    def symbol_map(self) -> npt.NDArray[np.complex128]:
         r"""
         The symbol map $\{0, \dots, M-1\} \mapsto \mathbb{C}$.
 

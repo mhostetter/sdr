@@ -132,7 +132,7 @@ class NCO:
         freq: npt.NDArray[np.float64] | None = None,
         phase: npt.NDArray[np.float64] | None = None,
         output: Literal["complex-exp"] = "complex-exp",
-    ) -> npt.NDArray[np.complex_]:
+    ) -> npt.NDArray[np.complex128]:
         ...
 
     def __call__(
@@ -199,7 +199,7 @@ class NCO:
 
         return y
 
-    def step(self, N: int) -> npt.NDArray[np.complex_]:
+    def step(self, N: int) -> npt.NDArray[np.complex128]:
         """
         Steps the NCO forward by $N$ samples.
 

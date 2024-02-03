@@ -161,7 +161,7 @@ class CPM:
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex_]:
+    def modulate(self, s: npt.ArrayLike) -> npt.NDArray[np.complex128]:
         r"""
         Modulates the decimal symbols $s[k]$ into pulse-shaped complex samples $x[n]$.
 
@@ -175,7 +175,7 @@ class CPM:
         s = np.asarray(s)  # Decimal symbols
         return self._modulate(s)
 
-    def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex_]:
+    def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         s = self._symbol_labels[s]  # Relabeled decimal symbols
         freq = self.index * (2 * s - (self.order - 1))  # Instantaneous frequency
         print(freq)
@@ -212,7 +212,7 @@ class CPM:
         x_tilde = np.asarray(x_tilde)  # Complex samples
         return self._demodulate(x_tilde)
 
-    def _demodulate(self, x_tilde: npt.NDArray[np.complex_]) -> npt.NDArray[np.int_]:
+    def _demodulate(self, x_tilde: npt.NDArray[np.complex128]) -> npt.NDArray[np.int_]:
         raise NotImplementedError("Demodulation for continuous-phase modulations is not supported.")
 
     @abc.abstractmethod
