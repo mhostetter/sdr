@@ -375,7 +375,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
 
 @export
-def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex_]:
+def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex128]:
     r"""
     Returns the root-$u$ Zadoff-Chu sequence of length $N$.
 
