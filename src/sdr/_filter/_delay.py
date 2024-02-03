@@ -12,7 +12,7 @@ from ._design_fir import _normalize_passband
 from ._fir import FIR
 
 
-def _ideal_frac_delay(length: int, delay: float) -> npt.NDArray[np.float_]:
+def _ideal_frac_delay(length: int, delay: float) -> npt.NDArray[np.float64]:
     """
     Returns the ideal fractional delay filter impulse response.
     """
@@ -25,7 +25,7 @@ def _ideal_frac_delay(length: int, delay: float) -> npt.NDArray[np.float_]:
 def design_frac_delay_fir(
     length: int,
     delay: float,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Designs a fractional delay FIR filter impulse response $h[n]$ using the Kaiser window method.
 

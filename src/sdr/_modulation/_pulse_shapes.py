@@ -15,7 +15,7 @@ def rectangular(
     sps: int,
     span: int = 1,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Returns a rectangular pulse shape.
 
@@ -76,7 +76,7 @@ def half_sine(
     sps: int,
     span: int = 1,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Returns a half-sine pulse shape.
 
@@ -138,7 +138,7 @@ def gaussian(
     span: int,
     sps: int,
     norm: Literal["power", "energy", "passband"] = "passband",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Returns a Gaussian pulse shape.
 
@@ -239,7 +239,7 @@ def raised_cosine(
     span: int,
     sps: int,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Returns a raised cosine (RC) pulse shape.
 
@@ -376,7 +376,7 @@ def root_raised_cosine(
     span: int,
     sps: int,
     norm: Literal["power", "energy", "passband"] = "energy",
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Returns a square root raised cosine (SRRC) pulse shape.
 
@@ -510,7 +510,7 @@ def root_raised_cosine(
     return h
 
 
-def _normalize(h: npt.NDArray[np.float_], norm: Literal["power", "energy", "passband"]) -> npt.NDArray[np.float_]:
+def _normalize(h: npt.NDArray[np.float64], norm: Literal["power", "energy", "passband"]) -> npt.NDArray[np.float64]:
     if norm == "power":
         h /= np.sqrt(np.max(np.abs(h) ** 2))
     elif norm == "energy":

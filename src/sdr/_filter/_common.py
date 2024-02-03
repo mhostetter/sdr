@@ -15,7 +15,7 @@ def get_frequency_vector(
     sample_rate: float = 1.0,
     whole: bool = True,
     decades: int | None = None,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     if isinstance(freqs, int):
         # freqs represents the number of frequency points
         if whole:

@@ -11,7 +11,7 @@ from .._conversion import linear
 from .._helper import export
 
 
-def Hb(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def Hb(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     """
     Computes the binary entropy function $H_b(x)$.
     """
@@ -21,7 +21,7 @@ def Hb(x: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def bsc_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def bsc_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Calculates the capacity of a binary symmetric channel (BSC).
 
@@ -65,7 +65,7 @@ def bsc_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def bec_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def bec_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Calculates the capacity of a binary erasure channel (BEC).
 
@@ -109,7 +109,7 @@ def bec_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
 
 
 @export
-def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDArray[np.float_]:
+def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDArray[np.float64]:
     r"""
     Calculates the capacity of an additive white Gaussian noise (AWGN) channel.
 

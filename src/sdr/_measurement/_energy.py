@@ -15,7 +15,7 @@ def energy(
     x: npt.ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     db: bool = False,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Measures the energy of a time-domain signal $x[n]$.
 
