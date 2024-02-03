@@ -3,7 +3,7 @@ A module containing classes and functions for generating and analyzing linear fe
 """
 from __future__ import annotations
 
-from typing import Callable, overload
+from typing import Callable, Type, overload
 
 import numba
 import numpy as np
@@ -468,7 +468,7 @@ class FLFSR:
         return GLFSR(self.characteristic_poly, state=state)
 
     @property
-    def field(self) -> type[FieldArray]:
+    def field(self) -> Type[FieldArray]:
         """
         The :obj:`~galois.FieldArray` subclass for the finite field that defines the linear arithmetic.
 
@@ -1170,7 +1170,7 @@ class GLFSR:
         return FLFSR(self.characteristic_poly, state=state)
 
     @property
-    def field(self) -> type[FieldArray]:
+    def field(self) -> Type[FieldArray]:
         """
         The :obj:`~galois.FieldArray` subclass for the finite field that defines the linear arithmetic.
 
