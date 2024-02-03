@@ -111,6 +111,7 @@ ignore = [
     "PLR0912", # too-many-branches
     "PLR0915", # too-many-statements
     "PLW0603", # global-statement
+    "UP006",   # non-pep585-annotation, type[FieldArray] renders wrong in docs
 ]
 extend-select = [
     "D213", # multi-line-summary-second-line
