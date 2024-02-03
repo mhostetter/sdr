@@ -11,7 +11,7 @@ from .._helper import export
 
 
 @export
-def fspl(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def fspl(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Calculates the free-space path loss (FSPL) in dB.
 

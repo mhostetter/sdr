@@ -7,7 +7,7 @@ import numpy as np
 import numpy.typing as npt
 
 
-def time_units(time: npt.NDArray[np.float_]) -> tuple[str, float]:
+def time_units(time: npt.NDArray[np.float64]) -> tuple[str, float]:
     """
     Determines the appropriate time units to use for a given time array.
     """
@@ -35,7 +35,7 @@ def time_units(time: npt.NDArray[np.float_]) -> tuple[str, float]:
     return units, scalar
 
 
-def freq_units(freq: npt.NDArray[np.float_]) -> tuple[str, float]:
+def freq_units(freq: npt.NDArray[np.float64]) -> tuple[str, float]:
     """
     Determines the appropriate frequency units to use for a given frequency array.
     """

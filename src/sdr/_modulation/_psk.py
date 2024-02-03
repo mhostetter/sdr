@@ -207,7 +207,7 @@ class PSK(LinearModulation):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def ber(self, ebn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float_]:
+    def ber(self, ebn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float64]:
         r"""
         Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
 
@@ -294,7 +294,7 @@ class PSK(LinearModulation):
 
         return Pbe
 
-    def ser(self, esn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float_]:
+    def ser(self, esn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float64]:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 

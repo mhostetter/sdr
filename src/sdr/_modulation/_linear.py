@@ -232,7 +232,7 @@ class LinearModulation:
         return a_tilde
 
     @abc.abstractmethod
-    def ber(self, ebn0: npt.ArrayLike) -> npt.NDArray[np.float_]:
+    def ber(self, ebn0: npt.ArrayLike) -> npt.NDArray[np.float64]:
         r"""
         Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
 
@@ -248,7 +248,7 @@ class LinearModulation:
         raise NotImplementedError("Bit error rate calculation for arbitrary linear modulations is not supported.")
 
     @abc.abstractmethod
-    def ser(self, esn0: npt.ArrayLike) -> npt.NDArray[np.float_]:
+    def ser(self, esn0: npt.ArrayLike) -> npt.NDArray[np.float64]:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 
@@ -301,7 +301,7 @@ class LinearModulation:
         return self._sps
 
     @property
-    def pulse_shape(self) -> npt.NDArray[np.float_]:
+    def pulse_shape(self) -> npt.NDArray[np.float64]:
         r"""
         The pulse shape $h[n]$ of the modulated signal.
         """

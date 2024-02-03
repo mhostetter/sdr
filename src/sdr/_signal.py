@@ -89,7 +89,7 @@ def mix(
 
 
 @export
-def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
+def to_complex_bb(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex_]:
     r"""
     Converts a real passband signal to a complex baseband signal.
 
@@ -172,7 +172,7 @@ def to_complex_bb(x_r: npt.NDArray[np.float_]) -> npt.NDArray[np.complex_]:
 
 
 @export
-def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float_]:
+def to_real_pb(x_c: npt.NDArray[np.complex_]) -> npt.NDArray[np.float64]:
     r"""
     Converts a complex baseband signal to a real passband signal.
 

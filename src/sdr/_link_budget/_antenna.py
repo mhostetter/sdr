@@ -12,7 +12,7 @@ from .._helper import export
 
 
 @export
-def wavelength(freq: npt.ArrayLike) -> npt.NDArray[np.float_]:
+def wavelength(freq: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Calculates the wavelength $\lambda$ of an electromagnetic wave with frequency $f$.
 
@@ -43,7 +43,7 @@ def parabolic_antenna(
     freq: npt.ArrayLike,
     diameter: npt.ArrayLike,
     efficiency: npt.ArrayLike = 0.55,
-) -> tuple[npt.NDArray[np.float_], npt.NDArray[np.float_]]:
+) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
     r"""
     Calculates the gain $G$ and beamwidth $\theta$ of a parabolic reflector.
 

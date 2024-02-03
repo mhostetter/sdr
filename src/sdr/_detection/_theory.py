@@ -10,7 +10,7 @@ from .._helper import export
 
 
 @export
-def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1) -> npt.NDArray[np.float_]:
+def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1) -> npt.NDArray[np.float64]:
     r"""
     Estimates the minimum required single-sample SNR.
 

@@ -339,7 +339,7 @@ class BinarySymmetricChannel(Channel):
         return string
 
     @staticmethod
-    def capacities(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+    def capacities(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
         """
         Calculates the capacity of BSC channels.
 
@@ -479,7 +479,7 @@ class BinaryErasureChannel(Channel):
         return string
 
     @staticmethod
-    def capacities(p: npt.ArrayLike) -> npt.NDArray[np.float_]:
+    def capacities(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
         """
         Calculates the capacity of BEC channels.
 
@@ -653,7 +653,7 @@ class DiscreteMemorylessChannel(Channel):
         return self._Y
 
     @property
-    def P(self) -> npt.NDArray[np.float_]:
+    def P(self) -> npt.NDArray[np.float64]:
         """
         The transition probability matrix $P$ of the DMC channel.
         """

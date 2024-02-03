@@ -18,7 +18,7 @@ def design_multirate_fir(
     decimation: int = 1,
     polyphase_order: int = 23,
     atten: float = 80,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method.
 
@@ -109,7 +109,7 @@ def design_multirate_fir(
     return h
 
 
-def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float_]:
+def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float64]:
     r"""
     The multirate filter is designed to linearly interpolate between samples.
 
@@ -122,7 +122,7 @@ def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float_]:
     return h
 
 
-def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float_]:
+def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float64]:
     r"""
     The multirate filter is designed to linearly interpolate between samples.
 
@@ -135,7 +135,7 @@ def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float_]:
     return h
 
 
-def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float_]:
+def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float64]:
     """
     The multirate filter is designed to be a zero-order hold.
 

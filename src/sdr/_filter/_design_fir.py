@@ -11,7 +11,7 @@ from typing_extensions import Literal
 from .._helper import export
 
 
-def _normalize(h: npt.NDArray[np.float_], norm: Literal["power", "energy", "passband"]) -> npt.NDArray[np.float_]:
+def _normalize(h: npt.NDArray[np.float64], norm: Literal["power", "energy", "passband"]) -> npt.NDArray[np.float64]:
     if norm == "power":
         h /= np.sqrt(np.max(np.abs(h) ** 2))
     elif norm == "energy":
@@ -24,14 +24,14 @@ def _normalize(h: npt.NDArray[np.float_], norm: Literal["power", "energy", "pass
     return h
 
 
-def _normalize_passband(h: npt.NDArray[np.float_], center_freq: float) -> npt.NDArray[np.float_]:
+def _normalize_passband(h: npt.NDArray[np.float64], center_freq: float) -> npt.NDArray[np.float64]:
     order = h.size - 1
     lo = np.exp(-1j * np.pi * center_freq * np.arange(-order // 2, order // 2 + 1))
     h = h / np.abs(np.sum(h * lo))
     return h
 
 
-def _ideal_lowpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
+def _ideal_lowpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float64]:
     """
     Returns the ideal lowpass filter impulse response.
     """
@@ -41,7 +41,7 @@ def _ideal_lowpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
     return h_ideal
 
 
-def _ideal_highpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
+def _ideal_highpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float64]:
     """
     Returns the ideal highpass filter impulse response.
     """
@@ -50,7 +50,7 @@ def _ideal_highpass(order: int, cutoff_freq: float) -> npt.NDArray[np.float_]:
     return h_ideal
 
 
-def _ideal_bandpass(order: int, center_freq: float, bandwidth: float) -> npt.NDArray[np.float_]:
+def _ideal_bandpass(order: int, center_freq: float, bandwidth: float) -> npt.NDArray[np.float64]:
     """
     Returns the ideal bandpass filter impulse response.
     """
@@ -60,7 +60,7 @@ def _ideal_bandpass(order: int, center_freq: float, bandwidth: float) -> npt.NDA
     return h_ideal
 
 
-def _ideal_bandstop(order: int, center_freq: float, bandwidth: float) -> npt.NDArray[np.float_]:
+def _ideal_bandstop(order: int, center_freq: float, bandwidth: float) -> npt.NDArray[np.float64]:
     """
     Returns the ideal bandstop filter impulse response.
     """
@@ -76,7 +76,7 @@ def _window(
     | npt.ArrayLike
     | None = None,
     atten: float = 60,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     if window is None:
         h_window = np.ones(order + 1)
     elif isinstance(window, str):
@@ -113,7 +113,7 @@ def design_lowpass_fir(
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
     atten: float = 60,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Designs a lowpass FIR filter impulse response $h[n]$ using the window method.
 
@@ -208,7 +208,7 @@ def design_highpass_fir(
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
     atten: float = 60,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Designs a highpass FIR filter impulse response $h[n]$ using the window method.
 
@@ -304,7 +304,7 @@ def design_bandpass_fir(
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
     atten: float = 60,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Designs a bandpass FIR filter impulse response $h[n]$ using the window method.
 
@@ -409,7 +409,7 @@ def design_bandstop_fir(
     | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
     | npt.ArrayLike = "hamming",
     atten: float = 60,
-) -> npt.NDArray[np.float_]:
+) -> npt.NDArray[np.float64]:
     r"""
     Designs a bandstop FIR filter impulse response $h[n]$ using the window method.
 
