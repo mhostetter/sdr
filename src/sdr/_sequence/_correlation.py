@@ -56,13 +56,15 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            code = sdr.barker_code(13); code
-            seq = sdr.barker_code(13, output="bipolar"); seq
+            sdr.barker_code(13)
+            sdr.barker_code(13, output="bipolar")
+            sdr.barker_code(13, output="field")
 
         Barker sequences have ideally-minimal autocorrelation sidelobes of +1 or -1.
 
         .. ipython:: python
 
+            seq = sdr.barker_code(13, output="bipolar")
             corr = np.correlate(seq, seq, mode="full")
             lag = np.arange(-seq.size + 1, seq.size)
 
@@ -147,8 +149,9 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            code = sdr.hadamard_code(16, 4); code
-            seq = sdr.hadamard_code(16, 4, output="bipolar"); seq
+            sdr.hadamard_code(16, 4)
+            sdr.hadamard_code(16, 4, output="bipolar")
+            sdr.hadamard_code(16, 4, output="field")
 
         The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
 
@@ -279,8 +282,9 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            code = sdr.walsh_code(16, 4); code
-            seq = sdr.walsh_code(16, 4, output="bipolar"); seq
+            sdr.walsh_code(16, 4)
+            sdr.walsh_code(16, 4, output="bipolar")
+            sdr.walsh_code(16, 4, output="field")
 
         The Hadamard and Walsh code sets are equivalent, however they are indexed differently.
 
@@ -450,7 +454,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
             sdr.plot.time_domain(seq2 + 0, label="Index 1"); \
             sdr.plot.time_domain(seq3 - 3, label="Index 2")
 
-        Examine the autocorrelation of the Kasami codes.
+        Examine the autocorrelation of the Kasami sequences.
 
         .. ipython:: python
 
@@ -467,7 +471,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
             plt.xlabel("Lag"); \
             plt.title("Autocorrelation of length-63 Kasami sequences");
 
-        Examine the cross correlation of the Kasami codes.
+        Examine the cross correlation of the Kasami sequences.
 
         .. ipython:: python
 
