@@ -4070,6 +4070,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.kasami_code/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.kasami_code (Python function) — Returns the Kasami code/sequence of length $N$." class="md-ellipsis">kasami_<wbr>code</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.zadoff_chu_sequence/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.zadoff_chu_sequence (Python function) — Returns the root-$u$ Zadoff-Chu sequence of length $N$." class="md-ellipsis">zadoff_<wbr>chu_<wbr>sequence</span>
       </a>
@@ -13309,24 +13324,33 @@ to the <span class="math notranslate nohighlight">\([0, \dots, 0, 1]\)</span> st
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Maximum_length_sequence">https://en.wikipedia.org/wiki/Maximum_length_sequence</a></p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
-<p>Generate a maximal-length sequence of degree-4 over <span class="math notranslate nohighlight">\(\mathrm{GF}(2)\)</span>. Compare the sequence with index 1 to
-the sequence with index 2. They are just phase shifts of each other.</p>
+<p>Generate a maximal-length sequence of degree-4 over <span class="math notranslate nohighlight">\(\mathrm{GF}(2)\)</span>.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="gh">Out[1]: </span><span class="go">array([1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1])</span>
 
-<span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="gh">Out[2]: </span><span class="go">array([0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0])</span>
+<span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">)</span>
+<span class="gh">Out[2]: </span>
+<span class="go">array([-1.,  1.,  1.,  1., -1.,  1.,  1., -1., -1.,  1., -1.,  1., -1.,</span>
+<span class="go">       -1., -1.])</span>
+
+<span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;field&quot;</span><span class="p">)</span>
+<span class="gh">Out[3]: </span><span class="go">GF([1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1], order=2)</span>
+</code></pre></div>
+</div>
+<p>Compare the sequence with index 1 to the sequence with index 2. They are just phase shifts of each other.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gh">Out[4]: </span><span class="go">array([0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0])</span>
 </code></pre></div>
 </div>
 <p>Generate a maximal-length sequence of degree-4 over <span class="math notranslate nohighlight">\(\mathrm{GF}(3^2)\)</span>.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">c</span> <span class="o">=</span> <span class="n">galois</span><span class="o">.</span><span class="n">primitive_poly</span><span class="p">(</span><span class="mi">3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="n">c</span>
-<span class="gh">Out[3]: </span><span class="go">Poly(x^4 + x + 5, GF(3^2))</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">c</span> <span class="o">=</span> <span class="n">galois</span><span class="o">.</span><span class="n">primitive_poly</span><span class="p">(</span><span class="mi">3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="n">c</span>
+<span class="gh">Out[5]: </span><span class="go">Poly(x^4 + x + 5, GF(3^2))</span>
 
-<span class="gp">In [4]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">poly</span><span class="o">=</span><span class="n">c</span><span class="p">);</span> <span class="n">x</span>
-<span class="gh">Out[4]: </span><span class="go">array([1, 0, 0, ..., 5, 4, 6])</span>
+<span class="gp">In [6]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">poly</span><span class="o">=</span><span class="n">c</span><span class="p">);</span> <span class="n">x</span>
+<span class="gh">Out[6]: </span><span class="go">array([1, 0, 0, ..., 5, 4, 6])</span>
 
-<span class="gp">In [5]: </span><span class="n">x</span><span class="o">.</span><span class="n">size</span>
-<span class="gh">Out[5]: </span><span class="go">6560</span>
+<span class="gp">In [7]: </span><span class="n">x</span><span class="o">.</span><span class="n">size</span>
+<span class="gh">Out[7]: </span><span class="go">6560</span>
 </code></pre></div>
 </div>
 </dd></dl>

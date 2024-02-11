@@ -4144,6 +4144,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.kasami_code/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.kasami_code (Python function) — Returns the Kasami code/sequence of length $N$." class="md-ellipsis">kasami_<wbr>code</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.zadoff_chu_sequence/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.zadoff_chu_sequence (Python function) — Returns the root-$u$ Zadoff-Chu sequence of length $N$." class="md-ellipsis">zadoff_<wbr>chu_<wbr>sequence</span>
       </a>
@@ -13256,19 +13271,24 @@ You're not viewing the latest version.
 </dl>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Create a Barker code and sequence of length 13.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">code</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">barker_code</span><span class="p">(</span><span class="mi">13</span><span class="p">);</span> <span class="n">code</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">barker_code</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
 <span class="gh">Out[1]: </span><span class="go">array([1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1])</span>
 
-<span class="gp">In [2]: </span><span class="n">seq</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">barker_code</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span> <span class="n">seq</span>
+<span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">barker_code</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">)</span>
 <span class="gh">Out[2]: </span><span class="go">array([-1., -1., -1., -1., -1.,  1.,  1., -1., -1.,  1., -1.,  1., -1.])</span>
+
+<span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">barker_code</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;field&quot;</span><span class="p">)</span>
+<span class="gh">Out[3]: </span><span class="go">GF([1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1], order=2)</span>
 </code></pre></div>
 </div>
 <p>Barker sequences have ideally-minimal autocorrelation sidelobes of +1 or -1.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">seq</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">barker_code</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">)</span>
 
-<span class="gp">In [4]: </span><span class="n">lag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">seq</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seq</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="gp">In [5]: </span><span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">seq</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)</span>
 
-<span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">In [6]: </span><span class="n">lag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">seq</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seq</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+<span class="gp">In [7]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">corr</span><span class="p">));</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Lag&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Autocorrelation of length-13 Barker sequence&quot;</span><span class="p">);</span>
