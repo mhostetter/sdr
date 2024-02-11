@@ -10,11 +10,14 @@ import galois
 import numpy as np
 import numpy.typing as npt
 import scipy.linalg
+from galois import Poly
+from galois.typing import PolyLike
 from typing_extensions import Literal
 
 from .._data import pack, unpack
 from .._helper import export
 from ._conversion import code_to_field, code_to_sequence, sequence_to_code
+from ._maximal import m_sequence
 
 
 @overload
@@ -372,6 +375,207 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
         return code_to_field(sequence_to_code(sequence))
     else:
         return sequence
+
+
+@overload
+def kasami_code(
+    length: int, index: int | tuple[int, int] = 0, poly: PolyLike | None = None, output: Literal["binary"] = "binary"
+) -> npt.NDArray[np.int_]:
+    ...
+
+
+@overload
+def kasami_code(
+    length: int, index: int | tuple[int, int] = 0, poly: PolyLike | None = None, output: Literal["field"] = "binary"
+) -> galois.FieldArray:
+    ...
+
+
+@overload
+def kasami_code(
+    length: int, index: int | tuple[int, int] = 0, poly: PolyLike | None = None, output: Literal["bipolar"] = "binary"
+) -> npt.NDArray[np.float64]:
+    ...
+
+
+@export
+def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "binary") -> Any:
+    r"""
+    Returns the Kasami code/sequence of length $N$.
+
+    Arguments:
+        length: The length $N = 2^n - 1$ of the Kasami code/sequence. The degree $n$ must be even.
+        index: The index of the Kasami code.
+
+            - `int`: The index $m$ in $[-1, 2^{n/2} - 1)$ from the Kasami code small set. There are $2^{n/2}$ codes
+              in the small set.
+            - `tuple[int, int]`: The index $(k, m)$ from the Kasami code large set, with $k \in [-2, 2^n - 1)$ and
+              $m \in [-1, 2^{n/2} - 1)$. There are $(2^n + 1) \cdot 2^{n/2}$ codes in the large set.
+
+        poly: The primitive polynomial of degree $n$ over $\mathrm{GF}(2)$. The default is `None`, which uses the
+            default primitive polynomial of degree $n$, i.e. `galois.primitive_poly(2, n)`.
+
+        output: The output format of the Kasami code/sequence.
+
+            - `"binary"` (default): The Kasami code with binary values of 0 and 1.
+            - `"field"`: The Kasami code as a Galois field array over $\mathrm{GF}(2)$.
+            - `"bipolar"`: The Kasami sequence with bipolar values of 1 and -1.
+
+    Returns:
+        The Kasami code/sequence of length $N$.
+
+    References:
+        - https://en.wikipedia.org/wiki/Kasami_code
+
+    Examples:
+        Create a Kasami code and sequence of length 15.
+
+        .. ipython:: python
+
+            sdr.kasami_code(15, 1)
+            sdr.kasami_code(15, 1, output="bipolar")
+            sdr.kasami_code(15, 1, output="field")
+
+        Create several Kasami codes of length 63 from the small set.
+
+        .. ipython:: python
+
+            seq1 = sdr.kasami_code(63, 0, output="bipolar"); \
+            seq2 = sdr.kasami_code(63, 1, output="bipolar"); \
+            seq3 = sdr.kasami_code(63, 2, output="bipolar");
+
+            @savefig sdr_kasami_code_1.png
+            plt.figure(); \
+            sdr.plot.time_domain(seq1 + 3, label="Index 0"); \
+            sdr.plot.time_domain(seq2 + 0, label="Index 1"); \
+            sdr.plot.time_domain(seq3 - 3, label="Index 2")
+
+        Examine the autocorrelation of the Kasami codes.
+
+        .. ipython:: python
+
+            lag = np.arange(-seq1.size + 1, seq1.size); \
+            acorr12 = np.correlate(seq1, seq1, mode="full"); \
+            acorr13 = np.correlate(seq2, seq2, mode="full"); \
+            acorr23 = np.correlate(seq3, seq3, mode="full");
+
+            @savefig sdr_kasami_code_2.png
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(acorr12), label="0"); \
+            sdr.plot.time_domain(lag, np.abs(acorr13), label="1"); \
+            sdr.plot.time_domain(lag, np.abs(acorr23), label="2"); \
+            plt.xlabel("Lag"); \
+            plt.title("Autocorrelation of length-63 Kasami sequences");
+
+        Examine the cross correlation of the Kasami codes.
+
+        .. ipython:: python
+
+            lag = np.arange(-seq1.size + 1, seq1.size); \
+            xcorr12 = np.correlate(seq1, seq2, mode="full"); \
+            xcorr13 = np.correlate(seq1, seq3, mode="full"); \
+            xcorr23 = np.correlate(seq2, seq3, mode="full");
+
+            @savefig sdr_kasami_code_3.png
+            plt.figure(); \
+            sdr.plot.time_domain(lag, np.abs(xcorr12), label="0 and 1"); \
+            sdr.plot.time_domain(lag, np.abs(xcorr13), label="0 and 2"); \
+            sdr.plot.time_domain(lag, np.abs(xcorr23), label="1 and 2"); \
+            plt.xlabel("Lag"); \
+            plt.title("Cross correlation of length-63 Kasami sequences");
+
+    Group:
+        sequences-correlation
+    """
+    if not isinstance(length, int):
+        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
+    if not np.log2(length + 1) % 1.0 == 0:
+        raise ValueError(f"Argument 'length' must be 2^n - 1, not {length}.")
+
+    n = int(np.log2(length + 1))
+    if not n % 2 == 0:
+        raise ValueError(f"Argument 'length' must be 2^n - 1 with even n, not {length}.")
+
+    if poly is None:
+        c = galois.primitive_poly(2, n)
+    else:
+        c = Poly._PolyLike(poly, field=galois.GF(2))
+
+    if isinstance(index, int):
+        code = _kasami_small_set(n, c, index)
+    elif isinstance(index, tuple):
+        code = _kasami_large_set(n, c, index)
+    else:
+        raise TypeError(f"Argument 'index' must be an integer or a tuple of integers, not {type(index).__name__}.")
+
+    if output == "binary":
+        return code
+    elif output == "field":
+        return code_to_field(code)
+    else:
+        return code_to_sequence(code)
+
+
+def _kasami_small_set(degree: int, poly: Poly, index: int) -> npt.NDArray[np.int_]:
+    if not degree % 2 == 0:
+        raise ValueError(f"Argument 'degree' must be even, not {degree}.")
+
+    m = index
+    if not -1 <= m < 2 ** (degree // 2) - 1:
+        raise ValueError(f"Argument 'index' must be between -1 and {2**(degree//2) - 1}, not {m}.")
+
+    u = m_sequence(degree, poly=poly, index=1, output="decimal")
+    length = u.size
+
+    stride = 2 ** (degree // 2) + 1
+    idxs = (np.arange(0, length) * stride) % length
+    w = u[idxs]
+
+    if m == -1:
+        code = u
+    else:
+        code = np.bitwise_xor(u, np.roll(w, -m))
+
+    return code
+
+
+def _kasami_large_set(degree: int, poly: Poly, index: tuple[int, int]) -> npt.NDArray[np.int_]:
+    if not degree % 4 == 2:
+        raise ValueError(f"Argument 'degree' must be 2 mod 4, not {degree}.")
+
+    k, m = index
+    if not -2 <= k < 2**degree - 1:
+        raise ValueError(f"Argument 'index[0]' must be between -2 and {2**degree - 1}, not {k}.")
+    if not -1 <= m < 2 ** (degree // 2) - 1:
+        raise ValueError(f"Argument 'index[1]' must be between -1 and {2**(degree//2) - 1}, not {m}.")
+
+    u = m_sequence(degree, poly=poly, index=1, output="decimal")
+    length = u.size
+
+    stride = 2 ** (degree // 2) + 1
+    idxs = (np.arange(0, length) * stride) % length
+    w = u[idxs]
+
+    stride = 2 ** (degree // 2 + 1) + 1
+    idxs = (np.arange(0, length) * stride) % length
+    v = u[idxs]
+
+    if m == -1:
+        if k == -2:
+            code = u
+        elif k == -1:
+            code = v
+        else:
+            code = np.bitwise_xor(u, np.roll(v, -k))
+    else:
+        if k == -2:
+            code = np.bitwise_xor(u, np.roll(w, -m))
+        elif k == -1:
+            code = np.bitwise_xor(v, np.roll(w, -m))
+        else:
+            code = np.bitwise_xor(np.bitwise_xor(u, np.roll(v, -k)), np.roll(w, -m))
+
+    return code
 
 
 @export
