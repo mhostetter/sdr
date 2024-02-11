@@ -78,12 +78,18 @@ def m_sequence(
         - https://en.wikipedia.org/wiki/Maximum_length_sequence
 
     Examples:
-        Generate a maximal-length sequence of degree-4 over $\mathrm{GF}(2)$. Compare the sequence with index 1 to
-        the sequence with index 2. They are just phase shifts of each other.
+        Generate a maximal-length sequence of degree-4 over $\mathrm{GF}(2)$.
 
         .. ipython:: python
 
             sdr.m_sequence(4)
+            sdr.m_sequence(4, output="bipolar")
+            sdr.m_sequence(4, output="field")
+
+        Compare the sequence with index 1 to the sequence with index 2. They are just phase shifts of each other.
+
+        .. ipython:: python
+
             sdr.m_sequence(4, index=2)
 
         Generate a maximal-length sequence of degree-4 over $\mathrm{GF}(3^2)$.
