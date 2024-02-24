@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from .._helper import export
 
 RC_PARAMS = {
+    "lines.linewidth": 1,
     "axes.grid": True,
     "axes.grid.which": "both",
     # "axes.xmargin": 0,
