@@ -4,7 +4,7 @@ __pycache__/
 # .pytest_cache/
 # build/
 dist/
-env/
+.venv/
 src/*.egg-info
 src/sdr/_version.py
 # .coverage
