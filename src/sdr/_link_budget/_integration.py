@@ -185,3 +185,98 @@ def _max_integration_time(cgl: float, freq_offset: float) -> float:
     t = scipy.optimize.brentq(lambda t: coherent_gain_loss(freq_offset, t) - cgl, min_t, max_t)
 
     return t
+
+
+@export
+def max_frequency_offset(
+    cgl: npt.ArrayLike,
+    integration_time: npt.ArrayLike,
+) -> npt.NDArray[np.float32]:
+    r"""
+    Computes the maximum frequency offset that produces at most the provided coherent gain loss (CGL).
+
+    Arguments:
+        cgl: The coherent gain loss (CGL) in dB.
+        integration_time: The coherent integration time $T_c$ in seconds.
+
+    Returns:
+        The maximum frequency offset $\Delta f$ in Hz.
+
+    Notes:
+        The inverse sinc function is calculated using numerical techniques.
+
+    Examples:
+        Compute the maximum frequency offset that produces at most 3 dB of coherent gain loss for an integration time
+        of 1 ms.
+
+        .. ipython:: python
+
+            sdr.max_frequency_offset(3, 1e-3)
+
+        Compute the maximum frequency offset that produces at most 3 dB of coherent gain loss for an array of
+        integration times.
+
+        .. ipython:: python
+
+            sdr.max_frequency_offset(3, [1e-3, 2e-3, 3e-3])
+
+        Plot the maximum frequency offset as a function of integration time.
+
+        .. ipython:: python
+
+            t = np.linspace(0, 10e-3, 1001)
+
+            @savefig sdr_max_frequency_offset_1.png
+            plt.figure(); \
+            plt.plot(t * 1e3, sdr.max_frequency_offset(0.1, t), label="0.1 dB"); \
+            plt.plot(t * 1e3, sdr.max_frequency_offset(1, t), label="1 dB"); \
+            plt.plot(t * 1e3, sdr.max_frequency_offset(3, t), label="3 dB"); \
+            plt.legend(); \
+            plt.ylim(0, 1e3); \
+            plt.xlabel("Integration time (ms)"); \
+            plt.ylabel("Maximum frequency offset (Hz)"); \
+            plt.title("Maximum frequency offset for various coherent gain losses");
+
+        Plot the maximum frequency offset as a function of coherent gain loss.
+
+        .. ipython:: python
+
+            cgl = np.linspace(0, 10, 1001)
+
+            @savefig sdr_max_frequency_offset_2.png
+            plt.figure(); \
+            plt.plot(cgl, sdr.max_frequency_offset(cgl, 0.5e-3), label="0.5 ms"); \
+            plt.plot(cgl, sdr.max_frequency_offset(cgl, 1e-3), label="1 ms"); \
+            plt.plot(cgl, sdr.max_frequency_offset(cgl, 2e-3), label="2 ms"); \
+            plt.legend(); \
+            plt.ylim(0, 1e3); \
+            plt.xlabel("Coherent gain loss (dB)"); \
+            plt.ylabel("Maximum frequency offset (Hz)"); \
+            plt.title("Maximum frequency offset for various integration times");
+
+    Group:
+        link-budget-coherent-integration
+    """
+    cgl = np.asarray(cgl)
+    integration_time = np.asarray(integration_time)
+
+    if np.any(cgl < 0):
+        raise ValueError(f"Argument 'cgl' must be non-negative, not {cgl}.")
+
+    f = _max_frequency_offset(cgl, integration_time)
+    if f.ndim == 0:
+        f = float(f)
+
+    return f
+
+
+@np.vectorize
+def _max_frequency_offset(cgl: float, integration_time: float) -> float:
+    if integration_time == 0:
+        return np.inf
+
+    min_f = 0  # Hz
+    max_f = 1 / integration_time  # Hz
+    f = scipy.optimize.brentq(lambda f: coherent_gain_loss(integration_time, f) - cgl, min_f, max_f)
+
+    return f
