@@ -15,3 +15,8 @@ Antennas
 --------
 
 .. python-apigen-group:: link-budget-antennas
+
+Coherent integration
+--------------------
+
+.. python-apigen-group:: link-budget-coherent-integration
