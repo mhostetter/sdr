@@ -12356,6 +12356,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.max_integration_time/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.max_integration_time (Python function) — Computes the maximum integration time that produces at most the provided coherent gain loss (CGL)." class="md-ellipsis">max_<wbr>integration_<wbr>time</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -13328,7 +13343,7 @@ You're not viewing the latest version.
 </dl>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
 <p><div class="math notranslate nohighlight">
-\[\text{CGL} = 10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right)\]</div>
+\[\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right)\]</div>
 
 <div class="math notranslate nohighlight">
 \[\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}\]</div>
@@ -13336,42 +13351,44 @@ You're not viewing the latest version.
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Compute the coherent gain loss for an integration time of 1 ms and a frequency offset of 235 Hz.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">235</span><span class="p">)</span>
-<span class="gh">Out[1]: </span><span class="go">-0.8038919141626675</span>
+<span class="gh">Out[1]: </span><span class="go">0.8038919141626675</span>
 </code></pre></div>
 </div>
 <p>Compute the coherent gain loss for an integration time of 1 ms and an array of frequency offsets.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">])</span>
 <span class="gh">Out[2]: </span>
-<span class="go">array([ 0.        , -0.14335017, -0.57922366, -1.32626966, -2.42007077,</span>
-<span class="go">       -3.92239754])</span>
+<span class="go">array([-0.        ,  0.14335017,  0.57922366,  1.32626966,  2.42007077,</span>
+<span class="go">        3.92239754])</span>
 </code></pre></div>
 </div>
-<p>Plot coherent gain loss as a function of frequency offset for an integration time of 1 ms.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">5e3</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<p>Plot coherent gain loss as a function of frequency offset.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
 
-<span class="gp">In [4]: </span><span class="n">cgl</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-
-<span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">cgl</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> \
+<span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">0.5e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;0.5 ms&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;1 ms&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">2e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;2 ms&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">55</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Frequency offset (Hz)&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss (dB)&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss for a 1-ms integration&quot;</span><span class="p">);</span>
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss for various integration times&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_coherent_gain_loss_1.png" src="../../_images/sdr_coherent_gain_loss_1.png" />
-<p>Plot coherent gain loss as a function of integration time for a frequency offset of 235 Hz.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e-2</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<p>Plot coherent gain loss as a function of integration time.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
 
-<span class="gp">In [7]: </span><span class="n">cgl</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">235</span><span class="p">)</span>
-
-<span class="gp">In [8]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">cgl</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> \
+<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;100 Hz&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;200 Hz&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;400 Hz&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">55</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Integration time (ms)&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss (dB)&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss for a 235-Hz frequency offset&quot;</span><span class="p">);</span>
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss for various frequency offsets&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
@@ -13424,13 +13441,13 @@ You're not viewing the latest version.
       
       
         
-        <a href="../probability/" class="md-footer__link md-footer__link--next" aria-label="Next: Probability" rel="next">
+        <a href="../sdr.max_integration_time/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.max_integration_time" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Probability
+              sdr.max_integration_time
             </div>
           </div>
           <div class="md-footer__button md-icon">
