@@ -26,7 +26,7 @@ def coherent_gain_loss(
         The coherent gain loss (CGL) in dB.
 
     Notes:
-        $$\text{CGL} = 10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right)$$
+        $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right)$$
         $$\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}$$
 
     Examples:
@@ -42,35 +42,39 @@ def coherent_gain_loss(
 
             sdr.coherent_gain_loss(1e-3, [0, 100, 200, 300, 400, 500])
 
-        Plot coherent gain loss as a function of frequency offset for an integration time of 1 ms.
+        Plot coherent gain loss as a function of frequency offset.
 
         .. ipython:: python
 
-            f = np.linspace(0, 5e3, 1001)
-            cgl = sdr.coherent_gain_loss(1e-3, f)
+            f = np.linspace(0, 2e3, 1001)
 
             @savefig sdr_coherent_gain_loss_1.png
             plt.figure(); \
-            plt.plot(f, cgl); \
-            plt.ylim(-50, 10); \
+            plt.plot(f, sdr.coherent_gain_loss(0.5e-3, f), label="0.5 ms"); \
+            plt.plot(f, sdr.coherent_gain_loss(1e-3, f), label="1 ms"); \
+            plt.plot(f, sdr.coherent_gain_loss(2e-3, f), label="2 ms"); \
+            plt.legend(); \
+            plt.ylim(-5, 55); \
             plt.xlabel("Frequency offset (Hz)"); \
             plt.ylabel("Coherent gain loss (dB)"); \
-            plt.title("Coherent gain loss for a 1-ms integration");
+            plt.title("Coherent gain loss for various integration times");
 
-        Plot coherent gain loss as a function of integration time for a frequency offset of 235 Hz.
+        Plot coherent gain loss as a function of integration time.
 
         .. ipython:: python
 
-            t = np.linspace(0, 2e-2, 1001)
-            cgl = sdr.coherent_gain_loss(t, 235)
+            t = np.linspace(0, 1e-2, 1001)
 
             @savefig sdr_coherent_gain_loss_2.png
             plt.figure(); \
-            plt.plot(t * 1e3, cgl); \
-            plt.ylim(-50, 10); \
+            plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 100), label="100 Hz"); \
+            plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 200), label="200 Hz"); \
+            plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 400), label="400 Hz"); \
+            plt.legend(); \
+            plt.ylim(-5, 55); \
             plt.xlabel("Integration time (ms)"); \
             plt.ylabel("Coherent gain loss (dB)"); \
-            plt.title("Coherent gain loss for a 235-Hz frequency offset");
+            plt.title("Coherent gain loss for various frequency offsets");
 
     Group:
         link-budget-coherent-integration
@@ -78,7 +82,10 @@ def coherent_gain_loss(
     integration_time = np.asarray(integration_time)
     freq_offset = np.asarray(freq_offset)
 
+    if np.any(integration_time < 0):
+        raise ValueError(f"Argument 'integration_time' must be non-negative, not {integration_time}.")
+
     cgl = np.sinc(integration_time * freq_offset) ** 2
-    cgl_db = db(cgl)
+    cgl_db = -1 * db(cgl)
 
     return cgl_db
