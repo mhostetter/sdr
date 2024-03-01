@@ -12,6 +12,56 @@ from .._helper import export
 
 
 @export
+def coherent_gain(
+    n_c: npt.ArrayLike,
+) -> npt.NDArray[np.float64]:
+    r"""
+    Computes the SNR improvement by coherently integrating $N_c$ samples.
+
+    Arguments:
+        n_c: The number of samples $N_c$ to coherently integrate.
+
+    Returns:
+        The coherent gain $G_c$ in dB.
+
+    Notes:
+        $$y[m] = \sum_{n=0}^{N_c-1} x[m-n]$$
+        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_c$$
+        $$G_c = 10 \log_{10} N_c$$
+
+    Examples:
+        Compute the coherent gain for various integration lengths.
+
+        .. ipython:: python
+
+            sdr.coherent_gain(1)
+            sdr.coherent_gain(10)
+            sdr.coherent_gain(20)
+
+        Plot coherent gain as a function of the number of coherently integrated samples.
+
+        .. ipython:: python
+
+            n_c = np.logspace(0, 3, 1001)
+
+            @savefig sdr_coherent_gain_1.png
+            plt.figure(); \
+            plt.semilogx(n_c, sdr.coherent_gain(n_c)); \
+            plt.xlabel("Number of samples, $N_c$"); \
+            plt.ylabel("Coherent gain (dB), $G_c$"); \
+            plt.title("Coherent gain as a function of the number of integrated samples");
+
+    Group:
+        link-budget-coherent-integration
+    """
+    n_c = np.asarray(n_c)
+    if np.any(n_c < 1):
+        raise ValueError(f"Argument 'n_c' must be at least 1, not {n_c}.")
+
+    return db(n_c)
+
+
+@export
 def coherent_gain_loss(
     integration_time: npt.ArrayLike,
     freq_offset: npt.ArrayLike,
