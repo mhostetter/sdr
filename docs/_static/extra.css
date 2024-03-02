@@ -61,3 +61,14 @@
 [data-md-color-scheme="slate"] img.no-invert {
   filter: none;
 }
+
+/* Fix ugly cell borders for Jupyter notebooks */
+div.cell_input.docutils.container {
+  border: transparent;
+  border-left-color: transparent;
+}
+
+div.cell_output.docutils.container>div {
+  border: transparent;
+  background: transparent;
+}
