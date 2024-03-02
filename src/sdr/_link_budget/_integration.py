@@ -104,7 +104,7 @@ def coherent_gain_loss(
             plt.plot(f, sdr.coherent_gain_loss(0.5e-3, f), label="0.5 ms"); \
             plt.plot(f, sdr.coherent_gain_loss(1e-3, f), label="1 ms"); \
             plt.plot(f, sdr.coherent_gain_loss(2e-3, f), label="2 ms"); \
-            plt.legend(); \
+            plt.legend(title="Integration time"); \
             plt.ylim(-5, 55); \
             plt.xlabel("Frequency offset (Hz)"); \
             plt.ylabel("Coherent gain loss (dB)"); \
@@ -121,7 +121,7 @@ def coherent_gain_loss(
             plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 100), label="100 Hz"); \
             plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 200), label="200 Hz"); \
             plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 400), label="400 Hz"); \
-            plt.legend(); \
+            plt.legend(title="Frequency offset"); \
             plt.ylim(-5, 55); \
             plt.xlabel("Integration time (ms)"); \
             plt.ylabel("Coherent gain loss (dB)"); \
