@@ -53,7 +53,7 @@ def coherent_gain(
             plt.title("Coherent gain as a function of the number of integrated samples");
 
     Group:
-        link-budget-coherent-integration
+        detection-coherent-integration
     """
     n_c = np.asarray(n_c)
     if np.any(n_c < 1):
@@ -129,7 +129,7 @@ def coherent_gain_loss(
             plt.title("Coherent gain loss for various frequency offsets");
 
     Group:
-        link-budget-coherent-integration
+        detection-coherent-integration
     """
     integration_time = np.asarray(integration_time)
     freq_offset = np.asarray(freq_offset)
@@ -228,7 +228,7 @@ def non_coherent_gain(
             plt.title(f"Non-coherent gain at {snr}-dB SNR for various $P_{{FA}}$");
 
     Group:
-        link-budget-coherent-integration
+        detection-non-coherent-integration
     """
     n_nc = np.asarray(n_nc)
     snr = np.asarray(snr)
@@ -351,7 +351,7 @@ def max_integration_time(
             plt.title("Maximum integration time for various frequency offsets");
 
     Group:
-        link-budget-coherent-integration
+        detection-coherent-integration
     """
     cgl = np.asarray(cgl)
     freq_offset = np.asarray(freq_offset)
@@ -446,7 +446,7 @@ def max_frequency_offset(
             plt.title("Maximum frequency offset for various integration times");
 
     Group:
-        link-budget-coherent-integration
+        detection-coherent-integration
     """
     cgl = np.asarray(cgl)
     integration_time = np.asarray(integration_time)
