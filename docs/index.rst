@@ -88,6 +88,7 @@ View all available classes and functions in the `API Reference <https://mhostett
    examples/psk.ipynb
    examples/phase-locked-loop.ipynb
    examples/coherent-integration.ipynb
+   examples/non-coherent-integration.ipynb
 
 .. toctree::
    :caption: Development
