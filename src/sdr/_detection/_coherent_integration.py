@@ -16,18 +16,18 @@ def coherent_gain(
     n_c: npt.ArrayLike,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the SNR improvement by coherently integrating $N_c$ samples.
+    Computes the SNR improvement by coherently integrating $N_C$ samples.
 
     Arguments:
-        n_c: The number of samples $N_c$ to coherently integrate.
+        n_c: The number of samples $N_C$ to coherently integrate.
 
     Returns:
-        The coherent gain $G_c$ in dB.
+        The coherent gain $G_C$ in dB.
 
     Notes:
-        $$y[m] = \sum_{n=0}^{N_c-1} x[m-n]$$
-        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_c$$
-        $$G_c = 10 \log_{10} N_c$$
+        $$y[m] = \sum_{n=0}^{N_C-1} x[m-n]$$
+        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_C$$
+        $$G_C = 10 \log_{10} N_C$$
 
     Examples:
         Compute the coherent gain for various integration lengths.
@@ -48,8 +48,8 @@ def coherent_gain(
             @savefig sdr_coherent_gain_1.png
             plt.figure(); \
             plt.semilogx(n_c, sdr.coherent_gain(n_c)); \
-            plt.xlabel("Number of samples, $N_c$"); \
-            plt.ylabel("Coherent gain (dB), $G_c$"); \
+            plt.xlabel("Number of samples, $N_C$"); \
+            plt.ylabel("Coherent gain (dB), $G_C$"); \
             plt.title("Coherent gain as a function of the number of integrated samples");
 
     Group:
