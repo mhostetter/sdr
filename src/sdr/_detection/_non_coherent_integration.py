@@ -46,6 +46,8 @@ def non_coherent_gain(
         $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_{NC}$$
 
     Examples:
+        See the :ref:`non-coherent-integration` example.
+
         Compute the non-coherent gain for various integration lengths at 10-dB SNR.
 
         .. ipython:: python
