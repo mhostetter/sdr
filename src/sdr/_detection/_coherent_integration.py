@@ -30,6 +30,8 @@ def coherent_gain(
         $$G_C = 10 \log_{10} N_C$$
 
     Examples:
+        See the :ref:`coherent-integration` example.
+
         Compute the coherent gain for various integration lengths.
 
         .. ipython:: python
