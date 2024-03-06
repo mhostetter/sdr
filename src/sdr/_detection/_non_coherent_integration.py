@@ -87,39 +87,24 @@ def non_coherent_gain(
             plt.ylabel("Non-coherent gain, $G_{NC}$"); \
             plt.title("Non-coherent gain for various output SNRs");
 
-        Plot the non-coherent gain parameterized by the probability of false alarm for 5-dB input SNR. Notice that the
-        gain is only slightly affected by the $P_{FA}$.
+        Examine the non-coherent gain across input SNR and false alarm rate for non-coherently integrating 10 samples.
+        Notice that the non-coherent gain is affected by both. The coherent integration gain, however, is
+        a constant 10 dB across both.
 
         .. ipython:: python
 
             plt.figure(); \
-            snr = 5; \
-            n = np.logspace(0, 3, 51); \
-            plt.semilogx(n, sdr.coherent_gain(n), color="k");
-            for exp in np.arange(-14, 0, 4):
-                plt.semilogx(n, sdr.non_coherent_gain(n, snr, p_fa=10.0**exp), label=f"$10^{{{exp}}}$")
+            snr = np.linspace(-40, 12, 101); \
+            n_nc = 10;
+            for p_fa in [1e-14, 1e-12, 1e-10, 1e-8, 1e-6, 1e-4, 1e-2]:
+                g_nc = sdr.non_coherent_gain(n_nc, snr, p_fa)
+                plt.plot(snr, g_nc, label=f"{p_fa:1.0e}")
             @savefig sdr_non_coherent_gain_3.png
             plt.legend(title="$P_{FA}$"); \
-            plt.xlabel("Number of samples, $N_{NC}$"); \
-            plt.ylabel("Non-coherent gain, $G_{NC}$"); \
-            plt.title(f"Non-coherent gain at {snr}-dB input SNR for various $P_{{FA}}$");
-
-        However, when the input SNR is very low, for example -20 dB, the non-coherent gain is more affected by
-        false alarm rate.
-
-        .. ipython:: python
-
-            plt.figure(); \
-            snr = -20; \
-            n = np.logspace(0, 3, 51); \
-            plt.semilogx(n, sdr.coherent_gain(n), color="k");
-            for exp in np.arange(-14, 0, 4):
-                plt.semilogx(n, sdr.non_coherent_gain(n, snr, p_fa=10.0**exp), label=f"$10^{{{exp}}}$")
-            @savefig sdr_non_coherent_gain_4.png
-            plt.legend(title="$P_{FA}$"); \
-            plt.xlabel("Number of samples, $N_{NC}$"); \
-            plt.ylabel("Non-coherent gain, $G_{NC}$"); \
-            plt.title(f"Non-coherent gain at {snr}-dB input SNR for various $P_{{FA}}$");
+            plt.ylim(0, 10); \
+            plt.xlabel("Input signal-to-noise ratio (dB)"); \
+            plt.ylabel("Non-coherent gain (dB)"); \
+            plt.title("Non-coherent gain for $N_{NC} = 10$");
 
     Group:
         detection-non-coherent-integration
