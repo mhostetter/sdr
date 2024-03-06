@@ -13569,46 +13569,28 @@ If <code class="code highlight python docutils literal highlight-python"><span c
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_non_coherent_gain_2.png" src="../../_images/sdr_non_coherent_gain_2.png" />
-<p>Plot the non-coherent gain parameterized by the probability of false alarm for 5-dB input SNR. Notice that the
-gain is only slightly affected by the <span class="math notranslate nohighlight">\(P_{FA}\)</span>.</p>
+<p>Examine the non-coherent gain across input SNR and false alarm rate for non-coherently integrating 10 samples.
+Notice that the non-coherent gain is affected by both. The coherent integration gain, however, is
+a constant 10 dB across both.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ....: </span><span class="n">snr</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> \
-<span class="gp">   ....: </span><span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">51</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">);</span>
+<span class="gp">   ....: </span><span class="n">snr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">101</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">n_nc</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [12]: </span><span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-<span class="gp">   ....: </span>    <span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">non_coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">snr</span><span class="p">,</span> <span class="n">p_fa</span><span class="o">=</span><span class="mf">10.0</span><span class="o">**</span><span class="n">exp</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="gp">In [12]: </span><span class="k">for</span> <span class="n">p_fa</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">1e-14</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">]:</span>
+<span class="gp">   ....: </span>    <span class="n">g_nc</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">non_coherent_gain</span><span class="p">(</span><span class="n">n_nc</span><span class="p">,</span> <span class="n">snr</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">snr</span><span class="p">,</span> <span class="n">g_nc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p_fa</span><span class="si">:</span><span class="s2">1.0e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
 <span class="gp">In [13]: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;$P_</span><span class="si">{FA}</span><span class="s2">$&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples, $N_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Non-coherent gain, $G_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Non-coherent gain at </span><span class="si">{</span><span class="n">snr</span><span class="si">}</span><span class="s2">-dB input SNR for various $P_</span><span class="se">{{</span><span class="s2">FA</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">);</span>
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Input signal-to-noise ratio (dB)&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Non-coherent gain (dB)&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Non-coherent gain for $N_</span><span class="si">{NC}</span><span class="s2"> = 10$&quot;</span><span class="p">);</span>
 <span class="gp">   ....: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_non_coherent_gain_3.png" src="../../_images/sdr_non_coherent_gain_3.png" />
-<p>However, when the input SNR is very low, for example -20 dB, the non-coherent gain is more affected by
-false alarm rate.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [14]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ....: </span><span class="n">snr</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">;</span> \
-<span class="gp">   ....: </span><span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">51</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">);</span>
-<span class="gp">   ....: </span>
-
-<span class="gp">In [15]: </span><span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-<span class="gp">   ....: </span>    <span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">non_coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">snr</span><span class="p">,</span> <span class="n">p_fa</span><span class="o">=</span><span class="mf">10.0</span><span class="o">**</span><span class="n">exp</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$10^</span><span class="se">{{</span><span class="si">{</span><span class="n">exp</span><span class="si">}</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">)</span>
-<span class="gp">   ....: </span>
-
-<span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;$P_</span><span class="si">{FA}</span><span class="s2">$&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples, $N_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Non-coherent gain, $G_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Non-coherent gain at </span><span class="si">{</span><span class="n">snr</span><span class="si">}</span><span class="s2">-dB input SNR for various $P_</span><span class="se">{{</span><span class="s2">FA</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">);</span>
-<span class="gp">   ....: </span>
-</code></pre></div>
-</div>
-<img alt="../../_images/sdr_non_coherent_gain_4.png" src="../../_images/sdr_non_coherent_gain_4.png" />
 </dd></dl>
 
 
