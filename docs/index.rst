@@ -80,15 +80,10 @@ View all available classes and functions in the `API Reference <https://mhostett
    :caption: Examples
    :hidden:
 
-   examples/pulse-shapes.ipynb
-   examples/peak-to-average-power.ipynb
-   examples/fir-filters.ipynb
-   examples/iir-filters.ipynb
-   examples/farrow-resampler.ipynb
-   examples/psk.ipynb
-   examples/phase-locked-loop.ipynb
-   examples/coherent-integration.ipynb
-   examples/non-coherent-integration.ipynb
+   examples/dsp.rst
+   examples/modulation.rst
+   examples/detection.rst
+   examples/synchronization.rst
 
 .. toctree::
    :caption: Development
