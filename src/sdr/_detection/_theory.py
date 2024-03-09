@@ -92,6 +92,67 @@ def _p_d_square_law(
 
 
 @export
+def p_fa(
+    threshold: npt.ArrayLike,
+    sigma2: npt.ArrayLike = 1,
+    detector: Literal["square-law", "linear", "real"] = "square-law",
+) -> npt.NDArray[np.float64]:
+    r"""
+    Computes the theoretical probability of false alarm.
+
+    Arguments:
+        threshold: The detection threshold $\gamma$ in linear units.
+        sigma2: The noise variance $\sigma^2$ in linear units.
+        detector: The detector type.
+
+            - `"square-law"`: The square-law detector.
+            - `"linear"`: The linear detector.
+            - `"real"`: The real detector.
+
+    Returns:
+        The probability of false alarm $P_{FA}$ in $(0, 1)$.
+
+    Examples:
+        .. ipython:: python
+
+            @savefig sdr_p_fa_1.png
+            plt.figure(); \
+            threshold = np.linspace(0, 20, 101); \
+            p_fa = sdr.p_fa(threshold, 1); \
+            plt.semilogy(threshold, p_fa); \
+            plt.xlabel("Threshold"); \
+            plt.ylabel("Probability of false alarm, $P_{FA}$"); \
+            plt.title("Square-Law Detector: False alarm performance");
+
+    Group:
+        detection-theory
+    """
+    threshold = np.asarray(threshold)
+    sigma2 = np.asarray(sigma2)
+
+    if detector == "square-law":
+        p_fa = _p_fa_square_law(threshold, sigma2)
+    else:
+        raise ValueError(f"Invalid detector type: {detector}")
+
+    if p_fa.ndim == 0:
+        p_fa = p_fa.item()
+
+    return p_fa
+
+
+def _p_fa_square_law(
+    threshold: npt.NDArray[np.float64],
+    sigma2: npt.NDArray[np.float64],
+) -> npt.NDArray[np.float64]:
+    nu = 2  # Degrees of freedom
+    h0_theory = scipy.stats.chi2(nu, scale=sigma2 / 2)
+    p_fa = h0_theory.sf(threshold)
+
+    return p_fa
+
+
+@export
 def threshold(
     p_fa: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
