@@ -145,7 +145,7 @@ html_theme_options = {
         # "navigation.expand",
         "navigation.tabs",
         # "toc.integrate",
-        # "navigation.sections",
+        "navigation.sections",
         # "navigation.instant",
         # "header.autohide",
         "navigation.top",
