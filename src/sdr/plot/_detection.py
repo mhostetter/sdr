@@ -47,7 +47,6 @@ def roc(
                 f"Argument 'type' must be one of ['linear', 'semilogx', 'semilogy', 'loglog'], not {type!r}."
             )
 
-        plt.ylim(0, 1)
         if "label" in kwargs:
             plt.legend()
 
