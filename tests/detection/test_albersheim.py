@@ -35,7 +35,7 @@ def test_exceptions():
         # p_fa must be in (0, 1)
         sdr.albersheim(0.5, 1, 1)
     with pytest.raises(ValueError):
-        # N_nc must be at least 1
+        # n_nc must be at least 1
         sdr.albersheim(0.5, 1e-6, 0)
 
 
@@ -93,9 +93,9 @@ def test_across_p_fa():
     np.testing.assert_allclose(snr, snr_truth)
 
 
-def test_across_N_nc():
-    N_nc = np.array([1, 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 200, 500, 1000])
-    snr = sdr.albersheim(0.5, 1e-6, N_nc)
+def test_across_n_nc():
+    n_nc = np.array([1, 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 200, 500, 1000])
+    snr = sdr.albersheim(0.5, 1e-6, n_nc)
     snr_truth = np.array(
         [
             11.231984877880109,
