@@ -14,8 +14,6 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
     r"""
     Estimates the minimum required single-sample SNR.
 
-    This function implements Albersheim's equation.
-
     Arguments:
         p_d: The desired probability of detection $P_D$ in $(0, 1)$.
         p_fa: The desired probability of false alarm $P_{FA}$ in $(0, 1)$.
@@ -25,7 +23,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
         The minimum required single-sample SNR $\gamma$ in dB.
 
     Notes:
-        Albersheim's equation is given by:
+        This function implements Albersheim's equation, given by
 
         $$A = \ln \frac{0.62}{P_{FA}}$$
 
@@ -34,11 +32,14 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
         $$
         \text{SNR}_{\text{dB}} =
         -5 \log_{10} N_{NC} + \left(6.2 + \frac{4.54}{\sqrt{N_{NC} + 0.44}}\right)
-        \log_{10} \left(A + 0.12AB + 1.7B\right)
+        \log_{10} \left(A + 0.12AB + 1.7B\right) .
         $$
 
         The error in the estimated minimum SNR is claimed to be less than 0.2 dB for
-        $10^{-7} \leq P_{FA} \leq 10^{-3}$, $0.1 \leq P_D \leq 0.9$, and $1 \le N_{NC} \le 8096$.
+
+        $$10^{-7} \leq P_{FA} \leq 10^{-3}$$
+        $$0.1 \leq P_D \leq 0.9$$
+        $$1 \le N_{NC} \le 8096 .$$
 
     References:
         - https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf
