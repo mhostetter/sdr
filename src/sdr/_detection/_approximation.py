@@ -63,7 +63,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1)
             plt.title(f"Estimated minimum required SNR across non-coherent combinations for $P_D = 0.9$\nusing Albersheim's approximation");
 
     Group:
-        detection-theory
+        detection-approximation
     """
     p_d = np.asarray(p_d)
     if not np.all(np.logical_and(0 < p_d, p_d < 1)):
