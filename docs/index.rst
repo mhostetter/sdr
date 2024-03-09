@@ -109,8 +109,7 @@ View all available classes and functions in the `API Reference <https://mhostett
    api/conversions.rst
    api/simulation.rst
    api/link-budgets.rst
-   api/probability.rst
-   api/data-manipulation.rst
+   api/misc.rst
    api/plotting.rst
 
 .. toctree::
