@@ -134,50 +134,6 @@ def non_coherent_gain(
     return g_nc
 
 
-def _extrapolate_non_coherent_gain(
-    n_nc: npt.NDArray[np.float64],
-    snr: npt.NDArray[np.float64],
-    p_fa: npt.NDArray[np.float64],
-    g_nc: npt.NDArray[np.float64],
-    snr_ref: Literal["input", "output"],
-) -> npt.NDArray[np.float64]:
-    # Broadcast arrays to the same shape and then flatten
-    n_nc, snr, p_fa, g_nc = np.broadcast_arrays(n_nc, snr, p_fa, g_nc)
-    shape = g_nc.shape
-    n_nc = n_nc.ravel()
-    snr = snr.ravel()
-    p_fa = p_fa.ravel()
-    g_nc = g_nc.ravel()
-
-    # Loop through the NaNs and interpolate
-    interpolators = {}
-    for i in range(g_nc.size):
-        if np.isnan(g_nc[i]):
-            key = (snr[i], p_fa[i])
-            if key not in interpolators:
-                n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 5)
-                g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], snr_ref, False)
-
-                idxs = ~np.isnan(g_nc_array)
-                n_nc_array = n_nc_array[idxs]
-                g_nc_array = g_nc_array[idxs]
-
-                if n_nc_array.size == 0:
-                    # The gain approaches a limit of the coherent gain of N_nc
-                    n_nc_array = np.logspace(0, 2, 5)
-                    g_nc_array = db(n_nc_array)
-
-                interpolators[key] = scipy.interpolate.interp1d(
-                    np.log10(n_nc_array), g_nc_array, kind="linear", fill_value="extrapolate"
-                )
-
-            g_nc[i] = interpolators[key](np.log10(n_nc[i]))
-
-    g_nc = g_nc.reshape(shape)
-
-    return g_nc
-
-
 @np.vectorize
 def _non_coherent_gain_in(n_nc: float, snr: float, p_fa: float) -> float:
     """
@@ -246,5 +202,49 @@ def _non_coherent_gain_out(n_nc: float, snr: float, p_fa: float) -> float:
     A2_db = db(A2)
     A2_db_nc = scipy.optimize.brentq(root_eq, A2_db - db(n_nc), A2_db)
     g_nc = A2_db - A2_db_nc
+
+    return g_nc
+
+
+def _extrapolate_non_coherent_gain(
+    n_nc: npt.NDArray[np.float64],
+    snr: npt.NDArray[np.float64],
+    p_fa: npt.NDArray[np.float64],
+    g_nc: npt.NDArray[np.float64],
+    snr_ref: Literal["input", "output"],
+) -> npt.NDArray[np.float64]:
+    # Broadcast arrays to the same shape and then flatten
+    n_nc, snr, p_fa, g_nc = np.broadcast_arrays(n_nc, snr, p_fa, g_nc)
+    shape = g_nc.shape
+    n_nc = n_nc.ravel()
+    snr = snr.ravel()
+    p_fa = p_fa.ravel()
+    g_nc = g_nc.ravel()
+
+    # Loop through the NaNs and interpolate
+    interpolators = {}
+    for i in range(g_nc.size):
+        if np.isnan(g_nc[i]):
+            key = (snr[i], p_fa[i])
+            if key not in interpolators:
+                n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 5)
+                g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], snr_ref, False)
+
+                idxs = ~np.isnan(g_nc_array)
+                n_nc_array = n_nc_array[idxs]
+                g_nc_array = g_nc_array[idxs]
+
+                if n_nc_array.size == 0:
+                    # The gain approaches a limit of the coherent gain of N_nc
+                    n_nc_array = np.logspace(0, 2, 5)
+                    g_nc_array = db(n_nc_array)
+
+                interpolators[key] = scipy.interpolate.interp1d(
+                    np.log10(n_nc_array), g_nc_array, kind="linear", fill_value="extrapolate"
+                )
+
+            g_nc[i] = interpolators[key](np.log10(n_nc[i]))
+
+    g_nc = g_nc.reshape(shape)
 
     return g_nc
