@@ -10,7 +10,7 @@ from .._helper import export
 
 
 @export
-def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1) -> npt.NDArray[np.float64]:
+def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1) -> npt.NDArray[np.float64]:
     r"""
     Estimates the minimum required single-sample SNR.
 
@@ -19,7 +19,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1)
     Arguments:
         p_d: The desired probability of detection $P_D$ in $(0, 1)$.
         p_fa: The desired probability of false alarm $P_{FA}$ in $(0, 1)$.
-        N_nc: The number of non-coherent combinations $N_{NC} \ge 1$.
+        n_nc: The number of non-coherent combinations $N_{NC} \ge 1$.
 
     Returns:
         The minimum required single-sample SNR $\gamma$ in dB.
@@ -53,10 +53,10 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1)
 
             @savefig sdr_albersheim_1.png
             plt.figure(); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=1), label="$N_{NC}$ = 1"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=2), label="$N_{NC}$ = 2"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=10), label="$N_{NC}$ = 10"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, N_nc=20), label="$N_{NC}$ = 20"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=1), label="$N_{NC}$ = 1"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=2), label="$N_{NC}$ = 2"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=10), label="$N_{NC}$ = 10"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=20), label="$N_{NC}$ = 20"); \
             plt.legend(); \
             plt.xlabel("Probability of false alarm, $P_{FA}$"); \
             plt.ylabel("Minimum required SNR (dB)"); \
@@ -73,12 +73,12 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, N_nc: npt.ArrayLike = 1)
     if not np.all(np.logical_and(0 < p_fa, p_fa < 1)):
         raise ValueError("Argument 'p_fa' must have values in (0, 1).")
 
-    N_nc = np.asarray(N_nc)
-    if not np.all(N_nc >= 1):
-        raise ValueError("Argument 'N_nc' must be at least 1.")
+    n_nc = np.asarray(n_nc)
+    if not np.all(n_nc >= 1):
+        raise ValueError("Argument 'n_nc' must be at least 1.")
 
     A = np.log(0.62 / p_fa)
     B = np.log(p_d / (1 - p_d))
-    snr = -5 * np.log10(N_nc) + (6.2 + (4.54 / np.sqrt(N_nc + 0.44))) * np.log10(A + 0.12 * A * B + 1.7 * B)
+    snr = -5 * np.log10(n_nc) + (6.2 + (4.54 / np.sqrt(n_nc + 0.44))) * np.log10(A + 0.12 * A * B + 1.7 * B)
 
     return snr
