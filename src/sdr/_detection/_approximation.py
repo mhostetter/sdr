@@ -1,5 +1,5 @@
 """
-A module containing functions to compute theoretical detection performance.
+A module containing functions to approximate detection performance.
 """
 from __future__ import annotations
 
