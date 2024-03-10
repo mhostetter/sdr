@@ -229,6 +229,7 @@ ipython_execlines = [
     "import sdr",
     "import galois",
     "np.random.seed(0)",  # Set random seed for reproducibility
+    "rng = np.random.default_rng(0)",  # Set random seed for reproducibility
     "sdr.plot.use_style()",  # Use the sdr library matplotlib style
 ]
 ipython_warning_is_error = False
