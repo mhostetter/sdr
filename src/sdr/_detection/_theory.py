@@ -13,6 +13,89 @@ from .._helper import export
 
 
 @export
+def h0_theory(
+    sigma2: float = 1.0,
+    detector: Literal["real", "linear", "square-law"] = "square-law",
+) -> scipy.stats.rv_continuous:
+    r"""
+    Computes the statistical distribution under the null hypothesis $\mathcal{H}_0$.
+
+    Arguments:
+        sigma2: The noise variance $\sigma^2$ in linear units.
+        detector: The detector type.
+
+            - `"real"`: The real detector.
+            - `"linear"`: The linear detector.
+            - `"square-law"`: The square-law detector.
+
+    Returns:
+        The probability density function under the null hypothesis $\mathcal{H}_0$.
+
+    Examples:
+        .. ipython:: python
+
+            snr = 5  # Signal-to-noise ratio in dB
+            sigma2 = 1  # Noise variance
+            p_fa = 1e-3  # Probability of false alarm
+
+        .. ipython:: python
+
+            detector = "real"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_h0_theory_1.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Real Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_h0_theory_2.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Linear Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_h0_theory_3.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Square-Law Detector: Probability density functions");
+
+    Group:
+        detection-theory
+    """
+    sigma2 = float(sigma2)
+    if sigma2 <= 0:
+        raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
+
+    nu = 2  # Degrees of freedom
+
+    if detector == "square-law":
+        h0 = scipy.stats.chi2(nu, scale=sigma2 / 2)
+    elif detector == "linear":
+        h0 = scipy.stats.chi(nu, scale=sigma2 / 2)
+    elif detector == "real":
+        h0 = scipy.stats.norm(0, np.sqrt(sigma2 / 2))
+    else:
+        raise ValueError(f"Argument `detector` must be one of 'square-law', 'linear', or 'real', not {detector}.")
+
+    return h0
+
+
+@export
 def p_d(
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike,
