@@ -16,6 +16,7 @@ from .._helper import export
 def h0_theory(
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
 ) -> scipy.stats.rv_continuous:
     r"""
     Computes the statistical distribution under the null hypothesis $\mathcal{H}_0$.
@@ -24,12 +25,15 @@ def h0_theory(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"coherent"`: The coherent detector.
-            - `"linear"`: The linear detector.
-            - `"square-law"`: The square-law detector.
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
 
     Returns:
-        The probability density function under the null hypothesis $\mathcal{H}_0$.
+        The distribution under the null hypothesis $\mathcal{H}_0$.
 
     See Also:
         sdr.plot.detector_pdfs
@@ -41,40 +45,144 @@ def h0_theory(
             sigma2 = 1  # Noise variance
             p_fa = 1e-1  # Probability of false alarm
 
+        Compare the detection statistics for complex signals.
+
+        .. ipython:: python
+
+            A2 = sdr.linear(snr) * sigma2; A2  # Signal power, A^2
+
+            x_h0 = rng.normal(size=100_000, scale=np.sqrt(sigma2 / 2)) + 1j * rng.normal(size=100_000, scale=np.sqrt(sigma2 / 2)); \
+            x_h1 = np.sqrt(A2) + x_h0
+
         .. ipython:: python
 
             detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
-            threshold = sdr.threshold(p_fa, sigma2, detector)
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            z_h0 = np.real(x_h0); \
+            z_h1 = np.real(x_h1)
 
             @savefig sdr_h0_theory_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
             plt.title("Coherent Detector: Probability density functions");
 
         .. ipython:: python
 
             detector = "linear"; \
             h0 = sdr.h0_theory(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
-            threshold = sdr.threshold(p_fa, sigma2, detector)
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            z_h0 = np.abs(x_h0); \
+            z_h1 = np.abs(x_h1)
 
             @savefig sdr_h0_theory_2.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
             plt.title("Linear Detector: Probability density functions");
 
         .. ipython:: python
 
             detector = "square-law"; \
             h0 = sdr.h0_theory(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
-            threshold = sdr.threshold(p_fa, sigma2, detector)
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            z_h0 = np.abs(x_h0) ** 2; \
+            z_h1 = np.abs(x_h1) ** 2
 
             @savefig sdr_h0_theory_3.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.title("Square-Law Detector: Probability density functions");
+
+        Compare the detection statistics for real signals.
+
+        .. ipython:: python
+
+            A2 = sdr.linear(snr) * sigma2; A2  # Signal power, A^2
+
+            x_h0 = rng.normal(size=100_000, scale=np.sqrt(sigma2)); \
+            x_h1 = np.sqrt(A2) + x_h0
+
+        .. ipython:: python
+
+            detector = "coherent"; \
+            h0 = sdr.h0_theory(sigma2, detector, complex=False); \
+            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
+            p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
+
+            z_h0 = np.real(x_h0); \
+            z_h1 = np.real(x_h1)
+
+            @savefig sdr_h0_theory_4.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.title("Coherent Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector, complex=False); \
+            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
+            p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
+
+            z_h0 = np.abs(x_h0); \
+            z_h1 = np.abs(x_h1)
+
+            @savefig sdr_h0_theory_5.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.title("Linear Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector, complex=False); \
+            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
+            p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
+
+            z_h0 = np.abs(x_h0) ** 2; \
+            z_h1 = np.abs(x_h1) ** 2
+
+            @savefig sdr_h0_theory_6.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold, x=np.linspace(0, 15, 1001)); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.xlim(0, 15); \
+            plt.ylim(0, 0.5); \
             plt.title("Square-Law Detector: Probability density functions");
 
     Group:
@@ -84,14 +192,19 @@ def h0_theory(
     if sigma2 <= 0:
         raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
 
-    nu = 2  # Degrees of freedom
+    if complex:
+        nu = 2  # Degrees of freedom
+        sigma2_per = sigma2 / 2  # Noise variance per dimension
+    else:
+        nu = 1
+        sigma2_per = sigma2
 
-    if detector == "square-law":
-        h0 = scipy.stats.chi2(nu, scale=sigma2 / 2)
+    if detector == "coherent":
+        h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
     elif detector == "linear":
-        h0 = scipy.stats.chi(nu, scale=sigma2 / 2)
-    elif detector == "coherent":
-        h0 = scipy.stats.norm(0, np.sqrt(sigma2 / 2))
+        h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
+    elif detector == "square-law":
+        h0 = scipy.stats.chi2(nu, scale=sigma2_per)
     else:
         raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
@@ -103,6 +216,7 @@ def h1_theory(
     snr: float,
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
 ) -> scipy.stats.rv_continuous:
     r"""
     Computes the statistical distribution under the alternative hypothesis $\mathcal{H}_1$.
@@ -112,12 +226,15 @@ def h1_theory(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"coherent"`: The coherent detector.
-            - `"linear"`: The linear detector.
-            - `"square-law"`: The square-law detector.
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
 
     Returns:
-        The probability density function under the alternative hypothesis $\mathcal{H}_1$.
+        The distribution under the alternative hypothesis $\mathcal{H}_1$.
 
     See Also:
         sdr.plot.detector_pdfs
@@ -129,40 +246,144 @@ def h1_theory(
             sigma2 = 1  # Noise variance
             p_fa = 1e-1  # Probability of false alarm
 
+        Compare the detection statistics for complex signals.
+
+        .. ipython:: python
+
+            A2 = sdr.linear(snr) * sigma2; A2  # Signal power, A^2
+
+            x_h0 = rng.normal(size=100_000, scale=np.sqrt(sigma2 / 2)) + 1j * rng.normal(size=100_000, scale=np.sqrt(sigma2 / 2)); \
+            x_h1 = np.sqrt(A2) + x_h0
+
         .. ipython:: python
 
             detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
-            threshold = sdr.threshold(p_fa, sigma2, detector)
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            z_h0 = np.real(x_h0); \
+            z_h1 = np.real(x_h1)
 
             @savefig sdr_h1_theory_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
             plt.title("Coherent Detector: Probability density functions");
 
         .. ipython:: python
 
             detector = "linear"; \
             h0 = sdr.h0_theory(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
-            threshold = sdr.threshold(p_fa, sigma2, detector)
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            z_h0 = np.abs(x_h0); \
+            z_h1 = np.abs(x_h1)
 
             @savefig sdr_h1_theory_2.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
             plt.title("Linear Detector: Probability density functions");
 
         .. ipython:: python
 
             detector = "square-law"; \
             h0 = sdr.h0_theory(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
-            threshold = sdr.threshold(p_fa, sigma2, detector)
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            z_h0 = np.abs(x_h0) ** 2; \
+            z_h1 = np.abs(x_h1) ** 2
 
             @savefig sdr_h1_theory_3.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.title("Square-Law Detector: Probability density functions");
+
+        Compare the detection statistics for real signals.
+
+        .. ipython:: python
+
+            A2 = sdr.linear(snr) * sigma2; A2  # Signal power, A^2
+
+            x_h0 = rng.normal(size=100_000, scale=np.sqrt(sigma2)); \
+            x_h1 = np.sqrt(A2) + x_h0
+
+        .. ipython:: python
+
+            detector = "coherent"; \
+            h0 = sdr.h0_theory(sigma2, detector, complex=False); \
+            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
+            p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
+
+            z_h0 = np.real(x_h0); \
+            z_h1 = np.real(x_h1)
+
+            @savefig sdr_h1_theory_4.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.title("Coherent Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector, complex=False); \
+            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
+            p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
+
+            z_h0 = np.abs(x_h0); \
+            z_h1 = np.abs(x_h1)
+
+            @savefig sdr_h1_theory_5.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.title("Linear Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector, complex=False); \
+            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
+            p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
+
+            z_h0 = np.abs(x_h0) ** 2; \
+            z_h1 = np.abs(x_h1) ** 2
+
+            @savefig sdr_h1_theory_6.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold, x=np.linspace(0, 15, 1001)); \
+            plt.gca().set_prop_cycle(None); \
+            plt.hist(z_h0, bins=101, histtype="step", density=True); \
+            plt.hist(z_h1, bins=101, histtype="step", density=True); \
+            plt.xlim(0, 15); \
+            plt.ylim(0, 0.5); \
             plt.title("Square-Law Detector: Probability density functions");
 
     Group:
@@ -174,16 +395,25 @@ def h1_theory(
         raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
 
     A2 = linear(snr) * sigma2  # Signal power, A^2
+    if complex:
+        nu = 2  # Degrees of freedom
+        sigma2_per = sigma2 / 2  # Noise variance per dimension
+    else:
+        nu = 1
+        sigma2_per = sigma2
+    lambda_ = A2 / (sigma2_per)  # Non-centrality parameter
 
-    nu = 2  # Degrees of freedom
-    lambda_ = A2 / (sigma2 / 2)  # Non-centrality parameter
-
-    if detector == "square-law":
-        h1 = scipy.stats.ncx2(nu, lambda_, scale=sigma2 / 2)
+    if detector == "coherent":
+        h1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2_per))
     elif detector == "linear":
-        h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2 / 2))
-    elif detector == "coherent":
-        h1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2 / 2))
+        if complex:
+            # Rice distribution has 2 degrees of freedom
+            h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+        else:
+            # Folded normal distribution has 1 degree of freedom
+            h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+    elif detector == "square-law":
+        h1 = scipy.stats.ncx2(nu, lambda_, scale=sigma2_per)
     else:
         raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
@@ -195,6 +425,7 @@ def p_d(
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical probability of detection $P_{D}$.
@@ -204,9 +435,12 @@ def p_d(
         p_fa: The probability of false alarm $P_{FA}$ in $(0, 1)$.
         detector: The detector type.
 
-            - `"coherent"`: The coherent detector.
-            - `"linear"`: The linear detector.
-            - `"square-law"`: The square-law detector.
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
 
     Returns:
         The probability of detection $P_D$ in $(0, 1)$.
@@ -214,7 +448,7 @@ def p_d(
     Examples:
         .. ipython:: python
 
-            snr = 5  # Signal-to-noise ratio in dB
+            snr = 3  # Signal-to-noise ratio in dB
             sigma2 = 1  # Noise variance
             p_fa = 1e-1  # Probability of false alarm
 
@@ -280,7 +514,7 @@ def p_d(
 
             @savefig sdr_p_d_4.png
             plt.figure(); \
-            snr = np.linspace(-10, 20, 101); \
+            snr = np.linspace(0, 20, 101); \
             sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "coherent"), label="Coherent"); \
             sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "linear"), label="Linear"); \
             sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "square-law"), label="Square-Law"); \
@@ -323,8 +557,8 @@ def p_d(
 
     @np.vectorize
     def _calculate(snr, p_fa):
-        h1 = h1_theory(snr, sigma2, detector)
-        gamma = threshold(p_fa, sigma2, detector)
+        h1 = h1_theory(snr, sigma2, detector, complex)
+        gamma = threshold(p_fa, sigma2, detector, complex)
         return h1.sf(gamma)
 
     p_d = _calculate(snr, p_fa)
@@ -339,6 +573,7 @@ def p_fa(
     threshold: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical probability of false alarm $P_{FA}$.
@@ -348,9 +583,12 @@ def p_fa(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"coherent"`: The coherent detector.
-            - `"linear"`: The linear detector.
-            - `"square-law"`: The square-law detector.
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
 
     Returns:
         The probability of false alarm $P_{FA}$ in $(0, 1)$.
@@ -414,7 +652,7 @@ def p_fa(
 
     @np.vectorize
     def _calculate(threshold, sigma2):
-        h0 = h0_theory(sigma2, detector)
+        h0 = h0_theory(sigma2, detector, complex)
         return h0.sf(threshold)
 
     p_fa = _calculate(threshold, sigma2)
@@ -429,6 +667,7 @@ def threshold(
     p_fa: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical detection threshold $\gamma$.
@@ -438,9 +677,12 @@ def threshold(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"coherent"`: The coherent detector.
-            - `"linear"`: The linear detector.
-            - `"square-law"`: The square-law detector.
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
 
     Returns:
         The detection threshold $\gamma$ in linear units.
@@ -504,7 +746,7 @@ def threshold(
 
     @np.vectorize
     def _calculate(p_fa, sigma2):
-        h0 = h0_theory(sigma2, detector)
+        h0 = h0_theory(sigma2, detector, complex)
         return h0.isf(p_fa)
 
     threshold = _calculate(p_fa, sigma2)
