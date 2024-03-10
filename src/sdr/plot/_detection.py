@@ -12,6 +12,46 @@ from ._rc_params import RC_PARAMS
 
 
 @export
+def p_d(
+    x: npt.ArrayLike,
+    p_d: npt.ArrayLike,
+    x_label: Literal["snr", "enr"] = "snr",
+    **kwargs,
+):
+    r"""
+    Plots the probability of detection $P_D$ as a function of received SNR or ENR.
+
+    Arguments:
+        x: The SNR or ENR in dB.
+        p_d: The probability of detection $P_D$.
+        x_label: The x-axis label to use.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    Group:
+        plot-detection
+    """
+    with plt.rc_context(RC_PARAMS):
+        default_kwargs = {}
+        kwargs = {**default_kwargs, **kwargs}
+
+        plt.plot(x, p_d, **kwargs)
+
+        plt.ylim(0, 1)
+        if "label" in kwargs:
+            plt.legend()
+
+        if x_label == "snr":
+            plt.xlabel(r"Signal-to-noise ratio (dB), $S/\sigma^2$")
+        elif x_label == "enr":
+            plt.xlabel(r"Energy-to-noise ratio (dB), $\mathcal{E}/\sigma^2$")
+        else:
+            raise ValueError(f"Argument 'x_label' must be one of ['snr', 'enr'], not {x_label!r}.")
+
+        plt.ylabel("Probability of detection, $P_{D}$")
+        plt.title("Detection performance")
+
+
+@export
 def roc(
     p_fa: npt.ArrayLike,
     p_d: npt.ArrayLike,
@@ -53,43 +93,3 @@ def roc(
         plt.xlabel("Probability of false alarm, $P_{FA}$")
         plt.ylabel("Probability of detection, $P_{D}$")
         plt.title("Receiver operating characteristic (ROC) curve")
-
-
-@export
-def p_d(
-    x: npt.ArrayLike,
-    p_d: npt.ArrayLike,
-    x_label: Literal["snr", "enr"] = "snr",
-    **kwargs,
-):
-    r"""
-    Plots the probability of detection $P_D$ as a function of received SNR or ENR.
-
-    Arguments:
-        x: The SNR or ENR in dB.
-        p_d: The probability of detection $P_D$.
-        x_label: The x-axis label to use.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
-
-    Group:
-        plot-detection
-    """
-    with plt.rc_context(RC_PARAMS):
-        default_kwargs = {}
-        kwargs = {**default_kwargs, **kwargs}
-
-        plt.plot(x, p_d, **kwargs)
-
-        plt.ylim(0, 1)
-        if "label" in kwargs:
-            plt.legend()
-
-        if x_label == "snr":
-            plt.xlabel(r"Signal-to-noise ratio (dB), $S/\sigma^2$")
-        elif x_label == "enr":
-            plt.xlabel(r"Energy-to-noise ratio (dB), $\mathcal{E}/\sigma^2$")
-        else:
-            raise ValueError(f"Argument 'x_label' must be one of ['snr', 'enr'], not {x_label!r}.")
-
-        plt.ylabel("Probability of detection, $P_{D}$")
-        plt.title("Detection performance")
