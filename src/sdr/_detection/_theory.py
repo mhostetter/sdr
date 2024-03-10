@@ -31,6 +31,9 @@ def h0_theory(
     Returns:
         The probability density function under the null hypothesis $\mathcal{H}_0$.
 
+    See Also:
+        sdr.plot.detector_pdfs
+
     Examples:
         .. ipython:: python
 
@@ -90,9 +93,101 @@ def h0_theory(
     elif detector == "real":
         h0 = scipy.stats.norm(0, np.sqrt(sigma2 / 2))
     else:
-        raise ValueError(f"Argument `detector` must be one of 'square-law', 'linear', or 'real', not {detector}.")
+        raise ValueError(f"Argument `detector` must be one of 'real', 'linear', or 'square-law', not {detector!r}.")
 
     return h0
+
+
+@export
+def h1_theory(
+    snr: float,
+    sigma2: float = 1.0,
+    detector: Literal["real", "linear", "square-law"] = "square-law",
+) -> scipy.stats.rv_continuous:
+    r"""
+    Computes the statistical distribution under the alternative hypothesis $\mathcal{H}_1$.
+
+    Arguments:
+        snr: The signal-to-noise ratio $S / \sigma^2$ in dB.
+        sigma2: The noise variance $\sigma^2$ in linear units.
+        detector: The detector type.
+
+            - `"real"`: The real detector.
+            - `"linear"`: The linear detector.
+            - `"square-law"`: The square-law detector.
+
+    Returns:
+        The probability density function under the alternative hypothesis $\mathcal{H}_1$.
+
+    See Also:
+        sdr.plot.detector_pdfs
+
+    Examples:
+        .. ipython:: python
+
+            snr = 5  # Signal-to-noise ratio in dB
+            sigma2 = 1  # Noise variance
+            p_fa = 1e-1  # Probability of false alarm
+
+        .. ipython:: python
+
+            detector = "real"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_h1_theory_1.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Real Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_h1_theory_2.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Linear Detector: Probability density functions");
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_h1_theory_3.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Square-Law Detector: Probability density functions");
+
+    Group:
+        detection-theory
+    """
+    snr = float(snr)
+    sigma2 = float(sigma2)
+    if sigma2 <= 0:
+        raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
+
+    A2 = linear(snr) * sigma2  # Signal power, A^2
+
+    nu = 2  # Degrees of freedom
+    lambda_ = A2 / (sigma2 / 2)  # Non-centrality parameter
+
+    if detector == "square-law":
+        h1 = scipy.stats.ncx2(nu, lambda_, scale=sigma2 / 2)
+    elif detector == "linear":
+        h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2 / 2))
+    elif detector == "real":
+        h1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2 / 2))
+    else:
+        raise ValueError(f"Argument `detector` must be one of 'real', 'linear', or 'square-law', not {detector!r}.")
+
+    return h1
 
 
 @export
