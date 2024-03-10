@@ -103,6 +103,7 @@ def detector_pdfs(
     h1: scipy.stats.rv_continuous | None = None,
     threshold: float | None = None,
     shade: bool = True,
+    annotate: bool = True,
     x: npt.NDArray[np.float64] | None = None,
     points: int = 1001,
     p_h0: float = 1e-6,
@@ -117,6 +118,7 @@ def detector_pdfs(
         h1: The statistical distribution under $\mathcal{H}_1$.
         threshold: The detection threshold $\gamma$.
         shade: Indicates whether to shade the tails of the PDFs.
+        annotate: Indicates whether to annotate the plot with the probabilities of false alarm and detection.
         x: The x-axis values to use for the plot. If not provided, it will be generated automatically.
         points: The number of points to use for the x-axis.
         p_h0: The probability of the $\mathcal{H}_0$ tails to plot. The smaller the value, the longer the x-axis.
@@ -173,15 +175,40 @@ def detector_pdfs(
         if h0 is not None:
             plt.plot(x, h0.pdf(x), label=r"$\mathcal{H}_0$: Noise", **kwargs)
             if shade and threshold:
-                color = plt.gca().lines[-1].get_color()
-                plt.fill_between(x, 0, h0.pdf(x), where=(x >= threshold), interpolate=True, color=color, alpha=0.1)
+                h0_color = plt.gca().lines[-1].get_color()
+                plt.fill_between(x, 0, h0.pdf(x), where=(x >= threshold), interpolate=True, color=h0_color, alpha=0.1)
         if h1 is not None:
             plt.plot(x, h1.pdf(x), label=r"$\mathcal{H}_1$: Signal + Noise", **kwargs)
             if shade and threshold:
-                color = plt.gca().lines[-1].get_color()
-                plt.fill_between(x, 0, h1.pdf(x), where=(x >= threshold), interpolate=True, color=color, alpha=0.1)
+                h1_color = plt.gca().lines[-1].get_color()
+                plt.fill_between(x, 0, h1.pdf(x), where=(x >= threshold), interpolate=True, color=h1_color, alpha=0.1)
         if threshold is not None:
             plt.axvline(threshold, color="k", linestyle="--", label="Threshold")
+
+        if annotate:
+            if h0 is not None and threshold is not None:
+                p_fa = h0.sf(threshold)
+                threshold_half = h0.isf(p_fa / 2)
+                plt.text(
+                    threshold_half,
+                    h0.pdf(threshold_half) / 2,
+                    rf"$P_{{FA}} = $ {p_fa:1.2e}",
+                    color=h0_color,
+                    ha="center",
+                    va="center",
+                )
+
+            if h1 is not None and threshold is not None:
+                p_d = h1.sf(threshold)
+                threshold_half = h1.isf(p_d / 2)
+                plt.text(
+                    threshold_half,
+                    h1.pdf(threshold_half) / 2,
+                    rf"$P_{{D}} = $ {p_d:1.2e}",
+                    color=h1_color,
+                    ha="center",
+                    va="center",
+                )
 
         plt.legend()
         plt.xlabel("Test statistic, $T(x)$")
