@@ -125,6 +125,9 @@ def detector_pdfs(
         p_h1: The probability of the $\mathcal{H}_1$ tails to plot. The smaller the value, the longer the x-axis.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
+    See Also:
+        sdr.h0_theory, sdr.h1_theory, sdr.threshold
+
     Example:
         .. ipython:: python
 
