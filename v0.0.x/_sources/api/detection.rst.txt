@@ -16,7 +16,12 @@ Non-coherent integration
 
 .. python-apigen-group:: detection-non-coherent-integration
 
-Theoretical limits
-------------------
+Theoretical performance
+-----------------------
 
 .. python-apigen-group:: detection-theory
+
+Approximated performance
+-----------------------
+
+.. python-apigen-group:: detection-approximation
