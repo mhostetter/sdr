@@ -15,7 +15,7 @@ from .._helper import export
 @export
 def h0_theory(
     sigma2: float = 1.0,
-    detector: Literal["real", "linear", "square-law"] = "square-law",
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
 ) -> scipy.stats.rv_continuous:
     r"""
     Computes the statistical distribution under the null hypothesis $\mathcal{H}_0$.
@@ -24,7 +24,7 @@ def h0_theory(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"real"`: The real detector.
+            - `"coherent"`: The coherent detector.
             - `"linear"`: The linear detector.
             - `"square-law"`: The square-law detector.
 
@@ -43,7 +43,7 @@ def h0_theory(
 
         .. ipython:: python
 
-            detector = "real"; \
+            detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector); \
             h1 = sdr.h1_theory(snr, sigma2, detector); \
             threshold = sdr.threshold(p_fa, sigma2, detector)
@@ -51,7 +51,7 @@ def h0_theory(
             @savefig sdr_h0_theory_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
-            plt.title("Real Detector: Probability density functions");
+            plt.title("Coherent Detector: Probability density functions");
 
         .. ipython:: python
 
@@ -90,10 +90,10 @@ def h0_theory(
         h0 = scipy.stats.chi2(nu, scale=sigma2 / 2)
     elif detector == "linear":
         h0 = scipy.stats.chi(nu, scale=sigma2 / 2)
-    elif detector == "real":
+    elif detector == "coherent":
         h0 = scipy.stats.norm(0, np.sqrt(sigma2 / 2))
     else:
-        raise ValueError(f"Argument `detector` must be one of 'real', 'linear', or 'square-law', not {detector!r}.")
+        raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
     return h0
 
@@ -102,7 +102,7 @@ def h0_theory(
 def h1_theory(
     snr: float,
     sigma2: float = 1.0,
-    detector: Literal["real", "linear", "square-law"] = "square-law",
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
 ) -> scipy.stats.rv_continuous:
     r"""
     Computes the statistical distribution under the alternative hypothesis $\mathcal{H}_1$.
@@ -112,7 +112,7 @@ def h1_theory(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"real"`: The real detector.
+            - `"coherent"`: The coherent detector.
             - `"linear"`: The linear detector.
             - `"square-law"`: The square-law detector.
 
@@ -131,7 +131,7 @@ def h1_theory(
 
         .. ipython:: python
 
-            detector = "real"; \
+            detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector); \
             h1 = sdr.h1_theory(snr, sigma2, detector); \
             threshold = sdr.threshold(p_fa, sigma2, detector)
@@ -139,7 +139,7 @@ def h1_theory(
             @savefig sdr_h1_theory_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
-            plt.title("Real Detector: Probability density functions");
+            plt.title("Coherent Detector: Probability density functions");
 
         .. ipython:: python
 
@@ -182,10 +182,10 @@ def h1_theory(
         h1 = scipy.stats.ncx2(nu, lambda_, scale=sigma2 / 2)
     elif detector == "linear":
         h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2 / 2))
-    elif detector == "real":
+    elif detector == "coherent":
         h1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2 / 2))
     else:
-        raise ValueError(f"Argument `detector` must be one of 'real', 'linear', or 'square-law', not {detector!r}.")
+        raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
     return h1
 
@@ -194,7 +194,7 @@ def h1_theory(
 def p_d(
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike,
-    detector: Literal["real", "linear", "square-law"] = "square-law",
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical probability of detection $P_{D}$.
@@ -204,7 +204,7 @@ def p_d(
         p_fa: The probability of false alarm $P_{FA}$ in $(0, 1)$.
         detector: The detector type.
 
-            - `"real"`: The real detector.
+            - `"coherent"`: The coherent detector.
             - `"linear"`: The linear detector.
             - `"square-law"`: The square-law detector.
 
@@ -218,12 +218,12 @@ def p_d(
             sigma2 = 1  # Noise variance
             p_fa = 1e-1  # Probability of false alarm
 
-        Compute the probability of detection for the real detector. Plot the PDFs and observe the theoretical
+        Compute the probability of detection for the coherent detector. Plot the PDFs and observe the theoretical
         $P_{D}$ is achieved.
 
         .. ipython:: python
 
-            detector = "real"; \
+            detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector); \
             h1 = sdr.h1_theory(snr, sigma2, detector)
 
@@ -234,7 +234,7 @@ def p_d(
             @savefig sdr_p_d_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
-            plt.title("Real Detector: Probability density functions");
+            plt.title("Coherent Detector: Probability density functions");
 
         Compute the probability of detection for the linear detector. Plot the PDFs and observe the theoretical
         $P_{D}$ is achieved.
@@ -281,7 +281,7 @@ def p_d(
             @savefig sdr_p_d_4.png
             plt.figure(); \
             snr = np.linspace(-10, 20, 101); \
-            sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "real"), label="Real"); \
+            sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "coherent"), label="Coherent"); \
             sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "linear"), label="Linear"); \
             sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "square-law"), label="Square-Law"); \
             plt.legend(title="Detector"); \
@@ -338,7 +338,7 @@ def p_d(
 def p_fa(
     threshold: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
-    detector: Literal["real", "linear", "square-law"] = "square-law",
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical probability of false alarm $P_{FA}$.
@@ -348,7 +348,7 @@ def p_fa(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"real"`: The real detector.
+            - `"coherent"`: The coherent detector.
             - `"linear"`: The linear detector.
             - `"square-law"`: The square-law detector.
 
@@ -361,12 +361,12 @@ def p_fa(
             threshold = 1.0  # Detection threshold
             sigma2 = 1  # Noise variance
 
-        Compute the probability of false alarm for the real detector. Plot the PDFs and observe the theoretical
+        Compute the probability of false alarm for the coherent detector. Plot the PDFs and observe the theoretical
         $P_{FA}$ is achieved.
 
         .. ipython:: python
 
-            detector = "real"; \
+            detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector)
 
             p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
@@ -374,7 +374,7 @@ def p_fa(
             @savefig sdr_p_fa_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
-            plt.title("Real Detector: Probability density functions");
+            plt.title("Coherent Detector: Probability density functions");
 
         Compute the probability of false alarm for the linear detector. Plot the PDFs and observe the theoretical
         $P_{FA}$ is achieved.
@@ -428,7 +428,7 @@ def p_fa(
 def threshold(
     p_fa: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
-    detector: Literal["real", "linear", "square-law"] = "square-law",
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical detection threshold $\gamma$.
@@ -438,7 +438,7 @@ def threshold(
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"real"`: The real detector.
+            - `"coherent"`: The coherent detector.
             - `"linear"`: The linear detector.
             - `"square-law"`: The square-law detector.
 
@@ -451,12 +451,12 @@ def threshold(
             p_fa = 1e-1  # Probability of false alarm
             sigma2 = 1  # Noise variance
 
-        Compute the detection threshold for the real detector. Plot the PDFs and observe the desired $P_{FA}$
+        Compute the detection threshold for the coherent detector. Plot the PDFs and observe the desired $P_{FA}$
         is achieved.
 
         .. ipython:: python
 
-            detector = "real"; \
+            detector = "coherent"; \
             h0 = sdr.h0_theory(sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
@@ -464,7 +464,7 @@ def threshold(
             @savefig sdr_threshold_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
-            plt.title("Real Detector: Probability density functions");
+            plt.title("Coherent Detector: Probability density functions");
 
         Compute the detection threshold for the linear detector. Plot the PDFs and observe the desired $P_{FA}$
         is achieved.
