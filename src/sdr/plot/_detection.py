@@ -103,6 +103,7 @@ def detector_pdfs(
     h1: scipy.stats.rv_continuous | None = None,
     threshold: float | None = None,
     shade: bool = True,
+    x: npt.NDArray[np.float64] | None = None,
     points: int = 1001,
     p_h0: float = 1e-6,
     p_h1: float = 1e-3,
@@ -116,6 +117,7 @@ def detector_pdfs(
         h1: The statistical distribution under $\mathcal{H}_1$.
         threshold: The detection threshold $\gamma$.
         shade: Indicates whether to shade the tails of the PDFs.
+        x: The x-axis values to use for the plot. If not provided, it will be generated automatically.
         points: The number of points to use for the x-axis.
         p_h0: The probability of the $\mathcal{H}_0$ tails to plot. The smaller the value, the longer the x-axis.
         p_h1: The probability of the $\mathcal{H}_1$ tails to plot. The smaller the value, the longer the x-axis.
@@ -147,25 +149,26 @@ def detector_pdfs(
         default_kwargs = {}
         kwargs = {**default_kwargs, **kwargs}
 
-        x_min = []
-        if h0 is not None:
-            x_min.append(h0.ppf(p_h0))
-        if h1 is not None:
-            x_min.append(h1.ppf(p_h1))
-        if threshold is not None:
-            x_min.append(threshold)
-        x_min = np.nanmin(x_min)
+        if x is None:
+            x_min = []
+            if h0 is not None:
+                x_min.append(h0.ppf(p_h0))
+            if h1 is not None:
+                x_min.append(h1.ppf(p_h1))
+            if threshold is not None:
+                x_min.append(threshold)
+            x_min = np.nanmin(x_min)
 
-        x_max = []
-        if h0 is not None:
-            x_max.append(h0.isf(p_h0))
-        if h1 is not None:
-            x_max.append(h1.isf(p_h1))
-        if threshold is not None:
-            x_max.append(threshold)
-        x_max = np.nanmax(x_max)
+            x_max = []
+            if h0 is not None:
+                x_max.append(h0.isf(p_h0))
+            if h1 is not None:
+                x_max.append(h1.isf(p_h1))
+            if threshold is not None:
+                x_max.append(threshold)
+            x_max = np.nanmax(x_max)
 
-        x = np.linspace(x_min, x_max, points)
+            x = np.linspace(x_min, x_max, points)
 
         if h0 is not None:
             plt.plot(x, h0.pdf(x), label=r"$\mathcal{H}_0$: Noise", **kwargs)
