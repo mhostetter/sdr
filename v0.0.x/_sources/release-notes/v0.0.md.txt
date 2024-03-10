@@ -4,6 +4,24 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.17
+
+*Released March 10, 2024*
+
+### Changes
+
+- Added theoretical detection threshold calculation in `sdr.threshold()`.
+- Added theoretical probability of detection calculation in `sdr.p_d()`.
+- Added theoretical probability of false alarm calculation in `sdr.p_fa()`.
+- Added test statistic distributions in `sdr.h0_theory()` and `sdr.h1_theory()`.
+- Added support for coherent, linear, and square-law detectors.
+- Added support for detection of real and complex signals.
+- Added plot helper for detection distributions in `sdr.plot.detection_pdfs()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.16
 
 *Released March 3, 2024*
