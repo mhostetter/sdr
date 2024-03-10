@@ -4,7 +4,9 @@ A module containing detection-related plotting functions.
 from __future__ import annotations
 
 import matplotlib.pyplot as plt
+import numpy as np
 import numpy.typing as npt
+import scipy.stats
 from typing_extensions import Literal
 
 from .._helper import export
@@ -93,3 +95,92 @@ def roc(
         plt.xlabel("Probability of false alarm, $P_{FA}$")
         plt.ylabel("Probability of detection, $P_{D}$")
         plt.title("Receiver operating characteristic (ROC) curve")
+
+
+@export
+def detector_pdfs(
+    h0: scipy.stats.rv_continuous | None = None,
+    h1: scipy.stats.rv_continuous | None = None,
+    threshold: float | None = None,
+    shade: bool = True,
+    points: int = 1001,
+    p_h0: float = 1e-6,
+    p_h1: float = 1e-3,
+    **kwargs,
+):
+    r"""
+    Plots the probability density functions (PDFs) of the detector under $\mathcal{H}_0$ and $\mathcal{H}_1$.
+
+    Arguments:
+        h0: The statistical distribution under $\mathcal{H}_0$.
+        h1: The statistical distribution under $\mathcal{H}_1$.
+        threshold: The detection threshold $\gamma$.
+        shade: Indicates whether to shade the tails of the PDFs.
+        points: The number of points to use for the x-axis.
+        p_h0: The probability of the $\mathcal{H}_0$ tails to plot. The smaller the value, the longer the x-axis.
+        p_h1: The probability of the $\mathcal{H}_1$ tails to plot. The smaller the value, the longer the x-axis.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    Example:
+        .. ipython:: python
+
+            snr = 5  # Signal-to-noise ratio in dB
+            sigma2 = 1  # Noise variance
+            p_fa = 1e-3  # Probability of false alarm
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            threshold = sdr.threshold(p_fa, sigma2, detector)
+
+            @savefig sdr_plot_detector_pdfs_1.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0, h1, threshold); \
+            plt.title("Linear Detector: Probability density functions");
+
+    Group:
+        plot-detection
+    """
+    with plt.rc_context(RC_PARAMS):
+        default_kwargs = {}
+        kwargs = {**default_kwargs, **kwargs}
+
+        x_min = []
+        if h0 is not None:
+            x_min.append(h0.ppf(p_h0))
+        if h1 is not None:
+            x_min.append(h1.ppf(p_h1))
+        if threshold is not None:
+            x_min.append(threshold)
+        x_min = np.nanmin(x_min)
+
+        x_max = []
+        if h0 is not None:
+            x_max.append(h0.isf(p_h0))
+        if h1 is not None:
+            x_max.append(h1.isf(p_h1))
+        if threshold is not None:
+            x_max.append(threshold)
+        x_max = np.nanmax(x_max)
+
+        x = np.linspace(x_min, x_max, points)
+
+        if h0 is not None:
+            plt.plot(x, h0.pdf(x), label=r"$\mathcal{H}_0$: Noise", **kwargs)
+            if shade and threshold:
+                color = plt.gca().lines[-1].get_color()
+                plt.fill_between(x, 0, h0.pdf(x), where=(x >= threshold), interpolate=True, color=color, alpha=0.1)
+        if h1 is not None:
+            plt.plot(x, h1.pdf(x), label=r"$\mathcal{H}_1$: Signal + Noise", **kwargs)
+            if shade and threshold:
+                color = plt.gca().lines[-1].get_color()
+                plt.fill_between(x, 0, h1.pdf(x), where=(x >= threshold), interpolate=True, color=color, alpha=0.1)
+        if threshold is not None:
+            plt.axvline(threshold, color="k", linestyle="--", label="Threshold")
+
+        plt.legend()
+        plt.xlabel("Test statistic, $T(x)$")
+        plt.ylabel("Probability density")
+        plt.title("Detector probability density functions (PDFs)")
