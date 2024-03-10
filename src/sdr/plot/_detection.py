@@ -38,7 +38,6 @@ def p_d(
 
         plt.plot(x, p_d, **kwargs)
 
-        plt.ylim(0, 1)
         if "label" in kwargs:
             plt.legend()
 
