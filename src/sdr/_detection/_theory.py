@@ -194,19 +194,19 @@ def h1_theory(
 def p_d(
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike,
-    detector: Literal["square-law", "linear", "real"] = "square-law",
+    detector: Literal["real", "linear", "square-law"] = "square-law",
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the theoretical probability of detection.
+    Computes the theoretical probability of detection $P_{D}$.
 
     Arguments:
         snr: The signal-to-noise ratio $S / \sigma^2$ in dB.
         p_fa: The probability of false alarm $P_{FA}$ in $(0, 1)$.
         detector: The detector type.
 
-            - `"square-law"`: The square-law detector.
-            - `"linear"`: The linear detector.
             - `"real"`: The real detector.
+            - `"linear"`: The linear detector.
+            - `"square-law"`: The square-law detector.
 
     Returns:
         The probability of detection $P_D$ in $(0, 1)$.
@@ -214,14 +214,93 @@ def p_d(
     Examples:
         .. ipython:: python
 
+            snr = 5  # Signal-to-noise ratio in dB
+            sigma2 = 1  # Noise variance
+            p_fa = 1e-1  # Probability of false alarm
+
+        Compute the probability of detection for the real detector. Plot the PDFs and observe the theoretical
+        $P_{D}$ is achieved.
+
+        .. ipython:: python
+
+            detector = "real"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            @savefig sdr_p_d_1.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
+            plt.title("Real Detector: Probability density functions");
+
+        Compute the probability of detection for the linear detector. Plot the PDFs and observe the theoretical
+        $P_{D}$ is achieved.
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            @savefig sdr_p_d_2.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
+            plt.title("Linear Detector: Probability density functions");
+
+        Compute the probability of detection for the square-law detector. Plot the PDFs and observe the theoretical
+        $P_{D}$ is achieved.
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector); \
+            h1 = sdr.h1_theory(snr, sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+
+            p_d = sdr.p_d(snr, p_fa, detector); p_d
+
+            @savefig sdr_p_d_3.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
+            plt.title("Square-Law Detector: Probability density functions");
+
+        Compare the detection performance of each detector.
+
+        .. ipython:: python
+
+            p_fa = 1e-6  # Probability of false alarm
+
+            @savefig sdr_p_d_4.png
+            plt.figure(); \
+            snr = np.linspace(-10, 20, 101); \
+            sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "real"), label="Real"); \
+            sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "linear"), label="Linear"); \
+            sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "square-law"), label="Square-Law"); \
+            plt.legend(title="Detector"); \
+            plt.title("Probability of detection");
+
+        Compare the $P_{D}$ of the square-law detector for various $P_{FA}$.
+
+        .. ipython:: python
+
             plt.figure(); \
             snr = np.linspace(-10, 20, 101);
-            for p_fa in [1e-12, 1e-9, 1e-6, 1e-3]:
+            for p_fa in [1e-15, 1e-12, 1e-9, 1e-6, 1e-3, 1e-1]:
                 p_d = sdr.p_d(snr, p_fa)
                 sdr.plot.p_d(snr, p_d, label=f"{p_fa:1.0e}")
-            @savefig sdr_p_d_1.png
+            @savefig sdr_p_d_5.png
             plt.legend(title="$P_{FA}$", loc="upper left"); \
             plt.title("Square-Law Detector: Probability of detection");
+
+        Compare the receiver operating characteristics (ROCs) of the square-law detector for various SNRs.
 
         .. ipython:: python
 
@@ -230,7 +309,7 @@ def p_d(
             for snr in [-5, 0, 5, 10, 15, 20]:
                 p_d = sdr.p_d(snr, p_fa)
                 sdr.plot.roc(p_fa, p_d, label=f"{snr} dB")
-            @savefig sdr_p_d_2.png
+            @savefig sdr_p_d_6.png
             plt.legend(title="SNR"); \
             plt.title("Square-Law Detector: Receiver operating characteristic");
 
@@ -240,31 +319,17 @@ def p_d(
     snr = np.asarray(snr)
     p_fa = np.asarray(p_fa)
 
-    snr = linear(snr)
+    sigma2 = 1
 
-    if detector == "square-law":
-        p_d = _p_d_square_law(snr, p_fa)
-    else:
-        raise ValueError(f"Invalid detector type: {detector}")
+    @np.vectorize
+    def _calculate(snr, p_fa):
+        h1 = h1_theory(snr, sigma2, detector)
+        gamma = threshold(p_fa, sigma2, detector)
+        return h1.sf(gamma)
 
+    p_d = _calculate(snr, p_fa)
     if p_d.ndim == 0:
         p_d = p_d.item()
-
-    return p_d
-
-
-def _p_d_square_law(
-    snr: npt.NDArray[np.float64],
-    p_fa: npt.NDArray[np.float64],
-) -> npt.NDArray[np.float64]:
-    sigma2 = 1  # Noise variance
-    A2 = snr * sigma2  # Signal power
-
-    nu = 2  # Degrees of freedom
-    lambda_ = A2 / (sigma2 / 2)  # Non-centrality parameter
-    h1_theory = scipy.stats.ncx2(nu, lambda_, scale=sigma2 / 2)
-    threshold = _threshold_square_law(p_fa, sigma2)
-    p_d = h1_theory.sf(threshold)
 
     return p_d
 
@@ -273,19 +338,19 @@ def _p_d_square_law(
 def p_fa(
     threshold: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
-    detector: Literal["square-law", "linear", "real"] = "square-law",
+    detector: Literal["real", "linear", "square-law"] = "square-law",
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the theoretical probability of false alarm.
+    Computes the theoretical probability of false alarm $P_{FA}$.
 
     Arguments:
         threshold: The detection threshold $\gamma$ in linear units.
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"square-law"`: The square-law detector.
-            - `"linear"`: The linear detector.
             - `"real"`: The real detector.
+            - `"linear"`: The linear detector.
+            - `"square-law"`: The square-law detector.
 
     Returns:
         The probability of false alarm $P_{FA}$ in $(0, 1)$.
@@ -293,14 +358,53 @@ def p_fa(
     Examples:
         .. ipython:: python
 
+            threshold = 1.0  # Detection threshold
+            sigma2 = 1  # Noise variance
+
+        Compute the probability of false alarm for the real detector. Plot the PDFs and observe the theoretical
+        $P_{FA}$ is achieved.
+
+        .. ipython:: python
+
+            detector = "real"; \
+            h0 = sdr.h0_theory(sigma2, detector)
+
+            p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
+
             @savefig sdr_p_fa_1.png
             plt.figure(); \
-            threshold = np.linspace(0, 20, 101); \
-            p_fa = sdr.p_fa(threshold, 1); \
-            plt.semilogy(threshold, p_fa); \
-            plt.xlabel("Threshold"); \
-            plt.ylabel("Probability of false alarm, $P_{FA}$"); \
-            plt.title("Square-Law Detector: False alarm performance");
+            sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
+            plt.title("Real Detector: Probability density functions");
+
+        Compute the probability of false alarm for the linear detector. Plot the PDFs and observe the theoretical
+        $P_{FA}$ is achieved.
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector)
+
+            p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
+
+            @savefig sdr_p_fa_2.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
+            plt.title("Linear Detector: Probability density functions");
+
+        Compute the probability of false alarm for the square-law detector. Plot the PDFs and observe the theoretical
+        $P_{FA}$ is achieved.
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector)
+
+            p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
+
+            @savefig sdr_p_fa_3.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
+            plt.title("Square-Law Detector: Probability density functions");
 
     Group:
         detection-theory
@@ -308,24 +412,14 @@ def p_fa(
     threshold = np.asarray(threshold)
     sigma2 = np.asarray(sigma2)
 
-    if detector == "square-law":
-        p_fa = _p_fa_square_law(threshold, sigma2)
-    else:
-        raise ValueError(f"Invalid detector type: {detector}")
+    @np.vectorize
+    def _calculate(threshold, sigma2):
+        h0 = h0_theory(sigma2, detector)
+        return h0.sf(threshold)
 
+    p_fa = _calculate(threshold, sigma2)
     if p_fa.ndim == 0:
         p_fa = p_fa.item()
-
-    return p_fa
-
-
-def _p_fa_square_law(
-    threshold: npt.NDArray[np.float64],
-    sigma2: npt.NDArray[np.float64],
-) -> npt.NDArray[np.float64]:
-    nu = 2  # Degrees of freedom
-    h0_theory = scipy.stats.chi2(nu, scale=sigma2 / 2)
-    p_fa = h0_theory.sf(threshold)
 
     return p_fa
 
@@ -334,19 +428,19 @@ def _p_fa_square_law(
 def threshold(
     p_fa: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
-    detector: Literal["square-law", "linear", "real"] = "square-law",
+    detector: Literal["real", "linear", "square-law"] = "square-law",
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the theoretical detection threshold.
+    Computes the theoretical detection threshold $\gamma$.
 
     Arguments:
         p_fa: The desired probability of false alarm $P_{FA}$ in $(0, 1)$.
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
-            - `"square-law"`: The square-law detector.
-            - `"linear"`: The linear detector.
             - `"real"`: The real detector.
+            - `"linear"`: The linear detector.
+            - `"square-law"`: The square-law detector.
 
     Returns:
         The detection threshold $\gamma$ in linear units.
@@ -354,14 +448,53 @@ def threshold(
     Examples:
         .. ipython:: python
 
+            p_fa = 1e-1  # Probability of false alarm
+            sigma2 = 1  # Noise variance
+
+        Compute the detection threshold for the real detector. Plot the PDFs and observe the desired $P_{FA}$
+        is achieved.
+
+        .. ipython:: python
+
+            detector = "real"; \
+            h0 = sdr.h0_theory(sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+
             @savefig sdr_threshold_1.png
             plt.figure(); \
-            p_fa = np.logspace(-15, 0, 101); \
-            threshold = sdr.threshold(p_fa, 1); \
-            plt.semilogx(p_fa, threshold); \
-            plt.xlabel("Probability of false alarm, $P_{FA}$"); \
-            plt.ylabel("Threshold"); \
-            plt.title("Square-Law Detector: Thresholds");
+            sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
+            plt.title("Real Detector: Probability density functions");
+
+        Compute the detection threshold for the linear detector. Plot the PDFs and observe the desired $P_{FA}$
+        is achieved.
+
+        .. ipython:: python
+
+            detector = "linear"; \
+            h0 = sdr.h0_theory(sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+
+            @savefig sdr_threshold_2.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
+            plt.title("Linear Detector: Probability density functions");
+
+        Compute the detection threshold for the square-law detector. Plot the PDFs and observe the desired $P_{FA}$
+        is achieved.
+
+        .. ipython:: python
+
+            detector = "square-law"; \
+            h0 = sdr.h0_theory(sigma2, detector)
+
+            threshold = sdr.threshold(p_fa, sigma2, detector); threshold
+
+            @savefig sdr_threshold_3.png
+            plt.figure(); \
+            sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
+            plt.title("Square-Law Detector: Probability density functions");
 
     Group:
         detection-theory
@@ -369,23 +502,13 @@ def threshold(
     p_fa = np.asarray(p_fa)
     sigma2 = np.asarray(sigma2)
 
-    if detector == "square-law":
-        threshold = _threshold_square_law(p_fa, sigma2)
-    else:
-        raise ValueError(f"Invalid detector type: {detector}")
+    @np.vectorize
+    def _calculate(p_fa, sigma2):
+        h0 = h0_theory(sigma2, detector)
+        return h0.isf(p_fa)
 
+    threshold = _calculate(p_fa, sigma2)
     if threshold.ndim == 0:
         threshold = threshold.item()
-
-    return threshold
-
-
-def _threshold_square_law(
-    p_fa: npt.NDArray[np.float64],
-    sigma2: npt.NDArray[np.float64],
-) -> npt.NDArray[np.float64]:
-    nu = 2  # Degrees of freedom
-    h0_theory = scipy.stats.chi2(nu, scale=sigma2 / 2)
-    threshold = h0_theory.isf(p_fa)
 
     return threshold
