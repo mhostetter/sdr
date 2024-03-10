@@ -36,7 +36,7 @@ def h0_theory(
 
             snr = 5  # Signal-to-noise ratio in dB
             sigma2 = 1  # Noise variance
-            p_fa = 1e-3  # Probability of false alarm
+            p_fa = 1e-1  # Probability of false alarm
 
         .. ipython:: python
 
