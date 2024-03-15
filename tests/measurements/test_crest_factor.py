@@ -2,6 +2,7 @@
 References:
     - https://en.wikipedia.org/wiki/Crest_factor
 """
+
 import numpy as np
 import pytest
 

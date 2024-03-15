@@ -1,6 +1,7 @@
 """
 A module containing functions for calculating the capacity of a channel.
 """
+
 from __future__ import annotations
 
 import numpy as np

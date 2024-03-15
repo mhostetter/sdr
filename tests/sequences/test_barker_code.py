@@ -7,6 +7,7 @@ MATLAB:
         disp(barker())
     end
 """
+
 import numpy as np
 import pytest
 

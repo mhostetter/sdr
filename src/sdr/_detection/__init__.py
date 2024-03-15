@@ -1,6 +1,7 @@
 """
 A subpackage for various detection algorithms.
 """
+
 from ._approximation import *
 from ._coherent_integration import *
 from ._correlator import *

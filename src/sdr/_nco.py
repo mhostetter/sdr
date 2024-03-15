@@ -1,6 +1,7 @@
 """
 A module for numerically-controlled oscillators (NCO).
 """
+
 from __future__ import annotations
 
 from typing import Any, overload
@@ -123,8 +124,7 @@ class NCO:
         freq: npt.NDArray[np.float64] | None = None,
         phase: npt.NDArray[np.float64] | None = None,
         output: Literal["phase", "sine", "cosine"] = "complex-exp",
-    ) -> npt.NDArray[np.float64]:
-        ...
+    ) -> npt.NDArray[np.float64]: ...
 
     @overload
     def __call__(
@@ -132,8 +132,7 @@ class NCO:
         freq: npt.NDArray[np.float64] | None = None,
         phase: npt.NDArray[np.float64] | None = None,
         output: Literal["complex-exp"] = "complex-exp",
-    ) -> npt.NDArray[np.complex128]:
-        ...
+    ) -> npt.NDArray[np.complex128]: ...
 
     def __call__(
         self,

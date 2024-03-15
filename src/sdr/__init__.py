@@ -1,6 +1,7 @@
 """
 A Python package for software-defined radio (SDR) applications.
 """
+
 try:
     from ._version import __version__, __version_tuple__
 except ModuleNotFoundError:  # pragma: no cover

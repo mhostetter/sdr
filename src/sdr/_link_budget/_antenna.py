@@ -1,6 +1,7 @@
 """
 A module containing functions for calculating antenna gains.
 """
+
 from __future__ import annotations
 
 import numpy as np

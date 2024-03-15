@@ -1,6 +1,7 @@
 """
 A module containing various correlation sequences.
 """
+
 from __future__ import annotations
 
 import math
@@ -21,18 +22,15 @@ from ._maximal import m_sequence
 
 
 @overload
-def barker_code(length: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]:
-    ...
+def barker_code(length: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]: ...
 
 
 @overload
-def barker_code(length: int, output: Literal["field"]) -> galois.FieldArray:
-    ...
+def barker_code(length: int, output: Literal["field"]) -> galois.FieldArray: ...
 
 
 @overload
-def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]:
-    ...
+def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]: ...
 
 
 @export
@@ -110,18 +108,15 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
 
 
 @overload
-def hadamard_code(length: int, index: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]:
-    ...
+def hadamard_code(length: int, index: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]: ...
 
 
 @overload
-def hadamard_code(length: int, index: int, output: Literal["field"]) -> galois.FieldArray:
-    ...
+def hadamard_code(length: int, index: int, output: Literal["field"]) -> galois.FieldArray: ...
 
 
 @overload
-def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]:
-    ...
+def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]: ...
 
 
 @export
@@ -242,18 +237,15 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
 
 @overload
-def walsh_code(length: int, index: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]:
-    ...
+def walsh_code(length: int, index: int, output: Literal["binary"] = "binary") -> npt.NDArray[np.int_]: ...
 
 
 @overload
-def walsh_code(length: int, index: int, output: Literal["field"]) -> galois.FieldArray:
-    ...
+def walsh_code(length: int, index: int, output: Literal["field"]) -> galois.FieldArray: ...
 
 
 @overload
-def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]:
-    ...
+def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArray[np.float64]: ...
 
 
 @export
@@ -384,22 +376,19 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 @overload
 def kasami_code(
     length: int, index: int | tuple[int, int] = 0, poly: PolyLike | None = None, output: Literal["binary"] = "binary"
-) -> npt.NDArray[np.int_]:
-    ...
+) -> npt.NDArray[np.int_]: ...
 
 
 @overload
 def kasami_code(
     length: int, index: int | tuple[int, int] = 0, poly: PolyLike | None = None, output: Literal["field"] = "binary"
-) -> galois.FieldArray:
-    ...
+) -> galois.FieldArray: ...
 
 
 @overload
 def kasami_code(
     length: int, index: int | tuple[int, int] = 0, poly: PolyLike | None = None, output: Literal["bipolar"] = "binary"
-) -> npt.NDArray[np.float64]:
-    ...
+) -> npt.NDArray[np.float64]: ...
 
 
 @export

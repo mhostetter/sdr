@@ -1,6 +1,7 @@
 """
 A subpackage for various plotting functions using :obj:`matplotlib`.
 """
+
 from ._detection import *
 from ._filter import *
 from ._modulation import *

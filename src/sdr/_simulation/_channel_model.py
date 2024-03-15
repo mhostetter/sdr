@@ -1,6 +1,7 @@
 """
 A module containing various channel models.
 """
+
 from __future__ import annotations
 
 from typing import Any, overload
@@ -307,12 +308,10 @@ class BinarySymmetricChannel(Channel):
         self._p = p
 
     @overload
-    def __call__(self, x: int) -> int:
-        ...
+    def __call__(self, x: int) -> int: ...
 
     @overload
-    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
-        ...
+    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]: ...
 
     def __call__(self, x: Any) -> Any:
         r"""
@@ -447,12 +446,10 @@ class BinaryErasureChannel(Channel):
         self._p = p
 
     @overload
-    def __call__(self, x: int) -> int:
-        ...
+    def __call__(self, x: int) -> int: ...
 
     @overload
-    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
-        ...
+    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]: ...
 
     def __call__(self, x: Any) -> Any:
         r"""
@@ -605,12 +602,10 @@ class DiscreteMemorylessChannel(Channel):
         self._Y = Y
 
     @overload
-    def __call__(self, x: int) -> int:
-        ...
+    def __call__(self, x: int) -> int: ...
 
     @overload
-    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
-        ...
+    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]: ...
 
     def __call__(self, x: Any) -> Any:
         r"""

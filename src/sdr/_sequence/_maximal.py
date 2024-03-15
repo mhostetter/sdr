@@ -1,6 +1,7 @@
 """
 A module containing maximal-length sequences.
 """
+
 from __future__ import annotations
 
 from typing import Any, overload
@@ -23,8 +24,7 @@ def m_sequence(
     poly: PolyLike | None = None,
     index: int = 1,
     output: Literal["decimal"] = "decimal",
-) -> npt.NDArray[np.int_]:
-    ...
+) -> npt.NDArray[np.int_]: ...
 
 
 @overload
@@ -33,8 +33,7 @@ def m_sequence(
     poly: PolyLike | None = None,
     index: int = 1,
     output: Literal["field"] = "decimal",
-) -> galois.FieldArray:
-    ...
+) -> galois.FieldArray: ...
 
 
 @overload
@@ -43,8 +42,7 @@ def m_sequence(
     poly: PolyLike | None = None,
     index: int = 1,
     output: Literal["bipolar"] = "decimal",
-) -> npt.NDArray[np.float64]:
-    ...
+) -> npt.NDArray[np.float64]: ...
 
 
 @export

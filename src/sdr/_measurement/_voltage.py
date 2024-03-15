@@ -1,6 +1,7 @@
 """
 A module containing various voltage measurement functions.
 """
+
 from __future__ import annotations
 
 import numpy as np

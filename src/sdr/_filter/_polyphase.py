@@ -1,6 +1,7 @@
 """
 A module for interpolating finite impulse response (FIR) filters.
 """
+
 from __future__ import annotations
 
 import numpy as np

@@ -7,6 +7,7 @@ MATLAB:
         disp(ber')
     end
 """
+
 import numpy as np
 
 import sdr

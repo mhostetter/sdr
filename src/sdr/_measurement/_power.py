@@ -1,6 +1,7 @@
 """
 A module containing various power measurement functions.
 """
+
 from __future__ import annotations
 
 import numpy as np

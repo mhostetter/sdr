@@ -1,6 +1,7 @@
 """
 A module for discrete-time loop filters.
 """
+
 from __future__ import annotations
 
 import numpy.typing as npt

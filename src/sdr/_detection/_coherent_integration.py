@@ -1,6 +1,7 @@
 """
 A module containing functions related to coherent integration.
 """
+
 from __future__ import annotations
 
 import numpy as np

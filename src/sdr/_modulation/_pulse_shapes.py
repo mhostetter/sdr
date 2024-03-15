@@ -1,6 +1,7 @@
 """
 A module containing various discrete-time pulse shapes.
 """
+
 from __future__ import annotations
 
 import numpy as np

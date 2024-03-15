@@ -1,6 +1,7 @@
 """
 A module containing a base class for linear phase/amplitude modulations.
 """
+
 from __future__ import annotations
 
 import abc

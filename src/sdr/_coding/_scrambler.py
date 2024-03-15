@@ -1,6 +1,7 @@
 """
 A module containing various scramblers.
 """
+
 from __future__ import annotations
 
 import numpy as np

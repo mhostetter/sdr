@@ -1,6 +1,7 @@
 """
 A module containing classes for minimum-shift keying (MSK) modulations.
 """
+
 from __future__ import annotations
 
 import numpy.typing as npt

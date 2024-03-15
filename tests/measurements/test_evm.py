@@ -39,6 +39,7 @@ MATLAB:
     [rms perc] = evm(x, x_hat);
     perc'
 """
+
 import numpy as np
 import pytest
 

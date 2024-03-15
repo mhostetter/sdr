@@ -1,6 +1,7 @@
 """
 A module that contains various conversion functions.
 """
+
 from __future__ import annotations
 
 import numpy as np
