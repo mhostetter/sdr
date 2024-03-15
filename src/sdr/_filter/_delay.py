@@ -1,6 +1,7 @@
 """
 A module for fractional delay filters.
 """
+
 from __future__ import annotations
 
 import numpy as np

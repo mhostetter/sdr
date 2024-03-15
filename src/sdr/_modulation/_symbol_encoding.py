@@ -1,6 +1,7 @@
 """
 A module containing functions for various symbol coding schemes.
 """
+
 from __future__ import annotations
 
 import numpy as np

@@ -1,6 +1,7 @@
 """
 A module for designing finite impulse response (FIR) multirate filters.
 """
+
 from __future__ import annotations
 
 import math

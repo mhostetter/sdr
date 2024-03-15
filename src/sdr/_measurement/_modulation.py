@@ -1,6 +1,7 @@
 """
 A module containing measurement functions related to modulation.
 """
+
 from __future__ import annotations
 
 import numpy as np

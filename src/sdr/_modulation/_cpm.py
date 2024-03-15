@@ -1,6 +1,7 @@
 """
 A module containing a base class for continuous phase modulations.
 """
+
 from __future__ import annotations
 
 import abc

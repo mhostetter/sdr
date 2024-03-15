@@ -1,6 +1,7 @@
 """
 A module containing various spectral estimation techniques.
 """
+
 from __future__ import annotations
 
 import matplotlib.pyplot as plt

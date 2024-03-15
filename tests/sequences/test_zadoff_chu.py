@@ -9,6 +9,7 @@ MATLAB:
         disp(seq)
     end
 """
+
 import numpy as np
 import pytest
 

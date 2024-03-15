@@ -1,6 +1,7 @@
 """
 A module containing a class that implements an energy detector.
 """
+
 from __future__ import annotations
 
 import numpy as np

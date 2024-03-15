@@ -1,6 +1,7 @@
 """
 A pytest module to test the Galois LFSR implementation.
 """
+
 import galois
 import numpy as np
 import pytest

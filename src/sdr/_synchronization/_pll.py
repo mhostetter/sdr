@@ -1,6 +1,7 @@
 """
 A module for closed-loop phase-locked loops (PLLs) analysis.
 """
+
 from __future__ import annotations
 
 import numpy as np

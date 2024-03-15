@@ -1,6 +1,7 @@
 """
 A module for infinite impulse response (IIR) filters.
 """
+
 from __future__ import annotations
 
 from typing import Any, overload
@@ -240,24 +241,21 @@ class IIR:
         sample_rate: float = 1.0,
         whole: bool = True,
         decades: int | None = None,
-    ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.complex128]]:
-        ...
+    ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.complex128]]: ...
 
     @overload
     def frequency_response(
         self,
         freqs: float | npt.NDArray[np.float64],
         sample_rate: float = 1.0,
-    ) -> complex:
-        ...
+    ) -> complex: ...
 
     @overload
     def frequency_response(
         self,
         freqs: npt.NDArray[np.float64],
         sample_rate: float = 1.0,
-    ) -> npt.NDArray[np.complex128]:
-        ...
+    ) -> npt.NDArray[np.complex128]: ...
 
     def frequency_response(
         self,

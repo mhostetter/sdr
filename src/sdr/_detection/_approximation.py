@@ -1,6 +1,7 @@
 """
 A module containing functions to approximate detection performance.
 """
+
 from __future__ import annotations
 
 import numpy as np

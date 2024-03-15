@@ -1,6 +1,7 @@
 """
 A module to determine axis units.
 """
+
 from __future__ import annotations
 
 import numpy as np

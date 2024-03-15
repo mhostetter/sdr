@@ -1,6 +1,7 @@
 """
 A module containing time-domain plotting functions.
 """
+
 from __future__ import annotations
 
 from typing import overload
@@ -26,8 +27,7 @@ def time_domain(
     offset: float = 0,
     diff: Literal["color", "line"] = "color",
     **kwargs,
-):
-    ...
+): ...
 
 
 @overload
@@ -38,8 +38,7 @@ def time_domain(
     sample_rate: float | None = None,
     diff: Literal["color", "line"] = "color",
     **kwargs,
-):
-    ...
+): ...
 
 
 @export

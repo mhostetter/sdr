@@ -1,6 +1,7 @@
 """
 A module containing conversions between binary and bipolar sequences.
 """
+
 from __future__ import annotations
 
 import galois

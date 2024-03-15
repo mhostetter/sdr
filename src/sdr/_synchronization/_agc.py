@@ -1,6 +1,7 @@
 """
 A module for signal amplitude synchronization.
 """
+
 from __future__ import annotations
 
 import numba

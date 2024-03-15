@@ -1,6 +1,7 @@
 """
 A module containing a class for measuring bit error rates (BER) or symbol error rates (SER).
 """
+
 from __future__ import annotations
 
 import numpy as np
