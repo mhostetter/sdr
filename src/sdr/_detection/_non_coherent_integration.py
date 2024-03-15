@@ -140,6 +140,9 @@ def _non_coherent_gain_in(n_nc: float, snr: float, p_fa: float) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the input of the non-coherent integrator.
     """
+    if n_nc == 1:
+        return 0.0
+
     sigma2 = 1  # Noise variance (power), sigma^2
     A2 = linear(snr) * sigma2  # Signal power, A^2
 
@@ -176,6 +179,9 @@ def _non_coherent_gain_out(n_nc: float, snr: float, p_fa: float) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the output of the non-coherent integrator.
     """
+    if n_nc == 1:
+        return 0.0
+
     sigma2 = 1  # Noise variance (power), sigma^2
     A2 = linear(snr) * sigma2  # Signal power, A^2
 
