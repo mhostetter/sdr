@@ -4,6 +4,8 @@ A module containing functions related to coherent integration.
 
 from __future__ import annotations
 
+from typing import Any, overload
+
 import numpy as np
 import numpy.typing as npt
 import scipy.optimize
@@ -12,23 +14,44 @@ from .._conversion import db
 from .._helper import export
 
 
+@overload
+def coherent_gain(n_c: npt.ArrayLike) -> npt.NDArray[np.float64]: ...
+
+
+@overload
+def coherent_gain(time: npt.ArrayLike, bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]: ...
+
+
 @export
-def coherent_gain(
-    n_c: npt.ArrayLike,
-) -> npt.NDArray[np.float64]:
+def coherent_gain(*args) -> Any:  # noqa: D417
     r"""
-    Computes the SNR improvement by coherently integrating $N_C$ samples.
+    Computes the SNR improvement by coherent integration.
 
     Arguments:
         n_c: The number of samples $N_C$ to coherently integrate.
+        time: The coherent integration time $T_C$ in seconds.
+        bandwidth: The coherent integration bandwidth $B_C$ in Hz.
 
     Returns:
         The coherent gain $G_C$ in dB.
 
     Notes:
-        $$y[m] = \sum_{n=0}^{N_C-1} x[m-n]$$
+        The signal $x[n]$ is coherently integrated over $N_C$ samples to produce the output $y[n]$.
+
+        $$y[n] = \sum_{m=0}^{N_C-1} x[n-m]$$
+
+        The coherent integration gain is the reduction in SNR of $x[n]$ compared to $y[n]$, such that both signals
+        have the same detection performance.
+
         $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_C$$
-        $$G_C = 10 \log_{10} N_C$$
+
+        The coherent integration gain is the time-bandwidth product
+
+        $$G_C = 10 \log_{10} (T_C B_C) .$$
+
+        If the signal bandwidth equals the sample rate, the coherent gain is simply
+
+        $$G_C = 10 \log_{10} N_C .$$
 
     Examples:
         See the :ref:`coherent-integration` example.
@@ -58,11 +81,34 @@ def coherent_gain(
     Group:
         detection-coherent-integration
     """
+    if len(args) == 1:
+        n_c = args[0]
+        return _coherent_gain_samples(n_c)
+    elif len(args) == 2:
+        time, bandwidth = args
+        return _coherent_gain_time_bandwidth(time, bandwidth)
+    else:
+        raise ValueError(f"Invalid number of arguments: {len(args)}.")
+
+
+def _coherent_gain_samples(n_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
     n_c = np.asarray(n_c)
     if np.any(n_c < 1):
         raise ValueError(f"Argument 'n_c' must be at least 1, not {n_c}.")
 
     return db(n_c)
+
+
+def _coherent_gain_time_bandwidth(time: npt.ArrayLike, bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
+    time = np.asarray(time)
+    bandwidth = np.asarray(bandwidth)
+
+    if np.any(time < 0):
+        raise ValueError(f"Argument 'time' must be non-negative, not {time}.")
+    if np.any(bandwidth < 0):
+        raise ValueError(f"Argument 'bandwidth' must be non-negative, not {bandwidth}.")
+
+    return db(time * bandwidth)
 
 
 @export
