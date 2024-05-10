@@ -79,22 +79,35 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float32]:
 
 @export
 def coherent_gain_loss(
-    integration_time: npt.ArrayLike,
-    freq_offset: npt.ArrayLike,
+    time: npt.ArrayLike,
+    freq: npt.ArrayLike,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the coherent gain loss (CGL) as a function of the given integration time and frequency offset.
+    Computes the coherent gain loss (CGL) given a time or frequency offset.
 
     Arguments:
-        integration_time: The coherent integration time $T_c$ in seconds.
-        freq_offset: The frequency offset $\Delta f$ in Hz.
+        time: The coherent integration time $T_C$ or time offset in $\Delta t$ in seconds.
+        freq: The frequency offset $\Delta f$ or signal bandwidth $B_C$ in Hz.
 
     Returns:
         The coherent gain loss (CGL) in dB.
 
     Notes:
-        $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right)$$
-        $$\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}$$
+        Coherent gain loss is the reduction in SNR due to time or frequency offsets during coherent integration.
+        These losses are similar to scalloping loss.
+
+        The coherent gain loss of a signal integrated for $T_C$ seconds with a frequency offset of $\Delta f$ Hz is
+
+        $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right) ,$$
+
+        where the sinc function is defined as
+
+        $$\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x} .$$
+
+        The coherent gain loss of a signal with bandwidth $B_C$ Hz with a detection time offset of $\Delta t$ seconds
+        is
+
+        $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( \Delta t B_C \right) \right) .$$
 
     Examples:
         Compute the coherent gain loss for an integration time of 1 ms and a frequency offset of 235 Hz.
@@ -102,6 +115,29 @@ def coherent_gain_loss(
         .. ipython:: python
 
             sdr.coherent_gain_loss(1e-3, 235)
+
+        Compute the coherent gain loss for a signal with 1 MHz of bandwidth and a detection time offset of 0.25 μs.
+
+        .. ipython:: python
+
+            sdr.coherent_gain_loss(0.25e-6, 1e6)
+
+        Compute the coherent gain loss of a signal detected between two DFT bins. This is commonly referred as the DFT
+        scalloping loss. Suppose the DFT is 1 ms long, then the bin spacing is 1 kHz. The worst case scalloping loss
+        occurs at 1/2 bin spacing, or 500 Hz in this example. Scalloping loss of 3.9 dB for an unwindowed DFT is a
+        well-known figure.
+
+        .. ipython:: python
+
+            t_c = 1e-3  # s
+            sdr.coherent_gain_loss(t_c, 1 / t_c / 2)
+
+        If the DFT is zero-padded to twice the length, the scalloping loss is reduced to 0.9 dB.
+
+        .. ipython:: python
+
+            t_c = 1e-3  # s
+            sdr.coherent_gain_loss(t_c, 1 / (2 * t_c) / 2)
 
         Compute the coherent gain loss for an integration time of 1 ms and an array of frequency offsets.
 
@@ -146,13 +182,15 @@ def coherent_gain_loss(
     Group:
         detection-coherent-integration
     """
-    integration_time = np.asarray(integration_time)
-    freq_offset = np.asarray(freq_offset)
+    time = np.asarray(time)
+    freq = np.asarray(freq)
 
-    if np.any(integration_time < 0):
-        raise ValueError(f"Argument 'integration_time' must be non-negative, not {integration_time}.")
+    if np.any(time < 0):
+        raise ValueError(f"Argument 'time' must be non-negative, not {time}.")
+    if np.any(freq < 0):
+        raise ValueError(f"Argument 'freq' must be non-negative, not {freq}.")
 
-    cgl = np.sinc(integration_time * freq_offset) ** 2
+    cgl = np.sinc(time * freq) ** 2
     cgl_db = -1 * db(cgl)
 
     return cgl_db
