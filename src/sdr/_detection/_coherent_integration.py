@@ -4,8 +4,6 @@ A module containing functions related to coherent integration.
 
 from __future__ import annotations
 
-from typing import Any, overload
-
 import numpy as np
 import numpy.typing as npt
 import scipy.optimize
@@ -14,23 +12,14 @@ from .._conversion import db
 from .._helper import export
 
 
-@overload
-def coherent_gain(n_c: npt.ArrayLike) -> npt.NDArray[np.float64]: ...
-
-
-@overload
-def coherent_gain(time: npt.ArrayLike, bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]: ...
-
-
 @export
-def coherent_gain(*args) -> Any:  # noqa: D417
+def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float32]:
     r"""
     Computes the SNR improvement by coherent integration.
 
     Arguments:
-        n_c: The number of samples $N_C$ to coherently integrate.
-        time: The coherent integration time $T_C$ in seconds.
-        bandwidth: The coherent integration bandwidth $B_C$ in Hz.
+        time_bandwidth: The time-bandwidth product $T_C B_C$ in seconds-Hz (unitless). If the signal bandwidth equals
+            the sample rate, the argument equals the number of samples $N_C$ to coherently integrate.
 
     Returns:
         The coherent gain $G_C$ in dB.
@@ -81,34 +70,11 @@ def coherent_gain(*args) -> Any:  # noqa: D417
     Group:
         detection-coherent-integration
     """
-    if len(args) == 1:
-        n_c = args[0]
-        return _coherent_gain_samples(n_c)
-    elif len(args) == 2:
-        time, bandwidth = args
-        return _coherent_gain_time_bandwidth(time, bandwidth)
-    else:
-        raise ValueError(f"Invalid number of arguments: {len(args)}.")
+    time_bandwidth = np.asarray(time_bandwidth)
+    if np.any(time_bandwidth < 1):
+        raise ValueError(f"Argument 'time_bandwidth' must be at least 1, not {time_bandwidth}.")
 
-
-def _coherent_gain_samples(n_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
-    n_c = np.asarray(n_c)
-    if np.any(n_c < 1):
-        raise ValueError(f"Argument 'n_c' must be at least 1, not {n_c}.")
-
-    return db(n_c)
-
-
-def _coherent_gain_time_bandwidth(time: npt.ArrayLike, bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
-    time = np.asarray(time)
-    bandwidth = np.asarray(bandwidth)
-
-    if np.any(time < 0):
-        raise ValueError(f"Argument 'time' must be non-negative, not {time}.")
-    if np.any(bandwidth < 0):
-        raise ValueError(f"Argument 'bandwidth' must be non-negative, not {bandwidth}.")
-
-    return db(time * bandwidth)
+    return db(time_bandwidth)
 
 
 @export
