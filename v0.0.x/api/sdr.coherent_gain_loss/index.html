@@ -8068,12 +8068,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.coherent_gain_loss (Python function) — Computes the coherent gain loss (CGL) as a function of the given integration time and frequency offset." class="md-ellipsis">coherent_<wbr>gain_<wbr>loss</span>
+          <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.coherent_gain_loss (Python function) — Computes the coherent gain loss (CGL) given a time or frequency offset." class="md-ellipsis">coherent_<wbr>gain_<wbr>loss</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.coherent_gain_loss (Python function) — Computes the coherent gain loss (CGL) as a function of the given integration time and frequency offset." class="md-ellipsis">coherent_<wbr>gain_<wbr>loss</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.coherent_gain_loss (Python function) — Computes the coherent gain loss (CGL) given a time or frequency offset." class="md-ellipsis">coherent_<wbr>gain_<wbr>loss</span>
       </a>
       
         
@@ -8099,15 +8099,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-integration_time" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.integration_time (Python parameter) — The coherent integration time $T_c$ in seconds." class="md-ellipsis">integration_<wbr>time</span>
+  <a href="#p-time" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.time (Python parameter) — The coherent integration time $T_C$ or time offset in $Delta t$ in seconds." class="md-ellipsis">time</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#p-freq_offset" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.freq_offset (Python parameter) — The frequency offset $Delta f$ in Hz." class="md-ellipsis">freq_<wbr>offset</span>
+  <a href="#p-freq" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.freq (Python parameter) — The frequency offset $Delta f$ or signal bandwidth $B_C$ in Hz." class="md-ellipsis">freq</span>
   </a>
   
 </li>
@@ -13658,15 +13658,15 @@ You're not viewing the latest version.
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#p-integration_time" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.integration_time (Python parameter) — The coherent integration time $T_c$ in seconds." class="md-ellipsis">integration_<wbr>time</span>
+  <a href="#p-time" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.time (Python parameter) — The coherent integration time $T_C$ or time offset in $Delta t$ in seconds." class="md-ellipsis">time</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#p-freq_offset" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.freq_offset (Python parameter) — The frequency offset $Delta f$ in Hz." class="md-ellipsis">freq_<wbr>offset</span>
+  <a href="#p-freq" class="md-nav__link">
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain_loss.freq (Python parameter) — The frequency offset $Delta f$ or signal bandwidth $B_C$ in Hz." class="md-ellipsis">freq</span>
   </a>
   
 </li>
@@ -13713,14 +13713,14 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">coherent_gain_loss</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-integration_time" title="sdr.coherent_gain_loss.integration_time (Python parameter) — The coherent integration time $T_c$ in seconds."><span class="n"><span class="pre">integration_time</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-freq_offset" title="sdr.coherent_gain_loss.freq_offset (Python parameter) — The frequency offset $Delta f$ in Hz."><span class="n"><span class="pre">freq_offset</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Computes the coherent gain loss (CGL) as a function of the given integration time and frequency offset.</p>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">coherent_gain_loss</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-time" title="sdr.coherent_gain_loss.time (Python parameter) — The coherent integration time $T_C$ or time offset in $Delta t$ in seconds."><span class="n"><span class="pre">time</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-freq" title="sdr.coherent_gain_loss.freq (Python parameter) — The frequency offset $Delta f$ or signal bandwidth $B_C$ in Hz."><span class="n"><span class="pre">freq</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Computes the coherent gain loss (CGL) given a time or frequency offset.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-integration_time"><span class="n sig-name">integration_time</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-integration_time" title="Permalink to this definition">¶</a></dt><dd><p>The coherent integration time <span class="math notranslate nohighlight">\(T_c\)</span> in seconds.</p>
+<dt id="p-time"><span class="n sig-name">time</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-time" title="Permalink to this definition">¶</a></dt><dd><p>The coherent integration time <span class="math notranslate nohighlight">\(T_C\)</span> or time offset in <span class="math notranslate nohighlight">\(\Delta t\)</span> in seconds.</p>
 </dd>
-<dt id="p-freq_offset"><span class="n sig-name">freq_offset</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-freq_offset" title="Permalink to this definition">¶</a></dt><dd><p>The frequency offset <span class="math notranslate nohighlight">\(\Delta f\)</span> in Hz.</p>
+<dt id="p-freq"><span class="n sig-name">freq</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-freq" title="Permalink to this definition">¶</a></dt><dd><p>The frequency offset <span class="math notranslate nohighlight">\(\Delta f\)</span> or signal bandwidth <span class="math notranslate nohighlight">\(B_C\)</span> in Hz.</p>
 </dd>
 </dl>
 </dd>
@@ -13729,11 +13729,20 @@ You're not viewing the latest version.
 </dd>
 </dl>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p>Coherent gain loss is the reduction in SNR due to time or frequency offsets during coherent integration.
+These losses are similar to scalloping loss.</p>
+<p>The coherent gain loss of a signal integrated for <span class="math notranslate nohighlight">\(T_C\)</span> seconds with a frequency offset of <span class="math notranslate nohighlight">\(\Delta f\)</span> Hz is</p>
 <p><div class="math notranslate nohighlight">
-\[\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right)\]</div>
-
-<div class="math notranslate nohighlight">
-\[\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x}\]</div>
+\[\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right) ,\]</div>
+</p>
+<p>where the sinc function is defined as</p>
+<p><div class="math notranslate nohighlight">
+\[\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x} .\]</div>
+</p>
+<p>The coherent gain loss of a signal with bandwidth <span class="math notranslate nohighlight">\(B_C\)</span> Hz with a detection time offset of <span class="math notranslate nohighlight">\(\Delta t\)</span> seconds
+is</p>
+<p><div class="math notranslate nohighlight">
+\[\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( \Delta t B_C \right) \right) .\]</div>
 </p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Compute the coherent gain loss for an integration time of 1 ms and a frequency offset of 235 Hz.</p>
@@ -13741,17 +13750,39 @@ You're not viewing the latest version.
 <span class="gh">Out[1]: </span><span class="go">0.8038919141626675</span>
 </code></pre></div>
 </div>
+<p>Compute the coherent gain loss for a signal with 1 MHz of bandwidth and a detection time offset of 0.25 μs.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">0.25e-6</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">)</span>
+<span class="gh">Out[2]: </span><span class="go">0.9120975839632417</span>
+</code></pre></div>
+</div>
+<p>Compute the coherent gain loss of a signal detected between two DFT bins. This is commonly referred as the DFT
+scalloping loss. Suppose the DFT is 1 ms long, then the bin spacing is 1 kHz. The worst case scalloping loss
+occurs at 1/2 bin spacing, or 500 Hz in this example. Scalloping loss of 3.9 dB for an unwindowed DFT is a
+well-known figure.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">t_c</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># s</span>
+
+<span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t_c</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">t_c</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gh">Out[4]: </span><span class="go">3.9223975406030527</span>
+</code></pre></div>
+</div>
+<p>If the DFT is zero-padded to twice the length, the scalloping loss is reduced to 0.9 dB.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">t_c</span> <span class="o">=</span> <span class="mf">1e-3</span>  <span class="c1"># s</span>
+
+<span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t_c</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">t_c</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gh">Out[6]: </span><span class="go">0.9120975839632417</span>
+</code></pre></div>
+</div>
 <p>Compute the coherent gain loss for an integration time of 1 ms and an array of frequency offsets.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">])</span>
-<span class="gh">Out[2]: </span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">])</span>
+<span class="gh">Out[7]: </span>
 <span class="go">array([-0.        ,  0.14335017,  0.57922366,  1.32626966,  2.42007077,</span>
 <span class="go">        3.92239754])</span>
 </code></pre></div>
 </div>
 <p>Plot coherent gain loss as a function of frequency offset.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [8]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2e3</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
 
-<span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">0.5e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;0.5 ms&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;1 ms&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="mf">2e-3</span><span class="p">,</span> <span class="n">f</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;2 ms&quot;</span><span class="p">);</span> \
@@ -13765,18 +13796,18 @@ You're not viewing the latest version.
 </div>
 <img alt="../../_images/sdr_coherent_gain_loss_1.png" src="../../_images/sdr_coherent_gain_loss_1.png" />
 <p>Plot coherent gain loss as a function of integration time.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [10]: </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mi">1001</span><span class="p">)</span>
 
-<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;100 Hz&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;200 Hz&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;400 Hz&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Frequency offset&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">55</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Integration time (ms)&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss (dB)&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss for various frequency offsets&quot;</span><span class="p">);</span>
-<span class="gp">   ...: </span>
+<span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;100 Hz&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;200 Hz&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mf">1e3</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain_loss</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="mi">400</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;400 Hz&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Frequency offset&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">55</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Integration time (ms)&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss (dB)&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Coherent gain loss for various frequency offsets&quot;</span><span class="p">);</span>
+<span class="gp">   ....: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_coherent_gain_loss_2.png" src="../../_images/sdr_coherent_gain_loss_2.png" />
