@@ -245,11 +245,14 @@ def h0_theory(
 
 
 @export
+@lru_cache
 def h1_theory(
     snr: float,
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
     complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
 ) -> scipy.stats.rv_continuous:
     r"""
     Computes the statistical distribution under the alternative hypothesis $\mathcal{H}_1$.
@@ -265,6 +268,9 @@ def h1_theory(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
+        n_c: The number of samples to coherently integrate $N_C$.
+        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
 
     Returns:
         The distribution under the alternative hypothesis $\mathcal{H}_1$.
@@ -427,6 +433,21 @@ def h1_theory(
     if sigma2 <= 0:
         raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
 
+    if not isinstance(n_c, int):
+        raise TypeError(f"Argument `n_c` must be an integer, not {n_c}.")
+    if not n_c >= 1:
+        raise ValueError(f"Argument `n_c` must be positive, not {n_c}.")
+
+    if not isinstance(n_nc, (int, type(None))):
+        raise TypeError(f"Argument `n_nc` must be an integer or None, not {n_nc}.")
+    if n_nc is not None:
+        if detector == "coherent":
+            raise ValueError(f"Argument `n_nc` is not supported for the coherent detector, not {n_nc}.")
+        if not n_nc >= 1:
+            raise ValueError(f"Argument `n_nc` must be positive, not {n_nc}.")
+    else:
+        n_nc = 1
+
     A2 = linear(snr) * sigma2  # Signal power, A^2
     if complex:
         nu = 2  # Degrees of freedom
@@ -434,6 +455,11 @@ def h1_theory(
     else:
         nu = 1
         sigma2_per = sigma2
+
+    # Coherent integration scales the signal power by n_c^2 and the noise power by n_c
+    A2 *= n_c**2
+    sigma2_per *= n_c
+
     lambda_ = A2 / (sigma2_per)  # Non-centrality parameter
 
     if detector == "coherent":
@@ -442,11 +468,13 @@ def h1_theory(
         if complex:
             # Rice distribution has 2 degrees of freedom
             h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+            h1 = _sum_distribution(h1, n_nc)
         else:
             # Folded normal distribution has 1 degree of freedom
             h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+            h1 = _sum_distribution(h1, n_nc)
     elif detector == "square-law":
-        h1 = scipy.stats.ncx2(nu, lambda_, scale=sigma2_per)
+        h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
     else:
         raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
