@@ -545,11 +545,14 @@ def _clt_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.stats
 
 
 @export
+@lru_cache
 def p_d(
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
     complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical probability of detection $P_{D}$.
@@ -565,6 +568,9 @@ def p_d(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
+        n_c: The number of samples to coherently integrate $N_C$.
+        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
 
     Returns:
         The probability of detection $P_D$ in $(0, 1)$.
@@ -681,8 +687,8 @@ def p_d(
 
     @np.vectorize
     def _calculate(snr, p_fa):
-        h1 = h1_theory(snr, sigma2, detector, complex)
-        gamma = threshold(p_fa, sigma2, detector, complex)
+        h1 = h1_theory(snr, sigma2, detector, complex, n_c, n_nc)
+        gamma = threshold(p_fa, sigma2, detector, complex, n_c, n_nc)
         return h1.sf(gamma)
 
     p_d = _calculate(snr, p_fa)
