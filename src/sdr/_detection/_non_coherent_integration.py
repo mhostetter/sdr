@@ -74,7 +74,7 @@ def non_coherent_gain(
         .. ipython:: python
 
             plt.figure(); \
-            n = np.logspace(0, 3, 51); \
+            n = np.logspace(0, 3, 51).astype(int); \
             plt.semilogx(n, sdr.coherent_gain(n), color="k");
             for snr in np.arange(-30, 40, 10):
                 plt.semilogx(n, sdr.non_coherent_gain(n, snr, snr_ref="input"), label=f"{snr} dB")
@@ -89,7 +89,7 @@ def non_coherent_gain(
         .. ipython:: python
 
             plt.figure(); \
-            n = np.logspace(0, 3, 51); \
+            n = np.logspace(0, 3, 51).astype(int); \
             plt.semilogx(n, sdr.coherent_gain(n), color="k");
             for snr in np.arange(-30, 40, 10):
                 plt.semilogx(n, sdr.non_coherent_gain(n, snr, snr_ref="output"), label=f"{snr} dB")
@@ -224,8 +224,7 @@ def _extrapolate_non_coherent_gain(
         if np.isnan(g_nc[i]):
             key = (snr[i], p_fa[i])
             if key not in interpolators:
-                n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 7)
-                n_nc_array = np.around(n_nc_array).astype(int)  # Combinations must be an integer
+                n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 7).astype(int)
                 g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], detector, complex, snr_ref, False)
 
                 idxs = ~np.isnan(g_nc_array)
