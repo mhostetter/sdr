@@ -10,8 +10,9 @@ import scipy.interpolate
 import scipy.optimize
 from typing_extensions import Literal
 
-from .._conversion import db, linear
+from .._conversion import db
 from .._helper import export
+from ._theory import p_d
 
 
 @export
@@ -110,7 +111,7 @@ def non_coherent_gain(
     Group:
         detection-non-coherent-integration
     """
-    n_nc = np.asarray(n_nc)
+    n_nc = np.asarray(n_nc, dtype=object)  # Downstream functions want a Python int
     snr = np.asarray(snr)
     p_fa = np.asarray(p_fa)
 
@@ -136,79 +137,49 @@ def non_coherent_gain(
 
 
 @np.vectorize
-def _non_coherent_gain_in(n_nc: float, snr: float, p_fa: float) -> float:
+def _non_coherent_gain_in(n_nc: int, snr: float, p_fa: float) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the input of the non-coherent integrator.
     """
     if n_nc == 1:
         return 0.0
 
-    sigma2 = 1  # Noise variance (power), sigma^2
-    A2 = linear(snr) * sigma2  # Signal power, A^2
-
-    # Determine the threshold that yields the desired probability of false alarm. Then compute the probability
-    # of detection for the specified SNR.
-    df = 2 * n_nc  # Degrees of freedom
-    threshold_in = scipy.stats.chi2.isf(p_fa, df, scale=sigma2 / 2)
-    nc = n_nc * A2 / (sigma2 / 2)  # Non-centrality parameter
-    p_d_in = scipy.stats.ncx2.sf(threshold_in, df, nc, scale=sigma2 / 2)
-
+    # Compute the theoretical p_d with the following input SNR and n_nc non-coherent combinations
+    p_d_in = p_d(snr, p_fa, detector="square-law", complex=True, n_c=1, n_nc=n_nc)
     if p_d_in == 1:
         return np.nan
 
-    # Determine the threshold, without non-coherent integration, that yields the same probability of false alarm.
-    df = 2 * 1  # Degrees of freedom
-    threshold_out = scipy.stats.chi2.isf(p_fa, df, scale=sigma2 / 2)
-
-    def root_eq(A2_db):
-        nc = 1 * linear(A2_db) / (sigma2 / 2)  # Non-centrality parameter
-        p_d_out = scipy.stats.ncx2.sf(threshold_out, df, nc, scale=sigma2 / 2)
+    def root_eq(snr_out: float):
+        p_d_out = p_d(snr_out, p_fa, detector="square-law", complex=True, n_c=1, n_nc=1)
         return db(p_d_out) - db(p_d_in)  # Use logarithms for numerical stability
 
-    # Determine the input signal power that, without non-coherent integration, yields the same probability of detection.
-    # We use logarithms for power for numerical stability.
-    A2_db = db(A2)
-    A2_db_c = scipy.optimize.brentq(root_eq, A2_db, A2_db + db(n_nc))
-    g_nc = A2_db_c - A2_db
+    # Determine the output SNR that, without non-coherent integration, yields the same probability of detection.
+    snr_out = scipy.optimize.brentq(root_eq, snr, snr + db(n_nc))  # Bounds are 0 to coherent gain
+    g_nc = snr_out - snr
 
     return g_nc
 
 
 @np.vectorize
-def _non_coherent_gain_out(n_nc: float, snr: float, p_fa: float) -> float:
+def _non_coherent_gain_out(n_nc: int, snr: float, p_fa: float) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the output of the non-coherent integrator.
     """
     if n_nc == 1:
         return 0.0
 
-    sigma2 = 1  # Noise variance (power), sigma^2
-    A2 = linear(snr) * sigma2  # Signal power, A^2
-
-    # Determine the threshold that yields the desired probability of false alarm. Then compute the probability
-    # of detection for the specified SNR.
-    df = 2 * 1  # Degrees of freedom
-    threshold_in = scipy.stats.chi2.isf(p_fa, df, scale=sigma2 / 2)
-    nc = 1 * A2 / (sigma2 / 2)  # Non-centrality parameter
-    p_d_in = scipy.stats.ncx2.sf(threshold_in, df, nc, scale=sigma2 / 2)
-
-    if p_d_in == 1:
+    # Compute the theoretical p_d with the following output SNR and no non-coherent combinations
+    p_d_out = p_d(snr, p_fa, detector="square-law", complex=True, n_c=1, n_nc=1)
+    if p_d_out == 1:
         return np.nan
 
-    # Determine the threshold, after non-coherent integration, that yields the same probability of false alarm.
-    df = 2 * n_nc  # Degrees of freedom
-    threshold_out = scipy.stats.chi2.isf(p_fa, df, scale=sigma2 / 2)
-
-    def root_eq(A2_db):
-        nc = n_nc * linear(A2_db) / (sigma2 / 2)  # Non-centrality parameter
-        p_d_out = scipy.stats.ncx2.sf(threshold_out, df, nc, scale=sigma2 / 2)
+    def root_eq(snr_in: float):
+        p_d_in = p_d(snr_in, p_fa, detector="square-law", complex=True, n_c=1, n_nc=n_nc)
         return db(p_d_out) - db(p_d_in)  # Use logarithms for numerical stability
 
-    # Determine the input signal power that, after non-coherent integration, yields the same probability of detection.
-    # We use logarithms for power for numerical stability.
-    A2_db = db(A2)
-    A2_db_nc = scipy.optimize.brentq(root_eq, A2_db - db(n_nc), A2_db)
-    g_nc = A2_db - A2_db_nc
+    # Determine the input SNR that, after non-coherent integration, yields the same probability of detection.
+    snr_in = scipy.optimize.brentq(root_eq, snr - db(n_nc), snr)  # Bounds are 0 to coherent gain
+    g_nc = snr - snr_in
 
     return g_nc
 
@@ -234,7 +205,8 @@ def _extrapolate_non_coherent_gain(
         if np.isnan(g_nc[i]):
             key = (snr[i], p_fa[i])
             if key not in interpolators:
-                n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 5)
+                n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 7)
+                n_nc_array = np.around(n_nc_array).astype(int)  # Combinations must be an integer
                 g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], snr_ref, False)
 
                 idxs = ~np.isnan(g_nc_array)
