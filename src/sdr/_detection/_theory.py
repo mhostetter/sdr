@@ -699,11 +699,14 @@ def p_d(
 
 
 @export
+@lru_cache
 def p_fa(
     threshold: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
     complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical probability of false alarm $P_{FA}$.
@@ -719,6 +722,9 @@ def p_fa(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
+        n_c: The number of samples to coherently integrate $N_C$.
+        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
 
     Returns:
         The probability of false alarm $P_{FA}$ in $(0, 1)$.
@@ -782,7 +788,7 @@ def p_fa(
 
     @np.vectorize
     def _calculate(threshold, sigma2):
-        h0 = h0_theory(sigma2, detector, complex)
+        h0 = h0_theory(sigma2, detector, complex, n_c, n_nc)
         return h0.sf(threshold)
 
     p_fa = _calculate(threshold, sigma2)
