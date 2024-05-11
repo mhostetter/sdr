@@ -799,11 +799,14 @@ def p_fa(
 
 
 @export
+@lru_cache
 def threshold(
     p_fa: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
     complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
     Computes the theoretical detection threshold $\gamma$.
@@ -819,6 +822,9 @@ def threshold(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
+        n_c: The number of samples to coherently integrate $N_C$.
+        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
 
     Returns:
         The detection threshold $\gamma$ in linear units.
@@ -882,7 +888,7 @@ def threshold(
 
     @np.vectorize
     def _calculate(p_fa, sigma2):
-        h0 = h0_theory(sigma2, detector, complex)
+        h0 = h0_theory(sigma2, detector, complex, n_c, n_nc)
         return h0.isf(p_fa)
 
     threshold = _calculate(p_fa, sigma2)
