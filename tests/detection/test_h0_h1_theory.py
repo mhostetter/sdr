@@ -23,9 +23,10 @@ def test_pdfs(detector, complex, n_c, n_nc):
     h0 = sdr.h0_theory(sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
     h1 = sdr.h1_theory(snr, sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
 
-    # p_fa = 1e-1
-    # threshold = sdr.threshold(p_fa, sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
-    # p_d = sdr.p_d(snr, p_fa, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
+    # Given a false rate, determine the detection threshold and theoretical probability of detection
+    p_fa = 1e-1
+    threshold = sdr.threshold(p_fa, sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
+    p_d = sdr.p_d(snr, p_fa, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
 
     # Simulate the input signal x for the h0 and h1 hypotheses
     trials = 10_000 * n_c * (1 if n_nc is None else n_nc)
@@ -57,6 +58,10 @@ def test_pdfs(detector, complex, n_c, n_nc):
         z_h0 = np.sum(z_h0.reshape((-1, n_nc)), axis=-1)
         z_h1 = np.sum(z_h1.reshape((-1, n_nc)), axis=-1)
 
+    # Measure probability of false alarm and detection
+    p_fa_meas = np.mean(z_h0 > threshold)
+    p_d_meas = np.mean(z_h1 > threshold)
+
     try:
         if h0.mean() == 0:
             assert np.mean(z_h0) == pytest.approx(h0.mean(), abs=0.1)
@@ -66,6 +71,9 @@ def test_pdfs(detector, complex, n_c, n_nc):
 
         assert np.mean(z_h1) == pytest.approx(h1.mean(), rel=0.1)
         assert np.var(z_h1) == pytest.approx(h1.var(), rel=0.1)
+
+        assert p_fa_meas == pytest.approx(p_fa, rel=0.1)
+        assert p_d_meas == pytest.approx(p_d, rel=0.1)
     except AssertionError as e:
         # import matplotlib.pyplot as plt
 
