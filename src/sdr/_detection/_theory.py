@@ -4,6 +4,8 @@ A module containing functions to compute theoretical detection performance.
 
 from __future__ import annotations
 
+from functools import lru_cache
+
 import numpy as np
 import numpy.typing as npt
 import scipy.stats
@@ -14,10 +16,13 @@ from .._helper import export
 
 
 @export
+@lru_cache
 def h0_theory(
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
     complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
 ) -> scipy.stats.rv_continuous:
     r"""
     Computes the statistical distribution under the null hypothesis $\mathcal{H}_0$.
@@ -32,6 +37,9 @@ def h0_theory(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
+        n_c: The number of samples to coherently integrate $N_C$.
+        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
 
     Returns:
         The distribution under the null hypothesis $\mathcal{H}_0$.
@@ -193,6 +201,21 @@ def h0_theory(
     if sigma2 <= 0:
         raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
 
+    if not isinstance(n_c, int):
+        raise TypeError(f"Argument `n_c` must be an integer, not {n_c}.")
+    if not n_c >= 1:
+        raise ValueError(f"Argument `n_c` must be positive, not {n_c}.")
+
+    if not isinstance(n_nc, (int, type(None))):
+        raise TypeError(f"Argument `n_nc` must be an integer or None, not {n_nc}.")
+    if n_nc is not None:
+        if detector == "coherent":
+            raise ValueError(f"Argument `n_nc` is not supported for the coherent detector, not {n_nc}.")
+        if not n_nc >= 1:
+            raise ValueError(f"Argument `n_nc` must be positive, not {n_nc}.")
+    else:
+        n_nc = 1
+
     if complex:
         nu = 2  # Degrees of freedom
         sigma2_per = sigma2 / 2  # Noise variance per dimension
@@ -200,12 +223,21 @@ def h0_theory(
         nu = 1
         sigma2_per = sigma2
 
+    # Coherent integration scales the noise power by n_c
+    sigma2_per *= n_c
+
     if detector == "coherent":
         h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
     elif detector == "linear":
         h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
+        if complex:
+            h0 = _sum_distribution(h0, n_nc)
+            # h0 = _fit_summed_distribution(h0, n_nc, scipy.stats.norm if n_nc >= 5 else scipy.stats.weibull_min)
+        else:
+            h0 = _sum_distribution(h0, n_nc)
+            # h0 = _fit_summed_distribution(h0, n_nc, scipy.stats.norm if n_nc >= 10 else scipy.stats.weibull_min)
     elif detector == "square-law":
-        h0 = scipy.stats.chi2(nu, scale=sigma2_per)
+        h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
     else:
         raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
@@ -419,6 +451,69 @@ def h1_theory(
         raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
 
     return h1
+
+
+def _sum_distribution(
+    dist: scipy.stats.rv_continuous, n_nc: int
+) -> scipy.stats.rv_histogram | scipy.stats.rv_continuous:
+    r"""
+    Sums a distribution `n_nc` times.
+
+    This function will compute n_nc - 1 convolutions of the base distribution. If n_nc is larger than 40,
+    using the Central Limit Theorem, this function will estimate the summed distribution as a Gaussian.
+
+    Arguments:
+        dist: The distribution to sum.
+        n_nc: The number of times to sum the distribution.
+
+    Returns:
+        The summed distribution.
+    """
+    if n_nc == 1:
+        return dist
+    elif n_nc <= 40:
+        return _convolve_distribution(dist, n_nc)
+    else:
+        return _clt_distribution(dist, n_nc)
+
+
+def _convolve_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.stats.rv_histogram:
+    # Determine mean and standard deviation of base distribution
+    mu, sigma2 = dist.stats()
+    sigma = np.sqrt(sigma2)
+
+    # NOTE: I was only able to get this to work with x starting at 0. When the x axis start below zero,
+    # I couldn't get the correct offset for the convolved x axis.
+
+    # Compute the PDF of the base distribution for 10 standard deviations about the mean
+    pdf_x = np.linspace(0, mu + 10 * sigma, 1_001)
+    pdf_y = dist.pdf(pdf_x)
+
+    # The PDF of the sum of n_nc independent random variables is the convolution of the PDF of the base distribution
+    x = pdf_x.copy()  # The convolved x axis
+    y = pdf_y.copy()  # The convolved y values
+    dx = np.mean(np.diff(x))
+    for _ in range(n_nc - 1):
+        y = np.convolve(y, pdf_y, "full")
+        x = np.arange(y.size) * dx + x[0]
+    y /= y.sum() * dx
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    x = np.append(x, x[-1] + dx)
+    x -= dx / 2
+
+    return scipy.stats.rv_histogram((y, x))
+
+
+def _clt_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.stats.rv_continuous:
+    # Determine mean and variance of base distribution
+    mu, sigma2 = dist.stats()
+
+    # The sum of n_nc independent random variables is normally distributed (if n_nc is sufficiently large)
+    mu_sum = n_nc * mu
+    sigma2_sum = n_nc * sigma2
+
+    return scipy.stats.norm(mu_sum, np.sqrt(sigma2_sum))
 
 
 @export
