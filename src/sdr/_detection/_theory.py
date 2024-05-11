@@ -545,7 +545,6 @@ def _clt_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.stats
 
 
 @export
-@lru_cache
 def p_d(
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike,
@@ -699,7 +698,6 @@ def p_d(
 
 
 @export
-@lru_cache
 def p_fa(
     threshold: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
@@ -799,7 +797,6 @@ def p_fa(
 
 
 @export
-@lru_cache
 def threshold(
     p_fa: npt.ArrayLike,
     sigma2: npt.ArrayLike = 1,
