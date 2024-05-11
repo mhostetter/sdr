@@ -20,6 +20,8 @@ def non_coherent_gain(
     n_nc: npt.ArrayLike,
     snr: npt.ArrayLike,
     p_fa: npt.ArrayLike = 1e-6,
+    detector: Literal["linear", "square-law"] = "square-law",
+    complex: bool = True,
     snr_ref: Literal["input", "output"] = "input",
     extrapolate: bool = True,
 ) -> npt.NDArray[np.float64]:
@@ -31,6 +33,14 @@ def non_coherent_gain(
         snr: The reference SNR in dB.
         p_fa: The desired probability of false alarm $P_{FA}$. This is used to compute the necessary thresholds before
             and after integration. The non-coherent gain is slightly affected by the $P_{FA}$.
+        detector: The detector type.
+
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
         snr_ref: The SNR reference.
 
             - `"input"`: The SNR is referenced at the input of the non-coherent integrator.
@@ -123,12 +133,12 @@ def non_coherent_gain(
         raise ValueError(f"Argument 'snr_ref' must be either 'input' or 'output', not {snr_ref}.")
 
     if snr_ref == "input":
-        g_nc = _non_coherent_gain_in(n_nc, snr, p_fa)
+        g_nc = _non_coherent_gain_in(n_nc, snr, p_fa, detector, complex)
     else:
-        g_nc = _non_coherent_gain_out(n_nc, snr, p_fa)
+        g_nc = _non_coherent_gain_out(n_nc, snr, p_fa, detector, complex)
 
     if extrapolate:
-        g_nc = _extrapolate_non_coherent_gain(n_nc, snr, p_fa, g_nc, snr_ref)
+        g_nc = _extrapolate_non_coherent_gain(n_nc, snr, p_fa, g_nc, snr_ref, detector, complex)
 
     if g_nc.ndim == 0:
         g_nc = float(g_nc)
@@ -137,7 +147,9 @@ def non_coherent_gain(
 
 
 @np.vectorize
-def _non_coherent_gain_in(n_nc: int, snr: float, p_fa: float) -> float:
+def _non_coherent_gain_in(
+    n_nc: int, snr: float, p_fa: float, detector: Literal["linear", "square-law"], complex: bool
+) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the input of the non-coherent integrator.
     """
@@ -145,12 +157,12 @@ def _non_coherent_gain_in(n_nc: int, snr: float, p_fa: float) -> float:
         return 0.0
 
     # Compute the theoretical p_d with the following input SNR and n_nc non-coherent combinations
-    p_d_in = p_d(snr, p_fa, detector="square-law", complex=True, n_c=1, n_nc=n_nc)
+    p_d_in = p_d(snr, p_fa, detector=detector, complex=complex, n_c=1, n_nc=n_nc)
     if p_d_in == 1:
         return np.nan
 
     def root_eq(snr_out: float):
-        p_d_out = p_d(snr_out, p_fa, detector="square-law", complex=True, n_c=1, n_nc=1)
+        p_d_out = p_d(snr_out, p_fa, detector=detector, complex=complex, n_c=1, n_nc=1)
         return db(p_d_out) - db(p_d_in)  # Use logarithms for numerical stability
 
     # Determine the output SNR that, without non-coherent integration, yields the same probability of detection.
@@ -161,7 +173,9 @@ def _non_coherent_gain_in(n_nc: int, snr: float, p_fa: float) -> float:
 
 
 @np.vectorize
-def _non_coherent_gain_out(n_nc: int, snr: float, p_fa: float) -> float:
+def _non_coherent_gain_out(
+    n_nc: int, snr: float, p_fa: float, detector: Literal["linear", "square-law"], complex: bool
+) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the output of the non-coherent integrator.
     """
@@ -169,12 +183,12 @@ def _non_coherent_gain_out(n_nc: int, snr: float, p_fa: float) -> float:
         return 0.0
 
     # Compute the theoretical p_d with the following output SNR and no non-coherent combinations
-    p_d_out = p_d(snr, p_fa, detector="square-law", complex=True, n_c=1, n_nc=1)
+    p_d_out = p_d(snr, p_fa, detector=detector, complex=complex, n_c=1, n_nc=1)
     if p_d_out == 1:
         return np.nan
 
     def root_eq(snr_in: float):
-        p_d_in = p_d(snr_in, p_fa, detector="square-law", complex=True, n_c=1, n_nc=n_nc)
+        p_d_in = p_d(snr_in, p_fa, detector=detector, complex=complex, n_c=1, n_nc=n_nc)
         return db(p_d_out) - db(p_d_in)  # Use logarithms for numerical stability
 
     # Determine the input SNR that, after non-coherent integration, yields the same probability of detection.
@@ -190,7 +204,12 @@ def _extrapolate_non_coherent_gain(
     p_fa: npt.NDArray[np.float64],
     g_nc: npt.NDArray[np.float64],
     snr_ref: Literal["input", "output"],
+    detector: Literal["linear", "square-law"],
+    complex: bool,
 ) -> npt.NDArray[np.float64]:
+    """
+    Computes the non-coherent gain for smaller n_nc values and extrapolates.
+    """
     # Broadcast arrays to the same shape and then flatten
     n_nc, snr, p_fa, g_nc = np.broadcast_arrays(n_nc, snr, p_fa, g_nc)
     shape = g_nc.shape
@@ -207,7 +226,7 @@ def _extrapolate_non_coherent_gain(
             if key not in interpolators:
                 n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 7)
                 n_nc_array = np.around(n_nc_array).astype(int)  # Combinations must be an integer
-                g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], snr_ref, False)
+                g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], detector, complex, snr_ref, False)
 
                 idxs = ~np.isnan(g_nc_array)
                 n_nc_array = n_nc_array[idxs]
