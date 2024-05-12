@@ -126,7 +126,7 @@ def detector_pdfs(
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     See Also:
-        sdr.h0, sdr.h1_theory, sdr.threshold
+        sdr.h0, sdr.h1, sdr.threshold
 
     Example:
         .. ipython:: python
@@ -139,7 +139,7 @@ def detector_pdfs(
 
             detector = "linear"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector); \
+            h1 = sdr.h1(snr, sigma2, detector); \
             threshold = sdr.threshold(p_fa, sigma2, detector)
 
             @savefig sdr_plot_detector_pdfs_1.png

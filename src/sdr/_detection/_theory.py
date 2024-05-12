@@ -66,7 +66,7 @@ def h0(
 
             detector = "coherent"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
             p_d = sdr.p_d(snr, p_fa, detector); p_d
@@ -86,7 +86,7 @@ def h0(
 
             detector = "linear"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
             p_d = sdr.p_d(snr, p_fa, detector); p_d
@@ -106,7 +106,7 @@ def h0(
 
             detector = "square-law"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
             p_d = sdr.p_d(snr, p_fa, detector); p_d
@@ -135,7 +135,7 @@ def h0(
 
             detector = "coherent"; \
             h0 = sdr.h0(sigma2, detector, complex=False); \
-            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+            h1 = sdr.h1(snr, sigma2, detector, complex=False)
 
             threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
             p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
@@ -155,7 +155,7 @@ def h0(
 
             detector = "linear"; \
             h0 = sdr.h0(sigma2, detector, complex=False); \
-            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+            h1 = sdr.h1(snr, sigma2, detector, complex=False)
 
             threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
             p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
@@ -175,7 +175,7 @@ def h0(
 
             detector = "square-law"; \
             h0 = sdr.h0(sigma2, detector, complex=False); \
-            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+            h1 = sdr.h1(snr, sigma2, detector, complex=False)
 
             threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
             p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
@@ -250,7 +250,7 @@ def _h0(
 
 
 @export
-def h1_theory(
+def h1(
     snr: float,
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
@@ -302,7 +302,7 @@ def h1_theory(
 
             detector = "coherent"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
             p_d = sdr.p_d(snr, p_fa, detector); p_d
@@ -310,7 +310,7 @@ def h1_theory(
             z_h0 = np.real(x_h0); \
             z_h1 = np.real(x_h1)
 
-            @savefig sdr_h1_theory_1.png
+            @savefig sdr_h1_1.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -322,7 +322,7 @@ def h1_theory(
 
             detector = "linear"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
             p_d = sdr.p_d(snr, p_fa, detector); p_d
@@ -330,7 +330,7 @@ def h1_theory(
             z_h0 = np.abs(x_h0); \
             z_h1 = np.abs(x_h1)
 
-            @savefig sdr_h1_theory_2.png
+            @savefig sdr_h1_2.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -342,7 +342,7 @@ def h1_theory(
 
             detector = "square-law"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
             p_d = sdr.p_d(snr, p_fa, detector); p_d
@@ -350,7 +350,7 @@ def h1_theory(
             z_h0 = np.abs(x_h0) ** 2; \
             z_h1 = np.abs(x_h1) ** 2
 
-            @savefig sdr_h1_theory_3.png
+            @savefig sdr_h1_3.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -371,7 +371,7 @@ def h1_theory(
 
             detector = "coherent"; \
             h0 = sdr.h0(sigma2, detector, complex=False); \
-            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+            h1 = sdr.h1(snr, sigma2, detector, complex=False)
 
             threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
             p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
@@ -379,7 +379,7 @@ def h1_theory(
             z_h0 = np.real(x_h0); \
             z_h1 = np.real(x_h1)
 
-            @savefig sdr_h1_theory_4.png
+            @savefig sdr_h1_4.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -391,7 +391,7 @@ def h1_theory(
 
             detector = "linear"; \
             h0 = sdr.h0(sigma2, detector, complex=False); \
-            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+            h1 = sdr.h1(snr, sigma2, detector, complex=False)
 
             threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
             p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
@@ -399,7 +399,7 @@ def h1_theory(
             z_h0 = np.abs(x_h0); \
             z_h1 = np.abs(x_h1)
 
-            @savefig sdr_h1_theory_5.png
+            @savefig sdr_h1_5.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -411,7 +411,7 @@ def h1_theory(
 
             detector = "square-law"; \
             h0 = sdr.h0(sigma2, detector, complex=False); \
-            h1 = sdr.h1_theory(snr, sigma2, detector, complex=False)
+            h1 = sdr.h1(snr, sigma2, detector, complex=False)
 
             threshold = sdr.threshold(p_fa, sigma2, detector, complex=False); threshold
             p_d = sdr.p_d(snr, p_fa, detector, complex=False); p_d
@@ -419,7 +419,7 @@ def h1_theory(
             z_h0 = np.abs(x_h0) ** 2; \
             z_h1 = np.abs(x_h1) ** 2
 
-            @savefig sdr_h1_theory_6.png
+            @savefig sdr_h1_6.png
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold, x=np.linspace(0, 15, 1001)); \
             plt.gca().set_prop_cycle(None); \
@@ -432,11 +432,11 @@ def h1_theory(
     Group:
         detection-theory
     """
-    return _h1_theory(snr, sigma2, detector, complex, n_c, n_nc)
+    return _h1(snr, sigma2, detector, complex, n_c, n_nc)
 
 
 @lru_cache
-def _h1_theory(
+def _h1(
     snr: float,
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
@@ -609,7 +609,7 @@ def p_d(
 
             detector = "coherent"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
 
@@ -627,7 +627,7 @@ def p_d(
 
             detector = "linear"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
 
@@ -645,7 +645,7 @@ def p_d(
 
             detector = "square-law"; \
             h0 = sdr.h0(sigma2, detector); \
-            h1 = sdr.h1_theory(snr, sigma2, detector)
+            h1 = sdr.h1(snr, sigma2, detector)
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
 
@@ -707,7 +707,7 @@ def p_d(
 
     @np.vectorize
     def _calculate(snr, p_fa):
-        h1 = h1_theory(snr, sigma2, detector, complex, n_c, n_nc)
+        h1 = _h1(snr, sigma2, detector, complex, n_c, n_nc)
         gamma = threshold(p_fa, sigma2, detector, complex, n_c, n_nc)
         return h1.sf(gamma)
 
