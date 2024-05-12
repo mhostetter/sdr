@@ -13,7 +13,7 @@ from .._helper import export
 @export
 def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1) -> npt.NDArray[np.float64]:
     r"""
-    Estimates the minimum required single-sample SNR.
+    Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$.
 
     Arguments:
         p_d: The desired probability of detection $P_D$ in $(0, 1)$.
@@ -22,6 +22,9 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
 
     Returns:
         The minimum required single-sample SNR $\gamma$ in dB.
+
+    See Also:
+        sdr.min_snr
 
     Notes:
         This function implements Albersheim's equation, given by
@@ -42,27 +45,38 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
         $$0.1 \leq P_D \leq 0.9$$
         $$1 \le N_{NC} \le 8096 .$$
 
+        Albersheim's equation approximates a linear detector. However, the difference between linear and square-law
+        detectors in minimal, so Albersheim's equation finds wide use.
+
     References:
         - https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf
         - https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf
         - https://www.mathworks.com/help/phased/ref/albersheim.html
 
     Examples:
+        Compare the theoretical minimum required SNR using a linear detector in :func:`sdr.min_snr` with the
+        estimated minimum required SNR using Albersheim's approximation in :func:`sdr.albersheim`.
+
         .. ipython:: python
 
             p_d = 0.9; \
-            p_fa = np.logspace(-7, -3, 100)
+            p_fa = np.logspace(-12, -1, 21)
 
             @savefig sdr_albersheim_1.png
             plt.figure(); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=1), label="$N_{NC}$ = 1"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=2), label="$N_{NC}$ = 2"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=10), label="$N_{NC}$ = 10"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=20), label="$N_{NC}$ = 20"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=1), linestyle="--"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=2), linestyle="--"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=10), linestyle="--"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=20), linestyle="--"); \
+            plt.gca().set_prop_cycle(None); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="linear"), label="$N_{NC}$ = 1"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="linear"), label="$N_{NC}$ = 2"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=10, detector="linear"), label="$N_{NC}$ = 10"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=20, detector="linear"), label="$N_{NC}$ = 20"); \
             plt.legend(); \
             plt.xlabel("Probability of false alarm, $P_{FA}$"); \
             plt.ylabel("Minimum required SNR (dB)"); \
-            plt.title(f"Estimated minimum required SNR across non-coherent combinations for $P_D = 0.9$\nusing Albersheim's approximation");
+            plt.title("Minimum required SNR across non-coherent combinations for $P_D = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
 
     Group:
         detection-approximation
