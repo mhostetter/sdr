@@ -914,3 +914,94 @@ def threshold(
         threshold = threshold.item()
 
     return threshold
+
+
+@export
+def min_snr(
+    p_d: npt.ArrayLike,
+    p_fa: npt.ArrayLike,
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
+) -> npt.NDArray[np.float64]:
+    r"""
+    Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$.
+
+    Arguments:
+        p_d: The desired probability of detection $P_{D}$ in $(0, 1)$.
+        p_fa: The probability of false alarm $P_{FA}$ in $(0, 1)$.
+        detector: The detector type.
+
+            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
+            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
+            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
+        n_c: The number of samples to coherently integrate $N_C$.
+        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
+
+    Returns:
+        The minimum signal-to-noise ratio (SNR) required to achieve the desired $P_{D}$.
+
+    See Also:
+        sdr.albersheim
+
+    Examples:
+        Compare the theoretical minimum required SNR using a linear detector in :func:`sdr.min_snr` with the
+        estimated minimum required SNR using Albersheim's approximation in :func:`sdr.albersheim`.
+
+        .. ipython:: python
+
+            p_d = 0.9; \
+            p_fa = np.logspace(-12, -1, 21)
+
+            @savefig sdr_min_snr_1.png
+            plt.figure(); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=1), linestyle="--"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=2), linestyle="--"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=10), linestyle="--"); \
+            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=20), linestyle="--"); \
+            plt.gca().set_prop_cycle(None); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="linear"), label="$N_{NC}$ = 1"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="linear"), label="$N_{NC}$ = 2"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=10, detector="linear"), label="$N_{NC}$ = 10"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=20, detector="linear"), label="$N_{NC}$ = 20"); \
+            plt.legend(); \
+            plt.xlabel("Probability of false alarm, $P_{FA}$"); \
+            plt.ylabel("Minimum required SNR (dB)"); \
+            plt.title("Minimum required SNR across non-coherent combinations for $P_D = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
+
+    Group:
+        detection-theory
+    """
+    p_d = np.asarray(p_d)
+    p_fa = np.asarray(p_fa)
+
+    calc_p_d = globals()["p_d"]
+
+    @np.vectorize
+    def _calculate(p_d, p_fa):
+        def _objective(snr):
+            return p_d - calc_p_d(snr, p_fa, detector, complex, n_c, n_nc)
+
+        # The max SNR may return p_d = NaN. If so, we need to reduce the max value or optimize.brentq() will error.
+        min_snr = -100  # dB
+        max_snr = 30  # dB
+        while True:
+            if np.isnan(_objective(max_snr)):
+                max_snr -= 10
+            else:
+                break
+
+        snr = scipy.optimize.brentq(_objective, min_snr, max_snr)
+
+        return snr
+
+    snr = _calculate(p_d, p_fa)
+    if snr.ndim == 0:
+        snr = snr.item()
+
+    return snr
