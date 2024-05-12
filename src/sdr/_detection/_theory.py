@@ -950,6 +950,27 @@ def min_snr(
         sdr.albersheim
 
     Examples:
+        Compute the minimum required SNR to achieve $P_D = 0.9$ and $P_{FA} = 10^{-6}$ with a square-law detector.
+
+        .. ipython:: python
+
+            sdr.min_snr(0.9, 1e-6, detector="square-law")
+
+        Now suppose the signal is non-coherently integrated $N_{NC} = 10$ times. Notice the minimum required SNR
+        decreases, but less than 10 dB. This is because non-coherent integration is less efficient than coherent
+        integration.
+
+        .. ipython:: python
+
+            sdr.min_snr(0.9, 1e-6, detector="square-law", n_nc=10)
+
+        Now suppose the signal is coherently integrated by $N_C = 10$ samples before the square-law detector.
+        Notice the SNR now decreases by exactly 10 dB.
+
+        .. ipython:: python
+
+            sdr.min_snr(0.9, 1e-6, detector="square-law", n_c=10, n_nc=10)
+
         Compare the theoretical minimum required SNR using a linear detector in :func:`sdr.min_snr` with the
         estimated minimum required SNR using Albersheim's approximation in :func:`sdr.albersheim`.
 
