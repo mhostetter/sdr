@@ -484,6 +484,12 @@ def _h1_theory(
         if complex:
             # Rice distribution has 2 degrees of freedom
             h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+
+            # Sometimes this distribution has so much SNR that SciPy throws an error when computing the mean, etc.
+            # We need to check for that condition. If true, we cant approximate the distribution by a Gaussian,
+            # which doesn't suffer from the same error.
+            if np.isnan(h1.mean()):
+                h1 = scipy.stats.norm(np.sqrt(lambda_ * sigma2_per), scale=np.sqrt(sigma2_per))
         else:
             # Folded normal distribution has 1 degree of freedom
             h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
