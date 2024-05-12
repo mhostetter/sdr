@@ -20,7 +20,7 @@ def test_pdfs(detector, complex, n_c, n_nc):
         n_nc = None
 
     # Compute the theoretical distributions
-    h0 = sdr.h0_theory(sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
+    h0 = sdr.h0(sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
     h1 = sdr.h1_theory(snr, sigma2, detector=detector, complex=complex, n_c=n_c, n_nc=n_nc)
 
     # Given a false rate, determine the detection threshold and theoretical probability of detection
