@@ -7946,6 +7946,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_snr/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">min_<wbr>snr</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -7992,7 +8007,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.albersheim/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum required single-sample SNR." class="md-ellipsis">albersheim</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">albersheim</span>
       </a>
     </li>
   
@@ -8356,6 +8371,13 @@ You're not viewing the latest version.
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="../sdr.min_snr/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">min_<wbr>snr</span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -8371,7 +8393,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="../sdr.albersheim/" class="md-nav__link">
-    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum required single-sample SNR." class="md-ellipsis">albersheim</span>
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">albersheim</span>
   </a>
   
 </li>
@@ -13950,13 +13972,19 @@ You're not viewing the latest version.
 <dd><p>Computes the theoretical detection threshold <span class="math notranslate nohighlight">\(\gamma\)</span>.</p>
 </dd></dl>
 
+<dl class="py function summary objdesc">
+<dt class="sig sig-object highlight py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.min_snr/" title="sdr.min_snr (Python function) — Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">min_snr</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.min_snr/#p-p_d" title="sdr.min_snr.p_d (Python parameter) — The desired probability of detection $P_{D}$ in $(0, 1)$."><span class="n"><span class="pre">p_d</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.min_snr/#p-p_fa" title="sdr.min_snr.p_fa (Python parameter) — The probability of false alarm $P_{FA}$ in $(0, 1)$."><span class="n"><span class="pre">p_fa</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection <span class="math notranslate nohighlight">\(P_{D}\)</span>.</p>
+</dd></dl>
+
 <div class="toctree-wrapper compound">
 </div>
 <h2 id="approximated-performance">Approximated performance<a class="headerlink" href="#approximated-performance" title="Permalink to this heading">¶</a></h2>
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.albersheim/" title="sdr.albersheim (Python function) — Estimates the minimum required single-sample SNR."><span class="sig-name descname pseudo-toc-entry"><span class="pre">albersheim</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.albersheim/#p-p_d" title="sdr.albersheim.p_d (Python parameter) — The desired probability of detection $P_D$ in $(0, 1)$."><span class="n"><span class="pre">p_d</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.albersheim/#p-p_fa" title="sdr.albersheim.p_fa (Python parameter) — The desired probability of false alarm $P_{FA}$ in $(0, 1)$."><span class="n"><span class="pre">p_fa</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Estimates the minimum required single-sample SNR.</p>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.albersheim/" title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">albersheim</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.albersheim/#p-p_d" title="sdr.albersheim.p_d (Python parameter) — The desired probability of detection $P_D$ in $(0, 1)$."><span class="n"><span class="pre">p_d</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.albersheim/#p-p_fa" title="sdr.albersheim.p_fa (Python parameter) — The desired probability of false alarm $P_{FA}$ in $(0, 1)$."><span class="n"><span class="pre">p_fa</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection <span class="math notranslate nohighlight">\(P_{D}\)</span>.</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">

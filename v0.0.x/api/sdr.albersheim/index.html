@@ -7945,6 +7945,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_snr/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">min_<wbr>snr</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -8000,12 +8015,12 @@ You're not viewing the latest version.
       <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum required single-sample SNR." class="md-ellipsis">albersheim</span>
+          <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">albersheim</span>
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="#" class="md-nav__link md-nav__link--active">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum required single-sample SNR." class="md-ellipsis">albersheim</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">albersheim</span>
       </a>
       
         
@@ -13742,7 +13757,7 @@ You're not viewing the latest version.
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
 <span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">albersheim</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-p_d" title="sdr.albersheim.p_d (Python parameter) — The desired probability of detection $P_D$ in $(0, 1)$."><span class="n"><span class="pre">p_d</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-p_fa" title="sdr.albersheim.p_fa (Python parameter) — The desired probability of false alarm $P_{FA}$ in $(0, 1)$."><span class="n"><span class="pre">p_fa</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-n_nc" title="sdr.albersheim.n_nc (Python parameter) — The number of non-coherent combinations $N_{NC} ge 1$."><span class="n"><span class="pre">n_nc</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
-<dd><p>Estimates the minimum required single-sample SNR.</p>
+<dd><p>Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection <span class="math notranslate nohighlight">\(P_{D}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
@@ -13758,6 +13773,10 @@ You're not viewing the latest version.
 <dd class="field-even"><p>The minimum required single-sample SNR <span class="math notranslate nohighlight">\(\gamma\)</span> in dB.</p>
 </dd>
 </dl>
+<div class="seealso collapsible admonition">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../sdr.min_snr/" title="sdr.min_snr (Python function) — Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.min_snr</span></code></a></p>
+</div>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
 <p>This function implements Albersheim’s equation, given by</p>
 <p><div class="math notranslate nohighlight">
@@ -13783,6 +13802,8 @@ You're not viewing the latest version.
 <div class="math notranslate nohighlight">
 \[1 \le N_{NC} \le 8096 .\]</div>
 </p>
+<p>Albersheim’s equation approximates a linear detector. However, the difference between linear and square-law
+detectors in minimal, so Albersheim’s equation finds wide use.</p>
 <p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf">https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf</a></p></li>
@@ -13790,19 +13811,26 @@ You're not viewing the latest version.
 <li><p><a class="reference external" href="https://www.mathworks.com/help/phased/ref/albersheim.html">https://www.mathworks.com/help/phased/ref/albersheim.html</a></p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p>Compare the theoretical minimum required SNR using a linear detector in <a class="reference internal" href="../sdr.min_snr/" title="sdr.min_snr (Python function) — Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.min_snr()</span></code></a> with the
+estimated minimum required SNR using Albersheim’s approximation in <a class="reference internal" href="#" title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$."><code class="xref py py-func docutils literal notranslate"><span class="pre">sdr.albersheim()</span></code></a>.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">p_d</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">p_fa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">p_fa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 1&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 2&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 10&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 20&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_prop_cycle</span><span class="p">(</span><span class="kc">None</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 1&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 2&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 10&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$N_</span><span class="si">{NC}</span><span class="s2">$ = 20&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Probability of false alarm, $P_</span><span class="si">{FA}</span><span class="s2">$&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Minimum required SNR (dB)&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated minimum required SNR across non-coherent combinations for $P_D = 0.9$</span><span class="se">\n</span><span class="s2">using Albersheim&#39;s approximation&quot;</span><span class="p">);</span>
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Minimum required SNR across non-coherent combinations for $P_D = 0.9$</span><span class="se">\n</span><span class="s2">from theory (solid) and Albersheim&#39;s approximation (dashed)&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
@@ -13839,7 +13867,7 @@ You're not viewing the latest version.
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../sdr.threshold/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.threshold" rel="prev">
+        <a href="../sdr.min_snr/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.min_snr" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -13848,7 +13876,7 @@ You're not viewing the latest version.
               <span class="md-footer__direction">
                 Previous
               </span>
-              sdr.threshold
+              sdr.min_snr
             </div>
           </div>
         </a>
