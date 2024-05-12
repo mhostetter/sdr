@@ -957,14 +957,14 @@ def min_snr(
             sdr.min_snr(0.9, 1e-6, detector="square-law")
 
         Now suppose the signal is non-coherently integrated $N_{NC} = 10$ times. Notice the minimum required SNR
-        decreases, but less than 10 dB. This is because non-coherent integration is less efficient than coherent
+        decreases, but by less than 10 dB. This is because non-coherent integration is less efficient than coherent
         integration.
 
         .. ipython:: python
 
             sdr.min_snr(0.9, 1e-6, detector="square-law", n_nc=10)
 
-        Now suppose the signal is coherently integrated by $N_C = 10$ samples before the square-law detector.
+        Now suppose the signal is coherently integrated for $N_C = 10$ samples before the square-law detector.
         Notice the SNR now decreases by exactly 10 dB.
 
         .. ipython:: python
