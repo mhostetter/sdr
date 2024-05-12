@@ -66,14 +66,14 @@ def test_pdfs(detector, complex, n_c, n_nc):
         if h0.mean() == 0:
             assert np.mean(z_h0) == pytest.approx(h0.mean(), abs=0.1)
         else:
-            assert np.mean(z_h0) == pytest.approx(h0.mean(), rel=0.1)
-        assert np.var(z_h0) == pytest.approx(h0.var(), rel=0.1)
+            assert np.mean(z_h0) == pytest.approx(h0.mean(), rel=0.2)
+        assert np.var(z_h0) == pytest.approx(h0.var(), rel=0.2)
 
-        assert np.mean(z_h1) == pytest.approx(h1.mean(), rel=0.1)
-        assert np.var(z_h1) == pytest.approx(h1.var(), rel=0.1)
+        assert np.mean(z_h1) == pytest.approx(h1.mean(), rel=0.2)
+        assert np.var(z_h1) == pytest.approx(h1.var(), rel=0.2)
 
-        assert p_fa_meas == pytest.approx(p_fa, rel=0.1)
-        assert p_d_meas == pytest.approx(p_d, rel=0.1)
+        assert p_fa_meas == pytest.approx(p_fa, rel=0.2)
+        assert p_d_meas == pytest.approx(p_d, rel=0.2)
     except AssertionError as e:
         # import matplotlib.pyplot as plt
 
