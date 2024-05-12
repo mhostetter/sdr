@@ -16,7 +16,6 @@ from .._helper import export
 
 
 @export
-@lru_cache
 def h0_theory(
     sigma2: float = 1.0,
     detector: Literal["coherent", "linear", "square-law"] = "square-law",
@@ -197,6 +196,17 @@ def h0_theory(
     Group:
         detection-theory
     """
+    return _h0_theory(sigma2, detector, complex, n_c, n_nc)
+
+
+@lru_cache
+def _h0_theory(
+    sigma2: float = 1.0,
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
+) -> scipy.stats.rv_continuous:
     sigma2 = float(sigma2)
     if sigma2 <= 0:
         raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
@@ -230,12 +240,7 @@ def h0_theory(
         h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
     elif detector == "linear":
         h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
-        if complex:
-            h0 = _sum_distribution(h0, n_nc)
-            # h0 = _fit_summed_distribution(h0, n_nc, scipy.stats.norm if n_nc >= 5 else scipy.stats.weibull_min)
-        else:
-            h0 = _sum_distribution(h0, n_nc)
-            # h0 = _fit_summed_distribution(h0, n_nc, scipy.stats.norm if n_nc >= 10 else scipy.stats.weibull_min)
+        h0 = _sum_distribution(h0, n_nc)
     elif detector == "square-law":
         h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
     else:
@@ -245,7 +250,6 @@ def h0_theory(
 
 
 @export
-@lru_cache
 def h1_theory(
     snr: float,
     sigma2: float = 1.0,
@@ -428,6 +432,18 @@ def h1_theory(
     Group:
         detection-theory
     """
+    return _h1_theory(snr, sigma2, detector, complex, n_c, n_nc)
+
+
+@lru_cache
+def _h1_theory(
+    snr: float,
+    sigma2: float = 1.0,
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
+) -> scipy.stats.rv_continuous:
     snr = float(snr)
     sigma2 = float(sigma2)
     if sigma2 <= 0:
@@ -468,11 +484,10 @@ def h1_theory(
         if complex:
             # Rice distribution has 2 degrees of freedom
             h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
-            h1 = _sum_distribution(h1, n_nc)
         else:
             # Folded normal distribution has 1 degree of freedom
             h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
-            h1 = _sum_distribution(h1, n_nc)
+        h1 = _sum_distribution(h1, n_nc)
     elif detector == "square-law":
         h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
     else:
