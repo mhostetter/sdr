@@ -98,3 +98,84 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
     snr = -5 * np.log10(n_nc) + (6.2 + (4.54 / np.sqrt(n_nc + 0.44))) * np.log10(A + 0.12 * A * B + 1.7 * B)
 
     return snr
+
+
+@export
+def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt.NDArray[np.float64]:
+    r"""
+    Estimates the non-coherent integration gain for a given probability of detection $P_{D}$ and false alarm $P_{FA}$.
+
+    Arguments:
+        p_d: The desired probability of detection $P_D$ in $(0, 1)$.
+        p_fa: The desired probability of false alarm $P_{FA}$ in $(0, 1)$.
+        n_nc: The number of non-coherent combinations $N_{NC} \ge 1$.
+
+    Returns:
+        The non-coherent integration gain $G_{NC}$.
+
+    See Also:
+        sdr.non_coherent_gain
+
+    Notes:
+        This function implements Peebles' equation, given by
+
+        $$
+        G_{NC} = 6.79 \cdot \left(1 + 0.253 \cdot P_D\right) \cdot \left(1 + \frac{\log_{10}(1 / P_{FA})}{46.6}\right) \cdot \log_{10}(N_{NC}) \cdot \left(1 - 0.14 \cdot \log_{10}(N_{NC}) + 0.0183 \cdot (\log_{10}(n_{nc}))^2\right)
+        $$
+
+        The error in the estimated non-coherent integration gain is claimed to be less than 0.8 dB for
+
+        $$10^{-10} \leq P_{FA} \leq 10^{-2}$$
+        $$0.5 \leq P_D \leq 0.999$$
+        $$1 \le N_{NC} \le 100 .$$
+
+        Peebles' equation approximates the non-coherent integration gain using a square-law detector.
+
+    Examples:
+        Compare the theoretical non-coherent gain for a square-law detector against the approximation from Peebles's
+        equation. This comparison plots curves for various post-integration probabilities of detection.
+
+        .. ipython:: python
+
+            fig, ax = plt.subplots(1, 2, sharey=True); \
+            p_fa = 1e-8; \
+            n = np.linspace(1, 100, 101).astype(int);
+            for p_d in [0.5, 0.8, 0.95]:
+                snr = sdr.min_snr(p_d, p_fa, detector="square-law")
+                ax[0].plot(n, sdr.non_coherent_gain(n, snr, p_fa=p_fa, detector="square-law", snr_ref="output"), label=p_d)
+            ax[0].plot(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
+            ax[0].legend(title="$P_D$"); \
+            ax[0].set_xlabel("Number of samples, $N_{NC}$"); \
+            ax[0].set_ylabel("Non-coherent gain, $G_{NC}$"); \
+            ax[0].set_title("Theoretical");
+            for p_d in [0.5, 0.8, 0.95]:
+                ax[1].plot(n, sdr.peebles(p_d, p_fa, n), linestyle="--", label=p_d)
+            @savefig sdr_peebles_1.png
+            ax[1].plot(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
+            ax[1].legend(title="$P_D$"); \
+            ax[1].set_xlabel("Number of samples, $N_{NC}$"); \
+            ax[1].set_ylabel("Non-coherent gain, $G_{NC}$"); \
+            ax[1].set_title("Peebles's approximation");
+
+    Group:
+        detection-approximation
+    """
+    p_d = np.asarray(p_d)
+    if not np.all(np.logical_and(0 < p_d, p_d < 1)):
+        raise ValueError("Argument 'p_d' must have values in (0, 1).")
+
+    p_fa = np.asarray(p_fa)
+    if not np.all(np.logical_and(0 < p_fa, p_fa < 1)):
+        raise ValueError("Argument 'p_fa' must have values in (0, 1).")
+
+    n_nc = np.asarray(n_nc)
+    if not np.all(n_nc >= 1):
+        raise ValueError("Argument 'n_nc' must be at least 1.")
+
+    g_nc = 6.79  # dB
+    g_nc *= 1 + 0.253 * p_d
+    g_nc *= 1 + np.log10(1 / p_fa) / 46.6
+    g_nc *= np.log10(n_nc)
+    g_nc *= 1 - 0.14 * np.log10(n_nc) + 0.0183 * np.log10(n_nc) ** 2
+
+    return g_nc
