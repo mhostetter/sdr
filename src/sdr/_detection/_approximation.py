@@ -139,19 +139,19 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
 
             fig, ax = plt.subplots(1, 2, sharey=True); \
             p_fa = 1e-8; \
-            n = np.linspace(1, 100, 101).astype(int);
+            n = np.linspace(1, 100, 31).astype(int);
             for p_d in [0.5, 0.8, 0.95]:
                 snr = sdr.min_snr(p_d, p_fa, detector="square-law")
-                ax[0].plot(n, sdr.non_coherent_gain(n, snr, p_fa=p_fa, detector="square-law", snr_ref="output"), label=p_d)
-            ax[0].plot(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
+                ax[0].semilogx(n, sdr.non_coherent_gain(n, snr, p_fa=p_fa, detector="square-law", snr_ref="output"), label=p_d)
+            ax[0].semilogx(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
             ax[0].legend(title="$P_D$"); \
             ax[0].set_xlabel("Number of samples, $N_{NC}$"); \
             ax[0].set_ylabel("Non-coherent gain, $G_{NC}$"); \
             ax[0].set_title("Theoretical");
             for p_d in [0.5, 0.8, 0.95]:
-                ax[1].plot(n, sdr.peebles(p_d, p_fa, n), linestyle="--", label=p_d)
+                ax[1].semilogx(n, sdr.peebles(p_d, p_fa, n), linestyle="--", label=p_d)
             @savefig sdr_peebles_1.png
-            ax[1].plot(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
+            ax[1].semilogx(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
             ax[1].legend(title="$P_D$"); \
             ax[1].set_xlabel("Number of samples, $N_{NC}$"); \
             ax[1].set_ylabel("Non-coherent gain, $G_{NC}$"); \
