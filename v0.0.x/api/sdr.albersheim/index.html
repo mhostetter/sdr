@@ -7877,8 +7877,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.h0_theory/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h0_theory (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$." class="md-ellipsis">h0_<wbr>theory</span>
+      <a href="../sdr.h0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h0 (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$." class="md-ellipsis">h0</span>
       </a>
     </li>
   
@@ -7892,8 +7892,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.h1_theory/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h1_theory (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$." class="md-ellipsis">h1_<wbr>theory</span>
+      <a href="../sdr.h1/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h1 (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$." class="md-ellipsis">h1</span>
       </a>
     </li>
   
@@ -8103,6 +8103,21 @@ You're not viewing the latest version.
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.peebles/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peebles (Python function) — Estimates the non-coherent integration gain for a given probability of detection $P_{D}$ and false alarm $P_{FA}$." class="md-ellipsis">peebles</span>
+      </a>
     </li>
   
 
@@ -13806,8 +13821,8 @@ You're not viewing the latest version.
 detectors in minimal, so Albersheim’s equation finds wide use.</p>
 <p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf">https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf</a></p></li>
-<li><p><a class="reference external" href="https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf">https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf</a></p></li>
+<li><p><a class="reference external" href="https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf">Mark Richards, Alternative Forms of Albersheim’s Equation.</a></p></li>
+<li><p><a class="reference external" href="https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf">Mark Richards, Non-Coherent Gain and its Approximations.</a></p></li>
 <li><p><a class="reference external" href="https://www.mathworks.com/help/phased/ref/albersheim.html">https://www.mathworks.com/help/phased/ref/albersheim.html</a></p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
@@ -13835,6 +13850,39 @@ estimated minimum required SNR using Albersheim’s approximation in <a class="r
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_albersheim_1.png" src="../../_images/sdr_albersheim_1.png" />
+<p>Compare the theoretical non-coherent gain for a linear detector against the approximation from Albersheim’s
+equation. This comparison plots curves for various post-integration probabilities of detection.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">p_fa</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">;</span> \
+<span class="gp">   ...: </span><span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [4]: </span><span class="k">for</span> <span class="n">p_d</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">]:</span>
+<span class="gp">   ...: </span>    <span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+<span class="gp">   ...: </span>    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">non_coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">snr</span><span class="p">,</span> <span class="n">p_fa</span><span class="o">=</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">snr_ref</span><span class="o">=</span><span class="s2">&quot;output&quot;</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">p_d</span><span class="p">)</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [5]: </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Coherent&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;$P_D$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples, $N_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Non-coherent gain, $G_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Theoretical&quot;</span><span class="p">);</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [6]: </span><span class="k">for</span> <span class="n">p_d</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">]:</span>
+<span class="gp">   ...: </span>    <span class="n">g_nc</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">sdr</span><span class="o">.</span><span class="n">albersheim</span><span class="p">(</span><span class="n">p_d</span><span class="p">,</span> <span class="n">p_fa</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="gp">   ...: </span>    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">g_nc</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">p_d</span><span class="p">)</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [7]: </span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">coherent_gain</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Coherent&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;$P_D$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples, $N_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Non-coherent gain, $G_</span><span class="si">{NC}</span><span class="s2">$&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Albersheim&#39;s approximation&quot;</span><span class="p">);</span>
+<span class="gp">   ...: </span>
+</code></pre></div>
+</div>
+<img alt="../../_images/sdr_albersheim_2.png" src="../../_images/sdr_albersheim_2.png" />
 </dd></dl>
 
 
@@ -13883,13 +13931,13 @@ estimated minimum required SNR using Albersheim’s approximation in <a class="r
       
       
         
-        <a href="../sdr.coherent_gain/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.coherent_gain" rel="next">
+        <a href="../sdr.peebles/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.peebles" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              sdr.coherent_gain
+              sdr.peebles
             </div>
           </div>
           <div class="md-footer__button md-icon">

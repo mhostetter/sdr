@@ -7879,8 +7879,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.h0_theory/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h0_theory (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$." class="md-ellipsis">h0_<wbr>theory</span>
+      <a href="../sdr.h0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h0 (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$." class="md-ellipsis">h0</span>
       </a>
     </li>
   
@@ -7894,8 +7894,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.h1_theory/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h1_theory (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$." class="md-ellipsis">h1_<wbr>theory</span>
+      <a href="../sdr.h1/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h1 (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$." class="md-ellipsis">h1</span>
       </a>
     </li>
   
@@ -8109,6 +8109,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.albersheim/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">albersheim</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.peebles/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peebles (Python function) — Estimates the non-coherent integration gain for a given probability of detection $P_{D}$ and false alarm $P_{FA}$." class="md-ellipsis">peebles</span>
       </a>
     </li>
   
@@ -13812,13 +13827,13 @@ for linear and square-law detectors.</p>
 </code></pre></div>
 </div>
 <p>Now suppose the signal is non-coherently integrated <span class="math notranslate nohighlight">\(N_{NC} = 10\)</span> times. Notice the minimum required SNR
-decreases, but less than 10 dB. This is because non-coherent integration is less efficient than coherent
+decreases, but by less than 10 dB. This is because non-coherent integration is less efficient than coherent
 integration.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [2]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;square-law&quot;</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gh">Out[2]: </span><span class="go">5.267486807285799</span>
 </code></pre></div>
 </div>
-<p>Now suppose the signal is coherently integrated by <span class="math notranslate nohighlight">\(N_C = 10\)</span> samples before the square-law detector.
+<p>Now suppose the signal is coherently integrated for <span class="math notranslate nohighlight">\(N_C = 10\)</span> samples before the square-law detector.
 Notice the SNR now decreases by exactly 10 dB.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">min_snr</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">detector</span><span class="o">=</span><span class="s2">&quot;square-law&quot;</span><span class="p">,</span> <span class="n">n_c</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_nc</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gh">Out[3]: </span><span class="go">-4.732513192714245</span>

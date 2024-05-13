@@ -7875,8 +7875,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.h0_theory/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h0_theory (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$." class="md-ellipsis">h0_<wbr>theory</span>
+      <a href="../sdr.h0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h0 (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$." class="md-ellipsis">h0</span>
       </a>
     </li>
   
@@ -7890,8 +7890,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.h1_theory/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h1_theory (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$." class="md-ellipsis">h1_<wbr>theory</span>
+      <a href="../sdr.h1/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.h1 (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$." class="md-ellipsis">h1</span>
       </a>
     </li>
   
@@ -8005,6 +8005,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.albersheim/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.albersheim (Python function) — Estimates the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$." class="md-ellipsis">albersheim</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.peebles/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peebles (Python function) — Estimates the non-coherent integration gain for a given probability of detection $P_{D}$ and false alarm $P_{FA}$." class="md-ellipsis">peebles</span>
       </a>
     </li>
   
@@ -13842,7 +13857,7 @@ You're not viewing the latest version.
 </dl>
 <div class="seealso collapsible admonition">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../sdr.h0_theory/" title="sdr.h0_theory (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.h0_theory</span></code></a>, <a class="reference internal" href="../sdr.h1_theory/" title="sdr.h1_theory (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.h1_theory</span></code></a>, <a class="reference internal" href="../sdr.threshold/" title="sdr.threshold (Python function) — Computes the theoretical detection threshold $gamma$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.threshold</span></code></a></p>
+<p><a class="reference internal" href="../sdr.h0/" title="sdr.h0 (Python function) — Computes the statistical distribution under the null hypothesis $mathcal{H}_0$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.h0</span></code></a>, <a class="reference internal" href="../sdr.h1/" title="sdr.h1 (Python function) — Computes the statistical distribution under the alternative hypothesis $mathcal{H}_1$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.h1</span></code></a>, <a class="reference internal" href="../sdr.threshold/" title="sdr.threshold (Python function) — Computes the theoretical detection threshold $gamma$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.threshold</span></code></a></p>
 </div>
 <p class="example rubric" id="example">Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">snr</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Signal-to-noise ratio in dB</span>
@@ -13853,8 +13868,8 @@ You're not viewing the latest version.
 </code></pre></div>
 </div>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">detector</span> <span class="o">=</span> <span class="s2">&quot;linear&quot;</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">h0</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">h0_theory</span><span class="p">(</span><span class="n">sigma2</span><span class="p">,</span> <span class="n">detector</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">h1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">h1_theory</span><span class="p">(</span><span class="n">snr</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">detector</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">h0</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">h0</span><span class="p">(</span><span class="n">sigma2</span><span class="p">,</span> <span class="n">detector</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">h1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">h1</span><span class="p">(</span><span class="n">snr</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">detector</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">threshold</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">p_fa</span><span class="p">,</span> <span class="n">sigma2</span><span class="p">,</span> <span class="n">detector</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
