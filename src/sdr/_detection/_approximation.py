@@ -49,8 +49,10 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
         detectors in minimal, so Albersheim's equation finds wide use.
 
     References:
-        - https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf
-        - https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf
+        - `Mark Richards, Alternative Forms of Albersheim's Equation.
+          <https://radarsp.weebly.com/uploads/2/1/4/7/21471216/albersheim_alternative_forms.pdf>`_
+        - `Mark Richards, Non-Coherent Gain and its Approximations.
+          <https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf>`_
         - https://www.mathworks.com/help/phased/ref/albersheim.html
 
     Examples:
@@ -156,6 +158,10 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
         $$1 \le N_{NC} \le 100 .$$
 
         Peebles' equation approximates the non-coherent integration gain using a square-law detector.
+
+    References:
+        - `Mark Richards, Non-Coherent Gain and its Approximations.
+          <https://bpb-us-w2.wpmucdn.com/sites.gatech.edu/dist/5/462/files/2016/12/Noncoherent-Integration-Gain-Approximations.pdf>`_
 
     Examples:
         Compare the theoretical non-coherent gain for a square-law detector against the approximation from Peebles's
