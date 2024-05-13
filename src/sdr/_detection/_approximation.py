@@ -78,6 +78,32 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
             plt.ylabel("Minimum required SNR (dB)"); \
             plt.title("Minimum required SNR across non-coherent combinations for $P_D = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
 
+        Compare the theoretical non-coherent gain for a linear detector against the approximation from Albersheim's
+        equation. This comparison plots curves for various post-integration probabilities of detection.
+
+        .. ipython:: python
+
+            fig, ax = plt.subplots(1, 2, sharey=True); \
+            p_fa = 1e-8; \
+            n = np.linspace(1, 100, 31).astype(int);
+            for p_d in [0.5, 0.8, 0.95]:
+                snr = sdr.min_snr(p_d, p_fa, detector="linear")
+                ax[0].semilogx(n, sdr.non_coherent_gain(n, snr, p_fa=p_fa, detector="linear", snr_ref="output"), label=p_d)
+            ax[0].semilogx(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
+            ax[0].legend(title="$P_D$"); \
+            ax[0].set_xlabel("Number of samples, $N_{NC}$"); \
+            ax[0].set_ylabel("Non-coherent gain, $G_{NC}$"); \
+            ax[0].set_title("Theoretical");
+            for p_d in [0.5, 0.8, 0.95]:
+                g_nc = sdr.albersheim(p_d, p_fa, 1) - sdr.albersheim(p_d, p_fa, n)
+                ax[1].semilogx(n, g_nc, linestyle="--", label=p_d)
+            @savefig sdr_albersheim_2.png
+            ax[1].semilogx(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
+            ax[1].legend(title="$P_D$"); \
+            ax[1].set_xlabel("Number of samples, $N_{NC}$"); \
+            ax[1].set_ylabel("Non-coherent gain, $G_{NC}$"); \
+            ax[1].set_title("Albersheim's approximation");
+
     Group:
         detection-approximation
     """
