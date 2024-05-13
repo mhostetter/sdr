@@ -520,13 +520,7 @@ def _sum_distribution(
     """
     if n_nc == 1:
         return dist
-    elif n_nc <= 40:
-        return _convolve_distribution(dist, n_nc)
-    else:
-        return _clt_distribution(dist, n_nc)
 
-
-def _convolve_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.stats.rv_histogram:
     # Determine mean and standard deviation of base distribution
     mu, sigma2 = dist.stats()
     sigma = np.sqrt(sigma2)
@@ -537,32 +531,23 @@ def _convolve_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.
     # Compute the PDF of the base distribution for 10 standard deviations about the mean
     pdf_x = np.linspace(0, mu + 10 * sigma, 1_001)
     pdf_y = dist.pdf(pdf_x)
+    dx = np.mean(np.diff(pdf_x))
 
-    # The PDF of the sum of n_nc independent random variables is the convolution of the PDF of the base distribution
-    x = pdf_x.copy()  # The convolved x axis
-    y = pdf_y.copy()  # The convolved y values
-    dx = np.mean(np.diff(x))
-    for _ in range(n_nc - 1):
-        y = np.convolve(y, pdf_y, "full")
-        x = np.arange(y.size) * dx + x[0]
+    # The PDF of the sum of n_nc independent random variables is the convolution of the PDF of the base distribution.
+    # This is efficiently computed in the frequency domain by exponentiating the FFT. The FFT must be zero-padded
+    # enough that the circular convolutions do not wrap around.
+    n_fft = scipy.fft.next_fast_len(pdf_y.size * n_nc)
+    Y = np.fft.fft(pdf_y, n_fft)
+    Y = Y**n_nc
+    y = np.fft.ifft(Y).real
     y /= y.sum() * dx
+    x = np.arange(y.size) * dx + pdf_x[0]
 
     # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
     x = np.append(x, x[-1] + dx)
     x -= dx / 2
 
     return scipy.stats.rv_histogram((y, x))
-
-
-def _clt_distribution(dist: scipy.stats.rv_continuous, n_nc: int) -> scipy.stats.rv_continuous:
-    # Determine mean and variance of base distribution
-    mu, sigma2 = dist.stats()
-
-    # The sum of n_nc independent random variables is normally distributed (if n_nc is sufficiently large)
-    mu_sum = n_nc * mu
-    sigma2_sum = n_nc * sigma2
-
-    return scipy.stats.norm(mu_sum, np.sqrt(sigma2_sum))
 
 
 @export
