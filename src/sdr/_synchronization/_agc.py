@@ -39,7 +39,8 @@ class AGC:
 
     References:
         - Michael Rice, *Digital Communications: A Discrete-Time Approach*, Section 9.5.
-        - https://wirelesspi.com/how-automatic-gain-control-agc-works/
+        - `Qasim Chaudhari, How Automatic Gain Control (AGC) Works.
+          <https://wirelesspi.com/how-automatic-gain-control-agc-works/>`_
 
     Examples:
         Create an example received signal with two bursty signals surrounded by noise.

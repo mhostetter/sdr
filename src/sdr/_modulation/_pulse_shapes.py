@@ -175,7 +175,8 @@ def gaussian(
 
     References:
         - https://www.mathworks.com/help/signal/ref/gaussdesign.html
-        - https://onlinelibrary.wiley.com/doi/pdf/10.1002/9780470041956.app2
+        - `Appendix B: Gaussian Pulse-Shaping Filter.
+          <https://onlinelibrary.wiley.com/doi/pdf/10.1002/9780470041956.app2>`_
 
     Examples:
         .. ipython:: python
