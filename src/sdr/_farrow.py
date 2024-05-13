@@ -18,7 +18,8 @@ class FarrowResampler:
 
     References:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Section 8.4.2.
-        - https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/
+        - `Qasim Chaudhari, Fractional Delay Filters Using the Farrow Structure.
+          <https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/>`_
 
     Examples:
         Create a sine wave with angular frequency $\omega = 2 \pi / 5.179$. Interpolate the signal by

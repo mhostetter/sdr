@@ -76,8 +76,8 @@ class FLFSR:
         $S = [y_{t+n-1}, y_{t+n-2}, \dots, y_{t+2}, y_{t+1}]$.
 
     References:
-        - Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”.
-          https://hdl.handle.net/2134/21932.
+        - `Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”.
+          <https://hdl.handle.net/2134/21932>`_
 
     See Also:
         berlekamp_massey
@@ -812,8 +812,8 @@ class GLFSR:
         In the Galois configuration, the shift register taps are $T = [c_0, c_1, \dots, c_{n-2}, c_{n-1}]$.
 
     References:
-        - Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”.
-          https://hdl.handle.net/2134/21932.
+        - `Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”.
+          <https://hdl.handle.net/2134/21932>`_
 
     See Also:
         berlekamp_massey
@@ -1493,10 +1493,12 @@ def berlekamp_massey(sequence, output="minimal"):
         minimal polynomial.
 
     References:
-        - Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”. https://hdl.handle.net/2134/21932.
-        - Sachs, J. Linear Feedback Shift Registers for the Uninitiated, Part VI: Sing Along with the
-          Berlekamp-Massey Algorithm. https://www.embeddedrelated.com/showarticle/1099.php
-        - https://crypto.stanford.edu/~mironov/cs359/massey.pdf
+        - `Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”.
+          <https://hdl.handle.net/2134/21932>`_
+        - `Jason Sachs, Linear Feedback Shift Registers for the Uninitiated, Part VI: Sing Along with the
+          Berlekamp-Massey Algorithm. <https://www.embeddedrelated.com/showarticle/1099.php>`_
+        - `James Massey, Shift-Register Synthesis and BCH Decoding.
+          <https://crypto.stanford.edu/~mironov/cs359/massey.pdf>`_
 
     Examples:
         The sequence below is a degree-4 linear recurrent sequence over $\mathrm{GF}(7)$.
