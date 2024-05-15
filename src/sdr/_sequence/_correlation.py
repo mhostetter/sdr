@@ -58,7 +58,7 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
             sdr.barker_code(13, output="bipolar")
             sdr.barker_code(13, output="field")
 
-        Barker sequences have ideally-minimal autocorrelation sidelobes of +1 or -1.
+        Barker sequences have ideally minimal autocorrelation sidelobes of +1 or -1.
 
         .. ipython:: python
 

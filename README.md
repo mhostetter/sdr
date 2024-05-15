@@ -21,7 +21,7 @@ The `sdr` library is a Python 3 package for software-defined radio (SDR).
 
 The goal of `sdr` is to provide tools to design, analyze, build, and test digital communication systems
 in Python. The library relies on and is designed to be interoperable with NumPy, SciPy, and Matplotlib.
-Performance is also very important. So, where possible, Numba is used to accelerate computationally-intensive
+Performance is also very important. So, where possible, Numba is used to accelerate computationally intensive
 functions.
 
 Additionally, the library aims to replicate relevant functionality from MATLAB's Communications and
@@ -61,7 +61,7 @@ View all available classes and functions in the [API Reference](https://mhostett
 - **Detection**: Theoretical probability of detection, probability of false alarm, and thresholds.
   Detection approximations. Coherent gain, coherent gain loss (CGL), non-coherent gain, maximum-allowable
   integration time and frequency offset.
-- **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
+- **Synchronization**: Numerically controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
   analysis, phase error detectors (PEDs), automatic gain control (AGC).
 - **Measurement**: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
   error vector magnitude (EVM).

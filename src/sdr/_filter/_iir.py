@@ -299,7 +299,7 @@ class IIR:
                 pole = 0.8 * np.exp(1j * np.pi / 8); \
                 iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            Compute the frequency response at 1024 evenly-spaced frequencies.
+            Compute the frequency response at 1024 evenly spaced frequencies.
 
             .. ipython:: python
 

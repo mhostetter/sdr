@@ -1145,7 +1145,7 @@ class Channelizer(PolyphaseFIR):
 
     Notes:
         The polyphase channelizer efficiently splits the input signal $x[n]$ with sample rate $f_s$ into $C$
-        equally-spaced channels. Each channel has a bandwidth of $f_s / C$.
+        equally spaced channels. Each channel has a bandwidth of $f_s / C$.
 
         The polyphase channelizer is equivalent to first mixing the input signal $x[n]$ with $C$ complex exponentials
         with frequencies $f_i = -i \cdot f_s / C$, filtering the mixed signals with the prototype FIR filter

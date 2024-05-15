@@ -1,5 +1,5 @@
 """
-A module for numerically-controlled oscillators (NCO).
+A module for numerically controlled oscillators (NCO).
 """
 
 from __future__ import annotations
@@ -16,11 +16,11 @@ from ._helper import export
 @export
 class NCO:
     r"""
-    Implements a numerically-controlled oscillator (NCO).
+    Implements a numerically controlled oscillator (NCO).
 
     Notes:
         .. code-block:: text
-           :caption: Numerically-Controlled Oscillator Block Diagram
+           :caption: Numerically Controlled Oscillator Block Diagram
 
                           constant           constant
                          increment            offset    p[n]
@@ -93,7 +93,7 @@ class NCO:
 
     def __init__(self, gain: float = 1.0, increment: float = 0.0, offset: float = 0.0):
         r"""
-        Creates a numerically-controlled oscillator (NCO).
+        Creates a numerically controlled oscillator (NCO).
 
         Arguments:
             gain: The NCO gain $K_0$.
