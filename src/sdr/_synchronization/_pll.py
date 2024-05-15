@@ -40,7 +40,7 @@ class ClosedLoopPLL:
             lo[n] = Local oscillator signal
             PED = Phase error detector
             LF = Loop filter
-            NCO = Numerically-controlled oscillator
+            NCO = Numerically controlled oscillator
             X = Complex multiplier
 
         The transfer function of the 2nd order, proportional-plus-integrator loop filter is
