@@ -20,6 +20,7 @@ from ._coding import *
 from ._conversion import *
 from ._data import *
 from ._detection import *
+from ._estimation import *
 from ._farrow import *
 from ._filter import *
 from ._link_budget import *
