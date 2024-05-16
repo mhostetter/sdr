@@ -109,6 +109,7 @@ View all available classes and functions in the `API Reference <https://mhostett
    api/sequences.rst
    api/coding.rst
    api/modulation.rst
+   api/estimation.rst
    api/detection.rst
    api/synchronization.rst
    api/measurement.rst
