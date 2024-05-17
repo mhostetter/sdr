@@ -25,14 +25,14 @@ def tdoa_crlb(
     Calculates the Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation.
 
     Arguments:
-        snr1: The signal-to-noise ratio (SNR) of the first signal $\gamma_1 = S_1 / (N_0 B_n)$ in dB.
-        snr2: The signal-to-noise ratio (SNR) of the second signal $\gamma_2 = S_2 / (N_0 B_n)$ in dB.
+        snr1: The signal-to-noise ratio (SNR) of the first signal $\gamma_1 = S_1 / (N_0 B_N)$ in dB.
+        snr2: The signal-to-noise ratio (SNR) of the second signal $\gamma_2 = S_2 / (N_0 B_N)$ in dB.
         time: The integration time $T$ in seconds.
-        bandwidth: The signal bandwidth $B_s$ in Hz.
-        rms_bandwidth: The root-mean-square (RMS) bandwidth $B_{s,\text{rms}}$ in Hz. If `None`, the RMS bandwidth
-            is calculated assuming a rectangular spectrum, $B_{s,\text{rms}} = B_s/\sqrt{12}$.
-        noise_bandwidth: The noise bandwidth $B_n$ in Hz. If `None`, the noise bandwidth is assumed to be the
-            signal bandwidth $B_s$. The noise bandwidth must be the same for both signals.
+        bandwidth: The signal bandwidth $B_S$ in Hz.
+        rms_bandwidth: The root-mean-square (RMS) bandwidth $B_{S,\text{rms}}$ in Hz. If `None`, the RMS bandwidth
+            is calculated assuming a rectangular spectrum, $B_{S,\text{rms}} = B_S/\sqrt{12}$.
+        noise_bandwidth: The noise bandwidth $B_N$ in Hz. If `None`, the noise bandwidth is assumed to be the
+            signal bandwidth $B_S$. The noise bandwidth must be the same for both signals.
 
     Returns:
         The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation standard deviation
@@ -42,10 +42,10 @@ def tdoa_crlb(
         The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation standard deviation
         $\sigma_{\text{TDOA}}$ is given by
 
-        $$\sigma_{\text{TDOA}} = \frac{1}{2 \pi B_{s,\text{rms}}} \frac{1}{\sqrt{B_n T \gamma}} .$$
+        $$\sigma_{\text{TDOA}} = \frac{1}{2 \pi B_{S,\text{rms}}} \frac{1}{\sqrt{B_N T \gamma}} .$$
 
         The effective signal-to-noise ratio (SNR) $\gamma$ is improved by the coherent integration gain, which is the
-        time-bandwidth product $B_n T$. The product $B_n T \gamma$ is the output SNR of the matched filter
+        time-bandwidth product $B_N T$. The product $B_N T \gamma$ is the output SNR of the matched filter
         or correlator.
 
         The time measurement accuracy is inversely proportional to the bandwidth of the signal and the square root of
