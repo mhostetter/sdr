@@ -24,7 +24,15 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
         The signal-to-noise ratio (SNR) of the product of the two signals $\gamma$ in dB.
 
     Notes:
-        $$\frac{1}{\gamma} = \frac{1}{2} \left[ \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \cdot \gamma_2} \right]$$
+        The effective or composite SNR $\gamma$ of the product of two signals with SNRs $\gamma_1$ and $\gamma_2$
+        is given by
+
+        $$\frac{1}{\gamma} = \frac{1}{2} \left[ \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2} \right] .$$
+
+        When both $\gamma_1$ and $\gamma_2$ are greater than 0 dB, and if $\gamma_1 = \gamma_2$, then
+        $\gamma = \gamma_1 = \gamma_2$. If one is much less than the other, then $\gamma$ is approximately 3 dB
+        greater than the smaller one. When both are less than 0 dB, the composite SNR is approximately
+        $\gamma = 2 \gamma_1 \gamma_2$.
 
     References:
         - `Seymour Stein, Algorithms for Ambiguity Function Processing <https://ieeexplore.ieee.org/document/1163621>`_
