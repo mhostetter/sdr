@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.integrate
 import scipy.stats
 
 from .._conversion import linear
@@ -166,7 +167,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
             @savefig sdr_awgn_capacity_2.png
             plt.figure(); \
             plt.semilogy(ebn0, C); \
-            plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$"); \
+            plt.xlabel("Bit energy-to-noise PSD ratio (dB), $E_b/N_0$"); \
             plt.ylabel("Capacity (bits/2D), $C$"); \
             plt.title("Capacity of the AWGN Channel");
 
@@ -180,3 +181,149 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
         return bandwidth * np.log2(1 + snr_linear)  # bits/s
 
     return np.log2(1 + snr_linear)  # bits/2D
+
+
+@export
+def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
+    r"""
+    Calculates the capacity of a binary-input additive white Gaussian noise (BI-AWGN) channel.
+
+    Arguments:
+        snr: The signal-to-noise ratio $S / N = A^2 / \sigma^2$ at the output of the channel in dB.
+
+            .. note::
+                This SNR is for a real signal. In the case of soft-decision BPSK, the SNR after coherent detection is
+                $S / N = 2 E_s / N_0$, where $E_s$ is the energy per symbol and $N_0$ is the noise power spectral
+                density.
+
+    Returns:
+        The capacity $C$ of the channel in bits/1D.
+
+    Notes:
+        The BI-AWGN channel is defined as
+
+        $$Y = A \cdot X + W ,$$
+
+        where $X$ is the input with $x_i \in \{-1, 1\}$, $A$ is the signal amplitude, $W \sim \mathcal{N}(0, \sigma^2)$
+        is the AWGN noise, the SNR is $A^2 / \sigma^2$, and $Y$ is the output with $y_i \in \mathbb{R}$.
+
+        The capacity of the BI-AWGN channel is
+
+        $$C = \max_{f_X} I(X; Y) = \max_{f_X} H(Y) - H(Y | X) ,$$
+
+        where $H(Y)$ is the differential entropy of the output $Y$ and $H(Y | X)$ is the conditional entropy of the
+        output $Y$ given the input $X$. The maximum mutual information is achieved when $X$ is equally likely to be
+        $-1$ or $1$.
+
+        The conditional probability density function (PDF) of $Y$ given $X = x$ is
+
+        $$f_{Y|X}(y|x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp \left( -\frac{(y - A x)^2}{2\sigma^2} \right) .$$
+
+        The marginal PDF of $Y$ is
+
+        $$f_Y(y) = \frac{1}{2} f_{Y|X}(y|1) + \frac{1}{2} f_{Y|X}(y|-1) .$$
+
+        The differential entropy of the output $Y$ is
+
+        $$H(Y) = - \int_{-\infty}^{\infty} f_Y(y) \log f_Y(y) \, dy .$$
+
+        The conditional entropy of the output $Y$ given the input $X$ is
+
+        $$H(Y | X) = - \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f_{Y|X}(y|x) \log f_{Y|X}(y|x) \, dy \, dx .$$
+
+        In this case, since $Y = X + W$, the conditional entropy simplifies to
+
+        $$H(Y | X) = H(W) = \frac{1}{2} \log(2\pi e \sigma^2) .$$
+
+        The capacity of the BI-AWGN channel is
+
+        $$
+        \begin{align*}
+        C
+        &= H(Y) - H(Y | X) \\
+        &= - \int_{-\infty}^{\infty} f_Y(y) \log f_Y(y) \, dy - \frac{1}{2} \log(2\pi e \sigma^2) .
+        \end{align*}
+        $$
+
+        However, the integral must be solved using numerical methods. A convenient closed-form upper bound,
+        provided by Yang, is
+
+        $$C \leq C_{ub} = \log(2) - \log(1 + e^{-\text{SNR}}) ,$$
+
+        where $\text{SNR} = A^2 / \sigma^2$ in linear units.
+
+    References:
+        - `Giuseppe Durisi, Chapter 3: The binary-input AWGN channel.
+          <https://gdurisi.github.io/fbl-notes/bi-awgn.html>`_
+        - `Pei Yang, A simple upper bound on the capacity of BI-AWGN channel.
+          <https://www.jstage.jst.go.jp/article/comex/6/8/6_2017XBL0074/_pdf/-char/en>`_
+        - `Tomáš Filler, Binary Additive White-Gaussian-Noise Channel.
+          <https://dde.binghamton.edu/filler/mct/lectures/25/mct-lect25-bawgnc.pdf>`_
+
+    Examples:
+        .. ipython:: python
+
+            snr = np.linspace(-30, 20, 51)
+
+            C_ub = np.log2(2) - np.log2(1 + np.exp(-sdr.linear(snr)))
+            C = sdr.biawgn_capacity(snr)
+
+            @savefig sdr_biawgn_capacity_1.png
+            plt.figure(); \
+            plt.plot(snr, C_ub, linestyle="--", label="$C_{ub}$"); \
+            plt.plot(snr, C, label="$C$"); \
+            plt.legend(); \
+            plt.xlabel("Signal-to-noise ratio (dB), $A^2/\sigma^2$"); \
+            plt.ylabel("Capacity (bits/1D), $C$"); \
+            plt.title("Capacity of the BI-AWGN Channel");
+
+        .. ipython:: python
+
+            snr = np.linspace(-30, 20, 51)
+            p = sdr.Q(np.sqrt(sdr.linear(snr)))
+            C_hard = sdr.bsc_capacity(p)
+            C_soft = sdr.biawgn_capacity(snr)
+
+            @savefig sdr_biawgn_capacity_2.png
+            plt.figure(); \
+            plt.plot(snr, C_hard, label="BSC (hard)"); \
+            plt.plot(snr, C_soft, label="BI-AWGN (soft)"); \
+            plt.legend(); \
+            plt.xlabel("Signal-to-noise ratio (dB), $A^2/\sigma^2$"); \
+            plt.ylabel("Capacity (bits/1D), $C$"); \
+            plt.title("Capacity of the BSC (hard-decision) and BI-AWGN (soft-decision) Channels");
+
+    Group:
+        link-budget-channel-capacity
+    """
+    return _biawgn_capacity(snr)
+
+
+@np.vectorize
+def _biawgn_capacity(snr: float) -> float:
+    sigma2 = 1  # Noise power (variance), sigma^2
+    A2 = linear(snr) * sigma2  # Signal power, A^2
+
+    # f_Y|X(y | 1) is the PDF of Y given X = 1 was sent
+    f_y_p1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2)).pdf
+
+    # f_Y|X(y | -1) is the PDF of Y given X = -1 was sent
+    f_y_n1 = scipy.stats.norm(-np.sqrt(A2), np.sqrt(sigma2)).pdf
+
+    # f_Y(y) is the marginal PDF of Y. This assumes equal probability of X = 0 and X = 1, which is required to
+    # maximize the mutual information I(X; Y) and achieve capacity.
+    def f_y(y):
+        return 0.5 * f_y_p1(y) + 0.5 * f_y_n1(y)
+
+    # H(Y | X) is the conditional entropy of the output Y given the input X. Since Y = X + W, the conditional
+    # entropy is the differential entropy of the noise W.
+    H_y_x = 0.5 * np.log2(2 * np.pi * np.e * sigma2)
+
+    # H(Y) is the differential entropy of the output Y
+    H_y = scipy.integrate.quad(lambda y: np.nan_to_num(-f_y(y) * np.log2(f_y(y))), -np.inf, np.inf)[0]
+
+    # I(X; Y) is the mutual information between the input X and the output Y. This is the maximum achievable
+    # mutual information and the channel capacity.
+    I_x_y = H_y - H_y_x
+
+    return I_x_y  # bits/1D
