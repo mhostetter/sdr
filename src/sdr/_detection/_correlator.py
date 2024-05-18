@@ -38,12 +38,12 @@ class ReplicaCorrelator:
 
         where $\mathcal{E}$ is the received energy $\mathcal{E} = \sum\limits_{n=0}^{N-1} \left| s[n] \right|^2$.
 
-        The probability of detection $P_D$, probability of false alarm $P_{FA}$, and detection threshold
+        The probability of detection $P_d$, probability of false alarm $P_{fa}$, and detection threshold
         $\gamma'$ are given by:
 
-        $$P_D = Q\left( Q^{-1}(P_{FA}) - \sqrt{\frac{2 \mathcal{E}}{\sigma^2}} \right)$$
-        $$P_{FA} = Q\left(\frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E} / 2}}\right)$$
-        $$\gamma' = \sqrt{\sigma^2 \mathcal{E} / 2} Q^{-1}(P_{FA})$$
+        $$P_d = Q\left( Q^{-1}(P_{fa}) - \sqrt{\frac{2 \mathcal{E}}{\sigma^2}} \right)$$
+        $$P_{fa} = Q\left(\frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E} / 2}}\right)$$
+        $$\gamma' = \sqrt{\sigma^2 \mathcal{E} / 2} Q^{-1}(P_{fa})$$
 
     References:
         - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*, Sections 4.3.2 and 13.3.1.
@@ -62,8 +62,8 @@ class ReplicaCorrelator:
     #     Initializes the energy detector.
 
     #     Arguments:
-    #         N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
-    #         p_fa: The desired probability of false alarm $P_{FA}$.
+    #         N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+    #         p_fa: The desired probability of false alarm $P_{fa}$.
     #     """
     #     if not isinstance(N_nc, int):
     #         raise TypeError(f"Argument 'N_nc' must be an integer, not {type(N_nc)}.")
@@ -94,13 +94,13 @@ class ReplicaCorrelator:
 
         Arguments:
             enr: The received energy-to-noise ratio $\mathcal{E}/\sigma^2$ in dB.
-            p_fa: The probability of false alarm $P_{FA}$. If `None`, the ROC curve is computed for
+            p_fa: The probability of false alarm $P_{fa}$. If `None`, the ROC curve is computed for
                 `p_fa = np.logspace(-10, 0, 101)`.
             complex: Indicates whether the signal is complex.
 
         Returns:
-            - The probability of false alarm $P_{FA}$.
-            - The probability of detection $P_D$.
+            - The probability of false alarm $P_{fa}$.
+            - The probability of detection $P_d$.
 
         Examples:
             .. ipython:: python
@@ -133,24 +133,24 @@ class ReplicaCorrelator:
         complex: bool = True,
     ) -> npt.NDArray[np.float64]:
         r"""
-        Computes the probability of detection $P_D$.
+        Computes the probability of detection $P_d$.
 
         Arguments:
             enr: The received energy-to-noise ratio $\mathcal{E}/\sigma^2$ in dB.
-            p_fa: The probability of false alarm $P_{FA}$.
+            p_fa: The probability of false alarm $P_{fa}$.
             complex: Indicates whether the signal is complex.
 
         Returns:
-            The probability of detection $P_D$.
+            The probability of detection $P_d$.
 
         Notes:
             For real signals:
 
-            $$P_D = Q\left( Q^{-1}(P_{FA}) - \sqrt{\frac{\mathcal{E}}{\sigma^2}} \right)$$
+            $$P_d = Q\left( Q^{-1}(P_{fa}) - \sqrt{\frac{\mathcal{E}}{\sigma^2}} \right)$$
 
             For complex signals:
 
-            $$P_D = Q\left( Q^{-1}(P_{FA}) - \sqrt{\frac{\mathcal{E}}{\sigma^2 / 2}} \right)$$
+            $$P_d = Q\left( Q^{-1}(P_{fa}) - \sqrt{\frac{\mathcal{E}}{\sigma^2 / 2}} \right)$$
 
         References:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
@@ -163,13 +163,13 @@ class ReplicaCorrelator:
 
                 @savefig sdr_ReplicaCorrelator_p_d_1.png
                 plt.figure(); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-1), label="$P_{FA} = 10^{-1}$"); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-2), label="$P_{FA} = 10^{-2}$"); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-3), label="$P_{FA} = 10^{-3}$"); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-4), label="$P_{FA} = 10^{-4}$"); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-5), label="$P_{FA} = 10^{-5}$"); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-6), label="$P_{FA} = 10^{-6}$"); \
-                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-7), label="$P_{FA} = 10^{-7}$");
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-1), label="$P_{fa} = 10^{-1}$"); \
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-2), label="$P_{fa} = 10^{-2}$"); \
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-3), label="$P_{fa} = 10^{-3}$"); \
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-4), label="$P_{fa} = 10^{-4}$"); \
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-5), label="$P_{fa} = 10^{-5}$"); \
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-6), label="$P_{fa} = 10^{-6}$"); \
+                sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-7), label="$P_{fa} = 10^{-7}$");
         """
         enr = np.asarray(enr)
         p_fa = np.asarray(p_fa)
@@ -192,7 +192,7 @@ class ReplicaCorrelator:
         complex: bool = True,
     ) -> npt.NDArray[np.float64]:
         r"""
-        Computes the probability of false alarm $P_{FA}$.
+        Computes the probability of false alarm $P_{fa}$.
 
         Arguments:
             threshold: The threshold $\gamma'$.
@@ -201,16 +201,16 @@ class ReplicaCorrelator:
             complex: Indicates whether the signal is complex.
 
         Returns:
-            The probability of false alarm $P_{FA}$.
+            The probability of false alarm $P_{fa}$.
 
         Notes:
             For real signals:
 
-            $$P_{FA} = Q\left( \frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E}}} \right)$$
+            $$P_{fa} = Q\left( \frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E}}} \right)$$
 
             For complex signals:
 
-            $$P_{FA} = Q\left( \frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E} / 2}} \right)$$
+            $$P_{fa} = Q\left( \frac{\gamma'}{\sqrt{\sigma^2 \mathcal{E} / 2}} \right)$$
 
         References:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
@@ -238,7 +238,7 @@ class ReplicaCorrelator:
         Computes the threshold $\gamma'$.
 
         Arguments:
-            p_fa: The probability of false alarm $P_{FA}$.
+            p_fa: The probability of false alarm $P_{fa}$.
             energy: The received energy $\mathcal{E} = \sum_{i=0}^{N-1} \left| s[n] \right|^2$.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
@@ -249,11 +249,11 @@ class ReplicaCorrelator:
         Notes:
             For real signals:
 
-            $$\gamma' = \sqrt{\sigma^2 \mathcal{E}} Q^{-1}(P_{FA})$$
+            $$\gamma' = \sqrt{\sigma^2 \mathcal{E}} Q^{-1}(P_{fa})$$
 
             For complex signals:
 
-            $$\gamma' = \sqrt{\sigma^2 \mathcal{E} / 2} Q^{-1}(P_{FA})$$
+            $$\gamma' = \sqrt{\sigma^2 \mathcal{E} / 2} Q^{-1}(P_{fa})$$
 
         References:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
@@ -306,14 +306,14 @@ class ReplicaCorrelator:
     # @property
     # def N_nc(self) -> int:
     #     """
-    #     The number of samples $N_{NC}$ to non-coherently integrate.
+    #     The number of samples $N_{nc}$ to non-coherently integrate.
     #     """
     #     return self._N_nc
 
     # @property
     # def desired_p_fa(self) -> float:
     #     """
-    #     The desired probability of false alarm $P_{FA}$.
+    #     The desired probability of false alarm $P_{fa}$.
     #     """
     #     return self._p_fa
 

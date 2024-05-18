@@ -36,8 +36,8 @@ def h0(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
-        n_c: The number of samples to coherently integrate $N_C$.
-        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
             for linear and square-law detectors.
 
     Returns:
@@ -272,8 +272,8 @@ def h1(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
-        n_c: The number of samples to coherently integrate $N_C$.
-        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
             for linear and square-law detectors.
 
     Returns:
@@ -560,11 +560,11 @@ def p_d(
     n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the theoretical probability of detection $P_{D}$.
+    Computes the theoretical probability of detection $P_d$.
 
     Arguments:
         snr: The signal-to-noise ratio $S / \sigma^2$ in dB.
-        p_fa: The probability of false alarm $P_{FA}$ in $(0, 1)$.
+        p_fa: The probability of false alarm $P_{fa}$ in $(0, 1)$.
         detector: The detector type.
 
             - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
@@ -573,12 +573,12 @@ def p_d(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
-        n_c: The number of samples to coherently integrate $N_C$.
-        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
             for linear and square-law detectors.
 
     Returns:
-        The probability of detection $P_D$ in $(0, 1)$.
+        The probability of detection $P_d$ in $(0, 1)$.
 
     Examples:
         .. ipython:: python
@@ -588,7 +588,7 @@ def p_d(
             p_fa = 1e-1  # Probability of false alarm
 
         Compute the probability of detection for the coherent detector. Plot the PDFs and observe the theoretical
-        $P_{D}$ is achieved.
+        $P_d$ is achieved.
 
         .. ipython:: python
 
@@ -606,7 +606,7 @@ def p_d(
             plt.title("Coherent Detector: Probability density functions");
 
         Compute the probability of detection for the linear detector. Plot the PDFs and observe the theoretical
-        $P_{D}$ is achieved.
+        $P_d$ is achieved.
 
         .. ipython:: python
 
@@ -624,7 +624,7 @@ def p_d(
             plt.title("Linear Detector: Probability density functions");
 
         Compute the probability of detection for the square-law detector. Plot the PDFs and observe the theoretical
-        $P_{D}$ is achieved.
+        $P_d$ is achieved.
 
         .. ipython:: python
 
@@ -656,7 +656,7 @@ def p_d(
             plt.legend(title="Detector"); \
             plt.title("Probability of detection");
 
-        Compare the $P_{D}$ of the square-law detector for various $P_{FA}$.
+        Compare the $P_d$ of the square-law detector for various $P_{fa}$.
 
         .. ipython:: python
 
@@ -666,7 +666,7 @@ def p_d(
                 p_d = sdr.p_d(snr, p_fa)
                 sdr.plot.p_d(snr, p_d, label=f"{p_fa:1.0e}")
             @savefig sdr_p_d_5.png
-            plt.legend(title="$P_{FA}$", loc="upper left"); \
+            plt.legend(title="$P_{fa}$", loc="upper left"); \
             plt.title("Square-Law Detector: Probability of detection");
 
         Compare the receiver operating characteristics (ROCs) of the square-law detector for various SNRs.
@@ -713,7 +713,7 @@ def p_fa(
     n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the theoretical probability of false alarm $P_{FA}$.
+    Computes the theoretical probability of false alarm $P_{fa}$.
 
     Arguments:
         threshold: The detection threshold $\gamma$ in linear units.
@@ -726,12 +726,12 @@ def p_fa(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
-        n_c: The number of samples to coherently integrate $N_C$.
-        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
             for linear and square-law detectors.
 
     Returns:
-        The probability of false alarm $P_{FA}$ in $(0, 1)$.
+        The probability of false alarm $P_{fa}$ in $(0, 1)$.
 
     Examples:
         .. ipython:: python
@@ -740,7 +740,7 @@ def p_fa(
             sigma2 = 1  # Noise variance
 
         Compute the probability of false alarm for the coherent detector. Plot the PDFs and observe the theoretical
-        $P_{FA}$ is achieved.
+        $P_{fa}$ is achieved.
 
         .. ipython:: python
 
@@ -755,7 +755,7 @@ def p_fa(
             plt.title("Coherent Detector: Probability density functions");
 
         Compute the probability of false alarm for the linear detector. Plot the PDFs and observe the theoretical
-        $P_{FA}$ is achieved.
+        $P_{fa}$ is achieved.
 
         .. ipython:: python
 
@@ -770,7 +770,7 @@ def p_fa(
             plt.title("Linear Detector: Probability density functions");
 
         Compute the probability of false alarm for the square-law detector. Plot the PDFs and observe the theoretical
-        $P_{FA}$ is achieved.
+        $P_{fa}$ is achieved.
 
         .. ipython:: python
 
@@ -815,7 +815,7 @@ def threshold(
     Computes the theoretical detection threshold $\gamma$.
 
     Arguments:
-        p_fa: The desired probability of false alarm $P_{FA}$ in $(0, 1)$.
+        p_fa: The desired probability of false alarm $P_{fa}$ in $(0, 1)$.
         sigma2: The noise variance $\sigma^2$ in linear units.
         detector: The detector type.
 
@@ -825,8 +825,8 @@ def threshold(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
-        n_c: The number of samples to coherently integrate $N_C$.
-        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
             for linear and square-law detectors.
 
     Returns:
@@ -838,7 +838,7 @@ def threshold(
             p_fa = 1e-1  # Probability of false alarm
             sigma2 = 1  # Noise variance
 
-        Compute the detection threshold for the coherent detector. Plot the PDFs and observe the desired $P_{FA}$
+        Compute the detection threshold for the coherent detector. Plot the PDFs and observe the desired $P_{fa}$
         is achieved.
 
         .. ipython:: python
@@ -853,7 +853,7 @@ def threshold(
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Coherent Detector: Probability density functions");
 
-        Compute the detection threshold for the linear detector. Plot the PDFs and observe the desired $P_{FA}$
+        Compute the detection threshold for the linear detector. Plot the PDFs and observe the desired $P_{fa}$
         is achieved.
 
         .. ipython:: python
@@ -868,7 +868,7 @@ def threshold(
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Linear Detector: Probability density functions");
 
-        Compute the detection threshold for the square-law detector. Plot the PDFs and observe the desired $P_{FA}$
+        Compute the detection threshold for the square-law detector. Plot the PDFs and observe the desired $P_{fa}$
         is achieved.
 
         .. ipython:: python
@@ -911,11 +911,11 @@ def min_snr(
     n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_{D}$.
+    Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$.
 
     Arguments:
-        p_d: The desired probability of detection $P_{D}$ in $(0, 1)$.
-        p_fa: The probability of false alarm $P_{FA}$ in $(0, 1)$.
+        p_d: The desired probability of detection $P_d$ in $(0, 1)$.
+        p_fa: The probability of false alarm $P_{fa}$ in $(0, 1)$.
         detector: The detector type.
 
             - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
@@ -924,24 +924,24 @@ def min_snr(
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
-        n_c: The number of samples to coherently integrate $N_C$.
-        n_nc: The number of samples to non-coherently integrate $N_{NC}$. Non-coherent integration is only allowable
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
             for linear and square-law detectors.
 
     Returns:
-        The minimum signal-to-noise ratio (SNR) required to achieve the desired $P_{D}$.
+        The minimum signal-to-noise ratio (SNR) required to achieve the desired $P_d$.
 
     See Also:
         sdr.albersheim
 
     Examples:
-        Compute the minimum required SNR to achieve $P_D = 0.9$ and $P_{FA} = 10^{-6}$ with a square-law detector.
+        Compute the minimum required SNR to achieve $P_d = 0.9$ and $P_{fa} = 10^{-6}$ with a square-law detector.
 
         .. ipython:: python
 
             sdr.min_snr(0.9, 1e-6, detector="square-law")
 
-        Now suppose the signal is non-coherently integrated $N_{NC} = 10$ times. Notice the minimum required SNR
+        Now suppose the signal is non-coherently integrated $N_{nc} = 10$ times. Notice the minimum required SNR
         decreases, but by less than 10 dB. This is because non-coherent integration is less efficient than coherent
         integration.
 
@@ -949,7 +949,7 @@ def min_snr(
 
             sdr.min_snr(0.9, 1e-6, detector="square-law", n_nc=10)
 
-        Now suppose the signal is coherently integrated for $N_C = 10$ samples before the square-law detector.
+        Now suppose the signal is coherently integrated for $N_c = 10$ samples before the square-law detector.
         Notice the SNR now decreases by exactly 10 dB.
 
         .. ipython:: python
@@ -971,14 +971,14 @@ def min_snr(
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=10), linestyle="--"); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=20), linestyle="--"); \
             plt.gca().set_prop_cycle(None); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="linear"), label="$N_{NC}$ = 1"); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="linear"), label="$N_{NC}$ = 2"); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=10, detector="linear"), label="$N_{NC}$ = 10"); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=20, detector="linear"), label="$N_{NC}$ = 20"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="linear"), label="$N_{nc}$ = 1"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="linear"), label="$N_{nc}$ = 2"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=10, detector="linear"), label="$N_{nc}$ = 10"); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=20, detector="linear"), label="$N_{nc}$ = 20"); \
             plt.legend(); \
-            plt.xlabel("Probability of false alarm, $P_{FA}$"); \
+            plt.xlabel("Probability of false alarm, $P_{fa}$"); \
             plt.ylabel("Minimum required SNR (dB)"); \
-            plt.title("Minimum required SNR across non-coherent combinations for $P_D = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
+            plt.title("Minimum required SNR across non-coherent combinations for $P_d = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
 
     Group:
         detection-theory
