@@ -33,12 +33,12 @@ class EnergyDetector:
         \frac{T(x)}{(\sigma_s^2 + \sigma^2) / 2} \sim \chi_{2N}^2 & \text{ under } \mathcal{H}_1
         $$
 
-        The probability of detection $P_D$, probability of false alarm $P_{FA}$, and detection threshold
+        The probability of detection $P_d$, probability of false alarm $P_{fa}$, and detection threshold
         $\gamma'$ are given by:
 
-        $$P_D = Q_{\chi_{2N}^2}\left( \frac{Q_{\chi_{2N}^2}^{-1}(P_{FA})}{\sigma_s^2 /\sigma^2 + 1} \right)$$
-        $$P_{FA} = Q_{\chi_{2N}^2}\left( \frac{\gamma'}{\sigma^2 / 2} \right)$$
-        $$\gamma' = \frac{\sigma^2}{2} Q_{\chi_N^2}^{-1}(P_{FA})$$
+        $$P_d = Q_{\chi_{2N}^2}\left( \frac{Q_{\chi_{2N}^2}^{-1}(P_{fa})}{\sigma_s^2 /\sigma^2 + 1} \right)$$
+        $$P_{fa} = Q_{\chi_{2N}^2}\left( \frac{\gamma'}{\sigma^2 / 2} \right)$$
+        $$\gamma' = \frac{\sigma^2}{2} Q_{\chi_N^2}^{-1}(P_{fa})$$
 
     References:
         - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*, Sections 5.3.
@@ -57,8 +57,8 @@ class EnergyDetector:
     #     Initializes the energy detector.
 
     #     Arguments:
-    #         N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
-    #         p_fa: The desired probability of false alarm $P_{FA}$.
+    #         N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+    #         p_fa: The desired probability of false alarm $P_{fa}$.
     #     """
     #     if not isinstance(N_nc, int):
     #         raise TypeError(f"Argument 'N_nc' must be an integer, not {type(N_nc)}.")
@@ -90,14 +90,14 @@ class EnergyDetector:
 
         Arguments:
             snr: The received signal-to-noise ratio $\sigma_s^2 / \sigma^2$ in dB.
-            N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
-            p_fa: The probability of false alarm $P_{FA}$. If `None`, the ROC curve is computed for
+            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            p_fa: The probability of false alarm $P_{fa}$. If `None`, the ROC curve is computed for
                 `p_fa = np.logspace(-10, 0, 101)`.
             complex: Indicates whether the signal is complex.
 
         Returns:
-            - The probability of false alarm $P_{FA}$.
-            - The probability of detection $P_D$.
+            - The probability of false alarm $P_{fa}$.
+            - The probability of detection $P_d$.
 
         Examples:
             Plot the theoretical ROC curves for integrating a single sample at various SNRs.
@@ -146,28 +146,28 @@ class EnergyDetector:
         complex: bool = True,
     ) -> npt.NDArray[np.float64]:
         r"""
-        Computes the probability of detection $P_D$.
+        Computes the probability of detection $P_d$.
 
         Arguments:
             snr: The received signal-to-noise ratio $\sigma_s^2 / \sigma^2$ in dB.
-            N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
-            p_fa: The probability of false alarm $P_{FA}$.
+            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            p_fa: The probability of false alarm $P_{fa}$.
             complex: Indicates whether the signal is real or complex.
 
         Returns:
-            The probability of detection $P_D$.
+            The probability of detection $P_d$.
 
         Notes:
             For real signals:
 
             $$
-            P_D &= Q_{\chi_N^2}\left( \frac{\sigma^2 Q_{\chi_N^2}^{-1}(P_{FA})}{\sigma_s^2 + \sigma^2} \right) \\
-            &= Q_{\chi_N^2}\left( \frac{Q_{\chi_N^2}^{-1}(P_{FA})}{\sigma_s^2 /\sigma^2 + 1} \right)
+            P_d &= Q_{\chi_N^2}\left( \frac{\sigma^2 Q_{\chi_N^2}^{-1}(P_{fa})}{\sigma_s^2 + \sigma^2} \right) \\
+            &= Q_{\chi_N^2}\left( \frac{Q_{\chi_N^2}^{-1}(P_{fa})}{\sigma_s^2 /\sigma^2 + 1} \right)
             $$
 
             For complex signals:
 
-            $$P_D = Q_{\chi_{2N}^2}\left( \frac{Q_{\chi_{2N}^2}^{-1}(P_{FA})}{\sigma_s^2 /\sigma^2 + 1} \right)$$
+            $$P_d = Q_{\chi_{2N}^2}\left( \frac{Q_{\chi_{2N}^2}^{-1}(P_{fa})}{\sigma_s^2 /\sigma^2 + 1} \right)$$
 
         References:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
@@ -180,11 +180,11 @@ class EnergyDetector:
 
                 @savefig sdr_EnergyDetector_p_d_1.png
                 plt.figure(); \
-                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-1), label="$P_{FA} = 10^{-1}$"); \
-                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-2), label="$P_{FA} = 10^{-2}$"); \
-                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-3), label="$P_{FA} = 10^{-3}$"); \
-                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-4), label="$P_{FA} = 10^{-4}$"); \
-                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-5), label="$P_{FA} = 10^{-5}$");
+                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-1), label="$P_{fa} = 10^{-1}$"); \
+                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-2), label="$P_{fa} = 10^{-2}$"); \
+                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-3), label="$P_{fa} = 10^{-3}$"); \
+                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-4), label="$P_{fa} = 10^{-4}$"); \
+                sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-5), label="$P_{fa} = 10^{-5}$");
         """
         snr = np.asarray(snr)
         N_nc = np.asarray(N_nc)
@@ -211,25 +211,25 @@ class EnergyDetector:
         complex: bool = True,
     ) -> npt.NDArray[np.float64]:
         r"""
-        Computes the probability of false alarm $P_{FA}$.
+        Computes the probability of false alarm $P_{fa}$.
 
         Arguments:
             threshold: The threshold $\gamma'$.
-            N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
+            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
 
         Returns:
-            The probability of false alarm $P_{FA}$.
+            The probability of false alarm $P_{fa}$.
 
         Notes:
             For real signals:
 
-            $$P_{FA} = Q_{\chi_N^2}\left( \frac{\gamma'}{\sigma^2} \right)$$
+            $$P_{fa} = Q_{\chi_N^2}\left( \frac{\gamma'}{\sigma^2} \right)$$
 
             For complex signals:
 
-            $$P_{FA} = Q_{\chi_{2N}^2}\left( \frac{\gamma'}{\sigma^2 / 2} \right)$$
+            $$P_{fa} = Q_{\chi_{2N}^2}\left( \frac{\gamma'}{\sigma^2 / 2} \right)$$
 
         References:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
@@ -259,8 +259,8 @@ class EnergyDetector:
         Computes the threshold $\gamma'$.
 
         Arguments:
-            N_nc: The number of samples $N_{NC}$ to non-coherently integrate.
-            p_fa: The probability of false alarm $P_{FA}$.
+            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            p_fa: The probability of false alarm $P_{fa}$.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
 
@@ -270,11 +270,11 @@ class EnergyDetector:
         Notes:
             For real signals:
 
-            $$\gamma' = \sigma^2 Q_{\chi_N^2}^{-1}(P_{FA})$$
+            $$\gamma' = \sigma^2 Q_{\chi_N^2}^{-1}(P_{fa})$$
 
             For complex signals:
 
-            $$\gamma' = \frac{\sigma^2}{2} Q_{\chi_N^2}^{-1}(P_{FA})$$
+            $$\gamma' = \frac{\sigma^2}{2} Q_{\chi_N^2}^{-1}(P_{fa})$$
 
         References:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
@@ -328,14 +328,14 @@ class EnergyDetector:
     # @property
     # def N_nc(self) -> int:
     #     """
-    #     The number of samples $N_{NC}$ to non-coherently integrate.
+    #     The number of samples $N_{nc}$ to non-coherently integrate.
     #     """
     #     return self._N_nc
 
     # @property
     # def desired_p_fa(self) -> float:
     #     """
-    #     The desired probability of false alarm $P_{FA}$.
+    #     The desired probability of false alarm $P_{fa}$.
     #     """
     #     return self._p_fa
 

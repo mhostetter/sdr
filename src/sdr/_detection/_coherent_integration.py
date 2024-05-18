@@ -19,28 +19,28 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float32]:
 
     Arguments:
         time_bandwidth: The time-bandwidth product $T_C B_C$ in seconds-Hz (unitless). If the signal bandwidth equals
-            the sample rate, the argument equals the number of samples $N_C$ to coherently integrate.
+            the sample rate, the argument equals the number of samples $N_c$ to coherently integrate.
 
     Returns:
-        The coherent gain $G_C$ in dB.
+        The coherent gain $G_c$ in dB.
 
     Notes:
-        The signal $x[n]$ is coherently integrated over $N_C$ samples to produce the output $y[n]$.
+        The signal $x[n]$ is coherently integrated over $N_c$ samples to produce the output $y[n]$.
 
-        $$y[n] = \sum_{m=0}^{N_C-1} x[n-m]$$
+        $$y[n] = \sum_{m=0}^{N_c-1} x[n-m]$$
 
         The coherent integration gain is the reduction in SNR of $x[n]$ compared to $y[n]$, such that both signals
         have the same detection performance.
 
-        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_C$$
+        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_c$$
 
         The coherent integration gain is the time-bandwidth product
 
-        $$G_C = 10 \log_{10} (T_C B_C) .$$
+        $$G_c = 10 \log_{10} (T_C B_C) .$$
 
         If the signal bandwidth equals the sample rate, the coherent gain is simply
 
-        $$G_C = 10 \log_{10} N_C .$$
+        $$G_c = 10 \log_{10} N_c .$$
 
     Examples:
         See the :ref:`coherent-integration` example.
@@ -63,8 +63,8 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float32]:
             @savefig sdr_coherent_gain_1.png
             plt.figure(); \
             plt.semilogx(n_c, sdr.coherent_gain(n_c)); \
-            plt.xlabel("Number of samples, $N_C$"); \
-            plt.ylabel("Coherent gain (dB), $G_C$"); \
+            plt.xlabel("Number of samples, $N_c$"); \
+            plt.ylabel("Coherent gain (dB), $G_c$"); \
             plt.title("Coherent gain as a function of the number of integrated samples");
 
     Group:
