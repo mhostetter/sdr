@@ -26,13 +26,13 @@ def non_coherent_gain(
     extrapolate: bool = True,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the SNR improvement by non-coherently integrating $N_{NC}$ samples.
+    Computes the SNR improvement by non-coherently integrating $N_{nc}$ samples.
 
     Arguments:
-        n_nc: The number of samples $N_{NC}$ to non-coherently integrate.
+        n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
         snr: The reference SNR in dB.
-        p_fa: The desired probability of false alarm $P_{FA}$. This is used to compute the necessary thresholds before
-            and after integration. The non-coherent gain is slightly affected by the $P_{FA}$.
+        p_fa: The desired probability of false alarm $P_{fa}$. This is used to compute the necessary thresholds before
+            and after integration. The non-coherent gain is slightly affected by the $P_{fa}$.
         detector: The detector type.
 
             - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
@@ -46,16 +46,16 @@ def non_coherent_gain(
             - `"input"`: The SNR is referenced at the input of the non-coherent integrator.
             - `"output"`: The SNR is referenced at the output of the non-coherent integrator.
 
-        extrapolate: Indicates whether to extrapolate $G_{NC}$ using smaller values of $N_{NC}$. This is only done when
+        extrapolate: Indicates whether to extrapolate $G_{nc}$ using smaller values of $N_{nc}$. This is only done when
             the non-coherent gain cannot be explicitly solved for due to lack of floating-point precision.
-            If `False`, the function will return `np.nan` for any $N_{NC}$ that cannot be solved for.
+            If `False`, the function will return `np.nan` for any $N_{nc}$ that cannot be solved for.
 
     Returns:
-        The non-coherent gain $G_{NC}$ in dB.
+        The non-coherent gain $G_{nc}$ in dB.
 
     Notes:
-        $$y[m] = \sum_{n=0}^{N_{NC}-1} \left| x[m-n] \right|^2$$
-        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_{NC}$$
+        $$y[m] = \sum_{n=0}^{N_{nc}-1} \left| x[m-n] \right|^2$$
+        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_{nc}$$
 
     Examples:
         See the :ref:`non-coherent-integration` example.
@@ -80,8 +80,8 @@ def non_coherent_gain(
                 plt.semilogx(n, sdr.non_coherent_gain(n, snr, snr_ref="input"), label=f"{snr} dB")
             @savefig sdr_non_coherent_gain_1.png
             plt.legend(title="Input SNR", loc="upper left"); \
-            plt.xlabel("Number of samples, $N_{NC}$"); \
-            plt.ylabel("Non-coherent gain, $G_{NC}$"); \
+            plt.xlabel("Number of samples, $N_{nc}$"); \
+            plt.ylabel("Non-coherent gain, $G_{nc}$"); \
             plt.title("Non-coherent gain for various input SNRs");
 
         Plot the non-coherent gain parameterized by output SNR.
@@ -95,8 +95,8 @@ def non_coherent_gain(
                 plt.semilogx(n, sdr.non_coherent_gain(n, snr, snr_ref="output"), label=f"{snr} dB")
             @savefig sdr_non_coherent_gain_2.png
             plt.legend(title="Output SNR", loc="upper left"); \
-            plt.xlabel("Number of samples, $N_{NC}$"); \
-            plt.ylabel("Non-coherent gain, $G_{NC}$"); \
+            plt.xlabel("Number of samples, $N_{nc}$"); \
+            plt.ylabel("Non-coherent gain, $G_{nc}$"); \
             plt.title("Non-coherent gain for various output SNRs");
 
         Examine the non-coherent gain across input SNR and false alarm rate for non-coherently integrating 10 samples.
@@ -112,11 +112,11 @@ def non_coherent_gain(
                 g_nc = sdr.non_coherent_gain(n_nc, snr, p_fa)
                 plt.plot(snr, g_nc, label=f"{p_fa:1.0e}")
             @savefig sdr_non_coherent_gain_3.png
-            plt.legend(title="$P_{FA}$"); \
+            plt.legend(title="$P_{fa}$"); \
             plt.ylim(0, 10); \
             plt.xlabel("Input signal-to-noise ratio (dB)"); \
             plt.ylabel("Non-coherent gain (dB)"); \
-            plt.title("Non-coherent gain for $N_{NC} = 10$");
+            plt.title("Non-coherent gain for $N_{nc} = 10$");
 
     Group:
         detection-non-coherent-integration

@@ -22,11 +22,11 @@ def p_d(
     **kwargs,
 ):
     r"""
-    Plots the probability of detection $P_D$ as a function of received SNR or ENR.
+    Plots the probability of detection $P_d$ as a function of received SNR or ENR.
 
     Arguments:
         x: The SNR or ENR in dB.
-        p_d: The probability of detection $P_D$.
+        p_d: The probability of detection $P_d$.
         x_label: The x-axis label to use.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
@@ -49,7 +49,7 @@ def p_d(
         else:
             raise ValueError(f"Argument 'x_label' must be one of ['snr', 'enr'], not {x_label!r}.")
 
-        plt.ylabel("Probability of detection, $P_{D}$")
+        plt.ylabel("Probability of detection, $P_d$")
         plt.title("Detection performance")
 
 
@@ -61,11 +61,11 @@ def roc(
     **kwargs,
 ):
     r"""
-    Plots the receiver operating characteristic (ROC) curve as a function of $P_{FA}$.
+    Plots the receiver operating characteristic (ROC) curve as a function of $P_{fa}$.
 
     Arguments:
-        p_fa: The probability of false alarm $P_{FA}$.
-        p_d: The probability of detection $P_D$.
+        p_fa: The probability of false alarm $P_{fa}$.
+        p_d: The probability of detection $P_d$.
         type: The type of plot to generate.
         kwargs: Additional keyword arguments to pass to the plotting function defined by `type`.
 
@@ -92,8 +92,8 @@ def roc(
         if "label" in kwargs:
             plt.legend()
 
-        plt.xlabel("Probability of false alarm, $P_{FA}$")
-        plt.ylabel("Probability of detection, $P_{D}$")
+        plt.xlabel("Probability of false alarm, $P_{fa}$")
+        plt.ylabel("Probability of detection, $P_d$")
         plt.title("Receiver operating characteristic (ROC) curve")
 
 
@@ -195,7 +195,7 @@ def detector_pdfs(
                 plt.text(
                     threshold_half,
                     h0.pdf(threshold_half) / 2,
-                    rf"$P_{{FA}} = $ {p_fa:1.2e}",
+                    rf"$P_{{fa}} = $ {p_fa:1.2e}",
                     color=h0_color,
                     ha="center",
                     va="center",
@@ -207,7 +207,7 @@ def detector_pdfs(
                 plt.text(
                     threshold_half,
                     h1.pdf(threshold_half) / 2,
-                    rf"$P_{{D}} = $ {p_d:1.2e}",
+                    rf"$P_{{d}} = $ {p_d:1.2e}",
                     color=h1_color,
                     ha="center",
                     va="center",
