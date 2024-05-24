@@ -90,7 +90,7 @@ def mix(
 
 
 @export
-def to_complex_bb(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex128]:
+def to_complex_baseband(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex128]:
     r"""
     Converts a real passband signal to a complex baseband signal.
 
@@ -118,12 +118,12 @@ def to_complex_bb(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex128]:
             ); \
             x_r = sdr.awgn(x_r, snr=30)
 
-            @savefig sdr_to_complex_bb_1.png
+            @savefig sdr_to_complex_baseband_1.png
             plt.figure(); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_r[n]$");
 
-            @savefig sdr_to_complex_bb_2.png
+            @savefig sdr_to_complex_baseband_2.png
             plt.figure(); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_r[n]$");
@@ -134,15 +134,15 @@ def to_complex_bb(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex128]:
 
         .. ipython:: python
 
-            x_c = sdr.to_complex_bb(x_r); \
+            x_c = sdr.to_complex_baseband(x_r); \
             sample_rate /= 2
 
-            @savefig sdr_to_complex_bb_3.png
+            @savefig sdr_to_complex_baseband_3.png
             plt.figure(); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_c[n]$");
 
-            @savefig sdr_to_complex_bb_4.png
+            @savefig sdr_to_complex_baseband_4.png
             plt.figure(); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_c[n]$");
