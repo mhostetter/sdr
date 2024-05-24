@@ -13890,8 +13890,8 @@ You're not viewing the latest version.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">span</span> <span class="o">=</span> <span class="mi">8</span>  <span class="c1"># Length of the pulse shape in symbols</span>
-<span class="n">sps</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># Samples per symbol</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">span</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># Length of the pulse shape in symbols</span>
+<span class="n">sps</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># Samples per symbol</span>
 </code></pre></div>
 </div>
 </div>
@@ -13907,7 +13907,8 @@ You're not viewing the latest version.
     <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">sps</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 
     <span class="n">bb</span> <span class="o">=</span> <span class="n">fir</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">pb</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">to_real_pb</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
+    <span class="n">pb</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+    <span class="n">pb</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">real</span>
 
     <span class="k">return</span> <span class="n">bb</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">bb</span><span class="p">),</span> <span class="n">pb</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">pb</span><span class="p">)</span>
 </code></pre></div>
@@ -13939,7 +13940,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c7fe025007177bc3456db6fdb2f8922f4049cd67bb85fb54d0fa2ff27e7eed03.png" src="../../_images/c7fe025007177bc3456db6fdb2f8922f4049cd67bb85fb54d0fa2ff27e7eed03.png" />
+<img alt="../../_images/35c80760d175fdcec3ff274342fcffd0fe0933f5875c40118859c3d53c446570.png" src="../../_images/35c80760d175fdcec3ff274342fcffd0fe0933f5875c40118859c3d53c446570.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -13956,24 +13957,24 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/46a9ddcf162aba9c852b81b3dae32c5dc332056a3cbc9c95e91556f543582cf6.png" src="../../_images/46a9ddcf162aba9c852b81b3dae32c5dc332056a3cbc9c95e91556f543582cf6.png" />
+<img alt="../../_images/8b25526a81712a0152eb715c82cd551d40a67fb030420377324837dbfab3cf4a.png" src="../../_images/8b25526a81712a0152eb715c82cd551d40a67fb030420377324837dbfab3cf4a.png" />
 </div>
 </div>
 <h2 id="examine-frequency-domain">Examine frequency domain<a class="headerlink" href="#examine-frequency-domain" title="Permalink to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_rect</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">1024</span> <span class="o">-</span> <span class="mi">256</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Rectangular, PAPR = </span><span class="si">{</span><span class="n">papr_bb_rect</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_0p9</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">1024</span> <span class="o">-</span> <span class="mi">256</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.9$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_0p5</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">1024</span> <span class="o">-</span> <span class="mi">256</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.5$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
-<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_0p1</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">1024</span> <span class="o">-</span> <span class="mi">256</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.1$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_rect</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Rectangular, PAPR = </span><span class="si">{</span><span class="n">papr_bb_rect</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_0p9</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.9$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_0p5</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.5$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
+<span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x_bb_0p1</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.1$, PAPR = </span><span class="si">{</span><span class="n">papr_bb_0p1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Power spectral density of baseband QPSK with SRRC pulse shaping&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/758e9317be19fdf80bef5bf3d88236d06942485f6f584f0fb09093053162ac7d.png" src="../../_images/758e9317be19fdf80bef5bf3d88236d06942485f6f584f0fb09093053162ac7d.png" />
+<img alt="../../_images/15a5dfdd221b1b383f8cad6fd863e62c6bdb330b3ed870389e2495f6e4eb3877.png" src="../../_images/15a5dfdd221b1b383f8cad6fd863e62c6bdb330b3ed870389e2495f6e4eb3877.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -13981,29 +13982,29 @@ You're not viewing the latest version.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span>
     <span class="n">x_pb_rect</span><span class="p">,</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-    <span class="n">overlap</span><span class="o">=</span><span class="mi">2048</span> <span class="o">-</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span>
     <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;one-sided&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Rectangular, PAPR = </span><span class="si">{</span><span class="n">papr_pb_rect</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span>
     <span class="n">x_pb_0p9</span><span class="p">,</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-    <span class="n">overlap</span><span class="o">=</span><span class="mi">2048</span> <span class="o">-</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span>
     <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;one-sided&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.9$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p9</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span>
     <span class="n">x_pb_0p5</span><span class="p">,</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-    <span class="n">overlap</span><span class="o">=</span><span class="mi">2048</span> <span class="o">-</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span>
     <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;one-sided&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.5$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p5</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span>
     <span class="n">x_pb_0p1</span><span class="p">,</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
-    <span class="n">overlap</span><span class="o">=</span><span class="mi">2048</span> <span class="o">-</span> <span class="mi">512</span><span class="p">,</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">12</span><span class="p">,</span>
+    <span class="n">overlap</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="mi">11</span><span class="p">,</span>
     <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;one-sided&quot;</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha = 0.1$, PAPR = </span><span class="si">{</span><span class="n">papr_pb_0p1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dB&quot;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -14013,19 +14014,19 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fb9840005fa4ef6304ac14f130db2c62e54e9f870e15ecb77618d81497844ad6.png" src="../../_images/fb9840005fa4ef6304ac14f130db2c62e54e9f870e15ecb77618d81497844ad6.png" />
+<img alt="../../_images/33872ee8eea1199864d97d88643a0754788a0aeae384c5f1644f53fae7132f9a.png" src="../../_images/33872ee8eea1199864d97d88643a0754788a0aeae384c5f1644f53fae7132f9a.png" />
 </div>
 </div>
 <h2 id="plot-across-excess-bandwidth">Plot across excess bandwidth<a class="headerlink" href="#plot-across-excess-bandwidth" title="Permalink to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">sweep_alpha</span><span class="p">(</span><span class="n">order</span><span class="p">):</span>
-    <span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
-    <span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">1_000</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">bpsk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+    <span class="n">N_symbols</span> <span class="o">=</span> <span class="mi">10_000</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">N_symbols</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 
-    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
     <span class="n">bb_papr</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">pb_papr</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -14034,7 +14035,8 @@ You're not viewing the latest version.
         <span class="n">fir</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">Interpolator</span><span class="p">(</span><span class="n">sps</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
 
         <span class="n">bb</span> <span class="o">=</span> <span class="n">fir</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">pb</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">to_real_pb</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span>
+        <span class="n">pb</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">mix</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+        <span class="n">pb</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="n">real</span>
 
         <span class="n">bb_papr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">bb</span><span class="p">))</span>
         <span class="n">pb_papr</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">papr</span><span class="p">(</span><span class="n">pb</span><span class="p">))</span>
@@ -14070,7 +14072,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/19548b3e9520c8af9d5ea026bc5db21bec41232bc938090260b860bbff76bdaf.png" src="../../_images/19548b3e9520c8af9d5ea026bc5db21bec41232bc938090260b860bbff76bdaf.png" />
+<img alt="../../_images/3220bee2ebcafe957ae7d8addf03656d6cac70cfc5ff12f369ca21071a201cfd.png" src="../../_images/3220bee2ebcafe957ae7d8addf03656d6cac70cfc5ff12f369ca21071a201cfd.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -14089,7 +14091,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f4b909eda7ac5167a9e5447f3dd3762cf54b6ec62fae61baa6729121064994a4.png" src="../../_images/f4b909eda7ac5167a9e5447f3dd3762cf54b6ec62fae61baa6729121064994a4.png" />
+<img alt="../../_images/728d59b51e7b31b5ffe7c3396b2b1ea5476946f5de064bc4fcffc6aa9ecfc9b0.png" src="../../_images/728d59b51e7b31b5ffe7c3396b2b1ea5476946f5de064bc4fcffc6aa9ecfc9b0.png" />
 </div>
 </div>
 
@@ -14099,7 +14101,7 @@ You're not viewing the latest version.
   <small>
     
       Last update:
-      May 18, 2024
+      May 24, 2024
     
   </small>
 </div>
