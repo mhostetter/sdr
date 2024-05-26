@@ -22,33 +22,45 @@ def tdoa_crlb(
     noise_bandwidth: npt.ArrayLike | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Calculates the Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation.
+    Calculates the Cramér-Rao lower bound (CRLB) on time difference of arrival (TDOA) estimation.
 
     Arguments:
-        snr1: The signal-to-noise ratio (SNR) of the first signal $\gamma_1 = S_1 / (N_0 B_N)$ in dB.
-        snr2: The signal-to-noise ratio (SNR) of the second signal $\gamma_2 = S_2 / (N_0 B_N)$ in dB.
+        snr1: The signal-to-noise ratio (SNR) of the first signal $\gamma_1 = S_1 / (N_0 B_n)$ in dB.
+        snr2: The signal-to-noise ratio (SNR) of the second signal $\gamma_2 = S_2 / (N_0 B_n)$ in dB.
         time: The integration time $T$ in seconds.
-        bandwidth: The signal bandwidth $B_S$ in Hz.
-        rms_bandwidth: The root-mean-square (RMS) bandwidth $B_{S,\text{rms}}$ in Hz. If `None`, the RMS bandwidth
-            is calculated assuming a rectangular spectrum, $B_{S,\text{rms}} = B_S/\sqrt{12}$.
-        noise_bandwidth: The noise bandwidth $B_N$ in Hz. If `None`, the noise bandwidth is assumed to be the
-            signal bandwidth $B_S$. The noise bandwidth must be the same for both signals.
+        bandwidth: The signal bandwidth $B_s$ in Hz.
+        rms_bandwidth: The root-mean-square (RMS) bandwidth $B_{s,\text{rms}}$ in Hz. If `None`, the RMS bandwidth
+            is calculated assuming a rectangular spectrum, $B_{s,\text{rms}} = B_s/\sqrt{12}$.
+        noise_bandwidth: The noise bandwidth $B_n$ in Hz. If `None`, the noise bandwidth is assumed to be the
+            signal bandwidth $B_s$. The noise bandwidth must be the same for both signals.
 
     Returns:
-        The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation standard deviation
-        $\sigma_{\text{TDOA}}$ in seconds.
+        The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation error standard deviation
+        $\sigma_{\text{tdoa}}$ in seconds.
 
     Notes:
-        The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation standard deviation
-        $\sigma_{\text{TDOA}}$ is given by
+        The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation error standard deviation
+        $\sigma_{\text{tdoa}}$ is given by
 
-        $$\sigma_{\text{TDOA}} = \frac{1}{2 \pi B_{S,\text{rms}}} \frac{1}{\sqrt{B_N T \gamma}} .$$
+        $$\sigma_{\text{tdoa}} = \frac{1}{\pi \sqrt{8} B_{s,\text{rms}}} \frac{1}{\sqrt{B_n T \gamma}}$$
+
+        $$\frac{1}{\gamma} = \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2}$$
+
+        $$B_{s,\text{rms}} = \left( \frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 W_s(f) \, df}{\int_{-\infty}^{\infty} W_s(f) \, df} \right)^{1/2} ,$$
+
+        where $\gamma$ is the effective signal-to-noise ratio (SNR), $W_s(f)$ is the power spectral density (PSD)
+        of the signal, and $\mu_f$ is the centroid of the PSD.
+
+        .. note::
+            The constant terms from Stein's original equations were rearranged. The factor of 2 was removed from
+            $\gamma$ and the factor of $2\pi$ was removed from $B_{s,\text{rms}}$ and incorporated into the CRLB
+            equation.
 
         The effective signal-to-noise ratio (SNR) $\gamma$ is improved by the coherent integration gain, which is the
-        time-bandwidth product $B_N T$. The product $B_N T \gamma$ is the output SNR of the matched filter
+        time-bandwidth product $B_n T$. The product $B_n T \gamma$ is the output SNR of the matched filter
         or correlator.
 
-        The time measurement accuracy is inversely proportional to the bandwidth of the signal and the square root of
+        The time measurement precision is inversely proportional to the bandwidth of the signal and the square root of
         the output SNR.
 
     Examples:
@@ -67,7 +79,7 @@ def tdoa_crlb(
             plt.xlim(1e-6, 1e0); \
             plt.ylim(1e-12, 1e-6); \
             plt.xlabel("Integration time (s), $T$"); \
-            plt.ylabel(r"CRLB on TDOA (s), $\sigma_{\text{TDOA}}$"); \
+            plt.ylabel(r"CRLB on TDOA (s), $\sigma_{\text{tdoa}}$"); \
             plt.title(f"Cramér-Rao lower bound (CRLB) on TDOA estimation error\nstandard deviation with {snr}-dB SNR");
 
     Group:
@@ -90,7 +102,8 @@ def tdoa_crlb(
     snr = linear(snr)
     output_snr = time * noise_bandwidth * snr
 
-    # Stein specifically mentions that the equations are only valid for output SNR greater than 10 dB
-    output_snr = np.where(output_snr >= linear(10), output_snr, np.nan)
+    # Stein specifically mentions that the equations are only valid for output SNR greater than 10 dB.
+    # Since we factored 2 out from the composite SNR, we need to compare against 7 dB.
+    output_snr = np.where(output_snr >= linear(7), output_snr, np.nan)
 
-    return 1 / (2 * np.pi * rms_bandwidth * np.sqrt(output_snr))
+    return 1 / (np.pi * np.sqrt(8) * rms_bandwidth * np.sqrt(output_snr))
