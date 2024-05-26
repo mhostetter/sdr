@@ -27,20 +27,25 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
         The effective or composite SNR $\gamma$ of the product of two signals with SNRs $\gamma_1$ and $\gamma_2$
         is given by
 
-        $$\frac{1}{\gamma} = \frac{1}{2} \left[ \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2} \right] .$$
+        $$\frac{1}{\gamma} = \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2} .$$
 
         When both $\gamma_1$ and $\gamma_2$ are greater than 0 dB, and if $\gamma_1 = \gamma_2$, then
-        $\gamma = \gamma_1 = \gamma_2$. If one is much less than the other, then $\gamma$ is approximately 3 dB
-        greater than the smaller one. When both are less than 0 dB, the composite SNR is approximately
-        $\gamma = 2 \gamma_1 \gamma_2$.
+        $\gamma = \gamma_1 / 2 = \gamma_2 / 2$. If one is much less than the other, then $\gamma$ is approximately
+        equal to the smaller one. When both are less than 0 dB, the composite SNR is approximately
+        $\gamma = \gamma_1 \gamma_2$.
+
+        .. note::
+            The constant terms from Stein's original equations were rearranged. The factor of 2 was removed and
+            incorporated into the CRLB equations. This was done so that when $\gamma_2 = \infty$ then
+            $\gamma = \gamma_1$.
 
     References:
         - `Seymour Stein, Algorithms for Ambiguity Function Processing <https://ieeexplore.ieee.org/document/1163621>`_
 
     Examples:
         Calculate the composite SNR of two signals with equal SNRs. Notice for positive input SNR, the composite SNR
-        is linear with slope 1 and intercept 0 dB. For negative input SNR, the composite SNR is linear with slope 2 and
-        offset 3 dB.
+        is linear with slope 1 and intercept -3 dB. For negative input SNR, the composite SNR is linear with slope 2
+        and intercept 0 dB.
 
         .. ipython:: python
 
@@ -56,8 +61,8 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
             plt.title("Composite SNR of two signals with equal SNRs");
 
         Calculate the composite SNR of two signals with different SNRs. Notice the knee of the curve is located at
-        `max(0, snr2)`. Left of the knee, the composite SNR is linear with slope 2 and intercept `snr2 + 3` dB.
-        Right of the knee, the composite SNR is linear with slope 0 and intercept `snr2 + 3` dB.
+        `max(0, snr2)`. Left of the knee, the composite SNR is linear with slope 1 and intercept `snr2`.
+        Right of the knee, the composite SNR is linear with slope 0 and intercept `snr2`.
 
         .. ipython:: python
 
@@ -84,10 +89,10 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
     snr1 = linear(snr1)
     snr2 = linear(snr2)
 
-    inv_snr = 0.5 * (1 / snr1 + 1 / snr2 + 1 / (snr1 * snr2))
+    inv_snr = 1 / snr1 + 1 / snr2 + 1 / (snr1 * snr2)
     snr = 1 / inv_snr
 
-    # Convert to dB
+    # Convert back to dB
     snr = db(snr)
 
     return snr
