@@ -16,7 +16,7 @@ Linear recurrent sequences
 
 .. python-apigen-group:: sequences-linear-recurrent
 
-Maximal-length sequences
+Maximum-length sequences
 ------------------------
 
-.. python-apigen-group:: sequences-maximal-length
+.. python-apigen-group:: sequences-maximum-length
