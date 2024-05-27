@@ -45,7 +45,12 @@ def toa_crlb(
 
         $$\sigma_{\text{toa}} = \frac{1}{\pi \sqrt{8} B_{s,\text{rms}}} \frac{1}{\sqrt{B_n T \gamma}}$$
 
-        $$B_{s,\text{rms}} = \sqrt{\frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 S(f - \mu_f) \, df}{\int_{-\infty}^{\infty} S(f - \mu_f) \, df}}$$
+        $$
+        B_{s,\text{rms}} = \sqrt{\frac
+        {\int_{-\infty}^{\infty} (f - \mu_f)^2 \cdot S(f - \mu_f) \, df}
+        {\int_{-\infty}^{\infty} S(f - \mu_f) \, df}
+        }
+        $$
 
         where $\gamma$ is the signal-to-noise ratio (SNR), $S(f)$ is the power spectral density (PSD) of the signal,
         and $\mu_f$ is the centroid of the PSD.
@@ -127,7 +132,12 @@ def tdoa_crlb(
 
         $$\frac{1}{\gamma} = \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2}$$
 
-        $$B_{s,\text{rms}} = \sqrt{\frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 S(f - \mu_f) \, df}{\int_{-\infty}^{\infty} S(f - \mu_f) \, df}}$$
+        $$
+        B_{s,\text{rms}} = \sqrt{\frac
+        {\int_{-\infty}^{\infty} (f - \mu_f)^2 \cdot S(f - \mu_f) \, df}
+        {\int_{-\infty}^{\infty} S(f - \mu_f) \, df}
+        }
+        $$
 
         where $\gamma$ is the effective signal-to-noise ratio (SNR), $S(f)$ is the power spectral density (PSD)
         of the signal, and $\mu_f$ is the centroid of the PSD.

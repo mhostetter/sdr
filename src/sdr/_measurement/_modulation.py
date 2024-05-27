@@ -165,7 +165,7 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
         x: The time-domain signal $x[n]$ to measure.
 
             .. note::
-                For best measurement performance, the time-domain signal should be arbitrarily long. This allows for
+                For best measurement performance, the time-domain signal should be very long. This allows for
                 more averaging of its power spectra.
 
         sample_rate: The sample rate $f_s$ in samples/s.
@@ -173,18 +173,30 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     Returns:
         The RMS signal bandwidth $B_{\text{rms}}$ in Hz.
 
+    See Also:
+        sdr.toa_crlb, sdr.tdoa_crlb
+
     Notes:
         The root-mean-square (RMS) bandwidth $B_{\text{rms}}$ is calculated by
 
-        $$B_{\text{rms}} = \sqrt{\frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 S(f - \mu_f) \, df}{\int_{-\infty}^{\infty} S(f - \mu_f) \, df}}$$
+        $$
+        B_{\text{rms}} = \sqrt{\frac
+        {\int_{-\infty}^{\infty} (f - \mu_f)^2 \cdot S(f - \mu_f) \, df}
+        {\int_{-\infty}^{\infty} S(f - \mu_f) \, df}
+        }
+        $$
 
         where $S(f)$ is the power spectral density (PSD) of the signal $x[n]$. The RMS bandwidth is measured about the
         centroid of the spectrum
 
-        $$\mu_f = \frac{\int_{-\infty}^{\infty} f S(f) \, df}{\int_{-\infty}^{\infty} S(f) \, df} .$$
+        $$
+        \mu_f = \frac
+        {\int_{-\infty}^{\infty} f \cdot S(f) \, df}
+        {\int_{-\infty}^{\infty} S(f) \, df} .
+        $$
 
-        The RMS bandwidth is a measure of the spread of the spectrum about the centroid. For a rectangular spectrum,
-        the RMS bandwidth is $B_{\text{rms}} = B_s / \sqrt{12}$.
+        The RMS bandwidth is a measure of the energy spread of the spectrum about the centroid. For a rectangular
+        spectrum, the RMS bandwidth is $B_{\text{rms}} = B_s / \sqrt{12}$.
 
     Examples:
         Calculate the RMS bandwidth of a signal with a rectangular spectrum with normalized bandwidth of 1.
@@ -238,11 +250,11 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     psd = np.fft.fftshift(psd)
 
     # Calculate the centroid of the PSD
-    f_mean = scipy.integrate.simps(f * psd, f) / scipy.integrate.simps(psd, f)
+    f_mean = scipy.integrate.simpson(f * psd, f) / scipy.integrate.simpson(psd, f)
     f -= f_mean
 
     # Calculate the RMS bandwidth
-    ms_bandwidth = scipy.integrate.simps(f**2 * psd, f) / scipy.integrate.simps(psd, f)
+    ms_bandwidth = scipy.integrate.simpson(f**2 * psd, f) / scipy.integrate.simpson(psd, f)
     rms_bandwidth = np.sqrt(float(ms_bandwidth))
 
     return rms_bandwidth
