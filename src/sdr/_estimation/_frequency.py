@@ -13,6 +13,94 @@ from ._snr import composite_snr
 
 
 @export
+def foa_crlb(
+    snr: npt.ArrayLike,
+    time: npt.ArrayLike,
+    bandwidth: npt.ArrayLike,
+    rms_integration_time: npt.ArrayLike | None = None,
+    noise_bandwidth: npt.ArrayLike | None = None,
+) -> npt.NDArray[np.float64]:
+    r"""
+    Calculates the Cramér-Rao lower bound (CRLB) on frequency of arrival (FOA) estimation.
+
+    Arguments:
+        snr: The signal-to-noise ratio (SNR) of the signal $\gamma = S / (N_0 B_n)$ in dB.
+        time: The integration time $T$ in seconds.
+        bandwidth: The signal bandwidth $B_s$ in Hz.
+        rms_integration_time: The root-mean-square (RMS) integration time $T_{\text{rms}}$ in Hz. If `None`, the RMS
+            integration time is calculated assuming a rectangular power envelope, $T_{\text{rms}} = T/\sqrt{12}$.
+        noise_bandwidth: The noise bandwidth $B_n$ in Hz. If `None`, the noise bandwidth is assumed to be the
+            signal bandwidth $B_s$. The noise bandwidth must be the same for both signals.
+
+    Returns:
+        The Cramér-Rao lower bound (CRLB) on the frequency of arrival (FOA) estimation error standard
+        deviation $\sigma_{\text{foa}}$ in Hz.
+
+    See Also:
+        sdr.rms_integration_time
+
+    Notes:
+        The Cramér-Rao lower bound (CRLB) on the frequency of arrival (FOA) estimation error standard
+        deviation $\sigma_{\text{foa}}$ is given by
+
+        $$\sigma_{\text{foa}} = \frac{1}{\pi \sqrt{8} T_{\text{rms}}} \frac{1}{\sqrt{B_n T \gamma}}$$
+
+        $$
+        T_{\text{rms}} = \sqrt{\frac
+        {\int_{-\infty}^{\infty} (t - \mu_t)^2 \cdot \left| x(t - \mu_t) \right|^2 \, dt}
+        {\int_{-\infty}^{\infty} \left| x(t - \mu_t) \right|^2 \, dt}
+        }
+        $$
+
+        where $\gamma$ is the signal-to-noise ratio (SNR), $\left| x(t) \right|^2$ is the power envelope of the signal,
+        and $\mu_t$ is the centroid of the power envelope.
+
+        .. note::
+            The constant terms from Stein's original equations were rearranged. The factor of 2 was removed from
+            $\gamma$ and the factor of $2\pi$ was removed from $T_{\text{rms}}$ and incorporated into the CRLB
+            equation.
+
+        The signal-to-noise ratio (SNR) $\gamma$ is improved by the coherent integration gain, which is the
+        time-bandwidth product $B_n T$. The product $B_n T \gamma$ is the output SNR of the matched filter
+        or correlator, which is equivalent to $E / N_0$.
+
+        $$B_n T \gamma = B_n T \frac{S}{N_0 B_n} = \frac{S T}{N_0} = \frac{E}{N_0}$$
+
+        .. warning::
+            According to Stein, the CRLB equation only holds for output SNRs greater than 10 dB. This ensures there is
+            sufficient SNR to correctly identify the time/frequency peak without high $P_{fa}$. Given the rearrangement
+            of scaling factors, CRLB values with output SNRs less than 7 dB are set to NaN.
+
+        The frequency measurement precision is inversely proportional to the integration time of the signal and the
+        square root of the output SNR.
+
+    Examples:
+        .. ipython:: python
+
+            snr = 10
+            bandwidth = np.logspace(5, 8, 101)
+
+            @savefig sdr_foa_crlb_1.png
+            plt.figure(); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-6, bandwidth), label="1 μs"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-5, bandwidth), label="10 μs"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-4, bandwidth), label="100 μs"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-3, bandwidth), label="1 ms"); \
+            plt.legend(title="Integration time"); \
+            plt.xlim(1e5, 1e8); \
+            plt.ylim(1e0, 1e6); \
+            plt.xlabel("Bandwidth (Hz), $B$"); \
+            plt.ylabel(r"CRLB on FOA (Hz), $\sigma_{\text{foa}}$"); \
+            plt.title(f"Cramér-Rao lower bound (CRLB) on FOA estimation error\nstandard deviation with {snr}-dB SNR");
+
+    Group:
+        estimation-frequency
+    """
+    # The second signal's SNR of 1 million dB is equivalent to a noiseless template
+    return fdoa_crlb(snr, 1_000_000, time, bandwidth, rms_integration_time, noise_bandwidth)
+
+
+@export
 def fdoa_crlb(
     snr1: npt.ArrayLike,
     snr2: npt.ArrayLike,
