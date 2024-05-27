@@ -5226,7 +5226,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="api/sequences/#maximal-length-sequences"><span class="md-ellipsis">Maximal-<wbr>length sequences</span></a>
+          <a href="api/sequences/#maximum-length-sequences"><span class="md-ellipsis">Maximum-<wbr>length sequences</span></a>
           
             <label for="__nav_3_2_4">
               <span class="md-nav__icon md-icon"></span>
@@ -5234,10 +5234,10 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Maximal-length sequences" data-md-level="3">
+      <nav class="md-nav" aria-label="Maximum-length sequences" data-md-level="3">
         <label class="md-nav__title" for="__nav_3_2_4">
           <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Maximal-<wbr>length sequences</span>
+          <span class="md-ellipsis">Maximum-<wbr>length sequences</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -8495,7 +8495,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="api/sdr.NCO/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.NCO (Python class) — Implements a numerically-controlled oscillator (NCO)." class="md-ellipsis">NCO</span></a>
+          <a href="api/sdr.NCO/"><span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.NCO (Python class) — Implements a numerically controlled oscillator (NCO)." class="md-ellipsis">NCO</span></a>
           
             <label for="__nav_3_7_1_1">
               <span class="md-nav__icon md-icon"></span>
@@ -8506,7 +8506,7 @@ You're not viewing the latest version.
       <nav class="md-nav" aria-label="NCO" data-md-level="4">
         <label class="md-nav__title" for="__nav_3_7_1_1">
           <span class="md-nav__icon md-icon"></span>
-          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.NCO (Python class) — Implements a numerically-controlled oscillator (NCO)." class="md-ellipsis">NCO</span>
+          <span aria-label="Python class" class="objinfo-icon objinfo-icon__data" title="Python class">C</span><span title="sdr.NCO (Python class) — Implements a numerically controlled oscillator (NCO)." class="md-ellipsis">NCO</span>
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -8548,7 +8548,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="api/sdr.NCO.__init__/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.NCO.__init__ (Python method) — Creates a numerically-controlled oscillator (NCO)." class="md-ellipsis">__<wbr>init__<wbr></span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.NCO.__init__ (Python method) — Creates a numerically controlled oscillator (NCO)." class="md-ellipsis">__<wbr>init__<wbr></span>
       </a>
     </li>
   
@@ -13910,7 +13910,7 @@ You're not viewing the latest version.
 </div><p>The <a class="reference internal" href="api/dsp/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> library is a Python 3 package for software-defined radio (SDR).</p>
 <p>The goal of <a class="reference internal" href="api/dsp/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> is to provide tools to design, analyze, build, and test digital communication systems
 in Python. The library relies on and is designed to be interoperable with <a class="reference external" href="https://numpy.org/">NumPy</a>, <a class="reference external" href="https://www.scipy.org/">SciPy</a>, and <a class="reference external" href="https://matplotlib.org/">Matplotlib</a>.
-Performance is also very important. So, where possible, <a class="reference external" href="https://numba.pydata.org/">Numba</a> is used to accelerate computationally-intensive
+Performance is also very important. So, where possible, <a class="reference external" href="https://numba.pydata.org/">Numba</a> is used to accelerate computationally intensive
 functions.</p>
 <p>Additionally, the library aims to replicate relevant functionality from MATLAB’s <a class="reference external" href="https://www.mathworks.com/products/communications.html">Communications</a> and
 <a class="reference external" href="https://www.mathworks.com/products/dsp-system.html">DSP</a> Toolboxes.</p>
@@ -13934,17 +13934,18 @@ LFSR synthesis.</p></li>
 <li><p><strong>Modulation</strong>: Phase-shift keying (PSK), <span class="math notranslate nohighlight">\(\pi/M\)</span> PSK, offset QPSK, continuous-phase modulation (CPM),
 minimum-shift keying (MSK), rectangular pulse shapes, half-sine pulse shapes, Gaussian pulse shapes,
 raised cosine pulse shapes, root raised cosine pulse shapes, differential encoding.</p></li>
-<li><p><strong>Detection</strong>: Theoretical probability of detection, probability of false alarm, and thresholds.
-Detection approximations. Coherent gain, coherent gain loss (CGL), non-coherent gain, maximum-allowable
-integration time and frequency offset.</p></li>
-<li><p><strong>Synchronization</strong>: Numerically-controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
+<li><p><strong>Estimation</strong>: TOA, TDOA, FOA, FDOA Cramér-Rao lower bounds.</p></li>
+<li><p><strong>Detection</strong>: Detector probability density functions (PDFs). Theoretical probability of detection, probability of
+false alarm, and thresholds. Detection performance approximations. Coherent gain, coherent gain loss (CGL),
+and non-coherent gain. Maximum-allowable integration time and frequency offset.</p></li>
+<li><p><strong>Synchronization</strong>: Numerically controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
 analysis, phase error detectors (PEDs), automatic gain control (AGC).</p></li>
 <li><p><strong>Measurement</strong>: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
-error vector magnitude (EVM).</p></li>
+error vector magnitude (EVM), RMS integration time, and RMS bandwidth.</p></li>
 <li><p><strong>Conversions</strong>: Between linear units and decibels. Between <span class="math notranslate nohighlight">\(E_b/N_0\)</span>, <span class="math notranslate nohighlight">\(E_s/N_0\)</span>, and <span class="math notranslate nohighlight">\(S/N\)</span>.</p></li>
 <li><p><strong>Simulation</strong>: Binary symmetric channels (BSC), binary erasure channels (BEC), discrete memoryless channels (DMC).
 Apply additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.</p></li>
-<li><p><strong>Link budgets</strong>: Channel capacity, free-space path loss, antenna gain.</p></li>
+<li><p><strong>Link budgets</strong>: BSC, BEC, AWGN, and BI-AWGN channel capacity, free-space path loss, antenna gain.</p></li>
 <li><p><strong>Miscellaneous</strong>: Packing and unpacking binary data, hexdump of binary data.</p></li>
 <li><p><strong>Plotting</strong>: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
 bit error rate (BER), symbol error rate (SER), probability of detection, receiver operating characteristic (ROC),
@@ -13968,7 +13969,7 @@ phase delay, and group delay.</p></li>
   <small>
     
       Last update:
-      May 15, 2024
+      May 27, 2024
     
   </small>
 </div>

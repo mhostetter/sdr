@@ -21,7 +21,7 @@ The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR).
 
 The goal of :obj:`sdr` is to provide tools to design, analyze, build, and test digital communication systems
 in Python. The library relies on and is designed to be interoperable with `NumPy`_, `SciPy`_, and `Matplotlib`_.
-Performance is also very important. So, where possible, `Numba`_ is used to accelerate computationally-intensive
+Performance is also very important. So, where possible, `Numba`_ is used to accelerate computationally intensive
 functions.
 
 Additionally, the library aims to replicate relevant functionality from MATLAB's `Communications`_ and
@@ -65,17 +65,18 @@ View all available classes and functions in the `API Reference <https://mhostett
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, continuous-phase modulation (CPM),
   minimum-shift keying (MSK), rectangular pulse shapes, half-sine pulse shapes, Gaussian pulse shapes,
   raised cosine pulse shapes, root raised cosine pulse shapes, differential encoding.
-- **Detection**: Theoretical probability of detection, probability of false alarm, and thresholds.
-  Detection approximations. Coherent gain, coherent gain loss (CGL), non-coherent gain, maximum-allowable
-  integration time and frequency offset.
-- **Synchronization**: Numerically-controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
+- **Estimation**: TOA, TDOA, FOA, FDOA Cramér-Rao lower bounds.
+- **Detection**: Detector probability density functions (PDFs). Theoretical probability of detection, probability of
+  false alarm, and thresholds. Detection performance approximations. Coherent gain, coherent gain loss (CGL),
+  and non-coherent gain. Maximum-allowable integration time and frequency offset.
+- **Synchronization**: Numerically controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
   analysis, phase error detectors (PEDs), automatic gain control (AGC).
 - **Measurement**: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
-  error vector magnitude (EVM).
+  error vector magnitude (EVM), RMS integration time, and RMS bandwidth.
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
 - **Simulation**: Binary symmetric channels (BSC), binary erasure channels (BEC), discrete memoryless channels (DMC).
   Apply additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
-- **Link budgets**: Channel capacity, free-space path loss, antenna gain.
+- **Link budgets**: BSC, BEC, AWGN, and BI-AWGN channel capacity, free-space path loss, antenna gain.
 - **Miscellaneous**: Packing and unpacking binary data, hexdump of binary data.
 - **Plotting**: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
   bit error rate (BER), symbol error rate (SER), probability of detection, receiver operating characteristic (ROC),
