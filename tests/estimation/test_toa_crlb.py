@@ -8,8 +8,8 @@ def test_stein_1():
     snr1 = -10  # dB
     time = 1e-3  # seconds
     bandwidth = 1e6  # Hz
-    sigma_tdoa = sdr.toa_crlb(snr1, time, bandwidth)
-    assert sigma_tdoa == pytest.approx(38.9848400616838e-9)
+    sigma_toa = sdr.toa_crlb(snr1, time, bandwidth)
+    assert sigma_toa == pytest.approx(38.9848400616838e-9)
 
 
 def test_stein_2():
@@ -17,5 +17,5 @@ def test_stein_2():
     snr1 = -10  # dB
     time = 6e-3  # seconds
     bandwidth = 1e6  # Hz
-    sigma_tdoa = sdr.toa_crlb(snr1, time, bandwidth)
-    assert sigma_tdoa == pytest.approx(15.915494309189534e-9)
+    sigma_toa = sdr.toa_crlb(snr1, time, bandwidth)
+    assert sigma_toa == pytest.approx(15.915494309189534e-9)
