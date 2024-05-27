@@ -209,11 +209,13 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
         The capacity of the BI-AWGN channel is
 
-        $$C = \max_{f_X} I(X; Y) = \max_{f_X} H(Y) - H(Y | X) ,$$
+        $$C = \max_{f_X} I(X; Y)$$
 
-        where $H(Y)$ is the differential entropy of the output $Y$ and $H(Y | X)$ is the conditional entropy of the
-        output $Y$ given the input $X$. The maximum mutual information is achieved when $X$ is equally likely to be
-        $-1$ or $1$.
+        $$I(X; Y) = H(Y) - H(Y | X) ,$$
+
+        where $I(X; Y)$ is the mutual information between the input $X$ and output $Y$, $H(Y)$ is the differential
+        entropy of the output $Y$, and $H(Y | X)$ is the conditional entropy of the output $Y$ given the input $X$.
+        The maximum mutual information is achieved when $X$ is equally likely to be $-1$ or $1$.
 
         The conditional probability density function (PDF) of $Y$ given $X = x$ is
 
