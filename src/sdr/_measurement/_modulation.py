@@ -258,3 +258,116 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     rms_bandwidth = np.sqrt(float(ms_bandwidth))
 
     return rms_bandwidth
+
+
+@export
+def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
+    r"""
+    Measures the RMS integration time $T_{\text{rms}}$ of the signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+
+            .. note::
+                For best measurement performance, the time-domain signal should be very oversampled. This allows
+                for better time precision.
+
+        sample_rate: The sample rate $f_s$ in samples/s.
+
+    Returns:
+        The RMS integration time $T_{\text{rms}}$ in seconds.
+
+    See Also:
+        sdr.foa_crlb, sdr.fdoa_crlb
+
+    Notes:
+        The root-mean-square (RMS) integration time $T_{\text{rms}}$ is calculated by
+
+        $$
+        T_{\text{rms}} = \sqrt{\frac
+        {\int_{-\infty}^{\infty} (t - \mu_t)^2 \cdot \left| x(t - \mu_t) \right|^2 \, dt}
+        {\int_{-\infty}^{\infty} \left| x(t - \mu_t) \right|^2 \, dt}
+        }
+        $$
+
+        where $x(t)$ is the continuous-time signal that was discretely sampled as $x[n]$. The RMS integration time is
+        measured about the centroid of the signal
+
+        $$
+        \mu_t = \frac
+        {\int_{-\infty}^{\infty} t \cdot \left| x(t) \right|^2 \, dt}
+        {\int_{-\infty}^{\infty} \left| x(t) \right|^2 \, dt} .
+        $$
+
+        The RMS integration time is a measure of the energy spread of the signal about the centroid. For a rectangular
+        signal, the RMS integration time is $T_{\text{rms}} = T / \sqrt{12}$.
+
+    Examples:
+        Calculate the RMS integration time of a signal with a rectangular envelope and duration of 1 second.
+
+        .. ipython:: python
+
+            symbol_rate = 100  # symbols/s
+            sps = 100  # samples/symbol
+            sample_rate = symbol_rate * sps  # samples/s
+            n_symbols = symbol_rate  # Make a 1-second long signal
+            t_s = n_symbols / symbol_rate  # Integration time (s)
+            t_s / np.sqrt(12)
+
+        Create a BPSK signal with a rectangular pulse shape. Measure the RMS integration time of the signal and compare
+        it to the ideal rectangular envelope.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(2, pulse_shape="rect", sps=sps)
+            symbols = np.random.randint(0, psk.order, n_symbols)
+            x_rect = psk.modulate(symbols).real
+            sdr.rms_integration_time(x_rect, sample_rate=sample_rate)
+
+            @savefig sdr_rms_integration_time_1.png
+            plt.figure(); \
+            sdr.plot.time_domain(x_rect, sample_rate=sample_rate, label="Rectangular");
+
+        Make the same measurements with square-root raised cosine (SRRC) pulse shaping.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(2, pulse_shape="srrc", sps=sps)
+            symbols = np.random.randint(0, psk.order, n_symbols)
+            x_srrc = psk.modulate(symbols).real
+            sdr.rms_integration_time(x_srrc, sample_rate=sample_rate)
+
+            @savefig sdr_rms_integration_time_2.png
+            plt.figure(); \
+            sdr.plot.time_domain(x_srrc, sample_rate=sample_rate, label="SRRC");
+
+        For a given transmit energy, the RMS integration time is improved by increasing the energy at the edges of the
+        signal. This can be achieved by applying a parabolic envelope to the BPSK signal. The energy of the signals
+        is normalized. Notice the RMS integration time increases by 50% for the same transmit energy and duration.
+
+        .. ipython:: python
+
+            x_srrc_env = x_srrc * np.linspace(-1, 1, len(x_srrc))**2
+            x_srrc_env *= np.sqrt(sdr.energy(x_srrc) / sdr.energy(x_srrc_env))
+            sdr.rms_integration_time(x_srrc_env, sample_rate=sample_rate)
+
+            @savefig sdr_rms_integration_time_3.png
+            plt.figure(); \
+            sdr.plot.time_domain(x_srrc, sample_rate=sample_rate, label="SRRC"); \
+            sdr.plot.time_domain(x_srrc_env, sample_rate=sample_rate, label="SRRC + Parabolic Envelope");
+
+    Group:
+        measurement-modulation
+    """
+    x = np.asarray(x)
+    t = np.arange(x.size) / sample_rate
+
+    # Calculate the centroid of the signal
+    t_mean = scipy.integrate.simpson(t * np.abs(x) ** 2, t) / scipy.integrate.simpson(np.abs(x) ** 2, t)
+    t -= t_mean
+
+    # Calculate the RMS integration time
+    ms_integration_time = scipy.integrate.simpson(t**2 * np.abs(x) ** 2, t) / scipy.integrate.simpson(np.abs(x) ** 2, t)
+    rms_integration_time = np.sqrt(float(ms_integration_time))
+
+    return rms_integration_time
