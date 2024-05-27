@@ -66,6 +66,11 @@ def toa_crlb(
 
         $$B_n T \gamma = B_n T \frac{S}{N_0 B_n} = \frac{S T}{N_0} = \frac{E}{N_0}$$
 
+        .. warning::
+            According to Stein, the CRLB equation only holds for output SNRs greater than 10 dB. This ensures there is
+            sufficient SNR to correctly identify the time/frequency peak without high $P_{fa}$. Given the rearrangement
+            of scaling factors, CRLB values with output SNRs less than 7 dB are set to NaN.
+
         The time measurement precision is inversely proportional to the bandwidth of the signal and the square root of
         the output SNR.
 
@@ -153,6 +158,11 @@ def tdoa_crlb(
 
         $$B_n T \gamma = B_n T \frac{S}{N_0 B_n} = \frac{S T}{N_0} = \frac{E}{N_0}$$
 
+        .. warning::
+            According to Stein, the CRLB equation only holds for output SNRs greater than 10 dB. This ensures there is
+            sufficient SNR to correctly identify the time/frequency peak without high $P_{fa}$. Given the rearrangement
+            of scaling factors, CRLB values with output SNRs less than 7 dB are set to NaN.
+
         The time measurement precision is inversely proportional to the bandwidth of the signal and the square root of
         the output SNR.
 
@@ -184,7 +194,7 @@ def tdoa_crlb(
     bandwidth = np.asarray(bandwidth)
 
     if rms_bandwidth is None:
-        rms_bandwidth = 1 / np.sqrt(12) * bandwidth
+        rms_bandwidth = bandwidth / np.sqrt(12)
     rms_bandwidth = np.asarray(rms_bandwidth)
 
     if noise_bandwidth is None:
