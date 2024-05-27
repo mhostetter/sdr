@@ -58,17 +58,18 @@ View all available classes and functions in the [API Reference](https://mhostett
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, continuous-phase modulation (CPM),
   minimum-shift keying (MSK), rectangular pulse shapes, half-sine pulse shapes, Gaussian pulse shapes,
   raised cosine pulse shapes, root raised cosine pulse shapes, differential encoding.
-- **Detection**: Theoretical probability of detection, probability of false alarm, and thresholds.
-  Detection approximations. Coherent gain, coherent gain loss (CGL), non-coherent gain, maximum-allowable
-  integration time and frequency offset.
+- **Estimation**: TOA, TDOA, FOA, FDOA Cramér-Rao lower bounds.
+- **Detection**: Detector probability density functions (PDFs). Theoretical probability of detection, probability of
+  false alarm, and thresholds. Detection performance approximations. Coherent gain, coherent gain loss (CGL),
+  and non-coherent gain. Maximum-allowable integration time and frequency offset.
 - **Synchronization**: Numerically controlled oscillators (NCO), loop filters, closed-loop phase-locked loop (PLL)
   analysis, phase error detectors (PEDs), automatic gain control (AGC).
 - **Measurement**: Energy, power, voltage, Euclidean distance, Hamming distance, bit/symbol error rate,
-  error vector magnitude (EVM).
+  error vector magnitude (EVM), RMS integration time, and RMS bandwidth.
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
 - **Simulation**: Binary symmetric channels (BSC), binary erasure channels (BEC), discrete memoryless channels (DMC).
   Apply additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
-- **Link budgets**: Channel capacity, free-space path loss, antenna gain.
+- **Link budgets**: BSC, BEC, AWGN, and BI-AWGN channel capacity, free-space path loss, antenna gain.
 - **Miscellaneous**: Packing and unpacking binary data, hexdump of binary data.
 - **Plotting**: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
   bit error rate (BER), symbol error rate (SER), probability of detection, receiver operating characteristic (ROC),
