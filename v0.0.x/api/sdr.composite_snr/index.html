@@ -7708,8 +7708,91 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.toa_crlb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.toa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on time of arrival (TOA) estimation." class="md-ellipsis">toa_<wbr>crlb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.tdoa_crlb/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.tdoa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation." class="md-ellipsis">tdoa_<wbr>crlb</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.tdoa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on time difference of arrival (TDOA) estimation." class="md-ellipsis">tdoa_<wbr>crlb</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_5_3" type="checkbox" id="__nav_3_5_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../estimation/#frequency-domain"><span class="md-ellipsis">Frequency domain</span></a>
+          
+            <label for="__nav_3_5_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Frequency domain" data-md-level="3">
+        <label class="md-nav__title" for="__nav_3_5_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Frequency domain</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.foa_crlb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.foa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on frequency of arrival (FOA) estimation." class="md-ellipsis">foa_<wbr>crlb</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.fdoa_crlb/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.fdoa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on frequency difference of arrival (FDOA) estimation." class="md-ellipsis">fdoa_<wbr>crlb</span>
       </a>
     </li>
   
@@ -11011,7 +11094,37 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.evm/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.evm (Python function) — Calculates the error-vector magnitude (EVM) of the complex symbols $hat{x}[k]$." class="md-ellipsis">evm</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.evm (Python function) — Measures the error-vector magnitude (EVM) of the complex symbols $hat{x}[k]$." class="md-ellipsis">evm</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.rms_bandwidth/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.rms_bandwidth (Python function) — Measures the RMS bandwidth $B_{text{rms}}$ of the signal $x[n]$." class="md-ellipsis">rms_<wbr>bandwidth</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.rms_integration_time/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.rms_integration_time (Python function) — Measures the RMS integration time $T_{text{rms}}$ of the signal $x[n]$." class="md-ellipsis">rms_<wbr>integration_<wbr>time</span>
       </a>
     </li>
   
@@ -13937,20 +14050,26 @@ You're not viewing the latest version.
 <p>The effective or composite SNR <span class="math notranslate nohighlight">\(\gamma\)</span> of the product of two signals with SNRs <span class="math notranslate nohighlight">\(\gamma_1\)</span> and <span class="math notranslate nohighlight">\(\gamma_2\)</span>
 is given by</p>
 <p><div class="math notranslate nohighlight">
-\[\frac{1}{\gamma} = \frac{1}{2} \left[ \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2} \right] .\]</div>
+\[\frac{1}{\gamma} = \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2} .\]</div>
 </p>
 <p>When both <span class="math notranslate nohighlight">\(\gamma_1\)</span> and <span class="math notranslate nohighlight">\(\gamma_2\)</span> are greater than 0 dB, and if <span class="math notranslate nohighlight">\(\gamma_1 = \gamma_2\)</span>, then
-<span class="math notranslate nohighlight">\(\gamma = \gamma_1 = \gamma_2\)</span>. If one is much less than the other, then <span class="math notranslate nohighlight">\(\gamma\)</span> is approximately 3 dB
-greater than the smaller one. When both are less than 0 dB, the composite SNR is approximately
-<span class="math notranslate nohighlight">\(\gamma = 2 \gamma_1 \gamma_2\)</span>.</p>
+<span class="math notranslate nohighlight">\(\gamma = \gamma_1 / 2 = \gamma_2 / 2\)</span>. If one is much less than the other, then <span class="math notranslate nohighlight">\(\gamma\)</span> is approximately
+equal to the smaller one. When both are less than 0 dB, the composite SNR is approximately
+<span class="math notranslate nohighlight">\(\gamma = \gamma_1 \gamma_2\)</span>.</p>
+<div class="note admonition">
+<p class="admonition-title">Note</p>
+<p>The constant terms from Stein’s original equations were rearranged. The factor of 2 was removed and
+incorporated into the CRLB equations. This was done so that when <span class="math notranslate nohighlight">\(\gamma_2 = \infty\)</span> then
+<span class="math notranslate nohighlight">\(\gamma = \gamma_1\)</span>.</p>
+</div>
 <p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://ieeexplore.ieee.org/document/1163621">Seymour Stein, Algorithms for Ambiguity Function Processing</a></p></li>
 </ul>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Calculate the composite SNR of two signals with equal SNRs. Notice for positive input SNR, the composite SNR
-is linear with slope 1 and intercept 0 dB. For negative input SNR, the composite SNR is linear with slope 2 and
-offset 3 dB.</p>
+is linear with slope 1 and intercept -3 dB. For negative input SNR, the composite SNR is linear with slope 2
+and intercept 0 dB.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">snr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
@@ -13965,8 +14084,8 @@ offset 3 dB.</p>
 </div>
 <img alt="../../_images/sdr_composite_snr_1.png" src="../../_images/sdr_composite_snr_1.png" />
 <p>Calculate the composite SNR of two signals with different SNRs. Notice the knee of the curve is located at
-<code class="code highlight python docutils literal highlight-python"><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">snr2</span><span class="p">)</span></code>. Left of the knee, the composite SNR is linear with slope 2 and intercept <code class="code highlight python docutils literal highlight-python"><span class="n">snr2</span> <span class="o">+</span> <span class="mi">3</span></code> dB.
-Right of the knee, the composite SNR is linear with slope 0 and intercept <code class="code highlight python docutils literal highlight-python"><span class="n">snr2</span> <span class="o">+</span> <span class="mi">3</span></code> dB.</p>
+<code class="code highlight python docutils literal highlight-python"><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">snr2</span><span class="p">)</span></code>. Left of the knee, the composite SNR is linear with slope 1 and intercept <code class="code highlight python docutils literal highlight-python"><span class="n">snr2</span></code>.
+Right of the knee, the composite SNR is linear with slope 0 and intercept <code class="code highlight python docutils literal highlight-python"><span class="n">snr2</span></code>.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">snr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
 
 <span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span>
@@ -14033,13 +14152,13 @@ Right of the knee, the composite SNR is linear with slope 0 and intercept <code 
       
       
         
-        <a href="../sdr.tdoa_crlb/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.tdoa_crlb" rel="next">
+        <a href="../sdr.toa_crlb/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.toa_crlb" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              sdr.tdoa_crlb
+              sdr.toa_crlb
             </div>
           </div>
           <div class="md-footer__button md-icon">
