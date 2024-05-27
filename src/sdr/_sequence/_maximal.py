@@ -99,7 +99,7 @@ def m_sequence(
             x.size
 
     Group:
-        sequences-maximal-length
+        sequences-maximum-length
     """
     if not isinstance(degree, int):
         raise TypeError(f"Argument 'degree' must be an integer, not {type(degree)}.")
