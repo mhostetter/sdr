@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.integrate
 from typing_extensions import Literal
 
 from .._helper import export
@@ -20,7 +21,7 @@ def evm(
     output: Literal["rms", "all"] | float = "rms",
 ) -> float:
     r"""
-    Calculates the error-vector magnitude (EVM) of the complex symbols $\hat{x}[k]$.
+    Measures the error-vector magnitude (EVM) of the complex symbols $\hat{x}[k]$.
 
     Arguments:
         x_hat: The complex symbols $\hat{x}[k]$ to be measured.
@@ -153,3 +154,95 @@ def evm(
         return perc_evm
 
     raise ValueError(f"Argument 'output' must be 'rms' or a float between 0 and 100, not {output}.")
+
+
+@export
+def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
+    r"""
+    Measures the RMS bandwidth $B_{\text{rms}}$ of the signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+
+            .. note::
+                For best measurement performance, the time-domain signal should be arbitrarily long. This allows for
+                more averaging of its power spectra.
+
+        sample_rate: The sample rate $f_s$ in samples/s.
+
+    Returns:
+        The RMS signal bandwidth $B_{\text{rms}}$ in Hz.
+
+    Notes:
+        The root-mean-square (RMS) bandwidth $B_{\text{rms}}$ is calculated by
+
+        $$B_{\text{rms}} = \sqrt{\frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 S(f - \mu_f) \, df}{\int_{-\infty}^{\infty} S(f - \mu_f) \, df}}$$
+
+        where $S(f)$ is the power spectral density (PSD) of the signal $x[n]$. The RMS bandwidth is measured about the
+        centroid of the spectrum
+
+        $$\mu_f = \frac{\int_{-\infty}^{\infty} f S(f) \, df}{\int_{-\infty}^{\infty} S(f) \, df} .$$
+
+        The RMS bandwidth is a measure of the spread of the spectrum about the centroid. For a rectangular spectrum,
+        the RMS bandwidth is $B_{\text{rms}} = B_s / \sqrt{12}$.
+
+    Examples:
+        Calculate the RMS bandwidth of a signal with a rectangular spectrum with normalized bandwidth of 1.
+
+        .. ipython:: python
+
+            symbol_rate = 1  # symbols/s
+            symbol_rate / np.sqrt(12)
+
+        Create a BPSK signal with a rectangular pulse shape. Note, the time-domain pulse shape is rectangular, but the
+        spectrum is sinc-shaped. Measure the RMS bandwidth of the signal and compare it to the ideal rectangular
+        spectrum.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(2, pulse_shape="rect")
+            symbols = np.random.randint(0, psk.order, 10_000)
+            x_rect = psk.modulate(symbols)
+            sdr.rms_bandwidth(x_rect, sample_rate=symbol_rate * psk.sps)
+
+        Make the same measurements with square-root raised cosine (SRRC) pulse shaping. The SRRC spectrum is narrower
+        and, therefore, closer to the rectangular spectrum.
+
+        .. ipython:: python
+
+            psk = sdr.PSK(2, pulse_shape="srrc")
+            symbols = np.random.randint(0, psk.order, 10_000)
+            x_srrc = psk.modulate(symbols)
+            sdr.rms_bandwidth(x_srrc, sample_rate=symbol_rate * psk.sps)
+
+        Plot the power spectral density (PSD) of the rectangular and SRRC pulse-shaped signals.
+
+        .. ipython:: python
+
+            @savefig sdr_rms_bandwidth_1.png
+            plt.figure(); \
+            sdr.plot.periodogram(x_rect, sample_rate=symbol_rate * psk.sps, label="Rectangular"); \
+            sdr.plot.periodogram(x_srrc, sample_rate=symbol_rate * psk.sps, label="SRRC");
+
+    Group:
+        measurement-modulation
+    """
+    x = np.asarray(x)
+
+    f, psd = scipy.signal.welch(
+        x, fs=sample_rate, detrend=False, return_onesided=False, scaling="density", average="mean"
+    )
+
+    # Shift so that the frequencies increase monotonically
+    f = np.fft.fftshift(f)
+    psd = np.fft.fftshift(psd)
+
+    # Calculate the centroid of the PSD
+    f_mean = scipy.integrate.simps(f * psd, f) / scipy.integrate.simps(psd, f)
+    f -= f_mean
+
+    # Calculate the RMS bandwidth
+    ms_bandwidth = scipy.integrate.simps(f**2 * psd, f) / scipy.integrate.simps(psd, f)
+    rms_bandwidth = np.sqrt(float(ms_bandwidth))
+
+    return rms_bandwidth
