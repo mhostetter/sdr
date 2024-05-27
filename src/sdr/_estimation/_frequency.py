@@ -82,10 +82,10 @@ def foa_crlb(
 
             @savefig sdr_foa_crlb_1.png
             plt.figure(); \
-            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-6, bandwidth), label="1 μs"); \
-            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-5, bandwidth), label="10 μs"); \
-            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-4, bandwidth), label="100 μs"); \
-            plt.loglog(bandwidth, sdr.foa_crlb(snr, snr, 1e-3, bandwidth), label="1 ms"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, 1e-6, bandwidth), label="1 μs"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, 1e-5, bandwidth), label="10 μs"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, 1e-4, bandwidth), label="100 μs"); \
+            plt.loglog(bandwidth, sdr.foa_crlb(snr, 1e-3, bandwidth), label="1 ms"); \
             plt.legend(title="Integration time"); \
             plt.xlim(1e5, 1e8); \
             plt.ylim(1e0, 1e6); \
