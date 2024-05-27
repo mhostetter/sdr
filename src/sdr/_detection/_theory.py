@@ -508,9 +508,6 @@ def _sum_distribution(
     r"""
     Sums a distribution `n_nc` times.
 
-    This function will compute n_nc - 1 convolutions of the base distribution. If n_nc is larger than 40,
-    using the Central Limit Theorem, this function will estimate the summed distribution as a Gaussian.
-
     Arguments:
         dist: The distribution to sum.
         n_nc: The number of times to sum the distribution.
