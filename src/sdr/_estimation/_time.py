@@ -38,6 +38,9 @@ def tdoa_crlb(
         The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation error standard deviation
         $\sigma_{\text{tdoa}}$ in seconds.
 
+    See Also:
+        sdr.rms_bandwidth
+
     Notes:
         The Cramér-Rao lower bound (CRLB) on the time difference of arrival (TDOA) estimation error standard deviation
         $\sigma_{\text{tdoa}}$ is given by
@@ -46,9 +49,9 @@ def tdoa_crlb(
 
         $$\frac{1}{\gamma} = \frac{1}{\gamma_1} + \frac{1}{\gamma_2} + \frac{1}{\gamma_1 \gamma_2}$$
 
-        $$B_{s,\text{rms}} = \left( \frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 W_s(f) \, df}{\int_{-\infty}^{\infty} W_s(f) \, df} \right)^{1/2} ,$$
+        $$B_{s,\text{rms}} = \sqrt{\frac{\int_{-\infty}^{\infty} (f - \mu_f)^2 S(f - \mu_f) \, df}{\int_{-\infty}^{\infty} S(f - \mu_f) \, df}}$$
 
-        where $\gamma$ is the effective signal-to-noise ratio (SNR), $W_s(f)$ is the power spectral density (PSD)
+        where $\gamma$ is the effective signal-to-noise ratio (SNR), $S(f)$ is the power spectral density (PSD)
         of the signal, and $\mu_f$ is the centroid of the PSD.
 
         .. note::
@@ -58,7 +61,9 @@ def tdoa_crlb(
 
         The effective signal-to-noise ratio (SNR) $\gamma$ is improved by the coherent integration gain, which is the
         time-bandwidth product $B_n T$. The product $B_n T \gamma$ is the output SNR of the matched filter
-        or correlator.
+        or correlator, which is equivalent to $E / N_0$.
+
+        $$B_n T \gamma = B_n T \frac{S}{N_0 B_n} = \frac{S T}{N_0} = \frac{E}{N_0}$$
 
         The time measurement precision is inversely proportional to the bandwidth of the signal and the square root of
         the output SNR.
