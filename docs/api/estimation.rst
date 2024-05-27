@@ -10,3 +10,8 @@ Time domain
 -----------
 
 .. python-apigen-group:: estimation-time
+
+Frequency domain
+----------------
+
+.. python-apigen-group:: estimation-frequency
