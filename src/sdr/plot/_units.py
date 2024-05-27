@@ -42,22 +42,22 @@ def freq_units(freq: npt.NDArray[np.float64]) -> tuple[str, float]:
     """
     max_freq = np.nanmax(np.abs(freq))
 
-    if max_freq > 10e12:
+    if max_freq > 1e12:
         scalar = 1e-12
         units = "THz"
-    elif max_freq > 10e9:
+    elif max_freq > 1e9:
         scalar = 1e-9
         units = "GHz"
-    elif max_freq > 10e6:
+    elif max_freq > 1e6:
         scalar = 1e-6
         units = "MHz"
-    elif max_freq > 10e3:
+    elif max_freq > 1e3:
         scalar = 1e-3
         units = "kHz"
-    elif max_freq > 10:
+    elif max_freq > 1:
         scalar = 1
         units = "Hz"
-    elif max_freq > 10e-3:
+    elif max_freq > 1e-3:
         scalar = 1e3
         units = "mHz"
     else:
