@@ -33,7 +33,7 @@ class ErrorRate:
 
         .. ipython:: python
 
-            x_hat = [1, 0, 1, 1, 1]; \
+            x_hat = [1, 0, 1, 1, 1]
             ber.add(10, x, x_hat)
 
         Measure and accumulate bit errors from the second received bit vector containing 2 bit errors at 10 dB SNR.
@@ -41,7 +41,7 @@ class ErrorRate:
 
         .. ipython:: python
 
-            x_hat = [1, 0, 1, 0, 1]; \
+            x_hat = [1, 0, 1, 0, 1]
             ber.add(10, x, x_hat)
 
         The total errors are 3, total bits 10, and average bit error rate 0.3.
