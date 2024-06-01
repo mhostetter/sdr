@@ -196,7 +196,7 @@ def sample_rate_offset(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the sample rate offset is applied.
-        offset: The sample rate offset $\Delta f_s = f_{s,new} - f_{s_old}$ in samples/s.
+        offset: The sample rate offset $\Delta f_s = f_{s,\text{new}} - f_{s,\text{old}}$ in samples/s.
         sample_rate: The sample rate $f_s$ in samples/s.
 
     Returns:
@@ -274,8 +274,8 @@ def frequency_offset(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the frequency offset is applied.
-        offset: The frequency offset $\Delta f_c = f_{c,new} - f_{c,old}$ in Hz.
-        offset_rate: The frequency offset rate $\Delta f_c / \Delta t}$ in Hz/s.
+        offset: The frequency offset $\Delta f_c = f_{c,\text{new}} - f_{c,\text{old}}$ in Hz.
+        offset_rate: The frequency offset rate $\Delta f_c / \Delta t$ in Hz/s.
         phase: The phase offset $\phi$ in degrees.
         sample_rate: The sample rate $f_s$ in samples/s.
 
@@ -309,7 +309,6 @@ def frequency_offset(
 
         .. ipython:: python
 
-            freq = 1 / 100
             freq_rate = 2 / 100**2
             y = sdr.frequency_offset(x, freq, freq_rate)
 
