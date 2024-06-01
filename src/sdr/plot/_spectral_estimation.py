@@ -27,6 +27,7 @@ def periodogram(
     average: Literal["mean", "median"] = "mean",
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -50,12 +51,16 @@ def periodogram(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued signals and `"two-sided"` for complex-valued signals.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic power spectral density.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
         plot-spectral-estimation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         x = np.asarray(x)
 
         if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
@@ -99,25 +104,25 @@ def periodogram(
             f *= scalar
 
         if x_axis == "log":
-            plt.semilogx(f, Pxx, **kwargs)
+            ax.semilogx(f, Pxx, **kwargs)
         else:
-            plt.plot(f, Pxx, **kwargs)
+            ax.plot(f, Pxx, **kwargs)
 
-        plt.grid(True, which="both")
+        ax.grid(True, which="both")
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
 
         if sample_rate_provided:
-            plt.xlabel(f"Frequency ({units}), $f$")
+            ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_xlabel("Normalized Frequency, $f /f_s$")
 
         if y_axis == "log":
-            plt.ylabel("Power density (dB/Hz)")
+            ax.set_ylabel("Power density (dB/Hz)")
         else:
-            plt.ylabel("Power density (W/Hz)")
+            ax.set_ylabel("Power density (W/Hz)")
 
-        plt.title("Power spectral density")
+        ax.set_title("Power spectral density")
 
 
 @export
@@ -132,6 +137,7 @@ def spectrogram(
     y_axis: Literal["auto", "one-sided", "two-sided"] = "auto",
     # persistence: bool = False,
     # colorbar: bool = True,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -152,6 +158,7 @@ def spectrogram(
         y_axis: The y-axis scaling. Options are to display a one-sided spectrum or a two-sided spectrum.
             The default is `"auto"` which selects `"one-sided"` for real-valued signals and `"two-sided"` for
             complex-valued signals.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
@@ -163,6 +170,9 @@ def spectrogram(
         plot-spectral-estimation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         x = np.asarray(x)
 
         if not y_axis in ["auto", "one-sided", "two-sided"]:
@@ -213,11 +223,11 @@ def spectrogram(
         }
         kwargs = {**default_kwargs, **kwargs}
 
-        plt.pcolormesh(t, f, Sxx, **kwargs)
+        ax.pcolormesh(t, f, Sxx, **kwargs)
         if sample_rate_provided:
-            plt.xlabel(f"Time ({t_units}), $t$")
-            plt.ylabel(f"Frequency ({f_units}), $f$")
+            ax.set_xlabel(f"Time ({t_units}), $t$")
+            ax.set_ylabel(f"Frequency ({f_units}), $f$")
         else:
-            plt.xlabel("Samples, $n$")
-            plt.ylabel("Normalized Frequency, $f /f_s$")
-        plt.title("Spectrogram")
+            ax.set_xlabel("Samples, $n$")
+            ax.set_ylabel("Normalized Frequency, $f /f_s$")
+        ax.set_title("Spectrogram")

@@ -48,6 +48,7 @@ def time_domain(  # noqa: D417
     centered: bool = False,
     offset: float = 0,
     diff: Literal["color", "line"] = "color",
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -120,6 +121,9 @@ def time_domain(  # noqa: D417
         if not x.ndim == 1:
             raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
 
+        if ax is None:
+            ax = plt.gca()
+
         if sample_rate is None:
             sample_rate_provided = False
             sample_rate = 1
@@ -141,12 +145,12 @@ def time_domain(  # noqa: D417
             units, scalar = time_units(t)
             t *= scalar
 
-        real_or_complex_plot(t, x, diff=diff, **kwargs)
+        real_or_complex_plot(ax, t, x, diff=diff, **kwargs)
         if sample_rate_provided:
-            plt.xlabel(f"Time ({units})")
+            ax.set_xlabel(f"Time ({units})")
         else:
-            plt.xlabel("Sample, $n$")
-        plt.ylabel("Amplitude")
+            ax.set_xlabel("Sample, $n$")
+        ax.set_ylabel("Amplitude")
 
 
 @export
@@ -158,9 +162,10 @@ def raster(
     color: Literal["index"] | str = "index",
     persistence: bool = False,
     colorbar: bool = True,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
-    """
+    r"""
     Plots a raster of the time-domain signal $x[n]$.
 
     Arguments:
@@ -176,6 +181,7 @@ def raster(
             2D histogram of the rasters.
         colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"` or
             `persistence=True`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to Matplotlib functions.
 
             If `persistence=False`, the following keyword arguments are passed to
@@ -202,6 +208,9 @@ def raster(
             raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
         if np.iscomplexobj(x):
             raise ValueError("Argument 'x' must be real, not complex.")
+
+        if ax is None:
+            ax = plt.gca()
 
         if x.ndim == 1:
             if not length is not None:
@@ -267,7 +276,7 @@ def raster(
             else:
                 h[h == 0] = np.nan  # Set 0s to NaNs so they don't show up in the plot
 
-            pcm = plt.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
+            pcm = ax.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
             if colorbar:
                 plt.colorbar(pcm, label="Points", pad=0.05)
         else:
@@ -290,7 +299,6 @@ def raster(
                 **kwargs,
             )
 
-            ax = plt.gca()
             ax.add_collection(line_collection)
             ax.set_xlim(t.min(), t.max())
             ax.set_ylim(x.min(), x.max())
@@ -299,7 +307,7 @@ def raster(
                 plt.colorbar(line_collection, label="Raster Index", pad=0.05)
 
         if sample_rate_provided:
-            plt.xlabel(f"Time ({units})")
+            ax.set_xlabel(f"Time ({units})")
         else:
-            plt.xlabel("Sample, $n$")
-        plt.ylabel("Amplitude")
+            ax.set_xlabel("Sample, $n$")
+        ax.set_ylabel("Amplitude")
