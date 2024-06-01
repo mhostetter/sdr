@@ -186,7 +186,7 @@ class MLPED(PED):
         synchronization-ped
     """
 
-    def __init__(self, A_received: float = 1, A_reference: float = 1) -> None:
+    def __init__(self, A_received: float = 1.0, A_reference: float = 1.0) -> None:
         """
         Initializes the ML-PED.
 
@@ -240,7 +240,7 @@ class MLPED(PED):
 
 
 def _data_aided_error(
-    ped: PED, modem: LinearModulation, n_points: int = 1000, A_received: float = 1, A_reference: float = 1
+    ped: PED, modem: LinearModulation, n_points: int = 1000, A_received: float = 1.0, A_reference: float = 1
 ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
     if not isinstance(ped, PED):
         raise TypeError(f"Argument 'ped' must be a PED, not {type(ped)}.")
@@ -260,7 +260,7 @@ def _data_aided_error(
 
 
 def _decision_directed_error(
-    ped: PED, modem: LinearModulation, n_points: int = 1000, A_received: float = 1, A_reference: float = 1
+    ped: PED, modem: LinearModulation, n_points: int = 1000, A_received: float = 1.0, A_reference: float = 1
 ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
     if not isinstance(ped, PED):
         raise TypeError(f"Argument 'ped' must be a PED, not {type(ped)}.")

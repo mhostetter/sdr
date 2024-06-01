@@ -24,7 +24,7 @@ def time_domain(
     *,
     sample_rate: float | None = None,
     centered: bool = False,
-    offset: float = 0,
+    offset: float = 0.0,
     diff: Literal["color", "line"] = "color",
     **kwargs,
 ): ...
@@ -46,7 +46,7 @@ def time_domain(  # noqa: D417
     *args,
     sample_rate: float | None = None,
     centered: bool = False,
-    offset: float = 0,
+    offset: float = 0.0,
     diff: Literal["color", "line"] = "color",
     ax: plt.Axes | None = None,
     **kwargs,
