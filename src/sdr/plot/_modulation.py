@@ -83,6 +83,7 @@ def constellation(
         # Set the axis limits to 10% larger than the maximum value
         if limits is None:
             lim = np.max(np.abs(x_hat)) * 1.1
+            lim = max(lim, ax.get_ylim()[1])  # Don't reduce the limits if they are already larger
             limits = (-lim, lim)
 
         if persistence:
