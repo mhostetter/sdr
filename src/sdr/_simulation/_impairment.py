@@ -264,9 +264,9 @@ def sample_rate_offset(
 @export
 def frequency_offset(
     x: npt.NDArray,
-    freq: npt.ArrayLike,
-    freq_rate: npt.ArrayLike = 0,
-    phase: npt.ArrayLike = 0,
+    offset: npt.ArrayLike,
+    offset_rate: npt.ArrayLike = 0.0,
+    phase: npt.ArrayLike = 0.0,
     sample_rate: float = 1.0,
 ) -> npt.NDArray:
     r"""
@@ -274,8 +274,8 @@ def frequency_offset(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the frequency offset is applied.
-        freq: The frequency offset $f$ in Hz (or in cycles/sample if `sample_rate=1`).
-        freq_rate: The frequency offset rate $f_{\text{rate}}$ in Hz/s (or in cycles/sample^2 if `sample_rate=1`).
+        offset: The frequency offset $\Delta f_c = f_{c,new} - f_{c,old}$ in Hz.
+        offset_rate: The frequency offset rate $\Delta f_c / \Delta t}$ in Hz/s.
         phase: The phase offset $\phi$ in degrees.
         sample_rate: The sample rate $f_s$ in samples/s.
 
@@ -283,40 +283,42 @@ def frequency_offset(
         The signal $x[n]$ with frequency offset applied.
 
     Examples:
-        Create a QPSK reference signal.
+        Create a reference signal with a constant frequency of 1 cycle per 100 samples.
 
         .. ipython:: python
 
-            psk = sdr.PSK(4, phase_offset=45); \
-            s = np.random.randint(0, psk.order, 1_000); \
-            x = psk.map_symbols(s)
+            x = np.exp(1j * 2 * np.pi / 100 * np.arange(100))
 
-        Add a frequency offset of 1 cycle per 10,000 symbols.
+        Add a frequency offset of 1 cycle per 100 samples (the length of the signal). Notice that the signal now
+        rotates through 2 cycles instead of 1.
 
         .. ipython:: python
 
-            freq = 1e-4; \
+            freq = 1 / 100
             y = sdr.frequency_offset(x, freq)
 
             @savefig sdr_frequency_offset_1.png
             plt.figure(); \
-            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
-            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{freq} cycles/sample frequency offset");
+            sdr.plot.time_domain(np.unwrap(np.angle(x)) / (2 * np.pi), label="$x[n]$"); \
+            sdr.plot.time_domain(np.unwrap(np.angle(y)) / (2 * np.pi), label="$y[n]$"); \
+            plt.ylabel("Absolute phase (cycles)"); \
+            plt.title("Constant frequency offset (linear phase)");
 
-        Add a frequency offset of -1 cycle per 20,000 symbols and a phase offset of -45 degrees.
+        Add a frequency rate of change of 2 cycles per 100^2 samples. Notice that the signal now rotates through
+        4 cycles instead of 2.
 
         .. ipython:: python
 
-            freq = -5e-5; \
-            phase = -45; \
-            y = sdr.frequency_offset(x, freq, phase=phase)
+            freq = 1 / 100
+            freq_rate = 2 / 100**2
+            y = sdr.frequency_offset(x, freq, freq_rate)
 
             @savefig sdr_frequency_offset_2.png
             plt.figure(); \
-            sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
-            sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{freq} cycles/sample frequency and {phase} deg offset");
+            sdr.plot.time_domain(np.unwrap(np.angle(x)) / (2 * np.pi), label="$x[n]$"); \
+            sdr.plot.time_domain(np.unwrap(np.angle(y)) / (2 * np.pi), label="$y[n]$"); \
+            plt.ylabel("Absolute phase (cycles)"); \
+            plt.title("Linear frequency offset (quadratic phase)");
 
     Group:
         simulation-impairments
@@ -324,20 +326,20 @@ def frequency_offset(
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
 
-    freq = np.asarray(freq)
-    if not (freq.ndim == 0 or freq.shape == x.shape):
-        raise ValueError(f"Argument 'freq' must be scalar or have shape {x.shape}, not {freq.shape}.")
+    offset = np.asarray(offset)
+    if not (offset.ndim == 0 or offset.shape == x.shape):
+        raise ValueError(f"Argument 'offset' must be scalar or have shape {x.shape}, not {offset.shape}.")
 
-    freq_rate = np.asarray(freq_rate)
-    if not (freq_rate.ndim == 0 or freq_rate.shape == x.shape):
-        raise ValueError(f"Argument 'freq_rate' must be scalar or have shape {x.shape}, not {freq_rate.shape}.")
+    offset_rate = np.asarray(offset_rate)
+    if not (offset_rate.ndim == 0 or offset_rate.shape == x.shape):
+        raise ValueError(f"Argument 'offset_rate' must be scalar or have shape {x.shape}, not {offset_rate.shape}.")
 
     phase = np.asarray(phase)
     if not (phase.ndim == 0 or phase.shape == x.shape):
         raise ValueError(f"Argument 'phase' must be scalar or have shape {x.shape}, not {phase.shape}.")
 
     t = np.arange(x.size) / sample_rate  # Time vector in seconds
-    f = freq + freq_rate * t  # Frequency vector in Hz
+    f = offset + offset_rate * t  # Frequency vector in Hz
     lo = np.exp(1j * (2 * np.pi * f * t + np.deg2rad(phase)))  # Local oscillator
     y = x * lo  # Apply frequency offset
 
