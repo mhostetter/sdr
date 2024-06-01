@@ -184,13 +184,20 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0.0) -> npt.ND
 
 
 @export
-def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
+def sample_rate_offset(
+    x: npt.NDArray,
+    offset: float,
+    # offset: npt.ArrayLike,
+    # offset_rate: npt.ArrayLike = 0.0,
+    sample_rate: float = 1.0,
+) -> npt.NDArray:
     r"""
     Applies a sample rate offset to the time-domain signal $x[n]$.
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the sample rate offset is applied.
-        ppm: The sample rate offset $f_{s,\text{new}} / f_s$ in parts per million (ppm).
+        offset: The sample rate offset $\Delta f_s = f_{s,new} - f_{s_old}$ in samples/s.
+        sample_rate: The sample rate $f_s$ in samples/s.
 
     Returns:
         The signal $x[n]$ with sample rate offset applied.
@@ -208,27 +215,25 @@ def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
 
         .. ipython:: python
 
-            ppm = 10; \
-            y = sdr.sample_rate_offset(x, ppm)
+            y = sdr.sample_rate_offset(x, 10e-6)
 
             @savefig sdr_sample_rate_offset_1.png
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{ppm} ppm sample rate offset");
+            plt.title("10 ppm sample rate offset");
 
         Add 100 ppm of sample rate offset.
 
         .. ipython:: python
 
-            ppm = 100; \
-            y = sdr.sample_rate_offset(x, ppm)
+            y = sdr.sample_rate_offset(x, 100e-6)
 
             @savefig sdr_sample_rate_offset_2.png
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
-            plt.title(f"{ppm} ppm sample rate offset");
+            plt.title("100 ppm sample rate offset");
 
     Group:
         simulation-impairments
@@ -236,7 +241,15 @@ def sample_rate_offset(x: npt.NDArray, ppm: float) -> npt.NDArray:
     if not x.ndim == 1:
         raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
 
-    rate = 1 + ppm * 1e-6
+    # offset = np.asarray(offset)
+    # if not (offset.ndim == 0 or offset.shape == x.shape):
+    #     raise ValueError(f"Argument 'offset' must be scalar or have shape {x.shape}, not {offset.shape}.")
+
+    # offset_rate = np.asarray(offset_rate)
+    # if not (offset_rate.ndim == 0 or offset_rate.shape == x.shape):
+    #     raise ValueError(f"Argument 'offset_rate' must be scalar or have shape {x.shape}, not {offset_rate.shape}.")
+
+    rate = (sample_rate + offset) / sample_rate
 
     # TODO: Add ppm_rate
     # if ppm_rate:
