@@ -11255,7 +11255,7 @@ You're not viewing the latest version.
       
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../conversions/#ratios"><span class="md-ellipsis">Ratios</span></a>
+          <a href="../conversions/#signal-to-noise-ratios"><span class="md-ellipsis">Signal-<wbr>to-<wbr>noise ratios</span></a>
           
             <label for="__nav_3_9_2">
               <span class="md-nav__icon md-icon"></span>
@@ -11263,91 +11263,8 @@ You're not viewing the latest version.
           
         </div>
       
-      <nav class="md-nav" aria-label="Ratios" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_9_2">
-          <span class="md-nav__icon md-icon"></span>
-          <span class="md-ellipsis">Ratios</span>
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.percent/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.percent (Python function) — Converts from a ratio to a percentage." class="md-ellipsis">percent</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ppm/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.ppm (Python function) — Converts from a ratio to parts per million (ppm)." class="md-ellipsis">ppm</span>
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../sdr.ppb/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.ppb (Python function) — Converts from a ratio to parts per billion (ppb)." class="md-ellipsis">ppb</span>
-      </a>
-    </li>
-  
-
-            
-          
-        </ul>
-      </nav>
-    </li>
-  
-  
-
-            
-          
-            
-              
-  
-  
-  
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_9_3" type="checkbox" id="__nav_3_9_3" >
-      
-      
-      
-        
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../conversions/#signal-to-noise-ratios"><span class="md-ellipsis">Signal-<wbr>to-<wbr>noise ratios</span></a>
-          
-            <label for="__nav_3_9_3">
-              <span class="md-nav__icon md-icon"></span>
-            </label>
-          
-        </div>
-      
       <nav class="md-nav" aria-label="Signal-to-noise ratios" data-md-level="3">
-        <label class="md-nav__title" for="__nav_3_9_3">
+        <label class="md-nav__title" for="__nav_3_9_2">
           <span class="md-nav__icon md-icon"></span>
           <span class="md-ellipsis">Signal-<wbr>to-<wbr>noise ratios</span>
         </label>
@@ -14094,25 +14011,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">9.785426610699302</span>
+<span class="gh">Out[3]: </span><span class="go">9.890006397247298</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">9.785426610699302</span>
+<span class="gh">Out[4]: </span><span class="go">9.890006397247298</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">9.70940095356739</span>
+<span class="gh">Out[5]: </span><span class="go">9.830694407399518</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">7.717070064567907</span>
+<span class="gh">Out[6]: </span><span class="go">8.0318434717302</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">17.758357475068053</span>
+<span class="gh">Out[7]: </span><span class="go">16.86207166251018</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
