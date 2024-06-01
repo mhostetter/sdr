@@ -13,7 +13,7 @@ from .._helper import export
 
 
 @export
-def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float32]:
+def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Computes the SNR improvement by coherent integration.
 
@@ -200,7 +200,7 @@ def coherent_gain_loss(
 def max_integration_time(
     cgl: npt.ArrayLike,
     freq_offset: npt.ArrayLike,
-) -> npt.NDArray[np.float32]:
+) -> npt.NDArray[np.float64]:
     r"""
     Computes the maximum integration time that produces at most the provided coherent gain loss (CGL).
 
@@ -295,7 +295,7 @@ def _max_integration_time(cgl: float, freq_offset: float) -> float:
 def max_frequency_offset(
     cgl: npt.ArrayLike,
     integration_time: npt.ArrayLike,
-) -> npt.NDArray[np.float32]:
+) -> npt.NDArray[np.float64]:
     r"""
     Computes the maximum frequency offset that produces at most the provided coherent gain loss (CGL).
 
