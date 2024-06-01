@@ -71,8 +71,8 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float32]:
         detection-coherent-integration
     """
     time_bandwidth = np.asarray(time_bandwidth)
-    if np.any(time_bandwidth < 1):
-        raise ValueError(f"Argument 'time_bandwidth' must be at least 1, not {time_bandwidth}.")
+    if np.any(time_bandwidth <= 0):
+        raise ValueError(f"Argument 'time_bandwidth' must be greater than 0, not {time_bandwidth}.")
 
     return db(time_bandwidth)
 
