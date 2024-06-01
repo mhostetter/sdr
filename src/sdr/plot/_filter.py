@@ -39,7 +39,7 @@ def _convert_to_taps(
 def impulse_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
-    offset: float = 0,
+    offset: float = 0.0,
     ax: plt.Axes | None = None,
     **kwargs,
 ):
