@@ -40,6 +40,7 @@ def impulse_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
     offset: float = 0,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -59,6 +60,7 @@ def impulse_response(
             100 for IIR filters.
         offset: The x-axis offset to apply to the first sample. Can be useful for comparing the impulse
             response of filters with different lengths.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -88,6 +90,9 @@ def impulse_response(
         plot-filter
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         if N is None:
@@ -105,16 +110,17 @@ def impulse_response(
         h, zi = scipy.signal.lfilter(b, a, d, zi=zi)
         t = np.arange(h.size) + offset
 
-        real_or_complex_plot(t, h, **kwargs)
-        plt.xlabel("Sample, $n$")
-        plt.ylabel("Amplitude")
-        plt.title("Impulse Response, $h[n]$")
+        real_or_complex_plot(ax, t, h, **kwargs)
+        ax.set_xlabel("Sample, $n$")
+        ax.set_ylabel("Amplitude")
+        ax.set_title("Impulse Response, $h[n]$")
 
 
 @export
 def step_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -132,6 +138,7 @@ def step_response(
 
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -161,6 +168,9 @@ def step_response(
         plot-filter
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         if N is None:
@@ -177,15 +187,16 @@ def step_response(
         s, zi = scipy.signal.lfilter(b, a, u, zi=zi)
         t = np.arange(s.size)
 
-        real_or_complex_plot(t, s, **kwargs)
-        plt.xlabel("Sample, $n$")
-        plt.ylabel("Amplitude")
-        plt.title("Step Response, $s[n]$")
+        real_or_complex_plot(ax, t, s, **kwargs)
+        ax.set_xlabel("Sample, $n$")
+        ax.set_ylabel("Amplitude")
+        ax.set_title("Step Response, $s[n]$")
 
 
 @export
 def zeros_poles(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -199,6 +210,7 @@ def zeros_poles(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -228,6 +240,9 @@ def zeros_poles(
         plot-filter
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         z, p, _ = scipy.signal.tf2zpk(b, a)
@@ -241,14 +256,14 @@ def zeros_poles(
             z_label = label + " (zeros)"
             p_label = label + " (poles)"
 
-        plt.plot(unit_circle.real, unit_circle.imag, color="k", linestyle="--", label="Unit circle")
-        plt.scatter(z.real, z.imag, marker="o", label=z_label)
-        plt.scatter(p.real, p.imag, marker="x", label=p_label)
-        plt.axis("equal")
-        plt.legend()
-        plt.xlabel("Real")
-        plt.ylabel("Imaginary")
-        plt.title("Zeros and Poles of $H(z)$")
+        ax.plot(unit_circle.real, unit_circle.imag, color="k", linestyle="--", label="Unit circle")
+        ax.scatter(z.real, z.imag, marker="o", label=z_label)
+        ax.scatter(p.real, p.imag, marker="x", label=p_label)
+        ax.axis("equal")
+        ax.legend()
+        ax.set_xlabel("Real")
+        ax.set_ylabel("Imaginary")
+        ax.set_title("Zeros and Poles of $H(z)$")
 
 
 @export
@@ -259,6 +274,7 @@ def magnitude_response(
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
     decades: int = 4,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -280,6 +296,7 @@ def magnitude_response(
             for real-valued filters and `"two-sided"` for complex-valued filters.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic magnitude response.
         decades: The number of decades to plot when `x_axis="log"`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -326,6 +343,9 @@ def magnitude_response(
         if not y_axis in ["linear", "log"]:
             raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
 
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         if x_axis == "auto":
@@ -359,25 +379,25 @@ def magnitude_response(
             H = np.abs(H) ** 2
 
         if x_axis == "log":
-            plt.semilogx(f, H, **kwargs)
+            ax.semilogx(f, H, **kwargs)
         else:
-            plt.plot(f, H, **kwargs)
+            ax.plot(f, H, **kwargs)
 
-        plt.grid(True, which="both")
+        ax.grid(True, which="both")
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
 
         if sample_rate_provided:
-            plt.xlabel(f"Frequency ({units}), $f$")
+            ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_xlabel("Normalized Frequency, $f /f_s$")
 
         if y_axis == "log":
-            plt.ylabel(r"Power (dB), $|H(\omega)|^2$")
+            ax.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
         else:
-            plt.ylabel(r"Power, $|H(\omega)|^2$")
+            ax.set_ylabel(r"Power, $|H(\omega)|^2$")
 
-        plt.title(r"Magnitude Response, $|H(\omega)|^2$")
+        ax.set_title(r"Magnitude Response, $|H(\omega)|^2$")
 
 
 @export
@@ -388,6 +408,7 @@ def phase_response(
     unwrap: bool = True,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -409,6 +430,7 @@ def phase_response(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -453,6 +475,9 @@ def phase_response(
         if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
             raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
 
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         if x_axis == "auto":
@@ -490,19 +515,19 @@ def phase_response(
             theta -= theta[np.argmin(np.abs(f))]
 
         if x_axis == "log":
-            plt.semilogx(f, theta, **kwargs)
+            ax.semilogx(f, theta, **kwargs)
         else:
-            plt.plot(f, theta, **kwargs)
+            ax.plot(f, theta, **kwargs)
 
-        plt.grid(True, which="both")
+        ax.grid(True, which="both")
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
         if sample_rate_provided:
-            plt.xlabel(f"Frequency ({units}), $f$")
+            ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
-        plt.ylabel(r"Phase (deg), $\angle H(\omega)$")
-        plt.title(r"Phase Response, $\angle H(\omega)$")
+            ax.set_xlabel("Normalized Frequency, $f /f_s$")
+        ax.set_ylabel(r"Phase (deg), $\angle H(\omega)$")
+        ax.set_title(r"Phase Response, $\angle H(\omega)$")
 
 
 @export
@@ -512,6 +537,7 @@ def phase_delay(
     N: int = 1024,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -532,6 +558,7 @@ def phase_delay(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -576,6 +603,9 @@ def phase_delay(
         if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
             raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
 
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         if x_axis == "auto":
@@ -611,22 +641,22 @@ def phase_delay(
             tau_phi *= scalar
 
         if x_axis == "log":
-            plt.semilogx(f, tau_phi, **kwargs)
+            ax.semilogx(f, tau_phi, **kwargs)
         else:
-            plt.plot(f, tau_phi, **kwargs)
+            ax.plot(f, tau_phi, **kwargs)
 
         min_ylim(tau_phi, 2 / sample_rate, sample_rate)
 
-        plt.grid(True, which="both")
+        ax.grid(True, which="both")
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
         if sample_rate_provided:
-            plt.xlabel(f"Frequency ({f_units}), $f$")
-            plt.ylabel(f"Phase Delay ({t_units})")
+            ax.set_xlabel(f"Frequency ({f_units}), $f$")
+            ax.set_ylabel(f"Phase Delay ({t_units})")
         else:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
-            plt.ylabel("Phase Delay (samples)")
-        plt.title(r"Phase Delay, $\tau_{\phi}(\omega)$")
+            ax.set_xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_ylabel("Phase Delay (samples)")
+        ax.set_title(r"Phase Delay, $\tau_{\phi}(\omega)$")
 
 
 @export
@@ -636,6 +666,7 @@ def group_delay(
     N: int = 1024,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -656,6 +687,7 @@ def group_delay(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -700,6 +732,9 @@ def group_delay(
         if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
             raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
 
+        if ax is None:
+            ax = plt.gca()
+
         b, a = _convert_to_taps(filter)
 
         if x_axis == "auto":
@@ -732,22 +767,22 @@ def group_delay(
             tau_g *= scalar
 
         if x_axis == "log":
-            plt.semilogx(f, tau_g, **kwargs)
+            ax.semilogx(f, tau_g, **kwargs)
         else:
-            plt.plot(f, tau_g, **kwargs)
+            ax.plot(f, tau_g, **kwargs)
 
         min_ylim(tau_g, 2 / sample_rate, sample_rate)
 
-        plt.grid(True, which="both")
+        ax.grid(True, which="both")
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
         if sample_rate_provided:
-            plt.xlabel(f"Frequency ({f_units}), $f$")
-            plt.ylabel(rf"Group Delay ({t_units}), $\tau_g(\omega)$")
+            ax.set_xlabel(f"Frequency ({f_units}), $f$")
+            ax.set_ylabel(rf"Group Delay ({t_units}), $\tau_g(\omega)$")
         else:
-            plt.xlabel("Normalized Frequency, $f /f_s$")
-            plt.ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
-        plt.title(r"Group Delay, $\tau_g(\omega)$")
+            ax.set_xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
+        ax.set_title(r"Group Delay, $\tau_g(\omega)$")
 
 
 @export

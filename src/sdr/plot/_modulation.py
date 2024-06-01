@@ -21,6 +21,7 @@ def constellation(
     limits: tuple[float, float] | None = None,
     persistence: bool = False,
     colorbar: bool = True,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -33,6 +34,7 @@ def constellation(
         persistence: Indicates whether to plot the points as a persistence plot. A persistence plot is a
             2D histogram of the points.
         colorbar: Indicates whether to add a colorbar to the plot. This is only added if `persistence=True`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to Matplotlib functions.
 
             If `persistence=False`, the following keyword arguments are passed to :func:`matplotlib.pyplot.scatter()`.
@@ -75,6 +77,9 @@ def constellation(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         # Set the axis limits to 10% larger than the maximum value
         if limits is None:
             lim = np.max(np.abs(x_hat)) * 1.1
@@ -101,7 +106,7 @@ def constellation(
             else:
                 h[h == 0] = np.nan  # Set 0s to NaNs so they don't show up in the plot
 
-            pcm = plt.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
+            pcm = ax.pcolormesh(t_edges, x_edges, h.T, cmap=cmap, **kwargs)
             if colorbar:
                 plt.colorbar(pcm, label="Points", pad=0.05)
         else:
@@ -110,16 +115,16 @@ def constellation(
                 "linestyle": "none",
             }
             kwargs = {**default_kwargs, **kwargs}
-            plt.plot(x_hat.real, x_hat.imag, **kwargs)
+            ax.plot(x_hat.real, x_hat.imag, **kwargs)
 
-        plt.axis("square")
-        plt.xlim(limits)
-        plt.ylim(limits)
+        ax.axis("square")
+        ax.set_xlim(limits)
+        ax.set_ylim(limits)
         if "label" in kwargs:
-            plt.legend()
-        plt.xlabel("In-phase channel, $I$")
-        plt.ylabel("Quadrature channel, $Q$")
-        plt.title("Constellation")
+            ax.legend()
+        ax.set_xlabel("In-phase channel, $I$")
+        ax.set_ylabel("Quadrature channel, $Q$")
+        ax.set_title("Constellation")
 
 
 @export
@@ -127,6 +132,7 @@ def symbol_map(
     modulation: LinearModulation | npt.NDArray[np.complex128],
     annotate: bool | Literal["bin"] = True,
     limits: tuple[float, float] | None = None,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -138,6 +144,7 @@ def symbol_map(
             If `"bin"`, the symbols are annotated with their binary representation.
         limits: The axis limits, which apply to both the x- and y-axis.
             If `None`, the axis limits are set to 50% larger than the maximum value.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
@@ -160,6 +167,9 @@ def symbol_map(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         if isinstance(modulation, LinearModulation):
             symbol_map_ = modulation.symbol_map
         else:
@@ -191,7 +201,7 @@ def symbol_map(
             "linestyle": "none",
         }
         kwargs = {**default_kwargs, **kwargs}
-        plt.plot(symbol_map_.real, symbol_map_.imag, **kwargs)
+        ax.plot(symbol_map_.real, symbol_map_.imag, **kwargs)
 
         if annotate:
             for i, symbol in enumerate(symbol_map_):
@@ -200,7 +210,7 @@ def symbol_map(
                 else:
                     label = i
 
-                plt.annotate(
+                ax.annotate(
                     label,
                     (symbol.real, symbol.imag),
                     xytext=(0, 5),
@@ -210,14 +220,14 @@ def symbol_map(
                     fontsize=8,
                 )
 
-        plt.axis("square")
-        plt.xlim(limits)
-        plt.ylim(limits)
+        ax.axis("square")
+        ax.set_xlim(limits)
+        ax.set_ylim(limits)
         if "label" in kwargs:
-            plt.legend()
-        plt.xlabel("In-phase channel, $I$")
-        plt.ylabel("Quadrature channel, $Q$")
-        plt.title("Symbol Map")
+            ax.legend()
+        ax.set_xlabel("In-phase channel, $I$")
+        ax.set_ylabel("Quadrature channel, $Q$")
+        ax.set_title("Symbol Map")
 
 
 @export
@@ -229,6 +239,7 @@ def eye(
     color: Literal["index"] | str = "index",
     persistence: bool = False,
     colorbar: bool = True,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -247,6 +258,7 @@ def eye(
             2D histogram of the rasters.
         colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"` or
             `persistence=True`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
 
     Example:
@@ -295,8 +307,10 @@ def eye(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
 
-        def _eye(xx):
+        def _eye(ax, xx):
             raster(
                 xx,
                 length=span * sps + 1,
@@ -305,26 +319,26 @@ def eye(
                 color=color,
                 persistence=persistence,
                 colorbar=colorbar,
+                ax=ax,
                 **kwargs,
             )
             if sample_rate is None:
-                plt.xlabel("Symbol, $k$")
+                ax.set_xlabel("Symbol, $k$")
 
             # Make y-axis symmetric
-            ax = plt.gca()
             ymin, ymax = ax.get_ylim()
             ylim = max(np.abs(ymin), np.abs(ymax))
             ax.set_ylim(-ylim, ylim)
 
         if np.iscomplexobj(x):
             plt.subplot(2, 1, 1)
-            _eye(x.real)
+            _eye(plt.gca(), x.real)
             plt.title("In-phase eye diagram")
             plt.subplot(2, 1, 2)
-            _eye(x.imag)
+            _eye(plt.gca(), x.imag)
             plt.title("Quadrature eye diagram")
         else:
-            _eye(x)
+            _eye(ax, x)
             plt.title("Eye diagram")
 
 
@@ -335,6 +349,7 @@ def phase_tree(
     span: int = 2,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -348,6 +363,7 @@ def phase_tree(
             be labeled as "Symbol".
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
 
     Example:
@@ -369,6 +385,9 @@ def phase_tree(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         phase = np.angle(x)
 
         # Create a strided array of phase values
@@ -388,13 +407,13 @@ def phase_tree(
             phase_strided,
             sample_rate=sample_rate if sample_rate is not None else sps,
             color=color,
+            ax=ax,
             **kwargs,
         )
         if sample_rate is None:
-            plt.xlabel("Symbol, $k$")
+            ax.set_xlabel("Symbol, $k$")
 
         # Make y-axis symmetric and have ticks every 180 degrees
-        ax = plt.gca()
         ymin, ymax = ax.get_ylim()
         ylim = max(np.abs(ymin), np.abs(ymax))
         ylim = np.ceil(ylim / 180) * 180
@@ -408,6 +427,7 @@ def phase_tree(
 def ber(
     ebn0: npt.NDArray[np.float64],
     ber: npt.NDArray[np.float64],
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -416,6 +436,7 @@ def ber(
     Arguments:
         ebn0: The bit energy $E_b$ to noise PSD $N_0$ ratio (dB).
         ber: The bit error rate $P_{be}$.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
@@ -441,22 +462,26 @@ def ber(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         default_kwargs = {}
         kwargs = {**default_kwargs, **kwargs}
 
-        plt.semilogy(ebn0, ber, **kwargs)
+        ax.semilogy(ebn0, ber, **kwargs)
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
 
-        plt.xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$")
-        plt.ylabel("Probability of bit error, $P_{be}$")
-        plt.title("Bit error rate curve")
+        ax.set_xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$")
+        ax.set_ylabel("Probability of bit error, $P_{be}$")
+        ax.set_title("Bit error rate curve")
 
 
 @export
 def ser(
     esn0: npt.NDArray[np.float64],
     ser: npt.NDArray[np.float64],
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -465,6 +490,7 @@ def ser(
     Arguments:
         esn0: The symbol energy $E_s$ to noise PSD $N_0$ ratio (dB).
         ser: The symbol error rate $P_{se}$.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
 
     Examples:
@@ -490,13 +516,16 @@ def ser(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
         default_kwargs = {}
         kwargs = {**default_kwargs, **kwargs}
 
-        plt.semilogy(esn0, ser, **kwargs)
+        ax.semilogy(esn0, ser, **kwargs)
         if "label" in kwargs:
-            plt.legend()
+            ax.legend()
 
-        plt.xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
-        plt.ylabel("Probability of symbol error, $P_{se}$")
-        plt.title("Symbol error rate curve")
+        ax.set_xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
+        ax.set_ylabel("Probability of symbol error, $P_{se}$")
+        ax.set_title("Symbol error rate curve")
