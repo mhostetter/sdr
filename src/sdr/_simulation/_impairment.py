@@ -103,7 +103,7 @@ def awgn(
 
 
 @export
-def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0) -> npt.NDArray:
+def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0.0) -> npt.NDArray:
     r"""
     Applies IQ imbalance to the complex time-domain signal $x[n]$.
 
@@ -254,7 +254,7 @@ def frequency_offset(
     freq: npt.ArrayLike,
     freq_rate: npt.ArrayLike = 0,
     phase: npt.ArrayLike = 0,
-    sample_rate: float = 1,
+    sample_rate: float = 1.0,
 ) -> npt.NDArray:
     r"""
     Applies a frequency and phase offset to the time-domain signal $x[n]$.

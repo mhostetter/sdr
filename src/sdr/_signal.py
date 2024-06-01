@@ -14,9 +14,9 @@ from ._helper import export
 @export
 def mix(
     x: npt.NDArray,
-    freq: float = 0,
-    phase: float = 0,
-    sample_rate: float = 1,
+    freq: float = 0.0,
+    phase: float = 0.0,
+    sample_rate: float = 1.0,
     complex: bool = True,
 ) -> npt.NDArray:
     r"""
