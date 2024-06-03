@@ -8231,6 +8231,13 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">Examples</span>
   </a>
@@ -13954,6 +13961,13 @@ You're not viewing the latest version.
 </li>
       
         <li class="md-nav__item">
+  <a href="#notes" class="md-nav__link">
+    <span class="md-ellipsis">Notes</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">Examples</span>
   </a>
@@ -13987,9 +14001,15 @@ You're not viewing the latest version.
 </dd>
 <dt id="p-detector"><span class="n sig-name">detector</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'coherent'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'linear'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'square-law'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;square-law&#39;</span></code><a class="headerlink" href="#p-detector" title="Permalink to this definition">¶</a></dt><dd><p><p>The detector type.</p>
 <ul class="simple">
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;coherent&quot;</span></code>: A coherent detector, <span class="math notranslate nohighlight">\(T(x) = \mathrm{Re}\{x[n]\}\)</span>.</p></li>
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;linear&quot;</span></code>: A linear detector, <span class="math notranslate nohighlight">\(T(x) = \left| x[n] \right|\)</span>.</p></li>
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;square-law&quot;</span></code>: A square-law detector, <span class="math notranslate nohighlight">\(T(x) = \left| x[n] \right|^2\)</span>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;coherent&quot;</span></code>: A coherent detector, <div class="math notranslate nohighlight">
+\[T(x) = \mathrm{Re}\left\{\sum_{i=0}^{N_c-1} x[n-i]\right\} .\]</div>
+</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;linear&quot;</span></code>: A linear detector, <div class="math notranslate nohighlight">
+\[T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right| .\]</div>
+</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;square-law&quot;</span></code>: A square-law detector, <div class="math notranslate nohighlight">
+\[T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right|^2 .\]</div>
+</p></li>
 </ul>
 </p>
 </dd>
@@ -14007,6 +14027,12 @@ for linear and square-law detectors.</p>
 <dd class="field-even"><p>The probability of detection <span class="math notranslate nohighlight">\(P_d\)</span> in <span class="math notranslate nohighlight">\((0, 1)\)</span>.</p>
 </dd>
 </dl>
+<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p>The probability of detection <span class="math notranslate nohighlight">\(P_d\)</span> is defined as the probability that the detector output <span class="math notranslate nohighlight">\(T(x)\)</span> exceeds the
+detection threshold <span class="math notranslate nohighlight">\(\gamma\)</span> given that the signal is present.</p>
+<p><div class="math notranslate nohighlight">
+\[P_d = P\left(T(x) &gt; \gamma \mid \mathcal{H}_1\right)\]</div>
+</p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">snr</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Signal-to-noise ratio in dB</span>
 

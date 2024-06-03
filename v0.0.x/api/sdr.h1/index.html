@@ -13987,9 +13987,15 @@ You're not viewing the latest version.
 </dd>
 <dt id="p-detector"><span class="n sig-name">detector</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'coherent'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'linear'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'square-law'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;square-law&#39;</span></code><a class="headerlink" href="#p-detector" title="Permalink to this definition">¶</a></dt><dd><p><p>The detector type.</p>
 <ul class="simple">
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;coherent&quot;</span></code>: A coherent detector, <span class="math notranslate nohighlight">\(T(x) = \mathrm{Re}\{x[n]\}\)</span>.</p></li>
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;linear&quot;</span></code>: A linear detector, <span class="math notranslate nohighlight">\(T(x) = \left| x[n] \right|\)</span>.</p></li>
-<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;square-law&quot;</span></code>: A square-law detector, <span class="math notranslate nohighlight">\(T(x) = \left| x[n] \right|^2\)</span>.</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;coherent&quot;</span></code>: A coherent detector, <div class="math notranslate nohighlight">
+\[T(x) = \mathrm{Re}\left\{\sum_{i=0}^{N_c-1} x[n-i]\right\} .\]</div>
+</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;linear&quot;</span></code>: A linear detector, <div class="math notranslate nohighlight">
+\[T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right| .\]</div>
+</p></li>
+<li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;square-law&quot;</span></code>: A square-law detector, <div class="math notranslate nohighlight">
+\[T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right|^2 .\]</div>
+</p></li>
 </ul>
 </p>
 </dd>
