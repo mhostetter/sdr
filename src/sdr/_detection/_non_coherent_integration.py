@@ -35,9 +35,9 @@ def non_coherent_gain(
             and after integration. The non-coherent gain is slightly affected by the $P_{fa}$.
         detector: The detector type.
 
-            - `"coherent"`: A coherent detector, $T(x) = \mathrm{Re}\{x[n]\}$.
-            - `"linear"`: A linear detector, $T(x) = \left| x[n] \right|$.
-            - `"square-law"`: A square-law detector, $T(x) = \left| x[n] \right|^2$.
+            - `"coherent"`: A coherent detector, $$T(x) = \mathrm{Re}\left\{\sum_{i=0}^{N_c-1} x[n-i]\right\} .$$
+            - `"linear"`: A linear detector, $$T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right| .$$
+            - `"square-law"`: A square-law detector, $$T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right|^2 .$$
 
         complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
             to noise variance.
