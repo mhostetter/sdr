@@ -577,6 +577,12 @@ def p_d(
     Returns:
         The probability of detection $P_d$ in $(0, 1)$.
 
+    Notes:
+        The probability of detection $P_d$ is defined as the probability that the detector output $T(x)$ exceeds the
+        detection threshold $\gamma$ given that the signal is present.
+
+        $$P_d = P\left(T(x) > \gamma \mid \mathcal{H}_1\right)$$
+
     Examples:
         .. ipython:: python
 
@@ -729,6 +735,12 @@ def p_fa(
 
     Returns:
         The probability of false alarm $P_{fa}$ in $(0, 1)$.
+
+    Notes:
+        The probability of false alarm $P_{fa}$ is defined as the probability that the detector output $T(x)$ exceeds
+        the detection threshold $\gamma$ given that the signal is absent.
+
+        $$P_{fa} = P\left(T(x) > \gamma \mid \mathcal{H}_0\right)$$
 
     Examples:
         .. ipython:: python
