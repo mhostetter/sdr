@@ -272,21 +272,20 @@ def max_integration_time(
     if np.any(cgl < 0):
         raise ValueError(f"Argument 'cgl' must be non-negative, not {cgl}.")
 
-    t = _max_integration_time(cgl, freq_offset)
+    @np.vectorize
+    def _calculate(cgl: float, freq_offset: float) -> float:
+        if freq_offset == 0:
+            return np.inf
+
+        min_t = 0  # s
+        max_t = 1 / freq_offset  # s
+        t = scipy.optimize.brentq(lambda t: coherent_gain_loss(freq_offset, t) - cgl, min_t, max_t)
+
+        return t
+
+    t = _calculate(cgl, freq_offset)
     if t.ndim == 0:
         t = float(t)
-
-    return t
-
-
-@np.vectorize
-def _max_integration_time(cgl: float, freq_offset: float) -> float:
-    if freq_offset == 0:
-        return np.inf
-
-    min_t = 0  # s
-    max_t = 1 / freq_offset  # s
-    t = scipy.optimize.brentq(lambda t: coherent_gain_loss(freq_offset, t) - cgl, min_t, max_t)
 
     return t
 
@@ -367,20 +366,19 @@ def max_frequency_offset(
     if np.any(cgl < 0):
         raise ValueError(f"Argument 'cgl' must be non-negative, not {cgl}.")
 
-    f = _max_frequency_offset(cgl, integration_time)
+    @np.vectorize
+    def _calculate(cgl: float, integration_time: float) -> float:
+        if integration_time == 0:
+            return np.inf
+
+        min_f = 0  # Hz
+        max_f = 1 / integration_time  # Hz
+        f = scipy.optimize.brentq(lambda f: coherent_gain_loss(integration_time, f) - cgl, min_f, max_f)
+
+        return f
+
+    f = _calculate(cgl, integration_time)
     if f.ndim == 0:
         f = float(f)
-
-    return f
-
-
-@np.vectorize
-def _max_frequency_offset(cgl: float, integration_time: float) -> float:
-    if integration_time == 0:
-        return np.inf
-
-    min_f = 0  # Hz
-    max_f = 1 / integration_time  # Hz
-    f = scipy.optimize.brentq(lambda f: coherent_gain_loss(integration_time, f) - cgl, min_f, max_f)
 
     return f
