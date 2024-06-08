@@ -12,7 +12,7 @@ from .._helper import export
 
 
 @export
-def fspl(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float64]:
+def free_space_path_loss(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Calculates the free-space path loss (FSPL) in dB.
 
@@ -35,28 +35,28 @@ def fspl(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float64
 
         .. ipython:: python
 
-            sdr.fspl(1e3, 1e9)
+            sdr.free_space_path_loss(1e3, 1e9)
 
         The free-space path loss is proportional to the square of the distance. So, doubling the distance
         results in a 6 dB increase in the free-space path loss.
 
         .. ipython:: python
 
-            sdr.fspl(2e3, 1e9)
+            sdr.free_space_path_loss(2e3, 1e9)
 
         The free-space path loss is also proportional to the square of the frequency. So, doubling the frequency
         results in a 6 dB increase in the free-space path loss.
 
         .. ipython:: python
 
-            sdr.fspl(1e3, 2e9)
+            sdr.free_space_path_loss(1e3, 2e9)
 
         Plot the free-space path loss at 1 GHz for distances up to 1 km.
 
         .. ipython:: python
 
             d = np.linspace(0, 1_000, 1000)  # m
-            fspl = sdr.fspl(d, 1e9)  # dB
+            fspl = sdr.free_space_path_loss(d, 1e9)  # dB
 
             @savefig sdr_fspl_1.png
             plt.figure(); \

@@ -11,7 +11,7 @@ def test_250_MHz():
         >> L = fspl(d, physconst('LightSpeed')/250e6); L'
     """
     d = np.logspace(1, 6, 20)
-    fspl = sdr.fspl(d, 250e6)
+    fspl = sdr.free_space_path_loss(d, 250e6)
     fspl_truth = np.array(
         [
             40.4065833953241,
@@ -41,7 +41,7 @@ def test_250_MHz():
 
     rng = np.random.default_rng()
     i = rng.integers(0, d.size)
-    fspl = sdr.fspl(d[i], 250e6)
+    fspl = sdr.free_space_path_loss(d[i], 250e6)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
 
@@ -53,7 +53,7 @@ def test_7p5_GHz():
         >> L = fspl(d, physconst('LightSpeed')/7.5e9); L'
     """
     d = np.logspace(1, 6, 20)
-    fspl = sdr.fspl(d, 7.5e9)
+    fspl = sdr.free_space_path_loss(d, 7.5e9)
     fspl_truth = np.array(
         [
             69.9490084897174,
@@ -83,7 +83,7 @@ def test_7p5_GHz():
 
     rng = np.random.default_rng()
     i = rng.integers(0, d.size)
-    fspl = sdr.fspl(d[i], 7.5e9)
+    fspl = sdr.free_space_path_loss(d[i], 7.5e9)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
 
@@ -95,7 +95,7 @@ def test_28p25_GHz():
         >> L = fspl(d, physconst('LightSpeed')/28.25e9); L'
     """
     d = np.logspace(1, 6, 20)
-    fspl = sdr.fspl(d, 28.25e9)
+    fspl = sdr.free_space_path_loss(d, 28.25e9)
     fspl_truth = np.array(
         [
             81.4681522649925,
@@ -125,7 +125,7 @@ def test_28p25_GHz():
 
     rng = np.random.default_rng()
     i = rng.integers(0, d.size)
-    fspl = sdr.fspl(d[i], 28.25e9)
+    fspl = sdr.free_space_path_loss(d[i], 28.25e9)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
 
@@ -137,7 +137,7 @@ def test_300_MHz_near_field():
         >> L = fspl(d, physconst('LightSpeed')/300e6); L'
     """
     d = np.linspace(0, 0.25, 20)
-    fspl = sdr.fspl(d, 300e6)
+    fspl = sdr.free_space_path_loss(d, 300e6)
     fspl_truth = np.array(
         [
             0,
@@ -167,6 +167,6 @@ def test_300_MHz_near_field():
 
     rng = np.random.default_rng()
     i = rng.integers(0, d.size)
-    fspl = sdr.fspl(d[i], 300e6)
+    fspl = sdr.free_space_path_loss(d[i], 300e6)
     assert isinstance(fspl, float)
     assert fspl == pytest.approx(fspl_truth[i])
