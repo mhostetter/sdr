@@ -53,6 +53,9 @@ def non_coherent_gain(
     Returns:
         The non-coherent gain $G_{nc}$ in dB.
 
+    See Also:
+        sdr.peebles
+
     Notes:
         $$y[m] = \sum_{n=0}^{N_{nc}-1} \left| x[m-n] \right|^2$$
         $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_{nc}$$
