@@ -920,7 +920,8 @@ def min_snr(
     n_nc: int | None = None,
 ) -> npt.NDArray[np.float64]:
     r"""
-    Computes the minimum signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$.
+    Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection
+    $P_d$.
 
     Arguments:
         p_d: The desired probability of detection $P_d$ in $(0, 1)$.
@@ -965,8 +966,7 @@ def min_snr(
 
             sdr.min_snr(0.9, 1e-6, detector="square-law", n_c=10, n_nc=10)
 
-        Compare the theoretical minimum required SNR using a linear detector in :func:`sdr.min_snr` with the
-        estimated minimum required SNR using Albersheim's approximation in :func:`sdr.albersheim`.
+        Compare the theoretical minimum required SNR using linear and square-law detectors.
 
         .. ipython:: python
 
@@ -975,19 +975,16 @@ def min_snr(
 
             @savefig sdr_min_snr_1.png
             plt.figure(); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=1), linestyle="--"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=2), linestyle="--"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=10), linestyle="--"); \
-            plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=20), linestyle="--"); \
-            plt.gca().set_prop_cycle(None); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="linear"), label="$N_{nc}$ = 1"); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="linear"), label="$N_{nc}$ = 2"); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=10, detector="linear"), label="$N_{nc}$ = 10"); \
-            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=20, detector="linear"), label="$N_{nc}$ = 20"); \
-            plt.legend(); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="square-law"), label=1); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="square-law"), label=2); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=4, detector="square-law"), label=4); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=8, detector="square-law"), label=8); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=16, detector="square-law"), label=16); \
+            plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=32, detector="square-law"), label=32); \
+            plt.legend(title="$N_{nc}$"); \
             plt.xlabel("Probability of false alarm, $P_{fa}$"); \
-            plt.ylabel("Minimum required SNR (dB)"); \
-            plt.title("Minimum required SNR across non-coherent combinations for $P_d = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
+            plt.ylabel("Minimum required input SNR (dB)"); \
+            plt.title("Minimum required input SNR across non-coherent combinations for $P_d = 0.9$");
 
     Group:
         detection-theory
