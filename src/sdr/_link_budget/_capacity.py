@@ -127,7 +127,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
         The inputs to the AWGN channel are $x_i \in \mathbb{C}$ and the outputs are $y_i \in \mathbb{C}$.
         The capacity of the AWGN channel is
 
-        $$C = \log_2(1 + \frac{S}{N}) \ \ \text{bits/2D} ,$$
+        $$C = \log_2\left(1 + \frac{S}{N}\right) \ \ \text{bits/2D} ,$$
 
         where $S = \frac{1}{N} \sum_{i=0}^{N-1} \left| x_i \right|^2$ is the average signal power
         and $N = \sigma^2$ is the complex noise power. The units are bits/2D, which is equivalent to
@@ -135,7 +135,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
 
         If the channel bandwidth $B$ is specified, the channel capacity is
 
-        $$C = B\log_2(1 + \frac{S}{N}) \ \ \text{bits/s} .$$
+        $$C = B\log_2\left(1 + \frac{S}{N}\right) \ \ \text{bits/s} .$$
 
     Examples:
         The capacity monotonically decreases as the SNR decreases. In the limit as the SNR approaches 0
