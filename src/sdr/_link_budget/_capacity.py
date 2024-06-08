@@ -298,34 +298,38 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-channel-capacity
     """
-    return _biawgn_capacity(snr)
 
+    @np.vectorize
+    def _calculate(snr: float) -> float:
+        sigma2 = 1  # Noise power (variance), sigma^2
+        A2 = linear(snr) * sigma2  # Signal power, A^2
 
-@np.vectorize
-def _biawgn_capacity(snr: float) -> float:
-    sigma2 = 1  # Noise power (variance), sigma^2
-    A2 = linear(snr) * sigma2  # Signal power, A^2
+        # f_Y|X(y | 1) is the PDF of Y given X = 1 was sent
+        f_y_p1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2)).pdf
 
-    # f_Y|X(y | 1) is the PDF of Y given X = 1 was sent
-    f_y_p1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2)).pdf
+        # f_Y|X(y | -1) is the PDF of Y given X = -1 was sent
+        f_y_n1 = scipy.stats.norm(-np.sqrt(A2), np.sqrt(sigma2)).pdf
 
-    # f_Y|X(y | -1) is the PDF of Y given X = -1 was sent
-    f_y_n1 = scipy.stats.norm(-np.sqrt(A2), np.sqrt(sigma2)).pdf
+        # f_Y(y) is the marginal PDF of Y. This assumes equal probability of X = 0 and X = 1, which is required to
+        # maximize the mutual information I(X; Y) and achieve capacity.
+        def f_y(y):
+            return 0.5 * f_y_p1(y) + 0.5 * f_y_n1(y)
 
-    # f_Y(y) is the marginal PDF of Y. This assumes equal probability of X = 0 and X = 1, which is required to
-    # maximize the mutual information I(X; Y) and achieve capacity.
-    def f_y(y):
-        return 0.5 * f_y_p1(y) + 0.5 * f_y_n1(y)
+        # H(Y | X) is the conditional entropy of the output Y given the input X. Since Y = X + W, the conditional
+        # entropy is the differential entropy of the noise W.
+        H_y_x = 0.5 * np.log2(2 * np.pi * np.e * sigma2)
 
-    # H(Y | X) is the conditional entropy of the output Y given the input X. Since Y = X + W, the conditional
-    # entropy is the differential entropy of the noise W.
-    H_y_x = 0.5 * np.log2(2 * np.pi * np.e * sigma2)
+        # H(Y) is the differential entropy of the output Y
+        H_y = scipy.integrate.quad(lambda y: np.nan_to_num(-f_y(y) * np.log2(f_y(y))), -np.inf, np.inf)[0]
 
-    # H(Y) is the differential entropy of the output Y
-    H_y = scipy.integrate.quad(lambda y: np.nan_to_num(-f_y(y) * np.log2(f_y(y))), -np.inf, np.inf)[0]
+        # I(X; Y) is the mutual information between the input X and the output Y. This is the maximum achievable
+        # mutual information and the channel capacity.
+        I_x_y = H_y - H_y_x
 
-    # I(X; Y) is the mutual information between the input X and the output Y. This is the maximum achievable
-    # mutual information and the channel capacity.
-    I_x_y = H_y - H_y_x
+        return I_x_y  # bits/1D
 
-    return I_x_y  # bits/1D
+    rho = _calculate(snr)
+    if rho.ndim == 0:
+        rho = float(rho)
+
+    return rho
