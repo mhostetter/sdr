@@ -43,8 +43,8 @@ def non_coherent_gain(
             to noise variance.
         snr_ref: The SNR reference.
 
-            - `"input"`: The SNR is referenced at the input of the non-coherent integrator.
-            - `"output"`: The SNR is referenced at the output of the non-coherent integrator.
+            - `"input"`: The SNR is referenced at the input of the non-coherent integrator $\text{SNR}_{\text{in},N_{nc}}$.
+            - `"output"`: The SNR is referenced at the output of the non-coherent integrator $\text{SNR}_{\text{in},1}$.
 
         extrapolate: Indicates whether to extrapolate $G_{nc}$ using smaller values of $N_{nc}$. This is only done when
             the non-coherent gain cannot be explicitly solved for due to lack of floating-point precision.
@@ -57,8 +57,12 @@ def non_coherent_gain(
         sdr.peebles
 
     Notes:
-        $$y[m] = \sum_{n=0}^{N_{nc}-1} \left| x[m-n] \right|^2$$
-        $$\text{SNR}_{y,\text{dB}} = \text{SNR}_{x,\text{dB}} + G_{nc}$$
+        Let the input SNR required to achieve the specified detection performance with no non-coherent integration
+        be $\text{SNR}_{\text{in},1}$. Let the input SNR required to achieve the same detection performance with
+        $N_{nc}$ non-coherent integrations be $\text{SNR}_{\text{in},N_{nc}}$. The non-coherent gain is defined as
+        their difference. It is the SNR reduction provided by the use of non-coherent integration.
+
+        $$G_{nc} = \text{SNR}_{\text{in},1} - \text{SNR}_{\text{in},N_{nc}}$$
 
     Examples:
         See the :ref:`non-coherent-integration` example.
