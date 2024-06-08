@@ -305,43 +305,46 @@ def shnidman(
     if not np.all(n_nc >= 1):
         raise ValueError("Argument 'n_nc' must be at least 1.")
 
-    return _shnidman(p_d, p_fa, n_nc, swerling)
+    @np.vectorize
+    def _calculate(
+        p_d: float,
+        p_fa: float,
+        n_nc: int,
+        swerling: int,
+    ) -> float:
+        """
+        Computes the minimum required input SNR in dB for the Swerling target model.
+        """
+        snr0 = _shnidman_swerling0(p_d, p_fa, n_nc)
 
+        if swerling in (0, 5):
+            K = np.inf
+        elif swerling == 1:
+            K = 1
+        elif swerling == 2:
+            K = n_nc
+        elif swerling == 3:
+            K = 2
+        elif swerling == 4:
+            K = 2 * n_nc
+        else:
+            raise ValueError(f"Argument 'swerling' must be in {0, 1, 2, 3, 4, 5}, not {swerling}.")
 
-@np.vectorize
-def _shnidman(
-    p_d: float,
-    p_fa: float,
-    n_nc: int,
-    swerling: int,
-) -> float:
-    """
-    Computes the minimum required input SNR in dB for the Swerling target model.
-    """
-    snr0 = _shnidman_swerling0(p_d, p_fa, n_nc)
+        C1 = 1 / K * (((17.7006 * p_d - 18.4496) * p_d + 14.5339) * p_d - 3.525)
+        C2 = 1 / K * (np.exp(27.31 * p_d - 25.14) + (p_d - 0.8) * (0.7 * np.log(1e-5 / p_fa) + (2 * n_nc - 20) / 80))
 
-    if swerling in (0, 5):
-        K = np.inf
-    elif swerling == 1:
-        K = 1
-    elif swerling == 2:
-        K = n_nc
-    elif swerling == 3:
-        K = 2
-    elif swerling == 4:
-        K = 2 * n_nc
-    else:
-        raise ValueError(f"Argument 'swerling' must be in {0, 1, 2, 3, 4, 5}, not {swerling}.")
+        if p_d <= 0.872:
+            C = C1
+        else:
+            C = C1 + C2
 
-    C1 = 1 / K * (((17.7006 * p_d - 18.4496) * p_d + 14.5339) * p_d - 3.525)
-    C2 = 1 / K * (np.exp(27.31 * p_d - 25.14) + (p_d - 0.8) * (0.7 * np.log(1e-5 / p_fa) + (2 * n_nc - 20) / 80))
+        snr = snr0 + C
 
-    if p_d <= 0.872:
-        C = C1
-    else:
-        C = C1 + C2
+        return snr
 
-    snr = snr0 + C
+    snr = _calculate(p_d, p_fa, n_nc, swerling)
+    if snr.ndim == 0:
+        snr = snr.item()
 
     return snr
 
