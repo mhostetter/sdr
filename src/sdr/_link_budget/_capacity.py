@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.integrate
 import scipy.stats
 
-from .._conversion import linear
+from .._conversion import db, linear
 from .._helper import export
 
 
@@ -150,24 +150,6 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
             plt.figure(); \
             plt.plot(snr, C); \
             plt.xlabel("Signal-to-noise ratio (dB), $S/N$"); \
-            plt.ylabel("Capacity (bits/2D), $C$"); \
-            plt.title("Capacity of the AWGN Channel");
-
-        At capacity, which occurs when $R = C$, $E_b/N_0$ is related to $E_s/N_0$ by
-
-        $$\frac{E_b}{N_0} = \frac{1}{R} \frac{E_s}{N_0} = \frac{1}{C} \frac{E_s}{N_0} .$$
-
-        When viewing the capacity as a function of $E_b/N_0$, the capacity approaches 0 as $E_b/N_0$ approaches
-        -1.59 dB. This is the *absolute Shannon limit*.
-
-        .. ipython:: python
-
-            ebn0 = sdr.snr_to_ebn0(snr, C)
-
-            @savefig sdr_awgn_capacity_2.png
-            plt.figure(); \
-            plt.semilogy(ebn0, C); \
-            plt.xlabel("Bit energy-to-noise PSD ratio (dB), $E_b/N_0$"); \
             plt.ylabel("Capacity (bits/2D), $C$"); \
             plt.title("Capacity of the AWGN Channel");
 
@@ -333,3 +315,73 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
         rho = float(rho)
 
     return rho
+
+
+@export
+def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
+    r"""
+    Calculates the Shannon limit on the bit energy-to-noise power spectral density ratio $E_b/N_0$ in the AWGN
+    channel.
+
+    Arguments:
+        rho: The spectral efficiency $\rho$ of the modulation in bits/2D.
+
+    Returns:
+        The Shannon limit on $E_b/N_0$ in dB.
+
+    See Also:
+        sdr.awgn_capacity
+
+    Notes:
+        $$C = \rho = \log_2\left(1 + \frac{S}{N}\right) = \log_2\left(1 + \rho\frac{E_b}{N_0}\right) \ \ \text{bits/2D}$$
+        $$\frac{E_b}{N_0} = \frac{2^{\rho} - 1}{\rho}$$\
+
+    Examples:
+        The *absolute Shannon limit* on power efficiency is -1.59 dB $E_b/N_0$. This can only be achieved when the
+        channel capacity approaches 0.
+
+        .. ipython:: python
+
+            sdr.shannon_limit_ebn0(0)
+
+        The Shannon limit for various FEC code rates is shown below. The modulation is assumed to be binary.
+
+        .. ipython:: python
+
+            rate = np.array([1/8, 1/4, 1/3, 1/2, 2/3, 3/4, 7/8])  # Code rate, n/k
+            rho = 2 * rate  # bits/2D
+            sdr.shannon_limit_ebn0(rho)
+
+        Plot the AWGN channel capacity as a function of $E_b/N_0$.
+
+        .. ipython:: python
+
+            rho = np.logspace(-2, 1, 101)
+            ebn0 = sdr.shannon_limit_ebn0(rho)
+
+            @savefig sdr_shannon_limit_ebn0_1.png
+            plt.figure(); \
+            plt.semilogy(ebn0, rho); \
+            plt.xlabel("Bit energy-to-noise PSD ratio (dB), $E_b/N_0$"); \
+            plt.ylabel("Capacity (bits/2D), $C$"); \
+            plt.title("Capacity of the AWGN Channel");
+
+    Group:
+        link-budget-channel-capacity
+    """
+
+    @np.vectorize
+    def _calculate(rho: float) -> float:
+        if rho == 0:
+            ebn0 = np.log(2)
+        else:
+            rho = float(rho)  # If rho is an integer, the below equation can error for large rho
+            ebn0 = (2**rho - 1) / rho
+
+        return db(ebn0)
+
+    ebn0 = _calculate(rho)
+    if ebn0.ndim == 0:
+        ebn0 = float(ebn0)
+
+    return ebn0
