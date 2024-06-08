@@ -42,8 +42,8 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
 
         The error in the estimated minimum SNR is claimed to be less than 0.2 dB for
 
-        $$10^{-7} \leq P_{fa} \leq 10^{-3}$$
         $$0.1 \leq P_d \leq 0.9$$
+        $$10^{-7} \leq P_{fa} \leq 10^{-3}$$
         $$1 \le N_{nc} \le 8096 .$$
 
         Albersheim's equation approximates a linear detector. However, the difference between linear and square-law
@@ -82,7 +82,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
             plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=32, detector="linear"), label=32); \
             plt.legend(title="$N_{nc}$"); \
             plt.xlabel("Probability of false alarm, $P_{fa}$"); \
-            plt.ylabel("Minimum required SNR (dB)"); \
+            plt.ylabel("Minimum required input SNR (dB)"); \
             plt.title("Minimum required SNR across non-coherent combinations for $P_d = 0.9$\nfrom theory (solid) and Albersheim's approximation (dashed)");
 
         Compare the theoretical non-coherent gain for a linear detector against the approximation from Albersheim's
@@ -158,8 +158,8 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
 
         The error in the estimated non-coherent integration gain is claimed to be less than 0.8 dB for
 
-        $$10^{-10} \leq P_{fa} \leq 10^{-2}$$
         $$0.5 \leq P_d \leq 0.999$$
+        $$10^{-10} \leq P_{fa} \leq 10^{-2}$$
         $$1 \le N_{nc} \le 100 .$$
 
         Peebles' equation approximates the non-coherent integration gain using a square-law detector.
