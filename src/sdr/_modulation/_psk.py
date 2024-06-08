@@ -140,7 +140,7 @@ class PSK(LinearModulation):
         Creates a new PSK object.
 
         Arguments:
-            order: The modulation order $M = 2^k$, where $k \ge 1$ is the bits per symbol.
+            order: The modulation order $M = 2^k$, where $k \ge 1$ is the coded bits per symbol.
             phase_offset: The phase offset $\phi$ in degrees.
             symbol_labels: The decimal symbol labels of consecutive complex symbols.
 
@@ -588,7 +588,7 @@ class PiMPSK(PSK):
         Creates a new $\pi/M$ PSK object.
 
         Arguments:
-            order: The modulation order $M = 2^k$, where $k \ge 1$ is the bits per symbol.
+            order: The modulation order $M = 2^k$, where $k \ge 1$ is the coded bits per symbol.
             phase_offset: The absolute phase offset $\phi$ in degrees.
             symbol_labels: The decimal symbol labels of consecutive complex symbols.
 
