@@ -7,6 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
+from .._conversion import db
 from .._helper import export
 
 
@@ -216,3 +217,151 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
     g_nc *= 1 - 0.14 * np.log10(n_nc) + 0.0183 * np.log10(n_nc) ** 2
 
     return g_nc
+
+
+@export
+def shnidman(
+    p_d: npt.ArrayLike,
+    p_fa: npt.ArrayLike,
+    n_nc: npt.ArrayLike = 1,
+    swerling: int = 0,
+) -> npt.NDArray[np.float64]:
+    r"""
+    Estimates the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection
+    $P_d$ for the Swerling target model.
+
+    Arguments:
+        p_d: The desired probability of detection $P_d$ in $(0, 1)$.
+        p_fa: The desired probability of false alarm $P_{fa}$ in $(0, 1)$.
+        n_nc: The number of non-coherent combinations $N_{nc} \ge 1$.
+        swerling: The Swerling target model.
+
+            - 0: Non-fluctuating target.
+            - 1: Dwell-to-dwell decorrelation. Rayleigh PDF. Target has many scatterers, none are dominant.
+              Set of $N_{nc}$ returned pulses are correlated within a dwell but independent with the next set of
+              $N_{nc}$ pulses on the next dwell.
+            - 2: Pulse-to-pulse decorrelation. Rayleigh PDF. Target has many scatterers, none are dominant.
+              Set of $N_{nc}$ returned pulses are independent from each other within a dwell.
+            - 3: Dwell-to-dwell decorrelation. Chi-squared PDF with 4 degrees of freedom. Target has many scatterers,
+              with one dominant. Set of $N_{nc}$ returned pulses are correlated within a dwell but independent with the
+              next set of $N_{nc}$ pulses on the next dwell.
+            - 4: Pulse-to-pulse decorrelation. Chi-squared PDF with 4 degrees of freedom. Target has many scatterers,
+              with one dominant. Set of $N_{nc}$ returned pulses are independent from each other within a dwell.
+            - 5: Same as Swerling 0.
+
+    Returns:
+        The minimum required input SNR $\gamma$ in dB.
+
+    See Also:
+        sdr.min_snr
+
+    Notes:
+        This function implements Shnidman's equation. The error in the estimated minimum SNR is claimed to be less than
+        1 dB for
+
+        $$0.1 \leq P_d \leq 0.99$$
+        $$10^{-9} \leq P_{fa} \leq 10^{-3}$$
+        $$1 \le N_{nc} \le 100 .$$
+
+    References:
+        - `Amalia Barrios, A Methodology for Phased Array Radar Threshold Modeling Using the Advanced Propagation Model (APM).
+          <https://apps.dtic.mil/sti/pdfs/AD1040159.pdf>`_
+        - https://www.mathworks.com/help/phased/ref/shnidman.html
+
+    Examples:
+        Compare the theoretical minimum required SNR across Swerling target models for 1, 3, and 30 non-coherent combinations.
+
+        .. ipython:: python
+
+            p_d = 0.9; \
+            p_fa = np.logspace(-12, -1, 21)
+
+            fig, ax = plt.subplots(3, 1, figsize=(8, 12));
+            for i, n_nc in enumerate([1, 3, 30]):
+                ax[i].semilogx(p_fa, sdr.shnidman(p_d, p_fa, n_nc=n_nc, swerling=0), label=0)
+                ax[i].semilogx(p_fa, sdr.shnidman(p_d, p_fa, n_nc=n_nc, swerling=1), label=1)
+                ax[i].semilogx(p_fa, sdr.shnidman(p_d, p_fa, n_nc=n_nc, swerling=2), label=2)
+                ax[i].semilogx(p_fa, sdr.shnidman(p_d, p_fa, n_nc=n_nc, swerling=3), label=3)
+                ax[i].semilogx(p_fa, sdr.shnidman(p_d, p_fa, n_nc=n_nc, swerling=4), label=4)
+                ax[i].legend(title="Swerling")
+                ax[i].set_xlabel("Probability of false alarm, $P_{fa}$")
+                ax[i].set_ylabel("Minimum required input SNR (dB)")
+                ax[i].set_title(f"$N_{{nc}}={n_nc}$")
+            @savefig sdr_shnidman_1.png
+            fig.suptitle("Minimum required SNR across Swerling target models");
+
+    Group:
+        detection-approximation
+    """
+    p_d = np.asarray(p_d)
+    if not np.all(np.logical_and(0 < p_d, p_d < 1)):
+        raise ValueError("Argument 'p_d' must have values in (0, 1).")
+
+    p_fa = np.asarray(p_fa)
+    if not np.all(np.logical_and(0 < p_fa, p_fa < 1)):
+        raise ValueError("Argument 'p_fa' must have values in (0, 1).")
+
+    n_nc = np.asarray(n_nc)
+    if not np.all(n_nc >= 1):
+        raise ValueError("Argument 'n_nc' must be at least 1.")
+
+    return _shnidman(p_d, p_fa, n_nc, swerling)
+
+
+@np.vectorize
+def _shnidman(
+    p_d: float,
+    p_fa: float,
+    n_nc: int,
+    swerling: int,
+) -> float:
+    """
+    Computes the minimum required input SNR in dB for the Swerling target model.
+    """
+    snr0 = _shnidman_swerling0(p_d, p_fa, n_nc)
+
+    if swerling in (0, 5):
+        K = np.inf
+    elif swerling == 1:
+        K = 1
+    elif swerling == 2:
+        K = n_nc
+    elif swerling == 3:
+        K = 2
+    elif swerling == 4:
+        K = 2 * n_nc
+    else:
+        raise ValueError(f"Argument 'swerling' must be in {0, 1, 2, 3, 4, 5}, not {swerling}.")
+
+    C1 = 1 / K * (((17.7006 * p_d - 18.4496) * p_d + 14.5339) * p_d - 3.525)
+    C2 = 1 / K * (np.exp(27.31 * p_d - 25.14) + (p_d - 0.8) * (0.7 * np.log(1e-5 / p_fa) + (2 * n_nc - 20) / 80))
+
+    if p_d <= 0.872:
+        C = C1
+    else:
+        C = C1 + C2
+
+    snr = snr0 + C
+
+    return snr
+
+
+def _shnidman_swerling0(
+    p_d: float,
+    p_fa: float,
+    n_nc: int,
+) -> float:
+    """
+    Computes the minimum required input SNR in dB for a Swerling 0 target model.
+    """
+    # NOTE: MATLAB uses <= 40, but the original paper uses < 40. Following MATLAB's convention to match the test
+    # vectors.
+    a = 0 if n_nc <= 40 else 0.25
+
+    eta = np.sqrt(-0.8 * np.log(4 * p_fa * (1 - p_fa)))
+    eta += np.sign(p_d - 0.5) * np.sqrt(-0.8 * np.log(4 * (1 - p_d) * p_d))
+
+    snr = eta * (eta + 2 * np.sqrt(n_nc / 2 + (a - 0.25))) / n_nc
+    snr = db(snr)
+
+    return snr
