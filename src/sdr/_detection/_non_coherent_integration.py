@@ -87,20 +87,20 @@ def non_coherent_gain(
             plt.ylabel("Non-coherent gain, $G_{nc}$"); \
             plt.title("Non-coherent gain for various input SNRs");
 
-        Plot the non-coherent gain parameterized by output SNR.
+        Compare the non-coherent gain for linear and square-law detectors for various input SNRs. Notice that the
+        square-law detector performs better at low SNRs and the linear detector performs better at high SNRs.
 
         .. ipython:: python
 
-            plt.figure(); \
-            n = np.logspace(0, 3, 51).astype(int); \
-            plt.semilogx(n, sdr.coherent_gain(n), color="k");
-            for snr in np.arange(-30, 40, 10):
-                plt.semilogx(n, sdr.non_coherent_gain(n, snr, snr_ref="output"), label=f"{snr} dB")
             @savefig sdr_non_coherent_gain_2.png
-            plt.legend(title="Output SNR", loc="upper left"); \
-            plt.xlabel("Number of samples, $N_{nc}$"); \
+            plt.figure(); \
+            snr = np.linspace(-20, 10, 21); \
+            plt.plot(snr, sdr.non_coherent_gain(10, snr, p_fa=1e-6, detector="linear"), label="Linear"); \
+            plt.plot(snr, sdr.non_coherent_gain(10, snr, p_fa=1e-6, detector="square-law"), label="Square-law"); \
+            plt.legend(title="Detector", loc="upper left"); \
+            plt.xlabel("Input signal-to-noise ratio (dB)"); \
             plt.ylabel("Non-coherent gain, $G_{nc}$"); \
-            plt.title("Non-coherent gain for various output SNRs");
+            plt.title("Non-coherent gain for $N_{nc} = 10$");
 
         Examine the non-coherent gain across input SNR and false alarm rate for non-coherently integrating 10 samples.
         Notice that the non-coherent gain is affected by both. The coherent integration gain, however, is
