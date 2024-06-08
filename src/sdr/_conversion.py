@@ -153,7 +153,7 @@ def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
 
     Arguments:
         ebn0: Bit energy $E_b$ to noise PSD $N_0$ ratio in dB.
-        bps: Bits per symbol $\log_2 M$, where $M$ is the modulation order.
+        bps: Coded bits per symbol $\log_2 M$, where $M$ is the modulation order.
         rate: Code rate $r = k/n$, where $k$ is the number of information bits and $n$ is the
             number of coded bits.
 
@@ -193,7 +193,7 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
 
     Arguments:
         ebn0: Bit energy $E_b$ to noise PSD $N_0$ ratio in dB.
-        bps: Bits per symbol $\log_2 M$, where $M$ is the modulation order.
+        bps: Coded bits per symbol $\log_2 M$, where $M$ is the modulation order.
         rate: Code rate $r = k/n$, where $k$ is the number of information bits and $n$ is the
             number of coded bits.
         sps: Samples per symbol $f_s / f_{sym}$.
@@ -238,7 +238,7 @@ def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
 
     Arguments:
         esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB.
-        bps: Bits per symbol $\log_2 M$, where $M$ is the modulation order.
+        bps: Coded bits per symbol $\log_2 M$, where $M$ is the modulation order.
         rate: Code rate $r = k/n$, where $k$ is the number of information bits and $n$ is the
             number of coded bits.
 
@@ -321,7 +321,7 @@ def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> np
 
     Arguments:
         snr: Signal-to-noise ratio $S/N$ in dB.
-        bps: Bits per symbol $\log_2 M$, where $M$ is the modulation order.
+        bps: Coded bits per symbol $\log_2 M$, where $M$ is the modulation order.
         rate: Code rate $r = k/n$, where $k$ is the number of information bits and $n$ is the
             number of coded bits.
         sps: Samples per symbol $f_s / f_{sym}$.

@@ -71,7 +71,7 @@ class LinearModulation:
             raise ValueError(f"Argument 'symbol_map' must have a size that is a power of 2, not {symbol_map.size}.")
         self._symbol_map = symbol_map  # Decimal-to-complex symbol map
         self._order = symbol_map.size  # Modulation order
-        self._bps = int(np.log2(self._order))  # Bits per symbol
+        self._bps = int(np.log2(self._order))  # Coded bits per symbol
 
         if not isinstance(phase_offset, (int, float)):
             raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
@@ -274,7 +274,7 @@ class LinearModulation:
     @property
     def bps(self) -> int:
         r"""
-        The number of bits per symbol $k = \log_2 M$.
+        The number of coded bits per symbol $k = \log_2 M$.
         """
         return self._bps
 

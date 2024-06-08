@@ -81,7 +81,7 @@ class CPM:
         if not np.log2(order).is_integer():
             raise ValueError(f"Argument 'order' must be a power of 2, not {order}.")
         self._order = order  # Modulation order
-        self._bps = int(np.log2(self._order))  # Bits per symbol
+        self._bps = int(np.log2(self._order))  # Coded bits per symbol
 
         if not isinstance(index, (int, float)):
             raise TypeError(f"Argument 'index' must be a number, not {type(index)}.")
@@ -258,7 +258,7 @@ class CPM:
     @property
     def bps(self) -> int:
         r"""
-        The number of bits per symbol $k = \log_2 M$.
+        The number of coded bits per symbol $k = \log_2 M$.
         """
         return self._bps
 
