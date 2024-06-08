@@ -100,6 +100,7 @@ select = [
 ]
 ignore = [
     "D200",    # fits-on-one-line
+    "D205",    # blank-line-after-summary
     "D212",    # multi-line-summary-first-line
     "E501",    # line-too-long
     "E713",    # not-in-test
