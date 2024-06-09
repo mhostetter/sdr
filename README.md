@@ -69,7 +69,8 @@ View all available classes and functions in the [API Reference](https://mhostett
 - **Conversions**: Between linear units and decibels. Between $E_b/N_0$, $E_s/N_0$, and $S/N$.
 - **Simulation**: Binary symmetric channels (BSC), binary erasure channels (BEC), discrete memoryless channels (DMC).
   Apply additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
-- **Link budgets**: BSC, BEC, AWGN, and BI-AWGN channel capacity, free-space path loss, antenna gain.
+- **Link budgets**: BSC, BEC, AWGN, and BI-AWGN channel capacity, Shannon's limit on $E_b/N_0$ and $S/N$,
+  free-space path loss, antenna gain.
 - **Miscellaneous**: Packing and unpacking binary data, hexdump of binary data.
 - **Plotting**: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
   bit error rate (BER), symbol error rate (SER), probability of detection, receiver operating characteristic (ROC),
