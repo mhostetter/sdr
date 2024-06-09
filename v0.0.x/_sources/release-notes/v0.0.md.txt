@@ -4,6 +4,24 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.20
+
+*Released June 9, 2024*
+
+### Changes
+
+- Removed `sdr.percent()`, `sdr.ppm()`, and `sdr.ppb()`.
+- Added Shnidman's minimum required SNR approximation in `sdr.shnidman()`.
+- Added Shannon's limit on $E_b/N_0$ over the AWGN channel in `sdr.shannon_limit_ebn0()`.
+- Added Shannon's limit on $S/N$ over the AWGN channel in `sdr.shannon_limit_snr()`.
+- Added axis keyword argument `ax` to each `sdr.plot` function.
+- Modified `sdr.sample_rate_offset()` and `sdr.frequency_offset()` APIs to use offset and not ppm.
+- Renamed `sdr.fspl()` to `sdr.free_space_path_loss()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.19
 
 *Released May 27, 2024*
