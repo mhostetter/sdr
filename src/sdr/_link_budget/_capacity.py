@@ -341,7 +341,7 @@ def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
     Notes:
         $$C = \rho = \log_2\left(1 + \frac{S}{N}\right) = \log_2\left(1 + \rho\frac{E_b}{N_0}\right) \ \ \text{bits/2D}$$
-        $$\frac{E_b}{N_0} = \frac{2^{\rho} - 1}{\rho}$$\
+        $$\frac{E_b}{N_0} = \frac{2^{\rho} - 1}{\rho}$$
 
     Examples:
         The *absolute Shannon limit* on power efficiency is -1.59 dB $E_b/N_0$. This can only be achieved when the
