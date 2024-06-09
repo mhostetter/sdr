@@ -138,17 +138,24 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
         $$C = B\log_2\left(1 + \frac{S}{N}\right) \ \ \text{bits/s} .$$
 
     Examples:
-        The capacity monotonically decreases as the SNR decreases. In the limit as the SNR approaches 0
-        ($-\infty$ dB), the capacity approaches 0.
+        Plot the AWGN channel capacity as a function of $S/N$. When the capacity is less than 2 bits/2D, capacity
+        is in the power-limited regime. In the power-limited regime, the capacity increases linearly with signal power
+        as in independent of bandwidth.
+
+        When the capacity is greater than 2 bits/2D, capacity is in the bandwidth-limited regime. In the
+        bandwidth-limited regime, the capacity increases linearly with bandwidth and logarithmically with signal power.
 
         .. ipython:: python
 
-            snr = np.linspace(-20, 20, 100); \
+            snr = np.linspace(-30, 60, 101); \
             C = sdr.awgn_capacity(snr)
 
             @savefig sdr_awgn_capacity_1.png
             plt.figure(); \
-            plt.plot(snr, C); \
+            plt.semilogy(snr, C); \
+            plt.axvline(sdr.shannon_limit_snr(2), color='k', linestyle='--'); \
+            plt.annotate("Power-limited regime", (sdr.shannon_limit_snr(1e-2), 1e-2), xytext=(0, -20), textcoords="offset pixels", rotation=44); \
+            plt.annotate("Bandwidth-limited regime", (sdr.shannon_limit_snr(8), 8), xytext=(0, -20), textcoords="offset pixels", rotation=7); \
             plt.xlabel("Signal-to-noise ratio (dB), $S/N$"); \
             plt.ylabel("Capacity (bits/2D), $C$"); \
             plt.title("Capacity of the AWGN Channel");
@@ -324,7 +331,7 @@ def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
     channel.
 
     Arguments:
-        rho: The spectral efficiency $\rho$ of the modulation in bits/2D.
+        rho: The nominal spectral efficiency $\rho$ of the modulation in bits/2D.
 
     Returns:
         The Shannon limit on $E_b/N_0$ in dB.
@@ -385,3 +392,60 @@ def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
         ebn0 = float(ebn0)
 
     return ebn0
+
+
+@export
+def shannon_limit_snr(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
+    r"""
+    Calculates the Shannon limit on the signal-to-noise ratio $S/N$ in the AWGN channel.
+
+    Arguments:
+        rho: The nominal spectral efficiency $\rho$ of the modulation in bits/2D.
+
+    Returns:
+        The Shannon limit on $S/N$ in dB.
+
+    See Also:
+        sdr.awgn_capacity
+
+    Notes:
+        $$C = \rho = \log_2\left(1 + \frac{S}{N}\right) \ \ \text{bits/2D}$$
+        $$\frac{S}{N} = 2^{\rho} - 1$$
+
+    Examples:
+        Plot the AWGN channel capacity as a function of $S/N$. When the capacity is less than 2 bits/2D, capacity
+        is in the power-limited regime. In the power-limited regime, the capacity increases linearly with signal power
+        as in independent of bandwidth.
+
+        When the capacity is greater than 2 bits/2D, capacity is in the bandwidth-limited regime. In the
+        bandwidth-limited regime, the capacity increases linearly with bandwidth and logarithmically with signal power.
+
+        .. ipython:: python
+
+            snr = np.linspace(-30, 60, 101); \
+            C = sdr.awgn_capacity(snr)
+
+            @savefig sdr_shannon_limit_snr_1.png
+            plt.figure(); \
+            plt.semilogy(snr, C); \
+            plt.axvline(sdr.shannon_limit_snr(2), color='k', linestyle='--'); \
+            plt.annotate("Power-limited regime", (sdr.shannon_limit_snr(1e-2), 1e-2), xytext=(0, -20), textcoords="offset pixels", rotation=44); \
+            plt.annotate("Bandwidth-limited regime", (sdr.shannon_limit_snr(8), 8), xytext=(0, -20), textcoords="offset pixels", rotation=7); \
+            plt.xlabel("Signal-to-noise ratio (dB), $S/N$"); \
+            plt.ylabel("Capacity (bits/2D), $C$"); \
+            plt.title("Capacity of the AWGN Channel");
+
+    Group:
+        link-budget-channel-capacity
+    """
+
+    @np.vectorize
+    def _calculate(rho: float) -> float:
+        rho = float(rho)  # If rho is an integer, the below equation can error for large rho
+        return db(2**rho - 1)
+
+    snr = _calculate(rho)
+    if snr.ndim == 0:
+        snr = float(snr)
+
+    return snr
