@@ -308,8 +308,6 @@ def eye(
         plot-modulation
     """
     with plt.rc_context(RC_PARAMS):
-        if ax is None:
-            ax = plt.gca()
 
         def _eye(ax, xx):
             raster(
@@ -332,13 +330,15 @@ def eye(
             ax.set_ylim(-ylim, ylim)
 
         if np.iscomplexobj(x):
-            plt.subplot(2, 1, 1)
-            _eye(plt.gca(), x.real)
+            ax = plt.subplot(2, 1, 1)
+            _eye(ax, x.real)
             plt.title("In-phase eye diagram")
-            plt.subplot(2, 1, 2)
-            _eye(plt.gca(), x.imag)
+            ax = plt.subplot(2, 1, 2)
+            _eye(ax, x.imag)
             plt.title("Quadrature eye diagram")
         else:
+            if ax is None:
+                ax = plt.gca()
             _eye(ax, x)
             plt.title("Eye diagram")
 
