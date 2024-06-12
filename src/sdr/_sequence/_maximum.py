@@ -1,5 +1,5 @@
 """
-A module containing maximal-length sequences.
+A module containing maximum-length sequences.
 """
 
 from __future__ import annotations
@@ -53,7 +53,7 @@ def m_sequence(
     output: Any = "decimal",
 ) -> Any:
     r"""
-    Generates a maximal-length sequence (m-sequence) from a Fibonacci linear feedback shift register (LFSR).
+    Generates a maximum-length sequence (m-sequence) from a Fibonacci linear feedback shift register (LFSR).
 
     Arguments:
         degree: The degree $n$ of the LFSR.
@@ -76,7 +76,7 @@ def m_sequence(
         - https://en.wikipedia.org/wiki/Maximum_length_sequence
 
     Examples:
-        Generate a maximal-length sequence of degree-4 over $\mathrm{GF}(2)$.
+        Generate a maximum-length sequence of degree-4 over $\mathrm{GF}(2)$.
 
         .. ipython:: python
 
@@ -90,7 +90,7 @@ def m_sequence(
 
             sdr.m_sequence(4, index=2)
 
-        Generate a maximal-length sequence of degree-4 over $\mathrm{GF}(3^2)$.
+        Generate a maximum-length sequence of degree-4 over $\mathrm{GF}(3^2)$.
 
         .. ipython:: python
 

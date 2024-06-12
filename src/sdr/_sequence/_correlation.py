@@ -18,7 +18,7 @@ from typing_extensions import Literal
 from .._data import pack, unpack
 from .._helper import export
 from ._conversion import code_to_field, code_to_sequence, sequence_to_code
-from ._maximal import m_sequence
+from ._maximum import m_sequence
 
 
 @overload
