@@ -53,24 +53,24 @@ def m_sequence(
     output: Any = "decimal",
 ) -> Any:
     r"""
-    Generates a maximum-length sequence (m-sequence) from a Fibonacci linear feedback shift register (LFSR).
+    Generates a maximum-length sequence ($m$-sequence) from a Fibonacci linear feedback shift register (LFSR).
 
     Arguments:
         degree: The degree $n$ of the LFSR.
         poly: The characteristic polynomial of the LFSR over $\mathrm{GF}(q)$. The default is `None`, which uses the
             primitive polynomial of degree $n$ over $\mathrm{GF}(2)$, `galois.primitive_poly(2, degree)`.
-        index: The index $i$ in $[1, q^{n})$ of the m-sequence. The index represents the initial state of the LFSR.
-            The index dictates the phase of the m-sequence. The integer index is interpreted as a polynomial over
+        index: The index $i$ in $[1, q^{n})$ of the $m$-sequence. The index represents the initial state of the LFSR.
+            The index dictates the phase of the $m$-sequence. The integer index is interpreted as a polynomial over
             $\mathrm{GF}(q)$, whose coefficients are the shift register values. The default is 1, which corresponds
             to the $[0, \dots, 0, 1]$ state.
-        output: The output format of the m-sequence.
+        output: The output format of the $m$-sequence.
 
-            - `"decimal"` (default): The m-sequence with decimal values in $[0, q^n)$.
-            - `"field"`: The m-sequence as a Galois field array over $\mathrm{GF}(q^n)$.
-            - `"bipolar"`: The m-sequence with bipolar values of 1 and -1. Only valid for $q = 2$.
+            - `"decimal"` (default): The $m$-sequence with decimal values in $[0, q^n)$.
+            - `"field"`: The $m$-sequence as a Galois field array over $\mathrm{GF}(q^n)$.
+            - `"bipolar"`: The $m$-sequence with bipolar values of 1 and -1. Only valid for $q = 2$.
 
     Returns:
-        The length-$q^n - 1$ m-sequence.
+        The length-$q^n - 1$ $m$-sequence.
 
     References:
         - https://en.wikipedia.org/wiki/Maximum_length_sequence

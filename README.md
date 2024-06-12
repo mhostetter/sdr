@@ -52,7 +52,7 @@ View all available classes and functions in the [API Reference](https://mhostett
   infinite impulse response (IIR) filters, polyphase interpolators, polyphase decimators, polyphase resamplers,
   polyphase channelizers, Farrow arbitrary resamplers, fractional delay FIR filters, FIR moving averagers,
   FIR differentiators, IIR integrators, IIR leaky integrators, complex mixing, real/complex conversion.
-- **Sequences**: Binary, Gray, Barker, Hadamard, Walsh, Kasami, Zadoff-Chu, m-sequences, Fibonacci LFSRs, Galois LFSRs,
+- **Sequences**: Binary, Gray, Barker, Hadamard, Walsh, Kasami, Zadoff-Chu, $m$-sequences, Fibonacci LFSRs, Galois LFSRs,
   LFSR synthesis.
 - **Coding**: Block interleavers, additive scramblers.
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, continuous-phase modulation (CPM),
