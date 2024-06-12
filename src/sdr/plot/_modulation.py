@@ -10,6 +10,7 @@ import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._helper import export
+from .._link_budget._capacity import shannon_limit_ebn0 as _shannon_limit_ebn0
 from .._modulation import LinearModulation, PiMPSK
 from ._rc_params import RC_PARAMS
 from ._time_domain import raster
@@ -530,3 +531,51 @@ def ser(
         ax.set_xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
         ax.set_ylabel("Probability of symbol error, $P_{se}$")
         ax.set_title("Symbol error rate curve")
+
+
+@export
+def shannon_limit_ebn0(
+    rho: float,
+    ax: plt.Axes | None = None,
+):
+    r"""
+    Plots the Shannon limit for the bit energy-to-noise PSD ratio $E_b/N_0$.
+
+    Arguments:
+        rho: The nominal spectral efficiency $\rho$ of the modulation in bits/2D.
+        ax: The axis to plot on. If `None`, the current axis is used.
+
+    Examples:
+        Plot the absolute Shannon limit on $E_b/N_0$ and the Shannon limit for $\rho = 2$ bits/2D. Compare these to the
+        theoretical BER curve for BPSK modulation, which has spectral efficiency $\rho = 2$ bits/2D.
+
+        .. ipython:: python
+
+            bpsk = sdr.PSK(2)
+            ebn0 = np.linspace(-2, 10, 201)
+
+            @savefig sdr_plot_shannon_limit_ebn0_1.png
+            plt.figure(); \
+            sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK theoretical"); \
+            plt.ylim(1e-6, 1e0); \
+            sdr.plot.shannon_limit_ebn0(0); \
+            sdr.plot.shannon_limit_ebn0(2); \
+            plt.title("Bit error rate curve for PSK modulation in AWGN");
+
+    Group:
+        plot-modulation
+    """
+    with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
+        ebn0 = _shannon_limit_ebn0(rho)
+
+        ax.axvline(x=ebn0, ymin=0, ymax=0.75, color="black", linestyle="--")
+        ax.annotate(
+            rf"Shannon limit for $\rho = {rho}$",
+            xy=(ebn0, ax.get_ylim()[0]),
+            xytext=(-1.25, 0.75),
+            textcoords="offset fontsize",
+            rotation=90,
+        )
