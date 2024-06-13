@@ -62,15 +62,11 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            seq = sdr.barker_code(13, output="bipolar")
-            corr = np.correlate(seq, seq, mode="full")
-            lag = np.arange(-seq.size + 1, seq.size)
+            x = sdr.barker_code(13, output="bipolar")
 
             @savefig sdr_barker_code_1.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(corr)); \
-            plt.xlabel("Lag"); \
-            plt.title("Autocorrelation of length-13 Barker sequence");
+            sdr.plot.correlation(x, x, mode="circular");
 
     Group:
         sequences-correlation
@@ -159,15 +155,27 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            seq1 = sdr.hadamard_code(32, 4, output="bipolar"); \
-            seq2 = sdr.hadamard_code(32, 10, output="bipolar"); \
-            seq3 = sdr.hadamard_code(32, 15, output="bipolar");
+            x1 = sdr.hadamard_code(32, 30, output="bipolar"); \
+            x2 = sdr.hadamard_code(32, 18, output="bipolar"); \
+            x3 = sdr.hadamard_code(32, 27, output="bipolar");
 
             @savefig sdr_hadamard_code_1.png
             plt.figure(); \
-            sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
-            sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
-            sdr.plot.time_domain(seq3 - 3, label="Index 15")
+            sdr.plot.time_domain(x1 + 3); \
+            sdr.plot.time_domain(x2 + 0); \
+            sdr.plot.time_domain(x3 - 3)
+
+        Hadamard sequence autocorrelation sidelobes are not uniform as a function of sequence index.
+        In fact, the sidelobes can be quite high.
+
+        .. ipython:: python
+
+            @savefig sdr_hadamard_code_2.png
+            plt.figure(); \
+            sdr.plot.correlation(x1, x1, mode="circular"); \
+            sdr.plot.correlation(x2, x2, mode="circular"); \
+            sdr.plot.correlation(x3, x3, mode="circular"); \
+            plt.ylim(0, 32);
 
         Hadamard sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Hadamard sequences for spreading codes are useful only when
@@ -175,36 +183,12 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            lag = np.arange(-seq1.size + 1, seq1.size); \
-            xcorr12 = np.correlate(seq1, seq2, mode="full"); \
-            xcorr13 = np.correlate(seq1, seq3, mode="full"); \
-            xcorr23 = np.correlate(seq2, seq3, mode="full");
-
-            @savefig sdr_hadamard_code_2.png
-            plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(xcorr12), label="4 and 10"); \
-            sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
-            sdr.plot.time_domain(lag, np.abs(xcorr23), label="10 and 15"); \
-            plt.xlabel("Lag"); \
-            plt.title("Cross correlation of length-32 Hadamard sequences");
-
-        Hadamard sequence autocorrelation sidelobes are not uniform as a function of sequence index.
-        In fact, the sidelobes can be quite high.
-
-        .. ipython:: python
-
-            lag = np.arange(-seq1.size + 1, seq1.size); \
-            acorr1 = np.correlate(seq1, seq1, mode="full"); \
-            acorr2 = np.correlate(seq2, seq2, mode="full"); \
-            acorr3 = np.correlate(seq3, seq3, mode="full");
-
             @savefig sdr_hadamard_code_3.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(acorr1), label="Index 4"); \
-            sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
-            sdr.plot.time_domain(lag, np.abs(acorr3), label="Index 15"); \
-            plt.xlabel("Lag"); \
-            plt.title("Autocorrelation of length-32 Hadamard sequences");
+            sdr.plot.correlation(x1, x2, mode="circular"); \
+            sdr.plot.correlation(x1, x3, mode="circular"); \
+            sdr.plot.correlation(x2, x3, mode="circular"); \
+            plt.ylim(0, 32);
 
     Group:
         sequences-correlation
@@ -289,15 +273,27 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            seq1 = sdr.walsh_code(32, 4, output="bipolar"); \
-            seq2 = sdr.walsh_code(32, 10, output="bipolar"); \
-            seq3 = sdr.walsh_code(32, 15, output="bipolar");
+            x1 = sdr.walsh_code(32, 10, output="bipolar"); \
+            x2 = sdr.walsh_code(32, 14, output="bipolar"); \
+            x3 = sdr.walsh_code(32, 18, output="bipolar");
 
             @savefig sdr_walsh_code_1.png
             plt.figure(); \
-            sdr.plot.time_domain(seq1 + 3, label="Index 4"); \
-            sdr.plot.time_domain(seq2 + 0, label="Index 10"); \
-            sdr.plot.time_domain(seq3 - 3, label="Index 15")
+            sdr.plot.time_domain(x1 + 3); \
+            sdr.plot.time_domain(x2 + 0); \
+            sdr.plot.time_domain(x3 - 3)
+
+        Walsh sequence autocorrelation sidelobes are not uniform as a function of sequence index.
+        In fact, the sidelobes can be quite high.
+
+        .. ipython:: python
+
+            @savefig sdr_walsh_code_2.png
+            plt.figure(); \
+            sdr.plot.correlation(x1, x1, mode="circular"); \
+            sdr.plot.correlation(x2, x2, mode="circular"); \
+            sdr.plot.correlation(x3, x3, mode="circular"); \
+            plt.ylim(0, 32);
 
         Walsh sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Walsh sequences for spreading codes are useful only when
@@ -305,36 +301,12 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            lag = np.arange(-seq1.size + 1, seq1.size); \
-            xcorr12 = np.correlate(seq1, seq2, mode="full"); \
-            xcorr13 = np.correlate(seq1, seq3, mode="full"); \
-            xcorr23 = np.correlate(seq2, seq3, mode="full");
-
-            @savefig sdr_walsh_code_2.png
-            plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(xcorr12), label="4 and 10"); \
-            sdr.plot.time_domain(lag, np.abs(xcorr13), label="4 and 15"); \
-            sdr.plot.time_domain(lag, np.abs(xcorr23), label="10 and 15"); \
-            plt.xlabel("Lag"); \
-            plt.title("Cross correlation of length-32 Walsh sequences");
-
-        Walsh sequence autocorrelation sidelobes are not uniform as a function of sequence index.
-        In fact, the sidelobes can be quite high.
-
-        .. ipython:: python
-
-            lag = np.arange(-seq1.size + 1, seq1.size); \
-            acorr1 = np.correlate(seq1, seq1, mode="full"); \
-            acorr2 = np.correlate(seq2, seq2, mode="full"); \
-            acorr3 = np.correlate(seq3, seq3, mode="full");
-
             @savefig sdr_walsh_code_3.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(acorr1), label="Index 4"); \
-            sdr.plot.time_domain(lag, np.abs(acorr2), label="Index 10"); \
-            sdr.plot.time_domain(lag, np.abs(acorr3), label="Index 15"); \
-            plt.xlabel("Lag"); \
-            plt.title("Autocorrelation of length-32 Walsh sequences");
+            sdr.plot.correlation(x1, x2, mode="circular"); \
+            sdr.plot.correlation(x1, x3, mode="circular"); \
+            sdr.plot.correlation(x2, x3, mode="circular"); \
+            plt.ylim(0, 32);
 
     Group:
         sequences-correlation
@@ -433,49 +405,37 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
 
         .. ipython:: python
 
-            seq1 = sdr.kasami_code(63, 0, output="bipolar"); \
-            seq2 = sdr.kasami_code(63, 1, output="bipolar"); \
-            seq3 = sdr.kasami_code(63, 2, output="bipolar");
+            x1 = sdr.kasami_code(63, 0, output="bipolar"); \
+            x2 = sdr.kasami_code(63, 1, output="bipolar"); \
+            x3 = sdr.kasami_code(63, 2, output="bipolar");
 
             @savefig sdr_kasami_code_1.png
             plt.figure(); \
-            sdr.plot.time_domain(seq1 + 3, label="Index 0"); \
-            sdr.plot.time_domain(seq2 + 0, label="Index 1"); \
-            sdr.plot.time_domain(seq3 - 3, label="Index 2")
+            sdr.plot.time_domain(x1 + 3); \
+            sdr.plot.time_domain(x2 + 0); \
+            sdr.plot.time_domain(x3 - 3)
 
         Examine the autocorrelation of the Kasami sequences.
 
         .. ipython:: python
 
-            lag = np.arange(-seq1.size + 1, seq1.size); \
-            acorr12 = np.correlate(seq1, seq1, mode="full"); \
-            acorr13 = np.correlate(seq2, seq2, mode="full"); \
-            acorr23 = np.correlate(seq3, seq3, mode="full");
-
             @savefig sdr_kasami_code_2.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(acorr12), label="0"); \
-            sdr.plot.time_domain(lag, np.abs(acorr13), label="1"); \
-            sdr.plot.time_domain(lag, np.abs(acorr23), label="2"); \
-            plt.xlabel("Lag"); \
-            plt.title("Autocorrelation of length-63 Kasami sequences");
+            sdr.plot.correlation(x1, x1, mode="circular"); \
+            sdr.plot.correlation(x2, x2, mode="circular"); \
+            sdr.plot.correlation(x3, x3, mode="circular"); \
+            plt.ylim(0, 63);
 
         Examine the cross correlation of the Kasami sequences.
 
         .. ipython:: python
 
-            lag = np.arange(-seq1.size + 1, seq1.size); \
-            xcorr12 = np.correlate(seq1, seq2, mode="full"); \
-            xcorr13 = np.correlate(seq1, seq3, mode="full"); \
-            xcorr23 = np.correlate(seq2, seq3, mode="full");
-
             @savefig sdr_kasami_code_3.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(xcorr12), label="0 and 1"); \
-            sdr.plot.time_domain(lag, np.abs(xcorr13), label="0 and 2"); \
-            sdr.plot.time_domain(lag, np.abs(xcorr23), label="1 and 2"); \
-            plt.xlabel("Lag"); \
-            plt.title("Cross correlation of length-63 Kasami sequences");
+            sdr.plot.correlation(x1, x2, mode="circular"); \
+            sdr.plot.correlation(x1, x3, mode="circular"); \
+            sdr.plot.correlation(x2, x3, mode="circular"); \
+            plt.ylim(0, 63);
 
     Group:
         sequences-correlation
@@ -609,20 +569,14 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
             sdr.plot.constellation(x3, linestyle="-", linewidth=0.5); \
             plt.title(f"Root-3 Zadoff-Chu sequence of length {N}");
 
-        The *periodic* autocorrelation of a Zadoff-Chu sequence has sidelobes of magnitude 0.
+        The *periodic* autocorrelation of a Zadoff-Chu sequence has sidelobes with magnitude 0.
 
         .. ipython:: python
 
-            # Perform periodic autocorrelation
-            corr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x3, mode="valid")
-            lag = np.arange(-N//2 + 1, N//2 + 2)
-
             @savefig sdr_zadoff_chu_2.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(corr) / N); \
-            plt.ylim(0, 1); \
-            plt.xlabel("Lag"); \
-            plt.title(f"Periodic autocorrelation of root-3 Zadoff-Chu sequence of length {N}");
+            sdr.plot.correlation(x3, x3, mode="circular"); \
+            plt.ylim(0, N);
 
         Create a root-5 Zadoff-Chu sequence $x_5[n]$ with length 139.
 
@@ -640,16 +594,10 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
 
         .. ipython:: python
 
-            # Perform periodic cross correlation
-            xcorr = np.correlate(np.roll(np.tile(x3, 2), -N//2), x5, mode="valid")
-            lag = np.arange(-N//2 + 1, N//2 + 2)
-
             @savefig sdr_zadoff_chu_4.png
             plt.figure(); \
-            sdr.plot.time_domain(lag, np.abs(xcorr) / N); \
-            plt.ylim(0, 1); \
-            plt.xlabel("Lag"); \
-            plt.title(f"Periodic cross correlation of root-3 and root-5 Zadoff-Chu sequences of length {N}");
+            sdr.plot.correlation(x3, x5, mode="circular"); \
+            plt.ylim(0, N);
 
     Group:
         sequences-correlation
