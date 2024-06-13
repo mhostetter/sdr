@@ -3,10 +3,10 @@ import numpy as np
 import sdr
 
 
-def verify_code(degree, poly, index, code_truth):
+def verify_code(length, poly, index, code_truth):
     code_truth = np.array(code_truth)
 
-    decimal = sdr.kasami_code(degree, index=index, poly=poly, output="binary")
+    decimal = sdr.kasami_code(length, index=index, poly=poly, output="binary")
     assert isinstance(decimal, np.ndarray)
     assert np.array_equal(decimal, code_truth)
 
