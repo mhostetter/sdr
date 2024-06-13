@@ -119,7 +119,7 @@ extend-select = [
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
-"tests/*" = ["D"]
+"tests/*" = ["D", "D415"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
