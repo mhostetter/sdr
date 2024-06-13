@@ -84,6 +84,31 @@ View all available classes and functions in the `API Reference <https://mhostett
   detection PDFs, impulse response, step response, zeros/poles, magnitude response, phase response,
   phase delay, and group delay.
 
+Citation
+--------
+
+If this library was useful to you in your research, please cite us. Following the `GitHub citation standards <https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-citation-files>`_, here is the recommended citation.
+
+.. md-tab-set::
+
+   .. md-tab-item:: BibTeX
+
+      .. code-block:: latex
+
+         @software{Hostetter_SDR_2023,
+            title = {{sdr: A software-defined radio package for Python}},
+            author = {Hostetter, Matt},
+            month = {7},
+            year = {2023},
+            url = {https://github.com/mhostetter/sdr},
+         }
+
+   .. md-tab-item:: APA
+
+      .. code-block:: text
+
+         Hostetter, M. (2023). sdr: A software-defined radio package for Python [Computer software]. https://github.com/mhostetter/sdr
+
 .. toctree::
    :caption: Examples
    :hidden:
