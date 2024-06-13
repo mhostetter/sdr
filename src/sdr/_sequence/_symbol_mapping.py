@@ -11,15 +11,15 @@ from .._helper import export
 
 
 @export
-def binary_code(n: int) -> npt.NDArray[np.int_]:
+def binary_code(degree: int) -> npt.NDArray[np.int_]:
     """
-    Generates a binary code of length $2^n$.
+    Generates a binary code of length $n = 2^m$.
 
     Arguments:
-        n: The length of the binary code.
+        degree: The degree $m$ of the binary code.
 
     Returns:
-        A binary code of length $2^n$.
+        A binary code of length $n = 2^m$.
 
     Examples:
         .. ipython:: python
@@ -32,22 +32,22 @@ def binary_code(n: int) -> npt.NDArray[np.int_]:
     Group:
         sequences-symbol-mapping
     """
-    if not n >= 1:
-        raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")
+    if not degree >= 1:
+        raise ValueError(f"Argument 'degree' must be greater than or equal to 1, not {degree}.")
 
-    return np.arange(2**n)
+    return np.arange(2**degree)
 
 
 @export
-def gray_code(n: int) -> npt.NDArray[np.int_]:
+def gray_code(degree: int) -> npt.NDArray[np.int_]:
     """
-    Generates a Gray code of length $2^n$.
+    Generates a Gray code of length $n = 2^m$.
 
     Arguments:
-        n: The length of the Gray code.
+        degree: The degree $m$ of the Gray code.
 
     Returns:
-        A Gray code of length $2^n$.
+        A Gray code of length $n = 2^m$.
 
     Examples:
         .. ipython:: python
@@ -60,16 +60,16 @@ def gray_code(n: int) -> npt.NDArray[np.int_]:
     Group:
         sequences-symbol-mapping
     """
-    if not n >= 1:
-        raise ValueError(f"Argument 'n' must be greater than or equal to 1, not {n}.")
+    if not degree >= 1:
+        raise ValueError(f"Argument 'degree' must be greater than or equal to 1, not {degree}.")
 
-    if n == 1:
+    if degree == 1:
         return np.array([0, 1])
 
-    # Generate the Gray code for n - 1.
-    n1 = gray_code(n - 1)
+    # Generate the Gray code with degree m - 1
+    code_1 = gray_code(degree - 1)
 
-    # Generate the Gray code for n by concatenating the Gray code for n - 1
+    # Generate the Gray code for degree m by concatenating the Gray code for degree m - 1
     # with itself reversed. Also, the most significant bit of the second half
     # is set to 1.
-    return np.concatenate((n1, n1[::-1] + 2 ** (n - 1)))
+    return np.concatenate((code_1, code_1[::-1] + 2 ** (degree - 1)))
