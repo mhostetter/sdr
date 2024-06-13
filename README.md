@@ -81,3 +81,27 @@ View all available classes and functions in the [API Reference](https://mhostett
 
 There are detailed examples published at <https://mhostetter.github.io/sdr/latest/examples/pulse-shapes/>.
 The Jupyter notebooks behind the examples are available for experimentation in `docs/examples/`.
+
+## Citation
+
+If this library was useful to you in your research, please cite us. Following the
+[GitHub citation standards](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-citation-files),
+here is the recommended citation.
+
+### BibTeX
+
+```bibtex
+@software{Hostetter_SDR_2023,
+    title = {{sdr: A software-defined radio package for Python}},
+    author = {Hostetter, Matt},
+    month = {7},
+    year = {2023},
+    url = {https://github.com/mhostetter/sdr},
+}
+```
+
+### APA
+
+```
+Hostetter, M. (2023). sdr: A software-defined radio package for Python [Computer software]. https://github.com/mhostetter/sdr
+```
