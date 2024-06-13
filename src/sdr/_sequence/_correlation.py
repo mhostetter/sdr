@@ -36,7 +36,7 @@ def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float
 @export
 def barker_code(length: Any, output: Any = "binary") -> Any:
     r"""
-    Returns the Barker code/sequence of length $N$.
+    Generates the Barker code/sequence of length $N$.
 
     Arguments:
         length: The length $N$ of the Barker code/sequence.
@@ -118,7 +118,7 @@ def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.ND
 @export
 def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
     r"""
-    Returns the Hadamard code/sequence of length $N$.
+    Generates the Hadamard code/sequence of length $N$.
 
     Arguments:
         length: The length $N$ of the Hadamard code/sequence. Must be a power of 2.
@@ -235,7 +235,7 @@ def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArr
 @export
 def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
     r"""
-    Returns the Walsh code/sequence of length $N$.
+    Generates the Walsh code/sequence of length $N$.
 
     Arguments:
         length: The length $N$ of the Walsh code/sequence. Must be a power of 2.
@@ -366,7 +366,7 @@ def kasami_code(
 @export
 def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "binary") -> Any:
     r"""
-    Returns the Kasami code/sequence of length $N$.
+    Generates the Kasami code/sequence of length $N$.
 
     Arguments:
         length: The length $N = 2^n - 1$ of the Kasami code/sequence. The degree $n$ must be even.
@@ -534,7 +534,7 @@ def _kasami_large_set(degree: int, poly: Poly, index: tuple[int, int]) -> npt.ND
 @export
 def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[np.complex128]:
     r"""
-    Returns the root-$u$ Zadoff-Chu sequence of length $N$.
+    Generates the root-$u$ Zadoff-Chu sequence of length $N$.
 
     Arguments:
         length: The length $N$ of the Zadoff-Chu sequence.
