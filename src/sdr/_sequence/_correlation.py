@@ -36,10 +36,10 @@ def barker_code(length: int, output: Literal["bipolar"]) -> npt.NDArray[np.float
 @export
 def barker_code(length: Any, output: Any = "binary") -> Any:
     r"""
-    Generates the Barker code/sequence of length $N$.
+    Generates the Barker code/sequence of length $n$.
 
     Arguments:
-        length: The length $N$ of the Barker code/sequence.
+        length: The length $n$ of the Barker code/sequence.
         output: The output format of the Barker code/sequence.
 
             - `"binary"` (default): The Barker code with binary values of 0 and 1.
@@ -47,7 +47,10 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
             - `"bipolar"`: The Barker sequence with bipolar values of 1 and -1.
 
     Returns:
-        The Barker code/sequence of length $N$.
+        The Barker code/sequence of length $n$.
+
+    Notes:
+        Barker codes only exist for length $n = 1, 2, 3, 4, 5, 7, 11, 13$.
 
     Examples:
         Create a Barker code and sequence of length 13.
@@ -118,11 +121,11 @@ def hadamard_code(length: int, index: int, output: Literal["bipolar"]) -> npt.ND
 @export
 def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
     r"""
-    Generates the Hadamard code/sequence of length $N$.
+    Generates the Hadamard code/sequence of length $n = 2^m$.
 
     Arguments:
-        length: The length $N$ of the Hadamard code/sequence. Must be a power of 2.
-        index: The index $i$ in $[0, N)$ of the Hadamard code.
+        length: The length $n = 2^m$ of the Hadamard code/sequence.
+        index: The index $i$ in $[0, n)$ of the Hadamard code.
         output: The output format of the Hadamard code/sequence.
 
             - `"binary"` (default): The Hadamard code with binary values of 0 and 1.
@@ -130,7 +133,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             - `"bipolar"`: The Hadamard sequence with bipolar values of 1 and -1.
 
     Returns:
-        The Hadamard code/sequence of length $N$ and index $i$.
+        The Hadamard code/sequence of length $n = 2^m$ and index $i$.
 
     References:
         - https://www.mathworks.com/help/comm/ref/comm.hadamardcode-system-object.html
@@ -235,11 +238,11 @@ def walsh_code(length: int, index: int, output: Literal["bipolar"]) -> npt.NDArr
 @export
 def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
     r"""
-    Generates the Walsh code/sequence of length $N$.
+    Generates the Walsh code/sequence of length $n = 2^m$.
 
     Arguments:
-        length: The length $N$ of the Walsh code/sequence. Must be a power of 2.
-        index: The index $i$ in $[0, N)$ of the Walsh code. Indicates how many transitions there are in the code.
+        length: The length $n = 2^m$ of the Walsh code/sequence.
+        index: The index $i$ in $[0, n)$ of the Walsh code. Indicates how many transitions there are in the code.
         output: The output format of the Walsh code/sequence.
 
             - `"binary"` (default): The Walsh code with binary values of 0 and 1.
@@ -247,7 +250,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             - `"bipolar"`: The Walsh sequence with bipolar values of 1 and -1.
 
     Returns:
-        The Walsh code/sequence of length $N$ and index $i$.
+        The Walsh code/sequence of length $n = 2^m$ and index $i$.
 
     References:
         - https://www.mathworks.com/help/comm/ref/comm.walshcode-system-object.html
@@ -544,19 +547,19 @@ def kasami_code(
 @export
 def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "binary") -> Any:
     r"""
-    Generates the Kasami code/sequence of length $N$.
+    Generates the Kasami code/sequence of length $n = 2^m - 1$.
 
     Arguments:
-        length: The length $N = 2^n - 1$ of the Kasami code/sequence. The degree $n$ must be even.
+        length: The length $n = 2^m - 1$ of the Kasami code/sequence. The degree $m$ must be even.
         index: The index of the Kasami code.
 
-            - `int`: The index $m$ in $[-1, 2^{n/2} - 1)$ from the Kasami code small set. There are $2^{n/2}$ codes
+            - `int`: The index $j$ in $[-1, 2^{m/2} - 1)$ from the Kasami code small set. There are $2^{m/2}$ codes
               in the small set.
-            - `tuple[int, int]`: The index $(k, m)$ from the Kasami code large set, with $k \in [-2, 2^n - 1)$ and
-              $m \in [-1, 2^{n/2} - 1)$. There are $(2^n + 1) \cdot 2^{n/2}$ codes in the large set.
+            - `tuple[int, int]`: The index $(i, j)$ from the Kasami code large set, with $i \in [-2, 2^m - 1)$ and
+              $j \in [-1, 2^{m/2} - 1)$. There are $(2^m + 1) \cdot 2^{m/2}$ codes in the large set.
 
-        poly: The primitive polynomial of degree $n$ over $\mathrm{GF}(2)$. The default is `None`, which uses the
-            default primitive polynomial of degree $n$, i.e. `galois.primitive_poly(2, n)`.
+        poly: The primitive polynomial of degree $m$ over $\mathrm{GF}(2)$. The default is `None`, which uses the
+            default primitive polynomial of degree $m$, i.e. `galois.primitive_poly(2, m)`.
 
         output: The output format of the Kasami code/sequence.
 
@@ -565,7 +568,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
             - `"bipolar"`: The Kasami sequence with bipolar values of 1 and -1.
 
     Returns:
-        The Kasami code/sequence of length $N$.
+        The Kasami code/sequence of length $n = 2^m - 1$.
 
     References:
         - https://en.wikipedia.org/wiki/Kasami_code
@@ -651,9 +654,9 @@ def _kasami_small_set(degree: int, poly: Poly, index: int) -> npt.NDArray[np.int
     if not degree % 2 == 0:
         raise ValueError(f"Argument 'degree' must be even, not {degree}.")
 
-    m = index
-    if not -1 <= m < 2 ** (degree // 2) - 1:
-        raise ValueError(f"Argument 'index' must be between -1 and {2**(degree//2) - 1}, not {m}.")
+    j = index
+    if not -1 <= j < 2 ** (degree // 2) - 1:
+        raise ValueError(f"Argument 'index' must be between -1 and {2**(degree//2) - 1}, not {j}.")
 
     u = m_sequence(degree, poly=poly, index=1, output="decimal")
     length = u.size
@@ -662,10 +665,10 @@ def _kasami_small_set(degree: int, poly: Poly, index: int) -> npt.NDArray[np.int
     idxs = (np.arange(0, length) * stride) % length
     w = u[idxs]
 
-    if m == -1:
+    if j == -1:
         code = u
     else:
-        code = np.bitwise_xor(u, np.roll(w, -m))
+        code = np.bitwise_xor(u, np.roll(w, -j))
 
     return code
 
@@ -674,11 +677,11 @@ def _kasami_large_set(degree: int, poly: Poly, index: tuple[int, int]) -> npt.ND
     if not degree % 4 == 2:
         raise ValueError(f"Argument 'degree' must be 2 mod 4, not {degree}.")
 
-    k, m = index
-    if not -2 <= k < 2**degree - 1:
-        raise ValueError(f"Argument 'index[0]' must be between -2 and {2**degree - 1}, not {k}.")
-    if not -1 <= m < 2 ** (degree // 2) - 1:
-        raise ValueError(f"Argument 'index[1]' must be between -1 and {2**(degree//2) - 1}, not {m}.")
+    i, j = index
+    if not -2 <= i < 2**degree - 1:
+        raise ValueError(f"Argument 'index[0]' must be between -2 and {2**degree - 1}, not {i}.")
+    if not -1 <= j < 2 ** (degree // 2) - 1:
+        raise ValueError(f"Argument 'index[1]' must be between -1 and {2**(degree//2) - 1}, not {j}.")
 
     u = m_sequence(degree, poly=poly, index=1, output="decimal")
     length = u.size
@@ -691,20 +694,20 @@ def _kasami_large_set(degree: int, poly: Poly, index: tuple[int, int]) -> npt.ND
     idxs = (np.arange(0, length) * stride) % length
     v = u[idxs]
 
-    if m == -1:
-        if k == -2:
+    if j == -1:
+        if i == -2:
             code = u
-        elif k == -1:
+        elif i == -1:
             code = v
         else:
-            code = np.bitwise_xor(u, np.roll(v, -k))
+            code = np.bitwise_xor(u, np.roll(v, -i))
     else:
-        if k == -2:
-            code = np.bitwise_xor(u, np.roll(w, -m))
-        elif k == -1:
-            code = np.bitwise_xor(v, np.roll(w, -m))
+        if i == -2:
+            code = np.bitwise_xor(u, np.roll(w, -j))
+        elif i == -1:
+            code = np.bitwise_xor(v, np.roll(w, -j))
         else:
-            code = np.bitwise_xor(np.bitwise_xor(u, np.roll(v, -k)), np.roll(w, -m))
+            code = np.bitwise_xor(np.bitwise_xor(u, np.roll(v, -i)), np.roll(w, -j))
 
     return code
 
