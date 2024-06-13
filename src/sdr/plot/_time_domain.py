@@ -12,6 +12,7 @@ import numpy.typing as npt
 from matplotlib.collections import LineCollection
 from typing_extensions import Literal
 
+from .._conversion import db
 from .._helper import export
 from ._helper import real_or_complex_plot
 from ._rc_params import RC_PARAMS
@@ -311,3 +312,125 @@ def raster(
         else:
             ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
+
+
+@export
+def correlation(
+    x: npt.NDArray,
+    y: npt.NDArray,
+    sample_rate: float | None = None,
+    mode: Literal["full", "valid", "same", "circular"] = "full",
+    y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
+    diff: Literal["color", "line"] = "color",
+    ax: plt.Axes | None = None,
+    **kwargs,
+):
+    r"""
+    Plots the correlation between two time-domain signals $x[n]$ and $y[n]$.
+
+    Arguments:
+        x: The first time-domain signal $x[n]$.
+        y: The second time-domain signal $y[n]$.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Lag (samples)".
+        mode: The :func:`numpy.correlate()` correlation mode. If `"circular"`, a circular correlation is computed
+            using FFTs.
+        y_axis: Indicates how to plot the y-axis. If `"complex"`, the real and imaginary parts are plotted separately.
+        diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
+            real and imaginary parts will have different colors based on the current Matplotlib color cycle.
+            If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
+            and both lines will share the same color.
+        ax: The axis to plot on. If `None`, the current axis is used.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+
+    Examples:
+        Plot the autocorrelation of a length-63 $m$-sequence. Notice that the linear correlation produces sidelobes
+        for non-zero lag.
+
+        .. ipython:: python
+
+            x = sdr.m_sequence(6, output="bipolar")
+
+            @savefig sdr_plot_correlation_1.png
+            plt.figure(); \
+            sdr.plot.correlation(x, x, mode="full");
+
+        However, the circular correlation only produces magnitudes of 1 for non-zero lag.
+
+        .. ipython:: python
+
+            @savefig sdr_plot_correlation_2.png
+            plt.figure(); \
+            sdr.plot.correlation(x, x, mode="circular");
+
+    Group:
+        plot-time-domain
+    """
+    with plt.rc_context(RC_PARAMS):
+        if not x.ndim == y.ndim == 1:
+            raise ValueError(f"Arguments 'x' and 'y' must be 1-D, not {x.ndim}-D and {y.ndim}-D.")
+
+        if ax is None:
+            ax = plt.gca()
+
+        if sample_rate is None:
+            sample_rate_provided = False
+            sample_rate = 1
+        else:
+            sample_rate_provided = True
+            if not isinstance(sample_rate, (int, float)):
+                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+
+        if mode == "circular":
+            n_fft = max(x.size, y.size)
+            X = np.fft.fft(x, n_fft)
+            Y = np.fft.fft(y, n_fft)
+            corr = np.fft.ifft(X * Y.conj(), n_fft)
+            corr = np.fft.fftshift(corr)
+            if np.isrealobj(x) and np.isrealobj(y):
+                # If both signals are real, the correlation is real
+                corr = corr.real
+        else:
+            corr = np.correlate(x, y, mode=mode)
+
+        if corr.size % 2 == 0:
+            t = np.arange(-corr.size // 2, corr.size // 2)  # Lags
+        else:
+            t = np.arange(-corr.size // 2 + 1, corr.size // 2 + 1)  # Lags
+
+        if sample_rate_provided:
+            units, scalar = time_units(t)
+            t *= scalar
+
+        if x is y:
+            equation = r"r_{xx}[n]"
+            if mode == "circular":
+                ax.set_title("Periodic auto-correlation function (PACF)")
+            else:
+                ax.set_title("Auto-correlation function (ACF)")
+        else:
+            equation = r"r_{xy}[n]"
+            if mode == "circular":
+                ax.set_title("Periodic cross-correlation function (PCCF)")
+            else:
+                ax.set_title("Cross-correlation function (CCF)")
+
+        if y_axis == "complex":
+            ax.set_ylabel(rf"Correlation, ${equation}$")
+        elif y_axis == "mag":
+            corr = np.abs(corr)
+            ax.set_ylabel(rf"Correlation, $\left| {equation} \right|$")
+        elif y_axis == "mag^2":
+            corr = np.abs(corr) ** 2
+            ax.set_ylabel(rf"Correlation, $\left| {equation} \right|^2$")
+        elif y_axis == "db":
+            corr = db(np.abs(corr) ** 2)
+            ax.set_ylabel(rf"Correlation (dB), $\left| {equation} \right|^2$")
+        else:
+            raise ValueError(f"Argument 'y_axis' must be 'complex', 'mag', 'mag^2', or 'db', not {y_axis!r}.")
+
+        real_or_complex_plot(ax, t, corr, diff=diff, **kwargs)
+        if sample_rate_provided:
+            ax.set_xlabel(rf"Lag ({units}), $\Delta t$")
+        else:
+            ax.set_xlabel(r"Lag (samples), $\Delta n$")
