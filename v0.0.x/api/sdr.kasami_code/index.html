@@ -5350,7 +5350,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.m_sequence/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.m_sequence (Python function) — Generates a maximal-length sequence (m-sequence) from a Fibonacci linear feedback shift register (LFSR)." class="md-ellipsis">m_<wbr>sequence</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.m_sequence (Python function) — Generates a maximum-length sequence ($m$-sequence) from a Fibonacci linear feedback shift register (LFSR)." class="md-ellipsis">m_<wbr>sequence</span>
       </a>
     </li>
   
@@ -13333,6 +13333,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.correlation/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.correlation (Python function) — Plots the correlation between two time-domain signals $x[n]$ and $y[n]$." class="md-ellipsis">correlation</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -13523,6 +13538,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.plot.ser/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.shannon_limit_ebn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.shannon_limit_ebn0 (Python function) — Plots the Shannon limit for the bit energy-to-noise PSD ratio $E_b/N_0$." class="md-ellipsis">shannon_<wbr>limit_<wbr>ebn0</span>
       </a>
     </li>
   
@@ -14063,49 +14093,35 @@ default primitive polynomial of degree <span class="math notranslate nohighlight
 </code></pre></div>
 </div>
 <p>Create several Kasami codes of length 63 from the small set.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">seq1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">kasami_code</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">seq2</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">kasami_code</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">seq3</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">kasami_code</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">x1</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">kasami_code</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">x2</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">kasami_code</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">x3</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">kasami_code</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">seq1</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Index 0&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">seq2</span> <span class="o">+</span> <span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Index 1&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">seq3</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Index 2&quot;</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x1</span> <span class="o">+</span> <span class="mi">3</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x2</span> <span class="o">+</span> <span class="mi">0</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x3</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_kasami_code_1.png" src="../../_images/sdr_kasami_code_1.png" />
 <p>Examine the autocorrelation of the Kasami sequences.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">lag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">seq1</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seq1</span><span class="o">.</span><span class="n">size</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">acorr12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">acorr13</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq2</span><span class="p">,</span> <span class="n">seq2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">acorr23</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq3</span><span class="p">,</span> <span class="n">seq3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">);</span>
-<span class="gp">   ...: </span>
-
-<span class="gp">In [7]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">acorr12</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;0&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">acorr13</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">acorr23</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Lag&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Autocorrelation of length-63 Kasami sequences&quot;</span><span class="p">);</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">63</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_kasami_code_2.png" src="../../_images/sdr_kasami_code_2.png" />
 <p>Examine the cross correlation of the Kasami sequences.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [8]: </span><span class="n">lag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">seq1</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seq1</span><span class="o">.</span><span class="n">size</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">xcorr12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">xcorr13</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span> <span class="n">seq3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">xcorr23</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">seq2</span><span class="p">,</span> <span class="n">seq3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">);</span>
-<span class="gp">   ...: </span>
-
-<span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xcorr12</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;0 and 1&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xcorr13</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;0 and 2&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">lag</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xcorr23</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;1 and 2&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Lag&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cross correlation of length-63 Kasami sequences&quot;</span><span class="p">);</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;circular&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">63</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>

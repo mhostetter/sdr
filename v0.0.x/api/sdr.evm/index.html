@@ -5253,7 +5253,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.m_sequence/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.m_sequence (Python function) — Generates a maximal-length sequence (m-sequence) from a Fibonacci linear feedback shift register (LFSR)." class="md-ellipsis">m_<wbr>sequence</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.m_sequence (Python function) — Generates a maximum-length sequence ($m$-sequence) from a Fibonacci linear feedback shift register (LFSR)." class="md-ellipsis">m_<wbr>sequence</span>
       </a>
     </li>
   
@@ -13319,6 +13319,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.correlation/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.correlation (Python function) — Plots the correlation between two time-domain signals $x[n]$ and $y[n]$." class="md-ellipsis">correlation</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -13509,6 +13524,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.plot.ser/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.ser (Python function) — Plots the symbol error rate (SER) as a function of $E_s/N_0$." class="md-ellipsis">ser</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.plot.shannon_limit_ebn0/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.plot.shannon_limit_ebn0 (Python function) — Plots the Shannon limit for the bit energy-to-noise PSD ratio $E_b/N_0$." class="md-ellipsis">shannon_<wbr>limit_<wbr>ebn0</span>
       </a>
     </li>
   
@@ -14056,25 +14086,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">10.008324435213115</span>
+<span class="gh">Out[3]: </span><span class="go">10.277748225109313</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">10.008324435213115</span>
+<span class="gh">Out[4]: </span><span class="go">10.277748225109313</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">9.971236847442363</span>
+<span class="gh">Out[5]: </span><span class="go">10.21273167360395</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">8.169380658690764</span>
+<span class="gh">Out[6]: </span><span class="go">8.111014528351506</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">17.664164131066347</span>
+<span class="gh">Out[7]: </span><span class="go">17.407255614785807</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
