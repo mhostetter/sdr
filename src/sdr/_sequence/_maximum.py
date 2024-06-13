@@ -184,7 +184,7 @@ def preferred_pairs(
         An iterator of primitive polynomials $(f(x), g(x))$ of degree $m$ that produce preferred pair $m$-sequences.
 
     See Also:
-        sdr.gold_code
+        sdr.is_preferred_pair, sdr.gold_code
 
     Notes:
         A preferred pair of primitive polynomials of degree $m$ are two polynomials $f(x)$ and $g(x)$ such that the
@@ -308,7 +308,7 @@ def is_preferred_pair(
         A boolean indicating if the two primitive polynomials generate preferred pair $m$-sequences.
 
     See Also:
-        sdr.preferred_pairs
+        sdr.preferred_pairs, sdr.gold_code
 
     Notes:
         A preferred pair of primitive polynomials of degree $m$ are two polynomials $f(x)$ and $g(x)$ such that the
