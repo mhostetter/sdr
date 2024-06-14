@@ -4152,7 +4152,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.binary_code/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.binary_code (Python function) — Generates a binary code of length $2^n$." class="md-ellipsis">binary_<wbr>code</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.binary_code (Python function) — Generates a binary code of length $n = 2^m$." class="md-ellipsis">binary_<wbr>code</span>
       </a>
     </li>
   
@@ -4167,7 +4167,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.gray_code/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gray_code (Python function) — Generates a Gray code of length $2^n$." class="md-ellipsis">gray_<wbr>code</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gray_code (Python function) — Generates a Gray code of length $n = 2^m$." class="md-ellipsis">gray_<wbr>code</span>
       </a>
     </li>
   
@@ -4220,7 +4220,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.barker_code/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.barker_code (Python function) — Returns the Barker code/sequence of length $N$." class="md-ellipsis">barker_<wbr>code</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.barker_code (Python function) — Generates the Barker code/sequence of length $n$." class="md-ellipsis">barker_<wbr>code</span>
       </a>
     </li>
   
@@ -4235,7 +4235,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.hadamard_code/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.hadamard_code (Python function) — Returns the Hadamard code/sequence of length $N$." class="md-ellipsis">hadamard_<wbr>code</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.hadamard_code (Python function) — Generates the Hadamard code/sequence of length $n = 2^m$." class="md-ellipsis">hadamard_<wbr>code</span>
       </a>
     </li>
   
@@ -4250,7 +4250,22 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.walsh_code/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.walsh_code (Python function) — Returns the Walsh code/sequence of length $N$." class="md-ellipsis">walsh_<wbr>code</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.walsh_code (Python function) — Generates the Walsh code/sequence of length $n = 2^m$." class="md-ellipsis">walsh_<wbr>code</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.gold_code/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.gold_code (Python function) — Generates the Gold code/sequence of length $n = 2^m - 1$." class="md-ellipsis">gold_<wbr>code</span>
       </a>
     </li>
   
@@ -4265,7 +4280,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.kasami_code/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.kasami_code (Python function) — Returns the Kasami code/sequence of length $N$." class="md-ellipsis">kasami_<wbr>code</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.kasami_code (Python function) — Generates the Kasami code/sequence of length $n = 2^m - 1$." class="md-ellipsis">kasami_<wbr>code</span>
       </a>
     </li>
   
@@ -4280,7 +4295,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.zadoff_chu_sequence/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.zadoff_chu_sequence (Python function) — Returns the root-$u$ Zadoff-Chu sequence of length $N$." class="md-ellipsis">zadoff_<wbr>chu_<wbr>sequence</span>
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.zadoff_chu_sequence (Python function) — Generates the root-$u$ Zadoff-Chu sequence of length $N$." class="md-ellipsis">zadoff_<wbr>chu_<wbr>sequence</span>
       </a>
     </li>
   
@@ -5352,6 +5367,36 @@ You're not viewing the latest version.
   
 </nav>
       
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.preferred_pairs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.preferred_pairs (Python function) — Generates primitive polynomials of degree $m$ that produce preferred pair $m$-sequences." class="md-ellipsis">preferred_<wbr>pairs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.is_preferred_pair/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.is_preferred_pair (Python function) — Determines if two primitive polynomials generate preferred pair $m$-sequences." class="md-ellipsis">is_<wbr>preferred_<wbr>pair</span>
+      </a>
     </li>
   
 
@@ -14104,7 +14149,7 @@ to the <span class="math notranslate nohighlight">\([0, \dots, 0, 1]\)</span> st
 <span class="gh">Out[7]: </span><span class="go">6560</span>
 </code></pre></div>
 </div>
-<p>Plot the autocorrelation of a length-63 <span class="math notranslate nohighlight">\(m\)</span>-sequence. Notice that the linear correlation produces sidelobes
+<p>Plot the auto-correlation of a length-63 <span class="math notranslate nohighlight">\(m\)</span>-sequence. Notice that the linear correlation produces sidelobes
 for non-zero lag. However, the circular correlation only produces magnitudes of 1 for non-zero lag.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [8]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">)</span>
 
@@ -14115,8 +14160,8 @@ for non-zero lag. However, the circular correlation only produces magnitudes of 
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_m_sequence_1.png" src="../../_images/sdr_m_sequence_1.png" />
-<p>The cross correlation of two <span class="math notranslate nohighlight">\(m\)</span>-sequences with different indices is low for zero lag. However, for non-zero
-lag the cross correlation is very large.</p>
+<p>The cross-correlation of two <span class="math notranslate nohighlight">\(m\)</span>-sequences with different indices is low for zero lag. However, for non-zero
+lag the cross-correlation is very large.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [10]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">)</span>
 
 <span class="gp">In [11]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">m_sequence</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;bipolar&quot;</span><span class="p">)</span>
@@ -14176,13 +14221,13 @@ lag the cross correlation is very large.</p>
       
       
         
-        <a href="../coding/" class="md-footer__link md-footer__link--next" aria-label="Next: Coding" rel="next">
+        <a href="../sdr.preferred_pairs/" class="md-footer__link md-footer__link--next" aria-label="Next: sdr.preferred_pairs" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Coding
+              sdr.preferred_pairs
             </div>
           </div>
           <div class="md-footer__button md-icon">
