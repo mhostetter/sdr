@@ -344,7 +344,7 @@ def correlation(
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
-        Plot the autocorrelation of a length-63 $m$-sequence. Notice that the linear correlation produces sidelobes
+        Plot the auto-correlation of a length-63 $m$-sequence. Notice that the linear correlation produces sidelobes
         for non-zero lag.
 
         .. ipython:: python
