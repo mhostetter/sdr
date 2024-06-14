@@ -61,7 +61,7 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
             sdr.barker_code(13, output="bipolar")
             sdr.barker_code(13, output="field")
 
-        Barker sequences have ideally minimal autocorrelation sidelobes of +1 or -1.
+        Barker sequences have ideally minimal auto-correlation sidelobes of +1 or -1.
 
         .. ipython:: python
 
@@ -154,7 +154,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             np.array_equal(sdr.hadamard_code(16, 3), sdr.walsh_code(16, 8))
             np.array_equal(sdr.hadamard_code(16, 11), sdr.walsh_code(16, 9))
 
-        Hadamard sequences have zero cross correlation when time aligned.
+        Hadamard sequences have zero cross-correlation when time aligned.
 
         .. ipython:: python
 
@@ -168,7 +168,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.time_domain(x2 + 0); \
             sdr.plot.time_domain(x3 - 3)
 
-        Hadamard sequence autocorrelation sidelobes are not uniform as a function of sequence index.
+        Hadamard sequence auto-correlation sidelobes are not uniform as a function of sequence index.
         In fact, the sidelobes can be quite high.
 
         .. ipython:: python
@@ -180,7 +180,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.correlation(x3, x3, mode="circular"); \
             plt.ylim(0, 32);
 
-        Hadamard sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
+        Hadamard sequences have zero cross-correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Hadamard sequences for spreading codes are useful only when
         precise time information is known.
 
@@ -272,7 +272,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             np.array_equal(sdr.hadamard_code(16, 3), sdr.walsh_code(16, 8))
             np.array_equal(sdr.hadamard_code(16, 11), sdr.walsh_code(16, 9))
 
-        Walsh sequences have zero cross correlation when time aligned.
+        Walsh sequences have zero cross-correlation when time aligned.
 
         .. ipython:: python
 
@@ -286,7 +286,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.time_domain(x2 + 0); \
             sdr.plot.time_domain(x3 - 3)
 
-        Walsh sequence autocorrelation sidelobes are not uniform as a function of sequence index.
+        Walsh sequence auto-correlation sidelobes are not uniform as a function of sequence index.
         In fact, the sidelobes can be quite high.
 
         .. ipython:: python
@@ -298,7 +298,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             sdr.plot.correlation(x3, x3, mode="circular"); \
             plt.ylim(0, 32);
 
-        Walsh sequences have zero cross correlation when time aligned. However, the sidelobes can be quite
+        Walsh sequences have zero cross-correlation when time aligned. However, the sidelobes can be quite
         large when time misaligned. Because of this, Walsh sequences for spreading codes are useful only when
         precise time information is known.
 
@@ -463,7 +463,7 @@ def gold_code(
             sdr.plot.time_domain(x2 + 0); \
             sdr.plot.time_domain(x3 - 3)
 
-        Examine the autocorrelation of the Gold sequences.
+        Examine the auto-correlation of the Gold sequences.
 
         .. ipython:: python
 
@@ -474,7 +474,7 @@ def gold_code(
             sdr.plot.correlation(x3, x3, mode="circular"); \
             plt.ylim(0, 63);
 
-        Examine the cross correlation of the Gold sequences.
+        Examine the cross-correlation of the Gold sequences.
 
         .. ipython:: python
 
@@ -596,7 +596,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
             sdr.plot.time_domain(x2 + 0); \
             sdr.plot.time_domain(x3 - 3)
 
-        Examine the autocorrelation of the Kasami sequences.
+        Examine the auto-correlation of the Kasami sequences.
 
         .. ipython:: python
 
@@ -607,7 +607,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
             sdr.plot.correlation(x3, x3, mode="circular"); \
             plt.ylim(0, 63);
 
-        Examine the cross correlation of the Kasami sequences.
+        Examine the cross-correlation of the Kasami sequences.
 
         .. ipython:: python
 
@@ -750,7 +750,7 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
             sdr.plot.constellation(x3, linestyle="-", linewidth=0.5); \
             plt.title(f"Root-3 Zadoff-Chu sequence of length {N}");
 
-        The *periodic* autocorrelation of a Zadoff-Chu sequence has sidelobes with magnitude 0.
+        The *periodic* auto-correlation of a Zadoff-Chu sequence has sidelobes with magnitude 0.
 
         .. ipython:: python
 
@@ -770,7 +770,7 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
             sdr.plot.constellation(x5, linestyle="-", linewidth=0.5); \
             plt.title(f"Root-5 Zadoff-Chu sequence of length {N}");
 
-        The *periodic* cross correlation of two prime-length Zadoff-Chu sequences with different roots has sidelobes
+        The *periodic* cross-correlation of two prime-length Zadoff-Chu sequences with different roots has sidelobes
         with magnitude $1 / \sqrt{N}$.
 
         .. ipython:: python

@@ -99,7 +99,7 @@ def m_sequence(
             x = sdr.m_sequence(4, poly=c); x
             x.size
 
-        Plot the autocorrelation of a length-63 $m$-sequence. Notice that the linear correlation produces sidelobes
+        Plot the auto-correlation of a length-63 $m$-sequence. Notice that the linear correlation produces sidelobes
         for non-zero lag. However, the circular correlation only produces magnitudes of 1 for non-zero lag.
 
         .. ipython:: python
@@ -111,8 +111,8 @@ def m_sequence(
             sdr.plot.correlation(x, x, mode="circular"); \
             plt.ylim(0, 63);
 
-        The cross correlation of two $m$-sequences with different indices is low for zero lag. However, for non-zero
-        lag the cross correlation is very large.
+        The cross-correlation of two $m$-sequences with different indices is low for zero lag. However, for non-zero
+        lag the cross-correlation is very large.
 
         .. ipython:: python
 
