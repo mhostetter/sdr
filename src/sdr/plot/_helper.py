@@ -5,6 +5,9 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
+from .._conversion import db
+from ._utility import stem
+
 
 def real_or_complex_plot(
     ax: plt.Axes,
@@ -31,6 +34,57 @@ def real_or_complex_plot(
             raise ValueError(f"Argument 'diff' must be 'color' or 'line', not {diff}.")
     else:
         ax.plot(t, x, label=label, **kwargs)
+
+    if label:
+        ax.legend()
+
+
+def standard_plot(
+    ax: plt.Axes,
+    x: npt.NDArray,
+    y: npt.NDArray,
+    y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
+    diff: Literal["color", "line"] = "color",
+    type: Literal["plot", "stem"] = "plot",
+    **kwargs,
+):
+    if y_axis == "complex":
+        pass
+    elif y_axis == "mag":
+        y = np.abs(y)
+    elif y_axis == "mag^2":
+        y = np.abs(y) ** 2
+    elif y_axis == "db":
+        y = db(np.abs(y) ** 2)
+    else:
+        raise ValueError(f"Argument 'y_axis' must be 'complex', 'mag', 'mag^2', or 'db', not {y_axis!r}.")
+
+    label = kwargs.pop("label", None)
+
+    if type == "plot":
+        if np.iscomplexobj(y):
+            if label is None:
+                label, label2 = "real", "imag"
+            else:
+                label, label2 = label + " (real)", label + " (imag)"
+
+            if diff == "color":
+                ax.plot(x, y.real, label=label, **kwargs)
+                ax.plot(x, y.imag, label=label2, **kwargs)
+            elif diff == "line":
+                (real,) = ax.plot(x, y.real, "-", label=label, **kwargs)
+                kwargs.pop("color", None)
+                ax.plot(x, y.imag, "--", color=real.get_color(), label=label2, **kwargs)
+            else:
+                raise ValueError(f"Argument 'diff' must be 'color' or 'line', not {diff}.")
+        else:
+            ax.plot(x, y, label=label, **kwargs)
+
+    elif type == "stem":
+        stem(x, y, ax=ax, **kwargs)
+
+    else:
+        raise ValueError(f"Argument 'type' must be 'plot' or 'stem', not {type!r}.")
 
     if label:
         ax.legend()
