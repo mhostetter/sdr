@@ -59,8 +59,8 @@ View all available classes and functions in the `API Reference <https://mhostett
   infinite impulse response (IIR) filters, polyphase interpolators, polyphase decimators, polyphase resamplers,
   polyphase channelizers, Farrow arbitrary resamplers, fractional delay FIR filters, FIR moving averagers,
   FIR differentiators, IIR integrators, IIR leaky integrators, complex mixing, real/complex conversion.
-- **Sequences**: Binary, Gray, Barker, Hadamard, Walsh, Kasami, Zadoff-Chu, $m$-sequences, Fibonacci LFSRs, Galois LFSRs,
-  LFSR synthesis.
+- **Sequences**: Binary, Gray, Barker, Hadamard, Walsh, Gold, Kasami, Zadoff-Chu, $m$-sequences, preferred pairs,
+  Fibonacci LFSRs, Galois LFSRs, LFSR synthesis.
 - **Coding**: Block interleavers, additive scramblers.
 - **Modulation**: Phase-shift keying (PSK), $\pi/M$ PSK, offset QPSK, continuous-phase modulation (CPM),
   minimum-shift keying (MSK), rectangular pulse shapes, half-sine pulse shapes, Gaussian pulse shapes,
@@ -79,7 +79,8 @@ View all available classes and functions in the `API Reference <https://mhostett
 - **Link budgets**: BSC, BEC, AWGN, and BI-AWGN channel capacity, Shannon's limit on $E_b/N_0$ and $S/N$,
   free-space path loss, antenna gain.
 - **Miscellaneous**: Packing and unpacking binary data, hexdump of binary data.
-- **Plotting**: Time-domain, raster, periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
+- **Plotting**: Time-domain, raster, correlation, stem, discrete Fourier transform (DFT), discrete-time Fourier
+  transform (DTFT), periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
   bit error rate (BER), symbol error rate (SER), probability of detection, receiver operating characteristic (ROC),
   detection PDFs, impulse response, step response, zeros/poles, magnitude response, phase response,
   phase delay, and group delay.

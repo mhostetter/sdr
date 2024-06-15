@@ -4,6 +4,29 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.21
+
+*Released June 15, 2024*
+
+### Changes
+
+- Added Gold codes in `sdr.gold_code()`.
+- Added calculation of primitive polynomials that generate preferred pair $m$-sequences in `sdr.preferred_pairs()`.
+- Added check if two primitive polynomials form a preferred pair in `sdr.is_preferred_pair()`.
+- Added plot of the discrete Fourier transform (DFT) in `sdr.plot.dft()`.
+- Added plot of the discrete-time Fourier transform (DTFT) in `sdr.plot.dtft()`.
+- Added plot of periodic and non-periodic auto- and cross-correlations (PACF, ACF, PCCF, and CCF) in
+  `sdr.plot.correlation()`.
+- Added general-purpose stem plot, styled like MATLAB, in `sdr.plot.stem()`.
+- Added plot of Shannon's limit on $E_b/N_0$ in `sdr.plot.shannon_limit_ebn0()`.
+- Added support for `python -OO` optimization.
+- Increased required `galois` version to `v0.3.9`.
+
+### Contributors
+
+- Justin Charlong ([@jcharlong](https://github.com/jcharlong))
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.20
 
 *Released June 9, 2024*
