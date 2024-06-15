@@ -1,10 +1,10 @@
 Plotting
 ========
 
-Configuration
--------------
+Utility
+-------
 
-.. python-apigen-group:: plot-config
+.. python-apigen-group:: plot-utility
 
 Time-domain
 -----------
