@@ -3,6 +3,7 @@ from __future__ import annotations
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
+from matplotlib.ticker import MaxNLocator
 from typing_extensions import Literal
 
 from .._conversion import db
@@ -88,6 +89,25 @@ def standard_plot(
 
     if label:
         ax.legend()
+
+
+def process_sample_rate(sample_rate: float | None):
+    if sample_rate is None:
+        sample_rate_provided = False
+        sample_rate = 1
+    else:
+        sample_rate_provided = True
+        if not isinstance(sample_rate, (int, float)):
+            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        if not sample_rate > 0:
+            raise ValueError(f"Argument 'sample_rate' must be greater than 0, not {sample_rate}.")
+
+    return sample_rate, sample_rate_provided
+
+
+def integer_x_axis(ax: plt.Axes):
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+    ax.xaxis.set_minor_locator(MaxNLocator(integer=True))
 
 
 def min_ylim(y: npt.NDArray, separation: float, sample_rate: float):

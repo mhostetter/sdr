@@ -11,6 +11,7 @@ import scipy.signal
 from typing_extensions import Literal
 
 from .._helper import export
+from ._helper import integer_x_axis, process_sample_rate
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -71,13 +72,7 @@ def periodogram(
         if not y_axis in ["linear", "log"]:
             raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         f, Pxx = scipy.signal.welch(
             x,
@@ -180,13 +175,7 @@ def spectrogram(
         if y_axis == "auto":
             y_axis = "one-sided" if np.isrealobj(x) else "two-sided"
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         f, t, Sxx = scipy.signal.spectrogram(
             x,
@@ -228,6 +217,7 @@ def spectrogram(
             ax.set_xlabel(f"Time ({t_units}), $t$")
             ax.set_ylabel(f"Frequency ({f_units}), $f$")
         else:
+            integer_x_axis(ax)
             ax.set_xlabel("Samples, $n$")
             ax.set_ylabel("Normalized frequency, $f / f_s$")
         ax.set_title("Spectrogram")
