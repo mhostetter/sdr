@@ -152,12 +152,12 @@ def dft(
             ax.set_xlabel("Normalized frequency, $f/f_s$")
 
         if y_axis == "complex":
-            ax.set_ylabel("Amplitude")
+            ax.set_ylabel("Amplitude, $X[k]$")
         elif y_axis == "mag":
-            ax.set_ylabel(r"Magnitude, $\left| X(k) \right|$")
+            ax.set_ylabel(r"Magnitude, $\left| X[k] \right|$")
         elif y_axis == "mag^2":
-            ax.set_ylabel(r"Power, $\left| X(k) \right|^2$")
+            ax.set_ylabel(r"Power, $\left| X[k] \right|^2$")
         elif y_axis == "db":
-            ax.set_ylabel(r"Power (dB), $\left| X(k) \right|^2$")
+            ax.set_ylabel(r"Power (dB), $\left| X[k] \right|^2$")
 
         ax.set_title("Discrete Fourier transform (DFT)")
