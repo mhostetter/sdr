@@ -34,6 +34,7 @@ def stem(
 def stem(  # noqa: D417
     *args,
     ax: plt.Axes | None = None,
+    color: str | None = None,
     **kwargs,
 ):
     r"""
@@ -43,6 +44,7 @@ def stem(  # noqa: D417
         x: The x-coordinates of the stem plot.
         y: The y-coordinates of the stem plot.
         ax: The axis to plot on. If `None`, the current axis is used.
+        color: The color of the stem line and marker. If `None`, the next color in the current color cycle is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.stem`.
 
     Notes:
@@ -102,8 +104,9 @@ def stem(  # noqa: D417
             ax = plt.gca()
 
         # Make a dummy plot to get the next color in the current color cycle
-        (line,) = ax.plot([], [])
-        color = line.get_color()
+        if color is None:
+            (line,) = ax.plot([], [])
+            color = line.get_color()
 
         # Plot matplotlib's standard stem plot
         markerline, stemlines, baseline = ax.stem(x, y, **kwargs)
