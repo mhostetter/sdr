@@ -12,7 +12,7 @@ from typing_extensions import Literal
 
 from .._filter import FIR, IIR
 from .._helper import export
-from ._helper import min_ylim, real_or_complex_plot
+from ._helper import integer_x_axis, min_ylim, process_sample_rate, real_or_complex_plot
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -110,6 +110,7 @@ def impulse_response(
         h, zi = scipy.signal.lfilter(b, a, d, zi=zi)
         t = np.arange(h.size) + offset
 
+        integer_x_axis(ax)
         real_or_complex_plot(ax, t, h, **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
@@ -187,6 +188,7 @@ def step_response(
         s, zi = scipy.signal.lfilter(b, a, u, zi=zi)
         t = np.arange(s.size)
 
+        integer_x_axis(ax)
         real_or_complex_plot(ax, t, s, **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
@@ -351,13 +353,7 @@ def magnitude_response(
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -423,7 +419,7 @@ def phase_response(
               feedback coefficients $a_j$.
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Normalized Frequency".
+            be labeled as "Normalized frequency".
         N: The number of samples $N$ in the phase response.
         unwrap: Indicates whether to unwrap the phase response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
@@ -483,13 +479,7 @@ def phase_response(
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -552,7 +542,7 @@ def phase_delay(
               feedback coefficients $a_j$.
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Normalized Frequency".
+            be labeled as "Normalized frequency".
         N: The number of samples $N$ in the phase delay.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
@@ -611,13 +601,7 @@ def phase_delay(
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -681,7 +665,7 @@ def group_delay(
               feedback coefficients $a_j$.
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Normalized Frequency".
+            be labeled as "Normalized frequency".
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
@@ -740,13 +724,7 @@ def group_delay(
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -806,7 +784,7 @@ def filter(
               feedback coefficients $a_j$.
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Normalized Frequency".
+            be labeled as "Normalized frequency".
         N_time: The number of samples $N_t$ in the time domain. If `None`, the length of `b` is used
             for FIR filters and 100 for IIR filters.
         N_freq: The number of samples $N_f$ in the frequency response.
