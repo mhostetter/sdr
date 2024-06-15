@@ -285,8 +285,8 @@ def shnidman(
                 ax[i].semilogx(p_fa, sdr.shnidman(p_d, p_fa, n_nc=n_nc, swerling=4), label=4)
                 ax[i].legend(title="Swerling")
                 ax[i].set_xlabel("Probability of false alarm, $P_{fa}$")
-                ax[i].set_ylabel("Minimum required input SNR (dB)")
-                ax[i].set_title(f"$N_{{nc}}={n_nc}$")
+                ax[i].set_ylabel("Minimum required input SNR (dB), $\gamma$")
+                ax[i].set_title(f"$N_{{nc}} = {n_nc}$")
             @savefig sdr_shnidman_1.png
             fig.suptitle("Minimum required SNR across Swerling target models");
 

@@ -229,7 +229,7 @@ def symbol_map(
             ax.legend()
         ax.set_xlabel("In-phase channel, $I$")
         ax.set_ylabel("Quadrature channel, $Q$")
-        ax.set_title("Symbol Map")
+        ax.set_title("Symbol map")
 
 
 @export
@@ -422,7 +422,7 @@ def phase_tree(
         ax.set_ylim(-ylim, ylim)
         ax.set_yticks(np.arange(-ylim, ylim + 1, 180))
 
-        ax.set_ylabel("Phase (deg)")
+        ax.set_ylabel(r"Phase (deg), $\phi$")
 
 
 @export
@@ -474,7 +474,7 @@ def ber(
         if "label" in kwargs:
             ax.legend()
 
-        ax.set_xlabel("Bit energy to noise PSD ratio (dB), $E_b/N_0$")
+        ax.set_xlabel("Bit energy-to-noise PSD ratio (dB), $E_b/N_0$")
         ax.set_ylabel("Probability of bit error, $P_{be}$")
         ax.set_title("Bit error rate curve")
 
@@ -528,7 +528,7 @@ def ser(
         if "label" in kwargs:
             ax.legend()
 
-        ax.set_xlabel("Symbol energy to noise PSD ratio (dB), $E_s/N_0$")
+        ax.set_xlabel("Symbol energy-to-noise PSD ratio (dB), $E_s/N_0$")
         ax.set_ylabel("Probability of symbol error, $P_{se}$")
         ax.set_title("Symbol error rate curve")
 
