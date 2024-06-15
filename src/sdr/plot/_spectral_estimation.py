@@ -115,7 +115,7 @@ def periodogram(
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
-            ax.set_xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_xlabel("Normalized frequency, $f / f_s$")
 
         if y_axis == "log":
             ax.set_ylabel("Power density (dB/Hz)")
@@ -229,5 +229,5 @@ def spectrogram(
             ax.set_ylabel(f"Frequency ({f_units}), $f$")
         else:
             ax.set_xlabel("Samples, $n$")
-            ax.set_ylabel("Normalized Frequency, $f /f_s$")
+            ax.set_ylabel("Normalized frequency, $f / f_s$")
         ax.set_title("Spectrogram")
