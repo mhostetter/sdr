@@ -40,7 +40,7 @@ def periodogram(
     Arguments:
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Normalized Frequency".
+            be labeled as "Normalized frequency".
         window: The windowing function to use. This can be a string or a vector of length `length`.
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
@@ -149,7 +149,7 @@ def spectrogram(
     Arguments:
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be label as "Samples" and the y-axis as "Normalized Frequency".
+            be label as "Samples" and the y-axis as "Normalized frequency".
         window: The windowing function to use. This can be a string or a vector of length `length`.
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
