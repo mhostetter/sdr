@@ -113,7 +113,7 @@ def impulse_response(
         real_or_complex_plot(ax, t, h, **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
-        ax.set_title("Impulse Response, $h[n]$")
+        ax.set_title("Impulse response, $h[n]$")
 
 
 @export
@@ -190,7 +190,7 @@ def step_response(
         real_or_complex_plot(ax, t, s, **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
-        ax.set_title("Step Response, $s[n]$")
+        ax.set_title("Step response, $s[n]$")
 
 
 @export
@@ -263,7 +263,7 @@ def zeros_poles(
         ax.legend()
         ax.set_xlabel("Real")
         ax.set_ylabel("Imaginary")
-        ax.set_title("Zeros and Poles of $H(z)$")
+        ax.set_title("Zeros and poles of $H(z)$")
 
 
 @export
@@ -390,14 +390,14 @@ def magnitude_response(
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
-            ax.set_xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_xlabel("Normalized frequency, $f / f_s$")
 
         if y_axis == "log":
             ax.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
         else:
             ax.set_ylabel(r"Power, $|H(\omega)|^2$")
 
-        ax.set_title(r"Magnitude Response, $|H(\omega)|^2$")
+        ax.set_title(r"Magnitude response, $|H(\omega)|^2$")
 
 
 @export
@@ -525,9 +525,9 @@ def phase_response(
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
-            ax.set_xlabel("Normalized Frequency, $f /f_s$")
+            ax.set_xlabel("Normalized frequency, $f / f_s$")
         ax.set_ylabel(r"Phase (deg), $\angle H(\omega)$")
-        ax.set_title(r"Phase Response, $\angle H(\omega)$")
+        ax.set_title(r"Phase response, $\angle H(\omega)$")
 
 
 @export
@@ -652,11 +652,11 @@ def phase_delay(
             ax.legend()
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({f_units}), $f$")
-            ax.set_ylabel(f"Phase Delay ({t_units})")
+            ax.set_ylabel(rf"Phase delay ({t_units}), $\tau_{{\phi}}{{\omega}}$")
         else:
-            ax.set_xlabel("Normalized Frequency, $f /f_s$")
-            ax.set_ylabel("Phase Delay (samples)")
-        ax.set_title(r"Phase Delay, $\tau_{\phi}(\omega)$")
+            ax.set_xlabel("Normalized frequency, $f / f_s$")
+            ax.set_ylabel(r"Phase delay (samples), $\tau_{\phi}(\omega)$")
+        ax.set_title(r"Phase delay, $\tau_{\phi}(\omega)$")
 
 
 @export
@@ -778,11 +778,11 @@ def group_delay(
             ax.legend()
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({f_units}), $f$")
-            ax.set_ylabel(rf"Group Delay ({t_units}), $\tau_g(\omega)$")
+            ax.set_ylabel(rf"Group delay ({t_units}), $\tau_g(\omega)$")
         else:
-            ax.set_xlabel("Normalized Frequency, $f /f_s$")
-            ax.set_ylabel(r"Group Delay (samples), $\tau_g(\omega)$")
-        ax.set_title(r"Group Delay, $\tau_g(\omega)$")
+            ax.set_xlabel("Normalized frequency, $f / f_s$")
+            ax.set_ylabel(r"Group delay (samples), $\tau_g(\omega)$")
+        ax.set_title(r"Group delay, $\tau_g(\omega)$")
 
 
 @export
