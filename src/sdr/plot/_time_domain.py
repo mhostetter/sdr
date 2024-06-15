@@ -68,6 +68,7 @@ def time_domain(  # noqa: D417
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
             and both lines will share the same color.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
