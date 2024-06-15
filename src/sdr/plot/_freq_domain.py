@@ -56,6 +56,9 @@ def dft(
             and both lines will share the same color.
         kwargs: Additional keyword arguments to pass to the plotting function.
 
+    See Also:
+        sdr.plot.dtft
+
     Notes:
         The discrete Fourier transform (DFT) is defined as
 
@@ -161,3 +164,101 @@ def dft(
             ax.set_ylabel(r"Power (dB), $\left| X[k] \right|^2$")
 
         ax.set_title("Discrete Fourier transform (DFT)")
+
+
+@export
+def dtft(
+    x: npt.NDArray,
+    sample_rate: float | None = None,
+    window: str | None = None,
+    size: int = int(2**20),  # ~1 million points
+    centered: bool = True,
+    ax: plt.Axes | None = None,
+    y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
+    diff: Literal["color", "line"] = "color",
+    **kwargs,
+):
+    r"""
+    Plots the discrete-time Fourier transform (DTFT) of the time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized frequency".
+        window: The windowing function to use. This can be a string or a vector of length `length`.
+        size: The number of points to use for the DTFT. The actual size used will be the nearest power of 2.
+        centered: Indicates whether to center the DTFT about 0.
+        ax: The axis to plot on. If `None`, the current axis is used.
+        y_axis: The y-axis scaling.
+        diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
+            real and imaginary parts will have different colors based on the current Matplotlib color cycle.
+            If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
+            and both lines will share the same color.
+        kwargs: Additional keyword arguments to pass to the plotting function.
+
+    See Also:
+        sdr.plot.dft
+
+    Notes:
+        The discrete Fourier transform (DTFT) is defined as
+
+        $$X(f) = \sum_{n=-\infty}^{\infty} x[n] e^{-j 2 \pi f n / f_s},$$
+
+        where $x[n]$ is the time-domain signal, $X(f)$ is the DTFT, $f$ is the frequency.
+
+    Examples:
+        Create a DC tone that is 10 samples long. Plot its DTFT. Notice that the width of the main lobe is $2 / T$,
+        with nulls at $\pm 1 / T$.
+
+        .. ipython:: python
+
+            n = 10  # samples
+            f = 0 / n  # cycles/sample
+            x = np.exp(1j * 2 * np.pi * f * np.arange(n))
+
+            @savefig sdr_plot_dtft_1.png
+            plt.figure(); \
+            sdr.plot.dtft(x);
+
+        Plot a critically sampled DFT and an oversampled DFT of the signal. Notice that the DFT is a sampled version of
+        the DTFT. The oversampled DFT has more samples and thus more closely resembles the DTFT.
+
+        .. ipython:: python
+
+            @savefig sdr_plot_dtft_2.png
+            plt.figure(); \
+            sdr.plot.dtft(x, label="DTFT"); \
+            sdr.plot.dft(x, oversample=4, type="stem", label="4x oversampled DFT"); \
+            sdr.plot.dft(x, type="stem", label="DFT");
+
+    Group:
+        plot-frequency-domain
+    """
+    with plt.rc_context(RC_PARAMS):
+        dft(
+            x,
+            sample_rate=sample_rate,
+            window=window,
+            size=size,
+            fast=True,
+            centered=centered,
+            ax=ax,
+            type="plot",
+            x_axis="freq",
+            y_axis=y_axis,
+            diff=diff,
+            **kwargs,
+        )
+
+        ax = plt.gca()
+
+        if y_axis == "complex":
+            ax.set_ylabel("Amplitude, $X(f)$")
+        elif y_axis == "mag":
+            ax.set_ylabel(r"Magnitude, $\left| X(f) \right|$")
+        elif y_axis == "mag^2":
+            ax.set_ylabel(r"Power, $\left| X(f) \right|^2$")
+        elif y_axis == "db":
+            ax.set_ylabel(r"Power (dB), $\left| X(f) \right|^2$")
+
+        ax.set_title("Discrete-time Fourier transform (DTFT)")
