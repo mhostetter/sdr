@@ -91,7 +91,7 @@ def dft(
 
             @savefig sdr_plot_dft_2.png
             plt.figure(); \
-            sdr.plot.dft(x, oversample=1000, color="k", label="DTFT"); \
+            sdr.plot.dtft(x, color="k", label="DTFT"); \
             sdr.plot.dft(x, oversample=4, type="stem", label="4x oversampled DFT"); \
             sdr.plot.dft(x, type="stem", label="DFT");
 
@@ -103,7 +103,7 @@ def dft(
 
             @savefig sdr_plot_dft_3.png
             plt.figure(); \
-            sdr.plot.dft(x, oversample=1000, window="hamming", color="k", label="DTFT"); \
+            sdr.plot.dtft(x, window="hamming", color="k", label="DTFT"); \
             sdr.plot.dft(x, oversample=4, window="hamming", type="stem", label="4x oversampled DFT"); \
             sdr.plot.dft(x, window="hamming", type="stem", label="DFT");
 
