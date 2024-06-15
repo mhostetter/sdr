@@ -1,0 +1,163 @@
+"""
+A module containing frequency-domain plotting functions.
+"""
+
+from __future__ import annotations
+
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy.typing as npt
+import scipy.fft
+import scipy.signal
+from typing_extensions import Literal
+
+from .._helper import export
+from ._helper import integer_x_axis, process_sample_rate, standard_plot
+from ._rc_params import RC_PARAMS
+
+
+@export
+def dft(
+    x: npt.NDArray,
+    sample_rate: float | None = None,
+    window: str | None = None,
+    size: int | None = None,
+    oversample: int | None = None,
+    fast: bool = False,
+    centered: bool = True,
+    x_axis: Literal["freq", "bin"] = "freq",
+    y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
+    diff: Literal["color", "line"] = "color",
+    ax: plt.Axes | None = None,
+    type: Literal["plot", "stem"] = "plot",
+    **kwargs,
+):
+    r"""
+    Plots the discrete Fourier transform (DFT) of the time-domain signal $x[n]$.
+
+    Arguments:
+        x: The time-domain signal $x[n]$.
+        sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
+            be labeled as "Normalized frequency".
+        window: The windowing function to use. This can be a string or a vector of length `length`.
+        size: The number of points to use for the DFT. If `None`, the length of the signal is used.
+        oversample: The factor to oversample the DFT. If `None`, the DFT is not oversampled. This is only considered
+            if `size` is `None`.
+        fast: Indicates whether to use the fast Fourier transform (FFT) algorithm. If `True`, the DFT size is set
+            to the next power of 2.
+        centered: Indicates whether to center the DFT about 0.
+        x_axis: The x-axis scaling.
+        y_axis: The y-axis scaling.
+        diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
+            real and imaginary parts will have different colors based on the current Matplotlib color cycle.
+            If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
+            and both lines will share the same color.
+        ax: The axis to plot on. If `None`, the current axis is used.
+        type: The type of plot to use.
+        kwargs: Additional keyword arguments to pass to the plotting function.
+
+    Notes:
+        The discrete Fourier transform (DFT) is defined as
+
+        $$X[k] = \sum_{n=0}^{N-1} x[n] e^{-j 2 \pi k n / N},$$
+
+        where $x[n]$ is the time-domain signal, $X[k]$ is the DFT, $k$ is the DFT frequency bin, and $N$ is the number
+        of samples in the DFT. The frequency corresponding to the k-th bin is $\frac{k}{N} f_s$.
+
+        The DFT is a sampled version of the discrete-time Fourier transform (DTFT).
+
+    Examples:
+        Create a tone whose frequency will straddle two DFT bins.
+
+        .. ipython:: python
+
+            n = 10  # samples
+            f = 1.5 / n  # cycles/sample
+            x = np.exp(1j * 2 * np.pi * f * np.arange(n))
+
+            @savefig sdr_plot_dft_1.png
+            plt.figure(); \
+            sdr.plot.dft(x, x_axis="bin", type="stem");
+
+        Plot the DFT against normalized frequency. Compare the DTFT, an oversampled DFT, and a critically sampled DFT.
+        Notice that the critically sampled DFT has scalloping loss (difference between the true peak and the DFT peak)
+        when the signal frequency does not align with a bin. Furthermore, the sidelobes are non-zero and large.
+        This is known as spectral leakage -- the spreading of a tone's power from a single bins to all bins.
+
+        .. ipython:: python
+
+            @savefig sdr_plot_dft_2.png
+            plt.figure(); \
+            sdr.plot.dft(x, oversample=1000, color="k", label="DTFT"); \
+            sdr.plot.dft(x, oversample=4, type="stem", label="4x oversampled DFT"); \
+            sdr.plot.dft(x, type="stem", label="DFT");
+
+        If a window is applied to the signal before the DFT is computed, the main lobe is widened and the sidelobes are
+        reduced. Given the wider main lobe, the scalloping loss of the critically sampled DFT is also reduced. These
+        benefits come at the cost of reduced frequency resolution.
+
+        .. ipython:: python
+
+            @savefig sdr_plot_dft_3.png
+            plt.figure(); \
+            sdr.plot.dft(x, oversample=1000, window="hamming", color="k", label="DTFT"); \
+            sdr.plot.dft(x, oversample=4, window="hamming", type="stem", label="4x oversampled DFT"); \
+            sdr.plot.dft(x, window="hamming", type="stem", label="DFT");
+
+    Group:
+        plot-frequency-domain
+    """
+    with plt.rc_context(RC_PARAMS):
+        if not x.ndim == 1:
+            raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
+
+        if ax is None:
+            ax = plt.gca()
+
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
+
+        if window is not None:
+            w = scipy.signal.windows.get_window(window, x.size)
+            x = x * w
+
+        if size is None:
+            if oversample is None:
+                size = x.size
+            else:
+                size = x.size * oversample
+
+        if fast:
+            size = scipy.d.next_fast_len(size)
+
+        X = np.fft.fft(x, size)
+        if x_axis == "freq":
+            f = np.fft.fftfreq(size, 1 / sample_rate)
+        elif x_axis == "bin":
+            f = np.fft.fftfreq(size, 1 / size)
+        else:
+            raise ValueError(f"Argument 'x_axis' must be 'freq' or 'bin', not {x_axis!r}.")
+
+        if centered:
+            X = np.fft.fftshift(X)
+            f = np.fft.fftshift(f)
+
+        standard_plot(ax, f, X, y_axis=y_axis, diff=diff, type=type, **kwargs)
+
+        if x_axis == "bin":
+            integer_x_axis(ax)
+            ax.set_xlabel("DFT bin index, $k$")
+        elif sample_rate_provided:
+            ax.set_xlabel("Frequency (Hz), $f$")
+        else:
+            ax.set_xlabel("Normalized frequency, $f/f_s$")
+
+        if y_axis == "complex":
+            ax.set_ylabel("Amplitude")
+        elif y_axis == "mag":
+            ax.set_ylabel(r"Magnitude, $\left| X(k) \right|$")
+        elif y_axis == "mag^2":
+            ax.set_ylabel(r"Power, $\left| X(k) \right|^2$")
+        elif y_axis == "db":
+            ax.set_ylabel(r"Power (dB), $\left| X(k) \right|^2$")
+
+        ax.set_title("Discrete Fourier transform (DFT)")
