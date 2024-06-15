@@ -14,7 +14,7 @@ from typing_extensions import Literal
 
 from .._conversion import db
 from .._helper import export
-from ._helper import real_or_complex_plot
+from ._helper import integer_x_axis, process_sample_rate, real_or_complex_plot
 from ._rc_params import RC_PARAMS
 from ._units import time_units
 
@@ -126,13 +126,7 @@ def time_domain(  # noqa: D417
         if ax is None:
             ax = plt.gca()
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if t is None:
             if centered:
@@ -151,6 +145,7 @@ def time_domain(  # noqa: D417
         if sample_rate_provided:
             ax.set_xlabel(f"Time ({units})")
         else:
+            integer_x_axis(ax)
             ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
 
@@ -243,14 +238,9 @@ def raster(
             N_rasters, length = x.shape
             x_strided = x
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            t = np.arange(length)
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
-            t = np.arange(length) / sample_rate
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
+        t = np.arange(length) / sample_rate
+        if sample_rate_provided:
             units, scalar = time_units(t)
             t *= scalar
 
@@ -311,6 +301,7 @@ def raster(
         if sample_rate_provided:
             ax.set_xlabel(f"Time ({units})")
         else:
+            integer_x_axis(ax)
             ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
 
@@ -374,13 +365,7 @@ def correlation(
         if ax is None:
             ax = plt.gca()
 
-        if sample_rate is None:
-            sample_rate_provided = False
-            sample_rate = 1
-        else:
-            sample_rate_provided = True
-            if not isinstance(sample_rate, (int, float)):
-                raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
+        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if mode == "circular":
             n_fft = max(x.size, y.size)
@@ -434,4 +419,5 @@ def correlation(
         if sample_rate_provided:
             ax.set_xlabel(rf"Lag ({units}), $\Delta t$")
         else:
+            integer_x_axis(ax)
             ax.set_xlabel(r"Lag (samples), $\Delta n$")
