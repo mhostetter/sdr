@@ -64,11 +64,13 @@ def stem(  # noqa: D417
 
             @savefig sdr_plot_stem_1.png
             plt.figure(); \
-            plt.stem(rrc);
+            plt.stem(rrc); \
+            plt.title("matplotlib.pyplot.stem()");
 
             @savefig sdr_plot_stem_2.png
             plt.figure(); \
-            sdr.plot.stem(rrc);
+            sdr.plot.stem(rrc); \
+            plt.title("sdr.plot.stem()");
 
         The standard plot is even more unreadable when multiple stem plots are on the same axes.
 
@@ -79,12 +81,14 @@ def stem(  # noqa: D417
             @savefig sdr_plot_stem_3.png
             plt.figure(); \
             plt.stem(rrc); \
-            plt.stem(gaussian);
+            plt.stem(gaussian); \
+            plt.title("matplotlib.pyplot.stem()");
 
             @savefig sdr_plot_stem_4.png
             plt.figure(); \
             sdr.plot.stem(rrc); \
-            sdr.plot.stem(gaussian);
+            sdr.plot.stem(gaussian); \
+            plt.title("sdr.plot.stem()");
 
     Group:
         plot-utility
