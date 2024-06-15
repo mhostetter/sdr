@@ -111,7 +111,7 @@ def impulse_response(
         t = np.arange(h.size) + offset
 
         integer_x_axis(ax)
-        real_or_complex_plot(ax, t, h, **kwargs)
+        real_or_complex_plot(t, h, ax=ax, **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
         ax.set_title("Impulse response, $h[n]$")
@@ -189,7 +189,7 @@ def step_response(
         t = np.arange(s.size)
 
         integer_x_axis(ax)
-        real_or_complex_plot(ax, t, s, **kwargs)
+        real_or_complex_plot(t, s, ax=ax, **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
         ax.set_title("Step response, $s[n]$")
@@ -273,10 +273,10 @@ def magnitude_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
     N: int = 1024,
+    ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
     decades: int = 4,
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -293,12 +293,12 @@ def magnitude_response(
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
         N: The number of samples $N$ in the frequency response.
+        ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic magnitude response.
         decades: The number of decades to plot when `x_axis="log"`.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -402,9 +402,9 @@ def phase_response(
     sample_rate: float | None = None,
     N: int = 1024,
     unwrap: bool = True,
+    ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -422,11 +422,11 @@ def phase_response(
             be labeled as "Normalized frequency".
         N: The number of samples $N$ in the phase response.
         unwrap: Indicates whether to unwrap the phase response.
+        ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -525,9 +525,9 @@ def phase_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
     N: int = 1024,
+    ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -544,11 +544,11 @@ def phase_delay(
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
         N: The number of samples $N$ in the phase delay.
+        ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -648,9 +648,9 @@ def group_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
     N: int = 1024,
+    ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -667,11 +667,11 @@ def group_delay(
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
         N: The number of samples $N$ in the frequency response.
+        ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:

@@ -48,8 +48,8 @@ def time_domain(  # noqa: D417
     sample_rate: float | None = None,
     centered: bool = False,
     offset: float = 0.0,
-    diff: Literal["color", "line"] = "color",
     ax: plt.Axes | None = None,
+    diff: Literal["color", "line"] = "color",
     **kwargs,
 ):
     r"""
@@ -64,11 +64,11 @@ def time_domain(  # noqa: D417
             `offset`.
         offset: The x-axis offset to apply to the first sample. The units of the offset are $1/f_s$.
             This argument is mutually exclusive with `centered`.
+        ax: The axis to plot on. If `None`, the current axis is used.
         diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
             and both lines will share the same color.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -141,7 +141,7 @@ def time_domain(  # noqa: D417
             units, scalar = time_units(t)
             t *= scalar
 
-        real_or_complex_plot(ax, t, x, diff=diff, **kwargs)
+        real_or_complex_plot(t, x, ax=ax, diff=diff, **kwargs)
         if sample_rate_provided:
             ax.set_xlabel(f"Time ({units})")
         else:
@@ -312,9 +312,9 @@ def correlation(
     y: npt.NDArray,
     sample_rate: float | None = None,
     mode: Literal["full", "valid", "same", "circular"] = "full",
+    ax: plt.Axes | None = None,
     y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
     diff: Literal["color", "line"] = "color",
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -327,12 +327,12 @@ def correlation(
             be labeled as "Lag (samples)".
         mode: The :func:`numpy.correlate()` correlation mode. If `"circular"`, a circular correlation is computed
             using FFTs.
+        ax: The axis to plot on. If `None`, the current axis is used.
         y_axis: Indicates how to plot the y-axis. If `"complex"`, the real and imaginary parts are plotted separately.
         diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
             and both lines will share the same color.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Examples:
@@ -415,7 +415,7 @@ def correlation(
         else:
             raise ValueError(f"Argument 'y_axis' must be 'complex', 'mag', 'mag^2', or 'db', not {y_axis!r}.")
 
-        real_or_complex_plot(ax, t, corr, diff=diff, **kwargs)
+        real_or_complex_plot(t, corr, ax=ax, diff=diff, **kwargs)
         if sample_rate_provided:
             ax.set_xlabel(rf"Lag ({units}), $\Delta t$")
         else:

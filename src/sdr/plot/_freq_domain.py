@@ -25,11 +25,11 @@ def dft(
     oversample: int | None = None,
     fast: bool = False,
     centered: bool = True,
+    ax: plt.Axes | None = None,
+    type: Literal["plot", "stem"] = "plot",
     x_axis: Literal["freq", "bin"] = "freq",
     y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
     diff: Literal["color", "line"] = "color",
-    ax: plt.Axes | None = None,
-    type: Literal["plot", "stem"] = "plot",
     **kwargs,
 ):
     r"""
@@ -46,14 +46,14 @@ def dft(
         fast: Indicates whether to use the fast Fourier transform (FFT) algorithm. If `True`, the DFT size is set
             to the next power of 2.
         centered: Indicates whether to center the DFT about 0.
+        ax: The axis to plot on. If `None`, the current axis is used.
+        type: The type of plot to use.
         x_axis: The x-axis scaling.
         y_axis: The y-axis scaling.
         diff: Indicates how to differentiate the real and imaginary parts of a complex signal. If `"color"`, the
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
             and both lines will share the same color.
-        ax: The axis to plot on. If `None`, the current axis is used.
-        type: The type of plot to use.
         kwargs: Additional keyword arguments to pass to the plotting function.
 
     Notes:

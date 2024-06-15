@@ -11,42 +11,42 @@ from ._utility import stem
 
 
 def real_or_complex_plot(
-    ax: plt.Axes,
-    t: npt.NDArray,
     x: npt.NDArray,
+    y: npt.NDArray,
+    ax: plt.Axes,
     diff: Literal["color", "line"] = "color",
     **kwargs,
 ):
     label = kwargs.pop("label", None)
-    if np.iscomplexobj(x):
+    if np.iscomplexobj(y):
         if label is None:
             label, label2 = "real", "imag"
         else:
             label, label2 = label + " (real)", label + " (imag)"
 
         if diff == "color":
-            ax.plot(t, x.real, label=label, **kwargs)
-            ax.plot(t, x.imag, label=label2, **kwargs)
+            ax.plot(x, y.real, label=label, **kwargs)
+            ax.plot(x, y.imag, label=label2, **kwargs)
         elif diff == "line":
-            (real,) = ax.plot(t, x.real, "-", label=label, **kwargs)
+            (real,) = ax.plot(x, y.real, "-", label=label, **kwargs)
             kwargs.pop("color", None)
-            ax.plot(t, x.imag, "--", color=real.get_color(), label=label2, **kwargs)
+            ax.plot(x, y.imag, "--", color=real.get_color(), label=label2, **kwargs)
         else:
             raise ValueError(f"Argument 'diff' must be 'color' or 'line', not {diff}.")
     else:
-        ax.plot(t, x, label=label, **kwargs)
+        ax.plot(x, y, label=label, **kwargs)
 
     if label:
         ax.legend()
 
 
 def standard_plot(
-    ax: plt.Axes,
     x: npt.NDArray,
     y: npt.NDArray,
+    ax: plt.Axes,
+    type: Literal["plot", "stem"] = "plot",
     y_axis: Literal["complex", "mag", "mag^2", "db"] = "mag",
     diff: Literal["color", "line"] = "color",
-    type: Literal["plot", "stem"] = "plot",
     **kwargs,
 ):
     if y_axis == "complex":
