@@ -12,7 +12,7 @@ from typing_extensions import Literal
 
 from .._filter import FIR, IIR
 from .._helper import export
-from ._helper import integer_x_axis, min_ylim, process_sample_rate, real_or_complex_plot
+from ._helper import integer_x_axis, min_ylim, process_sample_rate, standard_plot
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -41,6 +41,7 @@ def impulse_response(
     N: int | None = None,
     offset: float = 0.0,
     ax: plt.Axes | None = None,
+    type: Literal["plot", "stem"] = "stem",
     **kwargs,
 ):
     r"""
@@ -61,7 +62,8 @@ def impulse_response(
         offset: The x-axis offset to apply to the first sample. Can be useful for comparing the impulse
             response of filters with different lengths.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        type: The type of plot to use.
+        kwargs: Additional keyword arguments to pass to the plotting function.
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -111,7 +113,7 @@ def impulse_response(
         t = np.arange(h.size) + offset
 
         integer_x_axis(ax)
-        real_or_complex_plot(t, h, ax=ax, **kwargs)
+        standard_plot(t, h, ax=ax, type=type, y_axis="complex", **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
         ax.set_title("Impulse response, $h[n]$")
@@ -122,6 +124,7 @@ def step_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     N: int | None = None,
     ax: plt.Axes | None = None,
+    type: Literal["plot", "stem"] = "stem",
     **kwargs,
 ):
     r"""
@@ -140,7 +143,8 @@ def step_response(
         N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        type: The type of plot to use.
+        kwargs: Additional keyword arguments to pass to the plotting function.
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -189,7 +193,7 @@ def step_response(
         t = np.arange(s.size)
 
         integer_x_axis(ax)
-        real_or_complex_plot(t, s, ax=ax, **kwargs)
+        standard_plot(t, s, ax=ax, type=type, y_axis="complex", **kwargs)
         ax.set_xlabel("Sample, $n$")
         ax.set_ylabel("Amplitude")
         ax.set_title("Step response, $s[n]$")
