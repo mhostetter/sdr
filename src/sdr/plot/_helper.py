@@ -82,7 +82,7 @@ def standard_plot(
             ax.plot(x, y, label=label, **kwargs)
 
     elif type == "stem":
-        stem(x, y, ax=ax, **kwargs)
+        stem(x, y, ax=ax, label=label, **kwargs)
 
     else:
         raise ValueError(f"Argument 'type' must be 'plot' or 'stem', not {type!r}.")
