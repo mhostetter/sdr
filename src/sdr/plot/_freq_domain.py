@@ -204,7 +204,7 @@ def dtft(
 
         $$X(f) = \sum_{n=-\infty}^{\infty} x[n] e^{-j 2 \pi f n / f_s},$$
 
-        where $x[n]$ is the time-domain signal, $X(f)$ is the DTFT, $f$ is the frequency.
+        where $x[n]$ is the time-domain signal, $X(f)$ is the DTFT, and $f$ is the frequency.
 
     Examples:
         Create a DC tone that is 10 samples long. Plot its DTFT. Notice that the width of the main lobe is $2 / T$,
