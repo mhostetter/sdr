@@ -289,7 +289,7 @@ def magnitude_response(
               feedback coefficients $a_j$.
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
-            be labeled as "Normalized Frequency".
+            be labeled as "Normalized frequency".
         N: The number of samples $N$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
