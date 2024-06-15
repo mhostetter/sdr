@@ -127,7 +127,7 @@ def dft(
                 size = x.size * oversample
 
         if fast:
-            size = scipy.d.next_fast_len(size)
+            size = scipy.fft.next_fast_len(size)
 
         X = np.fft.fft(x, size)
         if x_axis == "freq":
