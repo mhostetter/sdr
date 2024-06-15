@@ -141,7 +141,7 @@ def dft(
             X = np.fft.fftshift(X)
             f = np.fft.fftshift(f)
 
-        standard_plot(ax, f, X, y_axis=y_axis, diff=diff, type=type, **kwargs)
+        standard_plot(f, X, ax=ax, y_axis=y_axis, diff=diff, type=type, **kwargs)
 
         if x_axis == "bin":
             integer_x_axis(ax)
