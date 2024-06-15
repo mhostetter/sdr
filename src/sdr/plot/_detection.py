@@ -18,8 +18,8 @@ from ._rc_params import RC_PARAMS
 def p_d(
     x: npt.ArrayLike,
     p_d: npt.ArrayLike,
-    x_label: Literal["snr", "enr"] = "snr",
     ax: plt.Axes | None = None,
+    x_label: Literal["snr", "enr"] = "snr",
     **kwargs,
 ):
     r"""
@@ -28,8 +28,8 @@ def p_d(
     Arguments:
         x: The SNR or ENR in dB.
         p_d: The probability of detection $P_d$.
-        x_label: The x-axis label to use.
         ax: The axis to plot on. If `None`, the current axis is used.
+        x_label: The x-axis label to use.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
@@ -62,8 +62,8 @@ def p_d(
 def roc(
     p_fa: npt.ArrayLike,
     p_d: npt.ArrayLike,
-    type: Literal["linear", "semilogx", "semilogy", "loglog"] = "semilogx",
     ax: plt.Axes | None = None,
+    type: Literal["linear", "semilogx", "semilogy", "loglog"] = "semilogx",
     **kwargs,
 ):
     r"""
@@ -72,8 +72,8 @@ def roc(
     Arguments:
         p_fa: The probability of false alarm $P_{fa}$.
         p_d: The probability of detection $P_d$.
-        type: The type of plot to generate.
         ax: The axis to plot on. If `None`, the current axis is used.
+        type: The type of plot to generate.
         kwargs: Additional keyword arguments to pass to the plotting function defined by `type`.
 
     Group:

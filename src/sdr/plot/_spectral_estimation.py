@@ -26,9 +26,9 @@ def periodogram(
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
     average: Literal["mean", "median"] = "mean",
+    ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -48,11 +48,11 @@ def periodogram(
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
         detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
         average: The type of averaging to use. Options are to average the periodograms using the mean or median.
+        ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued signals and `"two-sided"` for complex-valued signals.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic power spectral density.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
 
     Group:
@@ -129,10 +129,10 @@ def spectrogram(
     overlap: int | None = None,
     fft: int | None = None,
     detrend: Literal["constant", "linear", False] = False,
+    ax: plt.Axes | None = None,
     y_axis: Literal["auto", "one-sided", "two-sided"] = "auto",
     # persistence: bool = False,
     # colorbar: bool = True,
-    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -150,10 +150,10 @@ def spectrogram(
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
         detrend: The type of detrending to apply. Options are to remove the mean or a linear trend from each segment.
+        ax: The axis to plot on. If `None`, the current axis is used.
         y_axis: The y-axis scaling. Options are to display a one-sided spectrum or a two-sided spectrum.
             The default is `"auto"` which selects `"one-sided"` for real-valued signals and `"two-sided"` for
             complex-valued signals.
-        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 

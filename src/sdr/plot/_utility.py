@@ -18,6 +18,7 @@ from ._rc_params import RC_PARAMS
 def stem(
     x: npt.NDArray,
     *,
+    color: str | None = None,
     ax: plt.Axes | None = None,
     **kwargs,
 ): ...
@@ -28,6 +29,7 @@ def stem(
     x: npt.NDArray,
     y: npt.NDArray,
     *,
+    color: str | None = None,
     ax: plt.Axes | None = None,
     **kwargs,
 ): ...
@@ -36,8 +38,8 @@ def stem(
 @export
 def stem(  # noqa: D417
     *args,
-    ax: plt.Axes | None = None,
     color: str | None = None,
+    ax: plt.Axes | None = None,
     **kwargs,
 ):
     r"""
@@ -46,8 +48,8 @@ def stem(  # noqa: D417
     Arguments:
         x: The x-coordinates of the stem plot.
         y: The y-coordinates of the stem plot.
-        ax: The axis to plot on. If `None`, the current axis is used.
         color: The color of the stem line and marker. If `None`, the next color in the current color cycle is used.
+        ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.stem`.
 
     Notes:
