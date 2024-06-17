@@ -25,12 +25,18 @@ class MSK(OQPSK):
         MSK can also be consider as continuous-phase frequency-shift keying (CPFSK) with the frequency separation
         equaling half the bit period.
 
-    Note:
-        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
-        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
-        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
-        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
-        sample index.
+    .. nomenclature::
+        :collapsible:
+
+        - $k$: Symbol index
+        - $n$: Sample index
+        - $s[k]$: Decimal symbols
+        - $a[k]$ Complex symbols
+        - $x[n]$: Pulse-shaped complex samples
+        - $\tilde{x}[n]$: Received (noisy) pulse-shaped complex samples
+        - $\tilde{a}[k]$: Received (noisy) complex symbols
+        - $\hat{a}[k]$: Complex symbol decisions
+        - $\hat{s}[k]$: Decimal symbol decisions
 
     Examples:
         Create a MSK modem.
