@@ -32,12 +32,18 @@ class PSK(LinearModulation):
 
         $$a[k] = \exp \left[ j\left(\frac{2\pi}{M}s[k] + \phi\right) \right] .$$
 
-    Note:
-        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
-        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
-        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
-        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
-        sample index.
+    .. nomenclature::
+        :collapsible:
+
+        - $k$: Symbol index
+        - $n$: Sample index
+        - $s[k]$: Decimal symbols
+        - $a[k]$ Complex symbols
+        - $x[n]$: Pulse-shaped complex samples
+        - $\tilde{x}[n]$: Received (noisy) pulse-shaped complex samples
+        - $\tilde{a}[k]$: Received (noisy) complex symbols
+        - $\hat{a}[k]$: Complex symbol decisions
+        - $\hat{s}[k]$: Decimal symbol decisions
 
     Examples:
         Create a QPSK modem whose constellation has a 45° phase offset.
@@ -480,12 +486,18 @@ class PiMPSK(PSK):
         \end{cases}
         $$
 
-    Note:
-        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
-        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
-        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
-        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
-        sample index.
+    .. nomenclature::
+        :collapsible:
+
+        - $k$: Symbol index
+        - $n$: Sample index
+        - $s[k]$: Decimal symbols
+        - $a[k]$ Complex symbols
+        - $x[n]$: Pulse-shaped complex samples
+        - $\tilde{x}[n]$: Received (noisy) pulse-shaped complex samples
+        - $\tilde{a}[k]$: Received (noisy) complex symbols
+        - $\hat{a}[k]$: Complex symbol decisions
+        - $\hat{s}[k]$: Decimal symbol decisions
 
     Examples:
         Create a $\pi/4$ QPSK modem.
@@ -667,12 +679,18 @@ class OQPSK(PSK):
         \end{align}
         $$
 
-    Note:
-        The nomenclature for variable names in linear modulators is as follows: $s[k]$ are decimal symbols,
-        $\hat{s}[k]$ are decimal symbol decisions, $a[k]$ are complex symbols, $\tilde{a}[k]$ are received complex
-        symbols, $\hat{a}[k]$ are complex symbol decisions, $x[n]$ are pulse-shaped complex samples, and
-        $\tilde{x}[n]$ are received pulse-shaped complex samples. $k$ indicates a symbol index and $n$ indicates a
-        sample index.
+    .. nomenclature::
+        :collapsible:
+
+        - $k$: Symbol index
+        - $n$: Sample index
+        - $s[k]$: Decimal symbols
+        - $a[k]$ Complex symbols
+        - $x[n]$: Pulse-shaped complex samples
+        - $\tilde{x}[n]$: Received (noisy) pulse-shaped complex samples
+        - $\tilde{a}[k]$: Received (noisy) complex symbols
+        - $\hat{a}[k]$: Complex symbol decisions
+        - $\hat{s}[k]$: Decimal symbol decisions
 
     Examples:
         Create a OQPSK modem.
