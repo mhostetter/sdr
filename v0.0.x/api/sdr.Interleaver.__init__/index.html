@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.0d45cec6bbcb48354.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
@@ -94,7 +94,7 @@
             
 <p>
   Enjoying the library? Give us a
-  <span class="md-icon si-icon-inline octicons_star-16"></span>
+  <span class="md-icon si-icon-inline fontawesome_regular_star"></span>
   on
   <a class="reference external" href="https://github.com/mhostetter/sdr">GitHub</a>.
 </p>
@@ -14085,12 +14085,12 @@ You're not viewing the latest version.
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Interleaver</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-map" title="sdr.Interleaver.__init__.map (Python parameter) — The interleaver permutation map $pi : i mapsto j$, containing the values $[0, N)$. The $i$-th input element will be placed at the $pi(i)$-th output position."><span class="n"><span class="pre">map</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></em></span><span class="sig-paren">)</span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">Interleaver</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-map" title="sdr.Interleaver.__init__.map (Python parameter) — The interleaver permutation map $pi : i mapsto j$, containing the values $[0, N)$. The $i$-th input element will be placed at the $pi(i)$-th output position."><span class="n"><span class="pre">map</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.0)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates an arbitrary interleaver.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-map"><span class="n sig-name">map</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">NDArray<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)">int_</a><span class="p">]</span></span></span><a class="headerlink" href="#p-map" title="Permalink to this definition">¶</a></dt><dd><p>The interleaver permutation map <span class="math notranslate nohighlight">\(\pi : i \mapsto j\)</span>, containing the values <span class="math notranslate nohighlight">\([0, N)\)</span>.
+<dt id="p-map"><span class="n sig-name">map</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">NDArray<span class="p">[</span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.0)">int_</a><span class="p">]</span></span></span><a class="headerlink" href="#p-map" title="Permalink to this definition">¶</a></dt><dd><p>The interleaver permutation map <span class="math notranslate nohighlight">\(\pi : i \mapsto j\)</span>, containing the values <span class="math notranslate nohighlight">\([0, N)\)</span>.
 The <span class="math notranslate nohighlight">\(i\)</span>-th input element will be placed at the <span class="math notranslate nohighlight">\(\pi(i)\)</span>-th output position.</p>
 </dd>
 </dl>

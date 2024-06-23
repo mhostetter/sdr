@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.0d45cec6bbcb48354.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
@@ -94,7 +94,7 @@
             
 <p>
   Enjoying the library? Give us a
-  <span class="md-icon si-icon-inline octicons_star-16"></span>
+  <span class="md-icon si-icon-inline fontawesome_regular_star"></span>
   on
   <a class="reference external" href="https://github.com/mhostetter/sdr">GitHub</a>.
 </p>
@@ -14154,14 +14154,19 @@ a[k + 3/2] &amp;= I[k + 1] + jQ[k + 1] \\
 \end{align}
 \end{split}\]</div>
 </p>
-<div class="note admonition">
-<p class="admonition-title">Note</p>
-<p>The nomenclature for variable names in linear modulators is as follows: <span class="math notranslate nohighlight">\(s[k]\)</span> are decimal symbols,
-<span class="math notranslate nohighlight">\(\hat{s}[k]\)</span> are decimal symbol decisions, <span class="math notranslate nohighlight">\(a[k]\)</span> are complex symbols, <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span> are received complex
-symbols, <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span> are complex symbol decisions, <span class="math notranslate nohighlight">\(x[n]\)</span> are pulse-shaped complex samples, and
-<span class="math notranslate nohighlight">\(\tilde{x}[n]\)</span> are received pulse-shaped complex samples. <span class="math notranslate nohighlight">\(k\)</span> indicates a symbol index and <span class="math notranslate nohighlight">\(n\)</span> indicates a
-sample index.</p>
-</div>
+<details class="nomenclature collapsible admonition">
+<summary class="admonition-title">Variable nomenclature</summary><ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(k\)</span>: Symbol index</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>: Sample index</p></li>
+<li><p><span class="math notranslate nohighlight">\(s[k]\)</span>: Decimal symbols</p></li>
+<li><p><span class="math notranslate nohighlight">\(a[k]\)</span> Complex symbols</p></li>
+<li><p><span class="math notranslate nohighlight">\(x[n]\)</span>: Pulse-shaped complex samples</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tilde{x}[n]\)</span>: Received (noisy) pulse-shaped complex samples</p></li>
+<li><p><span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span>: Received (noisy) complex symbols</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{a}[k]\)</span>: Complex symbol decisions</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>: Decimal symbol decisions</p></li>
+</ul>
+</details>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Create a OQPSK modem.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">oqpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">OQPSK</span><span class="p">(</span><span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">);</span> <span class="n">oqpsk</span>
@@ -14278,7 +14283,7 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.LinearModulation.decide_symbols/" title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols into MLE symbol decisions."><span class="sig-name descname"><span class="pre">decide_symbols</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LinearModulation.decide_symbols/#p-a_tilde" title="sdr.LinearModulation.decide_symbols.a_tilde (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">a_tilde</span></span></a></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<a class="sig-name descname reference internal" href="../sdr.LinearModulation.decide_symbols/" title="sdr.LinearModulation.decide_symbols (Python method) — Converts the received complex symbols into MLE symbol decisions."><span class="sig-name descname"><span class="pre">decide_symbols</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.LinearModulation.decide_symbols/#p-a_tilde" title="sdr.LinearModulation.decide_symbols.a_tilde (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">a_tilde</span></span></a></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.0)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Converts the received complex symbols into MLE symbol decisions.</p>
 </dd></dl>
 
@@ -14290,7 +14295,7 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<a class="sig-name descname reference internal" href="../sdr.LinearModulation.demodulate/" title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples."><span class="sig-name descname"><span class="pre">demodulate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v1.26)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<a class="sig-name descname reference internal" href="../sdr.LinearModulation.demodulate/" title="sdr.LinearModulation.demodulate (Python method) — Demodulates the pulse-shaped complex samples."><span class="sig-name descname"><span class="pre">demodulate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.0)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Demodulates the pulse-shaped complex samples.</p>
 </dd></dl>
 
