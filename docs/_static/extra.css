@@ -72,3 +72,28 @@ div.cell_output.docutils.container>div {
   border: transparent;
   background: transparent;
 }
+
+/* Change the object info colors. */
+[data-md-color-scheme="default"] {
+  /* --objinfo-icon-fg-default: var(--md-code-hl-keyword-color); */
+  /* Properties */
+  --objinfo-icon-fg-alias: var(--md-code-hl-constant-color);
+  /* Classes */
+  --objinfo-icon-fg-data: var(--md-code-hl-string-color);
+  /* Functions, methods */
+  --objinfo-icon-fg-procedure: var(--md-code-hl-keyword-color);
+  /* Parameters (function/method arguments) */
+  --objinfo-icon-fg-sub-data: var(--md-code-hl-function-color);
+}
+
+[data-md-color-scheme="slate"] {
+  /* --objinfo-icon-fg-default: var(--md-code-hl-keyword-color); */
+  /* Properties */
+  --objinfo-icon-fg-alias: var(--md-code-hl-constant-color);
+  /* Classes */
+  --objinfo-icon-fg-data: var(--md-code-hl-string-color);
+  /* Functions, methods */
+  --objinfo-icon-fg-procedure: var(--md-code-hl-keyword-color);
+  /* Parameters (function/method arguments) */
+  --objinfo-icon-fg-sub-data: var(--md-code-hl-function-color);
+}
