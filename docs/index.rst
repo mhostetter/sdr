@@ -9,12 +9,13 @@ sdr
       <a href="https://pypi.org/project/sdr"><img src="https://img.shields.io/pypi/wheel/sdr" class="no-invert"></a>
       <a href="https://pypistats.org/packages/sdr"><img src="https://img.shields.io/pypi/dm/sdr" class="no-invert"></a>
       <a href="https://pypi.org/project/sdr"><img src="https://img.shields.io/pypi/l/sdr" class="no-invert"></a>
-      <a href="https://twitter.com/sdr_py"><img src="https://img.shields.io/static/v1?label=follow&message=@sdr_py&color=blue&logo=twitter" class="no-invert"></a>
-      <a href="https://github.com/mhostetter/sdr/actions/workflows/docs.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/docs.yaml/badge.svg" class="no-invert"></a>
-      <a href="https://github.com/mhostetter/sdr/actions/workflows/lint.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/lint.yaml/badge.svg" class="no-invert"></a>
-      <a href="https://github.com/mhostetter/sdr/actions/workflows/build.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/build.yaml/badge.svg" class="no-invert"></a>
-      <a href="https://github.com/mhostetter/sdr/actions/workflows/test.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/test.yaml/badge.svg" class="no-invert"></a>
+   </div>
+   <div align=center>
+      <a href="https://github.com/mhostetter/sdr/actions/workflows/lint.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/lint.yaml/badge.svg?branch=main" class="no-invert"></a>
+      <a href="https://github.com/mhostetter/sdr/actions/workflows/build.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/build.yaml/badge.svg?branch=main" class="no-invert"></a>
+      <a href="https://github.com/mhostetter/sdr/actions/workflows/test.yaml"><img src="https://github.com/mhostetter/sdr/actions/workflows/test.yaml/badge.svg?branch=main" class="no-invert"></a>
       <a href="https://codecov.io/gh/mhostetter/sdr"><img src="https://codecov.io/gh/mhostetter/sdr/branch/main/graph/badge.svg?token=3FJML79ZUK" class="no-invert"></a>
+      <a href="https://twitter.com/sdr_py"><img src="https://img.shields.io/static/v1?label=follow&message=@sdr_py&color=blue&logo=twitter" class="no-invert"></a>
    </div>
 
 The :obj:`sdr` library is a Python 3 package for software-defined radio (SDR).
