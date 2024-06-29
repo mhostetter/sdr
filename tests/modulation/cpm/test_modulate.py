@@ -20,7 +20,7 @@ def test_rect_bin():
     """
     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rect", samples_per_symbol=8)
     b = np.array([0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1])
-    s = sdr.pack(b, cpm.bps)
+    s = sdr.pack(b, cpm.bits_per_symbol)
     x = cpm.modulate(s)
     x_truth = np.array(
         [
@@ -126,7 +126,7 @@ def test_rect_gray():
     """
     cpm = sdr.CPM(4, index=0.5, symbol_labels="gray", pulse_shape="rect", samples_per_symbol=8)
     b = np.array([1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1])
-    s = sdr.pack(b, cpm.bps)
+    s = sdr.pack(b, cpm.bits_per_symbol)
     x = cpm.modulate(s)
     x_truth = np.array(
         [
@@ -232,7 +232,7 @@ def test_rect_gray():
 #     """
 #     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="sine", samples_per_symbol=8)
 #     b = np.array([0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1])
-#     s = sdr.pack(b, cpm.bps)
+#     s = sdr.pack(b, cpm.bits_per_symbol)
 #     x = cpm.modulate(s)
 #     x_truth = np.array(
 #         [
@@ -338,7 +338,7 @@ def test_rect_gray():
 #     """
 #     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rc", samples_per_symbol=8, alpha=0.2)
 #     b = np.array([1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0])
-#     s = sdr.pack(b, cpm.bps)
+#     s = sdr.pack(b, cpm.bits_per_symbol)
 #     x = cpm.modulate(s)
 #     x_truth = np.array(
 #         [
@@ -444,7 +444,7 @@ def test_rect_gray():
 #     """
 #     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="gaussian", samples_per_symbol=8, time_bandwidth=0.3)
 #     b = np.array([0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
-#     s = sdr.pack(b, cpm.bps)
+#     s = sdr.pack(b, cpm.bits_per_symbol)
 #     x = cpm.modulate(s)
 #     x_truth = np.array(
 #         [
@@ -550,7 +550,7 @@ def test_rect_gray():
 #     """
 #     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rect", samples_per_symbol=8)
 #     b = np.array([1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1])
-#     s = sdr.pack(b, cpm.bps)
+#     s = sdr.pack(b, cpm.bits_per_symbol)
 #     x = cpm.modulate(s)
 #     x_truth = np.array(
 #         [

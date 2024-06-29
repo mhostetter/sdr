@@ -87,7 +87,7 @@ class CPM:
         if not np.log2(order).is_integer():
             raise ValueError(f"Argument 'order' must be a power of 2, not {order}.")
         self._order = order  # Modulation order
-        self._bps = int(np.log2(self._order))  # Coded bits per symbol
+        self._bits_per_symbol = int(np.log2(self._order))  # Coded bits per symbol
 
         if not isinstance(index, (int, float)):
             raise TypeError(f"Argument 'index' must be a number, not {type(index)}.")
@@ -96,10 +96,10 @@ class CPM:
         self._index = index  # Modulation index
 
         if symbol_labels == "bin":
-            self._symbol_labels = binary_code(self.bps)
+            self._symbol_labels = binary_code(self.bits_per_symbol)
             self._symbol_labels_str = "bin"
         elif symbol_labels == "gray":
-            self._symbol_labels = gray_code(self.bps)
+            self._symbol_labels = gray_code(self.bits_per_symbol)
             self._symbol_labels_str = "gray"
         else:
             if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
@@ -262,11 +262,11 @@ class CPM:
         return self._order
 
     @property
-    def bps(self) -> int:
+    def bits_per_symbol(self) -> int:
         r"""
         The number of coded bits per symbol $k = \log_2 M$.
         """
-        return self._bps
+        return self._bits_per_symbol
 
     @property
     def index(self) -> float:

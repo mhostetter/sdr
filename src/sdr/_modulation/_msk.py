@@ -54,7 +54,7 @@ class MSK(OQPSK):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, msk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, msk.bits_per_symbol); symbols[0:4]
             complex_symbols = msk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_MSK_2.png
@@ -95,7 +95,7 @@ class MSK(OQPSK):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=msk.bps, samples_per_symbol=msk.samples_per_symbol); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=msk.bits_per_symbol, samples_per_symbol=msk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_MSK_6.png

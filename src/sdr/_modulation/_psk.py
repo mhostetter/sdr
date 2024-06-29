@@ -61,7 +61,7 @@ class PSK(LinearModulation):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, qpsk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, qpsk.bits_per_symbol); symbols[0:4]
             complex_symbols = qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PSK_2.png
@@ -93,7 +93,7 @@ class PSK(LinearModulation):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, samples_per_symbol=qpsk.samples_per_symbol); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=qpsk.bits_per_symbol, samples_per_symbol=qpsk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PSK_5.png
@@ -185,10 +185,10 @@ class PSK(LinearModulation):
         )
 
         if symbol_labels == "bin":
-            self._symbol_labels = binary_code(self.bps)
+            self._symbol_labels = binary_code(self.bits_per_symbol)
             self._symbol_labels_str = "bin"
         elif symbol_labels == "gray":
-            self._symbol_labels = gray_code(self.bps)
+            self._symbol_labels = gray_code(self.bits_per_symbol)
             self._symbol_labels_str = "gray"
         else:
             if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
@@ -265,7 +265,7 @@ class PSK(LinearModulation):
                 plt.title("BER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
         M = self.order
-        k = self.bps
+        k = self.bits_per_symbol
         ebn0 = np.asarray(ebn0)
         ebn0_linear = linear(ebn0)
         esn0 = ebn0_to_esn0(ebn0, k)
@@ -352,7 +352,7 @@ class PSK(LinearModulation):
                 plt.title("SER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
         M = self.order
-        k = self.bps
+        k = self.bits_per_symbol
         esn0 = np.asarray(esn0)
         esn0_linear = linear(esn0)
         ebn0 = esn0_to_ebn0(esn0, k)
@@ -515,7 +515,7 @@ class PiMPSK(PSK):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, pi4_qpsk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, pi4_qpsk.bits_per_symbol); symbols[0:4]
             complex_symbols = pi4_qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PiMPSK_2.png
@@ -547,7 +547,7 @@ class PiMPSK(PSK):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, samples_per_symbol=pi4_qpsk.samples_per_symbol); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=pi4_qpsk.bits_per_symbol, samples_per_symbol=pi4_qpsk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PiMPSK_5.png
@@ -708,7 +708,7 @@ class OQPSK(PSK):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, oqpsk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, oqpsk.bits_per_symbol); symbols[0:4]
             complex_symbols = oqpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_OQPSK_2.png
@@ -740,7 +740,7 @@ class OQPSK(PSK):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, samples_per_symbol=oqpsk.samples_per_symbol); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=oqpsk.bits_per_symbol, samples_per_symbol=oqpsk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_OQPSK_5.png
