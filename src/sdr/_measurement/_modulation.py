@@ -250,11 +250,13 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     psd = np.fft.fftshift(psd)
 
     # Calculate the centroid of the PSD
-    f_mean = scipy.integrate.simpson(f * psd, f) / scipy.integrate.simpson(psd, f)
+    f_mean = scipy.integrate.simpson(f * psd, x=f)
+    f_mean /= scipy.integrate.simpson(psd, x=f)
     f -= f_mean
 
     # Calculate the RMS bandwidth
-    ms_bandwidth = scipy.integrate.simpson(f**2 * psd, f) / scipy.integrate.simpson(psd, f)
+    ms_bandwidth = scipy.integrate.simpson(f**2 * psd, x=f)
+    ms_bandwidth /= scipy.integrate.simpson(psd, x=f)
     rms_bandwidth = np.sqrt(float(ms_bandwidth))
 
     return rms_bandwidth
@@ -363,11 +365,13 @@ def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     t = np.arange(x.size) / sample_rate
 
     # Calculate the centroid of the signal
-    t_mean = scipy.integrate.simpson(t * np.abs(x) ** 2, t) / scipy.integrate.simpson(np.abs(x) ** 2, t)
+    t_mean = scipy.integrate.simpson(t * np.abs(x) ** 2, x=t)
+    t_mean /= scipy.integrate.simpson(np.abs(x) ** 2, x=t)
     t -= t_mean
 
     # Calculate the RMS integration time
-    ms_integration_time = scipy.integrate.simpson(t**2 * np.abs(x) ** 2, t) / scipy.integrate.simpson(np.abs(x) ** 2, t)
+    ms_integration_time = scipy.integrate.simpson(t**2 * np.abs(x) ** 2, x=t)
+    ms_integration_time /= scipy.integrate.simpson(np.abs(x) ** 2, x=t)
     rms_integration_time = np.sqrt(float(ms_integration_time))
 
     return rms_integration_time
