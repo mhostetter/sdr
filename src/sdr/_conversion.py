@@ -183,7 +183,7 @@ def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
 
 
 @export
-def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float64]:
+def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, samples_per_symbol: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_b/N_0$ to $S/N$.
 
@@ -196,7 +196,7 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
         bps: Coded bits per symbol $\log_2 M$, where $M$ is the modulation order.
         rate: Code rate $r = k/n$, where $k$ is the number of information bits and $n$ is the
             number of coded bits.
-        sps: Samples per symbol $f_s / f_{sym}$.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
 
     Returns:
         The signal-to-noise ratio $S/N$ in dB.
@@ -206,19 +206,19 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
 
         .. ipython:: python
 
-            sdr.ebn0_to_snr(5, 2, rate=2/3, sps=1)
+            sdr.ebn0_to_snr(5, 2, rate=2/3, samples_per_symbol=1)
 
         Convert from $E_b/N_0 = 10$ dB to $S/N$ for a 16-QAM signal with $r = 1$ and 4 samples per symbol.
 
         .. ipython:: python
 
-            sdr.ebn0_to_snr(10, 4, rate=1, sps=4)
+            sdr.ebn0_to_snr(10, 4, rate=1, samples_per_symbol=4)
 
     Group:
         conversions-snrs
     """
     esn0 = ebn0_to_esn0(ebn0, bps, rate=rate)  # SNR per symbol
-    snr = esn0 - db(sps)  # SNR per sample
+    snr = esn0 - db(samples_per_symbol)  # SNR per sample
     return snr
 
 
@@ -268,7 +268,7 @@ def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
 
 
 @export
-def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
+def esn0_to_snr(esn0: npt.ArrayLike, samples_per_symbol: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_s/N_0$ to $S/N$.
 
@@ -278,7 +278,7 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
 
     Arguments:
         esn0: Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB.
-        sps: Samples per symbol $f_s / f_{sym}$.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
 
     Returns:
         The signal-to-noise ratio $S/N$ in dB.
@@ -289,19 +289,19 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
 
         .. ipython:: python
 
-            sdr.esn0_to_snr(5, sps=1)
+            sdr.esn0_to_snr(5, samples_per_symbol=1)
 
         Convert from $E_s/N_0 = 10$ dB to $S/N$ with 4 samples per symbol.
 
         .. ipython:: python
 
-            sdr.esn0_to_snr(10, sps=4)
+            sdr.esn0_to_snr(10, samples_per_symbol=4)
 
     Group:
         conversions-snrs
     """
     esn0 = np.asarray(esn0)  # SNR per symbol
-    snr = esn0 - db(sps)  # SNR per sample
+    snr = esn0 - db(samples_per_symbol)  # SNR per sample
     return snr
 
 
@@ -311,7 +311,7 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
 
 
 @export
-def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float64]:
+def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, samples_per_symbol: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $S/N$ to $E_b/N_0$.
 
@@ -324,7 +324,7 @@ def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> np
         bps: Coded bits per symbol $\log_2 M$, where $M$ is the modulation order.
         rate: Code rate $r = k/n$, where $k$ is the number of information bits and $n$ is the
             number of coded bits.
-        sps: Samples per symbol $f_s / f_{sym}$.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
 
     Returns:
         The bit energy $E_b$ to noise PSD $N_0$ ratio in dB.
@@ -334,25 +334,25 @@ def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> np
 
         .. ipython:: python
 
-            sdr.snr_to_ebn0(5, 2, rate=2/3, sps=1)
+            sdr.snr_to_ebn0(5, 2, rate=2/3, samples_per_symbol=1)
 
         Convert from $S/N = 10$ dB to $E_b/N_0$ for a 16-QAM signal with $r = 1$ and 4 samples per symbol.
 
         .. ipython:: python
 
-            sdr.snr_to_ebn0(10, 4, rate=1, sps=4)
+            sdr.snr_to_ebn0(10, 4, rate=1, samples_per_symbol=4)
 
     Group:
         conversions-snrs
     """
     snr = np.asarray(snr)  # SNR per sample
-    esn0 = snr_to_esn0(snr, sps=sps)  # Energy per symbol
+    esn0 = snr_to_esn0(snr, samples_per_symbol=samples_per_symbol)  # Energy per symbol
     ebn0 = esn0_to_ebn0(esn0, bps, rate=rate)  # Energy per information bit
     return ebn0
 
 
 @export
-def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
+def snr_to_esn0(snr: npt.ArrayLike, samples_per_symbol: int = 1) -> npt.NDArray[np.float64]:
     r"""
     Converts from $S/N$ to $E_s/N_0$.
 
@@ -362,7 +362,7 @@ def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
 
     Arguments:
         snr: Signal-to-noise ratio $S/N$ in dB.
-        sps: Samples per symbol $f_s / f_{sym}$.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
 
     Returns:
         The symbol energy $E_s$ to noise PSD $N_0$ ratio in dB.
@@ -373,17 +373,17 @@ def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
 
         .. ipython:: python
 
-            sdr.snr_to_esn0(5, sps=1)
+            sdr.snr_to_esn0(5, samples_per_symbol=1)
 
         Convert from $S/N = 10$ dB to $E_s/N_0$ with 4 samples per symbol.
 
         .. ipython:: python
 
-            sdr.snr_to_esn0(10, sps=4)
+            sdr.snr_to_esn0(10, samples_per_symbol=4)
 
     Group:
         conversions-snrs
     """
     snr = np.asarray(snr)
-    esn0 = snr + db(sps)
+    esn0 = snr + db(samples_per_symbol)
     return esn0

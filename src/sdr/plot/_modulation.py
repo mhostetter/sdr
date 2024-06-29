@@ -235,7 +235,7 @@ def symbol_map(
 @export
 def eye(
     x: npt.NDArray,
-    sps: int,
+    samples_per_symbol: int,
     span: int = 2,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
@@ -250,7 +250,7 @@ def eye(
     Arguments:
         x: The baseband modulated signal $x[n]$. If `x` is complex, in-phase and quadrature eye diagrams are plotted
             in separate subplots.
-        sps: The number of samples per symbol.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Symbol".
@@ -272,13 +272,13 @@ def eye(
         .. ipython:: python
 
             psk = sdr.PSK(4, phase_offset=45, pulse_shape="srrc"); \
-            sps = psk.sps; \
+            samples_per_symbol = psk.samples_per_symbol; \
             s = np.random.randint(0, psk.order, 1_000); \
             tx_samples = psk.modulate(s)
 
             @savefig sdr_plot_eye_1.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(tx_samples[4*sps : -4*sps], sps); \
+            sdr.plot.eye(tx_samples[4*samples_per_symbol : -4*samples_per_symbol], samples_per_symbol); \
             plt.suptitle("Transmitted QPSK symbols with SRRC pulse shape");
 
         Plot the eye diagram using a persistence plot. This provides insight into the probability density
@@ -288,7 +288,7 @@ def eye(
 
             @savefig sdr_plot_eye_2.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(tx_samples[4*sps : -4*sps], sps, persistence=True); \
+            sdr.plot.eye(tx_samples[4*samples_per_symbol : -4*samples_per_symbol], samples_per_symbol, persistence=True); \
             plt.suptitle("Transmitted QPSK symbols with SRRC pulse shape");
 
         Apply a SRRC matched filter at the receiver. The cascaded transmit and receive SRRC filters are equivalent
@@ -302,7 +302,7 @@ def eye(
 
             @savefig sdr_plot_eye_3.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(rx_samples[4*sps : -4*sps], sps, persistence=True); \
+            sdr.plot.eye(rx_samples[4*samples_per_symbol : -4*samples_per_symbol], samples_per_symbol, persistence=True); \
             plt.suptitle("Received and matched filtered QPSK symbols");
 
     Group:
@@ -313,9 +313,9 @@ def eye(
         def _eye(ax, xx):
             raster(
                 xx,
-                length=span * sps + 1,
-                stride=sps,
-                sample_rate=sample_rate if sample_rate is not None else sps,
+                length=span * samples_per_symbol + 1,
+                stride=samples_per_symbol,
+                sample_rate=sample_rate if sample_rate is not None else samples_per_symbol,
                 color=color,
                 persistence=persistence,
                 colorbar=colorbar,
@@ -347,7 +347,7 @@ def eye(
 @export
 def phase_tree(
     x: npt.NDArray,
-    sps: int,
+    samples_per_symbol: int,
     span: int = 2,
     sample_rate: float | None = None,
     color: Literal["index"] | str = "index",
@@ -359,7 +359,7 @@ def phase_tree(
 
     Arguments:
         x: The baseband CPM signal $x[n]$.
-        sps: The number of samples per symbol.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
         span: The number of symbols per raster.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Symbol".
@@ -381,7 +381,7 @@ def phase_tree(
 
             @savefig sdr_plot_phase_tree_1.png
             plt.figure(); \
-            sdr.plot.phase_tree(x, msk.sps)
+            sdr.plot.phase_tree(x, msk.samples_per_symbol)
 
     Group:
         plot-modulation
@@ -393,8 +393,8 @@ def phase_tree(
         phase = np.angle(x)
 
         # Create a strided array of phase values
-        length = sps * span + 1
-        stride = sps
+        length = samples_per_symbol * span + 1
+        stride = samples_per_symbol
         N_rasters = (phase.size - length) // stride + 1
         phase_strided = np.lib.stride_tricks.as_strided(
             phase, shape=(N_rasters, length), strides=(phase.strides[0] * stride, phase.strides[0]), writeable=False
@@ -407,7 +407,7 @@ def phase_tree(
 
         raster(
             phase_strided,
-            sample_rate=sample_rate if sample_rate is not None else sps,
+            sample_rate=sample_rate if sample_rate is not None else samples_per_symbol,
             color=color,
             ax=ax,
             **kwargs,

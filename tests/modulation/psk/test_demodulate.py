@@ -6,54 +6,54 @@ import sdr
 def test_bpsk_rect():
     rng = np.random.default_rng()
     phi = rng.uniform(0, 360)
-    sps = 10
-    h = sdr.rectangular(sps)
-    psk = sdr.PSK(2, phase_offset=phi, sps=sps, pulse_shape=h)
+    samples_per_symbol = 10
+    h = sdr.rectangular(samples_per_symbol)
+    psk = sdr.PSK(2, phase_offset=phi, samples_per_symbol=samples_per_symbol, pulse_shape=h)
     _verify_demodulation(psk)
 
 
 def test_bpsk_srrc():
     rng = np.random.default_rng()
     phi = rng.uniform(0, 360)
-    sps = 10
-    h = sdr.root_raised_cosine(0.5, 16, sps)
-    psk = sdr.PSK(2, phase_offset=phi, sps=sps, pulse_shape=h)
+    samples_per_symbol = 10
+    h = sdr.root_raised_cosine(0.5, 16, samples_per_symbol)
+    psk = sdr.PSK(2, phase_offset=phi, samples_per_symbol=samples_per_symbol, pulse_shape=h)
     _verify_demodulation(psk)
 
 
 def test_qpsk_rect():
     rng = np.random.default_rng()
     phi = rng.uniform(0, 360)
-    sps = 10
-    h = sdr.rectangular(sps)
-    psk = sdr.PSK(4, phase_offset=phi, sps=sps, pulse_shape=h)
+    samples_per_symbol = 10
+    h = sdr.rectangular(samples_per_symbol)
+    psk = sdr.PSK(4, phase_offset=phi, samples_per_symbol=samples_per_symbol, pulse_shape=h)
     _verify_demodulation(psk)
 
 
 def test_qpsk_srrc():
     rng = np.random.default_rng()
     phi = rng.uniform(0, 360)
-    sps = 10
-    h = sdr.root_raised_cosine(0.5, 16, sps)
-    psk = sdr.PSK(4, phase_offset=phi, sps=sps, pulse_shape=h)
+    samples_per_symbol = 10
+    h = sdr.root_raised_cosine(0.5, 16, samples_per_symbol)
+    psk = sdr.PSK(4, phase_offset=phi, samples_per_symbol=samples_per_symbol, pulse_shape=h)
     _verify_demodulation(psk)
 
 
 def test_8psk_rect():
     rng = np.random.default_rng()
     phi = rng.uniform(0, 360)
-    sps = 10
-    h = sdr.rectangular(sps)
-    psk = sdr.PSK(8, phase_offset=phi, sps=sps, pulse_shape=h)
+    samples_per_symbol = 10
+    h = sdr.rectangular(samples_per_symbol)
+    psk = sdr.PSK(8, phase_offset=phi, samples_per_symbol=samples_per_symbol, pulse_shape=h)
     _verify_demodulation(psk)
 
 
 def test_8psk_srrc():
     rng = np.random.default_rng()
     phi = rng.uniform(0, 360)
-    sps = 10
-    h = sdr.root_raised_cosine(0.5, 16, sps)
-    psk = sdr.PSK(8, phase_offset=phi, sps=sps, pulse_shape=h)
+    samples_per_symbol = 10
+    h = sdr.root_raised_cosine(0.5, 16, samples_per_symbol)
+    psk = sdr.PSK(8, phase_offset=phi, samples_per_symbol=samples_per_symbol, pulse_shape=h)
     _verify_demodulation(psk)
 
 

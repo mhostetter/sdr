@@ -9,7 +9,7 @@ def test_1():
         >> convertSNR(0:10, 'snr', 'esno', 'SamplesPerSymbol', 1)'
     """
     snr = np.arange(0, 11)
-    esn0 = sdr.snr_to_esn0(snr, sps=1)
+    esn0 = sdr.snr_to_esn0(snr, samples_per_symbol=1)
     esn0_truth = np.array(
         [
             0,
@@ -34,7 +34,7 @@ def test_2():
         >> convertSNR(0:10, 'snr', 'esno', 'SamplesPerSymbol', 2)'
     """
     snr = np.arange(0, 11)
-    esn0 = sdr.snr_to_esn0(snr, sps=2)
+    esn0 = sdr.snr_to_esn0(snr, samples_per_symbol=2)
     esn0_truth = np.array(
         [
             3.010299956639812,
@@ -59,7 +59,7 @@ def test_3():
         >> convertSNR(0:10, 'snr', 'esno', 'SamplesPerSymbol', 4)'
     """
     snr = np.arange(0, 11)
-    esn0 = sdr.snr_to_esn0(snr, sps=4)
+    esn0 = sdr.snr_to_esn0(snr, samples_per_symbol=4)
     esn0_truth = np.array(
         [
             6.020599913279624,

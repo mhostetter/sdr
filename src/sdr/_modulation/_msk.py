@@ -69,7 +69,7 @@ class MSK(OQPSK):
 
             @savefig sdr_MSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*msk.sps]);
+            sdr.plot.time_domain(tx_samples[0:50*msk.samples_per_symbol]);
 
         MSK, like OQPSK, has I and Q channels that are offset by half a symbol period.
 
@@ -77,7 +77,7 @@ class MSK(OQPSK):
 
             @savefig sdr_MSK_4.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(tx_samples[5*msk.sps : -5*msk.sps], msk.sps); \
+            sdr.plot.eye(tx_samples[5*msk.samples_per_symbol : -5*msk.samples_per_symbol], msk.samples_per_symbol); \
             plt.suptitle("Noiseless transmitted signal");
 
         The phase trajectory of MSK is linear and continuous. Although, it should be noted that the phase is not
@@ -88,19 +88,19 @@ class MSK(OQPSK):
 
             @savefig sdr_MSK_5.png
             plt.figure(); \
-            sdr.plot.phase_tree(tx_samples[msk.sps:], msk.sps);
+            sdr.plot.phase_tree(tx_samples[msk.samples_per_symbol:], msk.samples_per_symbol);
 
         Add AWGN noise such that $E_b/N_0 = 30$ dB.
 
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=msk.bps, sps=msk.sps); \
+            snr = sdr.ebn0_to_snr(ebn0, bps=msk.bps, samples_per_symbol=msk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_MSK_6.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*msk.sps]);
+            sdr.plot.time_domain(rx_samples[0:50*msk.samples_per_symbol]);
 
         Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal.
 
@@ -111,7 +111,7 @@ class MSK(OQPSK):
 
             @savefig sdr_MSK_7.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(mf_samples[10*msk.sps : -10*msk.sps], msk.sps); \
+            sdr.plot.eye(mf_samples[10*msk.samples_per_symbol : -10*msk.samples_per_symbol], msk.samples_per_symbol); \
             plt.suptitle("Noisy received and matched filtered signal");
 
         Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
@@ -137,7 +137,7 @@ class MSK(OQPSK):
         self,
         phase_offset: float = 45,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
-        sps: int = 8,
+        samples_per_symbol: int = 8,
     ):
         r"""
         Creates a new MSK object.
@@ -152,19 +152,19 @@ class MSK(OQPSK):
                   the new symbol labels. The default symbol labels are $0$ to $4-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
-            sps: The number of samples per symbol $f_s / f_{sym}$.
+            samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
 
         See Also:
             sdr.half_sine
         """
-        pulse_shape = half_sine(sps)
+        pulse_shape = half_sine(samples_per_symbol)
 
         super().__init__(
             phase_offset=phase_offset,
             symbol_labels=symbol_labels,
-            sps=sps,
+            samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
         )
 
-        if sps > 1 and sps % 2 != 0:
-            raise ValueError(f"Argument 'sps' must be even, not {sps}.")
+        if samples_per_symbol > 1 and samples_per_symbol % 2 != 0:
+            raise ValueError(f"Argument 'samples_per_symbol' must be even, not {samples_per_symbol}.")

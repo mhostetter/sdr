@@ -45,7 +45,7 @@ class CPM:
         index: float = 0.5,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "bin",
         phase_offset: float = 0.0,
-        sps: int = 8,
+        samples_per_symbol: int = 8,
         # pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc", "gaussian"] = "rect",
         pulse_shape: npt.ArrayLike | Literal["rect"] = "rect",
         span: int = 1,
@@ -67,11 +67,11 @@ class CPM:
                   the new symbol labels.
 
             phase_offset: A phase offset $\phi$ in degrees.
-            sps: The number of samples per symbol $f_s / f_{sym}$.
+            samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the instantaneous frequency of the signal. If a string is passed,
                 the pulse shape is normalized such that the maximum value is 1.
 
-                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `samples_per_symbol` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
                 - `"rect"`: Rectangular pulse shape.
 
@@ -111,11 +111,11 @@ class CPM:
             raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
         self._phase_offset = phase_offset  # Phase offset in degrees
 
-        if not isinstance(sps, int):
-            raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-        if not sps > 1:
-            raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-        self._sps = sps  # Samples per symbol
+        if not isinstance(samples_per_symbol, int):
+            raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+        if not samples_per_symbol > 1:
+            raise ValueError(f"Argument 'samples_per_symbol' must be greater than 1, not {samples_per_symbol}.")
+        self._samples_per_symbol = samples_per_symbol  # Samples per symbol
 
         if not isinstance(span, int):
             raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
@@ -124,22 +124,22 @@ class CPM:
 
         if isinstance(pulse_shape, str):
             if pulse_shape == "rect":
-                self._pulse_shape = rectangular(self.sps, span=span, norm="passband") / 2
-                # self._pulse_shape = np.ones(self.sps * span) / (self.sps * span) / 2
+                self._pulse_shape = rectangular(self.samples_per_symbol, span=span, norm="passband") / 2
+                # self._pulse_shape = np.ones(self.samples_per_symbol * span) / (self.samples_per_symbol * span) / 2
             else:
                 raise ValueError(f"Argument 'pulse_shape' must be 'rect', not {pulse_shape!r}.")
             # elif pulse_shape == "sine":
-            #     # self._pulse_shape = half_sine(self.sps, norm="passband") / 2
-            #     self._pulse_shape = 1 - np.cos(2 * np.pi * np.arange(0.5, self.sps + 0.5, 1) / self.sps)
+            #     # self._pulse_shape = half_sine(self.samples_per_symbol, norm="passband") / 2
+            #     self._pulse_shape = 1 - np.cos(2 * np.pi * np.arange(0.5, self.samples_per_symbol + 0.5, 1) / self.samples_per_symbol)
             #     self._pulse_shape = _normalize(self._pulse_shape, norm="passband") / 2
             # elif pulse_shape == "rc":
             #     if alpha is None:
             #         alpha = 0.2
-            #     self._pulse_shape = raised_cosine(alpha, span, self.sps, norm="passband") / 2
+            #     self._pulse_shape = raised_cosine(alpha, span, self.samples_per_symbol, norm="passband") / 2
             # elif pulse_shape == "gaussian":
             #     if time_bandwidth is None:
             #         time_bandwidth = 0.3
-            #     self._pulse_shape = gaussian(time_bandwidth, span, self.sps, norm="passband") / 2
+            #     self._pulse_shape = gaussian(time_bandwidth, span, self.samples_per_symbol, norm="passband") / 2
             # else:
             #     raise ValueError(f"Argument 'pulse_shape' must be 'rect', 'rc', or 'srrc', not {pulse_shape!r}.")
         else:
@@ -153,8 +153,8 @@ class CPM:
         # if time_bandwidth is not None and pulse_shape not in ["gaussian"]:
         #     raise ValueError("Argument 'time_bandwidth' is only valid for 'gaussian' pulse shape, not {pulse_shape!r}.")
 
-        self._tx_filter = Interpolator(self.sps, self.pulse_shape)  # Transmit pulse shaping filter
-        self._rx_filter = Decimator(self.sps, self.pulse_shape[::-1].conj())  # Receive matched filter
+        self._tx_filter = Interpolator(self.samples_per_symbol, self.pulse_shape)  # Transmit pulse shaping filter
+        self._rx_filter = Decimator(self.samples_per_symbol, self.pulse_shape[::-1].conj())  # Receive matched filter
 
         self._nco = NCO()
 
@@ -176,8 +176,8 @@ class CPM:
             s: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
 
         Returns:
-            The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol
-            and length `sps * s.size + pulse_shape.size - 1`.
+            The pulse-shaped complex samples $x[n]$ with :obj:`samples_per_symbol` samples per symbol
+            and length `samples_per_symbol * s.size + pulse_shape.size - 1`.
         """
         s = np.asarray(s)  # Decimal symbols
         return self._modulate(s)
@@ -193,8 +193,8 @@ class CPM:
         # phase_ps = np.insert(phase_ps, 0, 0)  # Start with phase 0
         # phase_ps = phase_ps[:-1]  # Trim last phase
         # # return phase_ps
-        # x = np.exp(1j * np.pi / self.sps * phase_ps)  # Complex samples
-        # # x = np.exp(1j * (2 * np.pi / self.sps * self.index * freq_ps + self._phase_offset))  # Complex samples
+        # x = np.exp(1j * np.pi / self.samples_per_symbol * phase_ps)  # Complex samples
+        # # x = np.exp(1j * (2 * np.pi / self.samples_per_symbol * self.index * freq_ps + self._phase_offset))  # Complex samples
         x = self._nco(2 * np.pi * freq_ps, output="complex-exp")  # Complex samples
         return x
 
@@ -210,8 +210,8 @@ class CPM:
         This method applies matched filtering and maximum-likelihood estimation.
 
         Arguments:
-            x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`sps`
-                samples per symbol and length `sps * s_hat.size + pulse_shape.size - 1`.
+            x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`samples_per_symbol`
+                samples per symbol and length `samples_per_symbol * s_hat.size + pulse_shape.size - 1`.
 
         Returns:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
@@ -286,11 +286,11 @@ class CPM:
         return self._phase_offset
 
     @property
-    def sps(self) -> int:
+    def samples_per_symbol(self) -> int:
         r"""
         The number of samples per symbol $f_s / f_{sym}$.
         """
-        return self._sps
+        return self._samples_per_symbol
 
     @property
     def pulse_shape(self) -> np.ndarray:

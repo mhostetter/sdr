@@ -18,7 +18,7 @@ def test_rect_bin():
         x = cpm(b);
         x
     """
-    cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rect", sps=8)
+    cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rect", samples_per_symbol=8)
     b = np.array([0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1])
     s = sdr.pack(b, cpm.bps)
     x = cpm.modulate(s)
@@ -106,7 +106,7 @@ def test_rect_bin():
             0.980785280403231 + 0.195090322016127j,
         ]
     )
-    # debug_plot(x, x_truth, cpm.sps)
+    # debug_plot(x, x_truth, cpm.samples_per_symbol)
     np.testing.assert_array_almost_equal(x, x_truth)
 
 
@@ -124,7 +124,7 @@ def test_rect_gray():
         x = cpm(b);
         x
     """
-    cpm = sdr.CPM(4, index=0.5, symbol_labels="gray", pulse_shape="rect", sps=8)
+    cpm = sdr.CPM(4, index=0.5, symbol_labels="gray", pulse_shape="rect", samples_per_symbol=8)
     b = np.array([1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1])
     s = sdr.pack(b, cpm.bps)
     x = cpm.modulate(s)
@@ -212,7 +212,7 @@ def test_rect_gray():
             0.980785280403231 + 0.195090322016127j,
         ]
     )
-    # debug_plot(x, x_truth, cpm.sps)
+    # debug_plot(x, x_truth, cpm.samples_per_symbol)
     np.testing.assert_array_almost_equal(x, x_truth)
 
 
@@ -230,7 +230,7 @@ def test_rect_gray():
 #         x = cpm(b);
 #         x
 #     """
-#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="sine", sps=8)
+#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="sine", samples_per_symbol=8)
 #     b = np.array([0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1])
 #     s = sdr.pack(b, cpm.bps)
 #     x = cpm.modulate(s)
@@ -318,7 +318,7 @@ def test_rect_gray():
 #             -0.999809845283299 - 0.019500596775106j,
 #         ]
 #     )
-#     # debug_plot(x, x_truth, cpm.sps)
+#     # debug_plot(x, x_truth, cpm.samples_per_symbol)
 #     np.testing.assert_array_almost_equal(x, x_truth)
 
 
@@ -336,7 +336,7 @@ def test_rect_gray():
 #         x = cpm(b);
 #         x
 #     """
-#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rc", sps=8, alpha=0.2)
+#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rc", samples_per_symbol=8, alpha=0.2)
 #     b = np.array([1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0])
 #     s = sdr.pack(b, cpm.bps)
 #     x = cpm.modulate(s)
@@ -424,7 +424,7 @@ def test_rect_gray():
 #             -0.990230937912052 - 0.139437045299366j,
 #         ]
 #     )
-#     # debug_plot(x, x_truth, cpm.sps)
+#     # debug_plot(x, x_truth, cpm.samples_per_symbol)
 #     np.testing.assert_array_almost_equal(x, x_truth)
 
 
@@ -442,7 +442,7 @@ def test_rect_gray():
 #         x = cpm(b);
 #         x
 #     """
-#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="gaussian", sps=8, time_bandwidth=0.3)
+#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="gaussian", samples_per_symbol=8, time_bandwidth=0.3)
 #     b = np.array([0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0])
 #     s = sdr.pack(b, cpm.bps)
 #     x = cpm.modulate(s)
@@ -530,7 +530,7 @@ def test_rect_gray():
 #             -0.883523872531454 - 0.468386129883265j,
 #         ]
 #     )
-#     # debug_plot(x, x_truth, cpm.sps)
+#     # debug_plot(x, x_truth, cpm.samples_per_symbol)
 #     np.testing.assert_array_almost_equal(x, x_truth)
 
 
@@ -548,7 +548,7 @@ def test_rect_gray():
 #         x = cpm(b);
 #         x
 #     """
-#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rect", sps=8)
+#     cpm = sdr.CPM(4, index=0.5, symbol_labels="bin", pulse_shape="rect", samples_per_symbol=8)
 #     b = np.array([1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1])
 #     s = sdr.pack(b, cpm.bps)
 #     x = cpm.modulate(s)
@@ -636,11 +636,11 @@ def test_rect_gray():
 #             -0.855231086688292 + 0.518246841150010j,
 #         ]
 #     )
-#     # debug_plot(x, x_truth, cpm.sps)
+#     # debug_plot(x, x_truth, cpm.samples_per_symbol)
 #     np.testing.assert_array_almost_equal(x, x_truth)
 
 
-def debug_plot(x: np.ndarray, x_truth: np.ndarray, sps: int):
+def debug_plot(x: np.ndarray, x_truth: np.ndarray, samples_per_symbol: int):
     # import matplotlib.pyplot as plt
 
     plt.figure()
@@ -648,11 +648,11 @@ def debug_plot(x: np.ndarray, x_truth: np.ndarray, sps: int):
     sdr.plot.time_domain(x_truth.real, label="Truth")
 
     plt.figure()
-    sdr.plot.phase_tree(x, sps, span=2)
+    sdr.plot.phase_tree(x, samples_per_symbol, span=2)
     plt.title("Test")
 
     plt.figure()
-    sdr.plot.phase_tree(x_truth, sps, span=2)
+    sdr.plot.phase_tree(x_truth, samples_per_symbol, span=2)
     plt.title("Truth")
 
     plt.show()

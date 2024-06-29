@@ -76,7 +76,7 @@ def time_domain(  # noqa: D417
 
         .. ipython:: python
 
-            qpsk = sdr.PSK(4, phase_offset=45, sps=10, pulse_shape="srrc"); \
+            qpsk = sdr.PSK(4, phase_offset=45, samples_per_symbol=10, pulse_shape="srrc"); \
             pulse_shape = qpsk.pulse_shape
 
             @savefig sdr_plot_time_domain_1.png

@@ -215,7 +215,7 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
             psk = sdr.PSK(2, pulse_shape="rect")
             symbols = np.random.randint(0, psk.order, 10_000)
             x_rect = psk.modulate(symbols)
-            sdr.rms_bandwidth(x_rect, sample_rate=symbol_rate * psk.sps)
+            sdr.rms_bandwidth(x_rect, sample_rate=symbol_rate * psk.samples_per_symbol)
 
         Make the same measurements with square-root raised cosine (SRRC) pulse shaping. The SRRC spectrum is narrower
         and, therefore, closer to the rectangular spectrum.
@@ -225,7 +225,7 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
             psk = sdr.PSK(2, pulse_shape="srrc")
             symbols = np.random.randint(0, psk.order, 10_000)
             x_srrc = psk.modulate(symbols)
-            sdr.rms_bandwidth(x_srrc, sample_rate=symbol_rate * psk.sps)
+            sdr.rms_bandwidth(x_srrc, sample_rate=symbol_rate * psk.samples_per_symbol)
 
         Plot the power spectral density (PSD) of the rectangular and SRRC pulse-shaped signals.
 
@@ -233,8 +233,8 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
 
             @savefig sdr_rms_bandwidth_1.png
             plt.figure(); \
-            sdr.plot.periodogram(x_rect, sample_rate=symbol_rate * psk.sps, label="Rectangular"); \
-            sdr.plot.periodogram(x_srrc, sample_rate=symbol_rate * psk.sps, label="SRRC");
+            sdr.plot.periodogram(x_rect, sample_rate=symbol_rate * psk.samples_per_symbol, label="Rectangular"); \
+            sdr.plot.periodogram(x_srrc, sample_rate=symbol_rate * psk.samples_per_symbol, label="SRRC");
 
     Group:
         measurement-modulation
@@ -308,8 +308,8 @@ def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
         .. ipython:: python
 
             symbol_rate = 100  # symbols/s
-            sps = 100  # samples/symbol
-            sample_rate = symbol_rate * sps  # samples/s
+            samples_per_symbol = 100  # samples/symbol
+            sample_rate = symbol_rate * samples_per_symbol  # samples/s
             n_symbols = symbol_rate  # Make a 1-second long signal
             t_s = n_symbols / symbol_rate  # Integration time (s)
             t_s / np.sqrt(12)
@@ -319,7 +319,7 @@ def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
 
         .. ipython:: python
 
-            psk = sdr.PSK(2, pulse_shape="rect", sps=sps)
+            psk = sdr.PSK(2, pulse_shape="rect", samples_per_symbol=samples_per_symbol)
             symbols = np.random.randint(0, psk.order, n_symbols)
             x_rect = psk.modulate(symbols).real
             sdr.rms_integration_time(x_rect, sample_rate=sample_rate)
@@ -332,7 +332,7 @@ def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
 
         .. ipython:: python
 
-            psk = sdr.PSK(2, pulse_shape="srrc", sps=sps)
+            psk = sdr.PSK(2, pulse_shape="srrc", samples_per_symbol=samples_per_symbol)
             symbols = np.random.randint(0, psk.order, n_symbols)
             x_srrc = psk.modulate(symbols).real
             sdr.rms_integration_time(x_srrc, sample_rate=sample_rate)
