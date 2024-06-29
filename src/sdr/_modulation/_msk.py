@@ -137,6 +137,7 @@ class MSK(OQPSK):
         self,
         phase_offset: float = 45,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        symbol_rate: float = 1.0,
         samples_per_symbol: int = 8,
     ):
         r"""
@@ -152,6 +153,7 @@ class MSK(OQPSK):
                   the new symbol labels. The default symbol labels are $0$ to $4-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
             samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
 
         See Also:
@@ -162,6 +164,7 @@ class MSK(OQPSK):
         super().__init__(
             phase_offset=phase_offset,
             symbol_labels=symbol_labels,
+            symbol_rate=symbol_rate,
             samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
         )

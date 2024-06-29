@@ -137,6 +137,7 @@ class PSK(LinearModulation):
         order: int,
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        symbol_rate: float = 1.0,
         samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
@@ -156,6 +157,7 @@ class PSK(LinearModulation):
                   the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
             samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
@@ -178,6 +180,7 @@ class PSK(LinearModulation):
         super().__init__(
             base_symbol_map,
             phase_offset=phase_offset,
+            symbol_rate=symbol_rate,
             samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
             span=span,
@@ -591,6 +594,7 @@ class PiMPSK(PSK):
         order: int,
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        symbol_rate: float = 1.0,
         samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
@@ -610,6 +614,7 @@ class PiMPSK(PSK):
                   the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
             samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
@@ -630,6 +635,7 @@ class PiMPSK(PSK):
             order,
             phase_offset=phase_offset,
             symbol_labels=symbol_labels,
+            symbol_rate=symbol_rate,
             samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
         )
@@ -783,6 +789,7 @@ class OQPSK(PSK):
         self,
         phase_offset: float = 45,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
+        symbol_rate: float = 1.0,
         samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
@@ -801,6 +808,7 @@ class OQPSK(PSK):
                   the new symbol labels. The default symbol labels are $0$ to $4-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
             samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
@@ -821,6 +829,7 @@ class OQPSK(PSK):
             4,
             phase_offset=phase_offset,
             symbol_labels=symbol_labels,
+            symbol_rate=symbol_rate,
             samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
             span=span,

@@ -45,6 +45,7 @@ class CPM:
         index: float = 0.5,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "bin",
         phase_offset: float = 0.0,
+        symbol_rate: float = 1.0,
         samples_per_symbol: int = 8,
         # pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc", "gaussian"] = "rect",
         pulse_shape: npt.ArrayLike | Literal["rect"] = "rect",
@@ -67,6 +68,7 @@ class CPM:
                   the new symbol labels.
 
             phase_offset: A phase offset $\phi$ in degrees.
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
             samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the instantaneous frequency of the signal. If a string is passed,
                 the pulse shape is normalized such that the maximum value is 1.
@@ -110,6 +112,12 @@ class CPM:
         if not isinstance(phase_offset, (int, float)):
             raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
         self._phase_offset = phase_offset  # Phase offset in degrees
+
+        if not isinstance(symbol_rate, (int, float)):
+            raise TypeError(f"Argument 'symbol_rate' must be a number, not {type(symbol_rate)}.")
+        if not symbol_rate > 0:
+            raise ValueError(f"Argument 'symbol_rate' must be positive, not {symbol_rate}.")
+        self._symbol_rate = symbol_rate  # symbols/s
 
         if not isinstance(samples_per_symbol, int):
             raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
@@ -262,11 +270,39 @@ class CPM:
         return self._order
 
     @property
+    def symbol_rate(self) -> float:
+        r"""
+        The symbol rate $f_{sym}$ in symbols/s.
+        """
+        return self._symbol_rate
+
+    @property
     def bits_per_symbol(self) -> int:
         r"""
         The number of coded bits per symbol $k = \log_2 M$.
         """
         return self._bits_per_symbol
+
+    @property
+    def bit_rate(self) -> float:
+        r"""
+        The bit rate $f_{b}$ in bits/s.
+        """
+        return self.symbol_rate * self.bits_per_symbol
+
+    @property
+    def samples_per_symbol(self) -> int:
+        r"""
+        The number of samples per symbol $f_s / f_{sym}$.
+        """
+        return self._samples_per_symbol
+
+    @property
+    def sample_rate(self) -> float:
+        r"""
+        The sample rate $f_s$ in samples/s.
+        """
+        return self.symbol_rate * self.samples_per_symbol
 
     @property
     def index(self) -> float:
@@ -284,13 +320,6 @@ class CPM:
         The phase offset $\phi$ in degrees.
         """
         return self._phase_offset
-
-    @property
-    def samples_per_symbol(self) -> int:
-        r"""
-        The number of samples per symbol $f_s / f_{sym}$.
-        """
-        return self._samples_per_symbol
 
     @property
     def pulse_shape(self) -> np.ndarray:
