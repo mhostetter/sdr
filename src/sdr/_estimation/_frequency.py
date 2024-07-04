@@ -30,7 +30,7 @@ def foa_crlb(
         rms_integration_time: The root-mean-square (RMS) integration time $T_{\text{rms}}$ in Hz. If `None`, the RMS
             integration time is calculated assuming a rectangular power envelope, $T_{\text{rms}} = T/\sqrt{12}$.
         noise_bandwidth: The noise bandwidth $B_n$ in Hz. If `None`, the noise bandwidth is assumed to be the
-            signal bandwidth $B_s$. The noise bandwidth must be the same for both signals.
+            signal bandwidth $B_s$.
 
     Returns:
         The Cramér-Rao lower bound (CRLB) on the frequency of arrival (FOA) estimation error standard
