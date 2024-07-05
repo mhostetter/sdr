@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14142,12 +14142,12 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-x_hat"><span class="n sig-name">x_hat</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x_hat" title="Permalink to this definition">¶</a></dt><dd><p>The complex symbols <span class="math notranslate nohighlight">\(\hat{x}[k]\)</span> to be measured.</p>
+<dt id="p-x_hat"><span class="n sig-name">x_hat</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x_hat" title="Permalink to this definition">¶</a></dt><dd><p>The complex symbols <span class="math notranslate nohighlight">\(\hat{x}[k]\)</span> to be measured.</p>
 </dd>
-<dt id="p-ref"><span class="n sig-name">ref</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-ref" title="Permalink to this definition">¶</a></dt><dd><p>The complex reference symbols <span class="math notranslate nohighlight">\(x[k]\)</span>. This can be the noiseless transmitted symbols or the
+<dt id="p-ref"><span class="n sig-name">ref</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-ref" title="Permalink to this definition">¶</a></dt><dd><p>The complex reference symbols <span class="math notranslate nohighlight">\(x[k]\)</span>. This can be the noiseless transmitted symbols or the
 modulation’s symbol map.</p>
 </dd>
-<dt id="p-norm"><span class="n sig-name">norm</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'average-power-ref'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'average-power'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'peak-power'</span></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;average-power-ref&#39;</span></code><a class="headerlink" href="#p-norm" title="Permalink to this definition">¶</a></dt><dd><p><p>The normalization source used in the EVM calculation.</p>
+<dt id="p-norm"><span class="n sig-name">norm</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><span class="s">'average-power-ref'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="s">'average-power'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="s">'peak-power'</span></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;average-power-ref&#39;</span></code><a class="headerlink" href="#p-norm" title="Permalink to this definition">¶</a></dt><dd><p><p>The normalization source used in the EVM calculation.</p>
 <ul class="simple">
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;average-power-ref&quot;</span></code>: The average power of the reference symbols <span class="math notranslate nohighlight">\(x[k]\)</span>.</p></li>
 </ul>
@@ -14168,7 +14168,7 @@ modulation’s symbol map.</p>
 </p>
 </p>
 </dd>
-<dt id="p-output"><span class="n sig-name">output</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><span class="s">'rms'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><span class="s">'all'</span><span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;rms&#39;</span></code><a class="headerlink" href="#p-output" title="Permalink to this definition">¶</a></dt><dd><p><p>The output type of the EVM calculation.</p>
+<dt id="p-output"><span class="n sig-name">output</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><span class="s">'rms'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="s">'all'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="s1">&#39;rms&#39;</span></code><a class="headerlink" href="#p-output" title="Permalink to this definition">¶</a></dt><dd><p><p>The output type of the EVM calculation.</p>
 <ul class="simple">
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;rms&quot;</span></code>: The root-mean-square (RMS) EVM.</p></li>
 </ul>
@@ -14195,7 +14195,7 @@ modulation’s symbol map.</p>
 </dl>
 </dd>
 </dl>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>Create QPSK symbols with <span class="math notranslate nohighlight">\(E_s/N_0\)</span> of 20 dB.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">psk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span> \
@@ -14214,25 +14214,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">9.801057306967353</span>
+<span class="gh">Out[3]: </span><span class="go">9.858944386295665</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">9.801057306967353</span>
+<span class="gh">Out[4]: </span><span class="go">9.858944386295665</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">9.744452693146982</span>
+<span class="gh">Out[5]: </span><span class="go">9.813565201874411</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">7.964847351883302</span>
+<span class="gh">Out[6]: </span><span class="go">8.119055162123056</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">17.160990471629333</span>
+<span class="gh">Out[7]: </span><span class="go">17.133634538340477</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
@@ -14325,7 +14325,7 @@ Either the symbol map or noiseless transmitted symbols may be passed.</p>
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14375,11 +14375,11 @@ Either the symbol map or noiseless transmitted symbols may be passed.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

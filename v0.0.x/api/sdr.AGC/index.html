@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14228,7 +14228,7 @@ You're not viewing the latest version.
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">AGC</span></span></dt>
 <dd><p>Implements an automatic gain controller (AGC).</p>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
 </span>Automatic Gain Control Block Diagram<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
@@ -14251,12 +14251,12 @@ X = Multiplier
 </code></pre></div>
 </div>
 </div>
-<p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="references">References</p>
 <ul class="simple">
 <li><p>Michael Rice, <em>Digital Communications: A Discrete-Time Approach</em>, Section 9.5.</p></li>
 <li><p><a class="reference external" href="https://wirelesspi.com/how-automatic-gain-control-agc-works/">Qasim Chaudhari, How Automatic Gain Control (AGC) Works.</a></p></li>
 </ul>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>Create an example received signal with two bursty signals surrounded by noise.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1000</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">0</span><span class="p">;</span> \
@@ -14290,7 +14290,7 @@ of interest appears the AGC gain is quickly decreased (according to the attack r
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_AGC_2.png" src="../../_images/sdr_AGC_2.png" />
-<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
+<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.AGC.__init__/" title="sdr.AGC.__init__ (Python method) — Creates an automatic gain controller (AGC)."><span class="sig-name descname pseudo-toc-entry"><span class="pre">AGC</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.AGC.__init__/#p-attack" title="sdr.AGC.__init__.attack (Python parameter) — The attack rate $alpha$. The attack rate is meant to attenuate strong signals. After $n_0 approx 1 / alpha$ samples the error will reduce to $1 / e$ of its original value."><span class="n"><span class="pre">attack</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.AGC.__init__/#p-decay" title="sdr.AGC.__init__.decay (Python parameter) — The decay rate $beta$. The decay rate is meant to amplify weak signals. After $n_0 approx 1 / beta$ samples the error will reduce to $1 / e$ of its original value."><span class="n"><span class="pre">decay</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.AGC.__init__/#p-reference" title="sdr.AGC.__init__.reference (Python parameter) — The desired output magnitude."><span class="n"><span class="pre">reference</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
@@ -14299,7 +14299,7 @@ of interest appears the AGC gain is quickly decreased (according to the attack r
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="special-methods">Special methods<a class="headerlink" href="#special-methods" title="Permalink to this heading">¶</a></h2>
+<h2 id="special-methods">Special methods<a class="headerlink" href="#special-methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.AGC.__call__/" title="sdr.AGC.__call__ (Python method) — Performs automatic gain control on the input signal."><span class="sig-name descname pseudo-toc-entry"><span class="pre">__call__</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.AGC.__call__/#p-x" title="sdr.AGC.__call__.x (Python parameter) — The input signal $x[n]$."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
@@ -14308,7 +14308,7 @@ of interest appears the AGC gain is quickly decreased (according to the attack r
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="streaming-mode-only">Streaming mode only<a class="headerlink" href="#streaming-mode-only" title="Permalink to this heading">¶</a></h2>
+<h2 id="streaming-mode-only">Streaming mode only<a class="headerlink" href="#streaming-mode-only" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.AGC.reset/" title="sdr.AGC.reset (Python method) — Resets the AGC gain. Only useful when using streaming mode."><span class="sig-name descname pseudo-toc-entry"><span class="pre">reset</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.AGC.reset/#p-gain" title="sdr.AGC.reset.gain (Python parameter) — The initial linear gain of the AGC."><span class="n"><span class="pre">gain</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em></span><span class="sig-paren">)</span></dt>
@@ -14329,7 +14329,7 @@ of interest appears the AGC gain is quickly decreased (according to the attack r
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Link to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.AGC.attack/" title="sdr.AGC.attack (Python property) — (Settable) The attack rate $alpha$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">attack</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></dt>
@@ -14428,7 +14428,7 @@ of interest appears the AGC gain is quickly decreased (according to the attack r
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14478,11 +14478,11 @@ of interest appears the AGC gain is quickly decreased (according to the attack r
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

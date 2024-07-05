@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14283,9 +14283,9 @@ You're not viewing the latest version.
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">IIR</span></span></dt>
 <dd><p>Implements an infinite impulse response (IIR) filter.</p>
-<p>This class is a wrapper for the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.lfilter.html#scipy.signal.lfilter" title="(in SciPy v1.13.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.lfilter()</span></code></a> function. It supports one-time filtering
+<p>This class is a wrapper for the <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.lfilter.html#scipy.signal.lfilter" title="(in SciPy v1.14.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.signal.lfilter()</span></code></a> function. It supports one-time filtering
 and streamed filtering.</p>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p>An IIR filter is defined by its feedforward coefficients <span class="math notranslate nohighlight">\(b_i\)</span> and feedback coefficients <span class="math notranslate nohighlight">\(a_j\)</span>.
 These coefficients define the difference equation</p>
 <p><div class="math notranslate nohighlight">
@@ -14295,9 +14295,9 @@ These coefficients define the difference equation</p>
 <p><div class="math notranslate nohighlight">
 \[H(z) = \frac{\sum\limits_{i=0}^{M} b_i z^{-i}}{\sum\limits_{j=0}^{N} a_j z^{-j}} .\]</div>
 </p>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>See the <a class="reference internal" href="../../examples/iir-filters/#iir-filters"><span class="std std-ref">IIR filters</span></a> example.</p>
-<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
+<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.__init__/" title="sdr.IIR.__init__ (Python method) — Creates an IIR filter with feedforward coefficients $b_i$ and feedback coefficients $a_j$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">IIR</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.IIR.__init__/#p-b" title="sdr.IIR.__init__.b (Python parameter) — The feedforward coefficients $b_i$ for $i = 0,...,M$."><span class="n"><span class="pre">b</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.IIR.__init__/#p-a" title="sdr.IIR.__init__.a (Python parameter) — The feedback coefficients $a_j$ for $j = 0,...,N$."><span class="n"><span class="pre">a</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.IIR.__init__/#p-streaming" title="sdr.IIR.__init__.streaming (Python parameter) — Indicates whether to use streaming mode. In streaming mode, previous inputs and outputs are preserved between calls to __call__()."><span class="n"><span class="pre">streaming</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span></dt>
@@ -14312,7 +14312,7 @@ These coefficients define the difference equation</p>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="special-methods">Special methods<a class="headerlink" href="#special-methods" title="Permalink to this heading">¶</a></h2>
+<h2 id="special-methods">Special methods<a class="headerlink" href="#special-methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.__call__/" title="sdr.IIR.__call__ (Python method) — Filters the input signal $x[n]$ with the IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">__call__</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.IIR.__call__/#p-x" title="sdr.IIR.__call__.x (Python parameter) — The input signal $x[n]$ with length $L$."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
@@ -14321,7 +14321,7 @@ These coefficients define the difference equation</p>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="streaming-mode-only">Streaming mode only<a class="headerlink" href="#streaming-mode-only" title="Permalink to this heading">¶</a></h2>
+<h2 id="streaming-mode-only">Streaming mode only<a class="headerlink" href="#streaming-mode-only" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.reset/" title="sdr.IIR.reset (Python method) — Resets the filter state. Only useful when using streaming mode."><span class="sig-name descname pseudo-toc-entry"><span class="pre">reset</span></span></a><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
@@ -14342,7 +14342,7 @@ These coefficients define the difference equation</p>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h2>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.impulse_response/" title="sdr.IIR.impulse_response (Python method) — Returns the impulse response $h[n]$ of the IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">impulse_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.IIR.impulse_response/#p-N" title="sdr.IIR.impulse_response.N (Python parameter) — The number of samples to return."><span class="n"><span class="pre">N</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">100</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
@@ -14357,7 +14357,7 @@ These coefficients define the difference equation</p>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.frequency_response/" title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><span class="pre">numpy.dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">numpy.float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><span class="pre">numpy.ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><span class="pre">numpy.dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">numpy.complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.frequency_response/" title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter."><span class="sig-name descname pseudo-toc-entry"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><span class="pre">Any</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname reference internal" href="../sdr.IIR.frequency_response/" title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter."><span class="sig-name descname"><span class="pre">frequency_response</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.IIR.frequency_response/#p-freqs" title="sdr.IIR.frequency_response.freqs (Python parameter) — The frequency specification."><span class="n"><span class="pre">freqs</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#complex" title="(in Python v3.12)"><span class="pre">complex</span></a></span></span></span></dt>
 <dt class="sig sig-object highlight py">
@@ -14367,7 +14367,7 @@ These coefficients define the difference equation</p>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Link to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.IIR.b_taps/" title="sdr.IIR.b_taps (Python property) — The feedforward taps $b_i$ for $i = 0,...,M$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">b_taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><span class="pre">NDArray</span></span></dt>
@@ -14484,7 +14484,7 @@ These coefficients define the difference equation</p>
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14534,11 +14534,11 @@ These coefficients define the difference equation</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

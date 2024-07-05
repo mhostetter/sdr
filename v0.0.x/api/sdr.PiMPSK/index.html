@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14133,7 +14133,7 @@ You're not viewing the latest version.
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">PiMPSK</span></span><span class="p"><span class="pre">(</span></span><span class="desctype"><a class="reference internal" href="../sdr.PSK/" title="sdr.PSK (Python class) — Implements phase-shift keying (PSK) modulation and demodulation."><span class="pre">sdr.PSK</span></a></span><span class="p"><span class="pre">)</span></span></dt>
 <dd><p>Implements <span class="math notranslate nohighlight">\(\pi/M\)</span> phase-shift keying (<span class="math notranslate nohighlight">\(\pi/M\)</span> PSK) modulation and demodulation.</p>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p><span class="math notranslate nohighlight">\(\pi/M\)</span> M-PSK is a linear phase modulation scheme similar to conventional M-PSK. One key distinction is that
 in <span class="math notranslate nohighlight">\(\pi/M\)</span> M-PSK, the odd symbols are rotated by <span class="math notranslate nohighlight">\(\pi/M\)</span> radians relative to the even symbols.
 This prevents symbol transitions through the origin, which results in a lower peak-to-average power ratio
@@ -14165,7 +14165,7 @@ The input bit stream is taken <span class="math notranslate nohighlight">\(k\)</
 <li><p><span class="math notranslate nohighlight">\(\hat{s}[k]\)</span>: Decimal symbol decisions</p></li>
 </ul>
 </details>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>Create a <span class="math notranslate nohighlight">\(\pi/4\)</span> QPSK modem.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">pi4_qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PiMPSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">);</span> <span class="n">pi4_qpsk</span>
 <span class="gh">Out[1]: </span><span class="go">sdr.PiMPSK(4, phase_offset=0.0, symbol_labels=&#39;gray&#39;)</span>
@@ -14251,7 +14251,7 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
 </div>
 <img alt="../../_images/sdr_PiMPSK_7.png" src="../../_images/sdr_PiMPSK_7.png" />
 <p>See the <a class="reference internal" href="../../examples/psk/#psk"><span class="std std-ref">Phase-shift keying</span></a> example.</p>
-<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
+<h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.PiMPSK.__init__/" title="sdr.PiMPSK.__init__ (Python method) — Creates a new $pi/M$ PSK object."><span class="sig-name descname pseudo-toc-entry"><span class="pre">PiMPSK</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PiMPSK.__init__/#p-order" title="sdr.PiMPSK.__init__.order (Python parameter) — The modulation order $M = 2^k$, where $k ge 1$ is the coded bits per symbol."><span class="n"><span class="pre">order</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PiMPSK.__init__/#p-phase_offset" title="sdr.PiMPSK.__init__.phase_offset (Python parameter) — The absolute phase offset $phi$ in degrees."><span class="n"><span class="pre">phase_offset</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
@@ -14260,7 +14260,7 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h2>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname reference internal" href="../sdr.PSK.ber/" title="sdr.PSK.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values."><span class="sig-name descname"><span class="pre">ber</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PSK.ber/#p-ebn0" title="sdr.PSK.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.PSK.ber/#p-diff_encoded" title="sdr.PSK.ber.diff_encoded (Python parameter) — Indicates whether the input symbols were differentially encoded."><span class="n"><span class="pre">diff_encoded</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">False</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
@@ -14297,7 +14297,7 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
 <dd><p>Demodulates the pulse-shaped complex samples.</p>
 </dd></dl>
 
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Link to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname reference internal" href="../sdr.PSK.phase_offset/" title="sdr.PSK.phase_offset (Python property) — The phase offset $phi$ in degrees."><span class="sig-name descname"><span class="pre">phase_offset</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></dt>
@@ -14424,7 +14424,7 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14474,11 +14474,11 @@ two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is remo
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

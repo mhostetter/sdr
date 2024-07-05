@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14145,11 +14145,11 @@ zeros.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p>The input binary array with 1 bit per element.</p>
+<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p>The input binary array with 1 bit per element.</p>
 </dd>
-<dt id="p-bpe"><span class="n sig-name">bpe</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></span></span><a class="headerlink" href="#p-bpe" title="Permalink to this definition">¶</a></dt><dd><p>The number of bits per element in the output array.</p>
+<dt id="p-bpe"><span class="n sig-name">bpe</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></span></span><a class="headerlink" href="#p-bpe" title="Permalink to this definition">¶</a></dt><dd><p>The number of bits per element in the output array.</p>
 </dd>
-<dt id="p-dtype"><span class="n sig-name">dtype</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">DTypeLike<span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-dtype" title="Permalink to this definition">¶</a></dt><dd><p>The data type of the output array. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, the smallest unsigned integer dtype
+<dt id="p-dtype"><span class="n sig-name">dtype</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">DTypeLike<span class="w"> </span><span class="p">|</span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-dtype" title="Permalink to this definition">¶</a></dt><dd><p>The data type of the output array. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, the smallest unsigned integer dtype
 that can hold <code class="code highlight python docutils literal highlight-python"><span class="n">bpe</span></code> bits is used.</p>
 </dd>
 </dl>
@@ -14158,7 +14158,7 @@ that can hold <code class="code highlight python docutils literal highlight-pyth
 <dd class="field-even"><p>The packed data with <code class="code highlight python docutils literal highlight-python"><span class="n">bpe</span></code> bits per element.</p>
 </dd>
 </dl>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">pack</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gh">Out[1]: </span><span class="go">array([2, 0, 3, 1], dtype=uint8)</span>
 
@@ -14244,7 +14244,7 @@ that can hold <code class="code highlight python docutils literal highlight-pyth
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14294,8 +14294,8 @@ that can hold <code class="code highlight python docutils literal highlight-pyth
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     
   </body>
 </html>

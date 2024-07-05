@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14187,7 +14187,7 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="phase-shift-keying"><span id="psk"></span>Phase-shift keying<a class="headerlink" href="#phase-shift-keying" title="Permalink to this heading">¶</a></h1>
+<h1 id="phase-shift-keying"><span id="psk"></span>Phase-shift keying<a class="headerlink" href="#phase-shift-keying" title="Link to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -14239,8 +14239,8 @@ You're not viewing the latest version.
 </div>
 </div>
 </div>
-<h2 id="constellations">Constellations<a class="headerlink" href="#constellations" title="Permalink to this heading">¶</a></h2>
-<h3 id="bpsk">BPSK<a class="headerlink" href="#bpsk" title="Permalink to this heading">¶</a></h3>
+<h2 id="constellations">Constellations<a class="headerlink" href="#constellations" title="Link to this heading">¶</a></h2>
+<h3 id="bpsk">BPSK<a class="headerlink" href="#bpsk" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">bpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
@@ -14253,7 +14253,7 @@ You're not viewing the latest version.
 <img alt="../../_images/5f00c9d110d6d1f5d6de1a8b7324facb308c1bc5fbd0b56c1284db5976b4526e.png" src="../../_images/5f00c9d110d6d1f5d6de1a8b7324facb308c1bc5fbd0b56c1284db5976b4526e.png" />
 </div>
 </div>
-<h3 id="qpsk">QPSK<a class="headerlink" href="#qpsk" title="Permalink to this heading">¶</a></h3>
+<h3 id="qpsk">QPSK<a class="headerlink" href="#qpsk" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
@@ -14266,7 +14266,7 @@ You're not viewing the latest version.
 <img alt="../../_images/27d74b134c837150a89f4923481dc2e7c142377a3ed6ba6d2871054e487f5800.png" src="../../_images/27d74b134c837150a89f4923481dc2e7c142377a3ed6ba6d2871054e487f5800.png" />
 </div>
 </div>
-<h3 id="id1">8-PSK<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<h3 id="id1">8-PSK<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk8</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
@@ -14279,7 +14279,7 @@ You're not viewing the latest version.
 <img alt="../../_images/a45fa2b55d67d069c5dcdaf081bb8f46addbcf72776ed47060945a1b223c0093.png" src="../../_images/a45fa2b55d67d069c5dcdaf081bb8f46addbcf72776ed47060945a1b223c0093.png" />
 </div>
 </div>
-<h3 id="id2">16-PSK<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<h3 id="id2">16-PSK<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">psk16</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">sps</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pulse_shape</span><span class="o">=</span><span class="s2">&quot;srrc&quot;</span><span class="p">)</span>
@@ -14292,7 +14292,7 @@ You're not viewing the latest version.
 <img alt="../../_images/4695e4a9508621b48ac6f45c07f9b6deaf1aaea6d1d55e523dc55cc6f4598d77.png" src="../../_images/4695e4a9508621b48ac6f45c07f9b6deaf1aaea6d1d55e523dc55cc6f4598d77.png" />
 </div>
 </div>
-<h2 id="error-rate-curves">Error rate curves<a class="headerlink" href="#error-rate-curves" title="Permalink to this heading">¶</a></h2>
+<h2 id="error-rate-curves">Error rate curves<a class="headerlink" href="#error-rate-curves" title="Link to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">error_rates</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">):</span>
@@ -14328,7 +14328,7 @@ You're not viewing the latest version.
 </div>
 </div>
 </div>
-<h3 id="bit-error-rate-curves">Bit error rate curves<a class="headerlink" href="#bit-error-rate-curves" title="Permalink to this heading">¶</a></h3>
+<h3 id="bit-error-rate-curves">Bit error rate curves<a class="headerlink" href="#bit-error-rate-curves" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -14352,7 +14352,7 @@ You're not viewing the latest version.
 <img alt="../../_images/4950811dabea3a8b73807be998204b43a0860209cf8884c620d33226868343a1.png" src="../../_images/4950811dabea3a8b73807be998204b43a0860209cf8884c620d33226868343a1.png" />
 </div>
 </div>
-<h3 id="symbol-error-rate-curves">Symbol error rate curves<a class="headerlink" href="#symbol-error-rate-curves" title="Permalink to this heading">¶</a></h3>
+<h3 id="symbol-error-rate-curves">Symbol error rate curves<a class="headerlink" href="#symbol-error-rate-curves" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -14376,7 +14376,7 @@ You're not viewing the latest version.
 <img alt="../../_images/1f65548ee65f4becfbef84efccff2344df57fa3ace8bd88d171b39293ade5ece.png" src="../../_images/1f65548ee65f4becfbef84efccff2344df57fa3ace8bd88d171b39293ade5ece.png" />
 </div>
 </div>
-<h2 id="symbol-mapping">Symbol mapping<a class="headerlink" href="#symbol-mapping" title="Permalink to this heading">¶</a></h2>
+<h2 id="symbol-mapping">Symbol mapping<a class="headerlink" href="#symbol-mapping" title="Link to this heading">¶</a></h2>
 <p>The mapping of decimal symbols to complex symbols is important.
 Ideally, adjacent symbol errors only result in 1 bit error.
 This is generally accomplished using a Gray code (the default in :class:<code class="docutils literal notranslate"><span class="pre">sdr.PSK</span></code>).</p>
@@ -14507,7 +14507,7 @@ This is generally accomplished using a Gray code (the default in :class:<code cl
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14557,8 +14557,8 @@ This is generally accomplished using a Gray code (the default in :class:<code cl
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     
   </body>
 </html>

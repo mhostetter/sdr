@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14147,7 +14147,7 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="phase-locked-loops"><span id="phase-locked-loop"></span>Phase-locked loops<a class="headerlink" href="#phase-locked-loops" title="Permalink to this heading">¶</a></h1>
+<h1 id="phase-locked-loops"><span id="phase-locked-loop"></span>Phase-locked loops<a class="headerlink" href="#phase-locked-loops" title="Link to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -14164,7 +14164,7 @@ You're not viewing the latest version.
 </div>
 </div>
 </div>
-<h2 id="design-a-proportional-plus-integrator-ppi-loop-filter">Design a proportional-plus-integrator (PPI) loop filter<a class="headerlink" href="#design-a-proportional-plus-integrator-ppi-loop-filter" title="Permalink to this heading">¶</a></h2>
+<h2 id="design-a-proportional-plus-integrator-ppi-loop-filter">Design a proportional-plus-integrator (PPI) loop filter<a class="headerlink" href="#design-a-proportional-plus-integrator-ppi-loop-filter" title="Link to this heading">¶</a></h2>
 <p>A 2nd order, proportional-plus-integrator loop filter has the following configuration.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>           +----+
        +--&gt;| K1 |-------------------+
@@ -14213,7 +14213,7 @@ z^-1 = Unit delay
 <img alt="../../_images/f474c88005fe6233b6446e7e9ae226127943cb1d183721c885766f959aba85ac.png" src="../../_images/f474c88005fe6233b6446e7e9ae226127943cb1d183721c885766f959aba85ac.png" />
 </div>
 </div>
-<h2 id="implement-a-pll-in-the-phase-domain">Implement a PLL in the phase domain<a class="headerlink" href="#implement-a-pll-in-the-phase-domain" title="Permalink to this heading">¶</a></h2>
+<h2 id="implement-a-pll-in-the-phase-domain">Implement a PLL in the phase domain<a class="headerlink" href="#implement-a-pll-in-the-phase-domain" title="Link to this heading">¶</a></h2>
 <p>This section implements Example C.2.1 from <em>Digital Communications: A Discrete-Time Approach</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -14276,7 +14276,7 @@ z^-1 = Unit delay
 <img alt="../../_images/0691dcf9c9745f26bbea2c3c4fec2bbca5efdee40d778cc7f7e927d9271698f9.png" src="../../_images/0691dcf9c9745f26bbea2c3c4fec2bbca5efdee40d778cc7f7e927d9271698f9.png" />
 </div>
 </div>
-<h2 id="implement-a-pll-in-the-time-domain">Implement a PLL in the time domain<a class="headerlink" href="#implement-a-pll-in-the-time-domain" title="Permalink to this heading">¶</a></h2>
+<h2 id="implement-a-pll-in-the-time-domain">Implement a PLL in the time domain<a class="headerlink" href="#implement-a-pll-in-the-time-domain" title="Link to this heading">¶</a></h2>
 <p>This section implements Example C.2.1 from <em>Digital Communications: A Discrete-Time Approach</em>,
 but using time-domain signals.</p>
 <div class="cell docutils container">
@@ -14428,7 +14428,7 @@ but using time-domain signals.</p>
 <img alt="../../_images/ed54bb13c050ca880827d6b62d481f2bbdd65aac4dec637754886e7bbddb5a3a.png" src="../../_images/ed54bb13c050ca880827d6b62d481f2bbdd65aac4dec637754886e7bbddb5a3a.png" />
 </div>
 </div>
-<h2 id="analyze-pll-closed-loop-performance">Analyze PLL closed-loop performance<a class="headerlink" href="#analyze-pll-closed-loop-performance" title="Permalink to this heading">¶</a></h2>
+<h2 id="analyze-pll-closed-loop-performance">Analyze PLL closed-loop performance<a class="headerlink" href="#analyze-pll-closed-loop-performance" title="Link to this heading">¶</a></h2>
 <p>A closed-loop PLL has the following configuration.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span><code>            bb[n]    phase_err[n]
         +---+    +-----+    +----+
@@ -14455,7 +14455,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 {1 - 2 (1 - \frac{1}{2} K_p K_0 (K_1 + K_2) z^{-1} + (1 - K_p K_0 K_1) z^{-2} } .
 \]</div>
 <p>The analysis of the performance of this closed-loop system is available in <a class="reference internal" href="../../api/sdr.ClosedLoopPLL/" title="sdr.ClosedLoopPLL (Python class) — A class that defines the performance of a closed-loop PLL."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.ClosedLoopPLL</span></code></a>.</p>
-<h3 id="compare-step-and-frequency-response-across-zeta">Compare step and frequency response across <span class="math notranslate nohighlight">\(\zeta\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-zeta" title="Permalink to this heading">¶</a></h3>
+<h3 id="compare-step-and-frequency-response-across-zeta">Compare step and frequency response across <span class="math notranslate nohighlight">\(\zeta\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-zeta" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -14489,7 +14489,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 <img alt="../../_images/c033f9e9cc39fd341ccac8f35bba9a0b35a2623bf7dcd26fcb77fb54e92b9276.png" src="../../_images/c033f9e9cc39fd341ccac8f35bba9a0b35a2623bf7dcd26fcb77fb54e92b9276.png" />
 </div>
 </div>
-<h3 id="compare-step-and-frequency-response-across-b-n-t">Compare step and frequency response across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-b-n-t" title="Permalink to this heading">¶</a></h3>
+<h3 id="compare-step-and-frequency-response-across-b-n-t">Compare step and frequency response across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-b-n-t" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -14521,7 +14521,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 <img alt="../../_images/01f27a0edb44e91408b49e9b09d4b991145392a241ef03302ea1c34f7ebe1259.png" src="../../_images/01f27a0edb44e91408b49e9b09d4b991145392a241ef03302ea1c34f7ebe1259.png" />
 </div>
 </div>
-<h3 id="compare-lock-time-across-b-n-t">Compare lock time across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-lock-time-across-b-n-t" title="Permalink to this heading">¶</a></h3>
+<h3 id="compare-lock-time-across-b-n-t">Compare lock time across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-lock-time-across-b-n-t" title="Link to this heading">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -14629,7 +14629,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14679,11 +14679,11 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

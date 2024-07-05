@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14156,9 +14156,9 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-degree"><span class="n sig-name">degree</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></span></span><a class="headerlink" href="#p-degree" title="Permalink to this definition">¶</a></dt><dd><p>The degree <span class="math notranslate nohighlight">\(m\)</span> of the <span class="math notranslate nohighlight">\(m\)</span>-sequences.</p>
+<dt id="p-degree"><span class="n sig-name">degree</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></span></span><a class="headerlink" href="#p-degree" title="Permalink to this definition">¶</a></dt><dd><p>The degree <span class="math notranslate nohighlight">\(m\)</span> of the <span class="math notranslate nohighlight">\(m\)</span>-sequences.</p>
 </dd>
-<dt id="p-poly1"><span class="n sig-name">poly1</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">PolyLike<span class="w">   </span><span class="p">|</span><span class="w">   </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-poly1" title="Permalink to this definition">¶</a></dt><dd><p>The first polynomial <span class="math notranslate nohighlight">\(f(x)\)</span> in the preferred pair. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, all primitive polynomials of degree <span class="math notranslate nohighlight">\(m\)</span>
+<dt id="p-poly1"><span class="n sig-name">poly1</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">PolyLike<span class="w"> </span><span class="p">|</span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)">None</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-poly1" title="Permalink to this definition">¶</a></dt><dd><p>The first polynomial <span class="math notranslate nohighlight">\(f(x)\)</span> in the preferred pair. If <code class="code highlight python docutils literal highlight-python"><span class="kc">None</span></code>, all primitive polynomials of degree <span class="math notranslate nohighlight">\(m\)</span>
 that yield preferred pair <span class="math notranslate nohighlight">\(m\)</span>-sequences are returned.</p>
 </dd>
 </dl>
@@ -14171,7 +14171,7 @@ that yield preferred pair <span class="math notranslate nohighlight">\(m\)</span
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../sdr.is_preferred_pair/" title="sdr.is_preferred_pair (Python function) — Determines if two primitive polynomials generate preferred pair $m$-sequences."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.is_preferred_pair</span></code></a>, <a class="reference internal" href="../sdr.gold_code/" title="sdr.gold_code (Python function) — Generates the Gold code/sequence of length $n = 2^m - 1$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.gold_code</span></code></a></p>
 </div>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p>A preferred pair of primitive polynomials of degree <span class="math notranslate nohighlight">\(m\)</span> are two polynomials <span class="math notranslate nohighlight">\(f(x)\)</span> and <span class="math notranslate nohighlight">\(g(x)\)</span> such that the
 periodic cross-correlation of the two <span class="math notranslate nohighlight">\(m\)</span>-sequences generated by <span class="math notranslate nohighlight">\(f(x)\)</span> and <span class="math notranslate nohighlight">\(g(x)\)</span> have only the values in
 <span class="math notranslate nohighlight">\(\{-1, -t(m), t(m) - 2\}\)</span>.</p>
@@ -14184,11 +14184,11 @@ t(m) = \begin{cases}
 \end{split}\]</div>
 </p>
 <p>There are no preferred pairs for degrees divisible by 4.</p>
-<p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="references">References</p>
 <ul class="simple">
 <li><p>John Proakis, <em>Digital Communications</em>, Chapter 12.2-5: Generation of PN Sequences.</p></li>
 </ul>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>Generate one preferred pair with <span class="math notranslate nohighlight">\(f(x) = x^5 + x^3 + 1\)</span>.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="nb">next</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">preferred_pairs</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">poly1</span><span class="o">=</span><span class="s2">&quot;x^5 + x^3 + 1&quot;</span><span class="p">))</span>
 <span class="gh">Out[1]: </span><span class="go">(Poly(x^5 + x^3 + 1, GF(2)), Poly(x^5 + x^3 + x^2 + x + 1, GF(2)))</span>
@@ -14308,7 +14308,7 @@ t(m) = \begin{cases}
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14358,11 +14358,11 @@ t(m) = \begin{cases}
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

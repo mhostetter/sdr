@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14121,7 +14121,7 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="farrow-arbitrary-resampler"><span id="id1"></span>Farrow arbitrary resampler<a class="headerlink" href="#farrow-arbitrary-resampler" title="Permalink to this heading">¶</a></h1>
+<h1 id="farrow-arbitrary-resampler"><span id="id1"></span>Farrow arbitrary resampler<a class="headerlink" href="#farrow-arbitrary-resampler" title="Link to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -14138,7 +14138,7 @@ You're not viewing the latest version.
 </div>
 </div>
 </div>
-<h2 id="construct-an-input-signal-x-n-x-n-t-s">Construct an input signal, <span class="math notranslate nohighlight">\(x[n] = x(n T_s)\)</span><a class="headerlink" href="#construct-an-input-signal-x-n-x-n-t-s" title="Permalink to this heading">¶</a></h2>
+<h2 id="construct-an-input-signal-x-n-x-n-t-s">Construct an input signal, <span class="math notranslate nohighlight">\(x[n] = x(n T_s)\)</span><a class="headerlink" href="#construct-an-input-signal-x-n-x-n-t-s" title="Link to this heading">¶</a></h2>
 <p>Create a discrete-time signal <span class="math notranslate nohighlight">\(x[n]\)</span> that sample the continuous-time signal <span class="math notranslate nohighlight">\(x(t)\)</span> at a sample rate <span class="math notranslate nohighlight">\(f_s = 1 / T_s\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -14165,7 +14165,7 @@ You're not viewing the latest version.
 <img alt="../../_images/e96a66da9e79b6834e98c3c244b6a2df2cba75ff3255221dcb68ecb11d62a700.png" src="../../_images/e96a66da9e79b6834e98c3c244b6a2df2cba75ff3255221dcb68ecb11d62a700.png" />
 </div>
 </div>
-<h2 id="resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r">Resample the input signal with rate <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(y[n] = x(n \frac{T_s}{r})\)</span><a class="headerlink" href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" title="Permalink to this heading">¶</a></h2>
+<h2 id="resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r">Resample the input signal with rate <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(y[n] = x(n \frac{T_s}{r})\)</span><a class="headerlink" href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" title="Link to this heading">¶</a></h2>
 <p>Now, resample <span class="math notranslate nohighlight">\(x[n]\)</span> such that the output <span class="math notranslate nohighlight">\(y[n]\)</span> is equivalent to sampling the continuous-time <span class="math notranslate nohighlight">\(x(t)\)</span>
 at sample rate <span class="math notranslate nohighlight">\(f_s = r/T_s\)</span>.
 This is equivalent to sampling <span class="math notranslate nohighlight">\(x[n]\)</span> at <span class="math notranslate nohighlight">\(1/r\)</span> fractional samples.
@@ -14192,7 +14192,7 @@ This is accomplished, for arbitrary <span class="math notranslate nohighlight">\
 </div>
 </div>
 </div>
-<h2 id="upsample-the-signal-by-an-integer-rate">Upsample the signal by an integer rate<a class="headerlink" href="#upsample-the-signal-by-an-integer-rate" title="Permalink to this heading">¶</a></h2>
+<h2 id="upsample-the-signal-by-an-integer-rate">Upsample the signal by an integer rate<a class="headerlink" href="#upsample-the-signal-by-an-integer-rate" title="Link to this heading">¶</a></h2>
 <p>When upsampling by 2, notice there are two output samples for every input sample.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -14223,7 +14223,7 @@ Output signal length: 396
 <img alt="../../_images/1b1e39b19b11c2139a622a0bdc55b8a064c096456de6951d8c2dcc379c93cca0.png" src="../../_images/1b1e39b19b11c2139a622a0bdc55b8a064c096456de6951d8c2dcc379c93cca0.png" />
 </div>
 </div>
-<h2 id="downsample-the-signal-by-an-integer-rate">Downsample the signal by an integer rate<a class="headerlink" href="#downsample-the-signal-by-an-integer-rate" title="Permalink to this heading">¶</a></h2>
+<h2 id="downsample-the-signal-by-an-integer-rate">Downsample the signal by an integer rate<a class="headerlink" href="#downsample-the-signal-by-an-integer-rate" title="Link to this heading">¶</a></h2>
 <p>When downsampling by 2, notice every other sample of the input appears at the output.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -14254,7 +14254,7 @@ Output signal length: 25
 <img alt="../../_images/80fd3cde9202fb1d1bdcc4d0f65b5e8126f165c7eaedbfacdb0c2e195aef92b7.png" src="../../_images/80fd3cde9202fb1d1bdcc4d0f65b5e8126f165c7eaedbfacdb0c2e195aef92b7.png" />
 </div>
 </div>
-<h2 id="upsample-by-an-irrational-rate">Upsample by an irrational rate<a class="headerlink" href="#upsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
+<h2 id="upsample-by-an-irrational-rate">Upsample by an irrational rate<a class="headerlink" href="#upsample-by-an-irrational-rate" title="Link to this heading">¶</a></h2>
 <p>When upsampling by <span class="math notranslate nohighlight">\(\pi\)</span>, notice there are roughly three output samples for every input sample.
 However, these samples often do not align with the original input samples.</p>
 <div class="cell docutils container">
@@ -14271,7 +14271,7 @@ Output signal length: 312
 <img alt="../../_images/f5d3e4a77998ab0badf42529485a90b130b5882db5ac4c90410d9a7837572cc0.png" src="../../_images/f5d3e4a77998ab0badf42529485a90b130b5882db5ac4c90410d9a7837572cc0.png" />
 </div>
 </div>
-<h2 id="downsample-by-an-irrational-rate">Downsample by an irrational rate<a class="headerlink" href="#downsample-by-an-irrational-rate" title="Permalink to this heading">¶</a></h2>
+<h2 id="downsample-by-an-irrational-rate">Downsample by an irrational rate<a class="headerlink" href="#downsample-by-an-irrational-rate" title="Link to this heading">¶</a></h2>
 <p>When downsampling by <span class="math notranslate nohighlight">\(\pi\)</span>, notice there are roughly three input samples for every output sample.
 However, these samples often do not align with the original input samples.</p>
 <div class="cell docutils container">
@@ -14374,7 +14374,7 @@ Output signal length: 32
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14424,11 +14424,11 @@ Output signal length: 32
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

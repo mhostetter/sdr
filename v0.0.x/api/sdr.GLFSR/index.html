@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14276,7 +14276,7 @@ You're not viewing the latest version.
 <dt class="sig sig-object highlight py">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">GLFSR</span></span></dt>
 <dd><p>Implements a Galois linear-feedback shift register (LFSR).</p>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p>A Galois LFSR is defined by its feedback polynomial <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
 <p><div class="math notranslate nohighlight">
 \[
@@ -14315,7 +14315,7 @@ sequence <span class="math notranslate nohighlight">\(y\)</span> produced by the
 <p>The shift register taps <span class="math notranslate nohighlight">\(T\)</span> are defined left-to-right as <span class="math notranslate nohighlight">\(T = [T_0, T_1, \dots, T_{n-2}, T_{n-1}]\)</span>.
 The state vector <span class="math notranslate nohighlight">\(S\)</span> is also defined left-to-right as <span class="math notranslate nohighlight">\(S = [S_0, S_1, \dots, S_{n-2}, S_{n-1}]\)</span>.</p>
 <p>In the Galois configuration, the shift register taps are <span class="math notranslate nohighlight">\(T = [c_0, c_1, \dots, c_{n-2}, c_{n-1}]\)</span>.</p>
-<p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="references">References</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://hdl.handle.net/2134/21932">Gardner, D. 2019. “Applications of the Galois Model LFSR in Cryptography”.</a></p></li>
 </ul>
@@ -14323,7 +14323,7 @@ The state vector <span class="math notranslate nohighlight">\(S\)</span> is also
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../sdr.berlekamp_massey/" title="sdr.berlekamp_massey (Python function) — Finds the minimal polynomial $c(x)$ that produces the linear recurrent sequence $y$."><code class="xref py py-obj docutils literal notranslate"><span class="pre">berlekamp_massey</span></code></a></p>
 </div>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:4">
 <input checked type="radio" id="__tabbed_1_1" name="__tabbed_1"><input type="radio" id="__tabbed_1_2" name="__tabbed_1"><input type="radio" id="__tabbed_1_3" name="__tabbed_1"><input type="radio" id="__tabbed_1_4" name="__tabbed_1"><div class="tabbed-labels docutils">
 <label class="tabbed-label" for="__tabbed_1_1">
@@ -14456,7 +14456,7 @@ GF(p^m)</label></div>
 </div>
 </div>
 </div>
-</div><h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Permalink to this heading">¶</a></h2>
+</div><h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.__init__/" title="sdr.GLFSR.__init__ (Python method) — Creates a new Galois LFSR."><span class="sig-name descname pseudo-toc-entry"><span class="pre">GLFSR</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.GLFSR.__init__/#p-characteristic_poly" title="sdr.GLFSR.__init__.characteristic_poly (Python parameter) — The characteristic polynomial $c(x) = x^{n} - c_{n-1} cdot x^{n-1} - c_{n-2} cdot x^{n-2} - dots - c_{1} cdot x - c_{0}$."><span class="n"><span class="pre">characteristic_poly</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">PolyLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span></dt>
@@ -14471,7 +14471,7 @@ GF(p^m)</label></div>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Permalink to this heading">¶</a></h2>
+<h2 id="methods">Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
 <a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.reset/" title="sdr.GLFSR.reset (Python method) — Resets the Galois LFSR state to the specified state."><span class="sig-name descname pseudo-toc-entry"><span class="pre">reset</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.GLFSR.reset/#p-state" title="sdr.GLFSR.reset.state (Python parameter) — The state vector $S = [S_0, S_1, dots, S_{n-2}, S_{n-1}]$. The default is None which corresponds to the initial state."><span class="n"><span class="pre">state</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span></dt>
@@ -14480,7 +14480,7 @@ GF(p^m)</label></div>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.step/" title="sdr.GLFSR.step (Python method) — Produces the next steps output symbols."><span class="sig-name descname pseudo-toc-entry"><span class="pre">step</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.GLFSR.step/#p-steps" title="sdr.GLFSR.step.steps (Python parameter) — The direction and number of output symbols to produce. The default is 1. If negative, the Galois LFSR will step backwards."><span class="n"><span class="pre">steps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.3.9)"><span class="pre">FieldArray</span></a></span></span></span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.step/" title="sdr.GLFSR.step (Python method) — Produces the next steps output symbols."><span class="sig-name descname pseudo-toc-entry"><span class="pre">step</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.GLFSR.step/#p-steps" title="sdr.GLFSR.step.steps (Python parameter) — The direction and number of output symbols to produce. The default is 1. If negative, the Galois LFSR will step backwards."><span class="n"><span class="pre">steps</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mi">1</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.4.0)"><span class="pre">FieldArray</span></a></span></span></span></dt>
 <dd><p>Produces the next <code class="code highlight python docutils literal highlight-python"><span class="n">steps</span></code> output symbols.</p>
 </dd></dl>
 
@@ -14492,16 +14492,16 @@ GF(p^m)</label></div>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Permalink to this heading">¶</a></h2>
+<h2 id="properties">Properties<a class="headerlink" href="#properties" title="Link to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.field/" title="sdr.GLFSR.field (Python property) — The FieldArray subclass for the finite field that defines the linear arithmetic."><span class="sig-name descname pseudo-toc-entry"><span class="pre">field</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.3.9)"><span class="pre">FieldArray</span></a><span class="p"><span class="pre">]</span></span></span></dt>
-<dd><p>The <a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.3.9)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldArray</span></code></a> subclass for the finite field that defines the linear arithmetic.</p>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.field/" title="sdr.GLFSR.field (Python property) — The FieldArray subclass for the finite field that defines the linear arithmetic."><span class="sig-name descname pseudo-toc-entry"><span class="pre">field</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><span class="pre">type</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.4.0)"><span class="pre">FieldArray</span></a><span class="p"><span class="pre">]</span></span></span></dt>
+<dd><p>The <a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.4.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FieldArray</span></code></a> subclass for the finite field that defines the linear arithmetic.</p>
 </dd></dl>
 
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.taps/" title="sdr.GLFSR.taps (Python property) — The shift register taps $T = [c_0, c_1, dots, c_{n-2}, c_{n-1}]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.3.9)"><span class="pre">FieldArray</span></a></span></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.taps/" title="sdr.GLFSR.taps (Python property) — The shift register taps $T = [c_0, c_1, dots, c_{n-2}, c_{n-1}]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">taps</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.4.0)"><span class="pre">FieldArray</span></a></span></dt>
 <dd><p>The shift register taps <span class="math notranslate nohighlight">\(T = [c_0, c_1, \dots, c_{n-2}, c_{n-1}]\)</span>.</p>
 </dd></dl>
 
@@ -14513,31 +14513,31 @@ GF(p^m)</label></div>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="polynomials">Polynomials<a class="headerlink" href="#polynomials" title="Permalink to this heading">¶</a></h2>
+<h2 id="polynomials">Polynomials<a class="headerlink" href="#polynomials" title="Link to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.characteristic_poly/" title="sdr.GLFSR.characteristic_poly (Python property) — The characteristic polynomial $c(x)$ that defines the linear recurrent sequence."><span class="sig-name descname pseudo-toc-entry"><span class="pre">characteristic_poly</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.Poly/" title="(in galois v0.3.9)"><span class="pre">Poly</span></a></span></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.characteristic_poly/" title="sdr.GLFSR.characteristic_poly (Python property) — The characteristic polynomial $c(x)$ that defines the linear recurrent sequence."><span class="sig-name descname pseudo-toc-entry"><span class="pre">characteristic_poly</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.Poly/" title="(in galois v0.4.0)"><span class="pre">Poly</span></a></span></dt>
 <dd><p>The characteristic polynomial <span class="math notranslate nohighlight">\(c(x)\)</span> that defines the linear recurrent sequence.</p>
 </dd></dl>
 
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.feedback_poly/" title="sdr.GLFSR.feedback_poly (Python property) — The feedback polynomial $f(x)$ that defines the feedback arithmetic."><span class="sig-name descname pseudo-toc-entry"><span class="pre">feedback_poly</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.Poly/" title="(in galois v0.3.9)"><span class="pre">Poly</span></a></span></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.feedback_poly/" title="sdr.GLFSR.feedback_poly (Python property) — The feedback polynomial $f(x)$ that defines the feedback arithmetic."><span class="sig-name descname pseudo-toc-entry"><span class="pre">feedback_poly</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.Poly/" title="(in galois v0.4.0)"><span class="pre">Poly</span></a></span></dt>
 <dd><p>The feedback polynomial <span class="math notranslate nohighlight">\(f(x)\)</span> that defines the feedback arithmetic.</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">
 </div>
-<h2 id="state">State<a class="headerlink" href="#state" title="Permalink to this heading">¶</a></h2>
+<h2 id="state">State<a class="headerlink" href="#state" title="Link to this heading">¶</a></h2>
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.initial_state/" title="sdr.GLFSR.initial_state (Python property) — The initial state vector $S = [S_0, S_1, dots, S_{n-2}, S_{n-1}]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">initial_state</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.3.9)"><span class="pre">FieldArray</span></a></span></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.initial_state/" title="sdr.GLFSR.initial_state (Python property) — The initial state vector $S = [S_0, S_1, dots, S_{n-2}, S_{n-1}]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">initial_state</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.4.0)"><span class="pre">FieldArray</span></a></span></dt>
 <dd><p>The initial state vector <span class="math notranslate nohighlight">\(S = [S_0, S_1, \dots, S_{n-2}, S_{n-1}]\)</span>.</p>
 </dd></dl>
 
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.state/" title="sdr.GLFSR.state (Python property) — The current state vector $S = [S_0, S_1, dots, S_{n-2}, S_{n-1}]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">state</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.3.9)"><span class="pre">FieldArray</span></a></span></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.GLFSR.state/" title="sdr.GLFSR.state (Python property) — The current state vector $S = [S_0, S_1, dots, S_{n-2}, S_{n-1}]$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">state</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://mhostetter.github.io/galois/latest/api/galois.FieldArray/" title="(in galois v0.4.0)"><span class="pre">FieldArray</span></a></span></dt>
 <dd><p>The current state vector <span class="math notranslate nohighlight">\(S = [S_0, S_1, \dots, S_{n-2}, S_{n-1}]\)</span>.</p>
 </dd></dl>
 
@@ -14621,7 +14621,7 @@ GF(p^m)</label></div>
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14671,11 +14671,11 @@ GF(p^m)</label></div>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

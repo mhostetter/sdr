@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14149,7 +14149,7 @@ You're not viewing the latest version.
                   
 
 
-<h1 id="iir-filters"><span id="id1"></span>IIR filters<a class="headerlink" href="#iir-filters" title="Permalink to this heading">¶</a></h1>
+<h1 id="iir-filters"><span id="id1"></span>IIR filters<a class="headerlink" href="#iir-filters" title="Link to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -14166,7 +14166,7 @@ You're not viewing the latest version.
 </div>
 </div>
 </div>
-<h2 id="create-an-iir-filter">Create an IIR filter<a class="headerlink" href="#create-an-iir-filter" title="Permalink to this heading">¶</a></h2>
+<h2 id="create-an-iir-filter">Create an IIR filter<a class="headerlink" href="#create-an-iir-filter" title="Link to this heading">¶</a></h2>
 <p>The user creates an IIR filter with the <a class="reference internal" href="../../api/sdr.IIR/" title="sdr.IIR (Python class) — Implements an infinite impulse response (IIR) filter."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.IIR</span></code></a> class by specifying the feedforward coefficients <span class="math notranslate nohighlight">\(b_i\)</span>
 and feedback coefficients <span class="math notranslate nohighlight">\(a_j\)</span>.
 Alternatively, an IIR filter may be created by specifying the zeros and poles in <a class="reference internal" href="../../api/sdr.IIR.ZerosPoles/" title="sdr.IIR.ZerosPoles (Python method) — Creates an IIR filter from its zeros, poles, and gain."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.IIR.ZerosPoles</span></code></a>.</p>
@@ -14210,7 +14210,7 @@ Feedback taps: [ 1.         -1.47820725  0.64      ]
 </div>
 </div>
 </div>
-<h2 id="examine-the-impulse-response-h-n">Examine the impulse response, <span class="math notranslate nohighlight">\(h[n]\)</span><a class="headerlink" href="#examine-the-impulse-response-h-n" title="Permalink to this heading">¶</a></h2>
+<h2 id="examine-the-impulse-response-h-n">Examine the impulse response, <span class="math notranslate nohighlight">\(h[n]\)</span><a class="headerlink" href="#examine-the-impulse-response-h-n" title="Link to this heading">¶</a></h2>
 <p>The impulse response of the IIR filter is computed and returned from the <a class="reference internal" href="../../api/sdr.IIR.impulse_response/" title="sdr.IIR.impulse_response (Python method) — Returns the impulse response $h[n]$ of the IIR filter."><code class="xref py py-meth docutils literal notranslate"><span class="pre">sdr.IIR.impulse_response()</span></code></a> method.
 The impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> is the output of the filter when the input is an impulse <span class="math notranslate nohighlight">\(\delta[n]\)</span>.</p>
 <div class="cell docutils container">
@@ -14246,7 +14246,7 @@ The impulse response <span class="math notranslate nohighlight">\(h[n]\)</span> 
 <img alt="../../_images/f23801b39c35c74281dfa31b1272e73104a37c7c8da7e83027ee16a6707fbd4f.png" src="../../_images/f23801b39c35c74281dfa31b1272e73104a37c7c8da7e83027ee16a6707fbd4f.png" />
 </div>
 </div>
-<h2 id="examine-the-step-response-s-n">Examine the step response, <span class="math notranslate nohighlight">\(s[n]\)</span><a class="headerlink" href="#examine-the-step-response-s-n" title="Permalink to this heading">¶</a></h2>
+<h2 id="examine-the-step-response-s-n">Examine the step response, <span class="math notranslate nohighlight">\(s[n]\)</span><a class="headerlink" href="#examine-the-step-response-s-n" title="Link to this heading">¶</a></h2>
 <p>The step response of the IIR filter is computed and returned from the <a class="reference internal" href="../../api/sdr.IIR.step_response/" title="sdr.IIR.step_response (Python method) — Returns the step response $s[n]$ of the IIR filter."><code class="xref py py-meth docutils literal notranslate"><span class="pre">sdr.IIR.step_response()</span></code></a> method.
 The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is the output of the filter when the input is a unit step <span class="math notranslate nohighlight">\(u[n]\)</span>.</p>
 <div class="cell docutils container">
@@ -14279,7 +14279,7 @@ The step response <span class="math notranslate nohighlight">\(s[n]\)</span> is 
 <img alt="../../_images/459193f8cc54fcb65be3d827ea64b2de8fbede9bba50777a2cd8bae1e34062fc.png" src="../../_images/459193f8cc54fcb65be3d827ea64b2de8fbede9bba50777a2cd8bae1e34062fc.png" />
 </div>
 </div>
-<h2 id="examine-the-zeros-and-poles">Examine the zeros and poles<a class="headerlink" href="#examine-the-zeros-and-poles" title="Permalink to this heading">¶</a></h2>
+<h2 id="examine-the-zeros-and-poles">Examine the zeros and poles<a class="headerlink" href="#examine-the-zeros-and-poles" title="Link to this heading">¶</a></h2>
 <p>Zeros are <span class="math notranslate nohighlight">\(z\)</span> values that set the numerator of <span class="math notranslate nohighlight">\(H(z)\)</span> to zero.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -14320,7 +14320,7 @@ The poles define the stability of the IIR filter.</p>
 <img alt="../../_images/05b3c50ff93047737387a1dc8648df1d503bc78c40726b48bfabaab3f172f1ed.png" src="../../_images/05b3c50ff93047737387a1dc8648df1d503bc78c40726b48bfabaab3f172f1ed.png" />
 </div>
 </div>
-<h2 id="examine-the-frequency-response-h-omega">Examine the frequency response, <span class="math notranslate nohighlight">\(H(\omega)\)</span><a class="headerlink" href="#examine-the-frequency-response-h-omega" title="Permalink to this heading">¶</a></h2>
+<h2 id="examine-the-frequency-response-h-omega">Examine the frequency response, <span class="math notranslate nohighlight">\(H(\omega)\)</span><a class="headerlink" href="#examine-the-frequency-response-h-omega" title="Link to this heading">¶</a></h2>
 <p>The frequency response is the transfer function <span class="math notranslate nohighlight">\(H(z)\)</span> evaluated at the complex exponential
 <span class="math notranslate nohighlight">\(e^{j \omega}\)</span>, where <span class="math notranslate nohighlight">\(\omega = 2 \pi f / f_s\)</span>.</p>
 <p>The two-sided frequency response is conveniently plotted using the <a class="reference internal" href="../../api/sdr.plot.magnitude_response/" title="sdr.plot.magnitude_response (Python function) — Plots the magnitude response $|H(omega)|^2$ of the filter."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.magnitude_response()</span></code></a> function.</p>
@@ -14349,7 +14349,7 @@ The poles define the stability of the IIR filter.</p>
 <img alt="../../_images/780883628c85071afc283ca2589b165bf11e55b0ba60c7e8390f8f09bce442dd.png" src="../../_images/780883628c85071afc283ca2589b165bf11e55b0ba60c7e8390f8f09bce442dd.png" />
 </div>
 </div>
-<h2 id="examine-the-group-delay-tau-g-omega">Examine the group delay, <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span><a class="headerlink" href="#examine-the-group-delay-tau-g-omega" title="Permalink to this heading">¶</a></h2>
+<h2 id="examine-the-group-delay-tau-g-omega">Examine the group delay, <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span><a class="headerlink" href="#examine-the-group-delay-tau-g-omega" title="Link to this heading">¶</a></h2>
 <p>The group delay <span class="math notranslate nohighlight">\(\tau_g(\omega)\)</span> is the time shift of the envelope of a signal passed through the filter
 as a function of its frequency <span class="math notranslate nohighlight">\(\omega\)</span>.</p>
 <p>The group delay is conveniently plotted using the <a class="reference internal" href="../../api/sdr.plot.group_delay/" title="sdr.plot.group_delay (Python function) — Plots the group delay $tau_g(omega)$ of the IIR filter."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.group_delay()</span></code></a> function.</p>
@@ -14377,7 +14377,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 <img alt="../../_images/16c9e8b38b57cb647717116f4315365ef9a7b9ddf2789c53cabf13d71c361206.png" src="../../_images/16c9e8b38b57cb647717116f4315365ef9a7b9ddf2789c53cabf13d71c361206.png" />
 </div>
 </div>
-<h2 id="fully-analyze-an-iir-filter">Fully analyze an IIR filter<a class="headerlink" href="#fully-analyze-an-iir-filter" title="Permalink to this heading">¶</a></h2>
+<h2 id="fully-analyze-an-iir-filter">Fully analyze an IIR filter<a class="headerlink" href="#fully-analyze-an-iir-filter" title="Link to this heading">¶</a></h2>
 <p>The user can easily analyze the perform of a given IIR filter using the <a class="reference internal" href="../../api/sdr.plot.filter/" title="sdr.plot.filter (Python function) — Plots the magnitude response $|H(omega)|^2$, impulse response $h[n]$, and zeros and poles of the filter."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.plot.filter()</span></code></a> function.</p>
 <p>Here is an IIR filter with one real zero and 8 complex poles.</p>
 <div class="cell docutils container">
@@ -14418,7 +14418,7 @@ as a function of its frequency <span class="math notranslate nohighlight">\(\ome
 <img alt="../../_images/8e7b0dd4d4f59ae5755220d9508057efca6a6f113acc0c42f4ae3ddab8e85bc3.png" src="../../_images/8e7b0dd4d4f59ae5755220d9508057efca6a6f113acc0c42f4ae3ddab8e85bc3.png" />
 </div>
 </div>
-<h2 id="poles-and-digital-filter-stability">Poles and digital filter stability<a class="headerlink" href="#poles-and-digital-filter-stability" title="Permalink to this heading">¶</a></h2>
+<h2 id="poles-and-digital-filter-stability">Poles and digital filter stability<a class="headerlink" href="#poles-and-digital-filter-stability" title="Link to this heading">¶</a></h2>
 <p>Reference:</p>
 <ul class="simple">
 <li><p>R. Lyons, Understanding Digital Signal Processing 3rd Edition, Section 6.3.1.</p></li>
@@ -14624,7 +14624,7 @@ This filter is unstable.</p>
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14674,11 +14674,11 @@ This filter is unstable.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

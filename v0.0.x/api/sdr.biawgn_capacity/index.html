@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14142,7 +14142,7 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-snr"><span class="n sig-name">snr</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-snr" title="Permalink to this definition">¶</a></dt><dd><p><p>The signal-to-noise ratio <span class="math notranslate nohighlight">\(S / N = A^2 / \sigma^2\)</span> at the output of the channel in dB.</p>
+<dt id="p-snr"><span class="n sig-name">snr</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-snr" title="Permalink to this definition">¶</a></dt><dd><p><p>The signal-to-noise ratio <span class="math notranslate nohighlight">\(S / N = A^2 / \sigma^2\)</span> at the output of the channel in dB.</p>
 <div class="note collapsible admonition">
 <p class="admonition-title">Note</p>
 <p>This SNR is for a real signal. In the case of soft-decision BPSK, the SNR after coherent detection is
@@ -14157,7 +14157,7 @@ density.</p>
 <dd class="field-even"><p>The capacity <span class="math notranslate nohighlight">\(C\)</span> of the channel in bits/1D.</p>
 </dd>
 </dl>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p>The BI-AWGN channel is defined as</p>
 <p><div class="math notranslate nohighlight">
 \[Y = A \cdot X + W ,\]</div>
@@ -14210,13 +14210,13 @@ provided by Yang, is</p>
 \[C \leq C_{ub} = \log(2) - \log(1 + e^{-\text{SNR}}) ,\]</div>
 </p>
 <p>where <span class="math notranslate nohighlight">\(\text{SNR} = A^2 / \sigma^2\)</span> in linear units.</p>
-<p class="rubric" id="references">References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="references">References</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://gdurisi.github.io/fbl-notes/bi-awgn.html">Giuseppe Durisi, Chapter 3: The binary-input AWGN channel.</a></p></li>
 <li><p><a class="reference external" href="https://www.jstage.jst.go.jp/article/comex/6/8/6_2017XBL0074/_pdf/-char/en">Pei Yang, A simple upper bound on the capacity of BI-AWGN channel.</a></p></li>
 <li><p><a class="reference external" href="https://dde.binghamton.edu/filler/mct/lectures/25/mct-lect25-bawgnc.pdf">Tomáš Filler, Binary Additive White-Gaussian-Noise Channel.</a></p></li>
 </ul>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">snr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">51</span><span class="p">)</span>
 
 <span class="gp">In [2]: </span><span class="n">C_ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">sdr</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">snr</span><span class="p">)))</span>
@@ -14331,7 +14331,7 @@ provided by Yang, is</p>
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14381,11 +14381,11 @@ provided by Yang, is</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14142,7 +14142,7 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to measure.</p>
+<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to measure.</p>
 <div class="note collapsible admonition">
 <p class="admonition-title">Note</p>
 <p>For best measurement performance, the time-domain signal should be very oversampled. This allows
@@ -14150,7 +14150,7 @@ for better time precision.</p>
 </div>
 </p>
 </dd>
-<dt id="p-sample_rate"><span class="n sig-name">sample_rate</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code><a class="headerlink" href="#p-sample_rate" title="Permalink to this definition">¶</a></dt><dd><p>The sample rate <span class="math notranslate nohighlight">\(f_s\)</span> in samples/s.</p>
+<dt id="p-sample_rate"><span class="n sig-name">sample_rate</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code><a class="headerlink" href="#p-sample_rate" title="Permalink to this definition">¶</a></dt><dd><p>The sample rate <span class="math notranslate nohighlight">\(f_s\)</span> in samples/s.</p>
 </dd>
 </dl>
 </dd>
@@ -14162,7 +14162,7 @@ for better time precision.</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../sdr.foa_crlb/" title="sdr.foa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on frequency of arrival (FOA) estimation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.foa_crlb</span></code></a>, <a class="reference internal" href="../sdr.fdoa_crlb/" title="sdr.fdoa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on frequency difference of arrival (FDOA) estimation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.fdoa_crlb</span></code></a></p>
 </div>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p>The root-mean-square (RMS) integration time <span class="math notranslate nohighlight">\(T_{\text{rms}}\)</span> is calculated by</p>
 <p><div class="math notranslate nohighlight">
 \[
@@ -14183,7 +14183,7 @@ measured about the centroid of the signal</p>
 </p>
 <p>The RMS integration time is a measure of the energy spread of the signal about the centroid. For a rectangular
 signal, the RMS integration time is <span class="math notranslate nohighlight">\(T_{\text{rms}} = T / \sqrt{12}\)</span>.</p>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>Calculate the RMS integration time of a signal with a rectangular envelope and duration of 1 second.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">symbol_rate</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># symbols/s</span>
 
@@ -14208,7 +14208,19 @@ it to the ideal rectangular envelope.</p>
 <span class="gp">In [9]: </span><span class="n">x_rect</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
 
 <span class="gp">In [10]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
-<span class="gh">Out[10]: </span><span class="go">0.28864626708135344</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:366,</span> in <span class="ni">rms_integration_time</span><span class="nt">(x, sample_rate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">363</span> <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="c1"># Calculate the centroid of the signal</span>
+<span class="ne">--&gt; </span><span class="mi">366</span> <span class="n">t_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">367</span> <span class="n">t</span> <span class="o">-=</span> <span class="n">t_mean</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span> <span class="c1"># Calculate the RMS integration time</span>
+
+<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
 
 <span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rectangular&quot;</span><span class="p">);</span>
@@ -14224,7 +14236,19 @@ it to the ideal rectangular envelope.</p>
 <span class="gp">In [14]: </span><span class="n">x_srrc</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
 
 <span class="gp">In [15]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
-<span class="gh">Out[15]: </span><span class="go">0.28865329576550935</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:366,</span> in <span class="ni">rms_integration_time</span><span class="nt">(x, sample_rate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">363</span> <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="c1"># Calculate the centroid of the signal</span>
+<span class="ne">--&gt; </span><span class="mi">366</span> <span class="n">t_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">367</span> <span class="n">t</span> <span class="o">-=</span> <span class="n">t_mean</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span> <span class="c1"># Calculate the RMS integration time</span>
+
+<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
 
 <span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SRRC&quot;</span><span class="p">);</span>
@@ -14240,7 +14264,19 @@ is normalized. Notice the RMS integration time increases by 50% for the same tra
 <span class="gp">In [18]: </span><span class="n">x_srrc_env</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">)</span> <span class="o">/</span> <span class="n">sdr</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">x_srrc_env</span><span class="p">))</span>
 
 <span class="gp">In [19]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_srrc_env</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
-<span class="gh">Out[19]: </span><span class="go">0.4219690131724645</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_srrc_env</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:366,</span> in <span class="ni">rms_integration_time</span><span class="nt">(x, sample_rate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">363</span> <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>
+<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="c1"># Calculate the centroid of the signal</span>
+<span class="ne">--&gt; </span><span class="mi">366</span> <span class="n">t_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">367</span> <span class="n">t</span> <span class="o">-=</span> <span class="n">t_mean</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span> <span class="c1"># Calculate the RMS integration time</span>
+
+<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
 
 <span class="gp">In [20]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SRRC&quot;</span><span class="p">);</span> \
@@ -14327,7 +14363,7 @@ is normalized. Notice the RMS integration time increases by 50% for the same tra
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14377,11 +14413,11 @@ is normalized. Notice the RMS integration time increases by 50% for the same tra
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>

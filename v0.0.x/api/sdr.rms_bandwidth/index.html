@@ -32,10 +32,10 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.c4f119a6ab66e9bca.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../_static/extra.css" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+        <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -14142,7 +14142,7 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to measure.</p>
+<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to measure.</p>
 <div class="note collapsible admonition">
 <p class="admonition-title">Note</p>
 <p>For best measurement performance, the time-domain signal should be very long. This allows for
@@ -14150,7 +14150,7 @@ more averaging of its power spectra.</p>
 </div>
 </p>
 </dd>
-<dt id="p-sample_rate"><span class="n sig-name">sample_rate</span><span class="p">:</span><span class="w">   </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w">   </span><span class="o">=</span><span class="w">   </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code><a class="headerlink" href="#p-sample_rate" title="Permalink to this definition">¶</a></dt><dd><p>The sample rate <span class="math notranslate nohighlight">\(f_s\)</span> in samples/s.</p>
+<dt id="p-sample_rate"><span class="n sig-name">sample_rate</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code><a class="headerlink" href="#p-sample_rate" title="Permalink to this definition">¶</a></dt><dd><p>The sample rate <span class="math notranslate nohighlight">\(f_s\)</span> in samples/s.</p>
 </dd>
 </dl>
 </dd>
@@ -14162,7 +14162,7 @@ more averaging of its power spectra.</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../sdr.toa_crlb/" title="sdr.toa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on time of arrival (TOA) estimation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.toa_crlb</span></code></a>, <a class="reference internal" href="../sdr.tdoa_crlb/" title="sdr.tdoa_crlb (Python function) — Calculates the Cramér-Rao lower bound (CRLB) on time difference of arrival (TDOA) estimation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.tdoa_crlb</span></code></a></p>
 </div>
-<p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
+<p class="rubric" id="notes">Notes</p>
 <p>The root-mean-square (RMS) bandwidth <span class="math notranslate nohighlight">\(B_{\text{rms}}\)</span> is calculated by</p>
 <p><div class="math notranslate nohighlight">
 \[
@@ -14183,7 +14183,7 @@ centroid of the spectrum</p>
 </p>
 <p>The RMS bandwidth is a measure of the energy spread of the spectrum about the centroid. For a rectangular
 spectrum, the RMS bandwidth is <span class="math notranslate nohighlight">\(B_{\text{rms}} = B_s / \sqrt{12}\)</span>.</p>
-<p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
+<p class="example rubric" id="examples">Examples</p>
 <p>Calculate the RMS bandwidth of a signal with a rectangular spectrum with normalized bandwidth of 1.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">symbol_rate</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># symbols/s</span>
 
@@ -14201,7 +14201,19 @@ spectrum.</p>
 <span class="gp">In [5]: </span><span class="n">x_rect</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">0.7446372175904691</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:253,</span> in <span class="ni">rms_bandwidth</span><span class="nt">(x, sample_rate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">psd</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="c1"># Calculate the centroid of the PSD</span>
+<span class="ne">--&gt; </span><span class="mi">253</span> <span class="n">f_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span> <span class="n">f</span> <span class="o">-=</span> <span class="n">f_mean</span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span> <span class="c1"># Calculate the RMS bandwidth</span>
+
+<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
 </code></pre></div>
 </div>
 <p>Make the same measurements with square-root raised cosine (SRRC) pulse shaping. The SRRC spectrum is narrower
@@ -14213,7 +14225,19 @@ and, therefore, closer to the rectangular spectrum.</p>
 <span class="gp">In [9]: </span><span class="n">x_srrc</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [10]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-<span class="gh">Out[10]: </span><span class="go">0.29088345066048465</span>
+<span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:253,</span> in <span class="ni">rms_bandwidth</span><span class="nt">(x, sample_rate)</span>
+<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">psd</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="c1"># Calculate the centroid of the PSD</span>
+<span class="ne">--&gt; </span><span class="mi">253</span> <span class="n">f_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span> <span class="n">f</span> <span class="o">-=</span> <span class="n">f_mean</span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span> <span class="c1"># Calculate the RMS bandwidth</span>
+
+<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
 </code></pre></div>
 </div>
 <p>Plot the power spectral density (PSD) of the rectangular and SRRC pulse-shaped signals.</p>
@@ -14302,7 +14326,7 @@ and, therefore, closer to the rectangular spectrum.</p>
   
     Created using
     <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
-    5.3.0.
+    7.3.7.
      and
     <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
   
@@ -14352,11 +14376,11 @@ and, therefore, closer to the rectangular spectrum.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike", "staticVersions": null, "versionPath": "../versions.json"}}</script>
     
       
-        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js"></script>
-        <script src="../../_static/design-tabs.js"></script>
+        <script src="../../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}})</script>
         <script>window.MathJax = {"tex": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]]}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js"></script>
+        <script id="MathJax-script" src="../../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
     
   </body>
 </html>
