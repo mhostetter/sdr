@@ -170,14 +170,14 @@ def m_sequence(
 @export
 def preferred_pairs(
     degree: int,
-    poly1: PolyLike | None = None,
+    poly: PolyLike | None = None,
 ) -> Iterator[tuple[Poly, Poly]]:
     r"""
     Generates primitive polynomials of degree $m$ that produce preferred pair $m$-sequences.
 
     Arguments:
         degree: The degree $m$ of the $m$-sequences.
-        poly1: The first polynomial $f(x)$ in the preferred pair. If `None`, all primitive polynomials of degree $m$
+        poly: The first polynomial $f(x)$ in the preferred pair. If `None`, all primitive polynomials of degree $m$
             that yield preferred pair $m$-sequences are returned.
 
     Returns:
@@ -208,13 +208,13 @@ def preferred_pairs(
 
         .. ipython:: python
 
-            next(sdr.preferred_pairs(5, poly1="x^5 + x^3 + 1"))
+            next(sdr.preferred_pairs(5, poly="x^5 + x^3 + 1"))
 
         Generate all preferred pairs with $f(x) = x^5 + x^3 + 1$.
 
         .. ipython:: python
 
-            list(sdr.preferred_pairs(5, poly1="x^5 + x^3 + 1"))
+            list(sdr.preferred_pairs(5, poly="x^5 + x^3 + 1"))
 
         Generate all preferred pairs with degree 5.
 
@@ -250,7 +250,7 @@ def preferred_pairs(
     # Determine the valid cross-correlation values for preferred pairs, Page 799
     valid_values = [-1, -t_m, t_m - 2]
 
-    if poly1 is None:
+    if poly is None:
         # Find all combinations of primitive polynomials of degree m
         for poly1, poly2 in itertools.combinations(galois.primitive_polys(2, degree), 2):
             # Create first m-sequence with the first polynomial
@@ -269,7 +269,7 @@ def preferred_pairs(
                 yield poly1, poly2
     else:
         # Find all combinations of the first polynomial with all primitive polynomials of degree m
-        poly1 = Poly._PolyLike(poly1, field=galois.GF(2))
+        poly1 = Poly._PolyLike(poly, field=galois.GF(2))
         if not poly1.degree == degree:
             raise ValueError(f"Argument 'poly1' must be a polynomial of degree {degree}, not {poly1.degree}.")
         if not poly1.is_primitive():
