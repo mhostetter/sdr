@@ -14201,19 +14201,7 @@ spectrum.</p>
 <span class="gp">In [5]: </span><span class="n">x_rect</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:253,</span> in <span class="ni">rms_bandwidth</span><span class="nt">(x, sample_rate)</span>
-<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">psd</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="c1"># Calculate the centroid of the PSD</span>
-<span class="ne">--&gt; </span><span class="mi">253</span> <span class="n">f_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">254</span> <span class="n">f</span> <span class="o">-=</span> <span class="n">f_mean</span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span> <span class="c1"># Calculate the RMS bandwidth</span>
-
-<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
+<span class="gh">Out[6]: </span><span class="go">0.7446372175904691</span>
 </code></pre></div>
 </div>
 <p>Make the same measurements with square-root raised cosine (SRRC) pulse shaping. The SRRC spectrum is narrower
@@ -14225,19 +14213,7 @@ and, therefore, closer to the rectangular spectrum.</p>
 <span class="gp">In [9]: </span><span class="n">x_srrc</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [10]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-<span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.11.9/x64/lib/python3.11/site-packages/sdr/_measurement/_modulation.py:253,</span> in <span class="ni">rms_bandwidth</span><span class="nt">(x, sample_rate)</span>
-<span class="g g-Whitespace">    </span><span class="mi">250</span> <span class="n">psd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">psd</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span> <span class="c1"># Calculate the centroid of the PSD</span>
-<span class="ne">--&gt; </span><span class="mi">253</span> <span class="n">f_mean</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="n">scipy</span><span class="o">.</span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">psd</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">254</span> <span class="n">f</span> <span class="o">-=</span> <span class="n">f_mean</span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span> <span class="c1"># Calculate the RMS bandwidth</span>
-
-<span class="ne">TypeError</span>: simpson() takes 1 positional argument but 2 were given
+<span class="gh">Out[10]: </span><span class="go">0.29088345066048465</span>
 </code></pre></div>
 </div>
 <p>Plot the power spectral density (PSD) of the rectangular and SRRC pulse-shaped signals.</p>
