@@ -317,7 +317,8 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
         return I_x_y  # bits/1D
 
-    rho = _calculate(snr)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        rho = _calculate(snr)
     if rho.ndim == 0:
         rho = float(rho)
 
