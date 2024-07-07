@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.5892a77620698431b.min.css?v=8bbcf148" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.1b54e34237929df00.min.css?v=fc47ba72" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
@@ -14227,13 +14227,17 @@ Accordingly, it has infinite gain at DC.</p>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_Integrator_2.png" src="../../_images/sdr_Integrator_2.png" />
-<p>Plot the frequency responses.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<p>Plot the frequency responses and compare them to theory.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="gp">In [7]: </span><span class="n">H_theory</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [8]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_back</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Backward&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_trap</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Trapezoidal&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">magnitude_response</span><span class="p">(</span><span class="n">iir_forw</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Forward&quot;</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span> \
-<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">f</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theory&quot;</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sdr</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">H_theory</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theory&quot;</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Magnitude response of integrating IIR filters&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
