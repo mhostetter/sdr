@@ -270,7 +270,13 @@ class Integrator(IIR):
             sdr.plot.time_domain(y_forw, label="Integral (forward)"); \
             plt.title("Discrete-time integration of a raised cosine pulse");
 
-        Plot the frequency responses.
+        Plot the frequency responses and compare them to theory.
+
+        .. ipython:: python
+            :okwarning:
+
+            f = np.linspace(0, 0.5, 100)
+            H_theory = 1/(2 * np.pi * f)
 
         .. ipython:: python
 
@@ -279,8 +285,7 @@ class Integrator(IIR):
             sdr.plot.magnitude_response(iir_back, label="Backward"); \
             sdr.plot.magnitude_response(iir_trap, label="Trapezoidal"); \
             sdr.plot.magnitude_response(iir_forw, label="Forward"); \
-            f = np.linspace(0, 0.5, 100); \
-            plt.plot(f, sdr.db(np.abs(1/(2 * np.pi * f))**2), color="k", linestyle="--", label="Theory"); \
+            plt.plot(f, sdr.db(np.abs(H_theory)**2), color="k", linestyle="--", label="Theory"); \
             plt.legend(); \
             plt.title("Magnitude response of integrating IIR filters");
 
