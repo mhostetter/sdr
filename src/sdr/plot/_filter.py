@@ -359,11 +359,12 @@ def magnitude_response(
 
         sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
-        if x_axis == "log":
-            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
-            f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
-        else:
-            f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            if x_axis == "log":
+                f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+                f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
+            else:
+                f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
 
         if x_axis == "two-sided":
             f -= sample_rate / 2
