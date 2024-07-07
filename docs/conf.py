@@ -236,7 +236,7 @@ ipython_execlines = [
     "rng = np.random.default_rng(0)",  # Set random seed for reproducibility
     "sdr.plot.use_style()",  # Use the sdr library matplotlib style
 ]
-ipython_warning_is_error = False
+ipython_warning_is_error = True
 
 myst_enable_extensions = ["dollarmath"]
 
