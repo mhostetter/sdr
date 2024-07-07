@@ -307,7 +307,8 @@ class Integrator(IIR):
         """
         if method == "backward":
             with warnings.catch_warnings():
-                warnings.simplefilter("ignore")  # SciPy throws a warning because there is a leading 0
+                # SciPy throws a warning because there is a leading 0
+                warnings.simplefilter("ignore", scipy.signal.BadCoefficients)
                 super().__init__([0, 1], [1, -1], streaming=streaming)
         elif method == "forward":
             super().__init__([1], [1, -1], streaming=streaming)
