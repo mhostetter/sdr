@@ -70,10 +70,12 @@ def db(
     if np.any(x < 0):
         raise ValueError("Argument 'x' must be non-negative.")
 
-    if type in ["value", "power"]:
-        return 10 * np.log10(x)
-    if type == "voltage":
-        return 20 * np.log10(x)
+    with np.errstate(divide="ignore"):
+        # Ignore divide by zero warning -- we're okay with -inf
+        if type in ["value", "power"]:
+            return 10 * np.log10(x)
+        if type == "voltage":
+            return 20 * np.log10(x)
 
     raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
 
