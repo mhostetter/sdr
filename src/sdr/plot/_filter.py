@@ -10,6 +10,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
+from .._conversion import db
 from .._filter import FIR, IIR
 from .._helper import export
 from ._helper import integer_x_axis, min_ylim, process_sample_rate, standard_plot
@@ -375,7 +376,7 @@ def magnitude_response(
             f *= scalar
 
         if y_axis == "log":
-            H = 10 * np.log10(np.abs(H) ** 2)
+            H = db(np.abs(H) ** 2)
         else:
             H = np.abs(H) ** 2
 

@@ -10,6 +10,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
+from .._conversion import db
 from .._helper import export
 from ._helper import integer_x_axis, process_sample_rate
 from ._rc_params import RC_PARAMS
@@ -87,7 +88,7 @@ def periodogram(
         )
 
         if y_axis == "log":
-            Pxx = 10 * np.log10(Pxx)
+            Pxx = db(Pxx)
 
         if x_axis == "two-sided":
             f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
@@ -188,7 +189,7 @@ def spectrogram(
             return_onesided=y_axis != "two-sided",
             mode="psd",
         )
-        Sxx = 10 * np.log10(Sxx)
+        Sxx = db(Sxx)
 
         if y_axis == "one-sided" and np.iscomplexobj(x):
             # If complex data, the spectrogram always returns a two-sided spectrum. So we need to remove the second half.

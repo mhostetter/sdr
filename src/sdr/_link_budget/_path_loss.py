@@ -8,6 +8,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.constants
 
+from .._conversion import db
 from .._helper import export
 
 
@@ -82,6 +83,6 @@ def free_space_path_loss(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.ND
     distance = np.maximum(distance, lambda_ / (4 * np.pi))
 
     # The free-space path loss equation
-    loss = 20 * np.log10(4 * np.pi * distance * freq / scipy.constants.speed_of_light)
+    loss = db((4 * np.pi * distance * freq / scipy.constants.speed_of_light) ** 2)
 
     return loss  # type: ignore
