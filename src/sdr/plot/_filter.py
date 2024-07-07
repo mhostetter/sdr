@@ -621,7 +621,8 @@ def phase_delay(
 
         theta = np.unwrap(np.angle(H))
         theta -= theta[np.argmin(np.abs(f))]  # Set omega=0 to have phase of 0
-        tau_phi = -theta / (2 * np.pi * f)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            tau_phi = -theta / (2 * np.pi * f)
         tau_phi[np.argmin(np.abs(f))] = np.nan  # Avoid crazy result when dividing by near zero
 
         if sample_rate_provided:
