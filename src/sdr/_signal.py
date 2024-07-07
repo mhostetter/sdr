@@ -364,6 +364,7 @@ def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
         The CW at 130 Hz folds into 30 Hz. The CW at -140 Hz folds into -40 Hz.
 
         .. ipython:: python
+            :okwarning:
 
             @savefig sdr_downsample_3.png
             plt.figure(); \
