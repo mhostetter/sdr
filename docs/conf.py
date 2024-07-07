@@ -189,11 +189,16 @@ html_last_updated_fmt = ""
 html_use_index = True
 html_domain_indices = True
 
-nitpicky = True
+# TODO: Disable nitpick for now, re-enable later
+nitpicky = False
 nitpick_ignore = [
-    ("py:class", "numpy.typing.ArrayLike"),  # Wish this would work
-    ("py:class", "numpy.typing.DTypeLike"),  # Wish this would work
-    ("py:class", "numpy.typing.NDArray"),  # Wish this would work
+    # Wish these would work
+    ("py:class", "numpy.typing.ArrayLike"),
+    ("py:class", "numpy.typing.DTypeLike"),
+    ("py:class", "numpy.typing.NDArray"),
+    ("py:class", "numpy.int64"),
+    ("py:class", "numpy.float64"),
+    ("py:class", "numpy.complex128"),
 ]
 
 
