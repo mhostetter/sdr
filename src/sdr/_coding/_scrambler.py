@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 from galois.typing import ArrayLike, PolyLike
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 from .._sequence import FLFSR
 
 
@@ -89,32 +89,35 @@ class AdditiveScrambler:
         """
         self._lfsr = FLFSR(characteristic_poly, feedback_poly, state=state)
 
-    def scramble(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
+    def scramble(self, x: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
-        Scrambles the input sequence $x[n]$.
+        Scrambles the binary input sequence $x[n]$.
 
         Arguments:
-            x: The input sequence $x[n]$.
+            x: The binary input sequence $x[n]$.
 
         Returns:
-            The scrambled output sequence $y[n]$.
+            The scrambled binary output sequence $y[n]$.
         """
+        x = verify_arraylike(x, int=True)
+
         self.lfsr.reset()  # Set the initial state
         shift = self.lfsr.characteristic_poly.degree
         seq = self.lfsr.step(x.size + shift)
         seq = seq.view(np.ndarray)
         y = np.bitwise_xor(x, seq[shift:])
-        return y
 
-    def descramble(self, y: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]:
+        return convert_output(y)
+
+    def descramble(self, y: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
-        Descrambles the input sequence $y[n]$.
+        Descrambles the binary input sequence $y[n]$.
 
         Arguments:
-            y: The input sequence $y[n]$.
+            y: The binary input sequence $y[n]$.
 
         Returns:
-            The descrambled output sequence $x[n]$.
+            The descrambled binary output sequence $x[n]$.
         """
         return self.scramble(y)
 

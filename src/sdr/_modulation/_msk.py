@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_scalar
 from ._psk import OQPSK
 from ._pulse_shapes import half_sine
 
@@ -157,6 +157,9 @@ class MSK(OQPSK):
         See Also:
             sdr.half_sine
         """
+        verify_scalar(phase_offset, float=True)
+        verify_scalar(sps, int=True, positive=True, even=True)
+
         pulse_shape = half_sine(sps)
 
         super().__init__(
@@ -165,6 +168,3 @@ class MSK(OQPSK):
             sps=sps,
             pulse_shape=pulse_shape,
         )
-
-        if sps > 1 and sps % 2 != 0:
-            raise ValueError(f"Argument 'sps' must be even, not {sps}.")

@@ -8,12 +8,12 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import db as to_db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool
 
 
 @export
 def peak_power(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     db: bool = False,
 ) -> float:
@@ -35,15 +35,19 @@ def peak_power(
     Group:
         measurement-power
     """
+    x = verify_arraylike(x, complex=True)
+    verify_bool(db)
+
     P_peak = np.max(np.abs(x) ** 2, axis=axis)
     if db:
         P_peak = to_db(P_peak, type="power")
-    return P_peak
+
+    return convert_output(P_peak)
 
 
 @export
 def average_power(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     axis: int | tuple[int, ...] | None = None,
     db: bool = False,
 ) -> float:
@@ -65,15 +69,18 @@ def average_power(
     Group:
         measurement-power
     """
+    x = verify_arraylike(x, complex=True)
+
     P_avg = np.mean(np.abs(x) ** 2, axis=axis)
     if db:
         P_avg = to_db(P_avg, type="power")
-    return P_avg
+
+    return convert_output(P_avg)
 
 
 @export
 def papr(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     axis: int | tuple[int, ...] | None = None,
 ) -> float:
     r"""

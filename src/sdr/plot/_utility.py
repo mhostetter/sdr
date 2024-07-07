@@ -10,13 +10,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import (
+    export,
+    verify_arraylike,
+    verify_isinstance,
+    verify_positional_args,
+)
 from ._rc_params import RC_PARAMS
 
 
 @overload
 def stem(
-    x: npt.NDArray,
+    x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
     *,
     color: str | None = None,
     ax: plt.Axes | None = None,
@@ -26,8 +31,8 @@ def stem(
 
 @overload
 def stem(
-    x: npt.NDArray,
-    y: npt.NDArray,
+    x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
+    y: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
     *,
     color: str | None = None,
     ax: plt.Axes | None = None,
@@ -95,20 +100,17 @@ def stem(  # noqa: D417
     Group:
         plot-utility
     """
+    verify_positional_args(args, 2)
+    if len(args) == 1:
+        y = verify_arraylike(args[0], complex=True, ndim=1)
+        x = np.arange(y.size)
+    elif len(args) == 2:
+        x = verify_arraylike(args[0], float=True, ndim=1)
+        y = verify_arraylike(args[1], complex=True, ndim=1)
+    verify_isinstance(color, str, optional=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
-        if len(args) == 1:
-            y = args[0]
-            x = np.arange(y.size)
-        elif len(args) == 2:
-            x, y = args
-        else:
-            raise ValueError(f"Expected 1 or 2 positional arguments, got {len(args)}.")
-
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
-        if not y.ndim == 1:
-            raise ValueError(f"Argument 'y' must be 1-D, not {y.ndim}-D.")
-
         if ax is None:
             ax = plt.gca()
 

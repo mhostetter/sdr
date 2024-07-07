@@ -11,12 +11,11 @@ import numpy as np
 import numpy.typing as npt
 from galois import FieldArray, Poly
 from galois._domains._function import Function
-from galois._helper import verify_isinstance
 from galois.typing import ArrayLike, PolyLike
 from numba import int64
 from typing_extensions import Literal, Self
 
-from .._helper import export
+from .._helper import export, verify_isinstance, verify_literal, verify_only_one_specified, verify_scalar
 
 ADD: Callable[[int, int], int]
 SUBTRACT: Callable[[int, int], int]
@@ -189,12 +188,11 @@ class FLFSR:
         See Also:
             galois.irreducible_poly, galois.primitive_poly
         """
+        verify_only_one_specified(characteristic_poly, feedback_poly)
         if characteristic_poly is not None:
             characteristic_poly = Poly._PolyLike(characteristic_poly)
         elif feedback_poly is not None:
             characteristic_poly = Poly._PolyLike(feedback_poly).reverse()
-        else:
-            raise ValueError("Either 'characteristic_poly' or 'feedback_poly' must be specified.")
 
         verify_isinstance(characteristic_poly, Poly)
         if not characteristic_poly.coeffs[0] == 1:
@@ -397,7 +395,7 @@ class FLFSR:
                 lfsr.step(-5)
                 lfsr.state
         """
-        verify_isinstance(steps, int)
+        verify_scalar(steps, int=True)
 
         if steps == 0:
             return self.field([])
@@ -924,12 +922,11 @@ class GLFSR:
         See Also:
             galois.irreducible_poly, galois.primitive_poly
         """
+        verify_only_one_specified(characteristic_poly, feedback_poly)
         if characteristic_poly is not None:
             characteristic_poly = Poly._PolyLike(characteristic_poly)
         elif feedback_poly is not None:
             characteristic_poly = Poly._PolyLike(feedback_poly).reverse()
-        else:
-            raise ValueError("Either 'characteristic_poly' or 'feedback_poly' must be specified.")
 
         verify_isinstance(characteristic_poly, Poly)
         if not characteristic_poly.coeffs[0] == 1:
@@ -1112,7 +1109,7 @@ class GLFSR:
                 lfsr.step(-5)
                 lfsr.state
         """
-        verify_isinstance(steps, int)
+        verify_scalar(steps, int=True)
 
         if steps == 0:
             return self.field([])
@@ -1536,11 +1533,9 @@ def berlekamp_massey(sequence, output="minimal"):
         sequences-linear-recurrent
     """
     verify_isinstance(sequence, FieldArray)
-    verify_isinstance(output, str)
-    if not sequence.ndim == 1:
+    verify_literal(output, ["minimal", "fibonacci", "galois"])
+    if not sequence.ndim == 1:  # TODO: Replace this with verify_arraylike() check
         raise ValueError(f"Argument 'sequence' must be 1-D, not {sequence.ndim}-D.")
-    if not output in ["minimal", "fibonacci", "galois"]:
-        raise ValueError(f"Argument 'output' must be in ['minimal', 'fibonacci', 'galois'], not {output!r}.")
 
     field = type(sequence)
     coeffs = berlekamp_massey_jit(field)(sequence)

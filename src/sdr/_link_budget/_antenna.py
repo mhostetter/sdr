@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.constants
 
 from .._conversion import db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
 @export
@@ -35,8 +35,11 @@ def wavelength(freq: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-antennas
     """
-    freq = np.asarray(freq)
-    return scipy.constants.speed_of_light / freq
+    freq = verify_arraylike(freq, float=True, positive=True)
+
+    lambda_ = scipy.constants.speed_of_light / freq
+
+    return convert_output(lambda_)
 
 
 @export
@@ -80,17 +83,9 @@ def parabolic_antenna(
     Group:
         link-budget-antennas
     """
-    freq = np.asarray(freq)
-    if not np.all(freq > 0):
-        raise ValueError("Argument 'freq' must be positive, not {freq}.")
-
-    diameter = np.asarray(diameter)
-    if not np.all(diameter > 0):
-        raise ValueError("Argument 'diameter' must be positive, not {diameter}.")
-
-    efficiency = np.asarray(efficiency)
-    if not np.all((0 <= efficiency) & (efficiency <= 1)):
-        raise ValueError("Argument 'efficiency' must be between 0 and 1, not {efficiency}.")
+    freq = verify_arraylike(freq, float=True, positive=True)
+    diameter = verify_arraylike(diameter, float=True, positive=True)
+    efficiency = verify_arraylike(efficiency, float=True, inclusive_min=0, inclusive_max=1)
 
     lambda_ = wavelength(freq)  # Wavelength in meters
     G = (np.pi * diameter / lambda_) ** 2 * efficiency  # Gain in linear units
@@ -99,4 +94,4 @@ def parabolic_antenna(
     theta = np.arcsin(3.83 * lambda_ / (np.pi * diameter))  # Beamwidth in radians
     theta = np.rad2deg(theta)  # Beamwidth in degrees
 
-    return G, theta
+    return convert_output(G), convert_output(theta)

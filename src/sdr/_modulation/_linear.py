@@ -11,7 +11,7 @@ import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._filter import Decimator, Interpolator
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_literal, verify_scalar
 from ._pulse_shapes import raised_cosine, rectangular, root_raised_cosine
 
 
@@ -70,26 +70,14 @@ class LinearModulation:
         See Also:
             sdr.rectangular, sdr.raised_cosine, sdr.root_raised_cosine
         """
-        symbol_map = np.asarray(symbol_map)
-        if not symbol_map.ndim == 1:
-            raise ValueError(f"Argument 'symbol_map' must be 1-D, not {symbol_map.ndim}-D.")
-        if not np.log2(symbol_map.size).is_integer():
-            raise ValueError(f"Argument 'symbol_map' must have a size that is a power of 2, not {symbol_map.size}.")
-        self._symbol_map = symbol_map  # Decimal-to-complex symbol map
-        self._order = symbol_map.size  # Modulation order
+        self._symbol_map = verify_arraylike(symbol_map, complex=True, ndim=1)  # Decimal-to-complex symbol map
+        self._order = verify_scalar(self._symbol_map.size, power_of_two=True)  # Modulation order
         self._bps = int(np.log2(self._order))  # Coded bits per symbol
-
-        if not isinstance(phase_offset, (int, float)):
-            raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
-        self._phase_offset = phase_offset  # Phase offset in degrees
-
-        if not isinstance(sps, int):
-            raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-        if not sps > 1:
-            raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-        self._sps = sps  # Samples per symbol
+        self._phase_offset = verify_scalar(phase_offset, float=True)  # Phase offset in degrees
+        self._sps = verify_scalar(sps, int=True, positive=True)  # Samples per symbol
 
         if isinstance(pulse_shape, str):
+            verify_literal(pulse_shape, ["rect", "rc", "srrc"])
             if pulse_shape == "rect":
                 if span is None:
                     span = 1
@@ -106,13 +94,8 @@ class LinearModulation:
                 if alpha is None:
                     alpha = 0.2
                 self._pulse_shape = root_raised_cosine(alpha, span, self.sps)
-            else:
-                raise ValueError(f"Argument 'pulse_shape' must be 'rect', 'rc', or 'srrc', not {pulse_shape!r}.")
         else:
-            pulse_shape = np.asarray(pulse_shape)
-            if not pulse_shape.ndim == 1:
-                raise ValueError(f"Argument 'pulse_shape' must be 1-D, not {pulse_shape.ndim}-D.")
-            self._pulse_shape = pulse_shape  # Pulse shape
+            self._pulse_shape = verify_arraylike(pulse_shape, float=True, ndim=1)  # Pulse shape
 
         self._tx_filter = Interpolator(self.sps, self.pulse_shape)  # Transmit pulse shaping filter
         self._rx_filter = Decimator(self.sps, self.pulse_shape[::-1].conj())  # Receive matched filter
@@ -138,8 +121,9 @@ class LinearModulation:
         Returns:
             The complex symbols $a[k]$.
         """
-        s = np.asarray(s)  # Decimal symbols
-        return self._map_symbols(s)
+        s = verify_arraylike(s, int=True)  # Decimal symbols
+        a = self._map_symbols(s)  # Complex symbols
+        return convert_output(a)
 
     def _map_symbols(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         a = self.symbol_map[s]  # Complex symbols
@@ -158,8 +142,9 @@ class LinearModulation:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
             - The complex symbol decisions $\hat{a}[k]$.
         """
-        a_tilde = np.asarray(a_tilde)  # Complex symbols
-        return self._decide_symbols(a_tilde)
+        a_tilde = verify_arraylike(a_tilde, complex=True)  # Complex symbols
+        s_hat, a_hat = self._decide_symbols(a_tilde)  # Decimal and complex symbol decisions
+        return convert_output(s_hat), convert_output(a_hat)
 
     def _decide_symbols(
         self, a_tilde: npt.NDArray[np.complex128]
@@ -180,7 +165,7 @@ class LinearModulation:
             The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol
             and length `sps * s.size + pulse_shape.size - 1`.
         """
-        s = np.asarray(s)  # Decimal symbols
+        s = verify_arraylike(s, int=True)  # Decimal symbols
         return self._modulate(s)
 
     def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
@@ -193,7 +178,8 @@ class LinearModulation:
         return x
 
     def demodulate(
-        self, x_tilde: npt.ArrayLike
+        self,
+        x_tilde: npt.ArrayLike,
     ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128], npt.NDArray[np.complex128]]:
         r"""
         Demodulates the pulse-shaped complex samples.
@@ -209,17 +195,23 @@ class LinearModulation:
             - The matched filter outputs $\tilde{a}[k]$.
             - The complex symbol decisions $\hat{a}[k]$.
         """
-        x_tilde = np.asarray(x_tilde)  # Complex samples
-        return self._demodulate(x_tilde)
+        x_tilde = verify_arraylike(x_tilde, complex=True)  # Complex samples
+        # Decimal symbol decisions, complex symbols, complex symbol decisions
+        s_hat, a_tilde, a_hat = self._demodulate(x_tilde)
+        return convert_output(s_hat), convert_output(a_tilde), convert_output(a_hat)
 
     def _demodulate(
-        self, x_tilde: npt.NDArray[np.complex128]
+        self,
+        x_tilde: npt.NDArray[np.complex128],
     ) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.complex128], npt.NDArray[np.complex128]]:
         a_tilde = self._rx_matched_filter(x_tilde)  # Complex symbols
-        s_hat, a_hat = self._decide_symbols(a_tilde)  # Decimal symbols
+        s_hat, a_hat = self._decide_symbols(a_tilde)  # Decimal and complex symbol decisions
         return s_hat, a_tilde, a_hat
 
-    def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
+    def _rx_matched_filter(
+        self,
+        x_tilde: npt.NDArray[np.complex128],
+    ) -> npt.NDArray[np.complex128]:
         if self.pulse_shape.size % self.sps == 0:
             x_tilde = np.insert(x_tilde, 0, 0)
 

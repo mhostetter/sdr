@@ -10,7 +10,7 @@ import numpy as np
 import scipy.signal
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_bool, verify_literal, verify_scalar
 from ._fir import FIR
 from ._iir import IIR
 
@@ -69,7 +69,11 @@ class MovingAverager(FIR):
         dsp-filter-applications
     """
 
-    def __init__(self, length: int, streaming: bool = False):
+    def __init__(
+        self,
+        length: int,
+        streaming: bool = False,
+    ):
         """
         Creates a moving average FIR filter.
 
@@ -81,10 +85,8 @@ class MovingAverager(FIR):
         Examples:
             See the :ref:`fir-filters` example.
         """
-        if not isinstance(length, int):
-            raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
-        if not length > 1:
-            raise ValueError(f"Argument 'length' must be greater than 1, not {length}.")
+        verify_scalar(length, int=True, positive=True)
+        verify_bool(streaming)
 
         h = np.ones(length) / length
 
@@ -167,7 +169,12 @@ class Differentiator(FIR):
         dsp-filter-applications
     """
 
-    def __init__(self, order: int = 20, window: str | float | tuple | None = "blackman", streaming: bool = False):
+    def __init__(
+        self,
+        order: int = 20,
+        window: str | float | tuple | None = "blackman",
+        streaming: bool = False,
+    ):
         """
         Creates a differentiator FIR filter.
 
@@ -182,12 +189,8 @@ class Differentiator(FIR):
         Examples:
             See the :ref:`fir-filters` example.
         """
-        if not isinstance(order, int):
-            raise TypeError("Argument 'order' must be an integer, not {type(order).__name__}.")
-        if not order > 0:
-            raise ValueError(f"Argument 'order' must be positive, not {order}.")
-        if not order % 2 == 0:
-            raise ValueError(f"Argument 'order' must be even, not {order}.")
+        verify_scalar(order, int=True, positive=True, even=True)
+        verify_bool(streaming)
 
         n = np.arange(-order // 2, order // 2 + 1)  # Sample index centered about 0
         with np.errstate(divide="ignore"):
@@ -293,7 +296,11 @@ class Integrator(IIR):
         dsp-filter-applications
     """
 
-    def __init__(self, method: Literal["backward", "trapezoidal", "forward"] = "trapezoidal", streaming: bool = False):
+    def __init__(
+        self,
+        method: Literal["backward", "trapezoidal", "forward"] = "trapezoidal",
+        streaming: bool = False,
+    ):
         """
         Creates an integrating IIR filter.
 
@@ -310,6 +317,9 @@ class Integrator(IIR):
         Examples:
             See the :ref:`iir-filters` example.
         """
+        verify_literal(method, ["backward", "trapezoidal", "forward"])
+        verify_bool(streaming)
+
         if method == "backward":
             with warnings.catch_warnings():
                 # SciPy throws a warning because there is a leading 0
@@ -319,8 +329,6 @@ class Integrator(IIR):
             super().__init__([1], [1, -1], streaming=streaming)
         elif method == "trapezoidal":
             super().__init__([0.5, 0.5], [1, -1], streaming=streaming)
-        else:
-            raise ValueError(f"Argument 'method' must be 'backward', 'forward', or 'trapezoidal', not {method!r}.")
 
     # TODO: Use np.cumsum() if it is faster
 
@@ -396,7 +404,11 @@ class LeakyIntegrator(IIR):
         dsp-filter-applications
     """
 
-    def __init__(self, alpha: float, streaming: bool = False):
+    def __init__(
+        self,
+        alpha: float,
+        streaming: bool = False,
+    ):
         r"""
         Creates a leaky integrator IIR filter.
 
@@ -409,10 +421,8 @@ class LeakyIntegrator(IIR):
         Examples:
             See the :ref:`iir-filters` example.
         """
-        if not isinstance(alpha, float):
-            raise TypeError(f"Argument 'alpha' must be a float, not {type(alpha).__name__}.")
-        if not 0 <= alpha <= 1:
-            raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
+        verify_scalar(alpha, float=True, exclusive_min=0, exclusive_max=1)
+        verify_bool(streaming)
 
         b = [1 - alpha]
         a = [1, -alpha]

@@ -11,14 +11,14 @@ import scipy.fft
 import scipy.signal
 from typing_extensions import Literal
 
-from .._helper import export
-from ._helper import integer_x_axis, process_sample_rate, standard_plot
+from .._helper import export, verify_arraylike, verify_bool, verify_isinstance, verify_literal, verify_scalar
+from ._helper import integer_x_axis, standard_plot, verify_sample_rate
 from ._rc_params import RC_PARAMS
 
 
 @export
 def dft(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     sample_rate: float | None = None,
     window: str | None = None,
     size: int | None = None,
@@ -110,14 +110,22 @@ def dft(
     Group:
         plot-frequency-domain
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
+    x = verify_arraylike(x, complex=True, ndim=1)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    # verify_isinstance(window, str, optional=True)
+    verify_scalar(size, optional=True, int=True, positive=True)
+    verify_scalar(oversample, optional=True, int=True, positive=True)
+    verify_bool(fast)
+    verify_bool(centered)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(type, ["plot", "stem"])
+    verify_literal(x_axis, ["freq", "bin"])
+    verify_literal(y_axis, ["complex", "mag", "mag^2", "db"])
+    verify_literal(diff, ["color", "line"])
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if window is not None:
             w = scipy.signal.windows.get_window(window, x.size)
@@ -137,8 +145,6 @@ def dft(
             f = np.fft.fftfreq(size, 1 / sample_rate)
         elif x_axis == "bin":
             f = np.fft.fftfreq(size, 1 / size)
-        else:
-            raise ValueError(f"Argument 'x_axis' must be 'freq' or 'bin', not {x_axis!r}.")
 
         if centered:
             X = np.fft.fftshift(X)
@@ -168,7 +174,7 @@ def dft(
 
 @export
 def dtft(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     sample_rate: float | None = None,
     window: str | None = None,
     size: int = int(2**20),  # ~1 million points

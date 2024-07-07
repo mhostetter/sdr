@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_literal, verify_scalar
 
 
 @export
@@ -52,15 +52,9 @@ def rectangular(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps >= 1:
-        raise ValueError(f"Argument 'sps' must be at least 1, not {sps}.")
-
-    if not isinstance(span, int):
-        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-    if not span >= 1:
-        raise ValueError(f"Argument 'span' must be at least 1, not {span}.")
+    verify_scalar(sps, int=True, positive=True)
+    verify_scalar(span, int=True, positive=True)
+    verify_literal(norm, ["power", "energy", "passband"])
 
     length = span * sps
     h = np.zeros(length, dtype=float)
@@ -113,15 +107,9 @@ def half_sine(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps >= 1:
-        raise ValueError(f"Argument 'sps' must be at least 1, not {sps}.")
-
-    if not isinstance(span, int):
-        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-    if not span >= 1:
-        raise ValueError(f"Argument 'span' must be at least 1, not {span}.")
+    verify_scalar(sps, int=True, positive=True)
+    verify_scalar(span, int=True, positive=True)
+    verify_literal(norm, ["power", "energy", "passband"])
 
     length = span * sps
     h = np.zeros(length, dtype=float)
@@ -202,23 +190,11 @@ def gaussian(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(time_bandwidth, (int, float)):
-        raise TypeError(f"Argument 'time_bandwidth' must be a number, not {type(time_bandwidth)}.")
-    if not time_bandwidth > 0:
-        raise ValueError(f"Argument 'time_bandwidth' must be greater than 0, not {time_bandwidth}.")
-
-    if not isinstance(span, int):
-        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-    if not span > 0:
-        raise ValueError(f"Argument 'span' must be positive, not {span}.")
-
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps > 1:
-        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-
-    if not span * sps % 2 == 0:
-        raise ValueError("The order of the filter (span * sps) must be even.")
+    verify_scalar(time_bandwidth, float=True, positive=True)
+    verify_scalar(span, int=True, positive=True)
+    verify_scalar(sps, int=True, inclusive_min=2)
+    verify_scalar(span * sps, even=True)
+    verify_literal(norm, ["power", "energy", "passband"])
 
     t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=float)
     t /= sps
@@ -334,23 +310,11 @@ def raised_cosine(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(alpha, (int, float)):
-        raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
-    if not 0 <= alpha <= 1:
-        raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
-
-    if not isinstance(span, int):
-        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-    if not span > 0:
-        raise ValueError(f"Argument 'span' must be positive, not {span}.")
-
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps > 1:
-        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-
-    if not span * sps % 2 == 0:
-        raise ValueError("The order of the filter (span * sps) must be even.")
+    verify_scalar(alpha, float=True, inclusive_min=0, inclusive_max=1)
+    verify_scalar(span, int=True, positive=True)
+    verify_scalar(sps, int=True, inclusive_min=2)
+    verify_scalar(span * sps, even=True)
+    verify_literal(norm, ["power", "energy", "passband"])
 
     t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=float)
     Ts = sps
@@ -472,23 +436,11 @@ def root_raised_cosine(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(alpha, (int, float)):
-        raise TypeError(f"Argument 'alpha' must be a number, not {type(alpha)}.")
-    if not 0 <= alpha <= 1:
-        raise ValueError(f"Argument 'alpha' must be between 0 and 1, not {alpha}.")
-
-    if not isinstance(span, int):
-        raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-    if not span > 0:
-        raise ValueError(f"Argument 'span' must be positive, not {span}.")
-
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps > 1:
-        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-
-    if not span * sps % 2 == 0:
-        raise ValueError("The order of the filter (span * sps) must be even.")
+    verify_scalar(alpha, float=True, inclusive_min=0, inclusive_max=1)
+    verify_scalar(span, int=True, positive=True)
+    verify_scalar(sps, int=True, inclusive_min=2)
+    verify_scalar(span * sps, even=True)
+    verify_literal(norm, ["power", "energy", "passband"])
 
     t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=float)
     Ts = sps  # Symbol duration (in samples)
@@ -519,7 +471,5 @@ def _normalize(h: npt.NDArray[np.float64], norm: Literal["power", "energy", "pas
         h /= np.sqrt(np.sum(np.abs(h) ** 2))
     elif norm == "passband":
         h /= np.sum(h)
-    else:
-        raise ValueError(f"Argument 'norm' must be 'power', 'energy', or 'passband', not {norm}.")
 
     return h

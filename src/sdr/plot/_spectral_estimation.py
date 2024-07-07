@@ -11,8 +11,8 @@ import scipy.signal
 from typing_extensions import Literal
 
 from .._conversion import db
-from .._helper import export
-from ._helper import integer_x_axis, process_sample_rate
+from .._helper import export, verify_arraylike, verify_isinstance, verify_literal, verify_scalar
+from ._helper import integer_x_axis, verify_sample_rate
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -59,21 +59,24 @@ def periodogram(
     Group:
         plot-spectral-estimation
     """
+    x = verify_arraylike(x, complex=True, ndim=1)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    # verify_isinstance(window, str, optional=True)
+    verify_scalar(length, optional=True, int=True, positive=True)
+    verify_scalar(overlap, optional=True, int=True, positive=True)
+    verify_scalar(fft, optional=True, int=True, positive=True)
+    verify_literal(detrend, ["constant", "linear", False])
+    verify_literal(average, ["mean", "median"])
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
+    verify_literal(y_axis, ["linear", "log"])
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
-        x = np.asarray(x)
-
-        if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
-            raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(x) else "two-sided"
-
-        if not y_axis in ["linear", "log"]:
-            raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         f, Pxx = scipy.signal.welch(
             x,
@@ -165,18 +168,22 @@ def spectrogram(
     Group:
         plot-spectral-estimation
     """
+    x = verify_arraylike(x, complex=True, ndim=1)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    # verify_isinstance(window, str, optional=True)
+    verify_scalar(length, optional=True, int=True, positive=True)
+    verify_scalar(overlap, optional=True, int=True, positive=True)
+    verify_scalar(fft, optional=True, int=True, positive=True)
+    verify_literal(detrend, ["constant", "linear", False])
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(y_axis, ["auto", "one-sided", "two-sided"])
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
-        x = np.asarray(x)
-
-        if not y_axis in ["auto", "one-sided", "two-sided"]:
-            raise ValueError(f"Argument 'y_axis' must be 'auto', 'one-sided', or 'two-sided', not {y_axis!r}.")
         if y_axis == "auto":
             y_axis = "one-sided" if np.isrealobj(x) else "two-sided"
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         f, t, Sxx = scipy.signal.spectrogram(
             x,

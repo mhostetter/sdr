@@ -4,12 +4,10 @@ A module containing various channel models.
 
 from __future__ import annotations
 
-from typing import Any, overload
-
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_equation, verify_scalar
 from .._link_budget._capacity import Hb
 
 
@@ -43,15 +41,14 @@ def bsc(
     Group:
         simulation-channel-models
     """
-    if not 0 <= p <= 1:
-        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+    x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=2)
+    verify_scalar(p, float=True, inclusive_min=0, inclusive_max=1)
 
-    x = np.asarray(x)
     rng = np.random.default_rng(seed)
     flip = rng.choice([0, 1], size=x.shape, p=[1 - p, p])
     y = x ^ flip
 
-    return y if y.ndim > 0 else y.item()
+    return convert_output(y)
 
 
 @export
@@ -84,15 +81,14 @@ def bec(
     Group:
         simulation-channel-models
     """
-    if not 0 <= p <= 1:
-        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+    x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=2)
+    verify_scalar(p, float=True, inclusive_min=0, inclusive_max=1)
 
-    x = np.asarray(x)
     rng = np.random.default_rng(seed)
     random_p = rng.random(x.shape)
     y = np.where(random_p < p, -1, x)
 
-    return y if y.ndim > 0 else y.item()
+    return convert_output(y)
 
 
 @export
@@ -143,27 +139,19 @@ def dmc(
     Group:
         simulation-channel-models
     """
-    x = np.asarray(x)
+    x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=2)
+    P = verify_arraylike(P, float=True, ndim=2, inclusive_min=0, inclusive_max=1)
+    verify_equation(np.allclose(P.sum(axis=1), 1))
 
-    P = np.asarray(P)
-    if not P.ndim == 2:
-        raise ValueError(f"Argument 'P' must be a 2D array, not {P.ndim}D.")
-    if not np.all(P >= 0):
-        raise ValueError(f"Argument 'P' must have non-negative entires, not {P}.")
-    if not np.allclose(P.sum(axis=1), 1):
-        raise ValueError(f"Argument 'P' must have row that sum to 1, not {P.sum(axis=1)}.")
+    if X is None:
+        X = np.arange(P.shape[0])
+    else:
+        X = verify_arraylike(X, int=True, ndim=1, size=P.shape[0])
 
-    X = np.asarray(X) if X is not None else np.arange(P.shape[0])
-    if not X.ndim == 1:
-        raise ValueError(f"Argument 'X' must be a 1D array, not {X.ndim}D.")
-    if not P.shape[0] == X.shape[0]:
-        raise ValueError(f"Argument 'P' must have {X.shape[0]} rows, not {P.shape[0]}.")
-
-    Y = np.asarray(Y) if Y is not None else np.arange(P.shape[1])
-    if not Y.ndim == 1:
-        raise ValueError(f"Argument 'Y' must be a 1D array, not {Y.ndim}D.")
-    if not P.shape[1] == Y.shape[0]:
-        raise ValueError(f"Argument 'P' must have {Y.shape[0]} columns, not {P.shape[1]}.")
+    if Y is None:
+        Y = np.arange(P.shape[1])
+    else:
+        Y = verify_arraylike(Y, int=True, ndim=1, size=P.shape[1])
 
     y = np.zeros_like(x)
     rng = np.random.default_rng(seed)
@@ -171,7 +159,7 @@ def dmc(
         idxs = np.where(x == Xi)[0]
         y[idxs] = rng.choice(Y, size=idxs.shape, p=P[i])
 
-    return y if y.ndim > 0 else y.item()
+    return convert_output(y)
 
 
 @export
@@ -194,7 +182,7 @@ class Channel:
 
         self.reset(seed)
 
-    def reset(self, seed: int | None = None) -> None:
+    def reset(self, seed: int | None = None):
         """
         Resets the channel with a new seed.
 
@@ -203,7 +191,7 @@ class Channel:
         """
         self._rng = np.random.default_rng(seed)
 
-    def __call__(self, x: npt.NDArray) -> npt.NDArray:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray:
         """
         Passes the input sequence $x$ through the channel.
 
@@ -301,19 +289,11 @@ class BinarySymmetricChannel(Channel):
             p: The transition probability $p$ of the BSC channel.
             seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
         """
+        self._p = verify_scalar(p, float=True, inclusive_min=0, inclusive_max=1)
+
         super().__init__(seed=seed)
 
-        if not 0 <= p <= 1:
-            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
-        self._p = p
-
-    @overload
-    def __call__(self, x: int) -> int: ...
-
-    @overload
-    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]: ...
-
-    def __call__(self, x: Any) -> Any:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
         Passes the binary input sequence $x$ through the channel.
 
@@ -323,11 +303,12 @@ class BinarySymmetricChannel(Channel):
         Returns:
             The output sequence $y$ with $y_i \in \mathcal{Y} = \{0, 1\}$.
         """
-        x = np.asarray(x)
+        x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=2)
+
         flip = self._rng.choice([0, 1], size=x.shape, p=[1 - self.p, self.p])
         y = x ^ flip
 
-        return y if y.ndim > 0 else y.item()
+        return convert_output(y)
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(p={self.p})"
@@ -345,11 +326,11 @@ class BinarySymmetricChannel(Channel):
         Returns:
             The capacity $C$ of the channel in bits/channel use.
         """
-        p = np.asarray(p)
-        if not (np.all(0 <= p) and np.all(p <= 1)):
-            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+        p = verify_arraylike(p, float=True, inclusive_min=0, inclusive_max=1)
 
-        return 1 - Hb(p)
+        C = 1 - Hb(p)
+
+        return convert_output(C)
 
     @property
     def X(self) -> npt.NDArray[np.int_]:
@@ -439,19 +420,11 @@ class BinaryErasureChannel(Channel):
             p: The erasure probability $p$ of the BEC channel.
             seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
         """
+        self._p = verify_scalar(p, float=True, inclusive_min=0, inclusive_max=1)
+
         super().__init__(seed=seed)
 
-        if not 0 <= p <= 1:
-            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
-        self._p = p
-
-    @overload
-    def __call__(self, x: int) -> int: ...
-
-    @overload
-    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]: ...
-
-    def __call__(self, x: Any) -> Any:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
         Passes the binary input sequence $x$ through the channel.
 
@@ -461,11 +434,12 @@ class BinaryErasureChannel(Channel):
         Returns:
             The output sequence $y$ with $y_i \in \mathcal{Y} = \{0, 1, e\}$. Erasures $e$ are represented by -1.
         """
-        x = np.asarray(x)
+        x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=2)
+
         random_p = self._rng.random(x.shape)
         y = np.where(random_p < self.p, -1, x)
 
-        return y if y.ndim > 0 else y.item()
+        return convert_output(y)
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(p={self.p})"
@@ -483,11 +457,11 @@ class BinaryErasureChannel(Channel):
         Returns:
             The capacity $C$ of the channel in bits/channel use.
         """
-        p = np.asarray(p)
-        if not (np.all(0 <= p) and np.all(p <= 1)):
-            raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+        p = verify_arraylike(p, float=True, inclusive_min=0, inclusive_max=1)
 
-        return 1 - p
+        C = 1 - p
+
+        return convert_output(C)
 
     @property
     def X(self) -> npt.NDArray[np.int_]:
@@ -576,38 +550,25 @@ class DiscreteMemorylessChannel(Channel):
             Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
             seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
         """
-        super().__init__(seed=seed)
-
-        P = np.asarray(P)
-        if not P.ndim == 2:
-            raise ValueError(f"Argument 'P' must be a 2D array, not {P.ndim}D.")
-        if not np.all(P >= 0):
-            raise ValueError(f"Argument 'P' must have non-negative entires, not {P}.")
-        if not np.allclose(P.sum(axis=1), 1):
-            raise ValueError(f"Argument 'P' must have row that sum to 1, not {P.sum(axis=1)}.")
+        P = verify_arraylike(P, float=True, ndim=2, inclusive_min=0, inclusive_max=1)
+        verify_equation(np.allclose(P.sum(axis=1), 1))
         self._P = P
 
-        X = np.asarray(X) if X is not None else np.arange(P.shape[0])
-        if not X.ndim == 1:
-            raise ValueError(f"Argument 'X' must be a 1D array, not {X.ndim}D.")
-        if not P.shape[0] == X.shape[0]:
-            raise ValueError(f"Argument 'P' must have {X.shape[0]} rows, not {P.shape[0]}.")
+        if X is None:
+            X = np.arange(P.shape[0])
+        else:
+            X = verify_arraylike(X, int=True, ndim=1, size=P.shape[0])
         self._X = X
 
-        Y = np.asarray(Y) if Y is not None else np.arange(P.shape[1])
-        if not Y.ndim == 1:
-            raise ValueError(f"Argument 'Y' must be a 1D array, not {Y.ndim}D.")
-        if not P.shape[1] == Y.shape[0]:
-            raise ValueError(f"Argument 'P' must have {Y.shape[0]} columns, not {P.shape[1]}.")
+        if Y is None:
+            Y = np.arange(P.shape[1])
+        else:
+            Y = verify_arraylike(Y, int=True, ndim=1, size=P.shape[1])
         self._Y = Y
 
-    @overload
-    def __call__(self, x: int) -> int: ...
+        super().__init__(seed=seed)
 
-    @overload
-    def __call__(self, x: npt.NDArray[np.int_]) -> npt.NDArray[np.int_]: ...
-
-    def __call__(self, x: Any) -> Any:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray[np.int_]:
         r"""
         Passes the input sequence $x$ through the channel.
 
@@ -617,13 +578,14 @@ class DiscreteMemorylessChannel(Channel):
         Returns:
             The output sequence $y$ with $y_i \in \mathcal{Y}$.
         """
-        x = np.asarray(x)
+        x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=len(self.X))
+
         y = np.zeros_like(x)
         for i, Xi in enumerate(self.X):
             idxs = np.where(x == Xi)[0]
             y[idxs] = self._rng.choice(self.Y, size=idxs.shape, p=self.P[i])
 
-        return y if y.ndim > 0 else y.item()
+        return convert_output(y)
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(P={self.P}, X={self.X}, Y={self.Y})"

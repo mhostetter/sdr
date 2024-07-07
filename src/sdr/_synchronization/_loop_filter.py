@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy.typing as npt
 
 from .._filter import IIR
-from .._helper import export
+from .._helper import export, verify_scalar
 
 
 @export
@@ -55,7 +55,13 @@ class LoopFilter:
         pll
     """
 
-    def __init__(self, noise_bandwidth: float, damping_factor: float, K0: float = 1.0, Kp: float = 1.0):
+    def __init__(
+        self,
+        noise_bandwidth: float,
+        damping_factor: float,
+        K0: float = 1.0,
+        Kp: float = 1.0,
+    ):
         r"""
         Creates a 2nd order, proportional-plus-integrator (PPI) loop filter.
 
@@ -70,8 +76,10 @@ class LoopFilter:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        BnT = noise_bandwidth
-        zeta = damping_factor
+        BnT = verify_scalar(noise_bandwidth, float=True, positive=True)
+        zeta = verify_scalar(damping_factor, float=True, positive=True)
+        verify_scalar(K0, float=True, positive=True)
+        verify_scalar(Kp, float=True, positive=True)
 
         # Equation C.57, page 736
         theta_n = BnT / (zeta + 1 / (4 * zeta))
@@ -100,7 +108,7 @@ class LoopFilter:
         """
         self.iir.reset()
 
-    def __call__(self, x: npt.NDArray) -> npt.NDArray:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray:
         """
         Filters the input signal $x[n]$.
 

@@ -14,7 +14,7 @@ from galois import Poly
 from galois.typing import PolyLike
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_equation, verify_literal, verify_scalar
 from ._conversion import code_to_sequence, field_to_code
 from ._lfsr import FLFSR
 
@@ -127,10 +127,7 @@ def m_sequence(
     Group:
         sequences-maximum-length
     """
-    if not isinstance(degree, int):
-        raise TypeError(f"Argument 'degree' must be an integer, not {type(degree)}.")
-    if not degree > 0:
-        raise ValueError(f"Argument 'degree' must be positive, not {degree}.")
+    verify_scalar(degree, int=True, positive=True)
 
     if poly is None:
         poly = galois.primitive_poly(2, degree)  # Characteristic polynomial
@@ -144,16 +141,11 @@ def m_sequence(
         raise ValueError(f"Argument 'poly' must be a primitive polynomial, {poly} is not.")
     q = poly.field.order
 
-    if not isinstance(index, int):
-        raise TypeError(f"Argument 'index' must be an integer, not {type(index)}.")
-    if not 1 <= index < q**degree:
-        raise ValueError(f"Argument 'index' must be in [1, q^m), not {index}.")
+    verify_scalar(index, int=True, inclusive_min=1, exclusive_max=q**degree)
+    verify_literal(output, ["decimal", "field", "bipolar"])
+
     state_poly = Poly.Int(index, field=poly.field)
     state_vector = state_poly.coefficients(degree)
-
-    if output not in ["decimal", "field", "bipolar"]:
-        raise ValueError(f"Argument 'output' must be 'decimal', 'field', or 'bipolar', not {output}.")
-
     lfsr = FLFSR(poly, state=state_vector)
     code = lfsr.step(q**degree - 1)
 
@@ -232,10 +224,7 @@ def preferred_pairs(
     Group:
         sequences-maximum-length
     """
-    if not isinstance(degree, int):
-        raise TypeError(f"Argument 'degree' must be an integer, not {type(degree)}.")
-    if not degree > 0:
-        raise ValueError(f"Argument 'degree' must be positive, not {degree}.")
+    verify_scalar(degree, int=True, positive=True)
 
     if degree % 4 == 0:
         # There are no preferred pairs for degrees divisible by 4
@@ -345,14 +334,19 @@ def is_preferred_pair(
     """
     poly1 = Poly._PolyLike(poly1, field=galois.GF(2))
     poly2 = Poly._PolyLike(poly2, field=galois.GF(2))
-    if not poly1.degree == poly2.degree:
-        raise ValueError(
-            f"Arguments 'poly1' and 'poly2' must have the same degree, not {poly1.degree} and {poly2.degree}."
-        )
-    if not poly1.is_primitive():
-        raise ValueError(f"Argument 'poly1' must be a primitive polynomial, {poly1} is not.")
-    if not poly2.is_primitive():
-        raise ValueError(f"Argument 'poly2' must be a primitive polynomial, {poly2} is not.")
+
+    verify_equation(poly1.degree == poly2.degree)
+    verify_equation(poly1.is_primitive())
+    verify_equation(poly2.is_primitive())
+
+    # if not poly1.degree == poly2.degree:
+    #     raise ValueError(
+    #         f"Arguments 'poly1' and 'poly2' must have the same degree, not {poly1.degree} and {poly2.degree}."
+    #     )
+    # if not poly1.is_primitive():
+    #     raise ValueError(f"Argument 'poly1' must be a primitive polynomial, {poly1} is not.")
+    # if not poly2.is_primitive():
+    #     raise ValueError(f"Argument 'poly2' must be a primitive polynomial, {poly2} is not.")
 
     degree = poly1.degree
     if degree % 4 == 0:

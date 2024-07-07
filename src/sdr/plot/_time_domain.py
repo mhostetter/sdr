@@ -13,15 +13,25 @@ from matplotlib.collections import LineCollection
 from typing_extensions import Literal
 
 from .._conversion import db
-from .._helper import export
-from ._helper import integer_x_axis, process_sample_rate, real_or_complex_plot
+from .._helper import (
+    export,
+    verify_arraylike,
+    verify_bool,
+    verify_isinstance,
+    verify_literal,
+    verify_not_specified,
+    verify_positional_args,
+    verify_scalar,
+    verify_specified,
+)
+from ._helper import integer_x_axis, real_or_complex_plot, verify_sample_rate
 from ._rc_params import RC_PARAMS
 from ._units import time_units
 
 
 @overload
 def time_domain(
-    x: npt.NDArray,
+    x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
     *,
     sample_rate: float | None = None,
     centered: bool = False,
@@ -34,8 +44,8 @@ def time_domain(
 
 @overload
 def time_domain(
-    t: npt.NDArray,
-    x: npt.NDArray,
+    t: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
+    x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
     *,
     sample_rate: float | None = None,
     centered: bool = False,
@@ -115,22 +125,22 @@ def time_domain(  # noqa: D417
     Group:
         plot-time-domain
     """
+    verify_positional_args(args, 2)
+    if len(args) == 1:
+        x = verify_arraylike(args[0], complex=True, ndim=1)
+        t = None
+    elif len(args) == 2:
+        t = verify_arraylike(args[0], float=True, ndim=1)
+        x = verify_arraylike(args[1], complex=True, ndim=1)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_bool(centered)
+    verify_scalar(offset, float=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(diff, ["color", "line"])
+
     with plt.rc_context(RC_PARAMS):
-        if len(args) == 1:
-            x = args[0]
-            t = None
-        elif len(args) == 2:
-            t, x = args
-        else:
-            raise ValueError(f"Expected 1 or 2 positional arguments, got {len(args)}.")
-
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be 1-D, not {x.ndim}-D.")
-
         if ax is None:
             ax = plt.gca()
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if t is None:
             if centered:
@@ -156,7 +166,7 @@ def time_domain(  # noqa: D417
 
 @export
 def raster(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     length: int | None = None,
     stride: int | None = None,
     sample_rate: float | None = None,
@@ -204,29 +214,25 @@ def raster(
     Group:
         plot-time-domain
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x.ndim in [1, 2]:
-            raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
-        if np.iscomplexobj(x):
-            raise ValueError("Argument 'x' must be real, not complex.")
+    x = verify_arraylike(x, float=True)  # TODO: Check ndim in [1, 2]
+    if not x.ndim in [1, 2]:
+        raise ValueError(f"Argument 'x' must be 1-D or 2-D, not {x.ndim}-D.")
+    verify_scalar(length, optional=True, int=True, inclusive_min=1, inclusive_max=x.size)
+    verify_scalar(stride, optional=True, int=True, inclusive_min=1, inclusive_max=x.size)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_isinstance(color, str)
+    verify_bool(persistence)
+    verify_bool(colorbar)
+    verify_isinstance(ax, plt.Axes, optional=True)
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
         if x.ndim == 1:
-            if not length is not None:
-                raise ValueError("Argument 'length' must be specified if 'x' is 1-D.")
-            if not isinstance(length, int):
-                raise TypeError(f"Argument 'length' must be an integer, not {type(length)}.")
-            if not 1 <= length <= x.size:
-                raise ValueError(f"Argument 'length' must be at least 1 and less than the length of 'x', not {length}.")
-
+            verify_specified(length)
             if stride is None:
                 stride = length
-            elif not isinstance(stride, int):
-                raise TypeError(f"Argument 'stride' must be an integer, not {type(stride)}.")
-            elif not 1 <= stride <= x.size:
-                raise ValueError(f"Argument 'stride' must be at least 1 and less than the length of 'x', not {stride}.")
 
             # Compute the strided data and format into segments for LineCollection
             N_rasters = (x.size - length) // stride + 1
@@ -234,15 +240,12 @@ def raster(
                 x, shape=(N_rasters, length), strides=(x.strides[0] * stride, x.strides[0]), writeable=False
             )
         else:
-            if not length is None:
-                raise ValueError("Argument 'length' can not be specified if 'x' is 2-D.")
-            if not stride is None:
-                raise ValueError("Argument 'stride' can not be specified if 'x' is 2-D.")
+            verify_not_specified(length)
+            verify_not_specified(stride)
 
             N_rasters, length = x.shape
             x_strided = x
 
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
         t = np.arange(length) / sample_rate
         if sample_rate_provided:
             units, scalar = time_units(t)
@@ -312,8 +315,8 @@ def raster(
 
 @export
 def correlation(
-    x: npt.NDArray,
-    y: npt.NDArray,
+    x: npt.ArrayLike,
+    y: npt.ArrayLike,
     sample_rate: float | None = None,
     mode: Literal["full", "valid", "same", "circular"] = "full",
     ax: plt.Axes | None = None,
@@ -362,14 +365,17 @@ def correlation(
     Group:
         plot-time-domain
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x.ndim == y.ndim == 1:
-            raise ValueError(f"Arguments 'x' and 'y' must be 1-D, not {x.ndim}-D and {y.ndim}-D.")
+    x = verify_arraylike(x, complex=True, ndim=1)
+    y = verify_arraylike(y, complex=True, ndim=1)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_literal(mode, ["full", "valid", "same", "circular"])
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(y_axis, ["complex", "mag", "mag^2", "db"])
+    verify_literal(diff, ["color", "line"])
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if mode == "circular":
             n_fft = max(x.size, y.size)
@@ -416,8 +422,6 @@ def correlation(
         elif y_axis == "db":
             corr = db(np.abs(corr) ** 2)
             ax.set_ylabel(rf"Correlation (dB), $\left| {equation} \right|^2$")
-        else:
-            raise ValueError(f"Argument 'y_axis' must be 'complex', 'mag', 'mag^2', or 'db', not {y_axis!r}.")
 
         real_or_complex_plot(t, corr, ax=ax, diff=diff, **kwargs)
         if sample_rate_provided:

@@ -8,7 +8,7 @@ import numba
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
 
 
 @export
@@ -80,7 +80,13 @@ class AGC:
         synchronization-amplitude
     """
 
-    def __init__(self, attack: float, decay: float, reference: float = 1.0, streaming: bool = False):
+    def __init__(
+        self,
+        attack: float,
+        decay: float,
+        reference: float = 1.0,
+        streaming: bool = False,
+    ):
         r"""
         Creates an automatic gain controller (AGC).
 
@@ -93,15 +99,15 @@ class AGC:
             streaming: Indicates whether the AGC operates in streaming mode. In streaming mode, the gain is
                 preserved between calls to :meth:`~AGC.__call__()`.
         """
-        self._attack = attack
-        self._decay = decay
-        self._reference = reference
-        self._streaming = streaming
+        self.attack = attack  # Uses the property setter
+        self.decay = decay  # Uses the property setter
+        self.reference = reference  # Uses the property setter
+        self._streaming = verify_bool(streaming)
 
         self._gain: float  # The linear gain state. Will be updated in reset().
         self.reset()
 
-    def __call__(self, x: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
+    def __call__(self, x: npt.ArrayLike) -> npt.NDArray[np.complex128]:
         """
         Performs automatic gain control on the input signal.
 
@@ -111,12 +117,14 @@ class AGC:
         Returns:
             The output signal $y[n]$.
         """
+        x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
+
         if not self.streaming:
             self.reset()
 
         y, self._gain = _numba_agc_loop(x, self.attack, self.decay, self.reference, self._gain)
 
-        return y
+        return convert_output(y)
 
     ##############################################################################
     # Streaming mode
@@ -132,7 +140,7 @@ class AGC:
         Group:
             Streaming mode only
         """
-        self._gain = gain
+        self._gain = verify_scalar(gain, float=True, positive=True)
 
     @property
     def streaming(self) -> bool:
@@ -171,8 +179,8 @@ class AGC:
         return self._attack
 
     @attack.setter
-    def attack(self, value: float):
-        self._attack = value
+    def attack(self, attack: float):
+        self._attack = verify_scalar(attack, float=True, inclusive_min=0, inclusive_max=1)
 
     @property
     def decay(self) -> float:
@@ -185,8 +193,8 @@ class AGC:
         return self._decay
 
     @decay.setter
-    def decay(self, value: float):
-        self._decay = value
+    def decay(self, decay: float):
+        self._decay = verify_scalar(decay, float=True, inclusive_min=0, inclusive_max=1)
 
     @property
     def reference(self) -> float:
@@ -196,8 +204,8 @@ class AGC:
         return self._reference
 
     @reference.setter
-    def reference(self, value: float):
-        self._reference = value
+    def reference(self, reference: float):
+        self._reference = verify_scalar(reference, float=True, positive=True)
 
 
 @numba.jit(nopython=True, cache=True)
