@@ -228,20 +228,20 @@ def _extrapolate_non_coherent_gain(
     # Loop through the NaNs and interpolate
     interpolators = {}
     for i in range(g_nc.size):
-        if np.isnan(g_nc[i]):
+        if np.isnan(g_nc[i]) and n_nc[i] > 1:  # Only interpolate where the gain is NaN and n_nc is greater than 1
             key = (snr[i], p_fa[i])
             if key not in interpolators:
                 n_nc_array = np.logspace(np.log10(max(1, 0.5 * n_nc[i])), np.log10(n_nc[i]), 7).astype(int)
+                n_nc_array = np.unique(n_nc_array)  # Remove unhelpful duplicates
                 g_nc_array = non_coherent_gain(n_nc_array, snr[i], p_fa[i], detector, complex, snr_ref, False)
 
                 idxs = ~np.isnan(g_nc_array)
                 n_nc_array = n_nc_array[idxs]
                 g_nc_array = g_nc_array[idxs]
 
-                if n_nc_array.size == 0:
-                    # The gain approaches a limit of the coherent gain of N_nc
-                    n_nc_array = np.logspace(0, 2, 5)
-                    g_nc_array = db(n_nc_array)
+                if n_nc_array.size < 2:
+                    # There aren't enough data points to interpolate
+                    continue
 
                 interpolators[key] = scipy.interpolate.interp1d(
                     np.log10(n_nc_array), g_nc_array, kind="linear", fill_value="extrapolate"
