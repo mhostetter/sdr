@@ -4,6 +4,8 @@ A module for specific filter applications.
 
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 import scipy.signal
 from typing_extensions import Literal
@@ -304,7 +306,9 @@ class Integrator(IIR):
             See the :ref:`iir-filters` example.
         """
         if method == "backward":
-            super().__init__([0, 1], [1, -1], streaming=streaming)
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")  # SciPy throws a warning because there is a leading 0
+                super().__init__([0, 1], [1, -1], streaming=streaming)
         elif method == "forward":
             super().__init__([1], [1, -1], streaming=streaming)
         elif method == "trapezoidal":
