@@ -4,6 +4,8 @@ A module that contains various conversion functions.
 
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
@@ -70,7 +72,6 @@ def db(
 
     if type in ["value", "power"]:
         return 10 * np.log10(x)
-
     if type == "voltage":
         return 20 * np.log10(x)
 
@@ -128,11 +129,13 @@ def linear(
     """
     x = np.asarray(x)
 
-    if type in ["value", "power"]:
-        return 10 ** (x / 10)
-
-    if type == "voltage":
-        return 10 ** (x / 20)
+    with warnings.catch_warnings():
+        # Ignore scalar power overflow warning -- we're okay with inf
+        warnings.simplefilter("ignore", RuntimeWarning)
+        if type in ["value", "power"]:
+            return 10 ** (x / 10)
+        if type == "voltage":
+            return 10 ** (x / 20)
 
     raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
 
