@@ -316,7 +316,45 @@ sphinx_immaterial_custom_admonitions = [
         "name": "warning",
         "title": "Warning",
         "classes": ["collapsible"],
-        "icon": "fontawesome/solid/triangle-exclamation",
+        "icon": "fontawesome/solid/exclamation",
+        "override": True,
+    },
+    {
+        "name": "info",
+        "icon": "fontawesome/solid/circle-info",
+        "override": True,
+    },
+    {
+        "name": "tip",
+        "icon": "fontawesome/regular/lightbulb",
+        "override": True,
+    },
+    {
+        "name": "abstract",
+        "icon": "fontawesome/regular/file-lines",
+        "override": True,
+    },
+    {
+        "name": "important",
+        "icon": "fontawesome/solid/bolt",
+        "override": True,
+    },
+    {
+        "name": "example",
+        "icon": "fontawesome/solid/terminal",
+        "override": True,
+    },
+    {
+        "name": "quote",
+        "icon": "fontawesome/solid/quote-left",
+        "override": True,
+    },
+    {
+        "name": "question",
+        "title": "Question",
+        "classes": ["collapsible"],
+        "icon": "fontawesome/solid/question",
+        "color": (108, 117, 125),  # --sd-color-secondary
         "override": True,
     },
     {
@@ -350,18 +388,18 @@ sphinx_immaterial_custom_admonitions = [
         "icon": "fontawesome/solid/arrow-down-a-z",
         "color": (108, 117, 125),  # --sd-color-secondary
     },
-    # {
-    #     "name": "fast-performance",
-    #     "title": "Faster performance",
-    #     "icon": "material/speedometer",
-    #     "color": (47, 177, 112),  # Green: --md-code-hl-string-color
-    # },
-    # {
-    #     "name": "slow-performance",
-    #     "title": "Slower performance",
-    #     "icon": "material/speedometer-slow",
-    #     "color": (230, 105, 91),  # Red: --md-code-hl-number-color
-    # },
+    {
+        "name": "fast-performance",
+        "title": "Faster performance",
+        "icon": "material/speedometer",
+        "color": (47, 177, 112),  # Green: --md-code-hl-string-color
+    },
+    {
+        "name": "slow-performance",
+        "title": "Slower performance",
+        "icon": "material/speedometer-slow",
+        "color": (230, 105, 91),  # Red: --md-code-hl-number-color
+    },
 ]
 
 
