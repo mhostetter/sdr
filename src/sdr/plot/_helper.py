@@ -7,6 +7,7 @@ from matplotlib.ticker import MaxNLocator
 from typing_extensions import Literal
 
 from .._conversion import db
+from .._helper import verify_scalar
 from ._utility import stem
 
 
@@ -91,16 +92,13 @@ def standard_plot(
         ax.legend()
 
 
-def process_sample_rate(sample_rate: float | None):
+def verify_sample_rate(sample_rate: float | None, default=1.0):
     if sample_rate is None:
         sample_rate_provided = False
-        sample_rate = 1
+        sample_rate = default
     else:
         sample_rate_provided = True
-        if not isinstance(sample_rate, (int, float)):
-            raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
-        if not sample_rate > 0:
-            raise ValueError(f"Argument 'sample_rate' must be greater than 0, not {sample_rate}.")
+        verify_scalar(sample_rate, float=True, positive=True)
 
     return sample_rate, sample_rate_provided
 

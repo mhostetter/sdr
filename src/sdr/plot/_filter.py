@@ -12,8 +12,8 @@ from typing_extensions import Literal
 
 from .._conversion import db
 from .._filter import FIR, IIR
-from .._helper import export
-from ._helper import integer_x_axis, min_ylim, process_sample_rate, standard_plot
+from .._helper import export, verify_arraylike, verify_bool, verify_isinstance, verify_literal, verify_scalar
+from ._helper import integer_x_axis, min_ylim, standard_plot, verify_sample_rate
 from ._rc_params import RC_PARAMS
 from ._units import freq_units, time_units
 
@@ -28,10 +28,10 @@ def _convert_to_taps(
         b = filter.b_taps
         a = filter.a_taps
     elif isinstance(filter, tuple):
-        b = np.asarray(filter[0])
-        a = np.asarray(filter[1])
+        b = verify_arraylike(filter[0], complex=True, ndim=1)
+        a = verify_arraylike(filter[1], complex=True, ndim=1)
     else:
-        b = np.asarray(filter)
+        b = verify_arraylike(filter, complex=True, ndim=1)
         a = np.array([1])
     return b, a
 
@@ -92,11 +92,15 @@ def impulse_response(
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(offset, float=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(type, ["plot", "stem"])
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
-
-        b, a = _convert_to_taps(filter)
 
         if N is None:
             if a.size == 1 and a[0] == 1:
@@ -173,11 +177,14 @@ def step_response(
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(type, ["plot", "stem"])
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
-
-        b, a = _convert_to_taps(filter)
 
         if N is None:
             if a.size == 1 and a[0] == 1:
@@ -246,11 +253,12 @@ def zeros_poles(
     Group:
         plot-filter
     """
+    b, a = _convert_to_taps(filter)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
-
-        b, a = _convert_to_taps(filter)
 
         z, p, _ = scipy.signal.tf2zpk(b, a)
         unit_circle = np.exp(1j * np.linspace(0, 2 * np.pi, 100))
@@ -344,21 +352,20 @@ def magnitude_response(
     Group:
         plot-filter
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
-            raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
-        if not y_axis in ["linear", "log"]:
-            raise ValueError(f"Argument 'y_axis' must be 'linear' or 'log', not {y_axis!r}.")
+    b, a = _convert_to_taps(filter)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
+    verify_literal(y_axis, ["linear", "log"])
+    verify_scalar(decades, int=True, positive=True)
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
-        b, a = _convert_to_taps(filter)
-
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         with np.errstate(divide="ignore", invalid="ignore"):
             if x_axis == "log":
@@ -473,19 +480,20 @@ def phase_response(
     Group:
         plot-filter
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
-            raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    b, a = _convert_to_taps(filter)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_bool(unwrap)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
+    verify_scalar(decades, int=True, positive=True)
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
-        b, a = _convert_to_taps(filter)
-
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -595,19 +603,19 @@ def phase_delay(
     Group:
         plot-filter
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
-            raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    b, a = _convert_to_taps(filter)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
+    verify_scalar(decades, int=True, positive=True)
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
-        b, a = _convert_to_taps(filter)
-
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
@@ -719,19 +727,19 @@ def group_delay(
     Group:
         plot-filter
     """
-    with plt.rc_context(RC_PARAMS):
-        if not x_axis in ["auto", "one-sided", "two-sided", "log"]:
-            raise ValueError(f"Argument 'x_axis' must be 'auto', 'one-sided', 'two-sided', or 'log', not {x_axis!r}.")
+    b, a = _convert_to_taps(filter)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
+    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
+    verify_scalar(decades, int=True, positive=True)
 
+    with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
 
-        b, a = _convert_to_taps(filter)
-
         if x_axis == "auto":
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
-
-        sample_rate, sample_rate_provided = process_sample_rate(sample_rate)
 
         if x_axis == "log":
             f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)

@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.optimize
 
 from .._conversion import db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
 @export
@@ -70,11 +70,11 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         detection-coherent-integration
     """
-    time_bandwidth = np.asarray(time_bandwidth)
-    if np.any(time_bandwidth <= 0):
-        raise ValueError(f"Argument 'time_bandwidth' must be greater than 0, not {time_bandwidth}.")
+    time_bandwidth = verify_arraylike(time_bandwidth, float=True, positive=True)
 
-    return db(time_bandwidth)
+    g_c = db(time_bandwidth)
+
+    return convert_output(g_c)
 
 
 @export
@@ -182,18 +182,13 @@ def coherent_gain_loss(
     Group:
         detection-coherent-integration
     """
-    time = np.asarray(time)
-    freq = np.asarray(freq)
-
-    if np.any(time < 0):
-        raise ValueError(f"Argument 'time' must be non-negative, not {time}.")
-    if np.any(freq < 0):
-        raise ValueError(f"Argument 'freq' must be non-negative, not {freq}.")
+    time = verify_arraylike(time, float=True, non_negative=True)
+    freq = verify_arraylike(freq, float=True)
 
     cgl = np.sinc(time * freq) ** 2
     cgl_db = -1 * db(cgl)
 
-    return cgl_db
+    return convert_output(cgl_db)
 
 
 @export
@@ -266,11 +261,8 @@ def max_integration_time(
     Group:
         detection-coherent-integration
     """
-    cgl = np.asarray(cgl)
-    freq_offset = np.asarray(freq_offset)
-
-    if np.any(cgl < 0):
-        raise ValueError(f"Argument 'cgl' must be non-negative, not {cgl}.")
+    cgl = verify_arraylike(cgl, float=True, non_negative=True)
+    freq_offset = verify_arraylike(freq_offset, float=True)
 
     @np.vectorize
     def _calculate(cgl: float, freq_offset: float) -> float:
@@ -284,10 +276,8 @@ def max_integration_time(
         return t
 
     t = _calculate(cgl, freq_offset)
-    if t.ndim == 0:
-        t = float(t)
 
-    return t
+    return convert_output(t)
 
 
 @export
@@ -360,11 +350,8 @@ def max_frequency_offset(
     Group:
         detection-coherent-integration
     """
-    cgl = np.asarray(cgl)
-    integration_time = np.asarray(integration_time)
-
-    if np.any(cgl < 0):
-        raise ValueError(f"Argument 'cgl' must be non-negative, not {cgl}.")
+    cgl = verify_arraylike(cgl, float=True, non_negative=True)
+    integration_time = verify_arraylike(integration_time, float=True, non_negative=True)
 
     @np.vectorize
     def _calculate(cgl: float, integration_time: float) -> float:
@@ -378,7 +365,5 @@ def max_frequency_offset(
         return f
 
     f = _calculate(cgl, integration_time)
-    if f.ndim == 0:
-        f = float(f)
 
-    return f
+    return convert_output(f)

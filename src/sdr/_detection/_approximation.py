@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_scalar
 
 
 @export
@@ -115,23 +115,15 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
     Group:
         detection-approximation
     """
-    p_d = np.asarray(p_d)
-    if not np.all(np.logical_and(0 < p_d, p_d < 1)):
-        raise ValueError("Argument 'p_d' must have values in (0, 1).")
-
-    p_fa = np.asarray(p_fa)
-    if not np.all(np.logical_and(0 < p_fa, p_fa < 1)):
-        raise ValueError("Argument 'p_fa' must have values in (0, 1).")
-
-    n_nc = np.asarray(n_nc)
-    if not np.all(n_nc >= 1):
-        raise ValueError("Argument 'n_nc' must be at least 1.")
+    p_d = verify_arraylike(p_d, float=True, inclusive_min=0, inclusive_max=1)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    n_nc = verify_arraylike(n_nc, int=True, positive=True)
 
     A = np.log(0.62 / p_fa)
     B = np.log(p_d / (1 - p_d))
     snr = -5 * np.log10(n_nc) + (6.2 + (4.54 / np.sqrt(n_nc + 0.44))) * np.log10(A + 0.12 * A * B + 1.7 * B)
 
-    return snr
+    return convert_output(snr)
 
 
 @export
@@ -198,17 +190,9 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
     Group:
         detection-approximation
     """
-    p_d = np.asarray(p_d)
-    if not np.all(np.logical_and(0 < p_d, p_d < 1)):
-        raise ValueError("Argument 'p_d' must have values in (0, 1).")
-
-    p_fa = np.asarray(p_fa)
-    if not np.all(np.logical_and(0 < p_fa, p_fa < 1)):
-        raise ValueError("Argument 'p_fa' must have values in (0, 1).")
-
-    n_nc = np.asarray(n_nc)
-    if not np.all(n_nc >= 1):
-        raise ValueError("Argument 'n_nc' must be at least 1.")
+    p_d = verify_arraylike(p_d, float=True, inclusive_min=0, inclusive_max=1)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    n_nc = verify_arraylike(n_nc, int=True, positive=True)
 
     g_nc = 6.79  # dB
     g_nc *= 1 + 0.253 * p_d
@@ -216,7 +200,7 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
     g_nc *= np.log10(n_nc)
     g_nc *= 1 - 0.14 * np.log10(n_nc) + 0.0183 * np.log10(n_nc) ** 2
 
-    return g_nc
+    return convert_output(g_nc)
 
 
 @export
@@ -293,17 +277,10 @@ def shnidman(
     Group:
         detection-approximation
     """
-    p_d = np.asarray(p_d)
-    if not np.all(np.logical_and(0 < p_d, p_d < 1)):
-        raise ValueError("Argument 'p_d' must have values in (0, 1).")
-
-    p_fa = np.asarray(p_fa)
-    if not np.all(np.logical_and(0 < p_fa, p_fa < 1)):
-        raise ValueError("Argument 'p_fa' must have values in (0, 1).")
-
-    n_nc = np.asarray(n_nc)
-    if not np.all(n_nc >= 1):
-        raise ValueError("Argument 'n_nc' must be at least 1.")
+    p_d = verify_arraylike(p_d, float=True, inclusive_min=0, inclusive_max=1)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    n_nc = verify_arraylike(n_nc, int=True, positive=True)
+    verify_scalar(swerling, int=True, inclusive_min=0, inclusive_max=5)
 
     @np.vectorize
     def _calculate(
@@ -327,8 +304,6 @@ def shnidman(
             K = 2
         elif swerling == 4:
             K = 2 * n_nc
-        else:
-            raise ValueError(f"Argument 'swerling' must be in {0, 1, 2, 3, 4, 5}, not {swerling}.")
 
         C1 = 1 / K * (((17.7006 * p_d - 18.4496) * p_d + 14.5339) * p_d - 3.525)
         C2 = 1 / K * (np.exp(27.31 * p_d - 25.14) + (p_d - 0.8) * (0.7 * np.log(1e-5 / p_fa) + (2 * n_nc - 20) / 80))
@@ -343,10 +318,8 @@ def shnidman(
         return snr
 
     snr = _calculate(p_d, p_fa, n_nc, swerling)
-    if snr.ndim == 0:
-        snr = snr.item()
 
-    return snr
+    return convert_output(snr)
 
 
 def _shnidman_swerling0(

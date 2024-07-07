@@ -11,7 +11,7 @@ import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._filter import Decimator, Interpolator
-from .._helper import export
+from .._helper import export, verify_arraylike, verify_equation, verify_literal, verify_scalar
 from .._nco import NCO
 from .._sequence import binary_code, gray_code
 from ._pulse_shapes import rectangular
@@ -80,54 +80,33 @@ class CPM:
         See Also:
             sdr.rectangular
         """
-        if not isinstance(order, int):
-            raise TypeError(f"Argument 'order' must be an integer, not {type(order)}.")
-        if not order > 1:
-            raise ValueError(f"Argument 'order' must be greater than 1, not {order}.")
-        if not np.log2(order).is_integer():
-            raise ValueError(f"Argument 'order' must be a power of 2, not {order}.")
-        self._order = order  # Modulation order
+        self._order = verify_scalar(order, int=True, inclusive_min=2, power_of_two=True)  # Modulation order
         self._bps = int(np.log2(self._order))  # Coded bits per symbol
+        self._index = verify_scalar(index, float=True, non_negative=True)  # Modulation index
 
-        if not isinstance(index, (int, float)):
-            raise TypeError(f"Argument 'index' must be a number, not {type(index)}.")
-        if not index >= 0:
-            raise ValueError(f"Argument 'index' must be non-negative, not {index}.")
-        self._index = index  # Modulation index
-
-        if symbol_labels == "bin":
-            self._symbol_labels = binary_code(self.bps)
-            self._symbol_labels_str = "bin"
-        elif symbol_labels == "gray":
-            self._symbol_labels = gray_code(self.bps)
-            self._symbol_labels_str = "gray"
+        if isinstance(symbol_labels, str):
+            verify_literal(symbol_labels, ["bin", "gray"])
+            if symbol_labels == "bin":
+                self._symbol_labels = binary_code(self.bps)
+                self._symbol_labels_str = "bin"
+            elif symbol_labels == "gray":
+                self._symbol_labels = gray_code(self.bps)
+                self._symbol_labels_str = "gray"
         else:
-            if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
-                raise ValueError(f"Argument 'symbol_labels' have unique values 0 to {self.order-1}.")
-            self._symbol_labels = np.asarray(symbol_labels)
+            symbol_labels = verify_arraylike(symbol_labels, int=True, ndim=1, size=self.order)
+            verify_equation(np.unique(symbol_labels).size == self.order)
+            self._symbol_labels = symbol_labels
             self._symbol_labels_str = self._symbol_labels
 
-        if not isinstance(phase_offset, (int, float)):
-            raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
-        self._phase_offset = phase_offset  # Phase offset in degrees
-
-        if not isinstance(sps, int):
-            raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-        if not sps > 1:
-            raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-        self._sps = sps  # Samples per symbol
-
-        if not isinstance(span, int):
-            raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
-        if not span > 0:
-            raise ValueError(f"Argument 'span' must be greater than 0, not {span}.")
+        self._phase_offset = verify_scalar(phase_offset, float=True)  # Phase offset in degrees
+        self._sps = verify_scalar(sps, int=True, positive=True)  # Samples per symbol
+        verify_scalar(span, int=True, positive=True)
 
         if isinstance(pulse_shape, str):
+            verify_literal(pulse_shape, ["rect"])
             if pulse_shape == "rect":
                 self._pulse_shape = rectangular(self.sps, span=span, norm="passband") / 2
                 # self._pulse_shape = np.ones(self.sps * span) / (self.sps * span) / 2
-            else:
-                raise ValueError(f"Argument 'pulse_shape' must be 'rect', not {pulse_shape!r}.")
             # elif pulse_shape == "sine":
             #     # self._pulse_shape = half_sine(self.sps, norm="passband") / 2
             #     self._pulse_shape = 1 - np.cos(2 * np.pi * np.arange(0.5, self.sps + 0.5, 1) / self.sps)
@@ -140,13 +119,8 @@ class CPM:
             #     if time_bandwidth is None:
             #         time_bandwidth = 0.3
             #     self._pulse_shape = gaussian(time_bandwidth, span, self.sps, norm="passband") / 2
-            # else:
-            #     raise ValueError(f"Argument 'pulse_shape' must be 'rect', 'rc', or 'srrc', not {pulse_shape!r}.")
         else:
-            pulse_shape = np.asarray(pulse_shape)
-            if not pulse_shape.ndim == 1:
-                raise ValueError(f"Argument 'pulse_shape' must be 1-D, not {pulse_shape.ndim}-D.")
-            self._pulse_shape = pulse_shape  # Pulse shape
+            self._pulse_shape = verify_arraylike(pulse_shape, float=True, ndim=1)  # Pulse shape
 
         # if alpha is not None and pulse_shape not in ["rc", "srrc"]:
         #     raise ValueError("Argument 'alpha' is only valid for 'rc' and 'srrc' pulse shapes, not {pulse_shape!r}.")
@@ -179,7 +153,7 @@ class CPM:
             The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol
             and length `sps * s.size + pulse_shape.size - 1`.
         """
-        s = np.asarray(s)  # Decimal symbols
+        s = verify_arraylike(s, int=True)  # Decimal symbols
         return self._modulate(s)
 
     def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
@@ -199,7 +173,6 @@ class CPM:
         return x
 
     def _tx_pulse_shape(self, a: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
-        a = np.asarray(a)  # Complex symbols
         x = self._tx_filter(a, mode="full")  # Complex samples
         return x
 
@@ -216,7 +189,7 @@ class CPM:
         Returns:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
         """
-        x_tilde = np.asarray(x_tilde)  # Complex samples
+        x_tilde = verify_arraylike(x_tilde, complex=True)  # Complex samples
         return self._demodulate(x_tilde)
 
     def _demodulate(self, x_tilde: npt.NDArray[np.complex128]) -> npt.NDArray[np.int_]:

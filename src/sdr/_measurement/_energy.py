@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import db as to_db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
 @export
@@ -34,8 +34,10 @@ def energy(
     Group:
         measurement-energy
     """
-    x = np.asarray(x)
+    x = verify_arraylike(x, complex=True)
+
     E = np.sum(np.abs(x) ** 2, axis=axis)
     if db:
         E = to_db(E)
-    return E
+
+    return convert_output(E)

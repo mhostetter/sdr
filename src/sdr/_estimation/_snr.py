@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import db, linear
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
 @export
@@ -82,8 +82,8 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
     Group:
         estimation-snr
     """
-    snr1 = np.asarray(snr1)
-    snr2 = np.asarray(snr2)
+    snr1 = verify_arraylike(snr1, float=True)
+    snr2 = verify_arraylike(snr2, float=True)
 
     # Convert to linear
     snr1 = linear(snr1)
@@ -95,4 +95,4 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
     # Convert back to dB
     snr = db(snr)
 
-    return snr
+    return convert_output(snr)

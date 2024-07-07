@@ -11,7 +11,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool, verify_literal, verify_scalar
 from ._common import frequency_response
 
 
@@ -50,7 +50,11 @@ class FIR:
         dsp-fir-filtering
     """
 
-    def __init__(self, h: npt.ArrayLike, streaming: bool = False):
+    def __init__(
+        self,
+        h: npt.ArrayLike,
+        streaming: bool = False,
+    ):
         """
         Creates an FIR filter.
 
@@ -62,10 +66,10 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        self._taps = np.asarray(h)
-        self._streaming = streaming
-        self._delay = self.taps.size // 2
+        self._taps = verify_arraylike(h, ndim=1)
+        self._streaming = verify_bool(streaming)
 
+        self._delay = self.taps.size // 2
         self._state: npt.NDArray  # The filter state. Will be updated in reset().
         self.reset()
 
@@ -73,7 +77,11 @@ class FIR:
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["full", "valid", "same"] = "full") -> npt.NDArray:
+    def __call__(
+        self,
+        x: npt.ArrayLike,
+        mode: Literal["full", "valid", "same"] = "full",
+    ) -> npt.NDArray:
         r"""
         Filters the input signal $x[n]$ with the FIR filter.
 
@@ -96,9 +104,8 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        x = np.atleast_1d(x)
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
+        x = verify_arraylike(x, atleast_1d=True, ndim=1)
+        verify_literal(mode, ["full", "valid", "same"])
 
         if self.streaming:
             # Prepend previous inputs from last __call__() call
@@ -108,7 +115,7 @@ class FIR:
         else:
             y = scipy.signal.convolve(x, self.taps, mode=mode)
 
-        return y
+        return convert_output(y)
 
     def __repr__(self) -> str:
         return f"sdr.{type(self).__name__}({self.taps.tolist()}, streaming={self.streaming})"
@@ -214,11 +221,9 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
+        verify_scalar(N, optional=True, int=True, inclusive_min=self.taps.size)
         if N is None:
             N = self.taps.size
-
-        if not N >= self.taps.size:
-            raise ValueError("Argument 'N' must be greater than or equal to the filter length.")
 
         # Delta impulse function
         d = np.zeros(N - self.taps.size + 1, dtype=float)
@@ -246,11 +251,9 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
+        verify_scalar(N, optional=True, int=True, inclusive_min=self.taps.size)
         if N is None:
             N = self.taps.size
-
-        if not N >= self.taps.size:
-            raise ValueError("Argument 'N' must be greater than or equal to the filter length.")
 
         # Unit step function
         u = np.ones(N - self.taps.size + 1, dtype=float)
@@ -341,6 +344,10 @@ class FIR:
 
                 fir.frequency_response([100, 200, 300, 400], sample_rate=1000)
         """
+        verify_scalar(sample_rate, float=True, positive=True)
+        verify_bool(whole)
+        verify_scalar(decades, optional=True, int=True, positive=True)
+
         f, H = frequency_response(self.taps, 1, freqs, sample_rate, whole, decades)
         if isinstance(freqs, int):
             return f, H
@@ -367,6 +374,9 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
+        verify_scalar(sample_rate, float=True, positive=True)
+        verify_scalar(N, int=True, positive=True)
+
         f, gd = scipy.signal.group_delay((self.taps, 1), w=N, whole=True, fs=sample_rate)
 
         f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
@@ -393,6 +403,9 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
+        verify_scalar(sample_rate, float=True, positive=True)
+        verify_scalar(N, int=True, positive=True)
+
         f, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
 
         f -= sample_rate / 2

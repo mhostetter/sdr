@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_equation, verify_scalar
 
 
 @export
@@ -37,7 +37,7 @@ class Interleaver:
         coding-interleavers
     """
 
-    def __init__(self, map: npt.NDArray[np.int_]):
+    def __init__(self, map: npt.ArrayLike):
         r"""
         Creates an arbitrary interleaver.
 
@@ -45,12 +45,8 @@ class Interleaver:
             map: The interleaver permutation map $\pi : i \mapsto j$, containing the values $[0, N)$.
                 The $i$-th input element will be placed at the $\pi(i)$-th output position.
         """
-        if not isinstance(map, np.ndarray):
-            raise TypeError(f"Argument 'map' must be a NumPy array, not {type(map)}.")
-        if not np.issubdtype(map.dtype, np.integer):
-            raise TypeError(f"Argument 'map' must be an array of integers, not {map.dtype}.")
-        if not np.all(np.unique(map) == np.arange(len(map))):
-            raise ValueError(f"Argument 'map' must contain the integers [0, {len(map)}), not {map}.")
+        map = verify_arraylike(map, int=True, atleast_1d=True, ndim=1)
+        verify_equation(np.unique(map).size == map.size)
 
         self._map = map
         self._inverse_map = np.argsort(map)
@@ -61,7 +57,7 @@ class Interleaver:
         """
         return self.map.size
 
-    def interleave(self, x: npt.NDArray) -> npt.NDArray:
+    def interleave(self, x: npt.ArrayLike) -> npt.NDArray:
         r"""
         Interleaves the input sequence $x[n]$.
 
@@ -71,17 +67,14 @@ class Interleaver:
         Returns:
             The interleaved sequence $y[n]$.
         """
-        if not isinstance(x, np.ndarray):
-            raise TypeError(f"Argument `x` must be a NumPy array, not {type(x)}.")
-        if not x.size % len(self) == 0:
-            raise ValueError(f"Argument `x` must have a length that is a multiple of {len(self)}, not {x.size}.")
+        x = verify_arraylike(x, ndim=1, size_multiple=len(self))
 
         y = np.empty_like(x)
         y.reshape((-1, len(self)))[..., self.map] = x.reshape((-1, len(self)))
 
-        return y
+        return convert_output(y)
 
-    def deinterleave(self, y: npt.NDArray) -> npt.NDArray:
+    def deinterleave(self, y: npt.ArrayLike) -> npt.NDArray:
         r"""
         Deinterleaves the input sequence $y[n]$.
 
@@ -91,15 +84,12 @@ class Interleaver:
         Returns:
             The deinterleaved sequence $x[n]$.
         """
-        if not isinstance(y, np.ndarray):
-            raise TypeError(f"Argument `y` must be a NumPy array, not {type(y)}.")
-        if not y.size % len(self) == 0:
-            raise ValueError(f"Argument `y` must have a length that is a multiple of {len(self)}, not {y.size}.")
+        y = verify_arraylike(y, ndim=1, size_multiple=len(self))
 
         x = np.empty_like(y)
         x.reshape((-1, len(self)))[..., self.inverse_map] = y.reshape((-1, len(self)))
 
-        return x
+        return convert_output(x)
 
     @property
     def map(self) -> npt.NDArray[np.int_]:
@@ -161,10 +151,8 @@ class BlockInterleaver(Interleaver):
                 consecutive input elements.
             cols: The number of columns $C$ in the interleaver.
         """
-        if not isinstance(rows, int):
-            raise TypeError(f"Argument 'rows' must be an integer, not {type(rows)}.")
-        if not isinstance(cols, int):
-            raise TypeError(f"Argument 'cols' must be an integer, not {type(cols)}.")
+        verify_scalar(rows, int=True, positive=True)
+        verify_scalar(cols, int=True, positive=True)
 
         map = np.arange(rows * cols).reshape((rows, cols)).T.ravel()
         super().__init__(map)

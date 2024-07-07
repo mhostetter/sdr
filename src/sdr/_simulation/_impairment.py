@@ -9,13 +9,13 @@ import numpy.typing as npt
 
 from .._conversion import linear
 from .._farrow import FarrowResampler
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_only_one_specified, verify_scalar
 from .._measurement import average_power
 
 
 @export
 def awgn(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     snr: float | None = None,
     noise: float | None = None,
     seed: int | None = None,
@@ -84,14 +84,17 @@ def awgn(
     Group:
         simulation-impairments
     """
+    x = verify_arraylike(x, complex=True)
+    verify_only_one_specified(snr, noise)
+
     if snr is not None:
+        verify_scalar(snr, float=True)
         snr_linear = linear(snr)
         signal_power = average_power(x)
         noise_power = signal_power / snr_linear
     elif noise is not None:
+        verify_scalar(noise, float=True, non_negative=True)
         noise_power = noise
-    else:
-        raise ValueError("Either 'snr' or 'noise' must be specified.")
 
     rng = np.random.default_rng(seed)
     if np.iscomplexobj(x):
@@ -99,11 +102,13 @@ def awgn(
     else:
         w = rng.normal(0, np.sqrt(noise_power), x.shape)
 
-    return x + w
+    y = x + w
+
+    return convert_output(y)
 
 
 @export
-def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0.0) -> npt.NDArray:
+def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.NDArray[np.complex128]:
     r"""
     Applies IQ imbalance to the complex time-domain signal $x[n]$.
 
@@ -169,8 +174,9 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0.0) -> npt.ND
     Group:
         simulation-impairments
     """
-    if not np.iscomplexobj(x):
-        raise ValueError("Argument 'x' must be complex.")
+    x = verify_arraylike(x, complex=True, imaginary=True)
+    verify_scalar(amplitude, float=True)
+    verify_scalar(phase, float=True)
 
     phase = np.deg2rad(phase)
 
@@ -180,12 +186,12 @@ def iq_imbalance(x: npt.NDArray, amplitude: float, phase: float = 0.0) -> npt.ND
 
     y = gain_i * x.real + 1j * gain_q * x.imag
 
-    return y
+    return convert_output(y)
 
 
 @export
 def sample_rate_offset(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     offset: float,
     # offset: npt.ArrayLike,
     # offset_rate: npt.ArrayLike = 0.0,
@@ -238,8 +244,9 @@ def sample_rate_offset(
     Group:
         simulation-impairments
     """
-    if not x.ndim == 1:
-        raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
+    x = verify_arraylike(x, complex=True, ndim=1)
+    verify_scalar(offset, float=True)
+    verify_scalar(sample_rate, float=True, positive=True)
 
     # offset = np.asarray(offset)
     # if not (offset.ndim == 0 or offset.shape == x.shape):
@@ -258,12 +265,12 @@ def sample_rate_offset(
     farrow = FarrowResampler()
     y = farrow(x, rate)
 
-    return y
+    return convert_output(y)
 
 
 @export
 def frequency_offset(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     offset: npt.ArrayLike,
     offset_rate: npt.ArrayLike = 0.0,
     phase: npt.ArrayLike = 0.0,
@@ -322,24 +329,15 @@ def frequency_offset(
     Group:
         simulation-impairments
     """
-    if not x.ndim == 1:
-        raise ValueError(f"Argument 'x' must be 1D, not {x.ndim}D.")
-
-    offset = np.asarray(offset)
-    if not (offset.ndim == 0 or offset.shape == x.shape):
-        raise ValueError(f"Argument 'offset' must be scalar or have shape {x.shape}, not {offset.shape}.")
-
-    offset_rate = np.asarray(offset_rate)
-    if not (offset_rate.ndim == 0 or offset_rate.shape == x.shape):
-        raise ValueError(f"Argument 'offset_rate' must be scalar or have shape {x.shape}, not {offset_rate.shape}.")
-
-    phase = np.asarray(phase)
-    if not (phase.ndim == 0 or phase.shape == x.shape):
-        raise ValueError(f"Argument 'phase' must be scalar or have shape {x.shape}, not {phase.shape}.")
+    x = verify_arraylike(x, complex=True, ndim=1)
+    offset = verify_arraylike(offset, float=True)
+    offset_rate = verify_arraylike(offset_rate, float=True)
+    phase = verify_arraylike(phase, float=True)
+    verify_scalar(sample_rate, float=True, positive=True)
 
     t = np.arange(x.size) / sample_rate  # Time vector in seconds
     f = offset + offset_rate * t  # Frequency vector in Hz
     lo = np.exp(1j * (2 * np.pi * f * t + np.deg2rad(phase)))  # Local oscillator
     y = x * lo  # Apply frequency offset
 
-    return y
+    return convert_output(y)

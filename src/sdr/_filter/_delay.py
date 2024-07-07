@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.signal
 
-from .._helper import export
+from .._helper import export, verify_scalar
 from ._design_fir import _normalize_passband
 from ._fir import FIR
 
@@ -91,15 +91,8 @@ def design_frac_delay_fir(
     Group:
         dsp-arbitrary-resampling
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
-    if not length >= 2:
-        raise ValueError(f"Argument 'length' must be at least 2, not {length}.")
-
-    if not isinstance(delay, (int, float)):
-        raise TypeError(f"Argument 'delay' must be a number, not {type(delay).__name__}.")
-    if not 0 <= delay <= 1:
-        raise ValueError(f"Argument 'delay' must be between 0 and 1, not {delay}.")
+    verify_scalar(length, int=True, inclusive_min=2)
+    verify_scalar(delay, float=True, inclusive_min=0, inclusive_max=1)
 
     N = length - (length % 2)  # The length guaranteed to be even
     h_ideal = _ideal_frac_delay(N, delay)
@@ -172,7 +165,11 @@ class FractionalDelay(FIR):
         dsp-arbitrary-resampling
     """
 
-    def __init__(self, length: int, delay: float):
+    def __init__(
+        self,
+        length: int,
+        delay: float,
+    ):
         r"""
         Creates a fractional delay FIR filter.
 
@@ -181,6 +178,9 @@ class FractionalDelay(FIR):
                 Filters with odd length are equivalent to an even-length filter with an appended zero.
             delay: The fractional delay $0 \le \Delta n \le 1$.
         """
+        verify_scalar(length, int=True, inclusive_min=2)
+        verify_scalar(delay, float=True, inclusive_min=0, inclusive_max=1)
+
         h = design_frac_delay_fir(length, delay)
         super().__init__(h)
 

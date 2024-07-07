@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool, verify_literal, verify_scalar
 from ._design_multirate import (
     design_multirate_fir,
     design_multirate_fir_linear,
@@ -267,24 +267,13 @@ class PolyphaseFIR(FIR):
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~PolyphaseFIR.__call__()`.
         """
-        if not isinstance(branches, int):
-            raise TypeError("Argument 'branches' must be an integer.")
-        if not branches >= 1:
-            raise ValueError(f"Argument 'branches' must be at least 1, not {branches}.")
-        self._branches = branches
+        self._branches = verify_scalar(branches, int=True, positive=True)
+        self._taps = verify_arraylike(taps, ndim=1)
+        self._input = verify_literal(input, ["hold", "top-to-bottom", "bottom-to-top"])
+        self._output = verify_literal(output, ["sum", "top-to-bottom", "bottom-to-top", "all"])
+        verify_bool(streaming)
 
-        self._taps = np.asarray(taps)
         self._polyphase_taps = polyphase_decompose(self.branches, self.taps)
-
-        if not input in ["hold", "top-to-bottom", "bottom-to-top"]:
-            raise ValueError(f"Argument 'input' must be 'hold', 'top-to-bottom', or 'bottom-to-top', not {input!r}.")
-        self._input = input
-
-        if not output in ["sum", "top-to-bottom", "bottom-to-top", "all"]:
-            raise ValueError(
-                f"Argument 'output' must be 'sum', 'top-to-bottom', 'bottom-to-top', or 'all', not {output!r}."
-            )
-        self._output = output
 
         # Determine the effective interpolation and decimation rates based on the input and output connection types
         self._interpolation = 1
@@ -300,7 +289,11 @@ class PolyphaseFIR(FIR):
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
+    def __call__(
+        self,
+        x: npt.ArrayLike,
+        mode: Literal["rate", "full"] = "rate",
+    ) -> npt.NDArray:
         r"""
         Filters the input signal $x[n]$ with the polyphase FIR filter.
 
@@ -322,9 +315,8 @@ class PolyphaseFIR(FIR):
             The filtered signal $y[n]$ with sample rate $f_s \cdot r$. The output length is dictated by
             the `mode` argument.
         """
-        x = np.atleast_1d(x)
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
+        x = verify_arraylike(x, atleast_1d=True, ndim=1)
+        verify_literal(mode, ["rate", "full"])
 
         if self.input == "hold":
             Y, self._state = _polyphase_input_hold(x, self._state, self.polyphase_taps, mode, self.streaming)
@@ -334,8 +326,6 @@ class PolyphaseFIR(FIR):
             )
         elif self.input == "bottom-to-top":
             Y, self._state = _polyphase_input_commutate(x, self._state, self.polyphase_taps, mode, True, self.streaming)
-        else:
-            raise NotImplementedError(f"Input connection type {self.input!r} is not supported.")
 
         if self.output == "sum":
             y = np.sum(Y, axis=0)
@@ -345,10 +335,8 @@ class PolyphaseFIR(FIR):
             y = Y.T.flatten()
         elif self.output == "all":
             y = Y
-        else:
-            raise NotImplementedError(f"Output connection type {self.output!r} is not supported.")
 
-        return y
+        return convert_output(y)
 
     def __repr__(self) -> str:
         h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
@@ -670,31 +658,25 @@ class Interpolator(PolyphaseFIR):
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Interpolator.__call__()`.
         """
-        if not isinstance(interpolation, int):
-            raise TypeError("Argument 'interpolation' must be an integer.")
-        if not interpolation >= 1:
-            raise ValueError(f"Argument 'interpolation' must be at least 1, not {interpolation}.")
-        self._method: Literal["kaiser", "linear", "linear-matlab", "zoh", "custom"]
+        verify_scalar(interpolation, int=True, positive=True)
+        verify_scalar(polyphase_order, int=True, positive=True)
+        verify_scalar(atten, float=True, positive=True)
+        verify_bool(streaming)
 
+        self._method: Literal["kaiser", "linear", "linear-matlab", "zoh", "custom"]
         if not isinstance(taps, str):
             self._method = "custom"
-            taps = np.asarray(taps)
-        elif taps == "kaiser":
-            self._method = "kaiser"
-            taps = design_multirate_fir(interpolation, 1, polyphase_order, atten)
-        elif taps == "linear":
-            self._method = "linear"
-            taps = design_multirate_fir_linear(interpolation)
-        elif taps == "linear-matlab":
-            self._method = "linear-matlab"
-            taps = design_multirate_fir_linear_matlab(interpolation)
-        elif taps == "zoh":
-            self._method = "zoh"
-            taps = design_multirate_fir_zoh(interpolation)
+            taps = verify_arraylike(taps, atleast_1d=True, ndim=1)
         else:
-            raise ValueError(
-                f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps}."
-            )
+            self._method = verify_literal(taps, ["kaiser", "linear", "linear-matlab", "zoh"])
+            if taps == "kaiser":
+                taps = design_multirate_fir(interpolation, 1, polyphase_order, atten)
+            elif taps == "linear":
+                taps = design_multirate_fir_linear(interpolation)
+            elif taps == "linear-matlab":
+                taps = design_multirate_fir_linear_matlab(interpolation)
+            elif taps == "zoh":
+                taps = design_multirate_fir_zoh(interpolation)
 
         super().__init__(interpolation, taps, input="hold", output="top-to-bottom", streaming=streaming)
 
@@ -846,20 +828,15 @@ class Decimator(PolyphaseFIR):
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Decimator.__call__()`.
         """
-        if not isinstance(decimation, int):
-            raise TypeError("Argument 'decimation' must be an integer.")
-        if not decimation >= 1:
-            raise ValueError(f"Argument 'decimation' must be at least 1, not {decimation}.")
-        self._method: Literal["kaiser", "custom"]
+        verify_scalar(decimation, int=True, positive=True)
 
+        self._method: Literal["kaiser", "custom"]
         if not isinstance(taps, str):
             self._method = "custom"
-            taps = np.asarray(taps)
-        elif taps == "kaiser":
-            self._method = "kaiser"
-            taps = design_multirate_fir(1, decimation, polyphase_order, atten)
+            taps = verify_arraylike(taps, atleast_1d=True, ndim=1)
         else:
-            raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps!r}.")
+            self._method = verify_literal(taps, ["kaiser"])
+            taps = design_multirate_fir(1, decimation, polyphase_order, atten)
 
         super().__init__(decimation, taps, input="bottom-to-top", output="sum", streaming=streaming)
 
@@ -1045,49 +1022,25 @@ class Resampler(PolyphaseFIR):
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Resampler.__call__()`.
         """
-        if not isinstance(interpolation, int):
-            raise TypeError(f"Argument 'interpolation' must be an integer, not {type(interpolation)}.")
-        if not interpolation >= 1:
-            raise ValueError(f"Argument 'interpolation' must be at least 1, not {interpolation}.")
-
-        if not isinstance(decimation, int):
-            raise TypeError(f"Argument 'decimation' must be an integer, not {type(decimation)}.")
-        if not decimation >= 1:
-            raise ValueError(f"Argument 'decimation' must be at least 1, not {decimation}.")
+        verify_scalar(interpolation, int=True, positive=True)
+        verify_scalar(decimation, int=True, positive=True)
 
         self._method: Literal["kaiser", "linear", "linear-matlab", "zoh", "custom"]
-
         if not isinstance(taps, str):
             self._method = "custom"
-            taps = np.asarray(taps)
-        elif taps == "kaiser":
-            self._method = "kaiser"
-            taps = design_multirate_fir(interpolation, decimation, polyphase_order, atten)
-        elif taps == "linear":
-            if not interpolation > 1:
-                raise ValueError(
-                    f"Argument 'interpolation' must be greater than 1 to use the 'linear' method, not {interpolation}."
-                )
-            self._method = "linear"
-            taps = design_multirate_fir_linear(interpolation)
-        elif taps == "linear-matlab":
-            if not interpolation > 1:
-                raise ValueError(
-                    f"Argument 'interpolation' must be greater than 1 to use the 'linear-matlab' method, not {interpolation}."
-                )
-            self._method = "linear-matlab"
-            taps = design_multirate_fir_linear_matlab(interpolation)
-        elif taps == "zoh":
-            if not interpolation > 1:
-                raise ValueError(
-                    f"Argument 'interpolation' must be greater than 1 to use the 'zoh' method, not {interpolation}."
-                )
-            self._method = "zoh"
-            taps = design_multirate_fir_zoh(interpolation)
+            taps = verify_arraylike(taps, atleast_1d=True, ndim=1)
         else:
-            raise ValueError(
-                f"Argument 'taps' must be 'kaiser', 'linear', 'linear-matlab', 'zoh', or an array-like, not {taps!r}."
-            )
+            self._method = verify_literal(taps, ["kaiser", "linear", "linear-matlab", "zoh"])
+            if taps == "kaiser":
+                taps = design_multirate_fir(interpolation, decimation, polyphase_order, atten)
+            else:
+                verify_scalar(interpolation, int=True, exclusive_min=1)
+                if taps == "linear":
+                    taps = design_multirate_fir_linear(interpolation)
+                elif taps == "linear-matlab":
+                    taps = design_multirate_fir_linear_matlab(interpolation)
+                elif taps == "zoh":
+                    taps = design_multirate_fir_zoh(interpolation)
 
         if interpolation == 1:
             # PolyphaseFIR configured like Decimator
@@ -1267,21 +1220,15 @@ class Channelizer(PolyphaseFIR):
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~Channelizer.__call__()`.
         """
-        if not isinstance(channels, int):
-            raise TypeError("Argument 'channels' must be an integer.")
-        if not channels >= 1:
-            raise ValueError(f"Argument 'channels' must be at least 1, not {channels}.")
-        self._channels = channels
-        self._method: Literal["kaiser", "custom"]
+        self._channels = verify_scalar(channels, int=True, positive=True)
 
+        self._method: Literal["kaiser", "custom"]
         if not isinstance(taps, str):
             self._method = "custom"
-            taps = np.asarray(taps)
-        elif taps == "kaiser":
-            self._method = "kaiser"
-            taps = design_multirate_fir(1, channels, polyphase_order, atten)
+            taps = verify_arraylike(taps, atleast_1d=True, ndim=1)
         else:
-            raise ValueError(f"Argument 'taps' must be 'kaiser', or an array-like, not {taps!r}.")
+            self._method = verify_literal(taps, ["kaiser"])
+            taps = design_multirate_fir(1, channels, polyphase_order, atten)
 
         super().__init__(channels, taps, input="bottom-to-top", output="all", streaming=streaming)
 
@@ -1289,7 +1236,11 @@ class Channelizer(PolyphaseFIR):
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
+    def __call__(
+        self,
+        x: npt.ArrayLike,
+        mode: Literal["rate", "full"] = "rate",
+    ) -> npt.NDArray:
         r"""
         Channelizes the input signal $x[n]$ with the polyphase FIR filter.
 

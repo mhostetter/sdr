@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_isinstance, verify_scalar
 from .._modulation import LinearModulation
 
 
@@ -68,7 +68,9 @@ class PED:
         return
 
     def __call__(
-        self, received: npt.NDArray[np.complex128], reference: npt.NDArray[np.complex128]
+        self,
+        received: npt.ArrayLike,
+        reference: npt.ArrayLike,
     ) -> npt.NDArray[np.float64]:
         r"""
         Detects the phase error.
@@ -81,13 +83,18 @@ class PED:
         Returns:
             The detected phase error $\theta_e[k]$ in radians.
         """
-        received = np.asarray(received)
-        reference = np.asarray(reference)
+        received = verify_arraylike(received, complex=True, atleast_1d=True, ndim=1)
+        reference = verify_arraylike(reference, complex=True, atleast_1d=True, ndim=1)
+
         reference = reference / np.abs(reference)  # Normalize the reference symbols
-        return np.angle(received * reference.conj())
+        phase_error = np.angle(received * reference.conj())
+
+        return convert_output(phase_error)
 
     def data_aided_error(
-        self, modem: LinearModulation, n_points: int = 1000
+        self,
+        modem: LinearModulation,
+        n_points: int = 1000,
     ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
         r"""
         Simulates the average phase error of the data-aided PED using the specified modulation scheme.
@@ -103,7 +110,9 @@ class PED:
         return _data_aided_error(self, modem, n_points)
 
     def decision_directed_error(
-        self, modem: LinearModulation, n_points: int = 1000
+        self,
+        modem: LinearModulation,
+        n_points: int = 1000,
     ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
         r"""
         Simulates the average phase error of the decision-directed PED using the specified modulation scheme.
@@ -186,7 +195,11 @@ class MLPED(PED):
         synchronization-ped
     """
 
-    def __init__(self, A_received: float = 1.0, A_reference: float = 1.0) -> None:
+    def __init__(
+        self,
+        A_received: float = 1.0,
+        A_reference: float = 1.0,
+    ) -> None:
         """
         Initializes the ML-PED.
 
@@ -194,21 +207,32 @@ class MLPED(PED):
             A_received: The received signal RMS amplitude $A_{rx,rms}$.
             A_reference: The reference signal RMS amplitude $A_{ref,rms}$.
         """
-        self._A_received = A_received
-        self._A_reference = A_reference
+        self.A_received = A_received  # Uses the property setter
+        self.A_reference = A_reference  # Uses the property setter
 
-    def __call__(self, received: npt.ArrayLike, reference: npt.ArrayLike) -> np.ndarray:
-        received = np.asarray(received)
-        reference = np.asarray(reference)
-        return received.imag * reference.real - received.real * reference.imag
+    def __call__(
+        self,
+        received: npt.ArrayLike,
+        reference: npt.ArrayLike,
+    ) -> np.ndarray:
+        received = verify_arraylike(received, complex=True, atleast_1d=True, ndim=1)
+        reference = verify_arraylike(reference, complex=True, atleast_1d=True, ndim=1)
+
+        phase_error = received.imag * reference.real - received.real * reference.imag
+
+        return convert_output(phase_error)
 
     def data_aided_error(
-        self, modem: LinearModulation, n_points: int = 1000
+        self,
+        modem: LinearModulation,
+        n_points: int = 1000,
     ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
         return _data_aided_error(self, modem, n_points, self._A_received, self._A_reference)
 
     def decision_directed_error(
-        self, modem: LinearModulation, n_points: int = 1000
+        self,
+        modem: LinearModulation,
+        n_points: int = 1000,
     ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
         return _decision_directed_error(self, modem, n_points, self._A_received, self._A_reference)
 
@@ -225,7 +249,7 @@ class MLPED(PED):
 
     @A_received.setter
     def A_received(self, A_received: float) -> None:
-        self._A_received = A_received
+        self._A_received = verify_scalar(A_received, float=True, positive=True)
 
     @property
     def A_reference(self) -> float:
@@ -236,18 +260,21 @@ class MLPED(PED):
 
     @A_reference.setter
     def A_reference(self, A_reference: float) -> None:
-        self._A_reference = A_reference
+        self._A_reference = verify_scalar(A_reference, float=True, positive=True)
 
 
 def _data_aided_error(
-    ped: PED, modem: LinearModulation, n_points: int = 1000, A_received: float = 1.0, A_reference: float = 1
+    ped: PED,
+    modem: LinearModulation,
+    n_points: int = 1000,
+    A_received: float = 1.0,
+    A_reference: float = 1,
 ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
-    if not isinstance(ped, PED):
-        raise TypeError(f"Argument 'ped' must be a PED, not {type(ped)}.")
-    if not isinstance(modem, LinearModulation):
-        raise TypeError(f"Argument 'modem' must be a LinearModulation, not {type(modem)}.")
-    if not isinstance(n_points, int):
-        raise TypeError(f"Argument 'n_points' must be an int, not {type(n_points)}.")
+    verify_isinstance(ped, PED)
+    verify_isinstance(modem, LinearModulation)
+    verify_scalar(n_points, int=True, positive=True)
+    verify_scalar(A_received, float=True, positive=True)
+    verify_scalar(A_reference, float=True, positive=True)
 
     error = np.linspace(-np.pi, np.pi, n_points)
     da_error = np.zeros(n_points, dtype=float)
@@ -260,14 +287,17 @@ def _data_aided_error(
 
 
 def _decision_directed_error(
-    ped: PED, modem: LinearModulation, n_points: int = 1000, A_received: float = 1.0, A_reference: float = 1
+    ped: PED,
+    modem: LinearModulation,
+    n_points: int = 1000,
+    A_received: float = 1.0,
+    A_reference: float = 1,
 ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
-    if not isinstance(ped, PED):
-        raise TypeError(f"Argument 'ped' must be a PED, not {type(ped)}.")
-    if not isinstance(modem, LinearModulation):
-        raise TypeError(f"Argument 'modem' must be a LinearModulation, not {type(modem)}.")
-    if not isinstance(n_points, int):
-        raise TypeError(f"Argument 'n_points' must be an int, not {type(n_points)}.")
+    verify_isinstance(ped, PED)
+    verify_isinstance(modem, LinearModulation)
+    verify_scalar(n_points, int=True, positive=True)
+    verify_scalar(A_received, float=True, positive=True)
+    verify_scalar(A_reference, float=True, positive=True)
 
     error = np.linspace(-np.pi, np.pi, n_points)
     dd_error = np.zeros(n_points, dtype=float)
