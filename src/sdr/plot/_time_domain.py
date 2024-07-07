@@ -26,6 +26,7 @@ def time_domain(
     sample_rate: float | None = None,
     centered: bool = False,
     offset: float = 0.0,
+    ax: plt.Axes | None = None,
     diff: Literal["color", "line"] = "color",
     **kwargs,
 ): ...
@@ -37,6 +38,9 @@ def time_domain(
     x: npt.NDArray,
     *,
     sample_rate: float | None = None,
+    centered: bool = False,
+    offset: float = 0.0,
+    ax: plt.Axes | None = None,
     diff: Literal["color", "line"] = "color",
     **kwargs,
 ): ...
