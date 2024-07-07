@@ -291,6 +291,7 @@ def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
         The spectrum of $y[n]$ has 3 additional copies of the spectrum of $x[n]$.
 
         .. ipython:: python
+            :okwarning:
 
             @savefig sdr_upsample_3.png
             plt.figure(); \
