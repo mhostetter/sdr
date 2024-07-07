@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import linear
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_scalar
 from .._probability import Q, Qinv
 
 
@@ -114,17 +114,15 @@ class ReplicaCorrelator:
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(10), label="ENR = 10 dB"); \
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(15), label="ENR = 15 dB");
         """
-        if not isinstance(enr, (int, float)):
-            raise TypeError(f"Argument 'enr' must be a number, not {type(enr)}.")
-
+        verify_scalar(enr, float=True)
         if p_fa is None:
             p_fa = np.logspace(-10, 0, 101)
         else:
-            p_fa = np.asarray(p_fa)
+            p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
 
         p_d = ReplicaCorrelator.p_d(enr, p_fa, complex=complex)
 
-        return p_fa, p_d
+        return convert_output(p_fa), convert_output(p_d)
 
     @staticmethod
     def p_d(
@@ -171,18 +169,17 @@ class ReplicaCorrelator:
                 sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-6), label="$P_{fa} = 10^{-6}$"); \
                 sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-7), label="$P_{fa} = 10^{-7}$");
         """
-        enr = np.asarray(enr)
-        p_fa = np.asarray(p_fa)
+        enr = verify_arraylike(enr, float=True)
+        p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
 
         enr_linear = linear(enr)
-
         if not complex:
             d2 = enr_linear  # Deflection coefficient
         else:
             d2 = 2 * enr_linear  # Deflection coefficient
         p_d = Q(Qinv(p_fa) - np.sqrt(d2))
 
-        return p_d
+        return convert_output(p_d)
 
     @staticmethod
     def p_fa(
@@ -216,16 +213,16 @@ class ReplicaCorrelator:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
               Equations 4.12 and 13.6.
         """
-        threshold = np.asarray(threshold)
-        energy = np.asarray(energy)
-        sigma2 = np.asarray(sigma2)
+        threshold = verify_arraylike(threshold, float=True)
+        energy = verify_arraylike(energy, float=True, non_negative=True)
+        sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
 
         if not complex:
             p_fa = Q(threshold / np.sqrt(energy * sigma2))
         else:
             p_fa = Q(threshold / np.sqrt(energy * sigma2 / 2))
 
-        return p_fa
+        return convert_output(p_fa)
 
     @staticmethod
     def threshold(
@@ -259,9 +256,9 @@ class ReplicaCorrelator:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
               Equations 4.12 and 13.6.
         """
-        p_fa = np.asarray(p_fa)
-        energy = np.asarray(energy)
-        sigma2 = np.asarray(sigma2)
+        p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+        energy = verify_arraylike(energy, float=True, non_negative=True)
+        sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
 
         # Compute the variance of the test statistic
         if not complex:
@@ -269,7 +266,7 @@ class ReplicaCorrelator:
         else:
             gamma_prime = np.sqrt(energy * sigma2 / 2) * Qinv(p_fa)
 
-        return gamma_prime
+        return convert_output(gamma_prime)
 
     # def test_statistic(self, x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     #     """

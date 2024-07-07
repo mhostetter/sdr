@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.stats
 
 from .._conversion import linear
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_scalar
 
 
 @export
@@ -124,19 +124,16 @@ class EnergyDetector:
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-10, 1_000), label=f"N = 1,000"); \
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-10, 5_000), label=f"N = 5,000");
         """
-        if not isinstance(snr, (int, float)):
-            raise TypeError(f"Argument 'snr' must be a number, not {type(snr)}.")
-        if not isinstance(N_nc, int):
-            raise TypeError(f"Argument 'N_nc' must be an integer, not {type(N_nc)}.")
-
+        verify_scalar(snr, float=True)
+        verify_scalar(N_nc, int=True, positive=True)
         if p_fa is None:
             p_fa = np.logspace(-10, 0, 101)
         else:
-            p_fa = np.asarray(p_fa)
+            p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
 
         p_d = EnergyDetector.p_d(snr, N_nc, p_fa, complex=complex)
 
-        return p_fa, p_d
+        return convert_output(p_fa), convert_output(p_d)
 
     @staticmethod
     def p_d(
@@ -186,12 +183,11 @@ class EnergyDetector:
                 sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-4), label="$P_{fa} = 10^{-4}$"); \
                 sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-5), label="$P_{fa} = 10^{-5}$");
         """
-        snr = np.asarray(snr)
-        N_nc = np.asarray(N_nc)
-        p_fa = np.asarray(p_fa)
+        snr = verify_arraylike(snr, float=True)
+        N_nc = verify_arraylike(N_nc, int=True, positive=True)
+        p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
 
         snr_linear = linear(snr)
-
         if not complex:
             nu = N_nc  # Degrees of freedom
             gamma_dprime = scipy.stats.chi2.isf(p_fa, nu)  # Normalized threshold
@@ -201,7 +197,7 @@ class EnergyDetector:
             gamma_dprime = scipy.stats.chi2.isf(p_fa, nu)  # Normalized threshold
             p_d = scipy.stats.chi2.sf(gamma_dprime / (snr_linear + 1), nu)
 
-        return p_d
+        return convert_output(p_d)
 
     @staticmethod
     def p_fa(
@@ -235,9 +231,9 @@ class EnergyDetector:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
               Equation 5.2.
         """
-        threshold = np.asarray(threshold)
-        N_nc = np.asarray(N_nc)
-        sigma2 = np.asarray(sigma2)
+        threshold = verify_arraylike(threshold, float=True)
+        N_nc = verify_arraylike(N_nc, int=True, positive=True)
+        sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
 
         if not complex:
             nu = N_nc  # Degrees of freedom
@@ -246,7 +242,7 @@ class EnergyDetector:
             nu = 2 * N_nc  # Degrees of freedom
             p_fa = scipy.stats.chi2.sf(threshold / (sigma2 / 2), nu)
 
-        return p_fa
+        return convert_output(p_fa)
 
     @staticmethod
     def threshold(
@@ -280,9 +276,9 @@ class EnergyDetector:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
               Equation 5.2.
         """
-        N_nc = np.asarray(N_nc)
-        p_fa = np.asarray(p_fa)
-        sigma2 = np.asarray(sigma2)
+        N_nc = verify_arraylike(N_nc, int=True, positive=True)
+        p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+        sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
 
         if not complex:
             nu = N_nc  # Degrees of freedom
@@ -291,7 +287,7 @@ class EnergyDetector:
             nu = 2 * N_nc  # Degrees of freedom
             gamma_prime = sigma2 / 2 * scipy.stats.chi2.isf(p_fa, nu)
 
-        return gamma_prime  # type: ignore
+        return convert_output(gamma_prime)
 
     # def test_statistic(self, x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     #     """

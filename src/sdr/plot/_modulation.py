@@ -9,16 +9,17 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_arraylike, verify_bool, verify_isinstance, verify_scalar
 from .._link_budget._capacity import shannon_limit_ebn0 as _shannon_limit_ebn0
 from .._modulation import LinearModulation, PiMPSK
+from ._helper import verify_sample_rate
 from ._rc_params import RC_PARAMS
 from ._time_domain import raster
 
 
 @export
 def constellation(
-    x_hat: npt.NDArray[np.complex128],
+    x_hat: npt.ArrayLike,
     limits: tuple[float, float] | None = None,
     persistence: bool = False,
     colorbar: bool = True,
@@ -77,6 +78,11 @@ def constellation(
     Group:
         plot-modulation
     """
+    x_hat = verify_arraylike(x_hat, complex=True, ndim=1)
+    verify_bool(persistence)
+    verify_bool(colorbar)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -131,7 +137,7 @@ def constellation(
 
 @export
 def symbol_map(
-    modulation: LinearModulation | npt.NDArray[np.complex128],
+    modulation: LinearModulation | npt.ArrayLike,
     annotate: bool | Literal["bin"] = True,
     limits: tuple[float, float] | None = None,
     ax: plt.Axes | None = None,
@@ -168,6 +174,10 @@ def symbol_map(
     Group:
         plot-modulation
     """
+    verify_isinstance(modulation, (LinearModulation, np.ndarray))
+    verify_isinstance(annotate, (bool, str))
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -234,7 +244,7 @@ def symbol_map(
 
 @export
 def eye(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     sps: int,
     span: int = 2,
     sample_rate: float | None = None,
@@ -308,6 +318,15 @@ def eye(
     Group:
         plot-modulation
     """
+    x = verify_arraylike(x, complex=True, ndim=1)
+    verify_scalar(sps, int=True, inclusive_min=2)
+    verify_scalar(span, int=True, positive=True)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate, default=sps)
+    verify_isinstance(color, str)
+    verify_bool(persistence)
+    verify_bool(colorbar)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
 
         def _eye(ax, xx):
@@ -315,14 +334,14 @@ def eye(
                 xx,
                 length=span * sps + 1,
                 stride=sps,
-                sample_rate=sample_rate if sample_rate is not None else sps,
+                sample_rate=sample_rate,
                 color=color,
                 persistence=persistence,
                 colorbar=colorbar,
                 ax=ax,
                 **kwargs,
             )
-            if sample_rate is None:
+            if not sample_rate_provided:
                 ax.set_xlabel("Symbol, $k$")
 
             # Make y-axis symmetric
@@ -346,7 +365,7 @@ def eye(
 
 @export
 def phase_tree(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     sps: int,
     span: int = 2,
     sample_rate: float | None = None,
@@ -386,6 +405,13 @@ def phase_tree(
     Group:
         plot-modulation
     """
+    x = verify_arraylike(x, complex=True, ndim=1)
+    verify_scalar(sps, int=True, inclusive_min=2)
+    verify_scalar(span, int=True, positive=True)
+    sample_rate, sample_rate_provided = verify_sample_rate(sample_rate, default=sps)
+    verify_isinstance(color, str)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -407,12 +433,12 @@ def phase_tree(
 
         raster(
             phase_strided,
-            sample_rate=sample_rate if sample_rate is not None else sps,
+            sample_rate=sample_rate,
             color=color,
             ax=ax,
             **kwargs,
         )
-        if sample_rate is None:
+        if not sample_rate_provided:
             ax.set_xlabel("Symbol, $k$")
 
         # Make y-axis symmetric and have ticks every 180 degrees
@@ -427,8 +453,8 @@ def phase_tree(
 
 @export
 def ber(
-    ebn0: npt.NDArray[np.float64],
-    ber: npt.NDArray[np.float64],
+    ebn0: npt.ArrayLike,
+    ber: npt.ArrayLike,
     ax: plt.Axes | None = None,
     **kwargs,
 ):
@@ -463,6 +489,10 @@ def ber(
     Group:
         plot-modulation
     """
+    ebn0 = verify_arraylike(ebn0, float=True, ndim=1)
+    ber = verify_arraylike(ber, float=True, ndim=1)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -481,8 +511,8 @@ def ber(
 
 @export
 def ser(
-    esn0: npt.NDArray[np.float64],
-    ser: npt.NDArray[np.float64],
+    esn0: npt.ArrayLike,
+    ser: npt.ArrayLike,
     ax: plt.Axes | None = None,
     **kwargs,
 ):
@@ -517,6 +547,10 @@ def ser(
     Group:
         plot-modulation
     """
+    esn0 = verify_arraylike(esn0, float=True, ndim=1)
+    ser = verify_arraylike(ser, float=True, ndim=1)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -565,6 +599,9 @@ def shannon_limit_ebn0(
     Group:
         plot-modulation
     """
+    verify_scalar(rho, float=True, non_negative=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()

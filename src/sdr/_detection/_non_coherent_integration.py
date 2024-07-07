@@ -11,7 +11,7 @@ import scipy.optimize
 from typing_extensions import Literal
 
 from .._conversion import db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool, verify_literal
 from ._theory import p_d
 
 
@@ -128,16 +128,13 @@ def non_coherent_gain(
     Group:
         detection-non-coherent-integration
     """
-    n_nc = np.asarray(n_nc, dtype=object)  # Downstream functions want a Python int
-    snr = np.asarray(snr)
-    p_fa = np.asarray(p_fa)
-
-    if np.any(n_nc < 1):
-        raise ValueError(f"Argument 'n_nc' must be at least 1, not {n_nc}.")
-    if np.any(p_fa < 0) or np.any(p_fa > 1):
-        raise ValueError(f"Argument 'p_fa' must be between 0 and 1, not {p_fa}.")
-    if snr_ref not in ["input", "output"]:
-        raise ValueError(f"Argument 'snr_ref' must be either 'input' or 'output', not {snr_ref}.")
+    n_nc = verify_arraylike(n_nc, dtype=object, positive=True)  # TODO: Downstream functions want a Python int?
+    snr = verify_arraylike(snr, float=True)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    verify_literal(detector, ["linear", "square-law"])
+    verify_bool(complex)
+    verify_literal(snr_ref, ["input", "output"])
+    verify_bool(extrapolate)
 
     if snr_ref == "input":
         g_nc = _non_coherent_gain_in(n_nc, snr, p_fa, detector, complex)
@@ -147,15 +144,16 @@ def non_coherent_gain(
     if extrapolate:
         g_nc = _extrapolate_non_coherent_gain(n_nc, snr, p_fa, g_nc, snr_ref, detector, complex)
 
-    if g_nc.ndim == 0:
-        g_nc = float(g_nc)
-
-    return g_nc
+    return convert_output(g_nc)
 
 
 @np.vectorize
 def _non_coherent_gain_in(
-    n_nc: int, snr: float, p_fa: float, detector: Literal["linear", "square-law"], complex: bool
+    n_nc: int,
+    snr: float,
+    p_fa: float,
+    detector: Literal["linear", "square-law"],
+    complex: bool,
 ) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the input of the non-coherent integrator.
@@ -181,7 +179,11 @@ def _non_coherent_gain_in(
 
 @np.vectorize
 def _non_coherent_gain_out(
-    n_nc: int, snr: float, p_fa: float, detector: Literal["linear", "square-law"], complex: bool
+    n_nc: int,
+    snr: float,
+    p_fa: float,
+    detector: Literal["linear", "square-law"],
+    complex: bool,
 ) -> float:
     """
     Solves for the non-coherent gain when the SNR is referenced at the output of the non-coherent integrator.

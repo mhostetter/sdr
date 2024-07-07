@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.integrate
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_arraylike, verify_literal, verify_scalar
 from ._power import average_power
 
 
@@ -117,8 +117,9 @@ def evm(
     Group:
         measurement-modulation
     """
-    x_hat = np.asarray(x_hat)
-    ref = np.asarray(ref)
+    x_hat = verify_arraylike(x_hat, complex=True)
+    ref = verify_arraylike(ref, complex=True)
+    norm = verify_literal(norm, ["average-power-ref", "average-power", "peak-power"])
 
     if norm == "average-power-ref":
         ref_power = average_power(ref)
@@ -126,10 +127,6 @@ def evm(
         ref_power = average_power(x_hat)
     elif norm == "peak-power":
         ref_power = np.max(np.abs(x_hat) ** 2)
-    else:
-        raise ValueError(
-            f"Argument 'norm' must be one of 'average-power-ref', 'average-power', or 'peak-power', not {ref}."
-        )
 
     if ref.shape == x_hat.shape:
         # Compute the error vectors to each reference symbol
@@ -149,15 +146,17 @@ def evm(
     inst_evm = 100 * np.sqrt(np.abs(error_vectors) ** 2 / ref_power)
     if output == "all":
         return inst_evm
-    if isinstance(output, (int, float)) and 0 <= output <= 100:
-        perc_evm = np.percentile(inst_evm, output)
-        return perc_evm
 
-    raise ValueError(f"Argument 'output' must be 'rms' or a float between 0 and 100, not {output}.")
+    verify_scalar(output, float=True, inclusive_min=0, inclusive_max=100)
+    perc_evm = np.percentile(inst_evm, output)
+    return perc_evm
 
 
 @export
-def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
+def rms_bandwidth(
+    x: npt.ArrayLike,
+    sample_rate: float = 1.0,
+) -> float:
     r"""
     Measures the RMS bandwidth $B_{\text{rms}}$ of the signal $x[n]$.
 
@@ -239,7 +238,8 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     Group:
         measurement-modulation
     """
-    x = np.asarray(x)
+    x = verify_arraylike(x, complex=True, ndim=1)
+    verify_scalar(sample_rate, float=True, positive=True)
 
     f, psd = scipy.signal.welch(
         x, fs=sample_rate, detrend=False, return_onesided=False, scaling="density", average="mean"
@@ -263,7 +263,10 @@ def rms_bandwidth(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
 
 
 @export
-def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
+def rms_integration_time(
+    x: npt.ArrayLike,
+    sample_rate: float = 1.0,
+) -> float:
     r"""
     Measures the RMS integration time $T_{\text{rms}}$ of the signal $x[n]$.
 
@@ -361,7 +364,9 @@ def rms_integration_time(x: npt.ArrayLike, sample_rate: float = 1.0) -> float:
     Group:
         measurement-modulation
     """
-    x = np.asarray(x)
+    x = verify_arraylike(x, complex=False, ndim=1)
+    verify_scalar(sample_rate, float=True, positive=True)
+
     t = np.arange(x.size) / sample_rate
 
     # Calculate the centroid of the signal

@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.signal
 
-from ._helper import export
+from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
 
 
 @export
@@ -128,20 +128,15 @@ class FarrowResampler:
         Creates a new Farrow arbitrary resampler.
 
         Arguments:
-            order: The order of the piecewise polynomial. Must be between 1 and 4.
+            order: The order of the piecewise polynomial, which must be between 1 and 4.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
-        if not isinstance(order, int):
-            raise TypeError(f"Argument 'order' must be an integer, not {type(order).__name__}.")
-        if not 1 <= order <= 4:
-            raise ValueError("Argument 'order' must be in the range [1, 4], not {order}.")
-        self._order = order
-
-        self._streaming = streaming
+        self._order = verify_scalar(order, int=True, inclusive_min=1, inclusive_max=4)
+        self._streaming = verify_bool(streaming)
         self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
         self._mu_next: float  # The next fractional sample delay value
 
@@ -183,8 +178,6 @@ class FarrowResampler:
                     [1 / 24, 1 / 12, -1 / 24, -1 / 12, 0],
                 ]
             ).T
-        else:
-            raise ValueError(f"Argument 'order' must be in the range [1, 4], not {order}.")
 
         self.reset()
 
@@ -192,7 +185,7 @@ class FarrowResampler:
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.NDArray, rate: float) -> npt.NDArray:
+    def __call__(self, x: npt.ArrayLike, rate: float) -> npt.NDArray:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
@@ -206,12 +199,9 @@ class FarrowResampler:
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
-        if not isinstance(rate, (int, float)):
-            raise TypeError(f"Argument 'rate' must be an integer or float, not {type(rate).__name__}.")
-        if not rate > 0:
-            raise ValueError(f"Argument 'rate' must be positive, not {rate}.")
+        x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
+        verify_scalar(rate, float=True, positive=True)
 
-        x = np.atleast_1d(x)
         if self.streaming:
             # Prepend previous inputs from last streaming call
             x_pad = np.concatenate((self._state, x))
@@ -257,7 +247,7 @@ class FarrowResampler:
         for i in range(1, self.order + 1):
             y += mu * y + ys[i][int_idxs]
 
-        return y
+        return convert_output(y)
 
     ##############################################################################
     # Streaming mode
@@ -280,10 +270,7 @@ class FarrowResampler:
         if state is None:
             self._state = np.array([])
         else:
-            state = np.asarray(state)
-            if not state.size == self._taps.shape[1] - 1:
-                raise ValueError(f"Argument 'state' must have {self._taps.shape[1]} elements, not {state.size}.")
-            self._state = state
+            self._state = verify_arraylike(state, complex=True, size=self._taps.shape[1] - 1)
 
         # Initial fractional sample delay accounts for filter delay
         self._mu_next = 0
@@ -304,8 +291,11 @@ class FarrowResampler:
         Group:
             Streaming mode only
         """
+        verify_scalar(rate, float=True, positive=True)
+
         x = np.zeros_like(self.state)
         y = self(x, rate)
+
         return y
 
     @property

@@ -10,7 +10,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.signal
 
-from .._helper import export
+from .._helper import export, verify_arraylike, verify_scalar
 
 
 @export
@@ -54,26 +54,12 @@ def design_multirate_fir(
     Group:
         dsp-polyphase-filtering
     """
-    if not isinstance(interpolation, int):
-        raise TypeError(f"Argument 'interpolation' must be an integer, not {interpolation}.")
-    if not interpolation >= 1:
-        raise ValueError(f"Argument 'interpolation' must be at least 1, not {interpolation}.")
-    P = interpolation
+    P = verify_scalar(interpolation, int=True, positive=True)
+    Q = verify_scalar(decimation, int=True, positive=True)
+    verify_scalar(polyphase_order, int=True, positive=True, odd=True)
+    verify_scalar(atten, float=True, positive=True)
 
-    if not isinstance(decimation, int):
-        raise TypeError(f"Argument 'decimation' must be an integer, not {decimation}.")
-    if not decimation >= 1:
-        raise ValueError(f"Argument 'decimation' must be at least 1, not {decimation}.")
-    Q = decimation
-
-    if not isinstance(polyphase_order, int):
-        raise TypeError(f"Argument 'polyphase_order' must be an integer, not {polyphase_order}.")
-    if not polyphase_order >= 1:
-        raise ValueError(f"Argument 'polyphase_order' must be at least 1, not {polyphase_order}.")
-    if not (polyphase_order + 1) % 2 == 0:
-        raise ValueError(f"Argument 'polyphase_order' must be odd, not {polyphase_order}.")
     half_length = (polyphase_order + 1) // 2
-
     B = P if P > 1 else Q  # The number of polyphase branches
     R = max(P, Q)  # Inverse of the filter's fractional bandwidth
 
@@ -189,15 +175,8 @@ def polyphase_decompose(branches: int, taps: npt.ArrayLike) -> npt.NDArray:
     Group:
         dsp-polyphase-filtering
     """
-    if not isinstance(branches, int):
-        raise TypeError(f"Argument 'branches' must be an integer, not {branches}.")
-    if not branches >= 1:
-        raise ValueError(f"Argument 'branches' must be at least 1, not {branches}.")
-    B = branches
-
-    taps = np.asarray(taps)
-    if not taps.ndim == 1:
-        raise ValueError(f"Argument 'taps' must be a 1-D array, not {taps.ndim}-D.")
+    B = verify_scalar(branches, int=True, positive=True)
+    taps = verify_arraylike(taps, ndim=1)
 
     N = math.ceil(taps.size / B) * B  # Filter length
 

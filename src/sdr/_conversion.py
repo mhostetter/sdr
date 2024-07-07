@@ -10,7 +10,7 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from ._helper import export
+from ._helper import convert_output, export, verify_arraylike, verify_literal
 
 ##############################################################################
 # Decibels
@@ -66,18 +66,17 @@ def db(
     Group:
         conversions-decibels
     """
-    x = np.asarray(x)
-    if np.any(x < 0):
-        raise ValueError("Argument 'x' must be non-negative.")
+    x = verify_arraylike(x, non_negative=True)
+    verify_literal(type, ["value", "power", "voltage"])
 
     with np.errstate(divide="ignore"):
         # Ignore divide by zero warning -- we're okay with -inf
-        if type in ["value", "power"]:
-            return 10 * np.log10(x)
         if type == "voltage":
-            return 20 * np.log10(x)
+            x_db = 20 * np.log10(x)
+        else:
+            x_db = 10 * np.log10(x)
 
-    raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
+    return convert_output(x_db)
 
 
 @export
@@ -129,17 +128,18 @@ def linear(
     Group:
         conversions-decibels
     """
-    x = np.asarray(x)
+    x = verify_arraylike(x)
+    verify_literal(type, ["value", "power", "voltage"])
 
     with warnings.catch_warnings():
         # Ignore scalar power overflow warning -- we're okay with inf
         warnings.simplefilter("ignore", RuntimeWarning)
-        if type in ["value", "power"]:
-            return 10 ** (x / 10)
         if type == "voltage":
-            return 10 ** (x / 20)
+            x_linear = 10 ** (x / 20)
+        else:
+            x_linear = 10 ** (x / 10)
 
-    raise ValueError(f"Argument 'type' must be 'value', 'power', or 'voltage', not {type!r}.")
+    return convert_output(x_linear)
 
 
 ##############################################################################
@@ -148,7 +148,11 @@ def linear(
 
 
 @export
-def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np.float64]:
+def ebn0_to_esn0(
+    ebn0: npt.ArrayLike,
+    bps: npt.ArrayLike,
+    rate: npt.ArrayLike = 1.0,
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_b/N_0$ to $E_s/N_0$.
 
@@ -181,14 +185,23 @@ def ebn0_to_esn0(ebn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
     Group:
         conversions-snrs
     """
-    ebn0 = np.asarray(ebn0)  # Energy per information bit
+    ebn0 = verify_arraylike(ebn0)  # Energy per information bit
+    bps = verify_arraylike(bps, int=True, positive=True)
+    rate = verify_arraylike(rate, float=True, inclusive_min=0, inclusive_max=1)
+
     ecn0 = ebn0 + db(rate)  # Energy per coded bit
     esn0 = ecn0 + db(bps)  # Energy per symbol
-    return esn0
+
+    return convert_output(esn0)
 
 
 @export
-def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float64]:
+def ebn0_to_snr(
+    ebn0: npt.ArrayLike,
+    bps: npt.ArrayLike,
+    rate: npt.ArrayLike = 1.0,
+    sps: npt.ArrayLike = 1,
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_b/N_0$ to $S/N$.
 
@@ -222,9 +235,15 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
     Group:
         conversions-snrs
     """
+    ebn0 = verify_arraylike(ebn0)  # Energy per information bit
+    bps = verify_arraylike(bps, int=True, positive=True)
+    rate = verify_arraylike(rate, float=True, inclusive_min=0, inclusive_max=1)
+    sps = verify_arraylike(sps, int=True, positive=True)
+
     esn0 = ebn0_to_esn0(ebn0, bps, rate=rate)  # SNR per symbol
     snr = esn0 - db(sps)  # SNR per sample
-    return snr
+
+    return convert_output(snr)
 
 
 ##############################################################################
@@ -233,7 +252,11 @@ def ebn0_to_snr(ebn0: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> n
 
 
 @export
-def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np.float64]:
+def esn0_to_ebn0(
+    esn0: npt.ArrayLike,
+    bps: npt.ArrayLike,
+    rate: npt.ArrayLike = 1.0,
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_s/N_0$ to $E_b/N_0$.
 
@@ -266,14 +289,21 @@ def esn0_to_ebn0(esn0: npt.ArrayLike, bps: int, rate: int = 1) -> npt.NDArray[np
     Group:
         conversions-snrs
     """
-    esn0 = np.asarray(esn0)
+    esn0 = verify_arraylike(esn0)  # Energy per symbol
+    bps = verify_arraylike(bps, int=True, positive=True)
+    rate = verify_arraylike(rate, float=True, inclusive_min=0, inclusive_max=1)
+
     ecn0 = esn0 - db(bps)  # Energy per coded bit
     ebn0 = ecn0 - db(rate)  # Energy per information bit
-    return ebn0
+
+    return convert_output(ebn0)
 
 
 @export
-def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
+def esn0_to_snr(
+    esn0: npt.ArrayLike,
+    sps: npt.ArrayLike = 1,
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from $E_s/N_0$ to $S/N$.
 
@@ -305,9 +335,12 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
     Group:
         conversions-snrs
     """
-    esn0 = np.asarray(esn0)  # SNR per symbol
+    esn0 = verify_arraylike(esn0)  # Energy per symbol
+    sps = verify_arraylike(sps, int=True, positive=True)
+
     snr = esn0 - db(sps)  # SNR per sample
-    return snr
+
+    return convert_output(snr)
 
 
 ##############################################################################
@@ -316,7 +349,12 @@ def esn0_to_snr(esn0: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
 
 
 @export
-def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> npt.NDArray[np.float64]:
+def snr_to_ebn0(
+    snr: npt.ArrayLike,
+    bps: npt.ArrayLike,
+    rate: npt.ArrayLike = 1.0,
+    sps: npt.ArrayLike = 1,
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from $S/N$ to $E_b/N_0$.
 
@@ -350,14 +388,22 @@ def snr_to_ebn0(snr: npt.ArrayLike, bps: int, rate: int = 1, sps: int = 1) -> np
     Group:
         conversions-snrs
     """
-    snr = np.asarray(snr)  # SNR per sample
+    snr = verify_arraylike(snr)  # SNR per sample
+    bps = verify_arraylike(bps, int=True, positive=True)
+    rate = verify_arraylike(rate, float=True, inclusive_min=0, inclusive_max=1)
+    sps = verify_arraylike(sps, int=True, positive=True)
+
     esn0 = snr_to_esn0(snr, sps=sps)  # Energy per symbol
     ebn0 = esn0_to_ebn0(esn0, bps, rate=rate)  # Energy per information bit
-    return ebn0
+
+    return convert_output(ebn0)
 
 
 @export
-def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
+def snr_to_esn0(
+    snr: npt.ArrayLike,
+    sps: npt.ArrayLike = 1,
+) -> npt.NDArray[np.float64]:
     r"""
     Converts from $S/N$ to $E_s/N_0$.
 
@@ -389,6 +435,9 @@ def snr_to_esn0(snr: npt.ArrayLike, sps: int = 1) -> npt.NDArray[np.float64]:
     Group:
         conversions-snrs
     """
-    snr = np.asarray(snr)
-    esn0 = snr + db(sps)
-    return esn0
+    snr = verify_arraylike(snr)  # SNR per sample
+    sps = verify_arraylike(sps, int=True, positive=True)
+
+    esn0 = snr + db(sps)  # Energy per symbol
+
+    return convert_output(esn0)

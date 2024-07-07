@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import linear
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 from ._snr import composite_snr
 
 
@@ -188,20 +188,21 @@ def fdoa_crlb(
     Group:
         estimation-frequency
     """
-    snr = composite_snr(snr1, snr2)
-    snr = np.asarray(snr)
-    time = np.asarray(time)
-    bandwidth = np.asarray(bandwidth)
-
+    snr1 = verify_arraylike(snr1, float=True)
+    snr2 = verify_arraylike(snr2, float=True)
+    time = verify_arraylike(time, float=True, positive=True)
+    bandwidth = verify_arraylike(bandwidth, float=True, positive=True)
     if rms_integration_time is None:
         rms_integration_time = time / np.sqrt(12)
-    rms_integration_time = np.asarray(rms_integration_time)
-
+    else:
+        rms_integration_time = verify_arraylike(rms_integration_time, float=True, positive=True)
     if noise_bandwidth is None:
         noise_bandwidth = bandwidth
-    noise_bandwidth = np.asarray(noise_bandwidth)
+    else:
+        noise_bandwidth = verify_arraylike(noise_bandwidth, float=True, positive=True)
 
     # The effective SNR is improved by the coherent integration gain, which is the time-bandwidth product
+    snr = composite_snr(snr1, snr2)
     snr = linear(snr)
     output_snr = time * noise_bandwidth * snr
 
@@ -209,4 +210,6 @@ def fdoa_crlb(
     # Since we factored 2 out from the composite SNR, we need to compare against 7 dB.
     output_snr = np.where(output_snr >= linear(7), output_snr, np.nan)
 
-    return 1 / (np.pi * np.sqrt(8) * rms_integration_time * np.sqrt(output_snr))
+    crlb = 1 / (np.pi * np.sqrt(8) * rms_integration_time * np.sqrt(output_snr))
+
+    return convert_output(crlb)

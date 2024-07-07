@@ -12,7 +12,16 @@ from typing_extensions import Literal
 
 from .._conversion import ebn0_to_esn0, esn0_to_ebn0, linear
 from .._data import unpack
-from .._helper import export, extend_docstring
+from .._helper import (
+    convert_output,
+    export,
+    extend_docstring,
+    verify_arraylike,
+    verify_bool,
+    verify_equation,
+    verify_literal,
+    verify_scalar,
+)
 from .._probability import Q
 from .._sequence import binary_code, gray_code
 from ._linear import LinearModulation
@@ -172,6 +181,9 @@ class PSK(LinearModulation):
         See Also:
             sdr.rectangular, sdr.raised_cosine, sdr.root_raised_cosine
         """
+        verify_scalar(order, int=True, positive=True, power_of_two=True)
+        verify_scalar(phase_offset, float=True)
+
         # Define the base PSK symbol map
         base_symbol_map = np.exp(1j * (2 * np.pi * np.arange(order) / order + np.deg2rad(phase_offset)))
 
@@ -184,16 +196,18 @@ class PSK(LinearModulation):
             alpha=alpha,
         )
 
-        if symbol_labels == "bin":
-            self._symbol_labels = binary_code(self.bps)
-            self._symbol_labels_str = "bin"
-        elif symbol_labels == "gray":
-            self._symbol_labels = gray_code(self.bps)
-            self._symbol_labels_str = "gray"
+        if isinstance(symbol_labels, str):
+            verify_literal(symbol_labels, ["bin", "gray"])
+            if symbol_labels == "bin":
+                self._symbol_labels = binary_code(self.bps)
+                self._symbol_labels_str = "bin"
+            elif symbol_labels == "gray":
+                self._symbol_labels = gray_code(self.bps)
+                self._symbol_labels_str = "gray"
         else:
-            if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
-                raise ValueError(f"Argument 'symbol_labels' have unique values 0 to {self.order-1}.")
-            self._symbol_labels = np.asarray(symbol_labels)
+            symbol_labels = verify_arraylike(symbol_labels, int=True, ndim=1, size=self.order)
+            verify_equation(np.unique(symbol_labels).size == self.order)
+            self._symbol_labels = symbol_labels
             self._symbol_labels_str = self._symbol_labels
 
         # Relabel the symbols
@@ -214,7 +228,11 @@ class PSK(LinearModulation):
         string += f"\n  phase_offset: {self.phase_offset}"
         return string
 
-    def ber(self, ebn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float64]:
+    def ber(
+        self,
+        ebn0: npt.ArrayLike,
+        diff_encoded: bool = False,
+    ) -> npt.NDArray[np.float64]:
         r"""
         Computes the bit error rate (BER) at the provided $E_b/N_0$ values.
 
@@ -264,9 +282,11 @@ class PSK(LinearModulation):
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0, diff_encoded=True), label="DE-QPSK"); \
                 plt.title("BER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
+        ebn0 = verify_arraylike(ebn0, float=True)
+        verify_bool(diff_encoded)
+
         M = self.order
         k = self.bps
-        ebn0 = np.asarray(ebn0)
         ebn0_linear = linear(ebn0)
         esn0 = ebn0_to_esn0(ebn0, k)
         esn0_linear = linear(esn0)
@@ -299,9 +319,13 @@ class PSK(LinearModulation):
             else:
                 raise ValueError("Differential encoding is not supported for M-PSK with M > 4.")
 
-        return Pbe
+        return convert_output(Pbe)
 
-    def ser(self, esn0: npt.ArrayLike, diff_encoded: bool = False) -> npt.NDArray[np.float64]:
+    def ser(
+        self,
+        esn0: npt.ArrayLike,
+        diff_encoded: bool = False,
+    ) -> npt.NDArray[np.float64]:
         r"""
         Computes the symbol error rate (SER) at the provided $E_s/N_0$ values.
 
@@ -351,9 +375,11 @@ class PSK(LinearModulation):
                 sdr.plot.ser(esn0, qpsk.ser(esn0, diff_encoded=True), label="DE-QPSK"); \
                 plt.title("SER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
+        esn0 = verify_arraylike(esn0, float=True)
+        verify_bool(diff_encoded)
+
         M = self.order
         k = self.bps
-        esn0 = np.asarray(esn0)
         esn0_linear = linear(esn0)
         ebn0 = esn0_to_ebn0(esn0, k)
         ebn0_linear = linear(ebn0)
@@ -390,7 +416,7 @@ class PSK(LinearModulation):
                     Pj = Pk(M, esn0_linear[i], j)
                     Pse[i] -= Pj**2
 
-        return Pse
+        return convert_output(Pse)
 
     @property
     @extend_docstring(
@@ -826,9 +852,6 @@ class OQPSK(PSK):
             span=span,
             alpha=alpha,
         )
-
-        if sps > 1 and sps % 2 != 0:
-            raise ValueError(f"Argument 'sps' must be even, not {sps}.")
 
     def __repr__(self) -> str:
         return f"sdr.{type(self).__name__}(phase_offset={self.phase_offset}, symbol_labels={self._symbol_labels_str!r})"

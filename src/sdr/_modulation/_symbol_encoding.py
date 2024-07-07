@@ -7,11 +7,14 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_scalar
 
 
 @export
-def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
+def diff_encode(
+    x: npt.ArrayLike,
+    y_prev: int = 0,
+) -> npt.NDArray[np.int_]:
     r"""
     Differentially encodes the input data $x[k]$.
 
@@ -48,27 +51,22 @@ def diff_encode(x: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
     Group:
         modulation-symbol-encoding
     """
-    x = np.asarray(x)
-    if not x.ndim == 1:
-        raise ValueError(f"Argument 'x' must be a 1D array, not {x.ndim}D.")
-    if not np.issubdtype(x.dtype, np.integer):
-        raise TypeError(f"Argument 'x' must be an integer array, not {x.dtype}.")
-
-    if not isinstance(y_prev, int):
-        raise TypeError(f"Argument 'y_prev' must be an integer, not {type(y_prev)}.")
-    if not y_prev >= 0:
-        raise ValueError(f"Argument 'y_prev' must be non-negative, not {y_prev}.")
+    x = verify_arraylike(x, int=True, atleast_1d=True, ndim=1, non_negative=True)
+    verify_scalar(y_prev, int=True, non_negative=True)
 
     y = np.empty_like(x, dtype=int)
     y[0] = x[0] ^ y_prev
     for n in range(1, len(x)):
         y[n] = x[n] ^ y[n - 1]
 
-    return y
+    return convert_output(y)
 
 
 @export
-def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
+def diff_decode(
+    y: npt.ArrayLike,
+    y_prev: int = 0,
+) -> npt.NDArray[np.int_]:
     r"""
     Differentially decodes the input data $y[k]$.
 
@@ -105,20 +103,12 @@ def diff_decode(y: npt.ArrayLike, y_prev: int = 0) -> npt.NDArray[np.int_]:
     Group:
         modulation-symbol-encoding
     """
-    y = np.asarray(y)
-    if not y.ndim == 1:
-        raise ValueError(f"Argument 'y' must be a 1D array, not {y.ndim}D.")
-    if not np.issubdtype(y.dtype, np.integer):
-        raise TypeError(f"Argument 'y' must be an integer array, not {y.dtype}.")
-
-    if not isinstance(y_prev, int):
-        raise TypeError(f"Argument 'y_prev' must be an integer, not {type(y_prev)}.")
-    if not y_prev >= 0:
-        raise ValueError(f"Argument 'y_prev' must be non-negative, not {y_prev}.")
+    y = verify_arraylike(y, int=True, atleast_1d=True, ndim=1, non_negative=True)
+    verify_scalar(y_prev, int=True, non_negative=True)
 
     x = np.empty_like(y, dtype=int)
     x[0] = y[0] ^ y_prev
     for n in range(1, len(y)):
         x[n] = y[n] ^ y[n - 1]
 
-    return x
+    return convert_output(x)

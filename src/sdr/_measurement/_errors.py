@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import export, verify_arraylike, verify_same_shape, verify_scalar
 
 
 @export
@@ -67,7 +67,12 @@ class ErrorRate:
         self._errors: dict[float, int] = {}
         self._counts: dict[float, int] = {}
 
-    def add(self, snr: float, x: npt.ArrayLike, x_hat: npt.ArrayLike) -> tuple[int, int, int]:
+    def add(
+        self,
+        snr: float,
+        x: npt.ArrayLike,
+        x_hat: npt.ArrayLike,
+    ) -> tuple[int, int, int]:
         r"""
         Measures the number of bit or symbol errors at the given signal-to-noise ratio (SNR).
 
@@ -88,10 +93,10 @@ class ErrorRate:
         Examples:
             See the class :ref:`error-rate-example` section.
         """
-        x = np.asarray(x)
-        x_hat = np.asarray(x_hat)
-        if not x.shape == x_hat.shape:
-            raise ValueError(f"Arguments 'x' and 'x_hat' must have the same shape, not {x.shape} and {x_hat.shape}.")
+        verify_scalar(snr, float=True)
+        x = verify_arraylike(x)
+        x_hat = verify_arraylike(x_hat)
+        verify_same_shape(x, x_hat)
 
         errors = np.sum(x_hat != x)
         counts = x.size

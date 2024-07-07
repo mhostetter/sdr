@@ -12,7 +12,15 @@ import scipy.stats
 from typing_extensions import Literal
 
 from .._conversion import linear
-from .._helper import export
+from .._helper import (
+    convert_output,
+    export,
+    verify_arraylike,
+    verify_bool,
+    verify_literal,
+    verify_not_specified,
+    verify_scalar,
+)
 
 
 @export
@@ -196,6 +204,14 @@ def h0(
     Group:
         detection-theory
     """
+    verify_scalar(sigma2, float=True, non_negative=True)
+    verify_literal(detector, ["coherent", "linear", "square-law"])
+    verify_bool(complex)
+    verify_scalar(n_c, int=True, positive=True)
+    verify_scalar(n_nc, optional=True, int=True, positive=True)
+    if detector == "coherent":
+        verify_not_specified(n_nc)
+
     return _h0(sigma2, detector, complex, n_c, n_nc)
 
 
@@ -207,23 +223,8 @@ def _h0(
     n_c: int = 1,
     n_nc: int | None = None,
 ) -> scipy.stats.rv_continuous:
-    sigma2 = float(sigma2)
-    if sigma2 <= 0:
-        raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
-
-    if not isinstance(n_c, int):
-        raise TypeError(f"Argument `n_c` must be an integer, not {n_c}.")
-    if not n_c >= 1:
-        raise ValueError(f"Argument `n_c` must be positive, not {n_c}.")
-
-    if not isinstance(n_nc, (int, type(None))):
-        raise TypeError(f"Argument `n_nc` must be an integer or None, not {n_nc}.")
-    if n_nc is not None:
-        if detector == "coherent":
-            raise ValueError(f"Argument `n_nc` is not supported for the coherent detector, not {n_nc}.")
-        if not n_nc >= 1:
-            raise ValueError(f"Argument `n_nc` must be positive, not {n_nc}.")
-    else:
+    # sigma2 = float(sigma2)
+    if n_nc is None:
         n_nc = 1
 
     if complex:
@@ -244,10 +245,6 @@ def _h0(
             h0 = _sum_distribution(h0, n_nc)
         elif detector == "square-law":
             h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
-        else:
-            raise ValueError(
-                f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}."
-            )
 
     return h0
 
@@ -435,6 +432,15 @@ def h1(
     Group:
         detection-theory
     """
+    verify_scalar(snr, float=True)
+    verify_scalar(sigma2, float=True, non_negative=True)
+    verify_literal(detector, ["coherent", "linear", "square-law"])
+    verify_bool(complex)
+    verify_scalar(n_c, int=True, positive=True)
+    verify_scalar(n_nc, optional=True, int=True, positive=True)
+    if detector == "coherent":
+        verify_not_specified(n_nc)
+
     return _h1(snr, sigma2, detector, complex, n_c, n_nc)
 
 
@@ -447,24 +453,9 @@ def _h1(
     n_c: int = 1,
     n_nc: int | None = None,
 ) -> scipy.stats.rv_continuous:
-    snr = float(snr)
-    sigma2 = float(sigma2)
-    if sigma2 <= 0:
-        raise ValueError(f"Argument `sigma2` must be positive, not {sigma2}.")
-
-    if not isinstance(n_c, int):
-        raise TypeError(f"Argument `n_c` must be an integer, not {n_c}.")
-    if not n_c >= 1:
-        raise ValueError(f"Argument `n_c` must be positive, not {n_c}.")
-
-    if not isinstance(n_nc, (int, type(None))):
-        raise TypeError(f"Argument `n_nc` must be an integer or None, not {n_nc}.")
-    if n_nc is not None:
-        if detector == "coherent":
-            raise ValueError(f"Argument `n_nc` is not supported for the coherent detector, not {n_nc}.")
-        if not n_nc >= 1:
-            raise ValueError(f"Argument `n_nc` must be positive, not {n_nc}.")
-    else:
+    # snr = float(snr)
+    # sigma2 = float(sigma2)
+    if n_nc is None:
         n_nc = 1
 
     A2 = linear(snr) * sigma2  # Signal power, A^2
@@ -500,10 +491,6 @@ def _h1(
             h1 = _sum_distribution(h1, n_nc)
         elif detector == "square-law":
             h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
-        else:
-            raise ValueError(
-                f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}."
-            )
 
     return h1
 
@@ -694,8 +681,14 @@ def p_d(
     Group:
         detection-theory
     """
-    snr = np.asarray(snr)
-    p_fa = np.asarray(p_fa)
+    snr = verify_arraylike(snr, float=True)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    verify_literal(detector, ["coherent", "linear", "square-law"])
+    verify_bool(complex)
+    verify_scalar(n_c, int=True, positive=True)
+    verify_scalar(n_nc, optional=True, int=True, positive=True)
+    if detector == "coherent":
+        verify_not_specified(n_nc)
 
     sigma2 = 1
 
@@ -706,10 +699,8 @@ def p_d(
         return h1.sf(gamma)
 
     p_d = _calculate(snr, p_fa)
-    if p_d.ndim == 0:
-        p_d = p_d.item()
 
-    return p_d
+    return convert_output(p_d)
 
 
 @export
@@ -802,8 +793,14 @@ def p_fa(
     Group:
         detection-theory
     """
-    threshold = np.asarray(threshold)
-    sigma2 = np.asarray(sigma2)
+    threshold = verify_arraylike(threshold, float=True)
+    sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
+    verify_literal(detector, ["coherent", "linear", "square-law"])
+    verify_bool(complex)
+    verify_scalar(n_c, int=True, positive=True)
+    verify_scalar(n_nc, optional=True, int=True, positive=True)
+    if detector == "coherent":
+        verify_not_specified(n_nc)
 
     @np.vectorize
     def _calculate(threshold, sigma2):
@@ -811,10 +808,8 @@ def p_fa(
         return h0.sf(threshold)
 
     p_fa = _calculate(threshold, sigma2)
-    if p_fa.ndim == 0:
-        p_fa = p_fa.item()
 
-    return p_fa
+    return convert_output(p_fa)
 
 
 @export
@@ -901,8 +896,14 @@ def threshold(
     Group:
         detection-theory
     """
-    p_fa = np.asarray(p_fa)
-    sigma2 = np.asarray(sigma2)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
+    verify_literal(detector, ["coherent", "linear", "square-law"])
+    verify_bool(complex)
+    verify_scalar(n_c, int=True, positive=True)
+    verify_scalar(n_nc, optional=True, int=True, positive=True)
+    if detector == "coherent":
+        verify_not_specified(n_nc)
 
     @np.vectorize
     def _calculate(p_fa, sigma2):
@@ -910,10 +911,8 @@ def threshold(
         return h0.isf(p_fa)
 
     threshold = _calculate(p_fa, sigma2)
-    if threshold.ndim == 0:
-        threshold = threshold.item()
 
-    return threshold
+    return convert_output(threshold)
 
 
 @export
@@ -995,8 +994,14 @@ def min_snr(
     Group:
         detection-theory
     """
-    p_d = np.asarray(p_d)
-    p_fa = np.asarray(p_fa)
+    p_d = verify_arraylike(p_d, float=True, inclusive_min=0, inclusive_max=1)
+    p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
+    verify_literal(detector, ["coherent", "linear", "square-law"])
+    verify_bool(complex)
+    verify_scalar(n_c, int=True, positive=True)
+    verify_scalar(n_nc, optional=True, int=True, positive=True)
+    if detector == "coherent":
+        verify_not_specified(n_nc)
 
     calc_p_d = globals()["p_d"]
 
@@ -1019,7 +1024,5 @@ def min_snr(
         return snr
 
     snr = _calculate(p_d, p_fa)
-    if snr.ndim == 0:
-        snr = snr.item()
 
-    return snr
+    return convert_output(snr)

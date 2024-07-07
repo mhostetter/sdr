@@ -8,7 +8,7 @@ import numpy as np
 
 from .._conversion import linear
 from .._filter import IIR
-from .._helper import export
+from .._helper import export, verify_scalar
 from ._loop_filter import LoopFilter
 
 
@@ -69,7 +69,12 @@ class ClosedLoopPLL:
     """
 
     def __init__(
-        self, noise_bandwidth: float, damping_factor: float, K0: float = 1.0, Kp: float = 1.0, sample_rate: float = 1.0
+        self,
+        noise_bandwidth: float,
+        damping_factor: float,
+        K0: float = 1.0,
+        Kp: float = 1.0,
+        sample_rate: float = 1.0,
     ):
         r"""
         Creates a closed-loop PLL analysis object.
@@ -86,6 +91,12 @@ class ClosedLoopPLL:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
+        self._BnT = verify_scalar(noise_bandwidth, float=True, positive=True)
+        self._zeta = verify_scalar(damping_factor, float=True, positive=True)
+        self._K0 = verify_scalar(K0, float=True, positive=True)
+        self._Kp = verify_scalar(Kp, float=True, positive=True)
+        self._sample_rate = verify_scalar(sample_rate, float=True, positive=True)
+
         lf = LoopFilter(noise_bandwidth, damping_factor, K0, Kp)
         K1 = lf.proportional_gain
         K2 = lf.integral_gain
@@ -102,12 +113,6 @@ class ClosedLoopPLL:
         # self._iir = IIR([b0, b1, b2], [a0, a1, a2])
         self._iir = IIR([b1, b2], [a0, a1, a2])  # Suppress warning about leading zero
 
-        self._sample_rate = sample_rate
-        self._BnT = noise_bandwidth
-        self._zeta = damping_factor
-
-        self._K0 = K0
-        self._Kp = Kp
         self._K1 = K1
         self._K2 = K2
 

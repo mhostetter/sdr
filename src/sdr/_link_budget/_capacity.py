@@ -10,16 +10,14 @@ import scipy.integrate
 import scipy.stats
 
 from .._conversion import db, linear
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
-def Hb(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
+def Hb(x: npt.NDArray[np.float64]) -> npt.NDArray[np.float64]:
     """
     Computes the binary entropy function $H_b(x)$.
     """
-    x = np.asarray(x)
-
-    return scipy.stats.entropy([x, 1 - x], base=2)  # type: ignore
+    return scipy.stats.entropy([x, 1 - x], base=2)
 
 
 @export
@@ -59,11 +57,11 @@ def bsc_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-channel-capacity
     """
-    p = np.asarray(p)
-    if not (np.all(0 <= p) and np.all(p <= 1)):
-        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+    p = verify_arraylike(p, float=True, inclusive_min=0, inclusive_max=1)
 
-    return 1 - Hb(p)
+    C = 1 - Hb(p)
+
+    return convert_output(C)
 
 
 @export
@@ -103,11 +101,11 @@ def bec_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-channel-capacity
     """
-    p = np.asarray(p)
-    if not (np.all(0 <= p) and np.all(p <= 1)):
-        raise ValueError(f"Argument 'p' must be between 0 and 1, not {p}.")
+    p = verify_arraylike(p, float=True, inclusive_min=0, inclusive_max=1)
 
-    return 1 - p  # type: ignore
+    C = 1 - p
+
+    return convert_output(C)
 
 
 @export
@@ -163,13 +161,16 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
     Group:
         link-budget-channel-capacity
     """
-    snr = np.asarray(snr)
+    snr = verify_arraylike(snr, float=True)
+
     snr_linear = linear(snr)
+    C = np.log2(1 + snr_linear)  # bits/2D
 
-    if bandwidth:
-        return bandwidth * np.log2(1 + snr_linear)  # bits/s
+    if bandwidth is not None:
+        bandwidth = verify_arraylike(bandwidth, float=True, positive=True)
+        C *= bandwidth  # bits/s
 
-    return np.log2(1 + snr_linear)  # bits/2D
+    return convert_output(C)
 
 
 @export
@@ -287,6 +288,7 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-channel-capacity
     """
+    snr = verify_arraylike(snr, float=True)
 
     @np.vectorize
     def _calculate(snr: float) -> float:
@@ -319,10 +321,8 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
     with np.errstate(divide="ignore", invalid="ignore"):
         rho = _calculate(snr)
-    if rho.ndim == 0:
-        rho = float(rho)
 
-    return rho
+    return convert_output(rho)
 
 
 @export
@@ -377,6 +377,7 @@ def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-channel-capacity
     """
+    rho = verify_arraylike(rho, float=True, non_negative=True)
 
     @np.vectorize
     def _calculate(rho: float) -> float:
@@ -389,10 +390,8 @@ def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
         return db(ebn0)
 
     ebn0 = _calculate(rho)
-    if ebn0.ndim == 0:
-        ebn0 = float(ebn0)
 
-    return ebn0
+    return convert_output(ebn0)
 
 
 @export
@@ -439,6 +438,7 @@ def shannon_limit_snr(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         link-budget-channel-capacity
     """
+    rho = verify_arraylike(rho, float=True, non_negative=True)
 
     @np.vectorize
     def _calculate(rho: float) -> float:
@@ -446,7 +446,5 @@ def shannon_limit_snr(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
         return db(2**rho - 1)
 
     snr = _calculate(rho)
-    if snr.ndim == 0:
-        snr = float(snr)
 
-    return snr
+    return convert_output(snr)

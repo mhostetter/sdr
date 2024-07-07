@@ -8,11 +8,11 @@ import numpy as np
 import numpy.typing as npt
 
 from .._conversion import db as to_db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool
 
 
 @export
-def peak_voltage(x: npt.NDArray, db: bool = False) -> float:
+def peak_voltage(x: npt.ArrayLike, db: bool = False) -> float:
     r"""
     Measures the peak voltage of a time-domain signal $x[n]$.
 
@@ -29,14 +29,18 @@ def peak_voltage(x: npt.NDArray, db: bool = False) -> float:
     Group:
         measurement-voltage
     """
+    x = verify_arraylike(x, complex=True)
+    verify_bool(db)
+
     V_peak = np.max(np.abs(x))
     if db:
         V_peak = to_db(V_peak, type="voltage")
-    return V_peak
+
+    return convert_output(V_peak)
 
 
 @export
-def rms_voltage(x: npt.NDArray, db: bool = False) -> float:
+def rms_voltage(x: npt.ArrayLike, db: bool = False) -> float:
     r"""
     Measures the root-mean-square (RMS) voltage of a time-domain signal $x[n]$.
 
@@ -53,14 +57,18 @@ def rms_voltage(x: npt.NDArray, db: bool = False) -> float:
     Group:
         measurement-voltage
     """
+    x = verify_arraylike(x, complex=True)
+    verify_bool(db)
+
     V_rms = np.sqrt(np.mean(np.abs(x) ** 2))
     if db:
         V_rms = to_db(V_rms, type="voltage")
-    return V_rms
+
+    return convert_output(V_rms)
 
 
 @export
-def crest_factor(x: npt.NDArray) -> float:
+def crest_factor(x: npt.ArrayLike) -> float:
     r"""
     Measures the crest factor of a time-domain signal $x[n]$.
 

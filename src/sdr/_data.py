@@ -7,11 +7,15 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from ._helper import export
+from ._helper import convert_output, export, verify_arraylike, verify_scalar
 
 
 @export
-def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> npt.NDArray[np.int_]:
+def pack(
+    x: npt.ArrayLike,
+    bpe: int,
+    dtype: npt.DTypeLike | None = None,
+) -> npt.NDArray[np.int_]:
     """
     Packs a binary array into an array with multiple bits per element.
 
@@ -37,12 +41,8 @@ def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> npt.
     Group:
         data
     """
-    x = np.asarray(x)
-    x = np.atleast_1d(x)
-    if not np.issubdtype(x.dtype, np.integer):
-        raise ValueError("Argument 'x' must be an integer array, not have {x.dtype} dtype.")
-    if not bpe >= 1:
-        raise ValueError("Argument 'bpe' must be at least 1, not {bpe}.")
+    x = verify_arraylike(x, int=True, atleast_1d=True)
+    verify_scalar(bpe, int=True, positive=True)
 
     if dtype is None:
         dtype = _unsigned_dtype(bpe)
@@ -63,11 +63,17 @@ def pack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> npt.
         single_bits = 2 ** np.arange(bpe - 1, -1, -1, dtype=dtype)
         y = np.sum(X * single_bits, axis=-1)
 
-    return y.astype(dtype)
+    y = y.astype(dtype)
+
+    return convert_output(y)
 
 
 @export
-def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> npt.NDArray[np.int_]:
+def unpack(
+    x: npt.ArrayLike,
+    bpe: int,
+    dtype: npt.DTypeLike | None = None,
+) -> npt.NDArray[np.int_]:
     """
     Unpacks an array with multiple bits per element into a binary array.
 
@@ -90,12 +96,8 @@ def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np
     Group:
         data
     """
-    x = np.asarray(x)
-    x = np.atleast_1d(x)
-    if not np.issubdtype(x.dtype, np.integer):
-        raise ValueError("Argument 'x' must be an integer array, not have {x.dtype} dtype.")
-    if not bpe >= 1:
-        raise ValueError("Argument 'bpe' must be at least 1, not {bpe}.")
+    x = verify_arraylike(x, int=True, atleast_1d=True)
+    verify_scalar(bpe, int=True, positive=True)
 
     if dtype is None:
         dtype = np.uint8
@@ -112,11 +114,16 @@ def unpack(x: npt.ArrayLike, bpe: int, dtype: npt.DTypeLike | None = None) -> np
         shape = x.shape[:-1] + (x.shape[-1] * bpe,)
         y = X.reshape(shape)
 
-    return y.astype(dtype)
+    y = y.astype(dtype)
+
+    return convert_output(y)
 
 
 @export
-def hexdump(data: npt.ArrayLike | bytes, width: int = 16) -> str:
+def hexdump(
+    data: npt.ArrayLike | bytes,
+    width: int = 16,
+) -> str:
     """
     Returns a hexdump of the specified data.
 
@@ -143,18 +150,8 @@ def hexdump(data: npt.ArrayLike | bytes, width: int = 16) -> str:
     if isinstance(data, bytes):
         data = np.frombuffer(data, dtype=np.uint8)
     else:
-        data = np.asarray(data)
-
-    if not np.issubdtype(data.dtype, np.integer):
-        raise ValueError("Argument 'data' must be an integer array, not have {data.dtype} dtype.")
-    if not data.ndim == 1:
-        raise ValueError("Argument 'data' must be a 1D array, not have {data.ndim} dimensions.")
-    if not np.count_nonzero(data < 0) == 0:
-        raise ValueError("Argument 'data' must contain only positive values.")
-    if not np.count_nonzero(data > 255) == 0:
-        raise ValueError("Argument 'data' must contain only values less than 256.")
-    if not 1 <= width <= 16:
-        raise ValueError("Argument 'width' must be between 1 and 16, not {width}.")
+        data = verify_arraylike(data, int=True, ndim=1, inclusive_min=0, exclusive_max=256)
+    verify_scalar(width, int=True, inclusive_min=1, inclusive_max=16)
 
     if width > data.size:
         width = data.size

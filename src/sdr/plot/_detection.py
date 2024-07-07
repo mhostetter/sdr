@@ -10,7 +10,7 @@ import numpy.typing as npt
 import scipy.stats
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_arraylike, verify_bool, verify_isinstance, verify_literal, verify_scalar
 from ._rc_params import RC_PARAMS
 
 
@@ -35,6 +35,11 @@ def p_d(
     Group:
         plot-detection
     """
+    x = verify_arraylike(x, complex=True, ndim=1)
+    p_d = verify_arraylike(p_d, float=True, ndim=1)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(x_label, ["snr", "enr"])
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -51,8 +56,6 @@ def p_d(
             ax.set_xlabel(r"Signal-to-noise ratio (dB), $S/\sigma^2$")
         elif x_label == "enr":
             ax.set_xlabel(r"Energy-to-noise ratio (dB), $\mathcal{E}/\sigma^2$")
-        else:
-            raise ValueError(f"Argument 'x_label' must be one of ['snr', 'enr'], not {x_label!r}.")
 
         ax.set_ylabel("Probability of detection, $P_d$")
         ax.set_title("Detection performance")
@@ -79,6 +82,11 @@ def roc(
     Group:
         plot-detection
     """
+    p_fa = verify_arraylike(p_fa, float=True, ndim=1)
+    p_d = verify_arraylike(p_d, float=True, ndim=1)
+    verify_isinstance(ax, plt.Axes, optional=True)
+    verify_literal(type, ["linear", "semilogx", "semilogy", "loglog"])
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()
@@ -94,10 +102,6 @@ def roc(
             ax.semilogy(p_fa, p_d, **kwargs)
         elif type == "loglog":
             ax.loglog(p_fa, p_d, **kwargs)
-        else:
-            raise ValueError(
-                f"Argument 'type' must be one of ['linear', 'semilogx', 'semilogy', 'loglog'], not {type!r}."
-            )
 
         if "label" in kwargs:
             ax.legend()
@@ -162,6 +166,17 @@ def detector_pdfs(
     Group:
         plot-detection
     """
+    # verify_isinstance(h0, scipy.stats.rv_continuous, optional=True)  # TODO: Need a better stats check
+    # verify_isinstance(h1, scipy.stats.rv_continuous, optional=True)  # TODO: Need a better stats check
+    verify_scalar(threshold, optional=True, float=True)
+    verify_bool(shade)
+    verify_bool(annotate)
+    verify_arraylike(x, optional=True, float=True, ndim=1)
+    verify_scalar(points, int=True, positive=True)
+    verify_scalar(p_h0, float=True, positive=True)
+    verify_scalar(p_h1, float=True, positive=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
     with plt.rc_context(RC_PARAMS):
         if ax is None:
             ax = plt.gca()

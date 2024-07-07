@@ -7,15 +7,15 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
 @export
 def euclidean(
-    x: npt.NDArray,
-    y: npt.NDArray,
+    x: npt.ArrayLike,
+    y: npt.ArrayLike,
     axis: int | tuple[int, ...] | None = None,
-) -> npt.NDArray:
+) -> npt.NDArray[np.float64]:
     r"""
     Measures the Euclidean distance between two signals $x[n]$ and $y[n]$.
 
@@ -33,10 +33,12 @@ def euclidean(
     Group:
         measurement-distance
     """
-    x = np.asarray(x)
-    y = np.asarray(y)
+    x = verify_arraylike(x, complex=True)
+    y = verify_arraylike(y, complex=True)
+
     d = np.sqrt(np.sum(np.abs(x - y) ** 2, axis=axis))
-    return d
+
+    return convert_output(d)
 
 
 @export
@@ -62,7 +64,9 @@ def hamming(
     Group:
         measurement-distance
     """
-    x = np.asarray(x)
-    y = np.asarray(y)
+    x = verify_arraylike(x, int=True)
+    y = verify_arraylike(y, int=True)
+
     d = np.sum(np.bitwise_xor(x, y), axis=axis)
-    return d
+
+    return convert_output(d)

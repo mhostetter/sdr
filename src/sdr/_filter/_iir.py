@@ -11,7 +11,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Self
 
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
 from ._common import frequency_response
 
 
@@ -40,7 +40,12 @@ class IIR:
         dsp-iir-filtering
     """
 
-    def __init__(self, b: npt.ArrayLike, a: npt.ArrayLike, streaming: bool = False):
+    def __init__(
+        self,
+        b: npt.ArrayLike,
+        a: npt.ArrayLike,
+        streaming: bool = False,
+    ):
         """
         Creates an IIR filter with feedforward coefficients $b_i$ and feedback coefficients $a_j$.
 
@@ -53,9 +58,9 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        self._b_taps = np.asarray(b)
-        self._a_taps = np.asarray(a)
-        self._streaming = streaming
+        self._b_taps = verify_arraylike(b, atleast_1d=1, ndim=1)
+        self._a_taps = verify_arraylike(a, atleast_1d=1, ndim=1)
+        self._streaming = verify_bool(streaming)
 
         self._state: npt.NDArray  # The filter state. Will be updated in reset().
         self.reset()
@@ -68,7 +73,13 @@ class IIR:
     ##############################################################################
 
     @classmethod
-    def ZerosPoles(cls, zeros: npt.ArrayLike, poles: npt.ArrayLike, gain: float = 1.0, streaming: bool = False) -> Self:
+    def ZerosPoles(
+        cls,
+        zeros: npt.ArrayLike,
+        poles: npt.ArrayLike,
+        gain: float = 1.0,
+        streaming: bool = False,
+    ) -> Self:
         """
         Creates an IIR filter from its zeros, poles, and gain.
 
@@ -82,6 +93,11 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
+        zeros = verify_arraylike(zeros, atleast_1d=1, ndim=1)
+        poles = verify_arraylike(poles, atleast_1d=1, ndim=1)
+        verify_scalar(gain, float=True, positive=True)
+        streaming = verify_bool(streaming)
+
         b, a = scipy.signal.zpk2tf(zeros, poles, gain)
 
         return cls(b, a, streaming=streaming)
@@ -103,16 +119,14 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        x = np.atleast_1d(x)
-        if not x.ndim == 1:
-            raise ValueError(f"Argument 'x' must be a 1-D, not {x.ndim}-D.")
+        x = verify_arraylike(x, atleast_1d=1, ndim=1)
 
         if not self.streaming:
             self.reset()
 
         y, self._state = scipy.signal.lfilter(self.b_taps, self.a_taps, x, zi=self._state)
 
-        return y
+        return convert_output(y)
 
     def __repr__(self) -> str:
         return f"sdr.{type(self).__name__}({self.b_taps.tolist()}, {self.a_taps.tolist()}, streaming={self.streaming})"
@@ -197,6 +211,8 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
+        verify_scalar(N, int=True, positive=True)
+
         # Delta impulse function
         d = np.zeros(N, dtype=float)
         d[0] = 1
@@ -225,6 +241,8 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
+        verify_scalar(N, int=True, positive=True)
+
         # Unit step function
         u = np.ones(N, dtype=float)
 
@@ -317,6 +335,10 @@ class IIR:
 
                 iir.frequency_response([100, 200, 300, 400], sample_rate=1000)
         """
+        verify_scalar(sample_rate, float=True, positive=True)
+        verify_bool(whole)
+        verify_scalar(decades, optional=True, int=True, positive=True)
+
         f, H = frequency_response(self.b_taps, self.a_taps, freqs, sample_rate, whole, decades)
         if isinstance(freqs, int):
             return f, H

@@ -9,7 +9,7 @@ import numpy.typing as npt
 import scipy.signal
 from typing_extensions import Literal
 
-from .._helper import export
+from .._helper import export, verify_scalar
 
 
 def _normalize(h: npt.NDArray[np.float64], norm: Literal["power", "energy", "passband"]) -> npt.NDArray[np.float64]:
@@ -71,6 +71,7 @@ def _ideal_bandstop(order: int, center_freq: float, bandwidth: float) -> npt.NDA
     return h_ideal
 
 
+# TODO: Replace with scipy.signal.windows.get_window()
 def _window(
     order: int,
     window: Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
@@ -178,20 +179,9 @@ def design_lowpass_fir(
     Group:
         dsp-fir-filtering
     """
-    if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be an integer, not {type(order).__name__}.")
-    if not order % 2 == 0:
-        raise ValueError(f"Argument 'order' must be even, not {order}.")
-
-    if not isinstance(cutoff_freq, (int, float)):
-        raise TypeError(f"Argument 'cutoff_freq' must be a number, not {type(cutoff_freq).__name__}.")
-    if not 0 <= cutoff_freq <= 1:
-        raise ValueError(f"Argument 'cutoff_freq' must be between 0 and 1, not {cutoff_freq}.")
-
-    if not isinstance(atten, (int, float)):
-        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
-    if not 0 <= atten:
-        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+    verify_scalar(order, int=True, even=True)
+    verify_scalar(cutoff_freq, float=True, inclusive_min=0, inclusive_max=1)
+    verify_scalar(atten, float=True, non_negative=True)
 
     h_ideal = _ideal_lowpass(order, cutoff_freq)
     h_window = _window(order, window, atten=atten)
@@ -273,20 +263,9 @@ def design_highpass_fir(
     Group:
         dsp-fir-filtering
     """
-    if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be an integer, not {type(order).__name__}.")
-    if not order % 2 == 0:
-        raise ValueError(f"Argument 'order' must be even, not {order}.")
-
-    if not isinstance(cutoff_freq, (int, float)):
-        raise TypeError(f"Argument 'cutoff_freq' must be a number, not {type(cutoff_freq).__name__}.")
-    if not 0 <= cutoff_freq <= 1:
-        raise ValueError(f"Argument 'cutoff_freq' must be between 0 and 1, not {cutoff_freq}.")
-
-    if not isinstance(atten, (int, float)):
-        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
-    if not 0 <= atten:
-        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+    verify_scalar(order, int=True, even=True)
+    verify_scalar(cutoff_freq, float=True, inclusive_min=0, inclusive_max=1)
+    verify_scalar(atten, float=True, non_negative=True)
 
     h_ideal = _ideal_highpass(order, cutoff_freq)
     h_window = _window(order, window, atten=atten)
@@ -371,27 +350,10 @@ def design_bandpass_fir(
     Group:
         dsp-fir-filtering
     """
-    if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be an integer, not {type(order).__name__}.")
-    if not order % 2 == 0:
-        raise ValueError(f"Argument 'order' must be even, not {order}.")
-
-    if not isinstance(center_freq, (int, float)):
-        raise TypeError(f"Argument 'center_freq' must be a number, not {type(center_freq).__name__}.")
-    if not 0 <= center_freq <= 1:
-        raise ValueError(f"Argument 'center_freq' must be between 0 and 1, not {center_freq}.")
-
-    if not isinstance(bandwidth, (int, float)):
-        raise TypeError(f"Argument 'bandwidth' must be a number, not {type(bandwidth).__name__}.")
-    if not 0 <= center_freq + bandwidth / 2 <= 1:
-        raise ValueError(f"Argument 'bandwidth' must be between 0 and 0.5 - 'center_freq', not {bandwidth}.")
-    if not 0 <= center_freq - bandwidth / 2 <= 1:
-        raise ValueError(f"Argument 'bandwidth' must be between 0 and 'center_freq', not {bandwidth}.")
-
-    if not isinstance(atten, (int, float)):
-        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
-    if not 0 <= atten:
-        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+    verify_scalar(order, int=True, even=True)
+    verify_scalar(center_freq, float=True, inclusive_min=0, inclusive_max=1)
+    verify_scalar(bandwidth, float=True, inclusive_min=0, inclusive_max=2 * min(center_freq, 1 - center_freq))
+    verify_scalar(atten, float=True, non_negative=True)
 
     h_ideal = _ideal_bandpass(order, center_freq, bandwidth)
     h_window = _window(order, window, atten=atten)
@@ -476,27 +438,10 @@ def design_bandstop_fir(
     Group:
         dsp-fir-filtering
     """
-    if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be an integer, not {type(order).__name__}.")
-    if not order % 2 == 0:
-        raise ValueError(f"Argument 'order' must be even, not {order}.")
-
-    if not isinstance(center_freq, (int, float)):
-        raise TypeError(f"Argument 'center_freq' must be a number, not {type(center_freq).__name__}.")
-    if not 0 <= center_freq <= 1:
-        raise ValueError(f"Argument 'center_freq' must be between 0 and 1, not {center_freq}.")
-
-    if not isinstance(bandwidth, (int, float)):
-        raise TypeError(f"Argument 'bandwidth' must be a number, not {type(bandwidth).__name__}.")
-    if not 0 <= center_freq + bandwidth / 2 <= 1:
-        raise ValueError(f"Argument 'bandwidth' must be between 0 and 0.5 - 'center_freq', not {bandwidth}.")
-    if not 0 <= center_freq - bandwidth / 2 <= 1:
-        raise ValueError(f"Argument 'bandwidth' must be between 0 and 'center_freq', not {bandwidth}.")
-
-    if not isinstance(atten, (int, float)):
-        raise TypeError(f"Argument 'atten' must be a number, not {type(atten).__name__}.")
-    if not 0 <= atten:
-        raise ValueError(f"Argument 'atten' must be non-negative, not {atten}.")
+    verify_scalar(order, int=True, even=True)
+    verify_scalar(center_freq, float=True, inclusive_min=0, inclusive_max=1)
+    verify_scalar(bandwidth, float=True, inclusive_min=0, inclusive_max=2 * min(center_freq, 1 - center_freq))
+    verify_scalar(atten, float=True, non_negative=True)
 
     h_ideal = _ideal_bandstop(order, center_freq, bandwidth)
     h_window = _window(order, window, atten=atten)

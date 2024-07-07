@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import export
+from .._helper import export, verify_scalar
 
 
 @export
@@ -32,8 +32,7 @@ def binary_code(degree: int) -> npt.NDArray[np.int_]:
     Group:
         sequences-symbol-mapping
     """
-    if not degree >= 1:
-        raise ValueError(f"Argument 'degree' must be greater than or equal to 1, not {degree}.")
+    verify_scalar(degree, int=True, positive=True)
 
     return np.arange(2**degree)
 
@@ -60,8 +59,7 @@ def gray_code(degree: int) -> npt.NDArray[np.int_]:
     Group:
         sequences-symbol-mapping
     """
-    if not degree >= 1:
-        raise ValueError(f"Argument 'degree' must be greater than or equal to 1, not {degree}.")
+    verify_scalar(degree, int=True, positive=True)
 
     if degree == 1:
         return np.array([0, 1])

@@ -16,7 +16,7 @@ from galois.typing import PolyLike
 from typing_extensions import Literal
 
 from .._data import pack, unpack
-from .._helper import export
+from .._helper import export, verify_bool, verify_coprime, verify_isinstance, verify_literal, verify_scalar
 from ._conversion import code_to_field, code_to_sequence, sequence_to_code
 from ._maximum import is_preferred_pair, m_sequence, preferred_pairs
 
@@ -74,10 +74,8 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
     Group:
         sequences-correlation
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
-    if not output in ("binary", "field", "bipolar"):
-        raise ValueError(f"Argument 'output' must be either 'binary', 'field', or 'bipolar', not {output}.")
+    verify_scalar(length, int=True)
+    verify_literal(output, ["binary", "field", "bipolar"])
 
     if length == 1:
         code = np.array([1])
@@ -196,20 +194,9 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
     Group:
         sequences-correlation
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
-    if not length >= 2:
-        raise ValueError(f"Argument 'length' must be greater than or equal to 1, not {length}.")
-    if not length & (length - 1) == 0:
-        raise ValueError(f"Argument 'length' must be a power of 2, not {length}.")
-
-    if not isinstance(index, int):
-        raise TypeError(f"Argument 'index' must be an integer, not {type(index).__name__}.")
-    if not 0 <= index < length:
-        raise ValueError(f"Argument 'index' must be between 0 and {length - 1}, not {index}.")
-
-    if not output in ("binary", "field", "bipolar"):
-        raise ValueError(f"Argument 'output' must be either 'binary', 'field', or 'bipolar', not {output}.")
+    verify_scalar(length, int=True, inclusive_min=2, power_of_two=True)
+    verify_scalar(index, int=True, inclusive_min=0, exclusive_max=length)
+    verify_literal(output, ["binary", "field", "bipolar"])
 
     H = scipy.linalg.hadamard(length)
     sequence = H[index]
@@ -314,20 +301,9 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
     Group:
         sequences-correlation
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
-    if not length >= 2:
-        raise ValueError(f"Argument 'length' must be greater than or equal to 1, not {length}.")
-    if not length & (length - 1) == 0:
-        raise ValueError(f"Argument 'length' must be a power of 2, not {length}.")
-
-    if not isinstance(index, int):
-        raise TypeError(f"Argument 'index' must be an integer, not {type(index).__name__}.")
-    if not 0 <= index < length:
-        raise ValueError(f"Argument 'index' must be between 0 and {length - 1}, not {index}.")
-
-    if not output in ("binary", "field", "bipolar"):
-        raise ValueError(f"Argument 'output' must be either 'binary', 'field', or 'bipolar', not {output}.")
+    verify_scalar(length, int=True, inclusive_min=2, power_of_two=True)
+    verify_scalar(index, int=True, inclusive_min=0, exclusive_max=length)
+    verify_literal(output, ["binary", "field", "bipolar"])
 
     H = scipy.linalg.hadamard(length)
 
@@ -488,12 +464,12 @@ def gold_code(
     Group:
         sequences-correlation
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
-    if not np.log2(length + 1) % 1.0 == 0:
-        raise ValueError(f"Argument 'length' must be 2^m - 1, not {length}.")
-
+    verify_scalar(length, int=True, positive=True)
+    verify_scalar(length + 1, power_of_two=True)
     m = int(np.log2(length + 1))
+    verify_scalar(index, int=True, inclusive_min=-2, exclusive_max=length)
+    verify_bool(verify)
+    verify_literal(output, ["binary", "field", "bipolar"])
 
     if poly1 is None and poly2 is None:
         poly1, poly2 = next(preferred_pairs(m))
@@ -621,14 +597,11 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
     Group:
         sequences-correlation
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be an integer, not {type(length).__name__}.")
-    if not np.log2(length + 1) % 1.0 == 0:
-        raise ValueError(f"Argument 'length' must be 2^n - 1, not {length}.")
-
+    verify_scalar(length, int=True, positive=True)
+    verify_scalar(length + 1, power_of_two=True)
     n = int(np.log2(length + 1))
-    if not n % 2 == 0:
-        raise ValueError(f"Argument 'length' must be 2^n - 1 with even n, not {length}.")
+    verify_scalar(n, even=True)
+    verify_isinstance(index, (int, tuple))
 
     if poly is None:
         c = galois.primitive_poly(2, n)
@@ -639,8 +612,6 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
         code = _kasami_small_set(n, c, index)
     elif isinstance(index, tuple):
         code = _kasami_large_set(n, c, index)
-    else:
-        raise TypeError(f"Argument 'index' must be an integer or a tuple of integers, not {type(index).__name__}.")
 
     if output == "binary":
         return code
@@ -783,20 +754,10 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
     Group:
         sequences-correlation
     """
-    if not isinstance(length, int):
-        raise TypeError(f"Argument 'length' must be of type 'int', not {type(length)}.")
-    if not length > 1:
-        raise ValueError(f"Argument 'length' must be greater than 1, not {length}.")
-
-    if not isinstance(root, int):
-        raise TypeError(f"Argument 'root' must be of type 'int', not {type(root)}.")
-    if not 0 < root < length:
-        raise ValueError(f"Argument 'root' must be greater than 0 and less than 'length', not {root}.")
-    if not math.gcd(length, root) == 1:
-        raise ValueError(f"Argument 'root' must be relatively prime to 'length'; {root} and {length} are not.")
-
-    if not isinstance(shift, int):
-        raise TypeError(f"Argument 'shift' must be of type 'int', not {type(shift)}.")
+    verify_scalar(length, int=True, inclusive_min=2)
+    verify_scalar(root, int=True, exclusive_min=0, exclusive_max=length)
+    verify_coprime(length, root)
+    verify_scalar(shift, int=True)
 
     n = np.arange(length)
     cf = length % 2

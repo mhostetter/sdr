@@ -9,11 +9,14 @@ import numpy.typing as npt
 import scipy.constants
 
 from .._conversion import db
-from .._helper import export
+from .._helper import convert_output, export, verify_arraylike
 
 
 @export
-def free_space_path_loss(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.NDArray[np.float64]:
+def free_space_path_loss(
+    distance: npt.ArrayLike,
+    freq: npt.ArrayLike,
+) -> npt.NDArray[np.float64]:
     r"""
     Calculates the free-space path loss (FSPL) in dB.
 
@@ -68,13 +71,8 @@ def free_space_path_loss(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.ND
     Group:
         link-budget-path-losses
     """
-    distance = np.asarray(distance)
-    if not np.all(distance >= 0):
-        raise ValueError(f"Argument 'distance' must be non-negative, not {distance}.")
-
-    freq = np.asarray(freq)
-    if not np.all(freq > 0):
-        raise ValueError(f"Argument 'freq' must be positive, not {freq}.")
+    distance = verify_arraylike(distance, float=True, non_negative=True)
+    freq = verify_arraylike(freq, float=True, positive=True)
 
     # The free-space path loss equation is only valid in the far field. For very small distances, the FSPL
     # equation could have a negative result, implying a path gain. This is not possible. So for distances less
@@ -85,4 +83,4 @@ def free_space_path_loss(distance: npt.ArrayLike, freq: npt.ArrayLike) -> npt.ND
     # The free-space path loss equation
     loss = db((4 * np.pi * distance * freq / scipy.constants.speed_of_light) ** 2)
 
-    return loss  # type: ignore
+    return convert_output(loss)

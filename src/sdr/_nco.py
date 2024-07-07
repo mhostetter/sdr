@@ -2,7 +2,7 @@
 A module for numerically controlled oscillators (NCO).
 """
 
-from __future__ import annotations
+# from __future__ import annotations
 
 from typing import Any, overload
 
@@ -10,7 +10,15 @@ import numpy as np
 import numpy.typing as npt
 from typing_extensions import Literal
 
-from ._helper import export
+from ._helper import (
+    convert_output,
+    export,
+    verify_arraylike,
+    verify_at_least_one_specified,
+    verify_literal,
+    verify_same_shape,
+    verify_scalar,
+)
 
 
 @export
@@ -103,9 +111,9 @@ class NCO:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        self._K0 = gain
-        self._increment = increment
-        self._offset = offset
+        self._K0 = verify_scalar(gain, float=True, positive=True)
+        self._increment = verify_scalar(increment, float=True)
+        self._offset = verify_scalar(offset, float=True)
         self._z_prev: float  # Will be updated in reset()
         self.reset()
 
@@ -121,16 +129,16 @@ class NCO:
     @overload
     def __call__(
         self,
-        freq: npt.NDArray[np.float64] | None = None,
-        phase: npt.NDArray[np.float64] | None = None,
+        freq: npt.NDArray | None = None,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
+        phase: npt.NDArray | None = None,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
         output: Literal["phase", "sine", "cosine"] = "complex-exp",
     ) -> npt.NDArray[np.float64]: ...
 
     @overload
     def __call__(
         self,
-        freq: npt.NDArray[np.float64] | None = None,
-        phase: npt.NDArray[np.float64] | None = None,
+        freq: npt.NDArray | None = None,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
+        phase: npt.NDArray | None = None,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
         output: Literal["complex-exp"] = "complex-exp",
     ) -> npt.NDArray[np.complex128]: ...
 
@@ -157,20 +165,18 @@ class NCO:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        if freq is None and phase is None:
-            raise ValueError("At least one of 'freq' and 'phase' must be provided.")
-        elif freq is None:
+        verify_at_least_one_specified(freq, phase)
+        freq = verify_arraylike(freq, optional=True, float=True, atleast_1d=True, ndim=1)
+        phase = verify_arraylike(phase, optional=True, float=True, atleast_1d=True, ndim=1)
+        if freq is None:
             freq = np.zeros_like(phase)
-        elif phase is None:
+        if phase is None:
             phase = np.zeros_like(freq)
-        assert freq is not None and phase is not None  # Needed for type checking
-
-        if not freq.size == phase.size:
-            raise ValueError(f"Arguments 'freq' and 'phase' must have the same size, not {freq.size} and {phase.size}.")
+        verify_same_shape(freq, phase)
+        verify_literal(output, ["phase", "sine", "cosine", "complex-exp"])
 
         # Scale the input by the NCO gain and add the constant accumulation to every sample
         z = freq * self.gain + self.increment
-        z = np.atleast_1d(z)
 
         # Insert the previous output in front of the current input. Then run a cumulative sum over all samples.
         z = np.insert(z, 0, self._z_prev)
@@ -188,15 +194,8 @@ class NCO:
             y = np.sin(y)
         elif output == "cosine":
             y = np.cos(y)
-        else:
-            raise ValueError(
-                f"Argument 'output' must be one of 'phase', 'sine', 'cosine', or 'complex-exp', not {output!r}."
-            )
 
-        if y.size == 1:
-            y = y[0]
-
-        return y
+        return convert_output(y, squeeze=True)
 
     def step(self, N: int) -> npt.NDArray[np.complex128]:
         """
@@ -211,8 +210,11 @@ class NCO:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
+        verify_scalar(N, int=True, positive=True)
+
         x = np.zeros(N)
         y = self(x)
+
         return y
 
     @property

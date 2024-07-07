@@ -8,12 +8,12 @@ import numpy as np
 import numpy.typing as npt
 import scipy.signal
 
-from ._helper import export
+from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
 
 
 @export
 def mix(
-    x: npt.NDArray,
+    x: npt.ArrayLike,
     freq: float = 0.0,
     phase: float = 0.0,
     sample_rate: float = 1.0,
@@ -64,21 +64,13 @@ def mix(
     Group:
         dsp-signal-manipulation
     """
-    if not isinstance(freq, (int, float)):
-        raise TypeError(f"Argument 'freq' must be a number, not {type(freq)}.")
-    if not isinstance(phase, (int, float)):
-        raise TypeError(f"Argument 'phase' must be a number, not {type(phase)}.")
-    if not isinstance(sample_rate, (int, float)):
-        raise TypeError(f"Argument 'sample_rate' must be a number, not {type(sample_rate)}.")
-    if not isinstance(complex, bool):
-        raise TypeError(f"Argument 'complex' must be a bool, not {type(complex)}.")
+    x = verify_arraylike(x, ndim=1)
+    verify_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
+    verify_scalar(phase, float=True)
+    verify_scalar(sample_rate, float=True, positive=True)
+    verify_bool(complex)
 
-    if not -sample_rate / 2 <= freq <= sample_rate / 2:
-        raise ValueError(f"Argument 'freq' must be in the range [{-sample_rate/2}, {sample_rate/2}], not {freq}.")
-    if not sample_rate > 0:
-        raise ValueError(f"Argument 'sample_rate' must be positive, not {sample_rate}.")
-
-    t = np.arange(len(x)) / sample_rate  # Time vector in seconds
+    t = np.arange(x.size) / sample_rate  # Time vector in seconds
     if complex:
         lo = np.exp(1j * (2 * np.pi * freq * t + np.deg2rad(phase)))
     else:
@@ -86,11 +78,11 @@ def mix(
 
     y = x * lo
 
-    return y
+    return convert_output(y)
 
 
 @export
-def to_complex_baseband(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex128]:
+def to_complex_baseband(x_r: npt.ArrayLike) -> npt.NDArray[np.complex128]:
     r"""
     Converts a real passband signal to a complex baseband signal.
 
@@ -150,10 +142,7 @@ def to_complex_baseband(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex1
     Group:
         dsp-signal-manipulation
     """
-    if not x_r.ndim == 1:
-        raise ValueError(f"Argument 'x_r' must be a 1D array, not {x_r.ndim}D.")
-    if not np.isrealobj(x_r):
-        raise ValueError("Argument 'x_r' must be real, not complex.")
+    x_r = verify_arraylike(x_r, float=True, real=True, ndim=1)
 
     if x_r.size % 2 == 1:
         # Append one zero for the decimate by 2
@@ -169,11 +158,11 @@ def to_complex_baseband(x_r: npt.NDArray[np.float64]) -> npt.NDArray[np.complex1
     # spectrum outside +/- fs/4 is zero.
     x_c = x_c[::2]
 
-    return x_c
+    return convert_output(x_c)
 
 
 @export
-def to_real_passband(x_c: npt.NDArray[np.complex128]) -> npt.NDArray[np.float64]:
+def to_real_passband(x_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
     r"""
     Converts a complex baseband signal to a real passband signal.
 
@@ -232,10 +221,7 @@ def to_real_passband(x_c: npt.NDArray[np.complex128]) -> npt.NDArray[np.float64]
     Group:
         dsp-signal-manipulation
     """
-    if not x_c.ndim == 1:
-        raise ValueError(f"Argument 'x_c' must be a 1D array, not {x_c.ndim}D.")
-    if not np.iscomplexobj(x_c):
-        raise ValueError("Argument 'x_c' must be complex, not real.")
+    x_c = verify_arraylike(x_c, complex=True, imaginary=True, ndim=1)
 
     # Upsample by 2 to achieve 2*fs sample rate
     x_c = scipy.signal.resample_poly(x_c, 2, 1)
@@ -246,11 +232,11 @@ def to_real_passband(x_c: npt.NDArray[np.complex128]) -> npt.NDArray[np.float64]
     # Only preserve the real part, which is complex-conjugate symmetric about 0 Hz.
     x_r = x_c.real
 
-    return x_r
+    return convert_output(x_r)
 
 
 @export
-def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
+def upsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
     r"""
     Upsamples the time-domain signal $x[n]$ by the factor $r$, by inserting $r-1$ zeros between each sample.
 
@@ -310,19 +296,17 @@ def upsample(x: npt.NDArray, rate: int) -> npt.NDArray:
     Group:
         dsp-signal-manipulation
     """
-    if not isinstance(rate, int):
-        raise TypeError(f"Argument 'rate' must be an int, not {type(rate)}.")
-    if not rate > 0:
-        raise ValueError(f"Argument 'rate' must be positive, not {rate}.")
+    x = verify_arraylike(x, ndim=1)
+    verify_scalar(rate, int=True, positive=True)
 
     y = np.zeros(x.size * rate, dtype=x.dtype)
     y[::rate] = x
 
-    return y
+    return convert_output(y)
 
 
 @export
-def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
+def downsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
     r"""
     Downsamples the time-domain signal $x[n]$ by the factor $r$, by discarding $r-1$ samples every $r$ samples.
 
@@ -384,11 +368,9 @@ def downsample(x: npt.NDArray, rate: int) -> npt.NDArray:
     Group:
         dsp-signal-manipulation
     """
-    if not isinstance(rate, int):
-        raise TypeError(f"Argument 'rate' must be an int, not {type(rate)}.")
-    if not rate > 0:
-        raise ValueError(f"Argument 'rate' must be positive, not {rate}.")
+    x = verify_arraylike(x, ndim=1)
+    verify_scalar(rate, int=True, positive=True)
 
     y = x[::rate]
 
-    return y
+    return convert_output(y)

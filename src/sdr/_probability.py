@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.special
 
-from ._helper import export
+from ._helper import convert_output, export, verify_arraylike
 
 
 @export
@@ -37,9 +37,11 @@ def Q(x: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         probability
     """
-    x = np.asarray(x)
+    x = verify_arraylike(x, float=True)
+
     p = scipy.special.erfc(x / np.sqrt(2)) / 2
-    return p
+
+    return convert_output(p)
 
 
 @export
@@ -68,6 +70,8 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Group:
         probability
     """
-    p = np.asarray(p)
+    p = verify_arraylike(p, float=True)
+
     x = np.sqrt(2) * scipy.special.erfcinv(2 * p)
-    return x
+
+    return convert_output(x)
