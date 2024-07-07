@@ -236,15 +236,18 @@ def _h0(
     # Coherent integration scales the noise power by n_c
     sigma2_per *= n_c
 
-    if detector == "coherent":
-        h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
-    elif detector == "linear":
-        h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
-        h0 = _sum_distribution(h0, n_nc)
-    elif detector == "square-law":
-        h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
-    else:
-        raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
+    with np.errstate(invalid="ignore"):
+        if detector == "coherent":
+            h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
+        elif detector == "linear":
+            h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
+            h0 = _sum_distribution(h0, n_nc)
+        elif detector == "square-law":
+            h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
+        else:
+            raise ValueError(
+                f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}."
+            )
 
     return h0
 
@@ -478,26 +481,29 @@ def _h1(
 
     lambda_ = A2 / (sigma2_per)  # Non-centrality parameter
 
-    if detector == "coherent":
-        h1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2_per))
-    elif detector == "linear":
-        if complex:
-            # Rice distribution has 2 degrees of freedom
-            h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+    with np.errstate(invalid="ignore"):
+        if detector == "coherent":
+            h1 = scipy.stats.norm(np.sqrt(A2), np.sqrt(sigma2_per))
+        elif detector == "linear":
+            if complex:
+                # Rice distribution has 2 degrees of freedom
+                h1 = scipy.stats.rice(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
 
-            # Sometimes this distribution has so much SNR that SciPy throws an error when computing the mean, etc.
-            # We need to check for that condition. If true, we cant approximate the distribution by a Gaussian,
-            # which doesn't suffer from the same error.
-            if np.isnan(h1.mean()):
-                h1 = scipy.stats.norm(np.sqrt(lambda_ * sigma2_per), scale=np.sqrt(sigma2_per))
+                # Sometimes this distribution has so much SNR that SciPy throws an error when computing the mean, etc.
+                # We need to check for that condition. If true, we cant approximate the distribution by a Gaussian,
+                # which doesn't suffer from the same error.
+                if np.isnan(h1.mean()):
+                    h1 = scipy.stats.norm(np.sqrt(lambda_ * sigma2_per), scale=np.sqrt(sigma2_per))
+            else:
+                # Folded normal distribution has 1 degree of freedom
+                h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
+            h1 = _sum_distribution(h1, n_nc)
+        elif detector == "square-law":
+            h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
         else:
-            # Folded normal distribution has 1 degree of freedom
-            h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
-        h1 = _sum_distribution(h1, n_nc)
-    elif detector == "square-law":
-        h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
-    else:
-        raise ValueError(f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}.")
+            raise ValueError(
+                f"Argument `detector` must be one of 'coherent', 'linear', or 'square-law', not {detector!r}."
+            )
 
     return h1
 
