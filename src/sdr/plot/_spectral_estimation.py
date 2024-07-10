@@ -196,9 +196,8 @@ def spectrogram(
             f = f[0 : f.size // 2]
             Sxx = Sxx[0 : Sxx.shape[0] // 2, :]
         if y_axis == "two-sided":
-            # f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
             f = np.fft.fftshift(f)
-            Sxx = np.fft.fftshift(Sxx)
+            Sxx = np.fft.fftshift(Sxx, axes=0)
 
         if sample_rate_provided:
             f_units, scalar = freq_units(f)
