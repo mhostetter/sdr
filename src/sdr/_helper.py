@@ -98,106 +98,17 @@ def verify_isinstance(
     return arg
 
 
-def verify_arraylike(
-    x: npt.ArrayLike | None,
-    dtype: npt.DTypeLike | None = None,
-    # Data types
-    optional: bool = False,
-    int: bool = False,
-    float: bool = False,
-    complex: bool = False,
-    # Value constraints
-    real: bool = False,
-    imaginary: bool = False,
-    negative: bool = False,
-    non_negative: bool = False,
-    positive: bool = False,
-    inclusive_min: float | None = None,
-    inclusive_max: float | None = None,
-    exclusive_min: float | None = None,
-    exclusive_max: float | None = None,
-    # Dimension and size constraints
-    atleast_1d: bool = False,
-    atleast_2d: bool = False,
-    atleast_3d: bool = False,
-    ndim: int | None = None,
-    size: int | None = None,
-    size_multiple: int | None = None,
-    shape: tuple[int, ...] | None = None,
-) -> npt.NDArray:
+def verify_literal(
+    arg: Any,
+    literals: Any,
+):
     """
-    Converts the argument to a NumPy array and verifies the conditions.
+    Verifies that the argument is one of the specified literals.
     """
-    if optional and x is None:
-        return x
+    if not arg in literals:
+        raise ValueError(f"Argument {_argument_names()[0]!r} must be one of {literals}, not {arg!r}.")
 
-    x = np.asarray(x, dtype=dtype)
-
-    if int:
-        if not np.issubdtype(x.dtype, np.integer):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int, not {x.dtype}.")
-    if float:
-        if not (np.issubdtype(x.dtype, np.integer) or np.issubdtype(x.dtype, np.floating)):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float, not {x.dtype}.")
-    if complex:
-        if not (
-            np.issubdtype(x.dtype, np.integer)
-            or np.issubdtype(x.dtype, np.floating)
-            or np.issubdtype(x.dtype, np.complexfloating)
-        ):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float or complex, not {x.dtype}.")
-
-    if real:
-        if not np.isrealobj(x):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be real, not complex.")
-    if imaginary:
-        if not np.iscomplexobj(x):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be complex, not real.")
-    if negative:
-        if np.any(x >= 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be negative, not {x}.")
-    if non_negative:
-        if np.any(x < 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be non-negative, not {x}.")
-    if positive:
-        if np.any(x <= 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be positive, not {x}.")
-
-    if inclusive_min is not None:
-        if np.any(x < inclusive_min):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be at least {inclusive_min}, not {x}.")
-    if inclusive_max is not None:
-        if np.any(x > inclusive_max):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be at most {inclusive_max}, not {x}.")
-    if exclusive_min is not None:
-        if np.any(x <= exclusive_min):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be greater than {exclusive_min}, not {x}.")
-    if exclusive_max is not None:
-        if np.any(x >= exclusive_max):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be less than {exclusive_max}, not {x}.")
-
-    if atleast_1d:
-        x = np.atleast_1d(x)
-    if atleast_2d:
-        x = np.atleast_2d(x)
-    if atleast_3d:
-        x = np.atleast_3d(x)
-    if ndim is not None:
-        if not x.ndim == ndim:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have {ndim} dimensions, not {x.ndim}.")
-    if size is not None:
-        if not x.size == size:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have {size} elements, not {x.size}.")
-    if size_multiple is not None:
-        if not x.size % size_multiple == 0:
-            raise ValueError(
-                f"Argument {_argument_names()[0]!r} must have a size that is a multiple of {size_multiple}, not {x.size}."
-            )
-    if shape is not None:
-        if not x.shape == shape:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have shape {shape}, not {x.shape}.")
-
-    return x
+    return arg
 
 
 def verify_scalar(
@@ -300,21 +211,8 @@ def verify_bool(
     if convert_numpy:
         x = convert_to_scalar(x)
 
-    if not (isinstance(x, bool) or (accept_numpy and np.issubdtype(x, np.bool_))):
+    if not (isinstance(x, bool) or (accept_numpy and isinstance(x, np.bool_))):
         raise TypeError(f"Argument {_argument_names()[0]!r} must be a bool, not {type(x)}.")
-
-    return x
-
-
-def verify_literal(
-    x: Any,
-    literals: Any,
-):
-    """
-    Verifies that the argument is one of the specified literals.
-    """
-    if not x in literals:
-        raise ValueError(f"Argument {_argument_names()[0]!r} must be one of {literals}, not {x!r}.")
 
     return x
 
@@ -340,6 +238,108 @@ def verify_condition(
     """
     if not condition:
         raise ValueError(f"Arguments must satisfy the condition {_argument_names()[0]!r}.")
+
+
+def verify_arraylike(
+    x: npt.ArrayLike | None,
+    dtype: npt.DTypeLike | None = None,
+    # Data types
+    optional: bool = False,
+    int: bool = False,
+    float: bool = False,
+    complex: bool = False,
+    # Value constraints
+    real: bool = False,
+    imaginary: bool = False,
+    negative: bool = False,
+    non_negative: bool = False,
+    positive: bool = False,
+    inclusive_min: float | None = None,
+    inclusive_max: float | None = None,
+    exclusive_min: float | None = None,
+    exclusive_max: float | None = None,
+    # Dimension and size constraints
+    atleast_1d: bool = False,
+    atleast_2d: bool = False,
+    atleast_3d: bool = False,
+    ndim: int | None = None,
+    size: int | None = None,
+    size_multiple: int | None = None,
+    shape: tuple[int, ...] | None = None,
+) -> npt.NDArray:
+    """
+    Converts the argument to a NumPy array and verifies the conditions.
+    """
+    if optional and x is None:
+        return x
+
+    x = np.asarray(x, dtype=dtype)
+
+    if int:
+        if not np.issubdtype(x.dtype, np.integer):
+            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int, not {x.dtype}.")
+    if float:
+        if not (np.issubdtype(x.dtype, np.integer) or np.issubdtype(x.dtype, np.floating)):
+            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float, not {x.dtype}.")
+    if complex:
+        if not (
+            np.issubdtype(x.dtype, np.integer)
+            or np.issubdtype(x.dtype, np.floating)
+            or np.issubdtype(x.dtype, np.complexfloating)
+        ):
+            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float or complex, not {x.dtype}.")
+
+    if real:
+        if not np.isrealobj(x):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be real, not complex.")
+    if imaginary:
+        if not np.iscomplexobj(x):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be complex, not real.")
+    if negative:
+        if np.any(x >= 0):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be negative, not {x}.")
+    if non_negative:
+        if np.any(x < 0):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be non-negative, not {x}.")
+    if positive:
+        if np.any(x <= 0):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be positive, not {x}.")
+
+    if inclusive_min is not None:
+        if np.any(x < inclusive_min):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be at least {inclusive_min}, not {x}.")
+    if inclusive_max is not None:
+        if np.any(x > inclusive_max):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be at most {inclusive_max}, not {x}.")
+    if exclusive_min is not None:
+        if np.any(x <= exclusive_min):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be greater than {exclusive_min}, not {x}.")
+    if exclusive_max is not None:
+        if np.any(x >= exclusive_max):
+            raise ValueError(f"Argument {_argument_names()[0]!r} must be less than {exclusive_max}, not {x}.")
+
+    if atleast_1d:
+        x = np.atleast_1d(x)
+    if atleast_2d:
+        x = np.atleast_2d(x)
+    if atleast_3d:
+        x = np.atleast_3d(x)
+    if ndim is not None:
+        if not x.ndim == ndim:
+            raise ValueError(f"Argument {_argument_names()[0]!r} must have {ndim} dimensions, not {x.ndim}.")
+    if size is not None:
+        if not x.size == size:
+            raise ValueError(f"Argument {_argument_names()[0]!r} must have {size} elements, not {x.size}.")
+    if size_multiple is not None:
+        if not x.size % size_multiple == 0:
+            raise ValueError(
+                f"Argument {_argument_names()[0]!r} must have a size that is a multiple of {size_multiple}, not {x.size}."
+            )
+    if shape is not None:
+        if not x.shape == shape:
+            raise ValueError(f"Argument {_argument_names()[0]!r} must have shape {shape}, not {x.shape}.")
+
+    return x
 
 
 def verify_same_shape(
