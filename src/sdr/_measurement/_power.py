@@ -12,6 +12,37 @@ from .._helper import convert_output, export, verify_arraylike, verify_bool
 
 
 @export
+def power(
+    x: npt.ArrayLike,
+    db: bool = False,
+) -> float:
+    r"""
+    Measures the instantaneous power of a time-domain signal $x[n]$.
+
+    $$P = \left| x[n] \right|^2$$
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to measure.
+        db: Indicates whether to return the result in decibels (dB).
+
+    Returns:
+        The instantaneous power. If `db=False`, $P$ is returned.
+        If `db=True`, $10 \log_{10} P$ is returned.
+
+    Group:
+        measurement-power
+    """
+    x = verify_arraylike(x, complex=True)
+    verify_bool(db)
+
+    P = np.abs(x) ** 2
+    if db:
+        P = to_db(P, type="power")
+
+    return convert_output(P)
+
+
+@export
 def peak_power(
     x: npt.ArrayLike,
     axis: int | tuple[int, ...] | None = None,
