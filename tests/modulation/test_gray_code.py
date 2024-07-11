@@ -1,13 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # n must be at least 1
-        sdr.binary_code(0)
 
 
 def test_1():

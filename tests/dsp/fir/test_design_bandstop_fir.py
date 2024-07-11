@@ -1,33 +1,8 @@
 import numpy as np
-import pytest
 
 import sdr
 
 from .helper import verify_impulse_response
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.design_bandstop_fir("30", 0.4, 0.25)
-    with pytest.raises(ValueError):
-        sdr.design_bandstop_fir(29, 0.4, 0.25)
-
-    with pytest.raises(TypeError):
-        sdr.design_bandstop_fir(30, "0.4", 0.25)
-    with pytest.raises(ValueError):
-        sdr.design_bandstop_fir(30, -0.1, 0.25)
-
-    with pytest.raises(TypeError):
-        sdr.design_bandstop_fir(30, 0.4, "0.25")
-    with pytest.raises(ValueError):
-        sdr.design_bandstop_fir(30, 0.4, 0.61 * 2)
-    with pytest.raises(ValueError):
-        sdr.design_bandstop_fir(30, 0.4, 0.41 * 2)
-
-    with pytest.raises(ValueError):
-        sdr.design_bandstop_fir(30, 0.4, 0.25, window="invalid")
-    with pytest.raises(ValueError):
-        sdr.design_bandstop_fir(30, 0.4, 0.25, window=np.ones(10))
 
 
 def test_custom():

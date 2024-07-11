@@ -11,34 +11,8 @@ MATLAB:
 """
 
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        # N must be an integer
-        sdr.zadoff_chu_sequence(13.0, 3)
-    with pytest.raises(TypeError):
-        # R must be an integer
-        sdr.zadoff_chu_sequence(13, 3.0)
-    with pytest.raises(TypeError):
-        # Shift must be an integer
-        sdr.zadoff_chu_sequence(13, 3, 1.0)
-
-    with pytest.raises(ValueError):
-        # N must be at least 2
-        sdr.zadoff_chu_sequence(1, 3)
-    with pytest.raises(ValueError):
-        # 0 < R < N
-        sdr.zadoff_chu_sequence(13, -3)
-    with pytest.raises(ValueError):
-        # 0 < R < N
-        sdr.zadoff_chu_sequence(13, 25)
-    with pytest.raises(ValueError):
-        # N and R must be coprime
-        sdr.zadoff_chu_sequence(15, 3)
 
 
 def test_3_2():

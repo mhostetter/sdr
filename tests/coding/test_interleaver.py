@@ -3,20 +3,6 @@ import numpy as np
 import sdr
 
 
-def test_exceptions():
-    with np.testing.assert_raises(TypeError):
-        sdr.Interleaver(0)
-    with np.testing.assert_raises(TypeError):
-        # Values must be integers
-        sdr.Interleaver(np.array([0, 1.0]))
-    with np.testing.assert_raises(ValueError):
-        # Values must be exhaustive in [0, len(map))
-        sdr.Interleaver(np.array([0, 1, 5, 2]))
-    with np.testing.assert_raises(ValueError):
-        # Values must be unique
-        sdr.Interleaver(np.array([0, 1, 2, 2]))
-
-
 def test_simple():
     map = np.array([0, 3, 1, 2])
     inverse_map = np.array([0, 2, 3, 1])

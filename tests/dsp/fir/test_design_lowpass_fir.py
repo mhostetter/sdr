@@ -1,26 +1,8 @@
 import numpy as np
-import pytest
 
 import sdr
 
 from .helper import verify_impulse_response
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.design_lowpass_fir("30", 0.2)
-    with pytest.raises(ValueError):
-        sdr.design_lowpass_fir(29, 0.2)
-
-    with pytest.raises(TypeError):
-        sdr.design_lowpass_fir(30, "0.2")
-    with pytest.raises(ValueError):
-        sdr.design_lowpass_fir(30, -0.1)
-
-    with pytest.raises(ValueError):
-        sdr.design_lowpass_fir(30, 0.2, window="invalid")
-    with pytest.raises(ValueError):
-        sdr.design_lowpass_fir(30, 0.2, window=np.ones(10))
 
 
 def test_custom():

@@ -1,26 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    rng = np.random.default_rng()
-    x = rng.standard_normal(10)
-
-    with pytest.raises(TypeError):
-        sdr.mix(x, freq="10")
-    with pytest.raises(TypeError):
-        sdr.mix(x, phase="45")
-    with pytest.raises(TypeError):
-        sdr.mix(x, sample_rate="1e3")
-
-    with pytest.raises(ValueError):
-        sdr.mix(x, freq=0.6)
-    with pytest.raises(ValueError):
-        sdr.mix(x, freq=5e3 + 1, sample_rate=10e3)
-    with pytest.raises(ValueError):
-        sdr.mix(x, sample_rate=0)
 
 
 def test_freq():

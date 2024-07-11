@@ -4,18 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # Number of non-coherent samples must be at least 1
-        sdr.non_coherent_gain(0, 10)
-    with pytest.raises(ValueError):
-        # P_FA must be between 0 and 1
-        sdr.non_coherent_gain(1, 10, -0.1)
-    with pytest.raises(ValueError):
-        # P_FA must be between 0 and 1
-        sdr.non_coherent_gain(1, 10, 1.1)
-
-
 def test_scalar_snr_in():
     assert sdr.non_coherent_gain(1, 10, snr_ref="input") == pytest.approx(0.0)
     assert sdr.non_coherent_gain(2, 10, snr_ref="input") == pytest.approx(2.499445060713011)

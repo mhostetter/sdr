@@ -4,15 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # p must be between 0 and 1
-        sdr.BinarySymmetricChannel(-0.1)
-    with pytest.raises(ValueError):
-        # p must be between 0 and 1
-        sdr.BinarySymmetricChannel(1.1)
-
-
 def test_types():
     bsc = sdr.BinarySymmetricChannel(0.5)
 

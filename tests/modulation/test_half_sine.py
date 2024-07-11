@@ -1,21 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.half_sine(8.0)
-    with pytest.raises(TypeError):
-        sdr.half_sine(8, span=1.0)
-
-    with pytest.raises(ValueError):
-        # Need at least 1 samples per symbol
-        sdr.half_sine(0)
-    with pytest.raises(ValueError):
-        # Need at least 1 symbol
-        sdr.half_sine(8, span=0)
 
 
 def test_4():

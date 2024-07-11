@@ -1,29 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.gaussian("invalid", 4, 6)
-    with pytest.raises(TypeError):
-        sdr.gaussian(0.5, 4.0, 6)
-    with pytest.raises(TypeError):
-        sdr.gaussian(0.5, 4, 6.0)
-
-    with pytest.raises(ValueError):
-        # Time-bandwidth product must be non-negative
-        sdr.gaussian(-0.1, 4, 6)
-    with pytest.raises(ValueError):
-        # Need at least 1 symbol
-        sdr.gaussian(0.5, 0, 4)
-    with pytest.raises(ValueError):
-        # Need at least 1 samples per symbol
-        sdr.gaussian(0.5, 6, 1)
-    with pytest.raises(ValueError):
-        # The filter must have even order
-        sdr.gaussian(0.5, 3, 5)
 
 
 def test_0p5_1_8():

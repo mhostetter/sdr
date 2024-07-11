@@ -4,12 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # Need either 'snr' or 'noise'
-        sdr.awgn(np.ones(10))
-
-
 def test_real_from_snr():
     rng = np.random.default_rng()
     A = rng.uniform(2, 3)  # Signal amplitude

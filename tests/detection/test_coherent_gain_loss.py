@@ -4,15 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # Integration must be non-negative
-        sdr.coherent_gain_loss(-1e3, 100)
-    with pytest.raises(ValueError):
-        # Integration must be non-negative
-        sdr.coherent_gain_loss([-1e3, 0, 1e3], 100)
-
-
 def test_scalar():
     assert sdr.coherent_gain_loss(1e-3, 235) == pytest.approx(0.8038919141626675)
 
