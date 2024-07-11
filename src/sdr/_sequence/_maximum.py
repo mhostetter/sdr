@@ -14,7 +14,7 @@ from galois import Poly
 from galois.typing import PolyLike
 from typing_extensions import Literal
 
-from .._helper import export, verify_equation, verify_literal, verify_scalar
+from .._helper import export, verify_condition, verify_literal, verify_scalar
 from ._conversion import code_to_sequence, field_to_code
 from ._lfsr import FLFSR
 
@@ -335,9 +335,9 @@ def is_preferred_pair(
     poly1 = Poly._PolyLike(poly1, field=galois.GF(2))
     poly2 = Poly._PolyLike(poly2, field=galois.GF(2))
 
-    verify_equation(poly1.degree == poly2.degree)
-    verify_equation(poly1.is_primitive())
-    verify_equation(poly2.is_primitive())
+    verify_condition(poly1.degree == poly2.degree)
+    verify_condition(poly1.is_primitive())
+    verify_condition(poly2.is_primitive())
 
     # if not poly1.degree == poly2.degree:
     #     raise ValueError(

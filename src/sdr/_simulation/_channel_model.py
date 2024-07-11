@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import convert_output, export, verify_arraylike, verify_equation, verify_scalar
+from .._helper import convert_output, export, verify_arraylike, verify_condition, verify_scalar
 from .._link_budget._capacity import Hb
 
 
@@ -141,7 +141,7 @@ def dmc(
     """
     x = verify_arraylike(x, int=True, inclusive_min=0, exclusive_max=2)
     P = verify_arraylike(P, float=True, ndim=2, inclusive_min=0, inclusive_max=1)
-    verify_equation(np.allclose(P.sum(axis=1), 1))
+    verify_condition(np.allclose(P.sum(axis=1), 1))
 
     if X is None:
         X = np.arange(P.shape[0])
@@ -551,7 +551,7 @@ class DiscreteMemorylessChannel(Channel):
             seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
         """
         P = verify_arraylike(P, float=True, ndim=2, inclusive_min=0, inclusive_max=1)
-        verify_equation(np.allclose(P.sum(axis=1), 1))
+        verify_condition(np.allclose(P.sum(axis=1), 1))
         self._P = P
 
         if X is None:

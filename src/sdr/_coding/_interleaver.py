@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 import numpy.typing as npt
 
-from .._helper import convert_output, export, verify_arraylike, verify_equation, verify_scalar
+from .._helper import convert_output, export, verify_arraylike, verify_condition, verify_scalar
 
 
 @export
@@ -46,7 +46,7 @@ class Interleaver:
                 The $i$-th input element will be placed at the $\pi(i)$-th output position.
         """
         map = verify_arraylike(map, int=True, atleast_1d=True, ndim=1)
-        verify_equation(np.unique(map).size == map.size)
+        verify_condition(np.unique(map).size == map.size)
 
         self._map = map
         self._inverse_map = np.argsort(map)
