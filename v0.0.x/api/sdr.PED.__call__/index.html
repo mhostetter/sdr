@@ -5913,7 +5913,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.AdditiveScrambler.scramble/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.AdditiveScrambler.scramble (Python method) — Scrambles the input sequence $x[n]$." class="md-ellipsis">scramble</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.AdditiveScrambler.scramble (Python method) — Scrambles the binary input sequence $x[n]$." class="md-ellipsis">scramble</span>
       </a>
     </li>
   
@@ -5928,7 +5928,7 @@ You're not viewing the latest version.
   
     <li class="md-nav__item">
       <a href="../sdr.AdditiveScrambler.descramble/" class="md-nav__link">
-        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.AdditiveScrambler.descramble (Python method) — Descrambles the input sequence $y[n]$." class="md-ellipsis">descramble</span>
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.AdditiveScrambler.descramble (Python method) — Descrambles the binary input sequence $y[n]$." class="md-ellipsis">descramble</span>
       </a>
     </li>
   
@@ -14113,14 +14113,14 @@ You're not viewing the latest version.
 
 <dl class="py method objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">PED.</span></span><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-received" title="sdr.PED.__call__.received (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">received</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-reference" title="sdr.PED.__call__.reference (Python parameter) — The reference complex symbols, either the known transmitted complex symbols $a[k]$ or the complex symbols decisions $hat{a}[k]$."><span class="n"><span class="pre">reference</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span><span class="pre">PED.</span></span><span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-received" title="sdr.PED.__call__.received (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">received</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-reference" title="sdr.PED.__call__.reference (Python parameter) — The reference complex symbols, either the known transmitted complex symbols $a[k]$ or the complex symbols decisions $hat{a}[k]$."><span class="n"><span class="pre">reference</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Detects the phase error.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-received"><span class="n sig-name">received</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">NDArray<span class="p">[</span>complex128<span class="p">]</span></span></span><a class="headerlink" href="#p-received" title="Permalink to this definition">¶</a></dt><dd><p>The received complex symbols <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span>.</p>
+<dt id="p-received"><span class="n sig-name">received</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-received" title="Permalink to this definition">¶</a></dt><dd><p>The received complex symbols <span class="math notranslate nohighlight">\(\tilde{a}[k]\)</span>.</p>
 </dd>
-<dt id="p-reference"><span class="n sig-name">reference</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">NDArray<span class="p">[</span>complex128<span class="p">]</span></span></span><a class="headerlink" href="#p-reference" title="Permalink to this definition">¶</a></dt><dd><p>The reference complex symbols, either the known transmitted complex symbols <span class="math notranslate nohighlight">\(a[k]\)</span>
+<dt id="p-reference"><span class="n sig-name">reference</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-reference" title="Permalink to this definition">¶</a></dt><dd><p>The reference complex symbols, either the known transmitted complex symbols <span class="math notranslate nohighlight">\(a[k]\)</span>
 or the complex symbols decisions <span class="math notranslate nohighlight">\(\hat{a}[k]\)</span>.</p>
 </dd>
 </dl>
