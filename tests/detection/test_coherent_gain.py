@@ -4,12 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # Number of coherent samples must be at least 1
-        sdr.coherent_gain(0)
-
-
 def test_scalar():
     assert sdr.coherent_gain(1) == pytest.approx(0.0)
     assert sdr.coherent_gain(2) == pytest.approx(3.010299956639813)

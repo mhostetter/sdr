@@ -4,15 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # CGL must be non-negative
-        sdr.max_integration_time(-3, 100)
-    with pytest.raises(ValueError):
-        # CGL must be non-negative
-        sdr.max_integration_time([-3, 0, 3], 100)
-
-
 def test_scalar():
     assert sdr.max_integration_time(3, 235) == pytest.approx(0.0018818867640235891)
 

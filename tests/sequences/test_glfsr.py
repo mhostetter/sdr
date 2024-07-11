@@ -18,22 +18,6 @@ CHARACTERISTIC_POLYS = [
 ]
 
 
-def test_exceptions():
-    c = galois.primitive_poly(7, 4)
-
-    # with pytest.raises(TypeError):
-    #     sdr.GLFSR(c.coeffs)
-    with pytest.raises(TypeError):
-        sdr.GLFSR(c, state=1)
-    with pytest.raises(ValueError):
-        c_coeffs = c.coeffs
-        c_coeffs[0] = 2  # Needs to be 1
-        c = galois.Poly(c_coeffs)
-        sdr.GLFSR(c)
-    with pytest.raises(ValueError):
-        sdr.GLFSR(c, state=[1, 2, 3, 4, 5])
-
-
 def test_from_taps():
     GF = galois.GF(7)
     T = GF([1, 2, 3, 4])

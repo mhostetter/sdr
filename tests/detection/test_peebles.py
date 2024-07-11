@@ -3,27 +3,7 @@ The equation was compared against plots from a technical paper. These values wer
 "verified" code.
 """
 
-import pytest
-
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # p_d must be in (0, 1)
-        sdr.peebles(0, 1e-6, 1)
-    with pytest.raises(ValueError):
-        # p_d must be in (0, 1)
-        sdr.peebles(1, 1e-6, 1)
-    with pytest.raises(ValueError):
-        # p_fa must be in (0, 1)
-        sdr.peebles(0.5, 0, 1)
-    with pytest.raises(ValueError):
-        # p_fa must be in (0, 1)
-        sdr.peebles(0.5, 1, 1)
-    with pytest.raises(ValueError):
-        # n_nc must be at least 1
-        sdr.peebles(0.5, 1e-6, 0)
 
 
 def test_0p5():

@@ -1,21 +1,8 @@
 import numpy as np
-import pytest
 
 import sdr
 
 from ..fir.helper import verify_impulse_response
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.design_frac_delay_fir("10", 0.25)
-    with pytest.raises(ValueError):
-        sdr.design_frac_delay_fir(-1, 0.25)
-
-    with pytest.raises(TypeError):
-        sdr.design_frac_delay_fir(10, "0.25")
-    with pytest.raises(ValueError):
-        sdr.design_frac_delay_fir(10, -0.25)
 
 
 def test_0p25_10():

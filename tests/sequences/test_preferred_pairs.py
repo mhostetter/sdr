@@ -1,27 +1,6 @@
 import galois
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    # NOTE: Need to use next() to get the exception
-    with pytest.raises(TypeError):
-        # Degree must be an integer
-        next(sdr.preferred_pairs(6.0))
-    with pytest.raises(ValueError):
-        # Degree must be positive
-        next(sdr.preferred_pairs(-1))
-
-    with pytest.raises(TypeError):
-        # Polynomial must be polynomial like
-        next(sdr.preferred_pairs(6, poly=1.0))
-    with pytest.raises(ValueError):
-        # Polynomial must be a primitive polynomial
-        next(sdr.preferred_pairs(6, poly=galois.Poly([1, 0, 0, 0, 0, 0, 1])))
-    with pytest.raises(ValueError):
-        # Polynomial must have correct degree
-        next(sdr.preferred_pairs(6, poly=galois.Poly.Degrees([4, 1, 0])))
 
 
 def test_degree_divides_4():

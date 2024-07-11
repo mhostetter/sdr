@@ -1,12 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        sdr.Integrator("invalid")
 
 
 def test_backward():

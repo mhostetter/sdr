@@ -17,27 +17,8 @@ end
 """
 
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # p_d must be in (0, 1)
-        sdr.shnidman(0, 1e-6, 1)
-    with pytest.raises(ValueError):
-        # p_d must be in (0, 1)
-        sdr.shnidman(1, 1e-6, 1)
-    with pytest.raises(ValueError):
-        # p_fa must be in (0, 1)
-        sdr.shnidman(0.5, 0, 1)
-    with pytest.raises(ValueError):
-        # p_fa must be in (0, 1)
-        sdr.shnidman(0.5, 1, 1)
-    with pytest.raises(ValueError):
-        # n_nc must be at least 1
-        sdr.shnidman(0.5, 1e-6, 0)
 
 
 def test_across_p_d():

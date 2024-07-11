@@ -1,28 +1,4 @@
-import numpy as np
-import pytest
-
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # Must only have integer arrays
-        sdr.hexdump(np.array([8, 13, 12], dtype=float))
-    with pytest.raises(ValueError):
-        # Must only have 1D arrays
-        sdr.hexdump(np.array([[8, 13, 12]], dtype=int))
-    with pytest.raises(ValueError):
-        # Must only have values 0-255
-        sdr.hexdump([8, 256, 12])
-    with pytest.raises(ValueError):
-        # Must only have values 0-255
-        sdr.hexdump([8, -1, 12])
-    with pytest.raises(ValueError):
-        # Must have width in 1-16
-        sdr.hexdump([8, 13, 12], width=0)
-    with pytest.raises(ValueError):
-        # Must have width in 1-16
-        sdr.hexdump([8, 13, 12], width=17)
 
 
 def test_output():

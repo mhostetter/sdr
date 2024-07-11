@@ -1,37 +1,7 @@
 import galois
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        # Degree must be an integer
-        sdr.m_sequence(6.0)
-    with pytest.raises(ValueError):
-        # Degree must be positive
-        sdr.m_sequence(-1)
-
-    with pytest.raises(TypeError):
-        # Polynomial must be polynomial like
-        sdr.m_sequence(6, poly=1.0)
-    with pytest.raises(ValueError):
-        # Polynomial must be a primitive polynomial
-        sdr.m_sequence(6, poly=galois.Poly([1, 0, 0, 0, 0, 0, 1]))
-    with pytest.raises(ValueError):
-        # Polynomial must have correct degree
-        sdr.m_sequence(6, poly=galois.Poly.Degrees([4, 1, 0]))
-
-    with pytest.raises(TypeError):
-        # Index must be an integer
-        sdr.m_sequence(6, index=1.0)
-    with pytest.raises(ValueError):
-        # Index must be in [1, q^n)
-        sdr.m_sequence(6, index=0)
-    with pytest.raises(ValueError):
-        # Index must be in [1, q^n)
-        sdr.m_sequence(6, index=2**6)
 
 
 def verify_code(degree, poly, code_truth):

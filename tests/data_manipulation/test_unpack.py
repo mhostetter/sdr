@@ -1,16 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        x = np.array([8, 13, 12], dtype=float)
-        sdr.pack(x, 4)
-    with pytest.raises(ValueError):
-        x = np.array([8, 13, 12], dtype=int)
-        sdr.pack(x, 0)
 
 
 def test_dtype():

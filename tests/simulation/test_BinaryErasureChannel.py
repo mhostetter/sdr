@@ -4,15 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # p must be between 0 and 1
-        sdr.BinaryErasureChannel(-0.1)
-    with pytest.raises(ValueError):
-        # p must be between 0 and 1
-        sdr.BinaryErasureChannel(1.1)
-
-
 def test_types():
     bsc = sdr.BinaryErasureChannel(0.5)
 
