@@ -36,24 +36,24 @@ def verify_positional_args(args: tuple[Any], limit: int):
     return len(args)
 
 
-def verify_specified(x: Any) -> Any:
+def verify_specified(arg: Any) -> Any:
     """
     Verifies that the argument is not None.
     """
-    if x is None:
-        raise ValueError(f"Argument {_argument_names()[0]!r} must be provided, not {x}.")
+    if arg is None:
+        raise ValueError(f"Argument {_argument_names()[0]!r} must be provided, not {arg}.")
 
-    return x
+    return arg
 
 
-def verify_not_specified(x: Any) -> Any:
+def verify_not_specified(arg: Any) -> Any:
     """
     Verifies that the argument is None.
     """
-    if x is not None:
-        raise ValueError(f"Argument {_argument_names()[0]!r} must not be provided, not {x}.")
+    if arg is not None:
+        raise ValueError(f"Argument {_argument_names()[0]!r} must not be provided, not {arg}.")
 
-    return x
+    return arg
 
 
 def verify_only_one_specified(*args):
@@ -77,25 +77,29 @@ def verify_at_least_one_specified(*args):
 
 
 def verify_isinstance(
-    x: Any,
+    arg: Any,
     types: Any,
     optional: bool = False,
 ) -> Any:
+    """
+    Verifies that the argument is an instance of the specified type(s).
+    """
     if optional:
+        # TODO: Can this be done in a more elegant way?
         try:
             types = list(types)
         except TypeError:
             types = [types]
         types = tuple(types + [type(None)])
 
-    if not isinstance(x, types):
-        raise TypeError(f"Argument {_argument_names()[0]!r} must be an instance of {types}, not {type(x)}.")
+    if not isinstance(arg, types):
+        raise TypeError(f"Argument {_argument_names()[0]!r} must be an instance of {types}, not {type(arg)}.")
 
-    return x
+    return arg
 
 
 def verify_arraylike(
-    x: npt.ArrayLike,
+    x: npt.ArrayLike | None,
     dtype: npt.DTypeLike | None = None,
     # Data types
     optional: bool = False,
@@ -227,8 +231,7 @@ def verify_scalar(
         return x
 
     if convert_numpy:
-        if np.isscalar(x) and hasattr(x, "item"):
-            x = x.item()
+        x = convert_to_scalar(x)
 
     if int:
         if not (isinstance(x, builtins.int) or (accept_numpy and np.issubdtype(x, np.integer))):
@@ -291,9 +294,11 @@ def verify_bool(
     accept_numpy: bool = True,
     convert_numpy: bool = False,
 ) -> bool:
+    """
+    Verifies that the argument is a boolean.
+    """
     if convert_numpy:
-        if np.isscalar(x) and hasattr(x, "item"):
-            x = x.item()
+        x = convert_to_scalar(x)
 
     if not (isinstance(x, bool) or (accept_numpy and np.issubdtype(x, np.bool_))):
         raise TypeError(f"Argument {_argument_names()[0]!r} must be a bool, not {type(x)}.")
@@ -305,6 +310,9 @@ def verify_literal(
     x: Any,
     literals: Any,
 ):
+    """
+    Verifies that the argument is one of the specified literals.
+    """
     if not x in literals:
         raise ValueError(f"Argument {_argument_names()[0]!r} must be one of {literals}, not {x!r}.")
 
@@ -315,15 +323,21 @@ def verify_coprime(
     x: int,
     y: int,
 ):
+    """
+    Verifies that the arguments are coprime.
+    """
     if np.gcd(x, y) != 1:
         raise ValueError(
             f"Arguments {_argument_names()[0]!r} and {_argument_names()[1]!r} must be coprime, not {x} and {y}."
         )
 
 
-def verify_equation(
+def verify_condition(
     condition: bool,
 ):
+    """
+    Verifies that the condition is satisfied.
+    """
     if not condition:
         raise ValueError(f"Arguments must satisfy the condition {_argument_names()[0]!r}.")
 
@@ -332,10 +346,27 @@ def verify_same_shape(
     x: npt.NDArray,
     y: npt.NDArray,
 ):
+    """
+    Verifies that the arguments have the same shape.
+    """
     if x.shape != y.shape:
         raise ValueError(
             f"Arguments {_argument_names()[0]!r} and {_argument_names()[1]!r} must have the same shape, not {x.shape} and {y.shape}."
         )
+
+
+def convert_to_scalar(x: Any):
+    """
+    Converts the input to a scalar if possible.
+    """
+    if np.isscalar(x) and hasattr(x, "item"):
+        x = x.item()
+
+    # TODO: Why is this needed? array(0) with np.int64 does not return true for np.isscalar()
+    if isinstance(x, np.ndarray) and x.ndim == 0:
+        x = x.item()
+
+    return x
 
 
 def convert_output(
@@ -348,12 +379,7 @@ def convert_output(
     if squeeze:
         x = np.squeeze(x)
 
-    if np.isscalar(x) and hasattr(x, "item"):
-        x = x.item()
-
-    # TODO: Why is this needed? array(0) with np.int64 does not return true for np.isscalar()
-    if isinstance(x, np.ndarray) and x.ndim == 0:
-        x = x.item()
+    x = convert_to_scalar(x)
 
     return x
 
