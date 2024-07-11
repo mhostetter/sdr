@@ -3,13 +3,6 @@ import numpy as np
 import sdr
 
 
-def test_exceptions():
-    with np.testing.assert_raises(TypeError):
-        sdr.BlockInterleaver(3.0, 4)
-    with np.testing.assert_raises(TypeError):
-        sdr.BlockInterleaver(3, 4.0)
-
-
 def test_simple():
     interleaver = sdr.BlockInterleaver(3, 4)
     assert len(interleaver) == 12

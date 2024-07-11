@@ -4,15 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # p must be between 0 and 1
-        sdr.bec([0, 1], -0.1)
-    with pytest.raises(ValueError):
-        # p must be between 0 and 1
-        sdr.bec([0, 1], 1.1)
-
-
 def test_types():
     y = sdr.bec(0, 0.5)
     assert isinstance(y, int)

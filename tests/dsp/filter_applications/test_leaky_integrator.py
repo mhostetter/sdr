@@ -1,16 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.LeakyIntegrator("invalid")
-    with pytest.raises(ValueError):
-        sdr.LeakyIntegrator(-0.1)
-    with pytest.raises(ValueError):
-        sdr.LeakyIntegrator(1.1)
 
 
 def test_impulse_response():

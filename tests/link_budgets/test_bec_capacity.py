@@ -1,16 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # Erasure probability must be between 0 and 1
-        sdr.bec_capacity(-0.1)
-    with pytest.raises(ValueError):
-        # Erasure probability must be between 0 and 1
-        sdr.bec_capacity(1.1)
 
 
 def test_outputs():

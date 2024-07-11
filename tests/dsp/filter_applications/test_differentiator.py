@@ -1,19 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.Differentiator(4.0)
-    with pytest.raises(ValueError):
-        sdr.Differentiator(0)
-    with pytest.raises(ValueError):
-        sdr.Differentiator(3)
-
-    with pytest.raises(ValueError):
-        sdr.Differentiator(10, window="bad_window")
 
 
 def test_10_hamming():

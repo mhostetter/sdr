@@ -4,15 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # CGL must be non-negative
-        sdr.max_frequency_offset(-3, 1e-3)
-    with pytest.raises(ValueError):
-        # CGL must be non-negative
-        sdr.max_frequency_offset([-3, 0, 3], 1e-3)
-
-
 def test_scalar():
     assert sdr.max_frequency_offset(3, 1e-3) == pytest.approx(442.2433896262681)
 

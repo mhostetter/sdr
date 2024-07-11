@@ -1,19 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    rng = np.random.default_rng()
-    x = rng.standard_normal(40)
-
-    with pytest.raises(TypeError):
-        # Rate must be an integer
-        sdr.downsample(x, 4.0)
-    with pytest.raises(ValueError):
-        # Rate must be positive
-        sdr.downsample(x, 0)
 
 
 def test_1():

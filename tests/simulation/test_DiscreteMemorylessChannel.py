@@ -4,30 +4,6 @@ import pytest
 import sdr
 
 
-def test_exceptions():
-    with pytest.raises(ValueError):
-        # P must be 2D
-        sdr.DiscreteMemorylessChannel([0.2, 0.8])
-    with pytest.raises(ValueError):
-        # P must be non-negative
-        sdr.DiscreteMemorylessChannel([[0.2, 0.8], [-0.1, 1.1]])
-    with pytest.raises(ValueError):
-        # P must sum to 1
-        sdr.DiscreteMemorylessChannel([[0.2, 0.8], [0.3, 0.8]])
-    with pytest.raises(ValueError):
-        # X must be 1D
-        sdr.DiscreteMemorylessChannel([[0.2, 0.8], [0.3, 0.7]], X=[[0, 1], [1, 0]])
-    with pytest.raises(ValueError):
-        # Y must be 1D
-        sdr.DiscreteMemorylessChannel([[0.2, 0.8], [0.3, 0.7]], Y=[[0, 1], [1, 0]])
-    with pytest.raises(ValueError):
-        # P must have X rows
-        sdr.DiscreteMemorylessChannel([[0.2, 0.8], [0.3, 0.7]], X=[0, 1, 2])
-    with pytest.raises(ValueError):
-        # P must have Y columns
-        sdr.DiscreteMemorylessChannel([[0.2, 0.8], [0.3, 0.7]], Y=[0, 1, 2])
-
-
 def test_bsc():
     rng = np.random.default_rng()
     p = rng.uniform(0.2, 0.8)

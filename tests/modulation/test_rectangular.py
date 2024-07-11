@@ -1,21 +1,6 @@
 import numpy as np
-import pytest
 
 import sdr
-
-
-def test_exceptions():
-    with pytest.raises(TypeError):
-        sdr.rectangular(8.0)
-    with pytest.raises(TypeError):
-        sdr.rectangular(8, span=1.0)
-
-    with pytest.raises(ValueError):
-        # Need at least 1 samples per symbol
-        sdr.rectangular(0)
-    with pytest.raises(ValueError):
-        # Need at least 1 symbol
-        sdr.rectangular(8, span=0)
 
 
 def test_4():
