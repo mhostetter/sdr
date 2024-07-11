@@ -10627,6 +10627,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.power/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.power (Python function) — Measures the instantaneous power of a time-domain signal $x[n]$." class="md-ellipsis">power</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.peak_power/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.peak_power (Python function) — Measures the peak power of a time-domain signal $x[n]$." class="md-ellipsis">peak_<wbr>power</span>
       </a>
@@ -14214,25 +14229,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">10.033399873472437</span>
+<span class="gh">Out[3]: </span><span class="go">9.872889388055206</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">10.033399873472437</span>
+<span class="gh">Out[4]: </span><span class="go">9.872889388055206</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">9.969014761237517</span>
+<span class="gh">Out[5]: </span><span class="go">9.845931361854493</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">8.08813193488062</span>
+<span class="gh">Out[6]: </span><span class="go">8.03695170630092</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">17.525215578651395</span>
+<span class="gh">Out[7]: </span><span class="go">17.050482253345965</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
