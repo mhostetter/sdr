@@ -4,6 +4,14 @@ import pytest
 import sdr
 
 
+def test_power():
+    rng = np.random.default_rng()
+    A = rng.uniform(2, 10)  # Signal amplitude
+    N = 50
+    x = A * np.exp(1j * np.linspace(0, 2 * np.pi, N, endpoint=False))
+    assert np.allclose(sdr.power(x), A**2)
+
+
 def test_peak_power():
     rng = np.random.default_rng()
     A = rng.uniform(2, 10)  # Signal amplitude
