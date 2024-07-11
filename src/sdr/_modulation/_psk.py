@@ -18,7 +18,7 @@ from .._helper import (
     extend_docstring,
     verify_arraylike,
     verify_bool,
-    verify_equation,
+    verify_condition,
     verify_literal,
     verify_scalar,
 )
@@ -206,7 +206,7 @@ class PSK(LinearModulation):
                 self._symbol_labels_str = "gray"
         else:
             symbol_labels = verify_arraylike(symbol_labels, int=True, ndim=1, size=self.order)
-            verify_equation(np.unique(symbol_labels).size == self.order)
+            verify_condition(np.unique(symbol_labels).size == self.order)
             self._symbol_labels = symbol_labels
             self._symbol_labels_str = self._symbol_labels
 

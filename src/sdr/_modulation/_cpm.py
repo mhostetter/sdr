@@ -11,7 +11,7 @@ import numpy.typing as npt
 from typing_extensions import Literal
 
 from .._filter import Decimator, Interpolator
-from .._helper import export, verify_arraylike, verify_equation, verify_literal, verify_scalar
+from .._helper import export, verify_arraylike, verify_condition, verify_literal, verify_scalar
 from .._nco import NCO
 from .._sequence import binary_code, gray_code
 from ._pulse_shapes import rectangular
@@ -94,7 +94,7 @@ class CPM:
                 self._symbol_labels_str = "gray"
         else:
             symbol_labels = verify_arraylike(symbol_labels, int=True, ndim=1, size=self.order)
-            verify_equation(np.unique(symbol_labels).size == self.order)
+            verify_condition(np.unique(symbol_labels).size == self.order)
             self._symbol_labels = symbol_labels
             self._symbol_labels_str = self._symbol_labels
 
