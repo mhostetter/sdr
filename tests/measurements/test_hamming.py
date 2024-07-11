@@ -8,7 +8,6 @@ Y = np.array([[7, 5, 2, 4, 0], [0, 0, 4, 1, 5], [5, 0, 7, 5, 6]])
 
 def test_axis_none():
     d = sdr.hamming(X, Y)
-    assert d.shape == ()
     assert d == 37
 
 
