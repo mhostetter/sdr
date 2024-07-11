@@ -9,7 +9,7 @@ def test_1():
         >> convertSNR(0:10, 'snr', 'ebno', 'BitsPerSymbol', 2, 'CodingRate', 1/3, 'SamplesPerSymbol', 1)'
     """
     snr = np.arange(0, 11)
-    ebn0 = sdr.snr_to_ebn0(snr, 2, rate=1 / 3, sps=1)
+    ebn0 = sdr.snr_to_ebn0(snr, 2, code_rate=1 / 3, samples_per_symbol=1)
     ebn0_truth = np.array(
         [
             1.760912590556812,
@@ -34,7 +34,7 @@ def test_2():
         >> convertSNR(0:10, 'snr', 'ebno', 'BitsPerSymbol', 3, 'CodingRate', 1/2, 'SamplesPerSymbol', 2)'
     """
     snr = np.arange(0, 11)
-    ebn0 = sdr.snr_to_ebn0(snr, 3, rate=1 / 2, sps=2)
+    ebn0 = sdr.snr_to_ebn0(snr, 3, code_rate=1 / 2, samples_per_symbol=2)
     ebn0_truth = np.array(
         [
             1.249387366082999,
@@ -59,7 +59,7 @@ def test_3():
         >> convertSNR(0:10, 'snr', 'ebno', 'BitsPerSymbol', 4, 'CodingRate', 2/3, 'SamplesPerSymbol', 4)'
     """
     snr = np.arange(0, 11)
-    ebn0 = sdr.snr_to_ebn0(snr, 4, rate=2 / 3, sps=4)
+    ebn0 = sdr.snr_to_ebn0(snr, 4, code_rate=2 / 3, samples_per_symbol=4)
     ebn0_truth = np.array(
         [
             1.760912590556812,

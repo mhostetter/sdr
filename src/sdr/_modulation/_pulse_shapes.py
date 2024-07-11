@@ -13,7 +13,7 @@ from .._helper import export
 
 @export
 def rectangular(
-    sps: int,
+    samples_per_symbol: int,
     span: int = 1,
     norm: Literal["power", "energy", "passband"] = "energy",
 ) -> npt.NDArray[np.float64]:
@@ -21,9 +21,9 @@ def rectangular(
     Returns a rectangular pulse shape.
 
     Arguments:
-        sps: The number of samples per symbol.
-        span: The length of the filter in symbols. The length of the filter is `span * sps` samples,
-            but only the center `sps` samples are non-zero. The only reason for `span` to be larger than 1 is to
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
+        span: The length of the filter in symbols. The length of the filter is `span * samples_per_symbol` samples,
+            but only the center `samples_per_symbol` samples are non-zero. The only reason for `span` to be larger than 1 is to
             add delay to the filter.
         norm: Indicates how to normalize the pulse shape.
 
@@ -52,20 +52,20 @@ def rectangular(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps >= 1:
-        raise ValueError(f"Argument 'sps' must be at least 1, not {sps}.")
+    if not isinstance(samples_per_symbol, int):
+        raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+    if not samples_per_symbol >= 1:
+        raise ValueError(f"Argument 'samples_per_symbol' must be at least 1, not {samples_per_symbol}.")
 
     if not isinstance(span, int):
         raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
     if not span >= 1:
         raise ValueError(f"Argument 'span' must be at least 1, not {span}.")
 
-    length = span * sps
+    length = span * samples_per_symbol
     h = np.zeros(length, dtype=float)
-    idx = (length - sps) // 2
-    h[idx : idx + sps] = 1
+    idx = (length - samples_per_symbol) // 2
+    h[idx : idx + samples_per_symbol] = 1
 
     h = _normalize(h, norm)
 
@@ -74,7 +74,7 @@ def rectangular(
 
 @export
 def half_sine(
-    sps: int,
+    samples_per_symbol: int,
     span: int = 1,
     norm: Literal["power", "energy", "passband"] = "energy",
 ) -> npt.NDArray[np.float64]:
@@ -82,9 +82,9 @@ def half_sine(
     Returns a half-sine pulse shape.
 
     Arguments:
-        sps: The number of samples per symbol.
-        span: The length of the filter in symbols. The length of the filter is `span * sps` samples,
-            but only the center `sps` samples are non-zero. The only reason for `span` to be larger than 1 is to
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
+        span: The length of the filter in symbols. The length of the filter is `span * samples_per_symbol` samples,
+            but only the center `samples_per_symbol` samples are non-zero. The only reason for `span` to be larger than 1 is to
             add delay to the filter.
         norm: Indicates how to normalize the pulse shape.
 
@@ -113,20 +113,20 @@ def half_sine(
     Group:
         modulation-pulse-shaping
     """
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps >= 1:
-        raise ValueError(f"Argument 'sps' must be at least 1, not {sps}.")
+    if not isinstance(samples_per_symbol, int):
+        raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+    if not samples_per_symbol >= 1:
+        raise ValueError(f"Argument 'samples_per_symbol' must be at least 1, not {samples_per_symbol}.")
 
     if not isinstance(span, int):
         raise TypeError(f"Argument 'span' must be an integer, not {type(span)}.")
     if not span >= 1:
         raise ValueError(f"Argument 'span' must be at least 1, not {span}.")
 
-    length = span * sps
+    length = span * samples_per_symbol
     h = np.zeros(length, dtype=float)
-    idx = (length - sps) // 2
-    h[idx : idx + sps] = np.sin(np.pi * np.arange(sps) / sps)
+    idx = (length - samples_per_symbol) // 2
+    h[idx : idx + samples_per_symbol] = np.sin(np.pi * np.arange(samples_per_symbol) / samples_per_symbol)
 
     h = _normalize(h, norm)
 
@@ -137,7 +137,7 @@ def half_sine(
 def gaussian(
     time_bandwidth: float,
     span: int,
-    sps: int,
+    samples_per_symbol: int,
     norm: Literal["power", "energy", "passband"] = "passband",
 ) -> npt.NDArray[np.float64]:
     r"""
@@ -148,9 +148,9 @@ def gaussian(
             3-dB bandwidth in Hz and $T_{sym}$ is the symbol time in seconds. The time-bandwidth product
             can also be thought of as the fractional bandwidth $B / f_{sym}$. Smaller values produce
             wider pulses.
-        span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
-            The filter order `span * sps` must be even.
-        sps: The number of samples per symbol.
+        span: The length of the filter in symbols. The length of the filter is `span * samples_per_symbol + 1` samples.
+            The filter order `span * samples_per_symbol` must be even.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
         norm: Indicates how to normalize the pulse shape.
 
             - `"power"`: The pulse shape is normalized so that the maximum power is 1.
@@ -212,16 +212,16 @@ def gaussian(
     if not span > 0:
         raise ValueError(f"Argument 'span' must be positive, not {span}.")
 
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps > 1:
-        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+    if not isinstance(samples_per_symbol, int):
+        raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+    if not samples_per_symbol > 1:
+        raise ValueError(f"Argument 'samples_per_symbol' must be greater than 1, not {samples_per_symbol}.")
 
-    if not span * sps % 2 == 0:
-        raise ValueError("The order of the filter (span * sps) must be even.")
+    if not span * samples_per_symbol % 2 == 0:
+        raise ValueError("The order of the filter (span * samples_per_symbol) must be even.")
 
-    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=float)
-    t /= sps
+    t = np.arange(-(span * samples_per_symbol) // 2, (span * samples_per_symbol) // 2 + 1, dtype=float)
+    t /= samples_per_symbol
 
     # Equation B.2
     Ts = 1
@@ -239,7 +239,7 @@ def gaussian(
 def raised_cosine(
     alpha: float,
     span: int,
-    sps: int,
+    samples_per_symbol: int,
     norm: Literal["power", "energy", "passband"] = "energy",
 ) -> npt.NDArray[np.float64]:
     r"""
@@ -247,9 +247,9 @@ def raised_cosine(
 
     Arguments:
         alpha: The excess bandwidth $0 \le \alpha \le 1$ of the filter.
-        span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
-            The filter order `span * sps` must be even.
-        sps: The number of samples per symbol.
+        span: The length of the filter in symbols. The length of the filter is `span * samples_per_symbol + 1` samples.
+            The filter order `span * samples_per_symbol` must be even.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
         norm: Indicates how to normalize the pulse shape.
 
             - `"power"`: The pulse shape is normalized so that the maximum power is 1.
@@ -344,16 +344,16 @@ def raised_cosine(
     if not span > 0:
         raise ValueError(f"Argument 'span' must be positive, not {span}.")
 
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps > 1:
-        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+    if not isinstance(samples_per_symbol, int):
+        raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+    if not samples_per_symbol > 1:
+        raise ValueError(f"Argument 'samples_per_symbol' must be greater than 1, not {samples_per_symbol}.")
 
-    if not span * sps % 2 == 0:
-        raise ValueError("The order of the filter (span * sps) must be even.")
+    if not span * samples_per_symbol % 2 == 0:
+        raise ValueError("The order of the filter (span * samples_per_symbol) must be even.")
 
-    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=float)
-    Ts = sps
+    t = np.arange(-(span * samples_per_symbol) // 2, (span * samples_per_symbol) // 2 + 1, dtype=float)
+    Ts = samples_per_symbol
 
     # Handle special cases where the denominator is zero
     t[t == 0] += 1e-16
@@ -376,7 +376,7 @@ def raised_cosine(
 def root_raised_cosine(
     alpha: float,
     span: int,
-    sps: int,
+    samples_per_symbol: int,
     norm: Literal["power", "energy", "passband"] = "energy",
 ) -> npt.NDArray[np.float64]:
     r"""
@@ -384,9 +384,9 @@ def root_raised_cosine(
 
     Arguments:
         alpha: The excess bandwidth $0 \le \alpha \le 1$ of the filter.
-        span: The length of the filter in symbols. The length of the filter is `span * sps + 1` samples.
-            The filter order `span * sps` must be even.
-        sps: The number of samples per symbol.
+        span: The length of the filter in symbols. The length of the filter is `span * samples_per_symbol + 1` samples.
+            The filter order `span * samples_per_symbol` must be even.
+        samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
         norm: Indicates how to normalize the pulse shape.
 
             - `"power"`: The pulse shape is normalized so that the maximum power is 1.
@@ -482,16 +482,16 @@ def root_raised_cosine(
     if not span > 0:
         raise ValueError(f"Argument 'span' must be positive, not {span}.")
 
-    if not isinstance(sps, int):
-        raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-    if not sps > 1:
-        raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
+    if not isinstance(samples_per_symbol, int):
+        raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+    if not samples_per_symbol > 1:
+        raise ValueError(f"Argument 'samples_per_symbol' must be greater than 1, not {samples_per_symbol}.")
 
-    if not span * sps % 2 == 0:
-        raise ValueError("The order of the filter (span * sps) must be even.")
+    if not span * samples_per_symbol % 2 == 0:
+        raise ValueError("The order of the filter (span * samples_per_symbol) must be even.")
 
-    t = np.arange(-(span * sps) // 2, (span * sps) // 2 + 1, dtype=float)
-    Ts = sps  # Symbol duration (in samples)
+    t = np.arange(-(span * samples_per_symbol) // 2, (span * samples_per_symbol) // 2 + 1, dtype=float)
+    Ts = samples_per_symbol  # Symbol duration (in samples)
 
     # Handle special cases where the denominator is zero
     t[t == 0] += 1e-16

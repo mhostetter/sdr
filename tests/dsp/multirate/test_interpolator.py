@@ -343,11 +343,11 @@ def test_3_zoh():
 def test_srrc_0p5_6():
     """
     MATLAB:
-        >> sps = 4;
-        >> h = rcosdesign(0.5, 6, sps);
+        >> samples_per_symbol = 4;
+        >> h = rcosdesign(0.5, 6, samples_per_symbol);
         >> s = randi([0 3], 10, 1);
         >> x = pskmod(s, 4);
-        >> fir = dsp.Interpolator(sps, h);
+        >> fir = dsp.Interpolator(samples_per_symbol, h);
         >> y = fir(x);
     """
     h = np.array(
@@ -451,11 +451,11 @@ def test_srrc_0p5_6():
 def test_srrc_0p9_4():
     """
     MATLAB:
-        >> sps = 5;
-        >> h = rcosdesign(0.9, 4, sps);
+        >> samples_per_symbol = 5;
+        >> h = rcosdesign(0.9, 4, samples_per_symbol);
         >> s = randi([0 3], 10, 1);
         >> x = pskmod(s, 4);
-        >> fir = dsp.Interpolator(sps, h);
+        >> fir = dsp.Interpolator(samples_per_symbol, h);
         >> y = fir(x);
     """
     h = np.array(
@@ -565,11 +565,11 @@ def test_srrc_0p9_4():
 def test_srrc_0p1_7():
     """
     MATLAB:
-        >> sps = 6;
-        >> h = rcosdesign(0.1, 7, sps);
+        >> samples_per_symbol = 6;
+        >> h = rcosdesign(0.1, 7, samples_per_symbol);
         >> s = randi([0 3], 10, 1);
         >> x = pskmod(s, 4);
-        >> fir = dsp.Interpolator(sps, h);
+        >> fir = dsp.Interpolator(samples_per_symbol, h);
         >> y = fir(x);
     """
     h = np.array(

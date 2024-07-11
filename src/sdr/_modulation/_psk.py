@@ -61,7 +61,7 @@ class PSK(LinearModulation):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, qpsk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, qpsk.bits_per_symbol); symbols[0:4]
             complex_symbols = qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PSK_2.png
@@ -76,7 +76,7 @@ class PSK(LinearModulation):
 
             @savefig sdr_PSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*qpsk.sps]);
+            sdr.plot.time_domain(tx_samples[0:50*qpsk.samples_per_symbol]);
 
         Examine the eye diagram of the pulse-shaped transmitted signal. The SRRC pulse shape is not a Nyquist filter,
         so ISI is present.
@@ -85,7 +85,7 @@ class PSK(LinearModulation):
 
             @savefig sdr_PSK_4.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(tx_samples[5*qpsk.sps : -5*qpsk.sps], qpsk.sps, persistence=True); \
+            sdr.plot.eye(tx_samples[5*qpsk.samples_per_symbol : -5*qpsk.samples_per_symbol], qpsk.samples_per_symbol, persistence=True); \
             plt.suptitle("Noiseless transmitted signal with ISI");
 
         Add AWGN noise such that $E_b/N_0 = 30$ dB.
@@ -93,12 +93,12 @@ class PSK(LinearModulation):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=qpsk.sps); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=qpsk.bits_per_symbol, samples_per_symbol=qpsk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PSK_5.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*qpsk.sps]);
+            sdr.plot.time_domain(rx_samples[0:50*qpsk.samples_per_symbol]);
 
         Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal. The
         two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is removed.
@@ -110,7 +110,7 @@ class PSK(LinearModulation):
 
             @savefig sdr_PSK_6.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(mf_samples[10*qpsk.sps : -10*qpsk.sps], qpsk.sps, persistence=True); \
+            sdr.plot.eye(mf_samples[10*qpsk.samples_per_symbol : -10*qpsk.samples_per_symbol], qpsk.samples_per_symbol, persistence=True); \
             plt.suptitle("Noisy received and matched filtered signal without ISI");
 
         Matched filter and demodulate.
@@ -137,7 +137,8 @@ class PSK(LinearModulation):
         order: int,
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
-        sps: int = 8,
+        symbol_rate: float = 1.0,
+        samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
         alpha: float | None = None,
@@ -156,10 +157,11 @@ class PSK(LinearModulation):
                   the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
-            sps: The number of samples per symbol $f_s / f_{sym}$.
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
+            samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
-                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `samples_per_symbol` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
                 - `"rect"`: Rectangular pulse shape.
                 - `"rc"`: Raised cosine pulse shape.
@@ -178,17 +180,18 @@ class PSK(LinearModulation):
         super().__init__(
             base_symbol_map,
             phase_offset=phase_offset,
-            sps=sps,
+            symbol_rate=symbol_rate,
+            samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
             span=span,
             alpha=alpha,
         )
 
         if symbol_labels == "bin":
-            self._symbol_labels = binary_code(self.bps)
+            self._symbol_labels = binary_code(self.bits_per_symbol)
             self._symbol_labels_str = "bin"
         elif symbol_labels == "gray":
-            self._symbol_labels = gray_code(self.bps)
+            self._symbol_labels = gray_code(self.bits_per_symbol)
             self._symbol_labels_str = "gray"
         else:
             if not np.array_equal(np.sort(symbol_labels), np.arange(self.order)):
@@ -265,7 +268,7 @@ class PSK(LinearModulation):
                 plt.title("BER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
         M = self.order
-        k = self.bps
+        k = self.bits_per_symbol
         ebn0 = np.asarray(ebn0)
         ebn0_linear = linear(ebn0)
         esn0 = ebn0_to_esn0(ebn0, k)
@@ -352,7 +355,7 @@ class PSK(LinearModulation):
                 plt.title("SER curves for PSK and DE-PSK modulation in an AWGN channel");
         """
         M = self.order
-        k = self.bps
+        k = self.bits_per_symbol
         esn0 = np.asarray(esn0)
         esn0_linear = linear(esn0)
         ebn0 = esn0_to_ebn0(esn0, k)
@@ -515,7 +518,7 @@ class PiMPSK(PSK):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, pi4_qpsk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, pi4_qpsk.bits_per_symbol); symbols[0:4]
             complex_symbols = pi4_qpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_PiMPSK_2.png
@@ -530,7 +533,7 @@ class PiMPSK(PSK):
 
             @savefig sdr_PiMPSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps]);
+            sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.samples_per_symbol]);
 
         Examine the eye diagram of the pulse-shaped transmitted signal. The SRRC pulse shape is not a Nyquist filter,
         so ISI is present.
@@ -539,7 +542,7 @@ class PiMPSK(PSK):
 
             @savefig sdr_PiMPSK_4.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(tx_samples[5*pi4_qpsk.sps : -5*pi4_qpsk.sps], pi4_qpsk.sps, persistence=True); \
+            sdr.plot.eye(tx_samples[5*pi4_qpsk.samples_per_symbol : -5*pi4_qpsk.samples_per_symbol], pi4_qpsk.samples_per_symbol, persistence=True); \
             plt.suptitle("Noiseless transmitted signal with ISI");
 
         Add AWGN noise such that $E_b/N_0 = 30$ dB.
@@ -547,12 +550,12 @@ class PiMPSK(PSK):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=pi4_qpsk.sps); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=pi4_qpsk.bits_per_symbol, samples_per_symbol=pi4_qpsk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_PiMPSK_5.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps]);
+            sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.samples_per_symbol]);
 
         Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal. The
         two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is removed.
@@ -564,7 +567,7 @@ class PiMPSK(PSK):
 
             @savefig sdr_PiMPSK_6.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(mf_samples[10*pi4_qpsk.sps : -10*pi4_qpsk.sps], pi4_qpsk.sps, persistence=True); \
+            sdr.plot.eye(mf_samples[10*pi4_qpsk.samples_per_symbol : -10*pi4_qpsk.samples_per_symbol], pi4_qpsk.samples_per_symbol, persistence=True); \
             plt.suptitle("Noisy received and matched filtered signal without ISI");
 
         Matched filter and demodulate.
@@ -591,7 +594,8 @@ class PiMPSK(PSK):
         order: int,
         phase_offset: float = 0.0,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
-        sps: int = 8,
+        symbol_rate: float = 1.0,
+        samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
         alpha: float | None = None,
@@ -610,10 +614,11 @@ class PiMPSK(PSK):
                   the new symbol labels. The default symbol labels are $0$ to $M-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
-            sps: The number of samples per symbol $f_s / f_{sym}$.
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
+            samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
-                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `samples_per_symbol` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
                 - `"rect"`: Rectangular pulse shape.
                 - `"rc"`: Raised cosine pulse shape.
@@ -630,7 +635,8 @@ class PiMPSK(PSK):
             order,
             phase_offset=phase_offset,
             symbol_labels=symbol_labels,
-            sps=sps,
+            symbol_rate=symbol_rate,
+            samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
         )
 
@@ -708,7 +714,7 @@ class OQPSK(PSK):
         .. ipython:: python
 
             bits = np.random.randint(0, 2, 1000); bits[0:8]
-            symbols = sdr.pack(bits, oqpsk.bps); symbols[0:4]
+            symbols = sdr.pack(bits, oqpsk.bits_per_symbol); symbols[0:4]
             complex_symbols = oqpsk.map_symbols(symbols); complex_symbols[0:4]
 
             @savefig sdr_OQPSK_2.png
@@ -723,7 +729,7 @@ class OQPSK(PSK):
 
             @savefig sdr_OQPSK_3.png
             plt.figure(); \
-            sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps]);
+            sdr.plot.time_domain(tx_samples[0:50*oqpsk.samples_per_symbol]);
 
         Examine the eye diagram of the pulse-shaped transmitted signal. The SRRC pulse shape is not a Nyquist filter,
         so ISI is present.
@@ -732,7 +738,7 @@ class OQPSK(PSK):
 
             @savefig sdr_OQPSK_4.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps], oqpsk.sps, persistence=True); \
+            sdr.plot.eye(tx_samples[5*oqpsk.samples_per_symbol : -5*oqpsk.samples_per_symbol], oqpsk.samples_per_symbol, persistence=True); \
             plt.suptitle("Noiseless transmitted signal with ISI");
 
         Add AWGN noise such that $E_b/N_0 = 30$ dB.
@@ -740,12 +746,12 @@ class OQPSK(PSK):
         .. ipython:: python
 
             ebn0 = 30; \
-            snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=oqpsk.sps); \
+            snr = sdr.ebn0_to_snr(ebn0, bits_per_symbol=oqpsk.bits_per_symbol, samples_per_symbol=oqpsk.samples_per_symbol); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
             @savefig sdr_OQPSK_5.png
             plt.figure(); \
-            sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps]);
+            sdr.plot.time_domain(rx_samples[0:50*oqpsk.samples_per_symbol]);
 
         Manually apply a matched filter. Examine the eye diagram of the matched filtered received signal. The
         two cascaded SRRC filters create a Nyquist RC filter. Therefore, the ISI is removed.
@@ -757,7 +763,7 @@ class OQPSK(PSK):
 
             @savefig sdr_OQPSK_6.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.eye(mf_samples[10*oqpsk.sps : -10*oqpsk.sps], oqpsk.sps, persistence=True); \
+            sdr.plot.eye(mf_samples[10*oqpsk.samples_per_symbol : -10*oqpsk.samples_per_symbol], oqpsk.samples_per_symbol, persistence=True); \
             plt.suptitle("Noisy received and matched filtered signal without ISI");
 
         Matched filter and demodulate. Note, the first symbol has $Q = 0$ and the last symbol has $I = 0$.
@@ -783,7 +789,8 @@ class OQPSK(PSK):
         self,
         phase_offset: float = 45,
         symbol_labels: Literal["bin", "gray"] | npt.ArrayLike = "gray",
-        sps: int = 8,
+        symbol_rate: float = 1.0,
+        samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
         alpha: float | None = None,
@@ -801,10 +808,11 @@ class OQPSK(PSK):
                   the new symbol labels. The default symbol labels are $0$ to $4-1$ for phases starting at $1 + 0j$
                   and going counter-clockwise around the unit circle.
 
-            sps: The number of samples per symbol $f_s / f_{sym}$.
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
+            samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
-                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `samples_per_symbol` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
                 - `"rect"`: Rectangular pulse shape.
                 - `"rc"`: Raised cosine pulse shape.
@@ -821,14 +829,15 @@ class OQPSK(PSK):
             4,
             phase_offset=phase_offset,
             symbol_labels=symbol_labels,
-            sps=sps,
+            symbol_rate=symbol_rate,
+            samples_per_symbol=samples_per_symbol,
             pulse_shape=pulse_shape,
             span=span,
             alpha=alpha,
         )
 
-        if sps > 1 and sps % 2 != 0:
-            raise ValueError(f"Argument 'sps' must be even, not {sps}.")
+        if samples_per_symbol > 1 and samples_per_symbol % 2 != 0:
+            raise ValueError(f"Argument 'samples_per_symbol' must be even, not {samples_per_symbol}.")
 
     def __repr__(self) -> str:
         return f"sdr.{type(self).__name__}(phase_offset={self.phase_offset}, symbol_labels={self._symbol_labels_str!r})"
@@ -866,8 +875,8 @@ class OQPSK(PSK):
         x_Q = self._tx_filter(a_Q, mode="full")  # Complex samples
 
         # Shift Q symbols by 1/2 symbol
-        x_I = np.append(x_I, np.zeros(self.sps // 2))
-        x_Q = np.insert(x_Q, 0, np.zeros(self.sps // 2))
+        x_I = np.append(x_I, np.zeros(self.samples_per_symbol // 2))
+        x_Q = np.insert(x_Q, 0, np.zeros(self.samples_per_symbol // 2))
 
         x = x_I + 1j * x_Q
 
@@ -891,8 +900,8 @@ class OQPSK(PSK):
         x_tilde_I, x_tilde_Q = x_tilde.real, x_tilde.imag
 
         # Shift Q samples by -1/2 symbol
-        x_tilde_I = x_tilde_I[: -self.sps // 2]
-        x_tilde_Q = x_tilde_Q[self.sps // 2 :]
+        x_tilde_I = x_tilde_I[: -self.samples_per_symbol // 2]
+        x_tilde_Q = x_tilde_Q[self.samples_per_symbol // 2 :]
 
         a_tilde_I = super()._rx_matched_filter(x_tilde_I)  # Complex samples
         a_tilde_Q = super()._rx_matched_filter(x_tilde_Q)  # Complex samples

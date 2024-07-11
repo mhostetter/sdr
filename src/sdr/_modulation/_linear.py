@@ -41,7 +41,8 @@ class LinearModulation:
         self,
         symbol_map: npt.ArrayLike,
         phase_offset: float = 0.0,
-        sps: int = 8,
+        symbol_rate: float = 1.0,
+        samples_per_symbol: int = 8,
         pulse_shape: npt.ArrayLike | Literal["rect", "rc", "srrc"] = "rect",
         span: int | None = None,
         alpha: float | None = None,
@@ -54,10 +55,11 @@ class LinearModulation:
                 are decimal symbols $s[k]$ and whose values are complex symbols $a[k]$, where $M$ is the
                 modulation order.
             phase_offset: A phase offset $\phi$ in degrees to apply to `symbol_map`.
-            sps: The number of samples per symbol $f_s / f_{sym}$.
+            symbol_rate: The symbol rate $f_{sym}$ in symbols/s.
+            samples_per_symbol: The number of samples per symbol $f_s / f_{sym}$.
             pulse_shape: The pulse shape $h[n]$ of the modulated signal.
 
-                - `npt.ArrayLike`: A custom pulse shape. It is important that `sps` matches the design
+                - `npt.ArrayLike`: A custom pulse shape. It is important that `samples_per_symbol` matches the design
                   of the pulse shape. See :ref:`pulse-shaping-functions`.
                 - `"rect"`: Rectangular pulse shape.
                 - `"rc"`: Raised cosine pulse shape.
@@ -77,35 +79,41 @@ class LinearModulation:
             raise ValueError(f"Argument 'symbol_map' must have a size that is a power of 2, not {symbol_map.size}.")
         self._symbol_map = symbol_map  # Decimal-to-complex symbol map
         self._order = symbol_map.size  # Modulation order
-        self._bps = int(np.log2(self._order))  # Coded bits per symbol
+        self._bits_per_symbol = int(np.log2(self._order))  # Coded bits per symbol
 
         if not isinstance(phase_offset, (int, float)):
             raise TypeError(f"Argument 'phase_offset' must be a number, not {type(phase_offset)}.")
         self._phase_offset = phase_offset  # Phase offset in degrees
 
-        if not isinstance(sps, int):
-            raise TypeError(f"Argument 'sps' must be an integer, not {type(sps)}.")
-        if not sps > 1:
-            raise ValueError(f"Argument 'sps' must be greater than 1, not {sps}.")
-        self._sps = sps  # Samples per symbol
+        if not isinstance(symbol_rate, (int, float)):
+            raise TypeError(f"Argument 'symbol_rate' must be a number, not {type(symbol_rate)}.")
+        if not symbol_rate > 0:
+            raise ValueError(f"Argument 'symbol_rate' must be positive, not {symbol_rate}.")
+        self._symbol_rate = symbol_rate  # symbols/s
+
+        if not isinstance(samples_per_symbol, int):
+            raise TypeError(f"Argument 'samples_per_symbol' must be an integer, not {type(samples_per_symbol)}.")
+        if not samples_per_symbol > 1:
+            raise ValueError(f"Argument 'samples_per_symbol' must be greater than 1, not {samples_per_symbol}.")
+        self._samples_per_symbol = samples_per_symbol  # Samples per symbol
 
         if isinstance(pulse_shape, str):
             if pulse_shape == "rect":
                 if span is None:
                     span = 1
-                self._pulse_shape = rectangular(self.sps, span=span)
+                self._pulse_shape = rectangular(self.samples_per_symbol, span=span)
             elif pulse_shape == "rc":
                 if span is None:
                     span = 10
                 if alpha is None:
                     alpha = 0.2
-                self._pulse_shape = raised_cosine(alpha, span, self.sps)
+                self._pulse_shape = raised_cosine(alpha, span, self.samples_per_symbol)
             elif pulse_shape == "srrc":
                 if span is None:
                     span = 10
                 if alpha is None:
                     alpha = 0.2
-                self._pulse_shape = root_raised_cosine(alpha, span, self.sps)
+                self._pulse_shape = root_raised_cosine(alpha, span, self.samples_per_symbol)
             else:
                 raise ValueError(f"Argument 'pulse_shape' must be 'rect', 'rc', or 'srrc', not {pulse_shape!r}.")
         else:
@@ -114,8 +122,8 @@ class LinearModulation:
                 raise ValueError(f"Argument 'pulse_shape' must be 1-D, not {pulse_shape.ndim}-D.")
             self._pulse_shape = pulse_shape  # Pulse shape
 
-        self._tx_filter = Interpolator(self.sps, self.pulse_shape)  # Transmit pulse shaping filter
-        self._rx_filter = Decimator(self.sps, self.pulse_shape[::-1].conj())  # Receive matched filter
+        self._tx_filter = Interpolator(self.samples_per_symbol, self.pulse_shape)  # Transmit pulse shaping filter
+        self._rx_filter = Decimator(self.samples_per_symbol, self.pulse_shape[::-1].conj())  # Receive matched filter
 
     def __repr__(self) -> str:
         return f"sdr.{type(self).__name__}({self.symbol_map.tolist()}, phase_offset={self.phase_offset})"
@@ -177,8 +185,8 @@ class LinearModulation:
             s: The decimal symbols $s[k]$ to modulate, $0$ to $M-1$.
 
         Returns:
-            The pulse-shaped complex samples $x[n]$ with :obj:`sps` samples per symbol
-            and length `sps * s.size + pulse_shape.size - 1`.
+            The pulse-shaped complex samples $x[n]$ with :obj:`samples_per_symbol` samples per symbol
+            and length `samples_per_symbol * s.size + pulse_shape.size - 1`.
         """
         s = np.asarray(s)  # Decimal symbols
         return self._modulate(s)
@@ -201,8 +209,8 @@ class LinearModulation:
         This method uses matched filtering and maximum-likelihood estimation.
 
         Arguments:
-            x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`sps`
-                samples per symbol and length `sps * s_hat.size + pulse_shape.size - 1`.
+            x_tilde: The received pulse-shaped complex samples $\tilde{x}[n]$ to demodulate, with :obj:`samples_per_symbol`
+                samples per symbol and length `samples_per_symbol * s_hat.size + pulse_shape.size - 1`.
 
         Returns:
             - The decimal symbol decisions $\hat{s}[k]$, $0$ to $M-1$.
@@ -220,17 +228,17 @@ class LinearModulation:
         return s_hat, a_tilde, a_hat
 
     def _rx_matched_filter(self, x_tilde: npt.NDArray[np.complex128]) -> npt.NDArray[np.complex128]:
-        if self.pulse_shape.size % self.sps == 0:
+        if self.pulse_shape.size % self.samples_per_symbol == 0:
             x_tilde = np.insert(x_tilde, 0, 0)
 
         a_tilde = self._rx_filter(x_tilde, mode="full")  # Complex symbols
 
-        span = self.pulse_shape.size // self.sps
+        span = self.pulse_shape.size // self.samples_per_symbol
         if span == 1:
-            N_symbols = x_tilde.size // self.sps
+            N_symbols = x_tilde.size // self.samples_per_symbol
             offset = span
         else:
-            N_symbols = x_tilde.size // self.sps - span
+            N_symbols = x_tilde.size // self.samples_per_symbol - span
             offset = span
 
         # Select the symbol decisions from the output of the decimating filter
@@ -278,11 +286,39 @@ class LinearModulation:
         return self._order
 
     @property
-    def bps(self) -> int:
+    def symbol_rate(self) -> float:
+        r"""
+        The symbol rate $f_{sym}$ in symbols/s.
+        """
+        return self._symbol_rate
+
+    @property
+    def bits_per_symbol(self) -> int:
         r"""
         The number of coded bits per symbol $k = \log_2 M$.
         """
-        return self._bps
+        return self._bits_per_symbol
+
+    @property
+    def bit_rate(self) -> float:
+        r"""
+        The bit rate $f_{b}$ in bits/s.
+        """
+        return self.symbol_rate * self.bits_per_symbol
+
+    @property
+    def samples_per_symbol(self) -> int:
+        r"""
+        The number of samples per symbol $f_s / f_{sym}$.
+        """
+        return self._samples_per_symbol
+
+    @property
+    def sample_rate(self) -> float:
+        r"""
+        The sample rate $f_s$ in samples/s.
+        """
+        return self.symbol_rate * self.samples_per_symbol
 
     @property
     def phase_offset(self) -> float:
@@ -299,13 +335,6 @@ class LinearModulation:
         This maps decimal symbols from $0$ to $M-1$ to complex symbols.
         """
         return self._symbol_map
-
-    @property
-    def sps(self) -> int:
-        r"""
-        The number of samples per symbol $f_s / f_{sym}$.
-        """
-        return self._sps
 
     @property
     def pulse_shape(self) -> npt.NDArray[np.float64]:

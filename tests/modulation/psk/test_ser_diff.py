@@ -16,7 +16,7 @@ import sdr
 def test_bpsk():
     psk = sdr.PSK(2)
     ebn0 = np.arange(-10, 10.5, 0.5)
-    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
+    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bits_per_symbol)
     ser = psk.ser(esn0, diff_encoded=True)
     ser_truth = np.array(
         [
@@ -69,7 +69,7 @@ def test_bpsk():
 def test_qpsk():
     psk = sdr.PSK(4)
     ebn0 = np.arange(-10, 10.5, 0.5)
-    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bps)
+    esn0 = sdr.ebn0_to_esn0(ebn0, psk.bits_per_symbol)
     ser = psk.ser(esn0, diff_encoded=True)
     ser_truth = np.array(
         [
