@@ -2,6 +2,8 @@
 A module containing various helper functions for the library.
 """
 
+from __future__ import annotations
+
 import builtins
 import inspect
 import sys
