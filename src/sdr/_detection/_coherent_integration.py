@@ -18,7 +18,7 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Computes the SNR improvement by coherent integration.
 
     Arguments:
-        time_bandwidth: The time-bandwidth product $T_C B_C$ in seconds-Hz (unitless). If the signal bandwidth equals
+        time_bandwidth: The time-bandwidth product $T_C B_n$ in seconds-Hz (unitless). If the noise bandwidth equals
             the sample rate, the argument equals the number of samples $N_c$ to coherently integrate.
 
     Returns:
@@ -36,9 +36,9 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
         The coherent integration gain is the time-bandwidth product
 
-        $$G_c = 10 \log_{10} (T_C B_C) .$$
+        $$G_c = 10 \log_{10} (T_C B_n) .$$
 
-        If the signal bandwidth equals the sample rate, the coherent gain is simply
+        If the noise bandwidth equals the sample rate, the coherent gain is simply
 
         $$G_c = 10 \log_{10} N_c .$$
 
