@@ -199,10 +199,10 @@ class PSK(LinearModulation):
         if isinstance(symbol_labels, str):
             verify_literal(symbol_labels, ["bin", "gray"])
             if symbol_labels == "bin":
-                self._symbol_labels = binary_code(self.bps)
+                self._symbol_labels = binary_code(self.order)
                 self._symbol_labels_str = "bin"
             elif symbol_labels == "gray":
-                self._symbol_labels = gray_code(self.bps)
+                self._symbol_labels = gray_code(self.order)
                 self._symbol_labels_str = "gray"
         else:
             symbol_labels = verify_arraylike(symbol_labels, int=True, ndim=1, size=self.order)
@@ -295,7 +295,7 @@ class PSK(LinearModulation):
             if M == 2:
                 # Equation 4.3-13 from Proakis
                 Pbe = Q(np.sqrt(2 * ebn0_linear))
-            elif M == 4 and np.array_equal(self._symbol_labels, gray_code(k)):
+            elif M == 4 and np.array_equal(self._symbol_labels, gray_code(M)):
                 # Equation 4.3-13 from Proakis
                 Pbe = Q(np.sqrt(2 * ebn0_linear))
             else:
@@ -313,7 +313,7 @@ class PSK(LinearModulation):
             if M == 2:
                 # Equation 8.37 from Simon and Alouini
                 Pbe = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
-            elif M == 4 and np.array_equal(self._symbol_labels, gray_code(k)):
+            elif M == 4 and np.array_equal(self._symbol_labels, gray_code(M)):
                 # Equation 8.37 from Simon and Alouini
                 Pbe = 2 * Q(np.sqrt(2 * ebn0_linear)) - 2 * Q(np.sqrt(2 * ebn0_linear)) ** 2
             else:

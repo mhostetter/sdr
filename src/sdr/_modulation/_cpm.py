@@ -87,10 +87,10 @@ class CPM:
         if isinstance(symbol_labels, str):
             verify_literal(symbol_labels, ["bin", "gray"])
             if symbol_labels == "bin":
-                self._symbol_labels = binary_code(self.bps)
+                self._symbol_labels = binary_code(self.order)
                 self._symbol_labels_str = "bin"
             elif symbol_labels == "gray":
-                self._symbol_labels = gray_code(self.bps)
+                self._symbol_labels = gray_code(self.order)
                 self._symbol_labels_str = "gray"
         else:
             symbol_labels = verify_arraylike(symbol_labels, int=True, ndim=1, size=self.order)
