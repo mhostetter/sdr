@@ -8404,7 +8404,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-time_bandwidth" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_C B_C$ in seconds-Hz (unitless). If the signal bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate." class="md-ellipsis">time_<wbr>bandwidth</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_C B_n$ in seconds-Hz (unitless). If the noise bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate." class="md-ellipsis">time_<wbr>bandwidth</span>
   </a>
   
 </li>
@@ -14091,7 +14091,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-time_bandwidth" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_C B_C$ in seconds-Hz (unitless). If the signal bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate." class="md-ellipsis">time_<wbr>bandwidth</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_C B_n$ in seconds-Hz (unitless). If the noise bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate." class="md-ellipsis">time_<wbr>bandwidth</span>
   </a>
   
 </li>
@@ -14138,12 +14138,12 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">coherent_gain</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-time_bandwidth" title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_C B_C$ in seconds-Hz (unitless). If the signal bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate."><span class="n"><span class="pre">time_bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">coherent_gain</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-time_bandwidth" title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_C B_n$ in seconds-Hz (unitless). If the noise bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate."><span class="n"><span class="pre">time_bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Computes the SNR improvement by coherent integration.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-time_bandwidth"><span class="n sig-name">time_bandwidth</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-time_bandwidth" title="Permalink to this definition">¶</a></dt><dd><p>The time-bandwidth product <span class="math notranslate nohighlight">\(T_C B_C\)</span> in seconds-Hz (unitless). If the signal bandwidth equals
+<dt id="p-time_bandwidth"><span class="n sig-name">time_bandwidth</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-time_bandwidth" title="Permalink to this definition">¶</a></dt><dd><p>The time-bandwidth product <span class="math notranslate nohighlight">\(T_C B_n\)</span> in seconds-Hz (unitless). If the noise bandwidth equals
 the sample rate, the argument equals the number of samples <span class="math notranslate nohighlight">\(N_c\)</span> to coherently integrate.</p>
 </dd>
 </dl>
@@ -14164,9 +14164,9 @@ have the same detection performance.</p>
 </p>
 <p>The coherent integration gain is the time-bandwidth product</p>
 <p><div class="math notranslate nohighlight">
-\[G_c = 10 \log_{10} (T_C B_C) .\]</div>
+\[G_c = 10 \log_{10} (T_C B_n) .\]</div>
 </p>
-<p>If the signal bandwidth equals the sample rate, the coherent gain is simply</p>
+<p>If the noise bandwidth equals the sample rate, the coherent gain is simply</p>
 <p><div class="math notranslate nohighlight">
 \[G_c = 10 \log_{10} N_c .\]</div>
 </p>
