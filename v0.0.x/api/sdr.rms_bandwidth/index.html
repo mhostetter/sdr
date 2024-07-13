@@ -14203,7 +14203,7 @@ spectrum, the RMS bandwidth is <span class="math notranslate nohighlight">\(B_{\
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">symbol_rate</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># symbols/s</span>
 
 <span class="gp">In [2]: </span><span class="n">symbol_rate</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
-<span class="gh">Out[2]: </span><span class="go">0.2886751345948129</span>
+<span class="gh">Out[2]: </span><span class="go">np.float64(0.2886751345948129)</span>
 </code></pre></div>
 </div>
 <p>Create a BPSK signal with a rectangular pulse shape. Note, the time-domain pulse shape is rectangular, but the
@@ -14216,7 +14216,7 @@ spectrum.</p>
 <span class="gp">In [5]: </span><span class="n">x_rect</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">0.7446372175904691</span>
+<span class="gh">Out[6]: </span><span class="go">np.float64(0.7446372175904691)</span>
 </code></pre></div>
 </div>
 <p>Make the same measurements with square-root raised cosine (SRRC) pulse shaping. The SRRC spectrum is narrower
@@ -14228,7 +14228,7 @@ and, therefore, closer to the rectangular spectrum.</p>
 <span class="gp">In [9]: </span><span class="n">x_srrc</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span>
 
 <span class="gp">In [10]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_bandwidth</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">symbol_rate</span> <span class="o">*</span> <span class="n">psk</span><span class="o">.</span><span class="n">sps</span><span class="p">)</span>
-<span class="gh">Out[10]: </span><span class="go">0.29088345066048465</span>
+<span class="gh">Out[10]: </span><span class="go">np.float64(0.29088345066048465)</span>
 </code></pre></div>
 </div>
 <p>Plot the power spectral density (PSD) of the rectangular and SRRC pulse-shaped signals.</p>

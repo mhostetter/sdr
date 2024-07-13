@@ -14211,7 +14211,7 @@ signal, the RMS integration time is <span class="math notranslate nohighlight">\
 <span class="gp">In [5]: </span><span class="n">t_s</span> <span class="o">=</span> <span class="n">n_symbols</span> <span class="o">/</span> <span class="n">symbol_rate</span>  <span class="c1"># Integration time (s)</span>
 
 <span class="gp">In [6]: </span><span class="n">t_s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">0.2886751345948129</span>
+<span class="gh">Out[6]: </span><span class="go">np.float64(0.2886751345948129)</span>
 </code></pre></div>
 </div>
 <p>Create a BPSK signal with a rectangular pulse shape. Measure the RMS integration time of the signal and compare
@@ -14223,7 +14223,7 @@ it to the ideal rectangular envelope.</p>
 <span class="gp">In [9]: </span><span class="n">x_rect</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
 
 <span class="gp">In [10]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
-<span class="gh">Out[10]: </span><span class="go">0.28864626708135344</span>
+<span class="gh">Out[10]: </span><span class="go">np.float64(0.28864626708135344)</span>
 
 <span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_rect</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rectangular&quot;</span><span class="p">);</span>
@@ -14239,7 +14239,7 @@ it to the ideal rectangular envelope.</p>
 <span class="gp">In [14]: </span><span class="n">x_srrc</span> <span class="o">=</span> <span class="n">psk</span><span class="o">.</span><span class="n">modulate</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span><span class="o">.</span><span class="n">real</span>
 
 <span class="gp">In [15]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
-<span class="gh">Out[15]: </span><span class="go">0.28865329576550935</span>
+<span class="gh">Out[15]: </span><span class="go">np.float64(0.28865329576550935)</span>
 
 <span class="gp">In [16]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SRRC&quot;</span><span class="p">);</span>
@@ -14255,7 +14255,7 @@ is normalized. Notice the RMS integration time increases by 50% for the same tra
 <span class="gp">In [18]: </span><span class="n">x_srrc_env</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">)</span> <span class="o">/</span> <span class="n">sdr</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">x_srrc_env</span><span class="p">))</span>
 
 <span class="gp">In [19]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">rms_integration_time</span><span class="p">(</span><span class="n">x_srrc_env</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
-<span class="gh">Out[19]: </span><span class="go">0.4219690131724645</span>
+<span class="gh">Out[19]: </span><span class="go">np.float64(0.4219690131724645)</span>
 
 <span class="gp">In [20]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x_srrc</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;SRRC&quot;</span><span class="p">);</span> \

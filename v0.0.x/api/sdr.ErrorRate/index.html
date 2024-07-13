@@ -14177,7 +14177,7 @@ The bit error rate of the first received bit vector is 0.2.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">x_hat</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="gp">In [4]: </span><span class="n">ber</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_hat</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">(1, 5, 0.2)</span>
+<span class="gh">Out[4]: </span><span class="go">(np.int64(1), 5, np.float64(0.2))</span>
 </code></pre></div>
 </div>
 <p>Measure and accumulate bit errors from the second received bit vector containing 2 bit errors at 10 dB SNR.
@@ -14185,12 +14185,12 @@ The bit error rate of the second received bit vector is 0.4.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">x_hat</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 
 <span class="gp">In [6]: </span><span class="n">ber</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_hat</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">(2, 5, 0.4)</span>
+<span class="gh">Out[6]: </span><span class="go">(np.int64(2), 5, np.float64(0.4))</span>
 </code></pre></div>
 </div>
 <p>The total errors are 3, total bits 10, and average bit error rate 0.3.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">ber</span><span class="o">.</span><span class="n">errors</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">ber</span><span class="o">.</span><span class="n">counts</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">ber</span><span class="o">.</span><span class="n">error_rate</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">(3, 10, 0.3)</span>
+<span class="gh">Out[7]: </span><span class="go">(np.int64(3), 10, np.float64(0.3))</span>
 </code></pre></div>
 </div>
 <p>Average bit error rates for every SNR can be obtained as follows.</p>
