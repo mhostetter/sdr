@@ -48,7 +48,7 @@ dependencies = [
     "numba",                      # Use galois's version limitation
     "scipy",
     "matplotlib",
-    "galois == 0.3.9",            # Exact match required because of use of internals
+    "galois == 0.4.1",            # Exact match required because of use of internals
     "typing_extensions >= 4.0.0", # v4.0.0 is needed for use of Self (Python 3.11+) and Literal (Python 3.8+)
 ]
 dynamic = ["version"]
