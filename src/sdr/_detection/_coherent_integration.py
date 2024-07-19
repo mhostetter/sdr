@@ -18,7 +18,7 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
     Computes the SNR improvement by coherent integration.
 
     Arguments:
-        time_bandwidth: The time-bandwidth product $T_C B_n$ in seconds-Hz (unitless). If the noise bandwidth equals
+        time_bandwidth: The time-bandwidth product $T_c B_n$ in seconds-Hz (unitless). If the noise bandwidth equals
             the sample rate, the argument equals the number of samples $N_c$ to coherently integrate.
 
     Returns:
@@ -36,7 +36,7 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
         The coherent integration gain is the time-bandwidth product
 
-        $$G_c = 10 \log_{10} (T_C B_n) .$$
+        $$G_c = 10 \log_{10} (T_c B_n) .$$
 
         If the noise bandwidth equals the sample rate, the coherent gain is simply
 
@@ -86,8 +86,8 @@ def coherent_gain_loss(
     Computes the coherent gain loss (CGL) given a time or frequency offset.
 
     Arguments:
-        time: The coherent integration time $T_C$ or time offset in $\Delta t$ in seconds.
-        freq: The frequency offset $\Delta f$ or signal bandwidth $B_C$ in Hz.
+        time: The coherent integration time $T_c$ or time offset in $\Delta t$ in seconds.
+        freq: The frequency offset $\Delta f$ or signal bandwidth $B_c$ in Hz.
 
     Returns:
         The coherent gain loss (CGL) in dB.
@@ -96,7 +96,7 @@ def coherent_gain_loss(
         Coherent gain loss is the reduction in SNR due to time or frequency offsets during coherent integration.
         These losses are similar to scalloping loss.
 
-        The coherent gain loss of a signal integrated for $T_C$ seconds with a frequency offset of $\Delta f$ Hz is
+        The coherent gain loss of a signal integrated for $T_c$ seconds with a frequency offset of $\Delta f$ Hz is
 
         $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( T_c \Delta f \right) \right) ,$$
 
@@ -104,10 +104,10 @@ def coherent_gain_loss(
 
         $$\text{sinc}(x) = \frac{\sin(\pi x)}{\pi x} .$$
 
-        The coherent gain loss of a signal with bandwidth $B_C$ Hz with a detection time offset of $\Delta t$ seconds
+        The coherent gain loss of a signal with bandwidth $B_c$ Hz with a detection time offset of $\Delta t$ seconds
         is
 
-        $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( \Delta t B_C \right) \right) .$$
+        $$\text{CGL} = -10 \log_{10} \left( \text{sinc}^2 \left( \Delta t B_c \right) \right) .$$
 
     Examples:
         Compute the coherent gain loss for an integration time of 1 ms and a frequency offset of 235 Hz.
