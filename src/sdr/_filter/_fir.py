@@ -8,6 +8,7 @@ from typing import Any, overload
 
 import numpy as np
 import numpy.typing as npt
+import scipy.integrate
 import scipy.signal
 from typing_extensions import Literal
 
@@ -417,6 +418,30 @@ class FIR:
         tau_phi[np.argmin(np.abs(f))] = np.nan  # Avoid crazy result when dividing by near zero
 
         return f, tau_phi
+
+    def noise_bandwidth(self, sample_rate: float = 1.0) -> float:
+        r"""
+        Returns the noise bandwidth $B_n$ of the FIR filter.
+
+        Arguments:
+            sample_rate: The sample rate $f_s$ of the filter in samples/s.
+
+        Returns:
+            The noise bandwidth of the FIR filter $B_n$ in Hz.
+
+        Examples:
+            See the :ref:`fir-filters` example.
+        """
+        verify_scalar(sample_rate, float=True, positive=True)
+
+        # Compute the frequency response
+        f, H = scipy.signal.freqz(self.taps, 1, worN=2**20, whole=True, fs=sample_rate)
+        H = np.abs(H) ** 2
+
+        # Compute the noise bandwidth
+        B_n = scipy.integrate.simpson(y=H, x=f) / np.max(H)
+
+        return B_n
 
     ##############################################################################
     # Properties
