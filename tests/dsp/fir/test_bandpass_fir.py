@@ -11,7 +11,7 @@ def test_custom():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="custom", CustomWindow=ones(1, 31));
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window=None)
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window=None)
     h_truth = np.array(
         [
             -0.017963811098946,
@@ -56,7 +56,7 @@ def test_hamming():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="hamming");
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="hamming")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="hamming")
     h_truth = np.array(
         [
             -0.001295920763505,
@@ -101,7 +101,7 @@ def test_hann():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="hann");
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="hann")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="hann")
     h_truth = np.array(
         [
             0,
@@ -146,7 +146,7 @@ def test_blackman():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="blackman");
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="blackman")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="blackman")
     h_truth = np.array(
         [
             0.000000000000000,
@@ -191,7 +191,7 @@ def test_blackman_harris():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="blackman-harris");
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="blackman-harris")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="blackman-harris")
     h_truth = np.array(
         [
             -0.000001060796132,
@@ -236,7 +236,7 @@ def test_chebyshev():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="chebyshev");
         >> transpose(h)
     """
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="chebyshev")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="chebyshev")
     h_truth = np.array(
         [
             -0.000309113441909,
@@ -282,7 +282,7 @@ def test_kaiser():
         >> transpose(h)
     """
     # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
-    h = sdr.design_bandpass_fir(30, 0.4, 0.25, window="kaiser", atten=21.542)
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="kaiser", atten=21.542)
     h_truth = np.array(
         [
             -0.016765450319470,
