@@ -14,7 +14,7 @@ from .._helper import export, verify_arraylike, verify_scalar
 
 
 @export
-def design_multirate_fir(
+def multirate_fir(
     interpolation: int,
     decimation: int = 1,
     polyphase_order: int = 23,
@@ -41,13 +41,13 @@ def design_multirate_fir(
 
         .. ipython:: python
 
-            h = sdr.design_multirate_fir(11, 3)
+            h = sdr.multirate_fir(11, 3)
 
-            @savefig sdr_design_multirate_fir_1.png
+            @savefig sdr_multirate_fir_1.png
             plt.figure(); \
             sdr.plot.impulse_response(h);
 
-            @savefig sdr_design_multirate_fir_2.png
+            @savefig sdr_multirate_fir_2.png
             plt.figure(); \
             sdr.plot.magnitude_response(h);
 
@@ -96,7 +96,7 @@ def design_multirate_fir(
     return h
 
 
-def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float64]:
+def multirate_fir_linear(rate: int) -> npt.NDArray[np.float64]:
     r"""
     The multirate filter is designed to linearly interpolate between samples.
 
@@ -109,7 +109,7 @@ def design_multirate_fir_linear(rate: int) -> npt.NDArray[np.float64]:
     return h
 
 
-def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float64]:
+def multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float64]:
     r"""
     The multirate filter is designed to linearly interpolate between samples.
 
@@ -122,7 +122,7 @@ def design_multirate_fir_linear_matlab(rate: int) -> npt.NDArray[np.float64]:
     return h
 
 
-def design_multirate_fir_zoh(rate: int) -> npt.NDArray[np.float64]:
+def multirate_fir_zoh(rate: int) -> npt.NDArray[np.float64]:
     """
     The multirate filter is designed to be a zero-order hold.
 
