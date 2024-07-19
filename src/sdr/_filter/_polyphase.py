@@ -11,10 +11,10 @@ from typing_extensions import Literal
 
 from .._helper import convert_output, export, verify_arraylike, verify_bool, verify_literal, verify_scalar
 from ._design_multirate import (
-    design_multirate_fir,
-    design_multirate_fir_linear,
-    design_multirate_fir_linear_matlab,
-    design_multirate_fir_zoh,
+    multirate_fir,
+    multirate_fir_linear,
+    multirate_fir_linear_matlab,
+    multirate_fir_zoh,
     polyphase_decompose,
 )
 from ._fir import FIR
@@ -640,7 +640,7 @@ class Interpolator(PolyphaseFIR):
             interpolation: The interpolation rate $P$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
                   with arguments `interpolation` and 1.
                 - `"linear"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2P$ linear ramp $\frac{1}{P} [0, ..., P-1, P, P-1, ..., 1]$.
@@ -670,13 +670,13 @@ class Interpolator(PolyphaseFIR):
         else:
             self._method = verify_literal(taps, ["kaiser", "linear", "linear-matlab", "zoh"])
             if taps == "kaiser":
-                taps = design_multirate_fir(interpolation, 1, polyphase_order, atten)
+                taps = multirate_fir(interpolation, 1, polyphase_order, atten)
             elif taps == "linear":
-                taps = design_multirate_fir_linear(interpolation)
+                taps = multirate_fir_linear(interpolation)
             elif taps == "linear-matlab":
-                taps = design_multirate_fir_linear_matlab(interpolation)
+                taps = multirate_fir_linear_matlab(interpolation)
             elif taps == "zoh":
-                taps = design_multirate_fir_zoh(interpolation)
+                taps = multirate_fir_zoh(interpolation)
 
         super().__init__(interpolation, taps, input="hold", output="top-to-bottom", streaming=streaming)
 
@@ -818,7 +818,7 @@ class Decimator(PolyphaseFIR):
             decimation: The decimation rate $Q$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
                   with arguments 1 and `decimation`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
@@ -836,7 +836,7 @@ class Decimator(PolyphaseFIR):
             taps = verify_arraylike(taps, atleast_1d=True, ndim=1)
         else:
             self._method = verify_literal(taps, ["kaiser"])
-            taps = design_multirate_fir(1, decimation, polyphase_order, atten)
+            taps = multirate_fir(1, decimation, polyphase_order, atten)
 
         super().__init__(decimation, taps, input="bottom-to-top", output="sum", streaming=streaming)
 
@@ -1004,7 +1004,7 @@ class Resampler(PolyphaseFIR):
             decimation: The decimation rate $Q$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
                   with arguments `interpolation` and `decimation`.
                 - `"linear"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2P$ linear ramp $\frac{1}{P} [0, ..., P-1, P, P-1, ..., 1]$.
@@ -1032,15 +1032,15 @@ class Resampler(PolyphaseFIR):
         else:
             self._method = verify_literal(taps, ["kaiser", "linear", "linear-matlab", "zoh"])
             if taps == "kaiser":
-                taps = design_multirate_fir(interpolation, decimation, polyphase_order, atten)
+                taps = multirate_fir(interpolation, decimation, polyphase_order, atten)
             else:
                 verify_scalar(interpolation, int=True, exclusive_min=1)
                 if taps == "linear":
-                    taps = design_multirate_fir_linear(interpolation)
+                    taps = multirate_fir_linear(interpolation)
                 elif taps == "linear-matlab":
-                    taps = design_multirate_fir_linear_matlab(interpolation)
+                    taps = multirate_fir_linear_matlab(interpolation)
                 elif taps == "zoh":
-                    taps = design_multirate_fir_zoh(interpolation)
+                    taps = multirate_fir_zoh(interpolation)
 
         if interpolation == 1:
             # PolyphaseFIR configured like Decimator
@@ -1210,7 +1210,7 @@ class Channelizer(PolyphaseFIR):
             channels: The number of channels $C$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.design_multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
                   with arguments 1 and `rate`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
@@ -1228,7 +1228,7 @@ class Channelizer(PolyphaseFIR):
             taps = verify_arraylike(taps, atleast_1d=True, ndim=1)
         else:
             self._method = verify_literal(taps, ["kaiser"])
-            taps = design_multirate_fir(1, channels, polyphase_order, atten)
+            taps = multirate_fir(1, channels, polyphase_order, atten)
 
         super().__init__(channels, taps, input="bottom-to-top", output="all", streaming=streaming)
 
