@@ -276,7 +276,7 @@ def highpass_fir(
 
 
 @export
-def design_bandpass_fir(
+def bandpass_fir(
     order: int,
     center_freq: float,
     bandwidth: float,
@@ -317,13 +317,13 @@ def design_bandpass_fir(
 
         .. ipython:: python
 
-            h_hamming = sdr.design_bandpass_fir(100, 0.4, 0.1, window="hamming")
+            h_hamming = sdr.bandpass_fir(100, 0.4, 0.1, window="hamming")
 
-            @savefig sdr_design_bandpass_fir_1.png
+            @savefig sdr_bandpass_fir_1.png
             plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
-            @savefig sdr_design_bandpass_fir_2.png
+            @savefig sdr_bandpass_fir_2.png
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
@@ -331,13 +331,13 @@ def design_bandpass_fir(
 
         .. ipython:: python
 
-            h_hann = sdr.design_bandpass_fir(100, 0.4, 0.1, window="hann"); \
-            h_blackman = sdr.design_bandpass_fir(100, 0.4, 0.1, window="blackman"); \
-            h_blackman_harris = sdr.design_bandpass_fir(100, 0.4, 0.1, window="blackman-harris"); \
-            h_chebyshev = sdr.design_bandpass_fir(100, 0.4, 0.1, window="chebyshev"); \
-            h_kaiser = sdr.design_bandpass_fir(100, 0.4, 0.1, window="kaiser")
+            h_hann = sdr.bandpass_fir(100, 0.4, 0.1, window="hann"); \
+            h_blackman = sdr.bandpass_fir(100, 0.4, 0.1, window="blackman"); \
+            h_blackman_harris = sdr.bandpass_fir(100, 0.4, 0.1, window="blackman-harris"); \
+            h_chebyshev = sdr.bandpass_fir(100, 0.4, 0.1, window="chebyshev"); \
+            h_kaiser = sdr.bandpass_fir(100, 0.4, 0.1, window="kaiser")
 
-            @savefig sdr_design_bandpass_fir_3.png
+            @savefig sdr_bandpass_fir_3.png
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
