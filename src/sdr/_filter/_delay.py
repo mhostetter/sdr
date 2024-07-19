@@ -13,7 +13,7 @@ from ._design_fir import _normalize_passband
 from ._fir import FIR
 
 
-def _ideal_frac_delay(length: int, delay: float) -> npt.NDArray[np.float64]:
+def _ideal_fractional_delay(length: int, delay: float) -> npt.NDArray[np.float64]:
     """
     Returns the ideal fractional delay filter impulse response.
     """
@@ -23,7 +23,7 @@ def _ideal_frac_delay(length: int, delay: float) -> npt.NDArray[np.float64]:
 
 
 @export
-def design_frac_delay_fir(
+def fractional_delay_fir(
     length: int,
     delay: float,
 ) -> npt.NDArray[np.float64]:
@@ -50,18 +50,18 @@ def design_frac_delay_fir(
 
         .. ipython:: python
 
-            h_8 = sdr.design_frac_delay_fir(8, 0.25)
+            h_8 = sdr.fractional_delay_fir(8, 0.25)
 
-            @savefig sdr_design_frac_delay_fir_1.png
+            @savefig sdr_fractional_delay_fir_1.png
             plt.figure(); \
             sdr.plot.impulse_response(h_8);
 
-            @savefig sdr_design_frac_delay_fir_2.png
+            @savefig sdr_fractional_delay_fir_2.png
             plt.figure(); \
             sdr.plot.magnitude_response(h_8); \
             plt.ylim(-4, 1);
 
-            @savefig sdr_design_frac_delay_fir_3.png
+            @savefig sdr_fractional_delay_fir_3.png
             plt.figure(); \
             sdr.plot.group_delay(h_8);
 
@@ -69,11 +69,11 @@ def design_frac_delay_fir(
 
         .. ipython:: python
 
-            h_16 = sdr.design_frac_delay_fir(16, 0.25); \
-            h_32 = sdr.design_frac_delay_fir(32, 0.25); \
-            h_64 = sdr.design_frac_delay_fir(64, 0.25)
+            h_16 = sdr.fractional_delay_fir(16, 0.25); \
+            h_32 = sdr.fractional_delay_fir(32, 0.25); \
+            h_64 = sdr.fractional_delay_fir(64, 0.25)
 
-            @savefig sdr_design_frac_delay_fir_4.png
+            @savefig sdr_fractional_delay_fir_4.png
             plt.figure(); \
             sdr.plot.magnitude_response(h_8, label="Length 8"); \
             sdr.plot.magnitude_response(h_16, label="Length 16"); \
@@ -81,7 +81,7 @@ def design_frac_delay_fir(
             sdr.plot.magnitude_response(h_64, label="Length 64"); \
             plt.ylim(-4, 1);
 
-            @savefig sdr_design_frac_delay_fir_5.png
+            @savefig sdr_fractional_delay_fir_5.png
             plt.figure(); \
             sdr.plot.group_delay(h_8, label="Length 8"); \
             sdr.plot.group_delay(h_16, label="Length 16"); \
@@ -95,7 +95,7 @@ def design_frac_delay_fir(
     verify_scalar(delay, float=True, inclusive_min=0, inclusive_max=1)
 
     N = length - (length % 2)  # The length guaranteed to be even
-    h_ideal = _ideal_frac_delay(N, delay)
+    h_ideal = _ideal_fractional_delay(N, delay)
 
     if N == 2:
         beta = 0
@@ -181,7 +181,7 @@ class FractionalDelay(FIR):
         verify_scalar(length, int=True, inclusive_min=2)
         verify_scalar(delay, float=True, inclusive_min=0, inclusive_max=1)
 
-        h = design_frac_delay_fir(length, delay)
+        h = fractional_delay_fir(length, delay)
         super().__init__(h)
 
         self._delay = length // 2 - 1 + delay

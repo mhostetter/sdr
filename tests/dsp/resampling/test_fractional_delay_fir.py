@@ -11,7 +11,7 @@ def test_0p25_10():
         >> h = designFracDelayFIR(0.25, 10);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(10, 0.25)
+    h = sdr.fractional_delay_fir(10, 0.25)
     h_truth = np.array(
         [
             0.003897161584427,
@@ -35,7 +35,7 @@ def test_0p25_21():
         >> h = designFracDelayFIR(0.25, 21);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(21, 0.25)
+    h = sdr.fractional_delay_fir(21, 0.25)
     h_truth = np.array(
         [
             -0.000459853432853,
@@ -70,7 +70,7 @@ def test_0p25_30():
         >> h = designFracDelayFIR(0.25, 30);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(30, 0.25)
+    h = sdr.fractional_delay_fir(30, 0.25)
     h_truth = np.array(
         [
             0.000162561838444,
@@ -114,7 +114,7 @@ def test_0p5_10():
         >> h = designFracDelayFIR(0.5, 10);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(10, 0.5)
+    h = sdr.fractional_delay_fir(10, 0.5)
     h_truth = np.array(
         [
             0.005176009486030,
@@ -138,7 +138,7 @@ def test_0p5_21():
         >> h = designFracDelayFIR(0.5, 21);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(21, 0.5)
+    h = sdr.fractional_delay_fir(21, 0.5)
     h_truth = np.array(
         [
             -0.000632089078103,
@@ -173,7 +173,7 @@ def test_0p5_30():
         >> h = designFracDelayFIR(0.5, 30);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(30, 0.5)
+    h = sdr.fractional_delay_fir(30, 0.5)
     h_truth = np.array(
         [
             0.000225731894765,
@@ -217,7 +217,7 @@ def test_0p75_10():
         >> h = designFracDelayFIR(0.75, 10);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(10, 0.75)
+    h = sdr.fractional_delay_fir(10, 0.75)
     h_truth = np.array(
         [
             0.003486934049224,
@@ -241,7 +241,7 @@ def test_0p75_21():
         >> h = designFracDelayFIR(0.75, 21);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(21, 0.75)
+    h = sdr.fractional_delay_fir(21, 0.75)
     h_truth = np.array(
         [
             -0.000436271205527,
@@ -276,7 +276,7 @@ def test_0p75_30():
         >> h = designFracDelayFIR(0.75, 30);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(30, 0.75)
+    h = sdr.fractional_delay_fir(30, 0.75)
     h_truth = np.array(
         [
             0.000157051267649,
@@ -320,7 +320,7 @@ def test_0p123456789_10():
         >> h = designFracDelayFIR(0.123456789, 10);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(10, 0.123456789)
+    h = sdr.fractional_delay_fir(10, 0.123456789)
     h_truth = np.array(
         [
             0.002163817437857,
@@ -344,7 +344,7 @@ def test_0p123456789_21():
         >> h = designFracDelayFIR(0.123456789, 21);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(21, 0.123456789)
+    h = sdr.fractional_delay_fir(21, 0.123456789)
     h_truth = np.array(
         [
             -0.000249932079617,
@@ -379,7 +379,7 @@ def test_0p123456789_30():
         >> h = designFracDelayFIR(0.123456789, 30);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(30, 0.123456789)
+    h = sdr.fractional_delay_fir(30, 0.123456789)
     h_truth = np.array(
         [
             0.000087825242290,
@@ -423,7 +423,7 @@ def test_0p876543211_10():
         >> h = designFracDelayFIR(1 - 0.123456789, 10);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(10, 1 - 0.123456789)
+    h = sdr.fractional_delay_fir(10, 1 - 0.123456789)
     h_truth = np.array(
         [
             0.001829658288306,
@@ -447,7 +447,7 @@ def test_0p876543211_21():
         >> h = designFracDelayFIR(1 - 0.123456789, 21);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(21, 1 - 0.123456789)
+    h = sdr.fractional_delay_fir(21, 1 - 0.123456789)
     h_truth = np.array(
         [
             -0.000230874758491,
@@ -482,7 +482,7 @@ def test_0p876543211_30():
         >> h = designFracDelayFIR(1 - 0.123456789, 30);
         >> transpose(h)
     """
-    h = sdr.design_frac_delay_fir(30, 1 - 0.123456789)
+    h = sdr.fractional_delay_fir(30, 1 - 0.123456789)
     h_truth = np.array(
         [
             0.000083379317149,
