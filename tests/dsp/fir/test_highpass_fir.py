@@ -11,7 +11,7 @@ def test_custom():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="custom", CustomWindow=ones(1,31));
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window=None)
+    h = sdr.highpass_fir(30, 0.6, window=None)
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -56,7 +56,7 @@ def test_hamming():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="hamming");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window="hamming")
+    h = sdr.highpass_fir(30, 0.6, window="hamming")
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -101,7 +101,7 @@ def test_hann():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="hann");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window="hann")
+    h = sdr.highpass_fir(30, 0.6, window="hann")
     h_truth = np.array(
         [
             0,
@@ -146,7 +146,7 @@ def test_blackman():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="blackman");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window="blackman")
+    h = sdr.highpass_fir(30, 0.6, window="blackman")
     h_truth = np.array(
         [
             0.000000000000000,
@@ -191,7 +191,7 @@ def test_blackman_harris():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="blackman-harris");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window="blackman-harris")
+    h = sdr.highpass_fir(30, 0.6, window="blackman-harris")
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -236,7 +236,7 @@ def test_chebyshev():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="chebyshev");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window="chebyshev")
+    h = sdr.highpass_fir(30, 0.6, window="chebyshev")
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -284,7 +284,7 @@ def test_kaiser_0p2():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.2, window="kaiser", atten=30)
+    h = sdr.highpass_fir(30, 0.2, window="kaiser", atten=30)
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -329,7 +329,7 @@ def test_kaiser_0p4():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.4, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.4, window="kaiser", atten=21.542)
+    h = sdr.highpass_fir(30, 0.4, window="kaiser", atten=21.542)
     h_truth = np.array(
         [
             0.000000000000000,
@@ -374,7 +374,7 @@ def test_kaiser_0p6():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.6, window="kaiser", atten=60)
+    h = sdr.highpass_fir(30, 0.6, window="kaiser", atten=60)
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -419,7 +419,7 @@ def test_kaiser_0p8():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.8, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_highpass_fir(30, 0.8, window="kaiser", atten=20)
+    h = sdr.highpass_fir(30, 0.8, window="kaiser", atten=20)
     h_truth = np.array(
         [
             0.000000000000000,
