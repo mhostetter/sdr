@@ -323,7 +323,7 @@ class FIR:
         Examples:
             .. ipython:: python
 
-                h = sdr.design_lowpass_fir(100, 0.2, window="hamming"); \
+                h = sdr.lowpass_fir(100, 0.2, window="hamming"); \
                 fir = sdr.FIR(h)
 
             Compute the frequency response at 1024 evenly spaced frequencies.

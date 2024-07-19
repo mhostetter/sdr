@@ -11,7 +11,7 @@ def test_custom():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="custom", CustomWindow=ones(1, 31));
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window=None)
+    h = sdr.lowpass_fir(30, 0.2, window=None)
     h_truth = np.array(
         [
             0.000000000000000,
@@ -56,7 +56,7 @@ def test_hamming():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="hamming");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window="hamming")
+    h = sdr.lowpass_fir(30, 0.2, window="hamming")
     h_truth = np.array(
         [
             0.000000000000000,
@@ -101,7 +101,7 @@ def test_hann():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="hann");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window="hann")
+    h = sdr.lowpass_fir(30, 0.2, window="hann")
     h_truth = np.array(
         [
             0,
@@ -146,7 +146,7 @@ def test_blackman():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="blackman");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window="blackman")
+    h = sdr.lowpass_fir(30, 0.2, window="blackman")
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -191,7 +191,7 @@ def test_blackman_harris():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="blackman-harris");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window="blackman-harris")
+    h = sdr.lowpass_fir(30, 0.2, window="blackman-harris")
     h_truth = np.array(
         [
             0.000000000000000,
@@ -236,7 +236,7 @@ def test_chebyshev():
         >> h = designLowpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="chebyshev");
         >> transpose(h)
     """
-    h = sdr.design_lowpass_fir(30, 0.2, window="chebyshev")
+    h = sdr.lowpass_fir(30, 0.2, window="chebyshev")
     h_truth = np.array(
         [
             0.000000000000000,
@@ -285,7 +285,7 @@ def test_kaiser30_0p1():
         >> transpose(h)
     """
     # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
-    h = sdr.design_lowpass_fir(30, 0.1, "kaiser", atten=21.542)
+    h = sdr.lowpass_fir(30, 0.1, "kaiser", atten=21.542)
     h_truth = np.array(
         [
             -0.019837202437853,
@@ -331,7 +331,7 @@ def test_kaiser_30_0p2():
         >> transpose(h)
     """
     # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
-    h = sdr.design_lowpass_fir(30, 0.2, window="kaiser", atten=21.542)
+    h = sdr.lowpass_fir(30, 0.2, window="kaiser", atten=21.542)
     h_truth = np.array(
         [
             0.000000000000000,
@@ -377,7 +377,7 @@ def test_kaiser30_0p3():
         >> transpose(h)
     """
     # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
-    h = sdr.design_lowpass_fir(30, 0.3, "kaiser", atten=21.542)
+    h = sdr.lowpass_fir(30, 0.3, "kaiser", atten=21.542)
     h_truth = np.array(
         [
             0.019631739746596,
@@ -423,7 +423,7 @@ def test_kaiser_60_0p2():
         >> transpose(h)
     """
     # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
-    h = sdr.design_lowpass_fir(60, 0.2, "kaiser", atten=21.542)
+    h = sdr.lowpass_fir(60, 0.2, "kaiser", atten=21.542)
     h_truth = np.array(
         [
             -0.000000000000000,
