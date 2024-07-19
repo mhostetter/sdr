@@ -1212,6 +1212,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.FIR.noise_bandwidth/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.FIR.noise_bandwidth (Python method) — Returns the noise bandwidth $B_n$ of the FIR filter." class="md-ellipsis">noise_<wbr>bandwidth</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -1712,6 +1727,21 @@ You're not viewing the latest version.
     <li class="md-nav__item">
       <a href="../sdr.IIR.frequency_response/" class="md-nav__link">
         <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.frequency_response (Python method) — Returns the frequency response $H(omega)$ of the IIR filter." class="md-ellipsis">frequency_<wbr>response</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.IIR.noise_bandwidth/" class="md-nav__link">
+        <span aria-label="Python method" class="objinfo-icon objinfo-icon__procedure" title="Python method">M</span><span title="sdr.IIR.noise_bandwidth (Python method) — Returns the noise bandwidth $B_n$ of the IIR filter." class="md-ellipsis">noise_<wbr>bandwidth</span>
       </a>
     </li>
   
@@ -14229,25 +14259,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">np.float64(10.116352878527213)</span>
+<span class="gh">Out[3]: </span><span class="go">np.float64(10.142718059626727)</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">np.float64(10.116352878527213)</span>
+<span class="gh">Out[4]: </span><span class="go">np.float64(10.142718059626727)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">np.float64(10.071047863604708)</span>
+<span class="gh">Out[5]: </span><span class="go">np.float64(10.10118042542687)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">np.float64(8.163334098690504)</span>
+<span class="gh">Out[6]: </span><span class="go">np.float64(8.337269164404052)</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">np.float64(17.57397126172431)</span>
+<span class="gh">Out[7]: </span><span class="go">np.float64(17.659584543138834)</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
