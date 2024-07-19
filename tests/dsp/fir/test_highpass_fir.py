@@ -1,4 +1,5 @@
 import numpy as np
+import scipy.signal
 
 import sdr
 
@@ -47,7 +48,7 @@ def test_custom():
             -0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 def test_hamming():
@@ -92,7 +93,7 @@ def test_hamming():
             -0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 def test_hann():
@@ -137,7 +138,7 @@ def test_hann():
             0,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 def test_blackman():
@@ -182,7 +183,7 @@ def test_blackman():
             0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 def test_blackman_harris():
@@ -191,7 +192,7 @@ def test_blackman_harris():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="blackman-harris");
         >> transpose(h)
     """
-    h = sdr.highpass_fir(30, 0.6, window="blackman-harris")
+    h = sdr.highpass_fir(30, 0.6, window="blackmanharris")
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -227,7 +228,7 @@ def test_blackman_harris():
             -0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 def test_chebyshev():
@@ -236,7 +237,7 @@ def test_chebyshev():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="chebyshev");
         >> transpose(h)
     """
-    h = sdr.highpass_fir(30, 0.6, window="chebyshev")
+    h = sdr.highpass_fir(30, 0.6, window=("chebwin", 60))
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -272,7 +273,7 @@ def test_chebyshev():
             -0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 # NOTE: Added extra Kaiser window tests to reverse engineer MATLAB's beta parameter
@@ -284,7 +285,7 @@ def test_kaiser_0p2():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.2, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.highpass_fir(30, 0.2, window="kaiser", atten=30)
+    h = sdr.highpass_fir(30, 0.2, window=("kaiser", 0.5))
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -320,7 +321,7 @@ def test_kaiser_0p2():
             -0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-1)
+    verify_impulse_response(h, h_truth, atol=1e-1)  # TODO: These aren't exactly identical
 
 
 def test_kaiser_0p4():
@@ -329,7 +330,7 @@ def test_kaiser_0p4():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.4, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.highpass_fir(30, 0.4, window="kaiser", atten=21.542)
+    h = sdr.highpass_fir(30, 0.4, window=("kaiser", 0.5))
     h_truth = np.array(
         [
             0.000000000000000,
@@ -365,7 +366,7 @@ def test_kaiser_0p4():
             0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-1)
+    verify_impulse_response(h, h_truth, atol=1e-1)  # TODO: These aren't exactly identical
 
 
 def test_kaiser_0p6():
@@ -374,7 +375,8 @@ def test_kaiser_0p6():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.6, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.highpass_fir(30, 0.6, window="kaiser", atten=60)
+    beta = scipy.signal.kaiser_beta(60)
+    h = sdr.highpass_fir(30, 0.6, window=("kaiser", beta))
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -410,7 +412,7 @@ def test_kaiser_0p6():
             -0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical
 
 
 def test_kaiser_0p8():
@@ -419,7 +421,7 @@ def test_kaiser_0p8():
         >> h = designHighpassFIR(FilterOrder=30, CutoffFrequency=0.8, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.highpass_fir(30, 0.8, window="kaiser", atten=20)
+    h = sdr.highpass_fir(30, 0.8, window=("kaiser", 0.5))
     h_truth = np.array(
         [
             0.000000000000000,
@@ -455,4 +457,4 @@ def test_kaiser_0p8():
             0.000000000000000,
         ]
     )
-    verify_impulse_response(h, h_truth, atol=1e-2)
+    verify_impulse_response(h, h_truth, atol=1e-2)  # TODO: These aren't exactly identical

@@ -191,7 +191,7 @@ def test_blackman_harris():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="blackman-harris");
         >> transpose(h)
     """
-    h = sdr.bandpass_fir(30, 0.4, 0.25, window="blackman-harris")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window="blackmanharris")
     h_truth = np.array(
         [
             -0.000001060796132,
@@ -236,7 +236,7 @@ def test_chebyshev():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="chebyshev");
         >> transpose(h)
     """
-    h = sdr.bandpass_fir(30, 0.4, 0.25, window="chebyshev")
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window=("chebwin", 60))
     h_truth = np.array(
         [
             -0.000309113441909,
@@ -281,8 +281,8 @@ def test_kaiser():
         >> h = designBandpassFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="kaiser");
         >> transpose(h)
     """
-    # MATLAB uses beta=0.5 for Kaiser window. Attenuation of 21.542 dB was reverse engineered.
-    h = sdr.bandpass_fir(30, 0.4, 0.25, window="kaiser", atten=21.542)
+    # MATLAB uses beta=0.5 for Kaiser window
+    h = sdr.bandpass_fir(30, 0.4, 0.25, window=("kaiser", 0.5))
     h_truth = np.array(
         [
             -0.016765450319470,
