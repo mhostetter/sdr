@@ -21,7 +21,7 @@ from ._units import freq_units, time_units
 def periodogram(
     x: npt.ArrayLike,
     sample_rate: float | None = None,
-    window: str | npt.ArrayLike = "hann",
+    window: str | float | tuple | None = "hann",
     length: int | None = None,
     overlap: int | None = None,
     fft: int | None = None,
@@ -43,7 +43,8 @@ def periodogram(
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        window: The windowing function to use. This can be a string or a vector of length `length`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.
@@ -128,7 +129,7 @@ def periodogram(
 def spectrogram(
     x: npt.ArrayLike,
     sample_rate: float | None = None,
-    window: str | npt.ArrayLike = "hann",
+    window: str | float | tuple | None = "hann",
     length: int | None = None,
     overlap: int | None = None,
     fft: int | None = None,
@@ -149,7 +150,8 @@ def spectrogram(
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be label as "Samples" and the y-axis as "Normalized frequency".
-        window: The windowing function to use. This can be a string or a vector of length `length`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
         length: The length of each segment in samples. If `None`, the length is set to 256.
         overlap: The number of samples to overlap between segments. If `None`, the overlap is set to `length // 2`.
         fft: The number of points to use in the FFT. If `None`, the FFT length is set to `length`.

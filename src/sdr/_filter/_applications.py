@@ -198,8 +198,7 @@ class Differentiator(FIR):
         h[order // 2] = 0
 
         if window is not None:
-            h_win = scipy.signal.windows.get_window(window, order + 1, fftbins=False)
-            h *= h_win
+            h *= scipy.signal.windows.get_window(window, order + 1, fftbins=False)
 
         super().__init__(h, streaming=streaming)
 

@@ -20,7 +20,7 @@ from ._rc_params import RC_PARAMS
 def dft(
     x: npt.ArrayLike,
     sample_rate: float | None = None,
-    window: str | None = None,
+    window: str | float | tuple | None = None,
     size: int | None = None,
     oversample: int | None = None,
     fast: bool = False,
@@ -39,7 +39,8 @@ def dft(
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        window: The windowing function to use. This can be a string or a vector of length `length`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
         size: The number of points to use for the DFT. If `None`, the length of the signal is used.
         oversample: The factor to oversample the DFT. If `None`, the DFT is not oversampled. This is only considered
             if `size` is `None`.
@@ -128,8 +129,7 @@ def dft(
             ax = plt.gca()
 
         if window is not None:
-            w = scipy.signal.windows.get_window(window, x.size)
-            x = x * w
+            x *= scipy.signal.windows.get_window(window, x.size)
 
         if size is None:
             if oversample is None:
@@ -176,7 +176,7 @@ def dft(
 def dtft(
     x: npt.ArrayLike,
     sample_rate: float | None = None,
-    window: str | None = None,
+    window: str | float | tuple | None = None,
     size: int = int(2**20),  # ~1 million points
     centered: bool = True,
     ax: plt.Axes | None = None,
@@ -191,7 +191,8 @@ def dtft(
         x: The time-domain signal $x[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        window: The windowing function to use. This can be a string or a vector of length `length`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
         size: The number of points to use for the DTFT. The actual size used will be the nearest power of 2.
         centered: Indicates whether to center the DTFT about 0.
         ax: The axis to plot on. If `None`, the current axis is used.
