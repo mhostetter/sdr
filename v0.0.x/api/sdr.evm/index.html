@@ -1318,8 +1318,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_lowpass_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_lowpass_fir (Python function) — Designs a lowpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>lowpass_<wbr>fir</span>
+      <a href="../sdr.lowpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.lowpass_fir (Python function) — Designs a lowpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">lowpass_<wbr>fir</span>
       </a>
     </li>
   
@@ -1333,8 +1333,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_highpass_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_highpass_fir (Python function) — Designs a highpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>highpass_<wbr>fir</span>
+      <a href="../sdr.highpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.highpass_fir (Python function) — Designs a highpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">highpass_<wbr>fir</span>
       </a>
     </li>
   
@@ -1348,8 +1348,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_bandpass_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_bandpass_fir (Python function) — Designs a bandpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>bandpass_<wbr>fir</span>
+      <a href="../sdr.bandpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bandpass_fir (Python function) — Designs a bandpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">bandpass_<wbr>fir</span>
       </a>
     </li>
   
@@ -1363,8 +1363,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_bandstop_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_bandstop_fir (Python function) — Designs a bandstop FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>bandstop_<wbr>fir</span>
+      <a href="../sdr.bandstop_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bandstop_fir (Python function) — Designs a bandstop FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">bandstop_<wbr>fir</span>
       </a>
     </li>
   
@@ -3057,8 +3057,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_multirate_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_multirate_fir (Python function) — Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">design_<wbr>multirate_<wbr>fir</span>
+      <a href="../sdr.multirate_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multirate_fir (Python function) — Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">multirate_<wbr>fir</span>
       </a>
     </li>
   
@@ -3943,8 +3943,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_frac_delay_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_frac_delay_fir (Python function) — Designs a fractional delay FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">design_<wbr>frac_<wbr>delay_<wbr>fir</span>
+      <a href="../sdr.fractional_delay_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.fractional_delay_fir (Python function) — Designs a fractional delay FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">fractional_<wbr>delay_<wbr>fir</span>
       </a>
     </li>
   
@@ -14229,25 +14229,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">np.float64(9.862463796710822)</span>
+<span class="gh">Out[3]: </span><span class="go">np.float64(10.116352878527213)</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">np.float64(9.862463796710822)</span>
+<span class="gh">Out[4]: </span><span class="go">np.float64(10.116352878527213)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">np.float64(9.83858821045432)</span>
+<span class="gh">Out[5]: </span><span class="go">np.float64(10.071047863604708)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">np.float64(8.195479549225455)</span>
+<span class="gh">Out[6]: </span><span class="go">np.float64(8.163334098690504)</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">np.float64(17.031022754799018)</span>
+<span class="gh">Out[7]: </span><span class="go">np.float64(17.57397126172431)</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>

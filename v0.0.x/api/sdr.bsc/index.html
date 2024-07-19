@@ -1318,8 +1318,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_lowpass_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_lowpass_fir (Python function) — Designs a lowpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>lowpass_<wbr>fir</span>
+      <a href="../sdr.lowpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.lowpass_fir (Python function) — Designs a lowpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">lowpass_<wbr>fir</span>
       </a>
     </li>
   
@@ -1333,8 +1333,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_highpass_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_highpass_fir (Python function) — Designs a highpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>highpass_<wbr>fir</span>
+      <a href="../sdr.highpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.highpass_fir (Python function) — Designs a highpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">highpass_<wbr>fir</span>
       </a>
     </li>
   
@@ -1348,8 +1348,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_bandpass_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_bandpass_fir (Python function) — Designs a bandpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>bandpass_<wbr>fir</span>
+      <a href="../sdr.bandpass_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bandpass_fir (Python function) — Designs a bandpass FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">bandpass_<wbr>fir</span>
       </a>
     </li>
   
@@ -1363,8 +1363,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_bandstop_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_bandstop_fir (Python function) — Designs a bandstop FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">design_<wbr>bandstop_<wbr>fir</span>
+      <a href="../sdr.bandstop_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.bandstop_fir (Python function) — Designs a bandstop FIR filter impulse response $h[n]$ using the window method." class="md-ellipsis">bandstop_<wbr>fir</span>
       </a>
     </li>
   
@@ -3057,8 +3057,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_multirate_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_multirate_fir (Python function) — Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">design_<wbr>multirate_<wbr>fir</span>
+      <a href="../sdr.multirate_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multirate_fir (Python function) — Designs a multirate FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">multirate_<wbr>fir</span>
       </a>
     </li>
   
@@ -3943,8 +3943,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.design_frac_delay_fir/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.design_frac_delay_fir (Python function) — Designs a fractional delay FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">design_<wbr>frac_<wbr>delay_<wbr>fir</span>
+      <a href="../sdr.fractional_delay_fir/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.fractional_delay_fir (Python function) — Designs a fractional delay FIR filter impulse response $h[n]$ using the Kaiser window method." class="md-ellipsis">fractional_<wbr>delay_<wbr>fir</span>
       </a>
     </li>
   
@@ -14176,13 +14176,13 @@ roughly 5 bits are flipped at the output.</p>
 <span class="gh">Out[1]: </span><span class="go">array([0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1])</span>
 
 <span class="gp">In [2]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">bsc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">);</span> <span class="n">y</span>
-<span class="gh">Out[2]: </span><span class="go">array([1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1])</span>
+<span class="gh">Out[2]: </span><span class="go">array([0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0])</span>
 
 <span class="gp">In [3]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[3]: </span>
-<span class="go">array([False,  True,  True,  True,  True,  True,  True, False,  True,</span>
-<span class="go">        True,  True,  True,  True,  True,  True, False,  True, False,</span>
-<span class="go">        True,  True])</span>
+<span class="go">array([ True,  True,  True,  True, False,  True,  True,  True,  True,</span>
+<span class="go">        True,  True, False, False,  True,  True,  True,  True, False,</span>
+<span class="go">        True, False])</span>
 </code></pre></div>
 </div>
 </dd></dl>
