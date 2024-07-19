@@ -11,7 +11,7 @@ def test_custom():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="custom", CustomWindow=ones(1,31));
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window=None)
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window=None)
     h_truth = np.array(
         [
             0.017963811098946,
@@ -56,7 +56,7 @@ def test_hamming():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="hamming");
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window="hamming")
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window="hamming")
     h_truth = np.array(
         [
             0.001295920763505,
@@ -101,7 +101,7 @@ def test_hann():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="hann");
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window="hann")
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window="hann")
     h_truth = np.array(
         [
             0,
@@ -146,7 +146,7 @@ def test_blackman():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="blackman");
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window="blackman")
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window="blackman")
     h_truth = np.array(
         [
             -0.000000000000000,
@@ -191,7 +191,7 @@ def test_blackman_harris():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="blackman-harris");
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window="blackman-harris")
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window="blackman-harris")
     h_truth = np.array(
         [
             0.000001060796132,
@@ -236,7 +236,7 @@ def test_chebyshev():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="chebyshev");
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window="chebyshev")
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window="chebyshev")
     h_truth = np.array(
         [
             0.000309113441909,
@@ -281,7 +281,7 @@ def test_kaiser():
         >> h = designBandstopFIR(FilterOrder=30, CenterFrequency=0.4, Bandwidth=0.25, Window="kaiser");
         >> transpose(h)
     """
-    h = sdr.design_bandstop_fir(30, 0.4, 0.25, window="kaiser", atten=20)
+    h = sdr.bandstop_fir(30, 0.4, 0.25, window="kaiser", atten=20)
     h_truth = np.array(
         [
             0.016765450319470,
