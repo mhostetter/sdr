@@ -71,50 +71,11 @@ def _ideal_bandstop(order: int, center_freq: float, bandwidth: float) -> npt.NDA
     return h_ideal
 
 
-# TODO: Replace with scipy.signal.windows.get_window()
-def _window(
-    order: int,
-    window: Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
-    | npt.ArrayLike
-    | None = None,
-    atten: float = 60,
-) -> npt.NDArray[np.float64]:
-    if window is None:
-        h_window = np.ones(order + 1)
-    elif isinstance(window, str):
-        if window == "hamming":
-            h_window = scipy.signal.windows.hamming(order + 1)
-        elif window == "hann":
-            h_window = scipy.signal.windows.hann(order + 1)
-        elif window == "blackman":
-            h_window = scipy.signal.windows.blackman(order + 1)
-        elif window == "blackman-harris":
-            h_window = scipy.signal.windows.blackmanharris(order + 1)
-        elif window == "chebyshev":
-            h_window = scipy.signal.windows.chebwin(order + 1, at=atten)
-        elif window == "kaiser":
-            beta = scipy.signal.kaiser_beta(atten)
-            h_window = scipy.signal.windows.kaiser(order + 1, beta=beta)
-        else:
-            raise ValueError(
-                f"Argument 'window' must be in ['hamming', 'hann', 'blackman', 'blackman-harris', 'chebyshev', 'kaiser'], not {window!r}."
-            )
-    else:
-        h_window = np.asarray(window)
-        if not h_window.shape == (order + 1,):
-            raise ValueError(f"Argument 'window' must be a length-{order + 1} vector, not {h_window.shape}.")
-
-    return h_window
-
-
 @export
 def lowpass_fir(
     order: int,
     cutoff_freq: float,
-    window: None
-    | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
-    | npt.ArrayLike = "hamming",
-    atten: float = 60,
+    window: str | float | tuple | None = "hamming",
 ) -> npt.NDArray[np.float64]:
     r"""
     Designs a lowpass FIR filter impulse response $h[n]$ using the window method.
@@ -122,18 +83,8 @@ def lowpass_fir(
     Arguments:
         order: The filter order $N$. Must be even.
         cutoff_freq: The cutoff frequency $f_c$, normalized to the Nyquist frequency $f_s / 2$.
-        window: The time-domain window to use.
-
-            - `None`: No windowing. Equivalently, a length-$N + 1$ vector of ones.
-            - `"hamming"`: Hamming window, see :func:`scipy.signal.windows.hamming`.
-            - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
-            - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
-            - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
-            - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
-
-        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
@@ -162,9 +113,9 @@ def lowpass_fir(
 
             h_hann = sdr.lowpass_fir(100, 0.2, window="hann"); \
             h_blackman = sdr.lowpass_fir(100, 0.2, window="blackman"); \
-            h_blackman_harris = sdr.lowpass_fir(100, 0.2, window="blackman-harris"); \
-            h_chebyshev = sdr.lowpass_fir(100, 0.2, window="chebyshev"); \
-            h_kaiser = sdr.lowpass_fir(100, 0.2, window="kaiser")
+            h_blackman_harris = sdr.lowpass_fir(100, 0.2, window="blackmanharris"); \
+            h_chebyshev = sdr.lowpass_fir(100, 0.2, window=("chebwin", 60)); \
+            h_kaiser = sdr.lowpass_fir(100, 0.2, window=("kaiser", 0.5))
 
             @savefig sdr_lowpass_fir_3.png
             plt.figure(); \
@@ -181,11 +132,10 @@ def lowpass_fir(
     """
     verify_scalar(order, int=True, even=True)
     verify_scalar(cutoff_freq, float=True, inclusive_min=0, inclusive_max=1)
-    verify_scalar(atten, float=True, non_negative=True)
 
-    h_ideal = _ideal_lowpass(order, cutoff_freq)
-    h_window = _window(order, window, atten=atten)
-    h = h_ideal * h_window
+    h = _ideal_lowpass(order, cutoff_freq)
+    if window is not None:
+        h *= scipy.signal.windows.get_window(window, h.size, fftbins=False)
     h = _normalize_passband(h, 0)
 
     return h
@@ -195,10 +145,7 @@ def lowpass_fir(
 def highpass_fir(
     order: int,
     cutoff_freq: float,
-    window: None
-    | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
-    | npt.ArrayLike = "hamming",
-    atten: float = 60,
+    window: str | float | tuple | None = "hamming",
 ) -> npt.NDArray[np.float64]:
     r"""
     Designs a highpass FIR filter impulse response $h[n]$ using the window method.
@@ -206,18 +153,8 @@ def highpass_fir(
     Arguments:
         order: The filter order $N$. Must be even.
         cutoff_freq: The cutoff frequency $f_c$, normalized to the Nyquist frequency $f_s / 2$.
-        window: The time-domain window to use.
-
-            - `None`: No windowing. Equivalently, a length-$N + 1$ vector of ones.
-            - `"hamming"`: Hamming window, see :func:`scipy.signal.windows.hamming`.
-            - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
-            - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
-            - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
-            - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
-
-        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
@@ -246,9 +183,9 @@ def highpass_fir(
 
             h_hann = sdr.highpass_fir(100, 0.7, window="hann"); \
             h_blackman = sdr.highpass_fir(100, 0.7, window="blackman"); \
-            h_blackman_harris = sdr.highpass_fir(100, 0.7, window="blackman-harris"); \
-            h_chebyshev = sdr.highpass_fir(100, 0.7, window="chebyshev"); \
-            h_kaiser = sdr.highpass_fir(100, 0.7, window="kaiser")
+            h_blackman_harris = sdr.highpass_fir(100, 0.7, window="blackmanharris"); \
+            h_chebyshev = sdr.highpass_fir(100, 0.7, window=("chebwin", 60)); \
+            h_kaiser = sdr.highpass_fir(100, 0.7, window=("kaiser", 0.5))
 
             @savefig sdr_highpass_fir_3.png
             plt.figure(); \
@@ -265,11 +202,10 @@ def highpass_fir(
     """
     verify_scalar(order, int=True, even=True)
     verify_scalar(cutoff_freq, float=True, inclusive_min=0, inclusive_max=1)
-    verify_scalar(atten, float=True, non_negative=True)
 
-    h_ideal = _ideal_highpass(order, cutoff_freq)
-    h_window = _window(order, window, atten=atten)
-    h = h_ideal * h_window
+    h = _ideal_highpass(order, cutoff_freq)
+    if window is not None:
+        h *= scipy.signal.windows.get_window(window, h.size, fftbins=False)
     h = _normalize_passband(h, 1)
 
     return h
@@ -280,10 +216,7 @@ def bandpass_fir(
     order: int,
     center_freq: float,
     bandwidth: float,
-    window: None
-    | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
-    | npt.ArrayLike = "hamming",
-    atten: float = 60,
+    window: str | float | tuple | None = "hamming",
 ) -> npt.NDArray[np.float64]:
     r"""
     Designs a bandpass FIR filter impulse response $h[n]$ using the window method.
@@ -292,18 +225,8 @@ def bandpass_fir(
         order: The filter order $N$. Must be even.
         center_freq: The center frequency $f_{center}$, normalized to the Nyquist frequency $f_s / 2$.
         bandwidth: The two-sided bandwidth about $f_{center}$, normalized to the Nyquist frequency $f_s / 2$.
-        window: The time-domain window to use.
-
-            - `None`: No windowing. Equivalently, a length-$N + 1$ vector of ones.
-            - `"hamming"`: Hamming window, see :func:`scipy.signal.windows.hamming`.
-            - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
-            - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
-            - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
-            - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
-
-        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the passband has 0 dB gain.
@@ -333,9 +256,9 @@ def bandpass_fir(
 
             h_hann = sdr.bandpass_fir(100, 0.4, 0.1, window="hann"); \
             h_blackman = sdr.bandpass_fir(100, 0.4, 0.1, window="blackman"); \
-            h_blackman_harris = sdr.bandpass_fir(100, 0.4, 0.1, window="blackman-harris"); \
-            h_chebyshev = sdr.bandpass_fir(100, 0.4, 0.1, window="chebyshev"); \
-            h_kaiser = sdr.bandpass_fir(100, 0.4, 0.1, window="kaiser")
+            h_blackman_harris = sdr.bandpass_fir(100, 0.4, 0.1, window="blackmanharris"); \
+            h_chebyshev = sdr.bandpass_fir(100, 0.4, 0.1, window=("chebwin", 60)); \
+            h_kaiser = sdr.bandpass_fir(100, 0.4, 0.1, window=("kaiser", 0.5))
 
             @savefig sdr_bandpass_fir_3.png
             plt.figure(); \
@@ -353,11 +276,10 @@ def bandpass_fir(
     verify_scalar(order, int=True, even=True)
     verify_scalar(center_freq, float=True, inclusive_min=0, inclusive_max=1)
     verify_scalar(bandwidth, float=True, inclusive_min=0, inclusive_max=2 * min(center_freq, 1 - center_freq))
-    verify_scalar(atten, float=True, non_negative=True)
 
-    h_ideal = _ideal_bandpass(order, center_freq, bandwidth)
-    h_window = _window(order, window, atten=atten)
-    h = h_ideal * h_window
+    h = _ideal_bandpass(order, center_freq, bandwidth)
+    if window is not None:
+        h *= scipy.signal.windows.get_window(window, h.size, fftbins=False)
     h = _normalize_passband(h, center_freq)
 
     return h
@@ -368,10 +290,7 @@ def bandstop_fir(
     order: int,
     center_freq: float,
     bandwidth: float,
-    window: None
-    | Literal["hamming", "hann", "blackman", "blackman-harris", "chebyshev", "kaiser"]
-    | npt.ArrayLike = "hamming",
-    atten: float = 60,
+    window: str | float | tuple | None = "hamming",
 ) -> npt.NDArray[np.float64]:
     r"""
     Designs a bandstop FIR filter impulse response $h[n]$ using the window method.
@@ -380,18 +299,8 @@ def bandstop_fir(
         order: The filter order $N$. Must be even.
         center_freq: The center frequency $f_{center}$, normalized to the Nyquist frequency $f_s / 2$.
         bandwidth: The two-sided bandwidth about $f_{center}$, normalized to the Nyquist frequency $f_s / 2$.
-        window: The time-domain window to use.
-
-            - `None`: No windowing. Equivalently, a length-$N + 1$ vector of ones.
-            - `"hamming"`: Hamming window, see :func:`scipy.signal.windows.hamming`.
-            - `"hann"`: Hann window, see :func:`scipy.signal.windows.hann`.
-            - `"blackman"`: Blackman window, see :func:`scipy.signal.windows.blackman`.
-            - `"blackman-harris"`: Blackman-Harris window, see :func:`scipy.signal.windows.blackmanharris`.
-            - `"chebyshev"`: Chebyshev window, see :func:`scipy.signal.windows.chebwin`.
-            - `"kaiser"`: Kaiser window, see :func:`scipy.signal.windows.kaiser`.
-            - `npt.ArrayLike`: A custom window. Must be a length-$N + 1$ vector.
-
-        atten: The sidelobe attenuation in dB. Only used if `window` is `"chebyshev"` or `"kaiser"`.
+        window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
+            If `None`, no window is applied.
 
     Returns:
         The filter impulse response $h[n]$ with length $N + 1$. The center of the larger passband has 0 dB gain.
@@ -421,9 +330,9 @@ def bandstop_fir(
 
             h_hann = sdr.bandstop_fir(100, 0.4, 0.75, window="hann"); \
             h_blackman = sdr.bandstop_fir(100, 0.4, 0.75, window="blackman"); \
-            h_blackman_harris = sdr.bandstop_fir(100, 0.4, 0.75, window="blackman-harris"); \
-            h_chebyshev = sdr.bandstop_fir(100, 0.4, 0.75, window="chebyshev"); \
-            h_kaiser = sdr.bandstop_fir(100, 0.4, 0.75, window="kaiser")
+            h_blackman_harris = sdr.bandstop_fir(100, 0.4, 0.75, window="blackmanharris"); \
+            h_chebyshev = sdr.bandstop_fir(100, 0.4, 0.75, window=("chebwin", 60)); \
+            h_kaiser = sdr.bandstop_fir(100, 0.4, 0.75, window=("kaiser", 0.5))
 
             @savefig sdr_bandstop_fir_3.png
             plt.figure(); \
@@ -441,11 +350,10 @@ def bandstop_fir(
     verify_scalar(order, int=True, even=True)
     verify_scalar(center_freq, float=True, inclusive_min=0, inclusive_max=1)
     verify_scalar(bandwidth, float=True, inclusive_min=0, inclusive_max=2 * min(center_freq, 1 - center_freq))
-    verify_scalar(atten, float=True, non_negative=True)
 
-    h_ideal = _ideal_bandstop(order, center_freq, bandwidth)
-    h_window = _window(order, window, atten=atten)
-    h = h_ideal * h_window
+    h = _ideal_bandstop(order, center_freq, bandwidth)
+    if window is not None:
+        h *= scipy.signal.windows.get_window(window, h.size, fftbins=False)
     if center_freq > 0.5:
         h = _normalize_passband(h, 0)
     else:
