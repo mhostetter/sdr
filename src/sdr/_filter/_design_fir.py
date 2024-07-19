@@ -108,7 +108,7 @@ def _window(
 
 
 @export
-def design_lowpass_fir(
+def lowpass_fir(
     order: int,
     cutoff_freq: float,
     window: None
@@ -146,13 +146,13 @@ def design_lowpass_fir(
 
         .. ipython:: python
 
-            h_hamming = sdr.design_lowpass_fir(100, 0.2, window="hamming")
+            h_hamming = sdr.lowpass_fir(100, 0.2, window="hamming")
 
-            @savefig sdr_design_lowpass_fir_1.png
+            @savefig sdr_lowpass_fir_1.png
             plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
-            @savefig sdr_design_lowpass_fir_2.png
+            @savefig sdr_lowpass_fir_2.png
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
@@ -160,13 +160,13 @@ def design_lowpass_fir(
 
         .. ipython:: python
 
-            h_hann = sdr.design_lowpass_fir(100, 0.2, window="hann"); \
-            h_blackman = sdr.design_lowpass_fir(100, 0.2, window="blackman"); \
-            h_blackman_harris = sdr.design_lowpass_fir(100, 0.2, window="blackman-harris"); \
-            h_chebyshev = sdr.design_lowpass_fir(100, 0.2, window="chebyshev"); \
-            h_kaiser = sdr.design_lowpass_fir(100, 0.2, window="kaiser")
+            h_hann = sdr.lowpass_fir(100, 0.2, window="hann"); \
+            h_blackman = sdr.lowpass_fir(100, 0.2, window="blackman"); \
+            h_blackman_harris = sdr.lowpass_fir(100, 0.2, window="blackman-harris"); \
+            h_chebyshev = sdr.lowpass_fir(100, 0.2, window="chebyshev"); \
+            h_kaiser = sdr.lowpass_fir(100, 0.2, window="kaiser")
 
-            @savefig sdr_design_lowpass_fir_3.png
+            @savefig sdr_lowpass_fir_3.png
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
