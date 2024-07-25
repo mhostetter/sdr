@@ -8254,6 +8254,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.threshold_factor/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$." class="md-ellipsis">threshold_<wbr>factor</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.min_snr/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$." class="md-ellipsis">min_<wbr>snr</span>
       </a>
@@ -14223,6 +14238,41 @@ results in a 6 dB increase in the free-space path loss.</p>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_fspl_1.png" src="../../_images/sdr_fspl_1.png" />
+<p>It is confusing why free-space path loss is proportional to the square of frequency. Is RF energy attenuated
+more at higher frequencies? The answer is no. The reason the FSPL equation has a frequency
+dependence is that it assumes omnidirectional, isotropic antennas are used at both the transmitter and
+receiver. The isotropic antenna has a gain of 0 dBi. The physical size of a roughly isotropic antenna
+(think dipole) is a function of frequency as well. So, as the frequency increases, the physical size of the
+isotropic antenna decreases. But what if the size of the antenna was fixed across frequency, as is the case
+with a parabolic dish antenna? You’ll note that the gain of a parabolic dish antenna is also proportional to
+the square of the frequency, see <a class="reference internal" href="../sdr.parabolic_antenna/" title="sdr.parabolic_antenna (Python function) — Calculates the gain $G$ and beamwidth $theta$ of a parabolic reflector."><code class="xref py py-func docutils literal notranslate"><span class="pre">parabolic_antenna()</span></code></a>.</p>
+<p>It turns out that if omnidirectional antennas are used at both the transmitter and receiver, the total path
+loss increases with frequency. But if a parabolic reflector is used at one end, the total path loss is
+constant across frequency. Furthermore, if a parabolic reflector is used at both ends, as is the case in
+VSAT systems, the total path loss decreases with frequency.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1e6</span><span class="p">,</span> <span class="mf">40e9</span><span class="p">,</span> <span class="mi">1_001</span><span class="p">)</span>
+
+<span class="go"># Free-space path loss at 1 km</span>
+<span class="gp">In [8]: </span><span class="n">fspl</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">free_space_path_loss</span><span class="p">(</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">freq</span><span class="p">)</span>
+
+<span class="go"># Isotropic antenna gain in dBi</span>
+<span class="gp">In [9]: </span><span class="n">iso</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="go"># 1-meter diameter parabolic dish antenna gain in dBi</span>
+<span class="gp">In [10]: </span><span class="n">par</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">parabolic_antenna</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">In [11]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freq</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">fspl</span> <span class="o">-</span> <span class="n">iso</span> <span class="o">-</span> <span class="n">iso</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Isotropic -&gt; Isotropic&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freq</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">fspl</span> <span class="o">-</span> <span class="n">iso</span> <span class="o">-</span> <span class="n">par</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Isotropic -&gt; Parabolic&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freq</span> <span class="o">/</span> <span class="mf">1e9</span><span class="p">,</span> <span class="n">fspl</span> <span class="o">-</span> <span class="n">par</span> <span class="o">-</span> <span class="n">par</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Parabolic -&gt; Parabolic&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Antennas&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;center right&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Frequency (GHz), $f$&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Path loss (dB)&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Path loss across center frequency&quot;</span><span class="p">);</span>
+<span class="gp">   ....: </span>
+</code></pre></div>
+</div>
+<img alt="../../_images/sdr_fspl_2.png" src="../../_images/sdr_fspl_2.png" />
 </dd></dl>
 
 

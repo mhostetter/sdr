@@ -8351,6 +8351,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.threshold_factor/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$." class="md-ellipsis">threshold_<wbr>factor</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.min_snr/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$." class="md-ellipsis">min_<wbr>snr</span>
       </a>
@@ -14220,7 +14235,7 @@ across the rows.</p>
 <h2 id="constructors">Constructors<a class="headerlink" href="#constructors" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.BlockInterleaver.__init__/" title="sdr.BlockInterleaver.__init__ (Python method) — Creates a $R times C$ block interleaver."><span class="sig-name descname pseudo-toc-entry"><span class="pre">BlockInterleaver</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.BlockInterleaver.__init__/#p-rows" title="sdr.BlockInterleaver.__init__.rows (Python parameter) — The number of rows $R$ in the interleaver. The row size determines the output separation of consecutive input elements."><span class="n"><span class="pre">rows</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.BlockInterleaver.__init__/#p-cols" title="sdr.BlockInterleaver.__init__.cols (Python parameter) — The number of columns $C$ in the interleaver."><span class="n"><span class="pre">cols</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.BlockInterleaver.__init__/" title="sdr.BlockInterleaver.__init__ (Python method) — Creates a $R times C$ block interleaver."><span class="sig-name descname pseudo-toc-entry"><span class="pre">BlockInterleaver</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.BlockInterleaver.__init__/#p-rows" title="sdr.BlockInterleaver.__init__.rows (Python parameter) — The number of rows $R$ in the interleaver."><span class="n"><span class="pre">rows</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.BlockInterleaver.__init__/#p-cols" title="sdr.BlockInterleaver.__init__.cols (Python parameter) — The number of columns $C$ in the interleaver."><span class="n"><span class="pre">cols</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span></dt>
 <dd><p>Creates a <span class="math notranslate nohighlight">\(R \times C\)</span> block interleaver.</p>
 </dd></dl>
 
@@ -14236,13 +14251,13 @@ across the rows.</p>
 <h2 id="methods">Methods<a class="headerlink" href="#methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.Interleaver.interleave/" title="sdr.Interleaver.interleave (Python method) — Interleaves the input sequence $x[n]$."><span class="sig-name descname"><span class="pre">interleave</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.Interleaver.interleave/#p-x" title="sdr.Interleaver.interleave.x (Python parameter) — The input sequence $x[n]$. Length must be a multiple of the interleaver size."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
+<a class="sig-name descname reference internal" href="../sdr.Interleaver.interleave/" title="sdr.Interleaver.interleave (Python method) — Interleaves the input sequence $x[n]$."><span class="sig-name descname"><span class="pre">interleave</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.Interleaver.interleave/#p-x" title="sdr.Interleaver.interleave.x (Python parameter) — The input sequence $x[n]$."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
 <dd><p>Interleaves the input sequence <span class="math notranslate nohighlight">\(x[n]\)</span>.</p>
 </dd></dl>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname reference internal" href="../sdr.Interleaver.deinterleave/" title="sdr.Interleaver.deinterleave (Python method) — Deinterleaves the input sequence $y[n]$."><span class="sig-name descname"><span class="pre">deinterleave</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.Interleaver.deinterleave/#p-y" title="sdr.Interleaver.deinterleave.y (Python parameter) — The input sequence $y[n]$. Length must be a multiple of the interleaver size."><span class="n"><span class="pre">y</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
+<a class="sig-name descname reference internal" href="../sdr.Interleaver.deinterleave/" title="sdr.Interleaver.deinterleave (Python method) — Deinterleaves the input sequence $y[n]$."><span class="sig-name descname"><span class="pre">deinterleave</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.Interleaver.deinterleave/#p-y" title="sdr.Interleaver.deinterleave.y (Python parameter) — The input sequence $y[n]$."><span class="n"><span class="pre">y</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
 <dd><p>Deinterleaves the input sequence <span class="math notranslate nohighlight">\(y[n]\)</span>.</p>
 </dd></dl>
 

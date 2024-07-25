@@ -8257,6 +8257,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.threshold_factor/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$." class="md-ellipsis">threshold_<wbr>factor</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.min_snr/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$." class="md-ellipsis">min_<wbr>snr</span>
       </a>
@@ -8701,6 +8716,13 @@ You're not viewing the latest version.
           <li class="md-nav__item">
   <a href="../sdr.threshold/" class="md-nav__link">
     <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold (Python function) — Computes the theoretical detection threshold $gamma$." class="md-ellipsis">threshold</span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="../sdr.threshold_factor/" class="md-nav__link">
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$." class="md-ellipsis">threshold_<wbr>factor</span>
   </a>
   
 </li>
@@ -14442,6 +14464,12 @@ You're not viewing the latest version.
 
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.threshold_factor/" title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">threshold_factor</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.threshold_factor/#p-p_fa" title="sdr.threshold_factor.p_fa (Python parameter) — The desired probability of false alarm $P_{fa}$ in $(0, 1)$."><span class="n"><span class="pre">p_fa</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<dd><p>Computes the theoretical detection threshold factor <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+</dd></dl>
+
+<dl class="py function summary objdesc">
+<dt class="sig sig-object highlight py">
 <span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.min_snr/" title="sdr.min_snr (Python function) — Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$."><span class="sig-name descname pseudo-toc-entry"><span class="pre">min_snr</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.min_snr/#p-p_d" title="sdr.min_snr.p_d (Python parameter) — The desired probability of detection $P_d$ in $(0, 1)$."><span class="n"><span class="pre">p_d</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.min_snr/#p-p_fa" title="sdr.min_snr.p_fa (Python parameter) — The probability of false alarm $P_{fa}$ in $(0, 1)$."><span class="n"><span class="pre">p_fa</span></span></a></em>, </span><span class="sig-param-decl"><em class="sig-param"><span class="p"><span class="pre">...</span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection
 <span class="math notranslate nohighlight">\(P_d\)</span>.</p>
@@ -14475,7 +14503,7 @@ You're not viewing the latest version.
 <h2 id="coherent-integration">Coherent integration<a class="headerlink" href="#coherent-integration" title="Link to this heading">¶</a></h2>
 <dl class="py function summary objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.coherent_gain/" title="sdr.coherent_gain (Python function) — Computes the SNR improvement by coherent integration."><span class="sig-name descname pseudo-toc-entry"><span class="pre">coherent_gain</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.coherent_gain/#p-time_bandwidth" title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_c B_n$ in seconds-Hz (unitless). If the noise bandwidth equals the sample rate, the argument equals the number of samples $N_c$ to coherently integrate."><span class="n"><span class="pre">time_bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.coherent_gain/" title="sdr.coherent_gain (Python function) — Computes the SNR improvement by coherent integration."><span class="sig-name descname pseudo-toc-entry"><span class="pre">coherent_gain</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.coherent_gain/#p-time_bandwidth" title="sdr.coherent_gain.time_bandwidth (Python parameter) — The time-bandwidth product $T_c B_n$ in seconds-Hz (unitless)."><span class="n"><span class="pre">time_bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Computes the SNR improvement by coherent integration.</p>
 </dd></dl>
 

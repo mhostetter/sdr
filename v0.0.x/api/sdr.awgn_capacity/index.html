@@ -8254,6 +8254,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.threshold_factor/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$." class="md-ellipsis">threshold_<wbr>factor</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.min_snr/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$." class="md-ellipsis">min_<wbr>snr</span>
       </a>
@@ -12851,7 +12866,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-bandwidth" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.awgn_capacity.bandwidth (Python parameter) — The bandwidth $B$ of the channel in Hz. If specified, the capacity is calculated in bits/s. If None, the capacity is calculated in bits/2D." class="md-ellipsis">bandwidth</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.awgn_capacity.bandwidth (Python parameter) — The bandwidth $B$ of the channel in Hz." class="md-ellipsis">bandwidth</span>
   </a>
   
 </li>
@@ -14135,7 +14150,7 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-bandwidth" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.awgn_capacity.bandwidth (Python parameter) — The bandwidth $B$ of the channel in Hz. If specified, the capacity is calculated in bits/s. If None, the capacity is calculated in bits/2D." class="md-ellipsis">bandwidth</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.awgn_capacity.bandwidth (Python parameter) — The bandwidth $B$ of the channel in Hz." class="md-ellipsis">bandwidth</span>
   </a>
   
 </li>
@@ -14182,7 +14197,7 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">awgn_capacity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-snr" title="sdr.awgn_capacity.snr (Python parameter) — The signal-to-noise ratio $S / N$ in dB of the channel."><span class="n"><span class="pre">snr</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-bandwidth" title="sdr.awgn_capacity.bandwidth (Python parameter) — The bandwidth $B$ of the channel in Hz. If specified, the capacity is calculated in bits/s. If None, the capacity is calculated in bits/2D."><span class="n"><span class="pre">bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">awgn_capacity</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-snr" title="sdr.awgn_capacity.snr (Python parameter) — The signal-to-noise ratio $S / N$ in dB of the channel."><span class="n"><span class="pre">snr</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-bandwidth" title="sdr.awgn_capacity.bandwidth (Python parameter) — The bandwidth $B$ of the channel in Hz."><span class="n"><span class="pre">bandwidth</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Calculates the capacity of an additive white Gaussian noise (AWGN) channel.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>

@@ -8254,6 +8254,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.threshold_factor/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.threshold_factor (Python function) — Computes the theoretical detection threshold factor $alpha$." class="md-ellipsis">threshold_<wbr>factor</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.min_snr/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_snr (Python function) — Computes the minimum input signal-to-noise ratio (SNR) required to achieve the desired probability of detection $P_d$." class="md-ellipsis">min_<wbr>snr</span>
       </a>
@@ -12698,14 +12713,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-amplitude" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.amplitude (Python parameter) — The amplitude imbalance $A$ in dB. A positive value indicates that the in-phase component is larger than the quadrature component." class="md-ellipsis">amplitude</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.amplitude (Python parameter) — The amplitude imbalance $A$ in dB." class="md-ellipsis">amplitude</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#p-phase" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.phase (Python parameter) — The phase imbalance $phi$ in degrees. A positive value indicates that the quadrature component leads the in-phase component." class="md-ellipsis">phase</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.phase (Python parameter) — The phase imbalance $phi$ in degrees." class="md-ellipsis">phase</span>
   </a>
   
 </li>
@@ -14142,14 +14157,14 @@ You're not viewing the latest version.
         
           <li class="md-nav__item">
   <a href="#p-amplitude" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.amplitude (Python parameter) — The amplitude imbalance $A$ in dB. A positive value indicates that the in-phase component is larger than the quadrature component." class="md-ellipsis">amplitude</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.amplitude (Python parameter) — The amplitude imbalance $A$ in dB." class="md-ellipsis">amplitude</span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#p-phase" class="md-nav__link">
-    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.phase (Python parameter) — The phase imbalance $phi$ in degrees. A positive value indicates that the quadrature component leads the in-phase component." class="md-ellipsis">phase</span>
+    <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span><span title="sdr.iq_imbalance.phase (Python parameter) — The phase imbalance $phi$ in degrees." class="md-ellipsis">phase</span>
   </a>
   
 </li>
@@ -14196,7 +14211,7 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">iq_imbalance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.iq_imbalance.x (Python parameter) — The complex time-domain signal $x[n]$ to which IQ imbalance is applied."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-amplitude" title="sdr.iq_imbalance.amplitude (Python parameter) — The amplitude imbalance $A$ in dB. A positive value indicates that the in-phase component is larger than the quadrature component."><span class="n"><span class="pre">amplitude</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase" title="sdr.iq_imbalance.phase (Python parameter) — The phase imbalance $phi$ in degrees. A positive value indicates that the quadrature component leads the in-phase component."><span class="n"><span class="pre">phase</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">iq_imbalance</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.iq_imbalance.x (Python parameter) — The complex time-domain signal $x[n]$ to which IQ imbalance is applied."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-amplitude" title="sdr.iq_imbalance.amplitude (Python parameter) — The amplitude imbalance $A$ in dB."><span class="n"><span class="pre">amplitude</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase" title="sdr.iq_imbalance.phase (Python parameter) — The phase imbalance $phi$ in degrees."><span class="n"><span class="pre">phase</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">complex128</span><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Applies IQ imbalance to the complex time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
