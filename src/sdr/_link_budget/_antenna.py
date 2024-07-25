@@ -91,7 +91,9 @@ def parabolic_antenna(
     G = (np.pi * diameter / lambda_) ** 2 * efficiency  # Gain in linear units
     G = db(G)  # Gain in dBi
 
-    theta = np.arcsin(3.83 * lambda_ / (np.pi * diameter))  # Beamwidth in radians
+    with np.errstate(invalid="ignore"):
+        # If the argument is greater than 1, arcsin returns NaN, which is fine
+        theta = np.arcsin(3.83 * lambda_ / (np.pi * diameter))  # Beamwidth in radians
     theta = np.rad2deg(theta)  # Beamwidth in degrees
 
     return convert_output(G), convert_output(theta)
