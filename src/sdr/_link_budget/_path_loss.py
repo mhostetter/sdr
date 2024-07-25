@@ -68,6 +68,43 @@ def free_space_path_loss(
             plt.xlabel('Distance (m)'); \
             plt.ylabel('Free-space path loss (dB)');
 
+        It is confusing why free-space path loss is proportional to the square of frequency. Is RF energy attenuated
+        more at higher frequencies? The answer is no. The reason the FSPL equation has a frequency
+        dependence is that it assumes omnidirectional, isotropic antennas are used at both the transmitter and
+        receiver. The isotropic antenna has a gain of 0 dBi. The physical size of a roughly isotropic antenna
+        (think dipole) is a function of frequency as well. So, as the frequency increases, the physical size of the
+        isotropic antenna decreases. But what if the size of the antenna was fixed across frequency, as is the case
+        with a parabolic dish antenna? You'll note that the gain of a parabolic dish antenna is also proportional to
+        the square of the frequency, see :func:`parabolic_antenna()`.
+
+        It turns out that if omnidirectional antennas are used at both the transmitter and receiver, the total path
+        loss increases with frequency. But if a parabolic reflector is used at one end, the total path loss is
+        constant across frequency. Furthermore, if a parabolic reflector is used at both ends, as is the case in
+        VSAT systems, the total path loss decreases with frequency.
+
+        .. ipython:: python
+
+            freq = np.linspace(1e6, 40e9, 1_001)
+
+            # Free-space path loss at 1 km
+            fspl = sdr.free_space_path_loss(1e3, freq)
+
+            # Isotropic antenna gain in dBi
+            iso = 0
+
+            # 1-meter diameter parabolic dish antenna gain in dBi
+            par = sdr.parabolic_antenna(freq, 1)[0]
+
+            @savefig sdr_fspl_2.png
+            plt.figure(); \
+            plt.plot(freq / 1e9, fspl - iso - iso, label="Isotropic -> Isotropic"); \
+            plt.plot(freq / 1e9, fspl - iso - par, label="Isotropic -> Parabolic"); \
+            plt.plot(freq / 1e9, fspl - par - par, label="Parabolic -> Parabolic"); \
+            plt.legend(title="Antennas", loc="center right"); \
+            plt.xlabel("Frequency (GHz), $f$"); \
+            plt.ylabel("Path loss (dB)"); \
+            plt.title("Path loss across center frequency");
+
     Group:
         link-budget-path-losses
     """
