@@ -11,6 +11,7 @@ import numpy.typing as npt
 import scipy.stats
 from typing_extensions import Literal
 
+from .._conversion import db as to_db
 from .._conversion import linear
 from .._helper import (
     convert_output,
@@ -913,6 +914,82 @@ def threshold(
     threshold = _calculate(p_fa, sigma2)
 
     return convert_output(threshold)
+
+
+@export
+def threshold_factor(
+    p_fa: npt.ArrayLike,
+    detector: Literal["coherent", "linear", "square-law"] = "square-law",
+    complex: bool = True,
+    n_c: int = 1,
+    n_nc: int | None = None,
+    db: bool = False,
+) -> npt.NDArray[np.float64]:
+    r"""
+    Computes the theoretical detection threshold factor $\alpha$.
+
+    Arguments:
+        p_fa: The desired probability of false alarm $P_{fa}$ in $(0, 1)$.
+        detector: The detector type.
+
+            - `"coherent"`: A coherent detector, $$T(x) = \mathrm{Re}\left\{\sum_{i=0}^{N_c-1} x[n-i]\right\} .$$
+            - `"linear"`: A linear detector, $$T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right| .$$
+            - `"square-law"`: A square-law detector, $$T(x) = \sum_{j=0}^{N_{nc}-1}\left|\sum_{i=0}^{N_c-1} x[n-i-jN_c]\right|^2 .$$
+
+        complex: Indicates whether the input signal is real or complex. This affects how the SNR is converted
+            to noise variance.
+        n_c: The number of samples to coherently integrate $N_c$.
+        n_nc: The number of samples to non-coherently integrate $N_{nc}$. Non-coherent integration is only allowable
+            for linear and square-law detectors.
+        db: Indicates whether to return the detection threshold $\alpha$ in dB.
+
+    Returns:
+        The detection threshold factor $\alpha$.
+
+    Notes:
+        The detection threshold factor $\alpha$ is defined as the ratio of the detection threshold $\gamma$ to the
+        mean of the detector output under the null hypothesis. This is true for linear and square-law detectors.
+
+        $$\alpha = \frac{\gamma}{\frac{1}{N} \sum_{i=1}^{N}\{T(x[i]) \mid \mathcal{H}_0\}}$$
+
+        For coherent detectors, the detection threshold factor $\alpha$ is defined as the ratio of the detection
+        threshold $\gamma$ to the mean of the square of the detector output under the null hypothesis.
+        This is required because the mean of the coherent detector output is zero.
+
+        $$\alpha = \frac{\gamma}{\frac{1}{N} \sum_{i=1}^{N}\{T(x[i])^2 \mid \mathcal{H}_0\}}$$
+
+    Examples:
+        .. ipython:: python
+
+            p_fa = np.logspace(-16, -1, 101)  # Probability of false alarm
+
+            @savefig sdr_threshold_factor_1.png
+            plt.figure(); \
+            plt.semilogx(p_fa, sdr.threshold_factor(p_fa, detector="coherent"), label="Coherent"); \
+            plt.semilogx(p_fa, sdr.threshold_factor(p_fa, detector="linear"), label="Linear"); \
+            plt.semilogx(p_fa, sdr.threshold_factor(p_fa, detector="square-law"), label="Square-Law"); \
+            plt.xlabel("Probability of false alarm, $P_{fa}$"); \
+            plt.ylabel(r"Detection threshold factor, $\alpha$"); \
+            plt.legend(title="Detector"); \
+            plt.title("Detection threshold factor across false alarm rate");
+
+    Group:
+        detection-theory
+    """
+    sigma2 = 1
+    gamma = threshold(p_fa, sigma2, detector, complex, n_c, n_nc)
+    null_hypothesis = h0(sigma2, detector, complex, n_c, n_nc)
+
+    if detector == "coherent":
+        # Since mean is zero, the variance is equivalent to the mean of the square
+        alpha = gamma / null_hypothesis.var()
+    else:
+        alpha = gamma / null_hypothesis.mean()
+
+    if db:
+        alpha = to_db(alpha)
+
+    return alpha
 
 
 @export
