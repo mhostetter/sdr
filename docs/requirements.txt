@@ -1,5 +1,5 @@
 sphinx == 7.3.7
-sphinx-immaterial == 0.11.14
+sphinx-immaterial == 0.12.1
 # For some reason, if the below versions aren't specified, the dependency resolution takes 18 minutes in CI.
 myst-parser == 3.0.1
 sphinx-design  == 0.6.0
