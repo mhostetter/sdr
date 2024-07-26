@@ -30,7 +30,7 @@ def awgn(
             desired noise variance can be computed and passed in `noise`. If `snr` is `None`,
             `noise` must be specified.
         noise: The noise power (variance) in linear units. If `noise` is `None`, `snr` must be specified.
-        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
 
     Returns:
         The noisy signal $x[n] + w[n]$.

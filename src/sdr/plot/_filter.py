@@ -225,7 +225,7 @@ def zeros_poles(
               feedback coefficients $a_j$.
 
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -312,7 +312,7 @@ def magnitude_response(
             for real-valued filters and `"two-sided"` for complex-valued filters.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic magnitude response.
         decades: The number of decades to plot when `x_axis="log"`.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -440,7 +440,7 @@ def phase_response(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -563,7 +563,7 @@ def phase_delay(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         See the :ref:`fir-filters` example.
@@ -687,7 +687,7 @@ def group_delay(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued filters and `"two-sided"` for complex-valued filters.
         decades: The number of decades to plot when `x_axis="log"`.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         See the :ref:`fir-filters` example.

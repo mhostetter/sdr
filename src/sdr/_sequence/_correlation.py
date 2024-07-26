@@ -368,11 +368,11 @@ def gold_code(
         length: The length $n = 2^m - 1$ of the Gold code/sequence.
         index: The index $i$ in $[-2, n)$ of the Gold code.
         poly1: The primitive polynomial of degree $m$ over $\mathrm{GF}(2)$ for the first $m$-sequence. If `None`,
-            a preferred pair is found using :func:`sdr.preferred_pairs()`.
+            a preferred pair is found using :func:`sdr.preferred_pairs`.
         poly2: The primitive polynomial of degree $m$ over $\mathrm{GF}(2)$ for the second $m$-sequence. If `None`,
-            a preferred pair is found using :func:`sdr.preferred_pairs()`.
+            a preferred pair is found using :func:`sdr.preferred_pairs`.
         verify: Indicates whether to verify that the provided polynomials are a preferred pair using
-            :func:`sdr.is_preferred_pair()`.
+            :func:`sdr.is_preferred_pair`.
         output: The output format of the Gold code/sequence.
 
             - `"binary"` (default): The Gold code with binary values of 0 and 1.

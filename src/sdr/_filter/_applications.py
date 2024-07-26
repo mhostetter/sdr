@@ -184,7 +184,7 @@ class Differentiator(FIR):
             window: The SciPy window definition. See :func:`scipy.signal.windows.get_window` for details.
                 If `None`, no window is applied.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~sdr.Differentiator.__call__()`.
+                preserved between calls to :meth:`~sdr.Differentiator.__call__`.
 
         Examples:
             See the :ref:`fir-filters` example.

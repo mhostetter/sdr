@@ -129,7 +129,7 @@ def hexdump(
 
     Arguments:
         data: The data to display. Each element is considered one byte. Use :func:`sdr.pack()`
-            or :func:`sdr.unpack()` to convert data with variable bits per element.
+            or :func:`sdr.unpack` to convert data with variable bits per element.
         width: The number of bytes per line.
 
     Returns:

@@ -640,7 +640,7 @@ class Interpolator(PolyphaseFIR):
             interpolation: The interpolation rate $P$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`sdr.multirate_fir`
                   with arguments `interpolation` and 1.
                 - `"linear"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2P$ linear ramp $\frac{1}{P} [0, ..., P-1, P, P-1, ..., 1]$.
@@ -818,7 +818,7 @@ class Decimator(PolyphaseFIR):
             decimation: The decimation rate $Q$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`sdr.multirate_fir`
                   with arguments 1 and `decimation`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
@@ -1004,7 +1004,7 @@ class Resampler(PolyphaseFIR):
             decimation: The decimation rate $Q$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`sdr.multirate_fir`
                   with arguments `interpolation` and `decimation`.
                 - `"linear"`: The prototype filter is designed to linearly interpolate between samples.
                   The filter coefficients are a length-$2P$ linear ramp $\frac{1}{P} [0, ..., P-1, P, P-1, ..., 1]$.
@@ -1210,7 +1210,7 @@ class Channelizer(PolyphaseFIR):
             channels: The number of channels $C$.
             taps: The prototype filter design specification.
 
-                - `"kaiser"`: The prototype filter is designed using :func:`~sdr.multirate_fir()`
+                - `"kaiser"`: The prototype filter is designed using :func:`sdr.multirate_fir`
                   with arguments 1 and `rate`.
                 - `npt.ArrayLike`: The prototype filter feedforward coefficients $h[n]$.
 
