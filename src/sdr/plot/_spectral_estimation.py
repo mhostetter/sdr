@@ -55,7 +55,7 @@ def periodogram(
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
             for real-valued signals and `"two-sided"` for complex-valued signals.
         y_axis: The y-axis scaling. Options are to display a linear or logarithmic power spectral density.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Group:
         plot-spectral-estimation
@@ -144,7 +144,7 @@ def spectrogram(
     Plots the spectrogram of a time-domain signal $x[n]$ using Welch's method.
 
     Note:
-        This function uses :func:`scipy.signal.spectrogram()` to estimate the spectrogram of the time-domain signal.
+        This function uses :func:`scipy.signal.spectrogram` to estimate the spectrogram of the time-domain signal.
 
     Arguments:
         x: The time-domain signal $x[n]$.
@@ -160,7 +160,7 @@ def spectrogram(
         y_axis: The y-axis scaling. Options are to display a one-sided spectrum or a two-sided spectrum.
             The default is `"auto"` which selects `"one-sided"` for real-valued signals and `"two-sided"` for
             complex-valued signals.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.pcolormesh`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
             - `"vmin"`: 10th percentile

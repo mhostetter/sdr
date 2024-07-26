@@ -23,7 +23,7 @@ def bsc(
     Arguments:
         x: The input sequence $x$ with $x_i \in \{0, 1\}$.
         p: The probability $p$ of a bit flip.
-        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
 
     Returns:
         The output sequence $y$ with $y_i \in \{0, 1\}$.
@@ -63,7 +63,7 @@ def bec(
     Arguments:
         x: The input sequence $x$ with $x_i \in \{0, 1\}$.
         p: The probability $p$ of a bit erasure.
-        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
 
     Returns:
         The output sequence $y$ with $y_i \in \{0, 1, e\}$. Erasures $e$ are represented by -1.
@@ -109,7 +109,7 @@ def dmc(
             $\mathcal{X} = \{0, 1, \ldots, m-1\}$.
         Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that
             $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
-        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+        seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
 
     Returns:
         The output sequence $y$ with $y_i \in \mathcal{Y}$.
@@ -176,7 +176,7 @@ class Channel:
         Creates a new channel.
 
         Arguments:
-            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
         """
         self._rng: np.random.Generator  # Will be set in self.reset()
 
@@ -187,7 +187,7 @@ class Channel:
         Resets the channel with a new seed.
 
         Arguments:
-            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
         """
         self._rng = np.random.default_rng(seed)
 
@@ -287,7 +287,7 @@ class BinarySymmetricChannel(Channel):
 
         Arguments:
             p: The transition probability $p$ of the BSC channel.
-            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
         """
         self._p = verify_scalar(p, float=True, inclusive_min=0, inclusive_max=1)
 
@@ -418,7 +418,7 @@ class BinaryErasureChannel(Channel):
 
         Arguments:
             p: The erasure probability $p$ of the BEC channel.
-            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
         """
         self._p = verify_scalar(p, float=True, inclusive_min=0, inclusive_max=1)
 
@@ -548,7 +548,7 @@ class DiscreteMemorylessChannel(Channel):
             P: The $m \times n$ transition probability matrix $P$, where $P = \Pr(Y = y_j | X = x_i)$.
             X: The input alphabet $\mathcal{X}$ of size $m$. If `None`, it is assumed that $\mathcal{X} = \{0, 1, \ldots, m-1\}$.
             Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
-            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng()`.
+            seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
         """
         P = verify_arraylike(P, float=True, ndim=2, inclusive_min=0, inclusive_max=1)
         verify_condition(np.allclose(P.sum(axis=1), 1))

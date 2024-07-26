@@ -39,13 +39,13 @@ def constellation(
         ax: The axis to plot on. If `None`, the current axis is used.
         kwargs: Additional keyword arguments to pass to Matplotlib functions.
 
-            If `persistence=False`, the following keyword arguments are passed to :func:`matplotlib.pyplot.scatter()`.
+            If `persistence=False`, the following keyword arguments are passed to :func:`matplotlib.pyplot.scatter`.
             The defaults may be overwritten.
 
             - `"marker"`: `"."`
             - `"linestyle"`: `"none"`
 
-            If `persistence=True`, the following keyword arguments are passed to :func:`numpy.histogram2d()` and
+            If `persistence=True`, the following keyword arguments are passed to :func:`numpy.histogram2d` and
             :func:`matplotlib.pyplot.pcolormesh`. The defaults may be overwritten.
 
             - `"range"`: +/- 10% of the maximum value
@@ -153,7 +153,7 @@ def symbol_map(
         limits: The axis limits, which apply to both the x- and y-axis.
             If `None`, the axis limits are set to 50% larger than the maximum value.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
             The following keyword arguments are set by default. The defaults may be overwritten.
 
             - `"marker"`: `"x"`
@@ -271,7 +271,7 @@ def eye(
         colorbar: Indicates whether to add a colorbar to the plot. This is only added if `color="index"` or
             `persistence=True`.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
+        kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster`.
 
     Example:
         Modulate 1,000 QPSK symbols using a square root raised cosine (SRRC) pulse shaping filter. The SRRC pulse shape
@@ -385,7 +385,7 @@ def phase_tree(
         color: Indicates how to color the rasters. If `"index"`, the rasters are colored based on their index.
             If a valid Matplotlib color, the rasters are all colored with that color.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster()`.
+        kwargs: Additional keyword arguments to pass to :func:`sdr.plot.raster`.
 
     Example:
         Modulate 100 MSK symbols.
@@ -465,7 +465,7 @@ def ber(
         ebn0: The bit energy $E_b$ to noise PSD $N_0$ ratio (dB).
         ber: The bit error rate $P_{be}$.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy`.
 
     Examples:
         Plot theoretical BER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.
@@ -523,7 +523,7 @@ def ser(
         esn0: The symbol energy $E_s$ to noise PSD $N_0$ ratio (dB).
         ser: The symbol error rate $P_{se}$.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.semilogy`.
 
     Examples:
         Plot theoretical SER curves for BPSK, QPSK, 8-PSK, and 16-PSK in an AWGN channel.

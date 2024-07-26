@@ -30,7 +30,7 @@ def p_d(
         p_d: The probability of detection $P_d$.
         ax: The axis to plot on. If `None`, the current axis is used.
         x_label: The x-axis label to use.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Group:
         plot-detection
@@ -139,7 +139,7 @@ def detector_pdfs(
         p_h0: The probability of the $\mathcal{H}_0$ tails to plot. The smaller the value, the longer the x-axis.
         p_h1: The probability of the $\mathcal{H}_1$ tails to plot. The smaller the value, the longer the x-axis.
         ax: The axis to plot on. If `None`, the current axis is used.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     See Also:
         sdr.h0, sdr.h1, sdr.threshold

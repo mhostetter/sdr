@@ -31,7 +31,7 @@ def use_style():
     """
     Applies :obj:`sdr`'s default :obj:`matplotlib` rcParams.
 
-    These style settings may be reverted with :func:`matplotlib.pyplot.rcdefaults()`.
+    These style settings may be reverted with :func:`matplotlib.pyplot.rcdefaults`.
 
     Examples:
         The following rcParams are applied.

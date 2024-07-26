@@ -75,7 +75,7 @@ def free_space_path_loss(
         (think dipole) is a function of frequency as well. So, as the frequency increases, the physical size of the
         isotropic antenna decreases. But what if the size of the antenna was fixed across frequency, as is the case
         with a parabolic dish antenna? You'll note that the gain of a parabolic dish antenna is also proportional to
-        the square of the frequency, see :func:`parabolic_antenna()`.
+        the square of the frequency, see :func:`sdr.parabolic_antenna`.
 
         It turns out that if omnidirectional antennas are used at both the transmitter and receiver, the total path
         loss increases with frequency. But if a parabolic reflector is used at one end, the total path loss is

@@ -83,7 +83,7 @@ def time_domain(  # noqa: D417
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
             and both lines will share the same color.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         Plot a square-root raised cosine (SRRC) pulse shape centered about 0.
@@ -332,7 +332,7 @@ def correlation(
         y: The second time-domain signal $y[n]$.
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Lag (samples)".
-        mode: The :func:`numpy.correlate()` correlation mode. If `"circular"`, a circular correlation is computed
+        mode: The :func:`numpy.correlate` correlation mode. If `"circular"`, a circular correlation is computed
             using FFTs.
         ax: The axis to plot on. If `None`, the current axis is used.
         y_axis: Indicates how to plot the y-axis. If `"complex"`, the real and imaginary parts are plotted separately.
@@ -340,7 +340,7 @@ def correlation(
             real and imaginary parts will have different colors based on the current Matplotlib color cycle.
             If `"line"`, the real part will have a solid line and the imaginary part will have a dashed line,
             and both lines will share the same color.
-        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot()`.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
 
     Examples:
         Plot the auto-correlation of a length-63 $m$-sequence. Notice that the linear correlation produces sidelobes
