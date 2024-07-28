@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.special
 
-from ._helper import convert_output, export, verify_arraylike
+from ._helper import convert_output, export, verify_arraylike, verify_scalar
 
 
 @export
@@ -75,6 +75,120 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
     x = np.sqrt(2) * scipy.special.erfcinv(2 * p)
 
     return convert_output(x)
+
+
+@export
+def sum_distribution(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    n_terms: int,
+    p: float = 1e-16,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the sum of $n$ independent random variables $X$.
+
+    Arguments:
+        X: The distribution of the random variable $X$.
+        n_terms: The number $n$ of random variables to sum.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the sum $Z = X_1 + X_2 + \ldots + X_n$.
+
+    Notes:
+        The PDF of the sum of $n$ independent random variables is the convolution of the PDF of the base distribution.
+
+        $$f_{X_1 + X_2 + \ldots + X_n}(t) = (f_X * f_X * \ldots * f_X)(t)$$
+
+    Examples:
+        Compute the distribution of the sum of two normal distributions.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=-1, scale=0.5)
+            n_terms = 2
+            x = np.linspace(-6, 2, 1000)
+
+            @savefig sdr_sum_distribution_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.sum_distribution(X, n_terms).pdf(x), label="X + X"); \
+            plt.hist(X.rvs((100_000, n_terms)).sum(axis=1), bins=101, density=True, histtype="step", label="X + X empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Sum of two Normal distributions");
+
+        Compute the distribution of the sum of three Rayleigh distributions.
+
+        .. ipython:: python
+
+            X = scipy.stats.rayleigh(scale=1)
+            n_terms = 3
+            x = np.linspace(0, 12, 1000)
+
+            @savefig sdr_sum_distribution_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.sum_distribution(X, n_terms).pdf(x), label="X + X + X"); \
+            plt.hist(X.rvs((100_000, n_terms)).sum(axis=1), bins=101, density=True, histtype="step", label="X + X + X empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Sum of three Rayleigh distributions");
+
+        Compute the distribution of the sum of four Rician distributions.
+
+        .. ipython:: python
+
+            X = scipy.stats.rice(2)
+            n_terms = 4
+            x = np.linspace(0, 12, 1000)
+
+            @savefig sdr_sum_distribution_3.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.sum_distribution(X, n_terms).pdf(x), label="X + X + X + X"); \
+            plt.hist(X.rvs((100_000, n_terms)).sum(axis=1), bins=101, density=True, histtype="step", label="X + X + X + X empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Sum of four Rician distributions");
+
+    Group:
+        probability
+    """
+    verify_scalar(n_terms, int=True, positive=True)
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    if n_terms == 1:
+        return X
+
+    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    # is p.
+    x1_min, x1_max = _x_range(X, p)
+    x = np.linspace(x1_min, x1_max, 1_001)
+    dx = np.mean(np.diff(x))
+
+    # Compute the PDF of the base distribution
+    f_X = X.pdf(x)
+
+    # The PDF of the sum of n_terms independent random variables is the convolution of the PDF of the base distribution.
+    # This is efficiently computed in the frequency domain by exponentiating the FFT. The FFT must be zero-padded
+    # enough that the circular convolutions do not wrap around.
+    n_fft = scipy.fft.next_fast_len(f_X.size * n_terms)
+    f_X_fft = np.fft.fft(f_X, n_fft)
+    f_X_fft = f_X_fft**n_terms
+    f_Y = np.fft.ifft(f_X_fft).real
+    f_Y /= f_Y.sum() * dx
+    x = np.arange(f_Y.size) * dx + x[0] * (n_terms)
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    x = np.append(x, x[-1] + dx)
+    x -= dx / 2
+
+    return scipy.stats.rv_histogram((f_Y, x))
 
 
 @export
@@ -162,6 +276,8 @@ def sum_distributions(
     Group:
         probability
     """
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
     # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
     # is p.
     x1_min, x1_max = _x_range(X, p)
