@@ -79,16 +79,16 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
 @export
 def sum_distributions(
-    dist1: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
-    dist2: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     p: float = 1e-16,
 ) -> scipy.stats.rv_histogram:
     r"""
     Numerically calculates the distribution of the sum of two independent random variables.
 
     Arguments:
-        dist1: The distribution of the first random variable $X$.
-        dist2: The distribution of the second random variable $Y$.
+        X: The distribution of the first random variable $X$.
+        Y: The distribution of the second random variable $Y$.
         p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
             the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
             analysis, but will require more computation.
@@ -164,8 +164,8 @@ def sum_distributions(
     """
     # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
     # is p.
-    x1_min, x1_max = _x_range(dist1, p)
-    x2_min, x2_max = _x_range(dist2, p)
+    x1_min, x1_max = _x_range(X, p)
+    x2_min, x2_max = _x_range(Y, p)
     dx1 = (x1_max - x1_min) / 1_000
     dx2 = (x2_max - x2_min) / 1_000
     dx = np.min([dx1, dx2])  # Use the smaller delta x -- must use the same dx for both distributions
@@ -173,23 +173,23 @@ def sum_distributions(
     x2 = np.arange(x2_min, x2_max, dx)
 
     # Compute the PDF of each distribution
-    y1 = dist1.pdf(x1)
-    y2 = dist2.pdf(x2)
+    f_X = X.pdf(x1)
+    f_Y = Y.pdf(x2)
 
     # The PDF of the sum of two independent random variables is the convolution of the PDF of the two distributions
-    y = np.convolve(y1, y2, mode="full") * dx
+    f_Z = np.convolve(f_X, f_Y, mode="full") * dx
 
     # Determine the x axis for the output convolution
-    x = np.arange(y.size) * dx + x1[0] + x2[0]
+    x = np.arange(f_Z.size) * dx + x1[0] + x2[0]
 
     # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
     x = np.append(x, x[-1] + dx)
     x -= dx / 2
 
-    return scipy.stats.rv_histogram((y, x))
+    return scipy.stats.rv_histogram((f_Z, x))
 
 
-def _x_range(dist: scipy.stats.rv_continuous, p: float) -> tuple[float, float]:
+def _x_range(X: scipy.stats.rv_continuous, p: float) -> tuple[float, float]:
     r"""
     Determines the range of x values for a given distribution such that the probability of exceeding the x axis, on
     either side, is p.
@@ -199,14 +199,14 @@ def _x_range(dist: scipy.stats.rv_continuous, p: float) -> tuple[float, float]:
 
     pp = p
     while True:
-        x_min = dist.ppf(pp)
+        x_min = X.ppf(pp)
         if not np.isnan(x_min):
             break
         pp *= 10
 
     pp = p
     while True:
-        x_max = dist.isf(pp)
+        x_max = X.isf(pp)
         if not np.isnan(x_max):
             break
         pp *= 10
