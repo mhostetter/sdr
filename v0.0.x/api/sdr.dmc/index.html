@@ -13224,6 +13224,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_distributions/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -14288,12 +14303,12 @@ You're not viewing the latest version.
 <span class="gp">In [3]: </span><span class="n">P</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">]]</span>
 
 <span class="gp">In [4]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">dmc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">);</span> <span class="n">y</span>
-<span class="gh">Out[4]: </span><span class="go">array([0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1])</span>
+<span class="gh">Out[4]: </span><span class="go">array([0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1])</span>
 
 <span class="gp">In [5]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[5]: </span>
-<span class="go">array([ True, False,  True,  True,  True, False, False, False,  True,</span>
-<span class="go">       False,  True,  True,  True,  True, False,  True,  True,  True,</span>
+<span class="go">array([ True,  True,  True,  True,  True, False,  True,  True,  True,</span>
+<span class="go">        True,  True, False,  True,  True,  True,  True,  True,  True,</span>
 <span class="go">        True,  True])</span>
 </code></pre></div>
 </div>
@@ -14308,14 +14323,14 @@ You're not viewing the latest version.
 <span class="go"># Specify the erasure as -1</span>
 <span class="gp">In [9]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">dmc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]);</span> <span class="n">y</span>
 <span class="gh">Out[9]: </span>
-<span class="go">array([ 0,  1,  1, -1, -1,  1,  1, -1,  1, -1, -1,  0,  0, -1,  0,  0,  0,</span>
-<span class="go">        0,  0,  1])</span>
+<span class="go">array([ 0,  1,  1,  0,  1,  1, -1,  1,  1,  1,  1,  0, -1,  1,  0,  0,  0,</span>
+<span class="go">       -1,  0, -1])</span>
 
 <span class="gp">In [10]: </span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span>
 <span class="gh">Out[10]: </span>
-<span class="go">array([ True,  True,  True, False, False,  True,  True, False,  True,</span>
-<span class="go">       False, False,  True,  True, False,  True,  True,  True,  True,</span>
-<span class="go">        True,  True])</span>
+<span class="go">array([ True,  True,  True,  True,  True,  True, False,  True,  True,</span>
+<span class="go">        True,  True,  True, False,  True,  True,  True,  True, False,</span>
+<span class="go">        True, False])</span>
 </code></pre></div>
 </div>
 </dd></dl>

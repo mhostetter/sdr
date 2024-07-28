@@ -13210,6 +13210,21 @@ You're not viewing the latest version.
 
             
           
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_distributions/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -14304,25 +14319,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">np.float64(9.793273968708323)</span>
+<span class="gh">Out[3]: </span><span class="go">np.float64(10.233907644201413)</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">np.float64(9.793273968708323)</span>
+<span class="gh">Out[4]: </span><span class="go">np.float64(10.233907644201413)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">np.float64(9.744251537151301)</span>
+<span class="gh">Out[5]: </span><span class="go">np.float64(10.184446281371574)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">np.float64(7.955987256913984)</span>
+<span class="gh">Out[6]: </span><span class="go">np.float64(8.390918992054418)</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">np.float64(16.930675512758732)</span>
+<span class="gh">Out[7]: </span><span class="go">np.float64(17.679009457559946)</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>
