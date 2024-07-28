@@ -22,6 +22,7 @@ from .._helper import (
     verify_not_specified,
     verify_scalar,
 )
+from .._probability import sum_distribution
 
 
 @export
@@ -243,7 +244,7 @@ def _h0(
             h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
         elif detector == "linear":
             h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
-            h0 = _sum_distribution(h0, n_nc)
+            h0 = sum_distribution(h0, n_nc)
         elif detector == "square-law":
             h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
 
@@ -489,56 +490,11 @@ def _h1(
             else:
                 # Folded normal distribution has 1 degree of freedom
                 h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
-            h1 = _sum_distribution(h1, n_nc)
+            h1 = sum_distribution(h1, n_nc)
         elif detector == "square-law":
             h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
 
     return h1
-
-
-def _sum_distribution(
-    dist: scipy.stats.rv_continuous, n_nc: int
-) -> scipy.stats.rv_histogram | scipy.stats.rv_continuous:
-    r"""
-    Sums a distribution `n_nc` times.
-
-    Arguments:
-        dist: The distribution to sum.
-        n_nc: The number of times to sum the distribution.
-
-    Returns:
-        The summed distribution.
-    """
-    if n_nc == 1:
-        return dist
-
-    # Determine mean and standard deviation of base distribution
-    mu, sigma2 = dist.stats()
-    sigma = np.sqrt(sigma2)
-
-    # NOTE: I was only able to get this to work with x starting at 0. When the x axis start below zero,
-    # I couldn't get the correct offset for the convolved x axis.
-
-    # Compute the PDF of the base distribution for 10 standard deviations about the mean
-    pdf_x = np.linspace(0, mu + 10 * sigma, 1_001)
-    pdf_y = dist.pdf(pdf_x)
-    dx = np.mean(np.diff(pdf_x))
-
-    # The PDF of the sum of n_nc independent random variables is the convolution of the PDF of the base distribution.
-    # This is efficiently computed in the frequency domain by exponentiating the FFT. The FFT must be zero-padded
-    # enough that the circular convolutions do not wrap around.
-    n_fft = scipy.fft.next_fast_len(pdf_y.size * n_nc)
-    Y = np.fft.fft(pdf_y, n_fft)
-    Y = Y**n_nc
-    y = np.fft.ifft(Y).real
-    y /= y.sum() * dx
-    x = np.arange(y.size) * dx + pdf_x[0]
-
-    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
-    x = np.append(x, x[-1] + dx)
-    x -= dx / 2
-
-    return scipy.stats.rv_histogram((y, x))
 
 
 @export
