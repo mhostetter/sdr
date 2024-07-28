@@ -305,6 +305,90 @@ def sum_distributions(
     return scipy.stats.rv_histogram((f_Z, x))
 
 
+@export
+def multiply_distributions(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    x: npt.ArrayLike | None = None,
+    p: float = 1e-10,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$.
+
+    Arguments:
+        X: The distribution of the first random variable $X$.
+        Y: The distribution of the second random variable $Y$.
+        x: The x values at which to evaluate the PDF of the product. If None, the x values are determined based on `p`.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the product $Z = X \cdot Y$.
+
+    Notes:
+        The PDF of the product of two independent random variables is calculated as follows.
+
+        $$
+        f_{X \cdot Y}(t) =
+        \int_{0}^{\infty} f_X(k) f_Y(t/k) \frac{1}{k} dk -
+        \int_{-\infty}^{0} f_X(k) f_Y(t/k) \frac{1}{k} dk
+        $$
+
+    Examples:
+        Compute the distribution of the product of two normal distributions.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=-1, scale=0.5)
+            Y = scipy.stats.norm(loc=2, scale=1.5)
+            x = np.linspace(-15, 10, 1_001)
+
+            @savefig sdr_multiply_distributions_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, sdr.multiply_distributions(X, Y).pdf(x), label="X * Y"); \
+            plt.hist(X.rvs(100_000) * Y.rvs(100_000), bins=101, density=True, histtype="step", label="X * Y empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Product of two Normal distributions");
+
+    Group:
+        probability
+    """
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    if x is None:
+        # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+        # is p.
+        x1_min, x1_max = _x_range(X, np.sqrt(p))
+        x2_min, x2_max = _x_range(Y, np.sqrt(p))
+        bounds = np.array([x1_min * x2_min, x1_min * x2_max, x1_max * x2_min, x1_max * x2_max])
+        x_min = np.min(bounds)
+        x_max = np.max(bounds)
+        x = np.linspace(x_min, x_max, 1_001)
+    else:
+        x = verify_arraylike(x, float=True, atleast_1d=True, ndim=1)
+        x = np.sort(x)
+    dx = np.mean(np.diff(x))
+
+    def integrand(k: float, xi: float) -> float:
+        return X.pdf(k) * Y.pdf(xi / k) * 1 / k
+
+    f_Z = np.zeros_like(x)
+    for i, xi in enumerate(x):
+        f_Z[i] = scipy.integrate.quad(integrand, 0, np.inf, args=(xi,))[0]
+        f_Z[i] -= scipy.integrate.quad(integrand, -np.inf, 0, args=(xi,))[0]
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    x = np.append(x, x[-1] + dx)
+    x -= dx / 2
+
+    return scipy.stats.rv_histogram((f_Z, x))
+
+
 def _x_range(X: scipy.stats.rv_continuous, p: float) -> tuple[float, float]:
     r"""
     Determines the range of x values for a given distribution such that the probability of exceeding the x axis, on
