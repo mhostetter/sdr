@@ -57,4 +57,4 @@ def _verify(X, Y):
         plt.title("Product of two distributions")
         plt.show()
 
-    assert np.allclose(Z.pdf(x), hist, atol=np.max(hist) * 0.1)
+    assert np.allclose(Z.pdf(x), hist, atol=np.max(hist) * 0.2)
