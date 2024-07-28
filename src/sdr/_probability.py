@@ -84,10 +84,10 @@ def sum_distribution(
     p: float = 1e-16,
 ) -> scipy.stats.rv_histogram:
     r"""
-    Numerically calculates the distribution of the sum of $n$ independent random variables $X$.
+    Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$.
 
     Arguments:
-        X: The distribution of the random variable $X$.
+        X: The distribution of the i.i.d. random variables $X_i$.
         n_terms: The number $n$ of random variables to sum.
         p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
             the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
@@ -108,7 +108,7 @@ def sum_distribution(
 
             X = scipy.stats.norm(loc=-1, scale=0.5)
             n_terms = 2
-            x = np.linspace(-6, 2, 1000)
+            x = np.linspace(-6, 2, 1_001)
 
             @savefig sdr_sum_distribution_1.png
             plt.figure(); \
@@ -126,7 +126,7 @@ def sum_distribution(
 
             X = scipy.stats.rayleigh(scale=1)
             n_terms = 3
-            x = np.linspace(0, 12, 1000)
+            x = np.linspace(0, 10, 1_001)
 
             @savefig sdr_sum_distribution_2.png
             plt.figure(); \
@@ -144,7 +144,7 @@ def sum_distribution(
 
             X = scipy.stats.rice(2)
             n_terms = 4
-            x = np.linspace(0, 12, 1000)
+            x = np.linspace(0, 18, 1_001)
 
             @savefig sdr_sum_distribution_3.png
             plt.figure(); \
@@ -198,7 +198,7 @@ def sum_distributions(
     p: float = 1e-16,
 ) -> scipy.stats.rv_histogram:
     r"""
-    Numerically calculates the distribution of the sum of two independent random variables.
+    Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$.
 
     Arguments:
         X: The distribution of the first random variable $X$.
@@ -222,7 +222,7 @@ def sum_distributions(
 
             X = scipy.stats.norm(loc=-1, scale=0.5)
             Y = scipy.stats.norm(loc=2, scale=1.5)
-            x = np.linspace(-5, 10, 1000)
+            x = np.linspace(-5, 10, 1_001)
 
             @savefig sdr_sum_distributions_1.png
             plt.figure(); \
@@ -241,7 +241,7 @@ def sum_distributions(
 
             X = scipy.stats.rayleigh(scale=1)
             Y = scipy.stats.rayleigh(loc=1, scale=2)
-            x = np.linspace(0, 12, 1000)
+            x = np.linspace(0, 12, 1_001)
 
             @savefig sdr_sum_distributions_2.png
             plt.figure(); \
@@ -260,7 +260,7 @@ def sum_distributions(
 
             X = scipy.stats.rice(2)
             Y = scipy.stats.rice(3)
-            x = np.linspace(0, 12, 1000)
+            x = np.linspace(0, 12, 1_001)
 
             @savefig sdr_sum_distributions_3.png
             plt.figure(); \
