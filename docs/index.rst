@@ -79,7 +79,8 @@ View all available classes and functions in the `API Reference <https://mhostett
   Apply additive white Gaussian noise (AWGN), frequency offset, sample rate offset, IQ imbalance.
 - **Link budgets**: BSC, BEC, AWGN, and BI-AWGN channel capacity, Shannon's limit on $E_b/N_0$ and $S/N$,
   free-space path loss, antenna gain.
-- **Miscellaneous**: Packing and unpacking binary data, hexdump of binary data.
+- **Miscellaneous**: Numerical calculation of PDF of sum and product of random variables. Packing and unpacking binary
+  data, hexdump of binary data.
 - **Plotting**: Time-domain, raster, correlation, stem, discrete Fourier transform (DFT), discrete-time Fourier
   transform (DTFT), periodogram, spectrogram, constellation, symbol map, eye diagram, phase tree,
   bit error rate (BER), symbol error rate (SER), probability of detection, receiver operating characteristic (ROC),
