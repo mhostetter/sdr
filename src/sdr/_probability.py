@@ -415,6 +415,128 @@ def multiply_distributions(
 
 
 @export
+def min_distribution(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    n_vars: int,
+    p: float = 1e-16,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the minimum of $n$ i.i.d. random variables $X_i$.
+
+    Arguments:
+        X: The distribution of the i.i.d. random variables $X_i$.
+        n_vars: The number $n$ of random variables.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the sum $Z = \min(X_1, X_2, \dots, X_n)$.
+
+    Notes:
+        Given a random variable $X$ with PDF $f_X(x)$ and CDF $F_X(x)$, we compute the PDF of
+        $Z = \min(X_1, X_2, \dots, X_n)$, where $X_1, X_2, \dots, X_n$ are independent and identically distributed
+        (i.i.d.), as follows.
+
+        The CDF of $Z$, denoted $F_Z(z)$, is $F_Z(z) = P(Z \leq z)$. Since $Z = \min(X_1, X_2, \dots, X_n)$, the
+        event $Z \leq z$ occurs if at least one $X_i \leq z$. Using independence,
+
+        $$F_Z(z) = 1 - P(\text{All } X_i > z) = 1 - \prod_{i=1}^n P(X_i > z) = [1 - F_X(z)]^n = 1 - [1 - F_X(z)]^n .$$
+
+        The PDF of $Z$, denoted $f_Z(z)$, is the derivative of $F_Z(z)$. Therefore, $f_Z(z) = \frac{d}{dz} F_Z(z)$.
+        Substituting $F_Z(z) = 1 - [1 - F_X(z)]^n$ yields $f_Z(z) = n \cdot [1 - F_X(z)]^{n-1} \cdot f_X(z)$.
+
+        Therefore, the PDF of $Z = \min(X_1, X_2, \dots, X_n)$ is
+
+        $$f_Z(z) = n \cdot [1 - F_X(z)]^{n-1} \cdot f_X(z)$$
+
+        where $F_X(z)$ is the CDF of the original random variable $X$, $f_X(z)$ is the PDF of $X$, and $n$ is the
+        number of samples.
+
+    Examples:
+        Compute the distribution of the minimum of ten Normal random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=-1, scale=0.5)
+            n_vars = 10
+            x = np.linspace(-4, 1, 1_001)
+
+            @savefig sdr_min_distribution_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.min_distribution(X, n_vars).pdf(x), label=r"$\min(X_1, X_2)$"); \
+            plt.hist(X.rvs((100_000, n_vars)).min(axis=1), bins=101, density=True, histtype="step", label=r"$\min(X_1, X_2)$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Minimum of 10 Normal random variables");
+
+        Compute the distribution of the minimum of ten Rayleigh random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rayleigh(scale=1)
+            n_vars = 10
+            x = np.linspace(0, 4, 1_001)
+
+            @savefig sdr_min_distribution_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.min_distribution(X, n_vars).pdf(x), label="$\\min(X_1, \dots, X_3)$"); \
+            plt.hist(X.rvs((100_000, n_vars)).min(axis=1), bins=101, density=True, histtype="step", label="$\\min(X_1, \dots, X_3)$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Minimum of 10 Rayleigh random variables");
+
+        Compute the distribution of the minimum of 100 Rician random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rice(2)
+            n_vars = 100
+            x = np.linspace(0, 6, 1_001)
+
+            @savefig sdr_min_distribution_3.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.min_distribution(X, n_vars).pdf(x), label=r"$\min(X_1, \dots, X_{100})$"); \
+            plt.hist(X.rvs((100_000, n_vars)).min(axis=1), bins=101, density=True, histtype="step", label=r"$\min(X_1, \dots, X_{100})$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Minimum of 100 Rician random variables");
+
+    Group:
+        probability
+    """
+    verify_scalar(n_vars, int=True, positive=True)
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    if n_vars == 1:
+        return X
+
+    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    # is p.
+    z1_min, z1_max = _x_range(X, p)
+    z = np.linspace(z1_min, z1_max, 1_001)
+    dz = np.mean(np.diff(z))
+
+    # Compute the PDF and CDF of the base distribution
+    f_X = X.pdf(z)
+    F_X = X.cdf(z)
+
+    f_Z = n_vars * (1 - F_X) ** (n_vars - 1) * f_X
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
+
+    return scipy.stats.rv_histogram((f_Z, z))
+
+
+@export
 def max_distribution(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     n_vars: int,
