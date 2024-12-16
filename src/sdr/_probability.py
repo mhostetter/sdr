@@ -357,9 +357,7 @@ def multiply_distributions(
 
         Let $Z = X \cdot Y$. The PDF $f_Z(z)$ is given by
 
-        $$
-        f_Z(z) = \int_{-\infty}^\infty \frac{1}{|y|} f_X\left(\frac{z}{y}\right) f_Y(y) \, dy
-        $$
+        $$f_Z(z) = \int_{-\infty}^\infty \frac{1}{|y|} f_X\left(\frac{z}{y}\right) f_Y(y) \, dy$$
 
         The Jacobian adjustment for this transformation contributes the factor $\frac{1}{|y|}$.
 
@@ -433,7 +431,7 @@ def max_distribution(
             analysis, but will require more computation.
 
     Returns:
-        The distribution of the sum $Z = \text{max}(X_1, X_2, \dots, X_n)$.
+        The distribution of the sum $Z = \max(X_1, X_2, \dots, X_n)$.
 
     Notes:
         Given a random variable $X$ with PDF $f_X(x)$ and CDF $F_X(x)$, we compute the PDF of
@@ -442,7 +440,8 @@ def max_distribution(
 
         The CDF of $Z$, denoted $F_Z(z)$, is $F_Z(z) = P(Z \leq z)$. Since $Z = \max(X_1, X_2, \dots, X_n)$, the
         event $Z \leq z$ occurs if and only if all $X_i \leq z$. Using independence,
-        $P(Z \leq z) = \prod_{i=1}^n P(X_i \leq z)$. So, $F_Z(z) = [F_X(z)]^n$.
+
+        $$F_Z(z) = P(Z \leq z) = \prod_{i=1}^n P(X_i \leq z) = [F_X(z)]^n .$$
 
         The PDF of $Z$, denoted $f_Z(z)$, is the derivative of $F_Z(z)$. Therefore, $f_Z(z) = \frac{d}{dz} F_Z(z)$.
         Substituting $F_Z(z) = [F_X(z)]^n$ yields $f_Z(z) = n \cdot [F_X(z)]^{n-1} \cdot f_X(z)$.
@@ -466,8 +465,8 @@ def max_distribution(
             @savefig sdr_max_distribution_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label=r"$\text{max}(X_1, X_2)$"); \
-            plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\text{max}(X_1, X_2)$ empirical"); \
+            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label=r"$\max(X_1, X_2)$"); \
+            plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\max(X_1, X_2)$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
@@ -484,12 +483,12 @@ def max_distribution(
             @savefig sdr_max_distribution_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label="$\\text{max}(X_1, \dots, X_3)$"); \
-            plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label="$\\text{max}(X_1, \dots, X_3)$ empirical"); \
+            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label="$\\max(X_1, \dots, X_3)$"); \
+            plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label="$\\max(X_1, \dots, X_3)$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Maximum of ten Rayleigh random variables");
+            plt.title("Maximum of 10 Rayleigh random variables");
 
         Compute the distribution of the maximum of 100 Rician random variables.
 
@@ -502,8 +501,8 @@ def max_distribution(
             @savefig sdr_max_distribution_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label=r"$\text{max}(X_1, \dots, X_{100})$"); \
-            plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\text{max}(X_1, \dots, X_{100})$ empirical"); \
+            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label=r"$\max(X_1, \dots, X_{100})$"); \
+            plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\max(X_1, \dots, X_{100})$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
