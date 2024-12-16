@@ -372,7 +372,7 @@ def add_rvs(
 
 
 @export
-def multiply_distributions(
+def multiply_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     z: npt.ArrayLike | None = None,
@@ -418,7 +418,7 @@ def multiply_distributions(
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.multiply_distributions(X, Y).pdf(x), label=r"$X \cdot Y$"); \
+            plt.plot(x, sdr.multiply_rvs(X, Y).pdf(x), label=r"$X \cdot Y$"); \
             plt.hist(X.rvs(100_000) * Y.rvs(100_000), bins=101, density=True, histtype="step", label=r"$X \cdot Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \

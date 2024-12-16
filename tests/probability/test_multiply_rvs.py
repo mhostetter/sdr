@@ -41,7 +41,7 @@ def _verify(X, Y):
     x = bins[1:] - np.diff(bins) / 2
 
     # Numerically compute the distribution, only do so over the histogram bins (for speed)
-    Z = sdr.multiply_distributions(X, Y, x)
+    Z = sdr.multiply_rvs(X, Y, x)
 
     if False:
         import matplotlib.pyplot as plt
