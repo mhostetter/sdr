@@ -22,7 +22,7 @@ from .._helper import (
     verify_not_specified,
     verify_scalar,
 )
-from .._probability import sum_distribution
+from .._probability import add_distribution
 
 
 @export
@@ -244,7 +244,7 @@ def _h0(
             h0 = scipy.stats.norm(0, np.sqrt(sigma2_per))
         elif detector == "linear":
             h0 = scipy.stats.chi(nu, scale=np.sqrt(sigma2_per))
-            h0 = sum_distribution(h0, n_nc)
+            h0 = add_distribution(h0, n_nc)
         elif detector == "square-law":
             h0 = scipy.stats.chi2(nu * n_nc, scale=sigma2_per)
 
@@ -490,7 +490,7 @@ def _h1(
             else:
                 # Folded normal distribution has 1 degree of freedom
                 h1 = scipy.stats.foldnorm(np.sqrt(lambda_), scale=np.sqrt(sigma2_per))
-            h1 = sum_distribution(h1, n_nc)
+            h1 = add_distribution(h1, n_nc)
         elif detector == "square-law":
             h1 = scipy.stats.ncx2(nu * n_nc, lambda_ * n_nc, scale=sigma2_per)
 
