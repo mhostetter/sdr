@@ -401,9 +401,9 @@ def multiply_distributions(
 
         Let $Z = X \cdot Y$. The PDF $f_Z(z)$ is given by
 
-        $$f_Z(z) = \int_{-\infty}^\infty \frac{1}{|y|} f_X\left(\frac{z}{y}\right) f_Y(y) \, dy$$
+        $$f_Z(z) = \int_{-\infty}^\infty \frac{1}{\left| w \right|} f_X\left(\frac{z}{w}\right) f_Y(w) \, dw$$
 
-        The Jacobian adjustment for this transformation contributes the factor $\frac{1}{|y|}$.
+        The Jacobian adjustment for this transformation contributes the factor $\frac{1}{\left| w \right|}$.
 
     Examples:
         Compute the distribution of the product of two Normal random variables.
