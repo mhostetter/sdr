@@ -128,7 +128,7 @@ def add_iid_rvs(
             n_vars = 2
             x = np.linspace(-6, 2, 1_001)
 
-            @savefig sdr_add_distribution_1.png
+            @savefig sdr_add_iid_rvs_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
@@ -146,7 +146,7 @@ def add_iid_rvs(
             n_vars = 3
             x = np.linspace(0, 10, 1_001)
 
-            @savefig sdr_add_distribution_2.png
+            @savefig sdr_add_iid_rvs_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
@@ -164,7 +164,7 @@ def add_iid_rvs(
             n_vars = 4
             x = np.linspace(0, 18, 1_001)
 
-            @savefig sdr_add_distribution_3.png
+            @savefig sdr_add_iid_rvs_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
@@ -290,7 +290,7 @@ def add_rvs(
             Y = scipy.stats.rayleigh(loc=1, scale=2)
             x = np.linspace(-4, 10, 1_001)
 
-            @savefig sdr_add_distributions_1.png
+            @savefig sdr_add_rvs_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
@@ -309,7 +309,7 @@ def add_rvs(
             Y = scipy.stats.rice(3)
             x = np.linspace(0, 12, 1_001)
 
-            @savefig sdr_add_distributions_2.png
+            @savefig sdr_add_rvs_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
@@ -328,7 +328,7 @@ def add_rvs(
             Y = scipy.stats.chi2(3)
             x = np.linspace(0, 20, 1_001)
 
-            @savefig sdr_add_distributions_3.png
+            @savefig sdr_add_rvs_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
@@ -414,7 +414,7 @@ def multiply_rvs(
             Y = scipy.stats.norm(loc=2, scale=1.5)
             x = np.linspace(-15, 10, 1_001)
 
-            @savefig sdr_multiply_distributions_1.png
+            @savefig sdr_multiply_rvs_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
@@ -506,7 +506,7 @@ def min_iid_rvs(
             n_vars = 10
             x = np.linspace(-4, 1, 1_001)
 
-            @savefig sdr_min_distribution_1.png
+            @savefig sdr_min_iid_rvs_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.min_iid_rvs(X, n_vars).pdf(x), label=r"$\min(X_1, X_2)$"); \
@@ -524,7 +524,7 @@ def min_iid_rvs(
             n_vars = 10
             x = np.linspace(0, 4, 1_001)
 
-            @savefig sdr_min_distribution_2.png
+            @savefig sdr_min_iid_rvs_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.min_iid_rvs(X, n_vars).pdf(x), label="$\\min(X_1, \dots, X_3)$"); \
@@ -542,7 +542,7 @@ def min_iid_rvs(
             n_vars = 100
             x = np.linspace(0, 6, 1_001)
 
-            @savefig sdr_min_distribution_3.png
+            @savefig sdr_min_iid_rvs_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.min_iid_rvs(X, n_vars).pdf(x), label=r"$\min(X_1, \dots, X_{100})$"); \
@@ -628,7 +628,7 @@ def max_iid_rvs(
             n_vars = 2
             x = np.linspace(-3, 1, 1_001)
 
-            @savefig sdr_max_distribution_1.png
+            @savefig sdr_max_iid_rvs_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label=r"$\max(X_1, X_2)$"); \
@@ -646,7 +646,7 @@ def max_iid_rvs(
             n_vars = 10
             x = np.linspace(0, 6, 1_001)
 
-            @savefig sdr_max_distribution_2.png
+            @savefig sdr_max_iid_rvs_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label="$\\max(X_1, \dots, X_3)$"); \
@@ -664,7 +664,7 @@ def max_iid_rvs(
             n_vars = 100
             x = np.linspace(0, 8, 1_001)
 
-            @savefig sdr_max_distribution_3.png
+            @savefig sdr_max_iid_rvs_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label=r"$\max(X_1, \dots, X_{100})$"); \
