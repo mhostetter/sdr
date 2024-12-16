@@ -229,67 +229,71 @@ def sum_distributions(
         The distribution of the sum $Z = X + Y$.
 
     Notes:
-        The PDF of the sum of two independent random variables is the convolution of the PDF of the two distributions.
+        Given two independent random variables $X$ and $Y$ with PDFs $f_X(x)$ and $f_Y(y)$, we compute the PDF of
+        $Z = X + Y$ as follows.
 
-        $$f_{X+Y}(t) = (f_X * f_Y)(t)$$
+        The PDF of $Z$, denoted $f_Z(z)$, can be obtained using the convolution formula for independent random
+        variables.
+
+        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_Y(z - x) \, dx$$
 
     Examples:
-        Compute the distribution of the sum of two normal distributions.
+        Compute the distribution of the sum of Normal and Rayleigh random variables.
 
         .. ipython:: python
 
             X = scipy.stats.norm(loc=-1, scale=0.5)
-            Y = scipy.stats.norm(loc=2, scale=1.5)
-            x = np.linspace(-5, 10, 1_001)
+            Y = scipy.stats.rayleigh(loc=1, scale=2)
+            x = np.linspace(-4, 10, 1_001)
 
             @savefig sdr_sum_distributions_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="X + Y"); \
-            plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="X + Y empirical"); \
+            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of two Normal distributions");
+            plt.title("Sum of Normal and Rayleigh random variables");
 
-        Compute the distribution of the sum of two Rayleigh distributions.
+        Compute the distribution of the sum of Rayleigh and Rician random variables.
 
         .. ipython:: python
 
             X = scipy.stats.rayleigh(scale=1)
-            Y = scipy.stats.rayleigh(loc=1, scale=2)
+            Y = scipy.stats.rice(3)
             x = np.linspace(0, 12, 1_001)
 
             @savefig sdr_sum_distributions_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="X + Y"); \
-            plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="X + Y empirical"); \
+            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of two Rayleigh distributions");
+            plt.title("Sum of Rayleigh and Rician random variables");
 
-        Compute the distribution of the sum of two Rician distributions.
+        Compute the distribution of the sum of Rician and Chi-squared random variables.
 
         .. ipython:: python
 
-            X = scipy.stats.rice(2)
-            Y = scipy.stats.rice(3)
-            x = np.linspace(0, 12, 1_001)
+            X = scipy.stats.rice(3)
+            Y = scipy.stats.chi2(3)
+            x = np.linspace(0, 20, 1_001)
 
             @savefig sdr_sum_distributions_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="X + Y"); \
-            plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="X + Y empirical"); \
+            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of two Rician distributions");
+            plt.title("Sum of Rician and Chi-squared random variables");
 
     Group:
         probability
@@ -298,29 +302,29 @@ def sum_distributions(
 
     # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
     # is p.
-    x1_min, x1_max = _x_range(X, p)
-    x2_min, x2_max = _x_range(Y, p)
-    dx1 = (x1_max - x1_min) / 1_000
-    dx2 = (x2_max - x2_min) / 1_000
-    dx = np.min([dx1, dx2])  # Use the smaller delta x -- must use the same dx for both distributions
-    x1 = np.arange(x1_min, x1_max, dx)
-    x2 = np.arange(x2_min, x2_max, dx)
+    x_min, x_max = _x_range(X, p)
+    y_min, y_max = _x_range(Y, p)
+    dx = (x_max - x_min) / 1_000
+    dy = (y_max - y_min) / 1_000
+    dz = np.min([dx, dy])  # Use the smaller delta x -- must use the same dx for both distributions
+    x = np.arange(x_min, x_max, dz)
+    y = np.arange(y_min, y_max, dz)
 
     # Compute the PDF of each distribution
-    f_X = X.pdf(x1)
-    f_Y = Y.pdf(x2)
+    f_X = X.pdf(x)
+    f_Y = Y.pdf(y)
 
     # The PDF of the sum of two independent random variables is the convolution of the PDF of the two distributions
-    f_Z = np.convolve(f_X, f_Y, mode="full") * dx
+    f_Z = np.convolve(f_X, f_Y, mode="full") * dz
 
     # Determine the x axis for the output convolution
-    x = np.arange(f_Z.size) * dx + x1[0] + x2[0]
+    z = np.arange(f_Z.size) * dz + x[0] + y[0]
 
     # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
-    x = np.append(x, x[-1] + dx)
-    x -= dx / 2
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
 
-    return scipy.stats.rv_histogram((f_Z, x))
+    return scipy.stats.rv_histogram((f_Z, z))
 
 
 @export
