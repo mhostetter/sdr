@@ -581,7 +581,7 @@ def min_iid_rvs(
 
 
 @export
-def max_distribution(
+def max_iid_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     n_vars: int,
     p: float = 1e-16,
@@ -631,7 +631,7 @@ def max_distribution(
             @savefig sdr_max_distribution_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label=r"$\max(X_1, X_2)$"); \
+            plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label=r"$\max(X_1, X_2)$"); \
             plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\max(X_1, X_2)$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -649,7 +649,7 @@ def max_distribution(
             @savefig sdr_max_distribution_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label="$\\max(X_1, \dots, X_3)$"); \
+            plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label="$\\max(X_1, \dots, X_3)$"); \
             plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label="$\\max(X_1, \dots, X_3)$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -667,7 +667,7 @@ def max_distribution(
             @savefig sdr_max_distribution_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.max_distribution(X, n_vars).pdf(x), label=r"$\max(X_1, \dots, X_{100})$"); \
+            plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label=r"$\max(X_1, \dots, X_{100})$"); \
             plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\max(X_1, \dots, X_{100})$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
