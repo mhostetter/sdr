@@ -78,7 +78,7 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
 
 @export
-def add_distribution(
+def add_iid_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     n_vars: int,
     p: float = 1e-16,
@@ -131,7 +131,7 @@ def add_distribution(
             @savefig sdr_add_distribution_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.add_distribution(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
+            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -149,7 +149,7 @@ def add_distribution(
             @savefig sdr_add_distribution_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.add_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
+            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -167,7 +167,7 @@ def add_distribution(
             @savefig sdr_add_distribution_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.add_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
+            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3 + X_4$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
