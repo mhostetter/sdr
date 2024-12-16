@@ -94,12 +94,12 @@ def sum_distribution(
             analysis, but will require more computation.
 
     Returns:
-        The distribution of the sum $Z = X_1 + X_2 + \ldots + X_n$.
+        The distribution of the sum $Z = X_1 + X_2 + \dots + X_n$.
 
     Notes:
         The PDF of the sum of $n$ independent random variables is the convolution of the PDF of the base distribution.
 
-        $$f_{X_1 + X_2 + \ldots + X_n}(t) = (f_X * f_X * \ldots * f_X)(t)$$
+        $$f_{X_1 + X_2 + \dots + X_n}(t) = (f_X * f_X * \dots * f_X)(t)$$
 
     Examples:
         Compute the distribution of the sum of two normal distributions.
