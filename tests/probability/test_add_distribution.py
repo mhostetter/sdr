@@ -25,6 +25,48 @@ def test_rician():
     _verify(X, 4)
 
 
+def test_exponential():
+    X = scipy.stats.expon(scale=1)
+    _verify(X, 2)
+    _verify(X, 3)
+    _verify(X, 4)
+
+
+def test_gamma():
+    X = scipy.stats.gamma(a=2, scale=1)
+    _verify(X, 2)
+    _verify(X, 3)
+    _verify(X, 4)
+
+
+# def test_poisson():
+#     X = scipy.stats.poisson(mu=2)
+#     _verify(X, 2)
+#     _verify(X, 3)
+#     _verify(X, 4)
+
+
+# def test_bernoulli():
+#     X = scipy.stats.bernoulli(p=0.5)
+#     _verify(X, 2)
+#     _verify(X, 3)
+#     _verify(X, 4)
+
+
+# def test_geomertic():
+#     X = scipy.stats.geom(p=0.5)
+#     _verify(X, 2)
+#     _verify(X, 3)
+#     _verify(X, 4)
+
+
+def test_chi2():
+    X = scipy.stats.chi2(df=2)
+    _verify(X, 2)
+    _verify(X, 3)
+    _verify(X, 4)
+
+
 def _verify(X, n):
     # Numerically compute the distribution
     Y = sdr.add_distribution(X, n)
