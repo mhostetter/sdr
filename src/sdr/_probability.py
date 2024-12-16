@@ -219,8 +219,8 @@ def sum_distributions(
     Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$.
 
     Arguments:
-        X: The distribution of the first random variable $X$.
-        Y: The distribution of the second random variable $Y$.
+        X: The distribution of the random variable $X$.
+        Y: The distribution of the random variable $Y$.
         p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
             the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
             analysis, but will require more computation.
@@ -331,16 +331,16 @@ def sum_distributions(
 def multiply_distributions(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
-    x: npt.ArrayLike | None = None,
+    z: npt.ArrayLike | None = None,
     p: float = 1e-10,
 ) -> scipy.stats.rv_histogram:
     r"""
     Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$.
 
     Arguments:
-        X: The distribution of the first random variable $X$.
-        Y: The distribution of the second random variable $Y$.
-        x: The x values at which to evaluate the PDF of the product. If None, the x values are determined based on `p`.
+        X: The distribution of the random variable $X$.
+        Y: The distribution of the random variable $Y$.
+        z: The $z$ values at which to evaluate the PDF of $Z$. If None, the $z$ values are determined based on `p`.
         p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
             the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
             analysis, but will require more computation.
@@ -349,16 +349,22 @@ def multiply_distributions(
         The distribution of the product $Z = X \cdot Y$.
 
     Notes:
-        The PDF of the product of two independent random variables is calculated as follows.
+        Given two independent random variables $X$ and $Y$ with PDFs $f_X(x)$ and $f_Y(y)$, and CDFs $F_X(x)$ and
+        $F_Y(y)$, we compute the PDF of $Z = X \cdot Y$ as follows.
+
+        The PDF of $Z$, denoted $f_Z(z)$, can be derived using the joint distribution of $X$ and $Y$. Since
+        $Z = X \cdot Y$, we express the relationship between $x$, $y$, and $z$ and use a transformation approach.
+
+        Let $Z = X \cdot Y$. The PDF $f_Z(z)$ is given by
 
         $$
-        f_{X \cdot Y}(t) =
-        \int_{0}^{\infty} f_X(k) f_Y(t/k) \frac{1}{k} dk -
-        \int_{-\infty}^{0} f_X(k) f_Y(t/k) \frac{1}{k} dk
+        f_Z(z) = \int_{-\infty}^\infty \frac{1}{|y|} f_X\left(\frac{z}{y}\right) f_Y(y) \, dy
         $$
+
+        The Jacobian adjustment for this transformation contributes the factor $\frac{1}{|y|}$.
 
     Examples:
-        Compute the distribution of the product of two normal distributions.
+        Compute the distribution of the product of two Normal random variables.
 
         .. ipython:: python
 
@@ -370,45 +376,44 @@ def multiply_distributions(
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.multiply_distributions(X, Y).pdf(x), label="X * Y"); \
-            plt.hist(X.rvs(100_000) * Y.rvs(100_000), bins=101, density=True, histtype="step", label="X * Y empirical"); \
+            plt.plot(x, sdr.multiply_distributions(X, Y).pdf(x), label=r"$X \cdot Y$"); \
+            plt.hist(X.rvs(100_000) * Y.rvs(100_000), bins=101, density=True, histtype="step", label=r"$X \cdot Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Product of two Normal distributions");
+            plt.title("Product of two Normal random variables");
 
     Group:
         probability
     """
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
 
-    if x is None:
-        # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    if z is None:
+        # Determine the z axis of each distribution such that the probability of exceeding the z axis, on either side,
         # is p.
-        x1_min, x1_max = _x_range(X, np.sqrt(p))
-        x2_min, x2_max = _x_range(Y, np.sqrt(p))
-        bounds = np.array([x1_min * x2_min, x1_min * x2_max, x1_max * x2_min, x1_max * x2_max])
-        x_min = np.min(bounds)
-        x_max = np.max(bounds)
-        x = np.linspace(x_min, x_max, 1_001)
+        x_min, x_max = _x_range(X, np.sqrt(p))
+        y_min, y_max = _x_range(Y, np.sqrt(p))
+        bounds = np.array([x_min * y_min, x_min * y_max, x_max * y_min, x_max * y_max])
+        z_min = np.min(bounds)
+        z_max = np.max(bounds)
+        z = np.linspace(z_min, z_max, 1_001)
     else:
-        x = verify_arraylike(x, float=True, atleast_1d=True, ndim=1)
-        x = np.sort(x)
-    dx = np.mean(np.diff(x))
+        z = verify_arraylike(z, float=True, atleast_1d=True, ndim=1)
+        z = np.sort(z)
+    dz = np.mean(np.diff(z))
 
-    def integrand(k: float, xi: float) -> float:
-        return X.pdf(k) * Y.pdf(xi / k) * 1 / k
+    def integrand(y: float, z: float) -> float:
+        return 1 / np.abs(y) * X.pdf(z / y) * Y.pdf(y)
 
-    f_Z = np.zeros_like(x)
-    for i, xi in enumerate(x):
-        f_Z[i] = scipy.integrate.quad(integrand, 0, np.inf, args=(xi,))[0]
-        f_Z[i] -= scipy.integrate.quad(integrand, -np.inf, 0, args=(xi,))[0]
+    f_Z = np.zeros_like(z)
+    for i, zi in enumerate(z):
+        f_Z[i] = scipy.integrate.quad(integrand, -np.inf, np.inf, args=(zi,))[0]
 
     # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
-    x = np.append(x, x[-1] + dx)
-    x -= dx / 2
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
 
-    return scipy.stats.rv_histogram((f_Z, x))
+    return scipy.stats.rv_histogram((f_Z, z))
 
 
 @export
