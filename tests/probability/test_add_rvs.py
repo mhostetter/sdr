@@ -36,7 +36,7 @@ def test_rayleigh_rician():
 
 def _verify(X, Y):
     # Numerically compute the distribution
-    Z = sdr.add_distributions(X, Y)
+    Z = sdr.add_rvs(X, Y)
 
     # Empirically compute the distribution
     z = X.rvs(100_000) + Y.rvs(100_000)

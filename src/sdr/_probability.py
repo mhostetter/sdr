@@ -254,7 +254,7 @@ def add_iid_rvs(
 
 
 @export
-def add_distributions(
+def add_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     p: float = 1e-16,
@@ -294,7 +294,7 @@ def add_distributions(
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.add_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.plot(x, sdr.add_rvs(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -313,7 +313,7 @@ def add_distributions(
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.add_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.plot(x, sdr.add_rvs(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -332,7 +332,7 @@ def add_distributions(
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.add_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.plot(x, sdr.add_rvs(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
