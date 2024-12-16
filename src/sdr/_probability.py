@@ -120,7 +120,7 @@ def add_iid_rvs(
         for sufficiently large $n$.
 
     Examples:
-        Compute the distribution of the sum of two normal distributions.
+        Compute the distribution of the sum of two normal random variables.
 
         .. ipython:: python
 
@@ -136,9 +136,9 @@ def add_iid_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of two normal distributions");
+            plt.title("Sum of two normal random variables");
 
-        Compute the distribution of the sum of three Rayleigh distributions.
+        Compute the distribution of the sum of three Rayleigh random variables.
 
         .. ipython:: python
 
@@ -154,9 +154,9 @@ def add_iid_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of three Rayleigh distributions");
+            plt.title("Sum of three Rayleigh random variables");
 
-        Compute the distribution of the sum of four Rician distributions.
+        Compute the distribution of the sum of four Rician random variables.
 
         .. ipython:: python
 
@@ -172,7 +172,7 @@ def add_iid_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of four Rician distributions");
+            plt.title("Sum of four Rician random variables");
 
     Group:
         probability
