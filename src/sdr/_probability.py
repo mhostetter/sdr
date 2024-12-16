@@ -80,7 +80,7 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
 @export
 def sum_distribution(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
-    n_terms: int,
+    n_vars: int,
     p: float = 1e-16,
 ) -> scipy.stats.rv_histogram:
     r"""
@@ -88,7 +88,7 @@ def sum_distribution(
 
     Arguments:
         X: The distribution of the i.i.d. random variables $X_i$.
-        n_terms: The number $n$ of random variables to sum.
+        n_vars: The number $n$ of random variables.
         p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
             the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
             analysis, but will require more computation.
@@ -97,9 +97,27 @@ def sum_distribution(
         The distribution of the sum $Z = X_1 + X_2 + \dots + X_n$.
 
     Notes:
-        The PDF of the sum of $n$ independent random variables is the convolution of the PDF of the base distribution.
+        Given a random variable $X$ with PDF $f_X(x)$, we compute the PDF of
+        $Z = X_1 + X_2 + \dots + X_n$, where $X_1, X_2, \dots, X_n$ are independent and identically distributed
+        (i.i.d.), as follows.
 
-        $$f_{X_1 + X_2 + \dots + X_n}(t) = (f_X * f_X * \dots * f_X)(t)$$
+        The PDF of $Z$, denoted $f_Z(z)$, can be obtained by using the convolution formula for independent
+        random variables. Specifically, the PDF of the sum of $n$ i.i.d. random variables is given by the $n$-fold
+        convolution of the PDF of $X$ with itself.
+
+        For $n = 2$, $Z = X_1 + X_2$. The PDF of $Z$ is
+
+        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_X(z - x) \, dx$$
+
+        For $n > 2$, the PDF of $Z = X_1 + X_2 + \dots + X_n$ is computed recursively
+
+        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_{Z_{n-1}}(z - x) \, dx$$
+
+        where $f_{Z_{n-1}}(z)$ is the PDF of the sum of $n-1$ random variables.
+
+        For large $n$, the Central Limit Theorem may be used as an approximation. If $X_i$ have mean $\mu$ and
+        variance $\sigma^2$, then $Z$ approximately follows $Z \sim \mathcal{N}(n\mu, n\sigma^2)$
+        for sufficiently large $n$.
 
     Examples:
         Compute the distribution of the sum of two normal distributions.
@@ -107,14 +125,14 @@ def sum_distribution(
         .. ipython:: python
 
             X = scipy.stats.norm(loc=-1, scale=0.5)
-            n_terms = 2
+            n_vars = 2
             x = np.linspace(-6, 2, 1_001)
 
             @savefig sdr_sum_distribution_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.sum_distribution(X, n_terms).pdf(x), label="X + X"); \
-            plt.hist(X.rvs((100_000, n_terms)).sum(axis=1), bins=101, density=True, histtype="step", label="X + X empirical"); \
+            plt.plot(x, sdr.sum_distribution(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
+            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
@@ -125,14 +143,14 @@ def sum_distribution(
         .. ipython:: python
 
             X = scipy.stats.rayleigh(scale=1)
-            n_terms = 3
+            n_vars = 3
             x = np.linspace(0, 10, 1_001)
 
             @savefig sdr_sum_distribution_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.sum_distribution(X, n_terms).pdf(x), label="X + X + X"); \
-            plt.hist(X.rvs((100_000, n_terms)).sum(axis=1), bins=101, density=True, histtype="step", label="X + X + X empirical"); \
+            plt.plot(x, sdr.sum_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
+            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
@@ -143,14 +161,14 @@ def sum_distribution(
         .. ipython:: python
 
             X = scipy.stats.rice(2)
-            n_terms = 4
+            n_vars = 4
             x = np.linspace(0, 18, 1_001)
 
             @savefig sdr_sum_distribution_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.sum_distribution(X, n_terms).pdf(x), label="X + X + X + X"); \
-            plt.hist(X.rvs((100_000, n_terms)).sum(axis=1), bins=101, density=True, histtype="step", label="X + X + X + X empirical"); \
+            plt.plot(x, sdr.sum_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
+            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3 + X_4$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
@@ -159,36 +177,36 @@ def sum_distribution(
     Group:
         probability
     """
-    verify_scalar(n_terms, int=True, positive=True)
+    verify_scalar(n_vars, int=True, positive=True)
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
 
-    if n_terms == 1:
+    if n_vars == 1:
         return X
 
     # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
     # is p.
-    x1_min, x1_max = _x_range(X, p)
-    x = np.linspace(x1_min, x1_max, 1_001)
-    dx = np.mean(np.diff(x))
+    z1_min, z1_max = _x_range(X, p)
+    z = np.linspace(z1_min, z1_max, 1_001)
+    dz = np.mean(np.diff(z))
 
     # Compute the PDF of the base distribution
-    f_X = X.pdf(x)
+    f_X = X.pdf(z)
 
-    # The PDF of the sum of n_terms independent random variables is the convolution of the PDF of the base distribution.
+    # The PDF of the sum of n_vars independent random variables is the convolution of the PDF of the base distribution.
     # This is efficiently computed in the frequency domain by exponentiating the FFT. The FFT must be zero-padded
     # enough that the circular convolutions do not wrap around.
-    n_fft = scipy.fft.next_fast_len(f_X.size * n_terms)
+    n_fft = scipy.fft.next_fast_len(f_X.size * n_vars)
     f_X_fft = np.fft.fft(f_X, n_fft)
-    f_X_fft = f_X_fft**n_terms
-    f_Y = np.fft.ifft(f_X_fft).real
-    f_Y /= f_Y.sum() * dx
-    x = np.arange(f_Y.size) * dx + x[0] * (n_terms)
+    f_X_fft = f_X_fft**n_vars
+    f_Z = np.fft.ifft(f_X_fft).real
+    f_Z /= f_Z.sum() * dz
+    z = np.arange(f_Z.size) * dz + z[0] * (n_vars)
 
     # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
-    x = np.append(x, x[-1] + dx)
-    x -= dx / 2
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
 
-    return scipy.stats.rv_histogram((f_Y, x))
+    return scipy.stats.rv_histogram((f_Z, z))
 
 
 @export
