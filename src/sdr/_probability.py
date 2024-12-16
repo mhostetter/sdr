@@ -372,6 +372,126 @@ def add_rvs(
 
 
 @export
+def subtract_rvs(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    p: float = 1e-16,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the difference of two independent random variables $X$ and $Y$.
+
+    Arguments:
+        X: The distribution of the random variable $X$.
+        Y: The distribution of the random variable $Y$.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the difference $Z = X - Y$.
+
+    Notes:
+        Given two independent random variables $X$ and $Y$ with PDFs $f_X(x)$ and $f_Y(y)$, we compute the PDF of
+        $Z = X - Y$ as follows.
+
+        The PDF of $Z$, denoted $f_Z(z)$, can be obtained using the convolution formula for independent random
+        variables. For the difference $Z = X - Y$, the PDF of $Y$ is flipped.
+
+        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_Y(x - z) \, dx$$
+
+    Examples:
+        Compute the distribution of the difference of Normal and Rayleigh random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=5, scale=0.5)
+            Y = scipy.stats.rayleigh(loc=1, scale=2)
+            x = np.linspace(-5, 10, 1_001)
+
+            @savefig sdr_subtract_rvs_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, sdr.subtract_rvs(X, Y).pdf(x), label="$X - Y$"); \
+            plt.hist(X.rvs(100_000) - Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X - Y$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Difference of Normal and Rayleigh random variables");
+
+        Compute the distribution of the difference of Rayleigh and Rician random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rayleigh(scale=1)
+            Y = scipy.stats.rice(3)
+            x = np.linspace(-10, 10, 1_001)
+
+            @savefig sdr_subtract_rvs_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, sdr.subtract_rvs(X, Y).pdf(x), label="$X - Y$"); \
+            plt.hist(X.rvs(100_000) - Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X - Y$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Difference of Rayleigh and Rician random variables");
+
+        Compute the distribution of the difference of Rician and Chi-squared random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rice(3)
+            Y = scipy.stats.chi2(3)
+            x = np.linspace(-10, 10, 1_001)
+
+            @savefig sdr_subtract_rvs_3.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, sdr.subtract_rvs(X, Y).pdf(x), label="$X - Y$"); \
+            plt.hist(X.rvs(100_000) - Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X - Y$ empirical"); \
+            plt.legend(); \
+            plt.xlim(-10, 10); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Difference of Rician and Chi-squared random variables");
+
+    Group:
+        probability
+    """
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    # is p.
+    x_min, x_max = _x_range(X, p)
+    y_min, y_max = _x_range(Y, p)  # Compute the bounds for Y
+    y_min, y_max = -y_max, -y_min  # Compute the bounds for -Y
+    dx = (x_max - x_min) / 1_000
+    dy = (y_max - y_min) / 1_000
+    dz = np.min([dx, dy])  # Use the smaller delta x -- must use the same dx for both distributions
+    x = np.arange(x_min, x_max, dz)
+    y = np.arange(y_min, y_max, dz)
+
+    # Compute the PDF of each distribution
+    f_X = X.pdf(x)
+    f_Y = Y.pdf(-y)  # Compute the PDF of -Y
+
+    # The PDF of the sum of two independent random variables is the convolution of the PDF of the two distributions
+    f_Z = np.convolve(f_X, f_Y, mode="full") * dz
+
+    # Determine the x axis for the output convolution
+    z = np.arange(f_Z.size) * dz + x[0] + y[0]
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
+
+    return scipy.stats.rv_histogram((f_Z, z))
+
+
+@export
 def multiply_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
