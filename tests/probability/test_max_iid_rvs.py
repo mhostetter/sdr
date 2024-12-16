@@ -27,7 +27,7 @@ def test_rician():
 
 def _verify(X, n):
     # Numerically compute the distribution
-    Y = sdr.max_distribution(X, n)
+    Y = sdr.max_iid_rvs(X, n)
 
     # Empirically compute the distribution
     y = X.rvs((100_000, n)).max(axis=1)
