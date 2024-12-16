@@ -69,7 +69,7 @@ def test_chi2():
 
 def _verify(X, n):
     # Numerically compute the distribution
-    Y = sdr.add_distribution(X, n)
+    Y = sdr.add_iid_rvs(X, n)
 
     # Empirically compute the distribution
     y = X.rvs((100_000, n)).sum(axis=1)
