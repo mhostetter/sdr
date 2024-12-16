@@ -78,7 +78,7 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
 
 @export
-def sum_distribution(
+def add_distribution(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     n_vars: int,
     p: float = 1e-16,
@@ -128,10 +128,10 @@ def sum_distribution(
             n_vars = 2
             x = np.linspace(-6, 2, 1_001)
 
-            @savefig sdr_sum_distribution_1.png
+            @savefig sdr_add_distribution_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.sum_distribution(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
+            plt.plot(x, sdr.add_distribution(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -146,10 +146,10 @@ def sum_distribution(
             n_vars = 3
             x = np.linspace(0, 10, 1_001)
 
-            @savefig sdr_sum_distribution_2.png
+            @savefig sdr_add_distribution_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.sum_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
+            plt.plot(x, sdr.add_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -164,10 +164,10 @@ def sum_distribution(
             n_vars = 4
             x = np.linspace(0, 18, 1_001)
 
-            @savefig sdr_sum_distribution_3.png
+            @savefig sdr_add_distribution_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.sum_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
+            plt.plot(x, sdr.add_distribution(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3 + X_4$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -210,7 +210,7 @@ def sum_distribution(
 
 
 @export
-def sum_distributions(
+def add_distributions(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     p: float = 1e-16,
@@ -246,11 +246,11 @@ def sum_distributions(
             Y = scipy.stats.rayleigh(loc=1, scale=2)
             x = np.linspace(-4, 10, 1_001)
 
-            @savefig sdr_sum_distributions_1.png
+            @savefig sdr_add_distributions_1.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.plot(x, sdr.add_distributions(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -265,11 +265,11 @@ def sum_distributions(
             Y = scipy.stats.rice(3)
             x = np.linspace(0, 12, 1_001)
 
-            @savefig sdr_sum_distributions_2.png
+            @savefig sdr_add_distributions_2.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.plot(x, sdr.add_distributions(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
@@ -284,11 +284,11 @@ def sum_distributions(
             Y = scipy.stats.chi2(3)
             x = np.linspace(0, 20, 1_001)
 
-            @savefig sdr_sum_distributions_3.png
+            @savefig sdr_add_distributions_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="X"); \
             plt.plot(x, Y.pdf(x), label="Y"); \
-            plt.plot(x, sdr.sum_distributions(X, Y).pdf(x), label="$X + Y$"); \
+            plt.plot(x, sdr.add_distributions(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
             plt.xlabel("Random variable"); \
