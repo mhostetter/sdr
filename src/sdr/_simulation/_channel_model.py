@@ -106,9 +106,9 @@ def dmc(
         x: The input sequence $x$ with $x_i \in \mathcal{X}$.
         P: The $m \times n$ transition probability matrix $P$, where $P_{i,j} = \Pr(Y = y_j | X = x_i)$.
         X: The input alphabet $\mathcal{X}$ of size $m$. If `None`, it is assumed that
-            $\mathcal{X} = \{0, 1, \ldots, m-1\}$.
+            $\mathcal{X} = \{0, 1, \dots, m-1\}$.
         Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that
-            $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
+            $\mathcal{Y} = \{0, 1, \dots, n-1\}$.
         seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
 
     Returns:
@@ -546,8 +546,8 @@ class DiscreteMemorylessChannel(Channel):
 
         Arguments:
             P: The $m \times n$ transition probability matrix $P$, where $P = \Pr(Y = y_j | X = x_i)$.
-            X: The input alphabet $\mathcal{X}$ of size $m$. If `None`, it is assumed that $\mathcal{X} = \{0, 1, \ldots, m-1\}$.
-            Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that $\mathcal{Y} = \{0, 1, \ldots, n-1\}$.
+            X: The input alphabet $\mathcal{X}$ of size $m$. If `None`, it is assumed that $\mathcal{X} = \{0, 1, \dots, m-1\}$.
+            Y: The output alphabet $\mathcal{Y}$ of size $n$. If `None`, it is assumed that $\mathcal{Y} = \{0, 1, \dots, n-1\}$.
             seed: The seed for the random number generator. This is passed to :func:`numpy.random.default_rng`.
         """
         P = verify_arraylike(P, float=True, ndim=2, inclusive_min=0, inclusive_max=1)
