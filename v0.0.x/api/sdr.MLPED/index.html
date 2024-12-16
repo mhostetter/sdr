@@ -13268,8 +13268,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distribution/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distribution (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">sum_<wbr>distribution</span>
+      <a href="../sdr.add_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_iid_rvs (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">add_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13283,8 +13283,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distributions (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">sum_<wbr>distributions</span>
+      <a href="../sdr.add_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_rvs (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">add_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13298,8 +13298,53 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.multiply_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      <a href="../sdr.subtract_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.subtract_rvs (Python function) — Numerically calculates the distribution of the difference of two independent random variables $X$ and $Y$." class="md-ellipsis">subtract_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_rvs (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_iid_rvs (Python function) — Numerically calculates the distribution of the minimum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">min_<wbr>iid_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.max_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.max_iid_rvs (Python function) — Numerically calculates the distribution of the maximum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">max_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -14391,7 +14436,7 @@ decision-directed ML-PED is <span class="math notranslate nohighlight">\([-\pi/M
 <h2 id="special-methods">Special methods<a class="headerlink" href="#special-methods" title="Link to this heading">¶</a></h2>
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.MLPED.__call__/" title="sdr.MLPED.__call__ (Python method) — Detects the phase error."><span class="sig-name descname pseudo-toc-entry"><span class="pre">__call__</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.MLPED.__call__/#p-received" title="sdr.MLPED.__call__.received (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">received</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.MLPED.__call__/#p-reference" title="sdr.MLPED.__call__.reference (Python parameter) — The reference complex symbols, either the known transmitted complex symbols $a[k]$ or the complex symbols decisions $hat{a}[k]$."><span class="n"><span class="pre">reference</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.MLPED.__call__/" title="sdr.MLPED.__call__ (Python method) — Detects the phase error."><span class="sig-name descname pseudo-toc-entry"><span class="pre">__call__</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.MLPED.__call__/#p-received" title="sdr.MLPED.__call__.received (Python parameter) — The received complex symbols $tilde{a}[k]$."><span class="n"><span class="pre">received</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.MLPED.__call__/#p-reference" title="sdr.MLPED.__call__.reference (Python parameter) — The reference complex symbols, either the known transmitted complex symbols $a[k]$ or the complex symbols decisions $hat{a}[k]$."><span class="n"><span class="pre">reference</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Detects the phase error.</p>
 </dd></dl>
 

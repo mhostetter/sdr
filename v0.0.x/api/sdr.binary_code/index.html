@@ -13173,8 +13173,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distribution/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distribution (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">sum_<wbr>distribution</span>
+      <a href="../sdr.add_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_iid_rvs (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">add_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13188,8 +13188,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distributions (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">sum_<wbr>distributions</span>
+      <a href="../sdr.add_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_rvs (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">add_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13203,8 +13203,53 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.multiply_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      <a href="../sdr.subtract_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.subtract_rvs (Python function) — Numerically calculates the distribution of the difference of two independent random variables $X$ and $Y$." class="md-ellipsis">subtract_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_rvs (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_iid_rvs (Python function) — Numerically calculates the distribution of the minimum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">min_<wbr>iid_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.max_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.max_iid_rvs (Python function) — Numerically calculates the distribution of the maximum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">max_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -14214,7 +14259,7 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">binary_code</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-length" title="sdr.binary_code.length (Python parameter) — The length $n = 2^m$ of the binary code."><span class="n"><span class="pre">length</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.1)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">binary_code</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-length" title="sdr.binary_code.length (Python parameter) — The length $n = 2^m$ of the binary code."><span class="n"><span class="pre">length</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.2)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Generates a binary code of length <span class="math notranslate nohighlight">\(n = 2^m\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>

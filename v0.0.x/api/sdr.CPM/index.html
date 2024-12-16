@@ -13276,8 +13276,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distribution/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distribution (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">sum_<wbr>distribution</span>
+      <a href="../sdr.add_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_iid_rvs (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">add_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13291,8 +13291,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distributions (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">sum_<wbr>distributions</span>
+      <a href="../sdr.add_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_rvs (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">add_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13306,8 +13306,53 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.multiply_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      <a href="../sdr.subtract_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.subtract_rvs (Python function) — Numerically calculates the distribution of the difference of two independent random variables $X$ and $Y$." class="md-ellipsis">subtract_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_rvs (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_iid_rvs (Python function) — Numerically calculates the distribution of the minimum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">min_<wbr>iid_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.max_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.max_iid_rvs (Python function) — Numerically calculates the distribution of the maximum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">max_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -14337,19 +14382,19 @@ You're not viewing the latest version.
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.demodulate/" title="sdr.CPM.demodulate (Python method) — Demodulates the pulse-shaped complex samples into decimal symbol decisions."><span class="sig-name descname pseudo-toc-entry"><span class="pre">demodulate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.CPM.demodulate/#p-x_tilde" title="sdr.CPM.demodulate.x_tilde (Python parameter) — The received pulse-shaped complex samples $tilde{x}[n]$ to demodulate, with sps samples per symbol and length sps * s_hat.size + pulse_shape.size - 1."><span class="n"><span class="pre">x_tilde</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.1)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></span></dt>
+<a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.demodulate/" title="sdr.CPM.demodulate (Python method) — Demodulates the pulse-shaped complex samples into decimal symbol decisions."><span class="sig-name descname pseudo-toc-entry"><span class="pre">demodulate</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.CPM.demodulate/#p-x_tilde" title="sdr.CPM.demodulate.x_tilde (Python parameter) — The received pulse-shaped complex samples $tilde{x}[n]$ to demodulate, with sps samples per symbol and length sps * s_hat.size + pulse_shape.size - 1."><span class="n"><span class="pre">x_tilde</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.int_" title="(in NumPy v2.2)"><span class="pre">int_</span></a><span class="p"><span class="pre">]</span></span></span></span></span></dt>
 <dd><p>Demodulates the pulse-shaped complex samples into decimal symbol decisions.</p>
 </dd></dl>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.ber/" title="sdr.CPM.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ber</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.CPM.ber/#p-ebn0" title="sdr.CPM.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.ber/" title="sdr.CPM.ber (Python method) — Computes the bit error rate (BER) at the provided $E_b/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ber</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.CPM.ber/#p-ebn0" title="sdr.CPM.ber.ebn0 (Python parameter) — Bit energy $E_b$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">ebn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Computes the bit error rate (BER) at the provided <span class="math notranslate nohighlight">\(E_b/N_0\)</span> values.</p>
 </dd></dl>
 
 <dl class="py method summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.ser/" title="sdr.CPM.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ser</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.CPM.ser/#p-esn0" title="sdr.CPM.ser.esn0 (Python parameter) — Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">esn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span></span></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.ser/" title="sdr.CPM.ser (Python method) — Computes the symbol error rate (SER) at the provided $E_s/N_0$ values."><span class="sig-name descname pseudo-toc-entry"><span class="pre">ser</span></span></a><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="../sdr.CPM.ser/#p-esn0" title="sdr.CPM.ser.esn0 (Python parameter) — Symbol energy $E_s$ to noise PSD $N_0$ ratio in dB."><span class="n"><span class="pre">esn0</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></span></span></dt>
 <dd><p>Computes the symbol error rate (SER) at the provided <span class="math notranslate nohighlight">\(E_s/N_0\)</span> values.</p>
 </dd></dl>
 
@@ -14388,7 +14433,7 @@ You're not viewing the latest version.
 
 <dl class="py property summary objdesc">
 <dt class="sig sig-object highlight py">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.pulse_shape/" title="sdr.CPM.pulse_shape (Python property) — The pulse shape $h[n]$ of the instantaneous frequency of the signal."><span class="sig-name descname pseudo-toc-entry"><span class="pre">pulse_shape</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><a class="sig-name descname pseudo-toc-entry reference internal" href="../sdr.CPM.pulse_shape/" title="sdr.CPM.pulse_shape (Python property) — The pulse shape $h[n]$ of the instantaneous frequency of the signal."><span class="sig-name descname pseudo-toc-entry"><span class="pre">pulse_shape</span></span></a><span class="p"> <span class="pre">:</span> </span><span class="desctype"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a></span></dt>
 <dd><p>The pulse shape <span class="math notranslate nohighlight">\(h[n]\)</span> of the instantaneous frequency of the signal.</p>
 </dd></dl>
 

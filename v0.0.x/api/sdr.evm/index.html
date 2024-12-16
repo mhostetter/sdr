@@ -13187,8 +13187,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distribution/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distribution (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">sum_<wbr>distribution</span>
+      <a href="../sdr.add_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_iid_rvs (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">add_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13202,8 +13202,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distributions (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">sum_<wbr>distributions</span>
+      <a href="../sdr.add_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_rvs (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">add_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13217,8 +13217,53 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.multiply_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      <a href="../sdr.subtract_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.subtract_rvs (Python function) — Numerically calculates the distribution of the difference of two independent random variables $X$ and $Y$." class="md-ellipsis">subtract_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_rvs (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_iid_rvs (Python function) — Numerically calculates the distribution of the minimum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">min_<wbr>iid_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.max_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.max_iid_rvs (Python function) — Numerically calculates the distribution of the maximum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">max_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -14319,25 +14364,25 @@ modulation’s symbol map.</p>
 <p>Measure the RMS EVM, normalizing with the average power of the reference symbols.
 Either the symbol map or noiseless transmitted symbols may be passed.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [3]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">)</span>
-<span class="gh">Out[3]: </span><span class="go">np.float64(9.941361586573262)</span>
+<span class="gh">Out[3]: </span><span class="go">np.float64(9.86031240825854)</span>
 
 <span class="gp">In [4]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="gh">Out[4]: </span><span class="go">np.float64(9.941361586573262)</span>
+<span class="gh">Out[4]: </span><span class="go">np.float64(9.86031240825854)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the average power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;average-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[5]: </span><span class="go">np.float64(9.893338199742283)</span>
+<span class="gh">Out[5]: </span><span class="go">np.float64(9.798411697693279)</span>
 </code></pre></div>
 </div>
 <p>Measure the RMS EVM, normalizing with the peak power of the received symbols.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;peak-power&quot;</span><span class="p">)</span>
-<span class="gh">Out[6]: </span><span class="go">np.float64(7.903350518888211)</span>
+<span class="gh">Out[6]: </span><span class="go">np.float64(8.175827076210254)</span>
 </code></pre></div>
 </div>
 <p>Measure the 95th percentile EVM.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">sdr</span><span class="o">.</span><span class="n">evm</span><span class="p">(</span><span class="n">x_hat</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">symbol_map</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="mi">95</span><span class="p">)</span>
-<span class="gh">Out[7]: </span><span class="go">np.float64(17.326380165505103)</span>
+<span class="gh">Out[7]: </span><span class="go">np.float64(17.4167584201252)</span>
 </code></pre></div>
 </div>
 <p>Measure the instantaneous EVM for each symbol.</p>

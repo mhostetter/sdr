@@ -13104,8 +13104,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distribution/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distribution (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">sum_<wbr>distribution</span>
+      <a href="../sdr.add_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_iid_rvs (Python function) — Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">add_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13119,8 +13119,8 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.sum_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sum_distributions (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">sum_<wbr>distributions</span>
+      <a href="../sdr.add_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.add_rvs (Python function) — Numerically calculates the distribution of the sum of two independent random variables $X$ and $Y$." class="md-ellipsis">add_<wbr>rvs</span>
       </a>
     </li>
   
@@ -13134,8 +13134,53 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
-      <a href="../sdr.multiply_distributions/" class="md-nav__link">
-        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_distributions (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>distributions</span>
+      <a href="../sdr.subtract_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.subtract_rvs (Python function) — Numerically calculates the distribution of the difference of two independent random variables $X$ and $Y$." class="md-ellipsis">subtract_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.multiply_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.multiply_rvs (Python function) — Numerically calculates the distribution of the product of two independent random variables $X$ and $Y$." class="md-ellipsis">multiply_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.min_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.min_iid_rvs (Python function) — Numerically calculates the distribution of the minimum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">min_<wbr>iid_<wbr>rvs</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.max_iid_rvs/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.max_iid_rvs (Python function) — Numerically calculates the distribution of the maximum of $n$ i.i.d. random variables $X_i$." class="md-ellipsis">max_<wbr>iid_<wbr>rvs</span>
       </a>
     </li>
   
@@ -14294,7 +14339,7 @@ The defaults may be overwritten.</p>
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;marker&quot;</span></code>: <code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;.&quot;</span></code></p></li>
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;linestyle&quot;</span></code>: <code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;none&quot;</span></code></p></li>
 </ul>
-<p>If <code class="code highlight python docutils literal highlight-python"><span class="n">persistence</span><span class="o">=</span><span class="kc">True</span></code>, the following keyword arguments are passed to <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram2d.html#numpy.histogram2d" title="(in NumPy v2.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram2d()</span></code></a> and
+<p>If <code class="code highlight python docutils literal highlight-python"><span class="n">persistence</span><span class="o">=</span><span class="kc">True</span></code>, the following keyword arguments are passed to <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.histogram2d.html#numpy.histogram2d" title="(in NumPy v2.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.histogram2d()</span></code></a> and
 <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolormesh.html#matplotlib.pyplot.pcolormesh" title="(in Matplotlib v3.9.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.pcolormesh()</span></code></a>. The defaults may be overwritten.</p>
 <ul class="simple">
 <li><p><code class="code highlight python docutils literal highlight-python"><span class="s2">&quot;range&quot;</span></code>: +/- 10% of the maximum value</p></li>
