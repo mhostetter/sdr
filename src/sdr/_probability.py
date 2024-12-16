@@ -389,6 +389,127 @@ def multiply_distributions(
     return scipy.stats.rv_histogram((f_Z, x))
 
 
+@export
+def max_distribution(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    n_samples: int,
+    p: float = 1e-16,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the maximum of $n$ i.i.d. random variables $X_i$.
+
+    Arguments:
+        X: The distribution of the i.i.d. random variables $X_i$.
+        n_samples: The number $n$ of random variables to compute the maximum.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the sum $Z = \text{max}(X_1, X_2, \dots, X_n)$.
+
+    Notes:
+        Given a random variable $X$ with PDF $f_X(x)$ and CDF $F_X(x)$, we compute the PDF of
+        $Z = \max(X_1, X_2, \dots, X_n)$, where $X_1, X_2, \dots, X_n$ are independent and identically distributed
+        (i.i.d.), as follows.
+
+        The CDF of $Z$, denoted $F_Z(z)$, is $F_Z(z) = P(Z \leq z)$. Since $Z = \max(X_1, X_2, \dots, X_n)$, the
+        event $Z \leq z$ occurs if and only if all $X_i \leq z$. Using independence,
+        $F_Z(z) = \prod_{i=1}^n P(X_i \leq z) = [F_X(z)]^n$.
+
+        The PDF of $Z$, denoted $f_Z(z)$, is the derivative of $F_Z(z)$, so $f_Z(z) = \frac{d}{dz} F_Z(z)$.
+        Substitute $F_Z(z) = [F_X(z)]^n$, which yields $f_Z(z) = n \cdot [F_X(z)]^{n-1} \cdot f_X(z)$.
+
+        Therefore, the PDF of $Z = \max(X_1, X_2, \dots, X_n)$ is
+
+        $$f_Z(z) = n \cdot [F_X(z)]^{n-1} \cdot f_X(z)$$
+
+        where $F_X(z)$ is the CDF of the original random variable $X$, $f_X(z)$ is the PDF of $X$, and $n$ is the
+        number of samples.
+
+    Examples:
+        Compute the distribution of the maximum of two samples from a normal distribution.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=-1, scale=0.5)
+            n_samples = 2
+            x = np.linspace(-3, 1, 1_001)
+
+            @savefig sdr_max_distribution_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.max_distribution(X, n_samples).pdf(x), label=r"$\text{max}(X_1, X_2)$"); \
+            plt.hist(X.rvs((100_000, n_samples)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\text{max}(X_1, X_2)$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Maximum of two samples from a Normal distribution");
+
+        Compute the distribution of the maximum of ten samples from a Rayleigh distribution.
+
+        .. ipython:: python
+
+            X = scipy.stats.rayleigh(scale=1)
+            n_samples = 10
+            x = np.linspace(0, 6, 1_001)
+
+            @savefig sdr_max_distribution_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.max_distribution(X, n_samples).pdf(x), label="$\\text{max}(X_1, \dots, X_3)$"); \
+            plt.hist(X.rvs((100_000, n_samples)).max(axis=1), bins=101, density=True, histtype="step", label="$\\text{max}(X_1, \dots, X_3)$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Maximum of ten samples from a Rayleigh distribution");
+
+        Compute the distribution of the maximum of 100 samples from a Rician distribution.
+
+        .. ipython:: python
+
+            X = scipy.stats.rice(2)
+            n_samples = 100
+            x = np.linspace(0, 8, 1_001)
+
+            @savefig sdr_max_distribution_3.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.max_distribution(X, n_samples).pdf(x), label=r"$\text{max}(X_1, \dots, X_{100})$"); \
+            plt.hist(X.rvs((100_000, n_samples)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\text{max}(X_1, \dots, X_{100})$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Maximum of 100 samples from a Rician distribution");
+
+    Group:
+        probability
+    """
+    verify_scalar(n_samples, int=True, positive=True)
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    if n_samples == 1:
+        return X
+
+    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    # is p.
+    x1_min, x1_max = _x_range(X, p)
+    x = np.linspace(x1_min, x1_max, 1_001)
+    dx = np.mean(np.diff(x))
+
+    # Compute the PDF and CDF of the base distribution
+    f_X = X.pdf(x)
+    F_X = X.cdf(x)
+
+    f_Z = n_samples * F_X ** (n_samples - 1) * f_X
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    x = np.append(x, x[-1] + dx)
+    x -= dx / 2
+
+    return scipy.stats.rv_histogram((f_Z, x))
+
+
 def _x_range(X: scipy.stats.rv_continuous, p: float) -> tuple[float, float]:
     r"""
     Determines the range of x values for a given distribution such that the probability of exceeding the x axis, on
