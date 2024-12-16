@@ -183,6 +183,50 @@ def add_distribution(
     if n_vars == 1:
         return X
 
+    # Compute the exact distribution, if possible
+    if isinstance(X.dist, scipy.stats.rv_continuous):
+        shape, loc, scale = X.dist._parse_args(*X.args, **X.kwds)
+
+        if isinstance(X.dist, type(scipy.stats.norm)):
+            # Sum of normals is normal
+            mu = loc  # Mean
+            sigma = scale  # Standard deviation
+            mu_sum = n_vars * mu
+            sigma_sum = np.sqrt(n_vars) * sigma
+            return scipy.stats.norm(loc=mu_sum, scale=sigma_sum)
+        if isinstance(X.dist, type(scipy.stats.expon)):
+            # Sum of exponentials is gamma
+            lambda_inv = 1 / X.mean()  # Rate parameter lambda
+            return scipy.stats.gamma(a=n_vars, scale=1 / lambda_inv)
+        if isinstance(X.dist, type(scipy.stats.gamma)):
+            # Sum of gammas with the same scale is gamma
+            a = shape[0]  # Shape parameter a
+            a_sum = a * n_vars
+            return scipy.stats.gamma(a=a_sum, scale=scale)
+        if isinstance(X.dist, type(scipy.stats.chi2)):
+            # Sum of Chi-Squares is Chi-Square
+            df = shape[0]
+            df_sum = n_vars * df
+            return scipy.stats.chi2(df=df_sum)
+    # if isinstance(X.dist, scipy.stats.rv_discrete):
+    #     shape, loc, scale = X.dist._parse_args(*X.args, **X.kwds)
+
+    #     if isinstance(X.dist, type(scipy.stats.poisson)):
+    #         # Sum of Poissons is Poisson
+    #         mu = shape[0]  # Rate parameter mu
+    #         mu_sum = mu * n_vars
+    #         return scipy.stats.poisson(mu=mu_sum)
+    #     if isinstance(X.dist, type(scipy.stats.bernoulli)):
+    #         # Sum of Bernoullis is Binomial
+    #         p = shape[1]  # Probability of success
+    #         return scipy.stats.binom(n=n_vars, p=p)
+    #     if isinstance(X.dist, type(scipy.stats.geom)):
+    #         # Sum of Geometrics is Negative Binomial
+    #         p = shape[0]  # Probability of success
+    #         return scipy.stats.binom(n=n_vars, p=p)
+
+    # TODO: Add an override that uses the Central Limit Theorem for large values of n
+
     # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
     # is p.
     z1_min, z1_max = _x_range(X, p)
