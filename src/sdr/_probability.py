@@ -136,7 +136,7 @@ def add_iid_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of two Normal distributions");
+            plt.title("Sum of two normal distributions");
 
         Compute the distribution of the sum of three Rayleigh distributions.
 
@@ -282,7 +282,7 @@ def add_rvs(
         $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_Y(z - x) \, dx$$
 
     Examples:
-        Compute the distribution of the sum of Normal and Rayleigh random variables.
+        Compute the distribution of the sum of normal and Rayleigh random variables.
 
         .. ipython:: python
 
@@ -299,7 +299,7 @@ def add_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Sum of Normal and Rayleigh random variables");
+            plt.title("Sum of normal and Rayleigh random variables");
 
         Compute the distribution of the sum of Rayleigh and Rician random variables.
 
@@ -400,7 +400,7 @@ def subtract_rvs(
         $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_Y(x - z) \, dx$$
 
     Examples:
-        Compute the distribution of the difference of Normal and Rayleigh random variables.
+        Compute the distribution of the difference of normal and Rayleigh random variables.
 
         .. ipython:: python
 
@@ -417,7 +417,7 @@ def subtract_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Difference of Normal and Rayleigh random variables");
+            plt.title("Difference of normal and Rayleigh random variables");
 
         Compute the distribution of the difference of Rayleigh and Rician random variables.
 
@@ -526,7 +526,7 @@ def multiply_rvs(
         The Jacobian adjustment for this transformation contributes the factor $\frac{1}{\left| w \right|}$.
 
     Examples:
-        Compute the distribution of the product of two Normal random variables.
+        Compute the distribution of the product of two normal random variables.
 
         .. ipython:: python
 
@@ -543,7 +543,7 @@ def multiply_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Product of two Normal random variables");
+            plt.title("Product of two normal random variables");
 
     Group:
         probability
@@ -618,7 +618,7 @@ def min_iid_rvs(
         number of samples.
 
     Examples:
-        Compute the distribution of the minimum of ten Normal random variables.
+        Compute the distribution of the minimum of ten normal random variables.
 
         .. ipython:: python
 
@@ -634,7 +634,7 @@ def min_iid_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Minimum of 10 Normal random variables");
+            plt.title("Minimum of 10 normal random variables");
 
         Compute the distribution of the minimum of ten Rayleigh random variables.
 
@@ -740,7 +740,7 @@ def max_iid_rvs(
         number of samples.
 
     Examples:
-        Compute the distribution of the maximum of two Normal random variables.
+        Compute the distribution of the maximum of two normal random variables.
 
         .. ipython:: python
 
@@ -756,7 +756,7 @@ def max_iid_rvs(
             plt.legend(); \
             plt.xlabel("Random variable"); \
             plt.ylabel("Probability density"); \
-            plt.title("Maximum of two Normal random variables");
+            plt.title("Maximum of two normal random variables");
 
         Compute the distribution of the maximum of ten Rayleigh random variables.
 
