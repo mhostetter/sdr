@@ -403,6 +403,140 @@ def multiply_rvs(
 
 
 @export
+def max_rvs(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    p: float = 1e-16,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the maximum of two independent random variables $X$ and $Y$.
+
+    Arguments:
+        X: The distribution of the random variable $X$.
+        Y: The distribution of the random variable $Y$.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the maximum $Z = \max(X, Y)$.
+
+    Notes:
+        Given two independent random variables $X$ and $Y$ with PDFs $f_X(x)$ and $f_Y(y)$, and CDFs $F_X(x)$ and
+        $F_Y(y)$, we compute the PDF of $Z = \max(X, Y)$ as follows.
+
+        The CDF of $Z$, denoted $F_Z(z)$, is $F_Z(z) = P(Z \leq z)$. Since $Z = \max(X, Y)$, the event $Z \leq z$
+        occurs if and only if both $X \leq z$ and $Y \leq z$. Using independence,
+
+        $$F_Z(z) = P(X \leq z) \cdot P(Y \leq z) = F_X(z) \cdot F_Y(z) .$$
+
+        The PDF of $Z$, denoted $f_Z(z)$, is the derivative of $F_Z(z)$. Therefore, $f_Z(z) = \frac{d}{dz} F_Z(z)$.
+        Substituting $F_Z(z) = F_X(z) \cdot F_Y(z)$ yields
+
+        $$
+        f_Z(z) = \frac{d}{dz} \big(F_X(z) \cdot F_Y(z)\big)
+        f_Z(z) = f_X(z) \cdot F_Y(z) + f_Y(z) \cdot F_X(z) .
+        $$
+
+        Therefore, the PDF of $Z = \max(X, Y)$ is
+
+        $$f_Z(z) = f_X(z) \cdot F_Y(z) + f_Y(z) \cdot F_X(z)$$
+
+        where $F_X(z)$ and $F_Y(z)$ are the CDFs of the original random variables $X$ and $Y$, and $f_X(z)$ and
+        $f_Y(z)$ are the PDFs of $X$ and $Y$.
+
+    Examples:
+        Compute the distribution of the maximum of normal and Rayleigh random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=3, scale=0.5)
+            Y = scipy.stats.rayleigh(loc=1, scale=2)
+            x = np.linspace(0, 10, 1_001)
+
+            @savefig sdr_max_rvs_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
+            plt.plot(x, sdr.max_rvs(X, Y).pdf(x), label=r"$\max(X, Y)$"); \
+            plt.hist(np.maximum(X.rvs(100_000), Y.rvs(100_000)), bins=101, density=True, histtype="step", label=r"$\max(X, Y)$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Maximum of normal and Rayleigh random variables");
+
+        Compute the distribution of the maximum of Rayleigh and Rician random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rayleigh(scale=1)
+            Y = scipy.stats.rice(2)
+            x = np.linspace(0, 6, 1_001)
+
+            @savefig sdr_max_rvs_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
+            plt.plot(x, sdr.max_rvs(X, Y).pdf(x), label=r"$\max(X, Y)$"); \
+            plt.hist(np.maximum(X.rvs(100_000), Y.rvs(100_000)), bins=101, density=True, histtype="step", label=r"$\max(X, Y)$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Maximum of Rayleigh and Rician random variables");
+
+        Compute the distribution of the maximum of Rician and Chi-squared random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rice(3)
+            Y = scipy.stats.chi2(3)
+            x = np.linspace(0, 20, 1_001)
+
+            @savefig sdr_max_rvs_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
+            plt.plot(x, sdr.max_rvs(X, Y).pdf(x), label=r"$\max(X, Y)$"); \
+            plt.hist(np.maximum(X.rvs(100_000), Y.rvs(100_000)), bins=101, density=True, histtype="step", label=r"$\max(X, Y)$ empirical"); \
+            plt.legend(); \
+            plt.xlim(0, 15); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Maximum of Rician and Chi-squared random variables");
+
+    Group:
+        independent-rvs
+    """
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    # is p.
+    x_min, x_max = _x_range(X, p)
+    y_min, y_max = _x_range(Y, p)
+    dx = (x_max - x_min) / 1_000
+    dy = (y_max - y_min) / 1_000
+    dz = np.min([dx, dy])  # Use the smaller delta x -- must use the same dx for both distributions
+    z = np.arange(np.min([x_min, y_min]), np.max([x_max, y_max]), dz)
+
+    # Compute the PDF of each distribution
+    f_X = X.pdf(z)
+    f_Y = Y.pdf(z)
+
+    # Compute the CDF of each distribution
+    F_X = X.cdf(z)
+    F_Y = Y.cdf(z)
+
+    # The PDF of the min of X and Y
+    f_Z = f_X * F_Y + f_Y * F_X
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
+
+    return scipy.stats.rv_histogram((f_Z, z))
+
+
+@export
 def add_iid_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     n_vars: int,
