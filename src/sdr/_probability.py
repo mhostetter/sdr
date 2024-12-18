@@ -116,8 +116,8 @@ def add_rvs(
 
             @savefig sdr_add_rvs_1.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.add_rvs(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
@@ -135,8 +135,8 @@ def add_rvs(
 
             @savefig sdr_add_rvs_2.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.add_rvs(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
@@ -154,8 +154,8 @@ def add_rvs(
 
             @savefig sdr_add_rvs_3.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.add_rvs(X, Y).pdf(x), label="$X + Y$"); \
             plt.hist(X.rvs(100_000) + Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X + Y$ empirical"); \
             plt.legend(); \
@@ -234,8 +234,8 @@ def subtract_rvs(
 
             @savefig sdr_subtract_rvs_1.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.subtract_rvs(X, Y).pdf(x), label="$X - Y$"); \
             plt.hist(X.rvs(100_000) - Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X - Y$ empirical"); \
             plt.legend(); \
@@ -253,8 +253,8 @@ def subtract_rvs(
 
             @savefig sdr_subtract_rvs_2.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.subtract_rvs(X, Y).pdf(x), label="$X - Y$"); \
             plt.hist(X.rvs(100_000) - Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X - Y$ empirical"); \
             plt.legend(); \
@@ -272,8 +272,8 @@ def subtract_rvs(
 
             @savefig sdr_subtract_rvs_3.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.subtract_rvs(X, Y).pdf(x), label="$X - Y$"); \
             plt.hist(X.rvs(100_000) - Y.rvs(100_000), bins=101, density=True, histtype="step", label="$X - Y$ empirical"); \
             plt.legend(); \
@@ -360,8 +360,8 @@ def multiply_rvs(
 
             @savefig sdr_multiply_rvs_1.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, Y.pdf(x), label="Y"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
+            plt.plot(x, Y.pdf(x), label="$Y$"); \
             plt.plot(x, sdr.multiply_rvs(X, Y).pdf(x), label=r"$X \cdot Y$"); \
             plt.hist(X.rvs(100_000) * Y.rvs(100_000), bins=101, density=True, histtype="step", label=r"$X \cdot Y$ empirical"); \
             plt.legend(); \
@@ -455,7 +455,7 @@ def add_iid_rvs(
 
             @savefig sdr_add_iid_rvs_1.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2$ empirical"); \
             plt.legend(); \
@@ -473,7 +473,7 @@ def add_iid_rvs(
 
             @savefig sdr_add_iid_rvs_2.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3$ empirical"); \
             plt.legend(); \
@@ -491,7 +491,7 @@ def add_iid_rvs(
 
             @savefig sdr_add_iid_rvs_3.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
             plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3 + X_4$ empirical"); \
             plt.legend(); \
@@ -628,7 +628,7 @@ def min_iid_rvs(
 
             @savefig sdr_min_iid_rvs_1.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.min_iid_rvs(X, n_vars).pdf(x), label=r"$\min(X_1, X_2)$"); \
             plt.hist(X.rvs((100_000, n_vars)).min(axis=1), bins=101, density=True, histtype="step", label=r"$\min(X_1, X_2)$ empirical"); \
             plt.legend(); \
@@ -646,7 +646,7 @@ def min_iid_rvs(
 
             @savefig sdr_min_iid_rvs_2.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.min_iid_rvs(X, n_vars).pdf(x), label="$\\min(X_1, \dots, X_3)$"); \
             plt.hist(X.rvs((100_000, n_vars)).min(axis=1), bins=101, density=True, histtype="step", label="$\\min(X_1, \dots, X_3)$ empirical"); \
             plt.legend(); \
@@ -664,7 +664,7 @@ def min_iid_rvs(
 
             @savefig sdr_min_iid_rvs_3.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.min_iid_rvs(X, n_vars).pdf(x), label=r"$\min(X_1, \dots, X_{100})$"); \
             plt.hist(X.rvs((100_000, n_vars)).min(axis=1), bins=101, density=True, histtype="step", label=r"$\min(X_1, \dots, X_{100})$ empirical"); \
             plt.legend(); \
@@ -750,7 +750,7 @@ def max_iid_rvs(
 
             @savefig sdr_max_iid_rvs_1.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label=r"$\max(X_1, X_2)$"); \
             plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\max(X_1, X_2)$ empirical"); \
             plt.legend(); \
@@ -768,7 +768,7 @@ def max_iid_rvs(
 
             @savefig sdr_max_iid_rvs_2.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label="$\\max(X_1, \dots, X_3)$"); \
             plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label="$\\max(X_1, \dots, X_3)$ empirical"); \
             plt.legend(); \
@@ -786,7 +786,7 @@ def max_iid_rvs(
 
             @savefig sdr_max_iid_rvs_3.png
             plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, sdr.max_iid_rvs(X, n_vars).pdf(x), label=r"$\max(X_1, \dots, X_{100})$"); \
             plt.hist(X.rvs((100_000, n_vars)).max(axis=1), bins=101, density=True, histtype="step", label=r"$\max(X_1, \dots, X_{100})$ empirical"); \
             plt.legend(); \
