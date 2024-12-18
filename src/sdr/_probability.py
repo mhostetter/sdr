@@ -78,182 +78,6 @@ def Qinv(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
 
 @export
-def add_iid_rvs(
-    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
-    n_vars: int,
-    p: float = 1e-16,
-) -> scipy.stats.rv_histogram:
-    r"""
-    Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$.
-
-    Arguments:
-        X: The distribution of the i.i.d. random variables $X_i$.
-        n_vars: The number $n$ of random variables.
-        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
-            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
-            analysis, but will require more computation.
-
-    Returns:
-        The distribution of the sum $Z = X_1 + X_2 + \dots + X_n$.
-
-    Notes:
-        Given a random variable $X$ with PDF $f_X(x)$, we compute the PDF of
-        $Z = X_1 + X_2 + \dots + X_n$, where $X_1, X_2, \dots, X_n$ are independent and identically distributed
-        (i.i.d.), as follows.
-
-        The PDF of $Z$, denoted $f_Z(z)$, can be obtained by using the convolution formula for independent
-        random variables. Specifically, the PDF of the sum of $n$ i.i.d. random variables is given by the $n$-fold
-        convolution of the PDF of $X$ with itself.
-
-        For $n = 2$, $Z = X_1 + X_2$. The PDF of $Z$ is
-
-        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_X(z - x) \, dx$$
-
-        For $n > 2$, the PDF of $Z = X_1 + X_2 + \dots + X_n$ is computed recursively
-
-        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_{Z_{n-1}}(z - x) \, dx$$
-
-        where $f_{Z_{n-1}}(z)$ is the PDF of the sum of $n-1$ random variables.
-
-        For large $n$, the Central Limit Theorem may be used as an approximation. If $X_i$ have mean $\mu$ and
-        variance $\sigma^2$, then $Z$ approximately follows $Z \sim \mathcal{N}(n\mu, n\sigma^2)$
-        for sufficiently large $n$.
-
-    Examples:
-        Compute the distribution of the sum of two normal random variables.
-
-        .. ipython:: python
-
-            X = scipy.stats.norm(loc=-1, scale=0.5)
-            n_vars = 2
-            x = np.linspace(-6, 2, 1_001)
-
-            @savefig sdr_add_iid_rvs_1.png
-            plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
-            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2$ empirical"); \
-            plt.legend(); \
-            plt.xlabel("Random variable"); \
-            plt.ylabel("Probability density"); \
-            plt.title("Sum of two normal random variables");
-
-        Compute the distribution of the sum of three Rayleigh random variables.
-
-        .. ipython:: python
-
-            X = scipy.stats.rayleigh(scale=1)
-            n_vars = 3
-            x = np.linspace(0, 10, 1_001)
-
-            @savefig sdr_add_iid_rvs_2.png
-            plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
-            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3$ empirical"); \
-            plt.legend(); \
-            plt.xlabel("Random variable"); \
-            plt.ylabel("Probability density"); \
-            plt.title("Sum of three Rayleigh random variables");
-
-        Compute the distribution of the sum of four Rician random variables.
-
-        .. ipython:: python
-
-            X = scipy.stats.rice(2)
-            n_vars = 4
-            x = np.linspace(0, 18, 1_001)
-
-            @savefig sdr_add_iid_rvs_3.png
-            plt.figure(); \
-            plt.plot(x, X.pdf(x), label="X"); \
-            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
-            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3 + X_4$ empirical"); \
-            plt.legend(); \
-            plt.xlabel("Random variable"); \
-            plt.ylabel("Probability density"); \
-            plt.title("Sum of four Rician random variables");
-
-    Group:
-        probability
-    """
-    verify_scalar(n_vars, int=True, positive=True)
-    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
-
-    if n_vars == 1:
-        return X
-
-    # Compute the exact distribution, if possible
-    if isinstance(X.dist, scipy.stats.rv_continuous):
-        shape, loc, scale = X.dist._parse_args(*X.args, **X.kwds)
-
-        if isinstance(X.dist, type(scipy.stats.norm)):
-            # Sum of normals is normal
-            mu = loc  # Mean
-            sigma = scale  # Standard deviation
-            mu_sum = n_vars * mu
-            sigma_sum = np.sqrt(n_vars) * sigma
-            return scipy.stats.norm(loc=mu_sum, scale=sigma_sum)
-        if isinstance(X.dist, type(scipy.stats.expon)):
-            # Sum of exponentials is gamma
-            lambda_inv = 1 / X.mean()  # Rate parameter lambda
-            return scipy.stats.gamma(a=n_vars, scale=1 / lambda_inv)
-        if isinstance(X.dist, type(scipy.stats.gamma)):
-            # Sum of gammas with the same scale is gamma
-            a = shape[0]  # Shape parameter a
-            a_sum = a * n_vars
-            return scipy.stats.gamma(a=a_sum, scale=scale)
-        if isinstance(X.dist, type(scipy.stats.chi2)):
-            # Sum of Chi-Squares is Chi-Square
-            df = shape[0]
-            df_sum = n_vars * df
-            return scipy.stats.chi2(df=df_sum)
-    # if isinstance(X.dist, scipy.stats.rv_discrete):
-    #     shape, loc, scale = X.dist._parse_args(*X.args, **X.kwds)
-
-    #     if isinstance(X.dist, type(scipy.stats.poisson)):
-    #         # Sum of Poissons is Poisson
-    #         mu = shape[0]  # Rate parameter mu
-    #         mu_sum = mu * n_vars
-    #         return scipy.stats.poisson(mu=mu_sum)
-    #     if isinstance(X.dist, type(scipy.stats.bernoulli)):
-    #         # Sum of Bernoullis is Binomial
-    #         p = shape[1]  # Probability of success
-    #         return scipy.stats.binom(n=n_vars, p=p)
-    #     if isinstance(X.dist, type(scipy.stats.geom)):
-    #         # Sum of Geometrics is Negative Binomial
-    #         p = shape[0]  # Probability of success
-    #         return scipy.stats.binom(n=n_vars, p=p)
-
-    # TODO: Add an override that uses the Central Limit Theorem for large values of n
-
-    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
-    # is p.
-    z1_min, z1_max = _x_range(X, p)
-    z = np.linspace(z1_min, z1_max, 1_001)
-    dz = np.mean(np.diff(z))
-
-    # Compute the PDF of the base distribution
-    f_X = X.pdf(z)
-
-    # The PDF of the sum of n_vars independent random variables is the convolution of the PDF of the base distribution.
-    # This is efficiently computed in the frequency domain by exponentiating the FFT. The FFT must be zero-padded
-    # enough that the circular convolutions do not wrap around.
-    n_fft = scipy.fft.next_fast_len(f_X.size * n_vars)
-    f_X_fft = np.fft.fft(f_X, n_fft)
-    f_X_fft = f_X_fft**n_vars
-    f_Z = np.fft.ifft(f_X_fft).real
-    f_Z /= f_Z.sum() * dz
-    z = np.arange(f_Z.size) * dz + z[0] * (n_vars)
-
-    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
-    z = np.append(z, z[-1] + dz)
-    z -= dz / 2
-
-    return scipy.stats.rv_histogram((f_Z, z))
-
-
-@export
 def add_rvs(
     X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
     Y: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
@@ -340,7 +164,7 @@ def add_rvs(
             plt.title("Sum of Rician and Chi-squared random variables");
 
     Group:
-        probability
+        independent-rvs
     """
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
 
@@ -459,7 +283,7 @@ def subtract_rvs(
             plt.title("Difference of Rician and Chi-squared random variables");
 
     Group:
-        probability
+        independent-rvs
     """
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
 
@@ -546,7 +370,7 @@ def multiply_rvs(
             plt.title("Product of two normal random variables");
 
     Group:
-        probability
+        independent-rvs
     """
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
 
@@ -570,6 +394,182 @@ def multiply_rvs(
     f_Z = np.zeros_like(z)
     for i, zi in enumerate(z):
         f_Z[i] = scipy.integrate.quad(integrand, -np.inf, np.inf, args=(zi,))[0]
+
+    # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
+    z = np.append(z, z[-1] + dz)
+    z -= dz / 2
+
+    return scipy.stats.rv_histogram((f_Z, z))
+
+
+@export
+def add_iid_rvs(
+    X: scipy.stats.rv_continuous | scipy.stats.rv_histogram,
+    n_vars: int,
+    p: float = 1e-16,
+) -> scipy.stats.rv_histogram:
+    r"""
+    Numerically calculates the distribution of the sum of $n$ i.i.d. random variables $X_i$.
+
+    Arguments:
+        X: The distribution of the i.i.d. random variables $X_i$.
+        n_vars: The number $n$ of random variables.
+        p: The probability of exceeding the x axis, on either side, for each distribution. This is used to determine
+            the bounds on the x axis for the numerical convolution. Smaller values of $p$ will result in more accurate
+            analysis, but will require more computation.
+
+    Returns:
+        The distribution of the sum $Z = X_1 + X_2 + \dots + X_n$.
+
+    Notes:
+        Given a random variable $X$ with PDF $f_X(x)$, we compute the PDF of
+        $Z = X_1 + X_2 + \dots + X_n$, where $X_1, X_2, \dots, X_n$ are independent and identically distributed
+        (i.i.d.), as follows.
+
+        The PDF of $Z$, denoted $f_Z(z)$, can be obtained by using the convolution formula for independent
+        random variables. Specifically, the PDF of the sum of $n$ i.i.d. random variables is given by the $n$-fold
+        convolution of the PDF of $X$ with itself.
+
+        For $n = 2$, $Z = X_1 + X_2$. The PDF of $Z$ is
+
+        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_X(z - x) \, dx$$
+
+        For $n > 2$, the PDF of $Z = X_1 + X_2 + \dots + X_n$ is computed recursively
+
+        $$f_Z(z) = \int_{-\infty}^\infty f_X(x) f_{Z_{n-1}}(z - x) \, dx$$
+
+        where $f_{Z_{n-1}}(z)$ is the PDF of the sum of $n-1$ random variables.
+
+        For large $n$, the Central Limit Theorem may be used as an approximation. If $X_i$ have mean $\mu$ and
+        variance $\sigma^2$, then $Z$ approximately follows $Z \sim \mathcal{N}(n\mu, n\sigma^2)$
+        for sufficiently large $n$.
+
+    Examples:
+        Compute the distribution of the sum of two normal random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.norm(loc=-1, scale=0.5)
+            n_vars = 2
+            x = np.linspace(-6, 2, 1_001)
+
+            @savefig sdr_add_iid_rvs_1.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2$"); \
+            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Sum of two normal random variables");
+
+        Compute the distribution of the sum of three Rayleigh random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rayleigh(scale=1)
+            n_vars = 3
+            x = np.linspace(0, 10, 1_001)
+
+            @savefig sdr_add_iid_rvs_2.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3$"); \
+            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Sum of three Rayleigh random variables");
+
+        Compute the distribution of the sum of four Rician random variables.
+
+        .. ipython:: python
+
+            X = scipy.stats.rice(2)
+            n_vars = 4
+            x = np.linspace(0, 18, 1_001)
+
+            @savefig sdr_add_iid_rvs_3.png
+            plt.figure(); \
+            plt.plot(x, X.pdf(x), label="X"); \
+            plt.plot(x, sdr.add_iid_rvs(X, n_vars).pdf(x), label="$X_1 + X_2 + X_3 + X_4$"); \
+            plt.hist(X.rvs((100_000, n_vars)).sum(axis=1), bins=101, density=True, histtype="step", label="$X_1 + X_2 + X_3 + X_4$ empirical"); \
+            plt.legend(); \
+            plt.xlabel("Random variable"); \
+            plt.ylabel("Probability density"); \
+            plt.title("Sum of four Rician random variables");
+
+    Group:
+        iid-rvs
+    """
+    verify_scalar(n_vars, int=True, positive=True)
+    verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
+
+    if n_vars == 1:
+        return X
+
+    # Compute the exact distribution, if possible
+    if isinstance(X.dist, scipy.stats.rv_continuous):
+        shape, loc, scale = X.dist._parse_args(*X.args, **X.kwds)
+
+        if isinstance(X.dist, type(scipy.stats.norm)):
+            # Sum of normals is normal
+            mu = loc  # Mean
+            sigma = scale  # Standard deviation
+            mu_sum = n_vars * mu
+            sigma_sum = np.sqrt(n_vars) * sigma
+            return scipy.stats.norm(loc=mu_sum, scale=sigma_sum)
+        if isinstance(X.dist, type(scipy.stats.expon)):
+            # Sum of exponentials is gamma
+            lambda_inv = 1 / X.mean()  # Rate parameter lambda
+            return scipy.stats.gamma(a=n_vars, scale=1 / lambda_inv)
+        if isinstance(X.dist, type(scipy.stats.gamma)):
+            # Sum of gammas with the same scale is gamma
+            a = shape[0]  # Shape parameter a
+            a_sum = a * n_vars
+            return scipy.stats.gamma(a=a_sum, scale=scale)
+        if isinstance(X.dist, type(scipy.stats.chi2)):
+            # Sum of Chi-Squares is Chi-Square
+            df = shape[0]
+            df_sum = n_vars * df
+            return scipy.stats.chi2(df=df_sum)
+    # if isinstance(X.dist, scipy.stats.rv_discrete):
+    #     shape, loc, scale = X.dist._parse_args(*X.args, **X.kwds)
+
+    #     if isinstance(X.dist, type(scipy.stats.poisson)):
+    #         # Sum of Poissons is Poisson
+    #         mu = shape[0]  # Rate parameter mu
+    #         mu_sum = mu * n_vars
+    #         return scipy.stats.poisson(mu=mu_sum)
+    #     if isinstance(X.dist, type(scipy.stats.bernoulli)):
+    #         # Sum of Bernoullis is Binomial
+    #         p = shape[1]  # Probability of success
+    #         return scipy.stats.binom(n=n_vars, p=p)
+    #     if isinstance(X.dist, type(scipy.stats.geom)):
+    #         # Sum of Geometrics is Negative Binomial
+    #         p = shape[0]  # Probability of success
+    #         return scipy.stats.binom(n=n_vars, p=p)
+
+    # TODO: Add an override that uses the Central Limit Theorem for large values of n
+
+    # Determine the x axis of each distribution such that the probability of exceeding the x axis, on either side,
+    # is p.
+    z1_min, z1_max = _x_range(X, p)
+    z = np.linspace(z1_min, z1_max, 1_001)
+    dz = np.mean(np.diff(z))
+
+    # Compute the PDF of the base distribution
+    f_X = X.pdf(z)
+
+    # The PDF of the sum of n_vars independent random variables is the convolution of the PDF of the base distribution.
+    # This is efficiently computed in the frequency domain by exponentiating the FFT. The FFT must be zero-padded
+    # enough that the circular convolutions do not wrap around.
+    n_fft = scipy.fft.next_fast_len(f_X.size * n_vars)
+    f_X_fft = np.fft.fft(f_X, n_fft)
+    f_X_fft = f_X_fft**n_vars
+    f_Z = np.fft.ifft(f_X_fft).real
+    f_Z /= f_Z.sum() * dz
+    z = np.arange(f_Z.size) * dz + z[0] * (n_vars)
 
     # Adjust the histograms bins to be on either side of each point. So there is one extra point added.
     z = np.append(z, z[-1] + dz)
@@ -673,7 +673,7 @@ def min_iid_rvs(
             plt.title("Minimum of 100 Rician random variables");
 
     Group:
-        probability
+        iid-rvs
     """
     verify_scalar(n_vars, int=True, positive=True)
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
@@ -795,7 +795,7 @@ def max_iid_rvs(
             plt.title("Maximum of 100 Rician random variables");
 
     Group:
-        probability
+        iid-rvs
     """
     verify_scalar(n_vars, int=True, positive=True)
     verify_scalar(p, float=True, exclusive_min=0, inclusive_max=0.1)
