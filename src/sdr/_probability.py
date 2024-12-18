@@ -428,20 +428,15 @@ def min_rvs(
         The CDF of $Z$, denoted $F_Z(z)$, is $F_Z(z) = P(Z \leq z)$. Since $Z = \min(X, Y)$, the event $Z \leq z$
         occurs if either $X \leq z$ or $Y \leq z$. Using the complement and independence,
 
-        $$
-        P(Z \leq z) = 1 - P(Z > z) = 1 - P(X > z \text{ and } Y > z)
-        F_Z(z) = 1 - P(X > z) \cdot P(Y > z)
-        F_Z(z) = 1 - (1 - F_X(z)) \cdot (1 - F_Y(z))
-        $$
+        $$P(Z \leq z) = 1 - P(Z > z) = 1 - P(X > z \text{ and } Y > z)$$
+        $$F_Z(z) = 1 - P(X > z) \cdot P(Y > z)$$
+        $$F_Z(z) = 1 - (1 - F_X(z)) \cdot (1 - F_Y(z)) .$$
 
         The PDF of $Z$, denoted $f_Z(z)$, is the derivative of $F_Z(z)$. Therefore, $f_Z(z) = \frac{d}{dz} F_Z(z)$.
         Substituting $F_Z(z) = 1 - (1 - F_X(z)) \cdot (1 - F_Y(z))$ yields
 
-        $$
-        f_Z(z) = \frac{d}{dz} \big(1 - (1 - F_X(z)) \cdot (1 - F_Y(z))\big)
-        f_Z(z) = \frac{d}{dz} \big((1 - F_X(z)) \cdot (1 - F_Y(z))\big)
-        f_Z(z) = f_X(z) \cdot (1 - F_Y(z)) + f_Y(z) \cdot (1 - F_X(z)) .
-        $$
+        $$f_Z(z) = \frac{d}{dz} \big(1 - (1 - F_X(z)) \cdot (1 - F_Y(z))\big)$$
+        $$f_Z(z) = f_X(z) \cdot (1 - F_Y(z)) + f_Y(z) \cdot (1 - F_X(z)) .$$
 
         Therefore, the PDF of $Z = \min(X, Y)$ is
 
@@ -497,7 +492,7 @@ def min_rvs(
             Y = scipy.stats.chi2(3)
             x = np.linspace(0, 20, 1_001)
 
-            @savefig sdr_min_rvs_2.png
+            @savefig sdr_min_rvs_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, Y.pdf(x), label="$Y$"); \
@@ -572,10 +567,8 @@ def max_rvs(
         The PDF of $Z$, denoted $f_Z(z)$, is the derivative of $F_Z(z)$. Therefore, $f_Z(z) = \frac{d}{dz} F_Z(z)$.
         Substituting $F_Z(z) = F_X(z) \cdot F_Y(z)$ yields
 
-        $$
-        f_Z(z) = \frac{d}{dz} \big(F_X(z) \cdot F_Y(z)\big)
-        f_Z(z) = f_X(z) \cdot F_Y(z) + f_Y(z) \cdot F_X(z) .
-        $$
+        $$f_Z(z) = \frac{d}{dz} \big(F_X(z) \cdot F_Y(z)\big)$$
+        $$f_Z(z) = f_X(z) \cdot F_Y(z) + f_Y(z) \cdot F_X(z) .$$
 
         Therefore, the PDF of $Z = \max(X, Y)$ is
 
@@ -631,7 +624,7 @@ def max_rvs(
             Y = scipy.stats.chi2(3)
             x = np.linspace(0, 20, 1_001)
 
-            @savefig sdr_max_rvs_2.png
+            @savefig sdr_max_rvs_3.png
             plt.figure(); \
             plt.plot(x, X.pdf(x), label="$X$"); \
             plt.plot(x, Y.pdf(x), label="$Y$"); \
