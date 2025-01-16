@@ -159,10 +159,10 @@ class CPM:
     def _modulate(self, s: npt.NDArray[np.int_]) -> npt.NDArray[np.complex128]:
         s = self._symbol_labels[s]  # Relabeled decimal symbols
         freq = self.index * (2 * s - (self.order - 1))  # Instantaneous frequency
-        print(freq)
+        # print(freq)
         # return f
         freq_ps = self._tx_pulse_shape(freq)  # Pulse-shaped instantaneous frequency
-        print(freq_ps)
+        # print(freq_ps)
         # phase_ps = np.cumsum(freq_ps)  # Pulse-shaped instantaneous phase
         # phase_ps = np.insert(phase_ps, 0, 0)  # Start with phase 0
         # phase_ps = phase_ps[:-1]  # Trim last phase
