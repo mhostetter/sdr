@@ -37,6 +37,7 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Mathematics",
     "Topic :: Security :: Cryptography",
     "Topic :: Software Development :: Libraries :: Python Modules",
@@ -48,7 +49,7 @@ dependencies = [
     "numba",                      # Use galois's version limitation
     "scipy",
     "matplotlib",
-    "galois == 0.4.3",            # Exact match required because of use of internals
+    "galois == 0.4.4",            # Exact match required because of use of internals
     "typing_extensions >= 4.0.0", # v4.0.0 is needed for use of Self (Python 3.11+) and Literal (Python 3.8+)
 ]
 dynamic = ["version"]
