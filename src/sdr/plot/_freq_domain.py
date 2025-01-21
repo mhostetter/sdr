@@ -128,8 +128,10 @@ def dft(
         if ax is None:
             ax = plt.gca()
 
-        if window is not None:
-            x *= scipy.signal.windows.get_window(window, x.size)
+        if window is None:
+            w = np.ones(x.size)
+        else:
+            w = scipy.signal.windows.get_window(window, x.size)
 
         if size is None:
             if oversample is None:
@@ -140,7 +142,7 @@ def dft(
         if fast:
             size = scipy.fft.next_fast_len(size)
 
-        X = np.fft.fft(x, size)
+        X = np.fft.fft(x * w, size)
         if x_axis == "freq":
             f = np.fft.fftfreq(size, 1 / sample_rate)
         elif x_axis == "bin":
