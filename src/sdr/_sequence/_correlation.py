@@ -627,7 +627,7 @@ def _kasami_small_set(degree: int, poly: Poly, index: int) -> npt.NDArray[np.int
 
     j = index
     if not -1 <= j < 2 ** (degree // 2) - 1:
-        raise ValueError(f"Argument 'index' must be between -1 and {2**(degree//2) - 1}, not {j}.")
+        raise ValueError(f"Argument 'index' must be between -1 and {2 ** (degree // 2) - 1}, not {j}.")
 
     u = m_sequence(degree, poly=poly, index=1, output="decimal")
     length = u.size
@@ -652,7 +652,7 @@ def _kasami_large_set(degree: int, poly: Poly, index: tuple[int, int]) -> npt.ND
     if not -2 <= i < 2**degree - 1:
         raise ValueError(f"Argument 'index[0]' must be between -2 and {2**degree - 1}, not {i}.")
     if not -1 <= j < 2 ** (degree // 2) - 1:
-        raise ValueError(f"Argument 'index[1]' must be between -1 and {2**(degree//2) - 1}, not {j}.")
+        raise ValueError(f"Argument 'index[1]' must be between -1 and {2 ** (degree // 2) - 1}, not {j}.")
 
     u = m_sequence(degree, poly=poly, index=1, output="decimal")
     length = u.size
