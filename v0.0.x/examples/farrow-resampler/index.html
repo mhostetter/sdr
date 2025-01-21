@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.e13b57acf20ef338b.min.css?v=c9624786" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.458d74cb8379d598d.min.css?v=e84ed5c5" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
@@ -14380,10 +14380,10 @@ You're not viewing the latest version.
 <h1 id="farrow-arbitrary-resampler"><span id="id1"></span>Farrow arbitrary resampler<a class="headerlink" href="#farrow-arbitrary-resampler" title="Link to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="kn">import</span> <span class="nn">sdr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
 <span class="o">%</span><span class="k">matplotlib</span> inline
@@ -14429,7 +14429,7 @@ This is accomplished, for arbitrary <span class="math notranslate nohighlight">\
 <p>In the <a class="reference internal" href="../../api/dsp/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> library, the Farrow arbitrary resampler is implemented in <a class="reference internal" href="../../api/sdr.FarrowResampler/" title="sdr.FarrowResampler (Python class) — Implements a piecewise polynomial Farrow arbitrary resampler."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.FarrowResampler</span></code></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">resample_signal</span><span class="p">(</span><span class="n">rate</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">resample_signal</span><span class="p">(</span><span class="n">rate</span><span class="p">):</span>
     <span class="n">farrow</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">FarrowResampler</span><span class="p">()</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">farrow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rate</span><span class="p">)</span>
     <span class="n">new_sample_rate</span> <span class="o">=</span> <span class="n">rate</span> <span class="o">*</span> <span class="n">sample_rate</span>

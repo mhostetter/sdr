@@ -32,7 +32,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.e13b57acf20ef338b.min.css?v=c9624786" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.458d74cb8379d598d.min.css?v=e84ed5c5" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=dc988d19" />
@@ -14446,10 +14446,10 @@ You're not viewing the latest version.
 <h1 id="phase-shift-keying"><span id="psk"></span>Phase-shift keying<a class="headerlink" href="#phase-shift-keying" title="Link to this heading">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">import</span> <span class="nn">sdr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sdr</span>
 
 <span class="o">%</span><span class="k">config</span> InlineBackend.print_figure_kwargs = {&quot;facecolor&quot; : &quot;w&quot;}
 <span class="o">%</span><span class="k">matplotlib</span> inline
@@ -14463,7 +14463,7 @@ You're not viewing the latest version.
 <p>In the <a class="reference internal" href="../../api/dsp/#module-sdr" title="sdr (Python module)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr</span></code></a> library, phase-shift keying modulation is available in the <a class="reference internal" href="../../api/sdr.PSK/" title="sdr.PSK (Python class) — Implements phase-shift keying (PSK) modulation and demodulation."><code class="xref py py-obj docutils literal notranslate"><span class="pre">sdr.PSK</span></code></a> class.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">analyze_psk</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">esn0</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">analyze_psk</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">esn0</span><span class="p">):</span>
     <span class="c1"># Generate random decimal symbols</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">)</span>
 
@@ -14551,7 +14551,7 @@ You're not viewing the latest version.
 <h2 id="error-rate-curves">Error rate curves<a class="headerlink" href="#error-rate-curves" title="Link to this heading">¶</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">error_rates</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">error_rates</span><span class="p">(</span><span class="n">psk</span><span class="p">,</span> <span class="n">ebn0</span><span class="p">):</span>
     <span class="n">esn0</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ebn0_to_esn0</span><span class="p">(</span><span class="n">ebn0</span><span class="p">,</span> <span class="n">psk</span><span class="o">.</span><span class="n">bps</span><span class="p">)</span>
     <span class="n">snr</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">esn0_to_snr</span><span class="p">(</span><span class="n">esn0</span><span class="p">)</span>
 
