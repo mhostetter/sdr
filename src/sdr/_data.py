@@ -153,8 +153,7 @@ def hexdump(
         data = verify_arraylike(data, int=True, ndim=1, inclusive_min=0, exclusive_max=256)
     verify_scalar(width, int=True, inclusive_min=1, inclusive_max=16)
 
-    if width > data.size:
-        width = data.size
+    width = min(width, data.size)
 
     string = ""
     for i in range(0, data.size, width):
