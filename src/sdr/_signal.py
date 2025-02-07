@@ -12,6 +12,74 @@ from ._helper import convert_output, export, verify_arraylike, verify_bool, veri
 
 
 @export
+def local_oscillator(
+    duration: float,
+    freq: float = 0.0,
+    phase: float = 0.0,
+    sample_rate: float = 1.0,
+    complex: bool = True,
+) -> npt.NDArray:
+    r"""
+    Generates a complex exponential or real sinusoid local oscillator.
+
+    Arguments:
+        duration: The duration of the signal in seconds (or samples if `sample_rate=1`).
+        freq: The frequency $f$ of the sinusoid in Hz (or 1/samples if `sample_rate=1`).
+            The frequency must satisfy $-f_s/2 \le f \le f_s/2$.
+        phase: The phase $\phi$ of the sinusoid in degrees.
+        sample_rate: The sample rate $f_s$ of the signal.
+        complex: Indicates whether to generate a complex exponential or real sinusoid.
+
+            - `True`: $\exp \left[ j \left( 2 \pi f t + \phi \right) \right]$
+            - `False`: $\cos \left( 2 \pi f t + \phi \right)$
+
+    Returns:
+        The local oscillator signal $x_{\text{LO}}[n]$.
+
+    Examples:
+        Create a complex exponential with a frequency of 10 Hz and phase of 45 degrees.
+
+        .. ipython:: python
+
+            sample_rate = 1e3; \
+            N = 100; \
+            lo = sdr.local_oscillator(N / sample_rate, freq=10, phase=45, sample_rate=sample_rate)
+
+            @savefig sdr_local_oscillator_1.png
+            plt.figure(); \
+            sdr.plot.time_domain(lo, sample_rate=sample_rate); \
+            plt.title(r"Complex exponential with $f=10$ Hz and $\phi=45$ degrees");
+
+        Create a real sinusoid with a frequency of 10 Hz and phase of 45 degrees.
+
+        .. ipython:: python
+
+            lo = sdr.local_oscillator(N / sample_rate, freq=10, phase=45, sample_rate=sample_rate, complex=False)
+
+            @savefig sdr_local_oscillator_2.png
+            plt.figure(); \
+            sdr.plot.time_domain(lo, sample_rate=sample_rate); \
+            plt.title(r"Real sinusoid with $f=10$ Hz and $\phi=45$ degrees");
+
+    Group:
+        dsp-signal-manipulation
+    """
+    verify_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
+    verify_scalar(phase, float=True)
+    verify_scalar(sample_rate, float=True, positive=True)
+    verify_bool(complex)
+
+    n = int(duration * sample_rate)  # Number of samples
+    t = np.arange(n) / sample_rate  # Time vector in seconds
+    if complex:
+        lo = np.exp(1j * (2 * np.pi * freq * t + np.deg2rad(phase)))
+    else:
+        lo = np.cos(2 * np.pi * freq * t + np.deg2rad(phase))
+
+    return convert_output(lo)
+
+
+@export
 def mix(
     x: npt.ArrayLike,
     freq: float = 0.0,
@@ -70,12 +138,7 @@ def mix(
     verify_scalar(sample_rate, float=True, positive=True)
     verify_bool(complex)
 
-    t = np.arange(x.size) / sample_rate  # Time vector in seconds
-    if complex:
-        lo = np.exp(1j * (2 * np.pi * freq * t + np.deg2rad(phase)))
-    else:
-        lo = np.cos(2 * np.pi * freq * t + np.deg2rad(phase))
-
+    lo = local_oscillator(x.size / sample_rate, freq=freq, phase=phase, sample_rate=sample_rate, complex=complex)
     y = x * lo
 
     return convert_output(y)
