@@ -192,9 +192,8 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.
 @export
 def sample_rate_offset(
     x: npt.ArrayLike,
-    offset: float,
-    # offset: npt.ArrayLike,
-    # offset_rate: npt.ArrayLike = 0.0,
+    offset: npt.ArrayLike,
+    offset_rate: npt.ArrayLike = 0.0,
     sample_rate: float = 1.0,
 ) -> npt.NDArray:
     r"""
@@ -203,10 +202,18 @@ def sample_rate_offset(
     Arguments:
         x: The time-domain signal $x[n]$ to which the sample rate offset is applied.
         offset: The sample rate offset $\Delta f_s = f_{s,\text{new}} - f_{s,\text{old}}$ in samples/s.
+        offset_rate: The sample rate offset rate $\Delta f_s / \Delta t$ in samples/s^2.
         sample_rate: The sample rate $f_s$ in samples/s.
 
     Returns:
         The signal $x[n]$ with sample rate offset applied.
+
+    Notes:
+        The sample rate offset is applied using a Farrow resampler. The resampling rate is calculated as follows.
+
+        $$
+        \text{rate} = \frac{f_s + \Delta f_s + \frac{\Delta f_s}{f_s}}{f_s}
+        $$
 
     Examples:
         Create a QPSK reference signal.
@@ -245,23 +252,11 @@ def sample_rate_offset(
         simulation-impairments
     """
     x = verify_arraylike(x, complex=True, ndim=1)
-    verify_scalar(offset, float=True)
+    offset = verify_arraylike(offset, float=True)
+    offset_rate = verify_arraylike(offset_rate, float=True)
     verify_scalar(sample_rate, float=True, positive=True)
 
-    # offset = np.asarray(offset)
-    # if not (offset.ndim == 0 or offset.shape == x.shape):
-    #     raise ValueError(f"Argument 'offset' must be scalar or have shape {x.shape}, not {offset.shape}.")
-
-    # offset_rate = np.asarray(offset_rate)
-    # if not (offset_rate.ndim == 0 or offset_rate.shape == x.shape):
-    #     raise ValueError(f"Argument 'offset_rate' must be scalar or have shape {x.shape}, not {offset_rate.shape}.")
-
-    rate = (sample_rate + offset) / sample_rate
-
-    # TODO: Add ppm_rate
-    # if ppm_rate:
-    #     rate += ppm_rate * 1e-6 * np.arange(x.size)
-
+    rate = (sample_rate + offset + offset_rate / sample_rate) / sample_rate
     farrow = FarrowResampler()
     y = farrow(x, rate)
 
