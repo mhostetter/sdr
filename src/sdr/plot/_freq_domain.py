@@ -77,7 +77,7 @@ def dft(
 
             n = 10  # samples
             f = 1.5 / n  # cycles/sample
-            x = np.exp(1j * 2 * np.pi * f * np.arange(n))
+            x = sdr.sinusoid(n, freq=f)
 
             @savefig sdr_plot_dft_1.png
             plt.figure(); \
@@ -223,7 +223,7 @@ def dtft(
 
             n = 10  # samples
             f = 0 / n  # cycles/sample
-            x = np.exp(1j * 2 * np.pi * f * np.arange(n))
+            x = sdr.sinusoid(n, freq=f)
 
             @savefig sdr_plot_dtft_1.png
             plt.figure(); \

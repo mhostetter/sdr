@@ -294,7 +294,7 @@ def frequency_offset(
 
         .. ipython:: python
 
-            x = np.exp(1j * 2 * np.pi / 100 * np.arange(100))
+            x = sdr.sinusoid(100, freq=1 / 100)
 
         Add a frequency offset of 1 cycle per 100 samples (the length of the signal). Notice that the signal now
         rotates through 2 cycles instead of 1.
