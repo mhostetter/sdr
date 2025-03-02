@@ -112,8 +112,7 @@ def mix(
         .. ipython:: python
 
             sample_rate = 1e3; \
-            N = 100; \
-            x = np.exp(1j * (2 * np.pi * 10 * np.arange(N) / sample_rate + np.pi/4))
+            x = sdr.sinusoid(100 / sample_rate, freq=10, phase=45, sample_rate=sample_rate)
 
             @savefig sdr_mix_1.png
             plt.figure(); \
@@ -169,9 +168,9 @@ def to_complex_baseband(x_r: npt.ArrayLike) -> npt.NDArray[np.complex128]:
 
             sample_rate = 1e3; \
             x_r = ( \
-                0.1 * np.sin(2 * np.pi * 100 / sample_rate * np.arange(1000)) \
-                + 1.0 * np.sin(2 * np.pi * 250 / sample_rate * np.arange(1000)) \
-                + 0.5 * np.sin(2 * np.pi * 300 / sample_rate * np.arange(1000)) \
+                0.1 * sdr.sinusoid(1_000 / sample_rate, freq=100, sample_rate=sample_rate, complex=False) \
+                + 1.0 * sdr.sinusoid(1_000 / sample_rate, freq=250, sample_rate=sample_rate, complex=False) \
+                + 0.5 * sdr.sinusoid(1_000 / sample_rate, freq=300, sample_rate=sample_rate, complex=False) \
             ); \
             x_r = sdr.awgn(x_r, snr=30)
 
@@ -248,9 +247,9 @@ def to_real_passband(x_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
             sample_rate = 500; \
             x_c = ( \
-                0.1 * np.exp(1j * 2 * np.pi * -150 / sample_rate * np.arange(1000)) \
-                + 1.0 * np.exp(1j * 2 * np.pi * 0 / sample_rate * np.arange(1000)) \
-                + 0.5 * np.exp(1j * 2 * np.pi * 50 / sample_rate * np.arange(1000)) \
+                0.1 * sdr.sinusoid(1_000 / sample_rate, freq=-150, sample_rate=sample_rate) \
+                + 1.0 * sdr.sinusoid(1_000 / sample_rate, freq=0, sample_rate=sample_rate) \
+                + 0.5 * sdr.sinusoid(1_000 / sample_rate, freq=50, sample_rate=sample_rate) \
             ); \
             x_c = sdr.awgn(x_c, snr=30)
 
@@ -326,7 +325,7 @@ def upsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
         .. ipython:: python
 
             sample_rate = 100; \
-            x = np.exp(1j * 2 * np.pi * 15 / sample_rate * np.arange(20))
+            x = sdr.sinusoid(20 / sample_rate, freq=15, sample_rate=sample_rate); \
             y = sdr.upsample(x, 4)
 
             @savefig sdr_upsample_1.png
@@ -393,9 +392,9 @@ def downsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
         .. ipython:: python
 
             sample_rate = 400; \
-            x1 = np.exp(1j * 2 * np.pi * 0 / sample_rate * np.arange(200)); \
-            x2 = np.exp(1j * 2 * np.pi * 130 / sample_rate * np.arange(200)); \
-            x3 = np.exp(1j * 2 * np.pi * -140 / sample_rate * np.arange(200)); \
+            x1 = sdr.sinusoid(200 / sample_rate, freq=0, sample_rate=sample_rate); \
+            x2 = sdr.sinusoid(200 / sample_rate, freq=130, sample_rate=sample_rate); \
+            x3 = sdr.sinusoid(200 / sample_rate, freq=-140, sample_rate=sample_rate); \
             x = x1 + x2 + x3
             y = sdr.downsample(x, 4)
 
