@@ -4027,6 +4027,21 @@ You're not viewing the latest version.
               
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.sinusoid/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sinusoid (Python function) — Generates a complex exponential or real sinusoid." class="md-ellipsis">sinusoid</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
     
@@ -14451,8 +14466,7 @@ The frequency must satisfy <span class="math notranslate nohighlight">\(-f_s/2 \
 <p class="example rubric" id="examples">Examples</p>
 <p>Create a complex exponential with a frequency of 10 Hz and phase of 45 degrees.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">1e3</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="mi">100</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
@@ -14504,7 +14518,7 @@ The frequency must satisfy <span class="math notranslate nohighlight">\(-f_s/2 \
     <nav class="md-footer__inner md-grid" aria-label="Footer" >
       
         
-        <a href="../sdr.fractional_delay_fir/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.fractional_delay_fir" rel="prev">
+        <a href="../sdr.sinusoid/" class="md-footer__link md-footer__link--prev" aria-label="Previous: sdr.sinusoid" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -14513,7 +14527,7 @@ The frequency must satisfy <span class="math notranslate nohighlight">\(-f_s/2 \
               <span class="md-footer__direction">
                 Previous
               </span>
-              sdr.fractional_delay_fir
+              sdr.sinusoid
             </div>
           </div>
         </a>

@@ -4026,6 +4026,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.sinusoid/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sinusoid (Python function) — Generates a complex exponential or real sinusoid." class="md-ellipsis">sinusoid</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.mix/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes a time-domain signal with a complex exponential or real sinusoid." class="md-ellipsis">mix</span>
       </a>
@@ -14444,7 +14459,7 @@ You're not viewing the latest version.
 </dl>
 <p class="example rubric" id="examples">Examples</p>
 <p>Create a reference signal with a constant frequency of 1 cycle per 100 samples.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
 </code></pre></div>
 </div>
 <p>Add a frequency offset of 1 cycle per 100 samples (the length of the signal). Notice that the signal now

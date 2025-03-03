@@ -4030,6 +4030,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.sinusoid/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sinusoid (Python function) — Generates a complex exponential or real sinusoid." class="md-ellipsis">sinusoid</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.mix/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes a time-domain signal with a complex exponential or real sinusoid." class="md-ellipsis">mix</span>
       </a>
@@ -14407,17 +14422,16 @@ polyphase interpolation (with anti-aliasing filtering), see <a class="reference 
 <p class="example rubric" id="examples">Examples</p>
 <p>Upsample a complex exponential by a factor of 4.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">15</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+<span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="mi">20</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">);</span> \
+<span class="gp">   ...: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
-<span class="gp">In [2]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-
-<span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">In [2]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Input signal $x[n]$&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 
-<span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">In [3]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Upsampled signal $y[n]$&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
@@ -14426,14 +14440,14 @@ polyphase interpolation (with anti-aliasing filtering), see <a class="reference 
 <img alt="../../_images/sdr_upsample_1.png" src="../../_images/sdr_upsample_1.png" />
 <img alt="../../_images/sdr_upsample_2.png" src="../../_images/sdr_upsample_2.png" />
 <p>The spectrum of <span class="math notranslate nohighlight">\(y[n]\)</span> has 3 additional copies of the spectrum of <span class="math notranslate nohighlight">\(x[n]\)</span>.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [4]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="n">sample_rate</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Input signal $x[n]$&quot;</span><span class="p">);</span>
 <span class="gp">   ...: </span>
 
-<span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
+<span class="gp">In [5]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">periodogram</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="n">sample_rate</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">*</span><span class="mi">2</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> \

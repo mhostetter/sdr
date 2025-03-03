@@ -4030,6 +4030,21 @@ You're not viewing the latest version.
   
   
     <li class="md-nav__item">
+      <a href="../sdr.sinusoid/" class="md-nav__link">
+        <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.sinusoid (Python function) — Generates a complex exponential or real sinusoid." class="md-ellipsis">sinusoid</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sdr.mix/" class="md-nav__link">
         <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span><span title="sdr.mix (Python function) — Mixes a time-domain signal with a complex exponential or real sinusoid." class="md-ellipsis">mix</span>
       </a>
@@ -14386,9 +14401,9 @@ If the length is odd, one zero is appended to the end.</p>
 Notice the spectrum is complex-conjugate symmetric.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [1]: </span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">1e3</span><span class="p">;</span> \
 <span class="gp">   ...: </span><span class="n">x_r</span> <span class="o">=</span> <span class="p">(</span> \
-<span class="gp">   ...: </span>    <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> \
-<span class="gp">   ...: </span>    <span class="o">+</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">250</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> \
-<span class="gp">   ...: </span>    <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mi">300</span> <span class="o">/</span> <span class="n">sample_rate</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> \
+<span class="gp">   ...: </span>    <span class="mf">0.1</span> <span class="o">*</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="mi">1_000</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+<span class="gp">   ...: </span>    <span class="o">+</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="mi">1_000</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
+<span class="gp">   ...: </span>    <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="mi">1_000</span> <span class="o">/</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> \
 <span class="gp">   ...: </span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">x_r</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">awgn</span><span class="p">(</span><span class="n">x_r</span><span class="p">,</span> <span class="n">snr</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 <span class="gp">   ...: </span>
