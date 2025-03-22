@@ -37,7 +37,7 @@ import sdr
 # -- Project information -----------------------------------------------------
 
 project = "sdr"
-copyright = "2023-2024, Matt Hostetter"
+copyright = "2023-2025, Matt Hostetter"
 author = "Matt Hostetter"
 version = sdr.__version__
 
