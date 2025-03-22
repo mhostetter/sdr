@@ -99,7 +99,7 @@ div.cell_output.docutils.container>div {
 }
 
 /* Change the "class" and "property" label colors. */
-.md-typeset dl.objdesc>dt .property {
+.md-typeset dl.objdesc>dt .property .k {
   color: var(--md-code-hl-constant-color);
   font-style: italic;
 }
