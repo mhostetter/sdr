@@ -14,7 +14,7 @@
         <link rel="prev" href="../sdr.sample_rate_offset/">
       
       
-        <link rel="next" href="../link-budgets/">
+        <link rel="next" href="../sdr.clock_error/">
       
       
       <link rel="icon" href="">
@@ -20161,7 +20161,7 @@ You're not viewing the latest version.
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="sdr.frequency_offset.offset (Python parameter) — The frequency offset $Delta f_c = f_{c,text{new}} - f_{c,text{old}}$ in Hz.">offset</span>
+      <span title="sdr.frequency_offset.offset (Python parameter) — The frequency offset $Delta f = f_{text{new}} - f$ in Hz.">offset</span>
     </span>
   </a>
   
@@ -20173,7 +20173,7 @@ You're not viewing the latest version.
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="sdr.frequency_offset.offset_rate (Python parameter) — The frequency offset rate $Delta f_c / Delta t$ in Hz/s.">offset_<wbr>rate</span>
+      <span title="sdr.frequency_offset.offset_rate (Python parameter) — The frequency offset rate $Delta^2 f / Delta t$ in Hz/s.">offset_<wbr>rate</span>
     </span>
   </a>
   
@@ -20232,6 +20232,32 @@ You're not viewing the latest version.
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sdr.clock_error/" class="md-nav__link">
+        
+  
+  
+    <span aria-label="Python function" class="objinfo-icon objinfo-icon__procedure" title="Python function">F</span>
+  
+  <span class="md-ellipsis">
+    <span title="sdr.clock_error (Python function) — Applies a clock error to the time-domain signal $x[n]$.">clock_<wbr>error</span>
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -22728,7 +22754,7 @@ You're not viewing the latest version.
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="sdr.frequency_offset.offset (Python parameter) — The frequency offset $Delta f_c = f_{c,text{new}} - f_{c,text{old}}$ in Hz.">offset</span>
+      <span title="sdr.frequency_offset.offset (Python parameter) — The frequency offset $Delta f = f_{text{new}} - f$ in Hz.">offset</span>
     </span>
   </a>
   
@@ -22740,7 +22766,7 @@ You're not viewing the latest version.
       <span aria-label="Python parameter" class="objinfo-icon objinfo-icon__sub-data" title="Python parameter">p</span>
     
     <span class="md-ellipsis">
-      <span title="sdr.frequency_offset.offset_rate (Python parameter) — The frequency offset rate $Delta f_c / Delta t$ in Hz/s.">offset_<wbr>rate</span>
+      <span title="sdr.frequency_offset.offset_rate (Python parameter) — The frequency offset rate $Delta^2 f / Delta t$ in Hz/s.">offset_<wbr>rate</span>
     </span>
   </a>
   
@@ -22813,16 +22839,17 @@ You're not viewing the latest version.
 
 <dl class="py function objdesc">
 <dt class="sig sig-object highlight sig-wrap py">
-<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">frequency_offset</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.frequency_offset.x (Python parameter) — The time-domain signal $x[n]$ to which the frequency offset is applied."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-offset" title="sdr.frequency_offset.offset (Python parameter) — The frequency offset $Delta f_c = f_{c,text{new}} - f_{c,text{old}}$ in Hz."><span class="n"><span class="pre">offset</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-offset_rate" title="sdr.frequency_offset.offset_rate (Python parameter) — The frequency offset rate $Delta f_c / Delta t$ in Hz/s."><span class="n"><span class="pre">offset_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase" title="sdr.frequency_offset.phase (Python parameter) — The phase offset $phi$ in degrees."><span class="n"><span class="pre">phase</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sample_rate" title="sdr.frequency_offset.sample_rate (Python parameter) — The sample rate $f_s$ in samples/s."><span class="n"><span class="pre">sample_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
+<span class="sig-prename descclassname"><span class="pre">sdr.</span></span><span class="sig-name descname"><span class="pre">frequency_offset</span></span><span class="sig-paren">(</span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-x" title="sdr.frequency_offset.x (Python parameter) — The time-domain signal $x[n]$ to which the frequency offset is applied."><span class="n"><span class="pre">x</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-offset" title="sdr.frequency_offset.offset (Python parameter) — The frequency offset $Delta f = f_{text{new}} - f$ in Hz."><span class="n"><span class="pre">offset</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-offset_rate" title="sdr.frequency_offset.offset_rate (Python parameter) — The frequency offset rate $Delta^2 f / Delta t$ in Hz/s."><span class="n"><span class="pre">offset_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-phase" title="sdr.frequency_offset.phase (Python parameter) — The phase offset $phi$ in degrees."><span class="n"><span class="pre">phase</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><span class="pre">ArrayLike</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code></em>, </span><span class="sig-param-decl"><em class="sig-param"><a class="n reference internal" href="#p-sample_rate" title="sdr.frequency_offset.sample_rate (Python parameter) — The sample rate $f_s$ in samples/s."><span class="n"><span class="pre">sample_rate</span></span></a><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">1.0</span></code></em></span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="desctype"><span class="pre">NDArray</span></span></span></span></dt>
 <dd><p>Applies a frequency and phase offset to the time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
 <dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to which the frequency offset is applied.</p>
 </dd>
-<dt id="p-offset"><span class="n sig-name">offset</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-offset" title="Permalink to this definition">¶</a></dt><dd><p>The frequency offset <span class="math notranslate nohighlight">\(\Delta f_c = f_{c,\text{new}} - f_{c,\text{old}}\)</span> in Hz.</p>
+<dt id="p-offset"><span class="n sig-name">offset</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-offset" title="Permalink to this definition">¶</a></dt><dd><p>The frequency offset <span class="math notranslate nohighlight">\(\Delta f = f_{\text{new}} - f\)</span> in Hz.</p>
 </dd>
-<dt id="p-offset_rate"><span class="n sig-name">offset_rate</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code><a class="headerlink" href="#p-offset_rate" title="Permalink to this definition">¶</a></dt><dd><p>The frequency offset rate <span class="math notranslate nohighlight">\(\Delta f_c / \Delta t\)</span> in Hz/s.</p>
+<dt id="p-offset_rate"><span class="n sig-name">offset_rate</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code><a class="headerlink" href="#p-offset_rate" title="Permalink to this definition">¶</a></dt><dd><p>The frequency offset rate <span class="math notranslate nohighlight">\(\Delta^2 f / \Delta t\)</span> in Hz/s. For example, a frequency
+offset varying from 1 kHz to 2 kHz over 1 ms, the offset rate is 1 kHz / 1 ms or 1 MHz/s.</p>
 </dd>
 <dt id="p-phase"><span class="n sig-name">phase</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code><a class="headerlink" href="#p-phase" title="Permalink to this definition">¶</a></dt><dd><p>The phase offset <span class="math notranslate nohighlight">\(\phi\)</span> in degrees.</p>
 </dd>
