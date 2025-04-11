@@ -9,7 +9,14 @@ import numpy.typing as npt
 
 from .._conversion import linear
 from .._farrow import FarrowResampler
-from .._helper import convert_output, export, verify_arraylike, verify_only_one_specified, verify_scalar
+from .._helper import (
+    convert_output,
+    export,
+    verify_arraylike,
+    verify_not_specified,
+    verify_only_one_specified,
+    verify_scalar,
+)
 from .._measurement import average_power
 
 
@@ -201,8 +208,8 @@ def sample_rate_offset(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the sample rate offset is applied.
-        offset: The sample rate offset $\Delta f_s = f_{s,\text{new}} - f_{s,\text{old}}$ in samples/s.
-        offset_rate: The sample rate offset rate $\Delta f_s / \Delta t$ in samples/s^2.
+        offset: The sample rate offset $\Delta f_s = f_{s,\text{new}} - f_{s}$ in samples/s.
+        offset_rate: The sample rate offset rate $\Delta^2 f_s / \Delta t$ in samples/s^2.
         sample_rate: The sample rate $f_s$ in samples/s.
 
     Returns:
@@ -256,6 +263,7 @@ def sample_rate_offset(
     offset_rate = verify_arraylike(offset_rate, float=True)
     verify_scalar(sample_rate, float=True, positive=True)
 
+    # TODO: Is this correct....
     rate = (sample_rate + offset + offset_rate / sample_rate) / sample_rate
     farrow = FarrowResampler()
     y = farrow(x, rate)
@@ -276,8 +284,9 @@ def frequency_offset(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the frequency offset is applied.
-        offset: The frequency offset $\Delta f_c = f_{c,\text{new}} - f_{c,\text{old}}$ in Hz.
-        offset_rate: The frequency offset rate $\Delta f_c / \Delta t$ in Hz/s.
+        offset: The frequency offset $\Delta f = f_{\text{new}} - f$ in Hz.
+        offset_rate: The frequency offset rate $\Delta^2 f / \Delta t$ in Hz/s. For example, a frequency
+            offset varying from 1 kHz to 2 kHz over 1 ms, the offset rate is 1 kHz / 1 ms or 1 MHz/s.
         phase: The phase offset $\phi$ in degrees.
         sample_rate: The sample rate $f_s$ in samples/s.
 
@@ -336,3 +345,166 @@ def frequency_offset(
     y = x * lo  # Apply frequency offset
 
     return convert_output(y)
+
+
+@export
+def clock_error(
+    x: npt.ArrayLike,
+    error: npt.ArrayLike,
+    error_rate: float = 0.0,
+    center_freq: float | None = None,
+    sample_rate: float | None = None,
+) -> npt.NDArray:
+    r"""
+    Applies a clock error to the time-domain signal $x[n]$.
+
+    This clock error could be caused by transmitter clock error, receiver clock error, or Doppler effects.
+
+    Arguments:
+        x: The time-domain signal $x[n]$ to which the clock error is applied.
+
+            .. warning::
+
+                The signal must be a real passband signal or a complex baseband signal (with 0 Hz baseband frequency).
+
+                If the signal is a real passband signal, time will be compressed resulting in a carrier frequency
+                change. If the signal is a complex baseband signal, time will similarly be compressed. However,
+                the zero-IF baseband signal will not observe a frequency shift, since it was always mixed to baseband.
+                Therefore, there is a subsequent frequency shift corresponding to the expected frequency shift at
+                passband.
+
+                If a complex low-IF signal is provided, the IF frequency will be shifted during time compression.
+                This can become noticeable at high clock errors, e.g. 1,000 ppm or more. It is not advised to use
+                this function with complex low-IF signals.
+
+        error: The fractional clock error $\epsilon$, which is unitless, with 0 representing no clock error. For example,
+            1e-6 represents 1 ppm of clock error.
+
+            The fractional clock error can be calculated from frequency offset $\Delta f$ and
+            carrier frequency $f_c$ as $\epsilon = \Delta f / f_c$. For example, a 1 kHz frequency error applied to a
+            signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.
+
+            The fractional clock error can also be calculated from sample rate offset $\Delta f_s$ and
+            sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$. For example, a 10 Hz sample rate error applied to a
+            signal with a 1 MHz sample rate is 1e-5 or 10 ppm.
+
+            The fractional clock error can also be calculated from relative velocity $\Delta v$ and speed of light
+            $c$ as $\epsilon = \Delta v / c$. For example, a 60 mph (or 26.82 m/s) relative velocity between the
+            transmitter and receiver is 8.946e-8 or 8.9 ppb.
+
+        error_rate: The clock error $\Delta \epsilon / \Delta t$ in 1/s.
+        center_freq: The center frequency $f_c$ of the complex baseband signal in Hz. 0 Hz baseband frequency must
+            correspond to the signal's carrier frequency. If $x[n]$ is complex, this must be provided.
+        sample_rate: The sample rate $f_s$ in samples/s. If $x[n]$ is complex, this must be provided.
+
+    Returns:
+        The signal $x[n]$ with clock error applied.
+
+    Examples:
+        This example demonstrates the effect of clock error on a real passband signal. The signal has a carrier
+        frequency of 100 kHz. A frequency offset of 20 kHz is desired, corresponding to a clock error or 0.2.
+        The clock error is added to the transmitter, and then removed at the receiver. Notice that the transmitted
+        signal is compressed in time and shifted in frequency. Also notice that the corrected received signal
+        matches the original.
+
+        .. ipython:: python
+
+            sample_rate = 2e6; \
+            freq = 100e3; \
+            duration = 1000e-6; \
+            x = sdr.sinusoid(duration, freq, sample_rate=sample_rate, complex=False)
+
+            freq_offset = 20e3; \
+            error = freq_offset / freq; \
+            print("Clock error:", error); \
+            y = sdr.clock_error(x, error)
+
+            error = -error / (1 + error); \
+            print("Clock error:", error); \
+            z = sdr.clock_error(y, error)
+
+            @savefig sdr_clock_error_1.png
+            plt.figure(); \
+            sdr.plot.time_domain(x - 0, sample_rate=sample_rate, label="No clock error"); \
+            sdr.plot.time_domain(y - 3, sample_rate=sample_rate, label="Added Tx clock error"); \
+            sdr.plot.time_domain(z - 6, sample_rate=sample_rate, label="Removed Tx clock error"); \
+            plt.legend(loc="lower left"); \
+            plt.title("Real passband signals with and without clock error");
+
+            @savefig sdr_clock_error_2.png
+            plt.figure(); \
+            sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
+            sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \
+            sdr.plot.dtft(z, sample_rate=sample_rate, label="Removed Tx clock error"); \
+            plt.axvline(freq, color="k", linestyle="--"); \
+            plt.axvline(freq + freq_offset, color="k", linestyle="--"); \
+            plt.xlim(80e3, 140e3);
+
+        This example demonstrates the effect of clock error on a complex baseband signal. The signal has a carrier
+        frequency of 1 MHz and sample rate of 2 MS/s. A frequency offset of 100 kHz is desired, corresponding to a
+        clock error of 0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice
+        that the transmitted signal is compressed in time, but not shifted in frequency. Notice that the transmitted
+        signal is compressed in time and shifted in frequency. Also notice that the corrected received signal
+        matches the original.
+
+        .. ipython:: python
+
+            sample_rate = 2e6; \
+            center_freq = 1e6; \
+            duration = 1000e-6; \
+            x = sdr.sinusoid(duration, 0, sample_rate=sample_rate)
+
+            freq_offset = 100e3; \
+            error = freq_offset / center_freq; \
+            print("Clock error:", error); \
+            y = sdr.clock_error(x, error, 0, center_freq, sample_rate=sample_rate)
+
+            error = -error / (1 + error); \
+            print("Clock error:", error); \
+            z = sdr.clock_error(y, error, 0, center_freq, sample_rate=sample_rate)
+
+            @savefig sdr_clock_error_3.png
+            plt.figure(); \
+            sdr.plot.time_domain(x - 0 - 0j, sample_rate=sample_rate, label="No clock error"); \
+            sdr.plot.time_domain(y - 3 - 3j, sample_rate=sample_rate, label="Added Tx clock error"); \
+            sdr.plot.time_domain(z - 6 - 6j, sample_rate=sample_rate, label="Removed Tx clock error"); \
+            plt.legend(loc="lower left"); \
+            plt.title("Complex baseband signals with and without clock error");
+
+            @savefig sdr_clock_error_4.png
+            plt.figure(); \
+            sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
+            sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \
+            sdr.plot.dtft(z, sample_rate=sample_rate, label="Removed Tx clock error"); \
+            plt.axvline(0, color="k", linestyle="--"); \
+            plt.axvline(freq_offset, color="k", linestyle="--"); \
+            plt.xlim(-20e3, 120e3);
+
+    Group:
+        simulation-impairments
+    """
+    x = verify_arraylike(x, complex=True, ndim=1)
+    error = verify_arraylike(error, float=True)
+    verify_scalar(error_rate, float=True)
+
+    # Apply time compression using resampling
+    alpha = 1 + error
+    # y = sample_rate_offset(x, 1 / alpha, 0)  # TODO: This doesn't work...
+    farrow = FarrowResampler()
+    y = farrow(x, 1 / alpha)
+
+    if np.issubdtype(x.dtype, np.floating):
+        verify_not_specified(center_freq)
+
+        # The carrier frequency was already shifted by the time compression
+        z = y
+    else:
+        verify_scalar(center_freq, float=True, positive=True)
+        verify_scalar(sample_rate, float=True, positive=True)
+
+        # Apply frequency shift that would be observed at passband
+        freq_offset = error * center_freq  # Hz
+        freq_offset_rate = error_rate * center_freq  # Hz/s
+        z = frequency_offset(y, freq_offset, freq_offset_rate, sample_rate=sample_rate)
+
+    return convert_output(z)
