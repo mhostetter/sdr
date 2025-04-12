@@ -54,7 +54,7 @@ class ReplicaCorrelator:
 
     # def __init__(
     #     self,
-    #     N_nc: int,
+    #     n_nc: int,
     #     p_fa: float = 1e-6,
     #     streaming: bool = False,
     # ):
@@ -62,14 +62,14 @@ class ReplicaCorrelator:
     #     Initializes the energy detector.
 
     #     Arguments:
-    #         N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+    #         n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
     #         p_fa: The desired probability of false alarm $P_{fa}$.
     #     """
-    #     if not isinstance(N_nc, int):
-    #         raise TypeError(f"Argument 'N_nc' must be an integer, not {type(N_nc)}.")
-    #     if not N_nc >= 1:
-    #         raise ValueError(f"Argument 'N_nc' must be greater than or equal to 1, not {N_nc}.")
-    #     self._N_nc = N_nc
+    #     if not isinstance(n_nc, int):
+    #         raise TypeError(f"Argument 'n_nc' must be an integer, not {type(n_nc)}.")
+    #     if not n_nc >= 1:
+    #         raise ValueError(f"Argument 'n_nc' must be greater than or equal to 1, not {n_nc}.")
+    #     self._N_nc = n_nc
 
     #     if not isinstance(p_fa, float):
     #         raise TypeError(f"Argument 'p_fa' must be a float, not {type(p_fa)}.")
@@ -81,7 +81,7 @@ class ReplicaCorrelator:
     #         raise TypeError(f"Argument 'streaming' must be a bool, not {type(streaming)}.")
     #     self._streaming = streaming
 
-    #     self._fir = FIR(np.ones(N_nc), streaming=streaming)
+    #     self._fir = FIR(np.ones(n_nc), streaming=streaming)
 
     @staticmethod
     def roc(
@@ -297,11 +297,11 @@ class ReplicaCorrelator:
     #         The decision statistic $d$.
     #     """
     #     T = self.test_statistic(x)
-    #     gamma = self.threshold(self.N_nc, self.desired_p_fa, sigma2)
+    #     gamma = self.threshold(self.n_nc, self.desired_p_fa, sigma2)
     #     return T >= gamma
 
     # @property
-    # def N_nc(self) -> int:
+    # def n_nc(self) -> int:
     #     """
     #     The number of samples $N_{nc}$ to non-coherently integrate.
     #     """
