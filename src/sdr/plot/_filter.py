@@ -13,9 +13,8 @@ from typing_extensions import Literal
 from .._conversion import db
 from .._filter import FIR, IIR
 from .._helper import export, verify_arraylike, verify_bool, verify_isinstance, verify_literal, verify_scalar
-from ._helper import integer_x_axis, min_ylim, standard_plot, verify_sample_rate
+from ._helper import freq_x_axis, min_ylim, standard_plot, time_x_axis, time_y_axis, verify_sample_rate
 from ._rc_params import RC_PARAMS
-from ._units import freq_units, time_units
 
 
 def _convert_to_taps(
@@ -117,9 +116,8 @@ def impulse_response(
         h, zi = scipy.signal.lfilter(b, a, d, zi=zi)
         t = np.arange(h.size) + offset
 
-        integer_x_axis(ax)
         standard_plot(t, h, ax=ax, type=type, y_axis="complex", **kwargs)
-        ax.set_xlabel("Sample, $n$")
+        time_x_axis(ax, False)
         ax.set_ylabel("Amplitude")
         ax.set_title("Impulse response, $h[n]$")
 
@@ -200,9 +198,8 @@ def step_response(
         s, zi = scipy.signal.lfilter(b, a, u, zi=zi)
         t = np.arange(s.size)
 
-        integer_x_axis(ax)
         standard_plot(t, s, ax=ax, type=type, y_axis="complex", **kwargs)
-        ax.set_xlabel("Sample, $n$")
+        time_x_axis(ax, False)
         ax.set_ylabel("Amplitude")
         ax.set_title("Step response, $s[n]$")
 
@@ -378,10 +375,6 @@ def magnitude_response(
             f -= sample_rate / 2
             H = np.fft.fftshift(H)
 
-        if sample_rate_provided:
-            units, scalar = freq_units(f)
-            f *= scalar
-
         if y_axis == "log":
             H = db(np.abs(H) ** 2)
         else:
@@ -395,17 +388,11 @@ def magnitude_response(
         ax.grid(True, which="both")
         if "label" in kwargs:
             ax.legend()
-
-        if sample_rate_provided:
-            ax.set_xlabel(f"Frequency ({units}), $f$")
-        else:
-            ax.set_xlabel("Normalized frequency, $f / f_s$")
-
+        freq_x_axis(ax, sample_rate_provided)
         if y_axis == "log":
             ax.set_ylabel(r"Power (dB), $|H(\omega)|^2$")
         else:
             ax.set_ylabel(r"Power, $|H(\omega)|^2$")
-
         ax.set_title(r"Magnitude response, $|H(\omega)|^2$")
 
 
@@ -505,10 +492,6 @@ def phase_response(
             f -= sample_rate / 2
             H = np.fft.fftshift(H)
 
-        if sample_rate_provided:
-            units, scalar = freq_units(f)
-            f *= scalar
-
         if unwrap:
             theta = np.rad2deg(np.unwrap(np.angle(H)))
         else:
@@ -526,10 +509,7 @@ def phase_response(
         ax.grid(True, which="both")
         if "label" in kwargs:
             ax.legend()
-        if sample_rate_provided:
-            ax.set_xlabel(f"Frequency ({units}), $f$")
-        else:
-            ax.set_xlabel("Normalized frequency, $f / f_s$")
+        freq_x_axis(ax, sample_rate_provided)
         ax.set_ylabel(r"Phase (deg), $\angle H(\omega)$")
         ax.set_title(r"Phase response, $\angle H(\omega)$")
 
@@ -633,12 +613,6 @@ def phase_delay(
             tau_phi = -theta / (2 * np.pi * f)
         tau_phi[np.argmin(np.abs(f))] = np.nan  # Avoid crazy result when dividing by near zero
 
-        if sample_rate_provided:
-            f_units, scalar = freq_units(f)
-            f *= scalar
-            t_units, scalar = time_units(tau_phi)
-            tau_phi *= scalar
-
         if x_axis == "log":
             ax.semilogx(f, tau_phi, **kwargs)
         else:
@@ -649,6 +623,8 @@ def phase_delay(
         ax.grid(True, which="both")
         if "label" in kwargs:
             ax.legend()
+        f_units = freq_x_axis(ax, sample_rate_provided)
+        t_units = time_y_axis(ax, sample_rate_provided)
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({f_units}), $f$")
             ax.set_ylabel(rf"Phase delay ({t_units}), $\tau_{{\phi}}{{\omega}}$")
@@ -751,14 +727,6 @@ def group_delay(
             f -= sample_rate / 2
             tau_g = np.fft.fftshift(tau_g)
 
-        if sample_rate_provided:
-            f_units, scalar = freq_units(f)
-            f *= scalar
-
-            tau_g /= sample_rate
-            t_units, scalar = time_units(tau_g)
-            tau_g *= scalar
-
         if x_axis == "log":
             ax.semilogx(f, tau_g, **kwargs)
         else:
@@ -769,6 +737,8 @@ def group_delay(
         ax.grid(True, which="both")
         if "label" in kwargs:
             ax.legend()
+        f_units = freq_x_axis(ax, sample_rate_provided)
+        t_units = time_y_axis(ax, sample_rate_provided)
         if sample_rate_provided:
             ax.set_xlabel(f"Frequency ({f_units}), $f$")
             ax.set_ylabel(rf"Group delay ({t_units}), $\tau_g(\omega)$")
