@@ -49,7 +49,7 @@ class EnergyDetector:
 
     # def __init__(
     #     self,
-    #     N_nc: int,
+    #     n_nc: int,
     #     p_fa: float = 1e-6,
     #     streaming: bool = False,
     # ):
@@ -57,14 +57,14 @@ class EnergyDetector:
     #     Initializes the energy detector.
 
     #     Arguments:
-    #         N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+    #         n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
     #         p_fa: The desired probability of false alarm $P_{fa}$.
     #     """
-    #     if not isinstance(N_nc, int):
-    #         raise TypeError(f"Argument 'N_nc' must be an integer, not {type(N_nc)}.")
-    #     if not N_nc >= 1:
-    #         raise ValueError(f"Argument 'N_nc' must be greater than or equal to 1, not {N_nc}.")
-    #     self._N_nc = N_nc
+    #     if not isinstance(n_nc, int):
+    #         raise TypeError(f"Argument 'n_nc' must be an integer, not {type(n_nc)}.")
+    #     if not n_nc >= 1:
+    #         raise ValueError(f"Argument 'n_nc' must be greater than or equal to 1, not {n_nc}.")
+    #     self._N_nc = n_nc
 
     #     if not isinstance(p_fa, float):
     #         raise TypeError(f"Argument 'p_fa' must be a float, not {type(p_fa)}.")
@@ -76,12 +76,12 @@ class EnergyDetector:
     #         raise TypeError(f"Argument 'streaming' must be a bool, not {type(streaming)}.")
     #     self._streaming = streaming
 
-    #     self._fir = FIR(np.ones(N_nc), streaming=streaming)
+    #     self._fir = FIR(np.ones(n_nc), streaming=streaming)
 
     @staticmethod
     def roc(
         snr: float,
-        N_nc: float,
+        n_nc: float,
         p_fa: npt.ArrayLike | None = None,
         complex: bool = True,
     ) -> tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]:
@@ -90,7 +90,7 @@ class EnergyDetector:
 
         Arguments:
             snr: The received signal-to-noise ratio $\sigma_s^2 / \sigma^2$ in dB.
-            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
             p_fa: The probability of false alarm $P_{fa}$. If `None`, the ROC curve is computed for
                 `p_fa = np.logspace(-10, 0, 101)`.
             complex: Indicates whether the signal is complex.
@@ -125,20 +125,20 @@ class EnergyDetector:
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-10, 5_000), label=f"N = 5,000");
         """
         verify_scalar(snr, float=True)
-        verify_scalar(N_nc, int=True, positive=True)
+        verify_scalar(n_nc, int=True, positive=True)
         if p_fa is None:
             p_fa = np.logspace(-10, 0, 101)
         else:
             p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
 
-        p_d = EnergyDetector.p_d(snr, N_nc, p_fa, complex=complex)
+        p_d = EnergyDetector.p_d(snr, n_nc, p_fa, complex=complex)
 
         return convert_output(p_fa), convert_output(p_d)
 
     @staticmethod
     def p_d(
         snr: npt.ArrayLike,
-        N_nc: npt.ArrayLike,
+        n_nc: npt.ArrayLike,
         p_fa: npt.ArrayLike,
         complex: bool = True,
     ) -> npt.NDArray[np.float64]:
@@ -147,7 +147,7 @@ class EnergyDetector:
 
         Arguments:
             snr: The received signal-to-noise ratio $\sigma_s^2 / \sigma^2$ in dB.
-            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
             p_fa: The probability of false alarm $P_{fa}$.
             complex: Indicates whether the signal is real or complex.
 
@@ -184,16 +184,16 @@ class EnergyDetector:
                 sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-5), label="$P_{fa} = 10^{-5}$");
         """
         snr = verify_arraylike(snr, float=True)
-        N_nc = verify_arraylike(N_nc, int=True, positive=True)
+        n_nc = verify_arraylike(n_nc, int=True, positive=True)
         p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
 
         snr_linear = linear(snr)
         if not complex:
-            nu = N_nc  # Degrees of freedom
+            nu = n_nc  # Degrees of freedom
             gamma_dprime = scipy.stats.chi2.isf(p_fa, nu)  # Normalized threshold
             p_d = scipy.stats.chi2.sf(gamma_dprime / (snr_linear + 1), nu)
         else:
-            nu = 2 * N_nc  # Degrees of freedom
+            nu = 2 * n_nc  # Degrees of freedom
             gamma_dprime = scipy.stats.chi2.isf(p_fa, nu)  # Normalized threshold
             p_d = scipy.stats.chi2.sf(gamma_dprime / (snr_linear + 1), nu)
 
@@ -202,7 +202,7 @@ class EnergyDetector:
     @staticmethod
     def p_fa(
         threshold: npt.ArrayLike,
-        N_nc: npt.ArrayLike,
+        n_nc: npt.ArrayLike,
         sigma2: npt.ArrayLike,
         complex: bool = True,
     ) -> npt.NDArray[np.float64]:
@@ -211,7 +211,7 @@ class EnergyDetector:
 
         Arguments:
             threshold: The threshold $\gamma'$.
-            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
 
@@ -232,21 +232,21 @@ class EnergyDetector:
               Equation 5.2.
         """
         threshold = verify_arraylike(threshold, float=True)
-        N_nc = verify_arraylike(N_nc, int=True, positive=True)
+        n_nc = verify_arraylike(n_nc, int=True, positive=True)
         sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
 
         if not complex:
-            nu = N_nc  # Degrees of freedom
+            nu = n_nc  # Degrees of freedom
             p_fa = scipy.stats.chi2.sf(threshold / sigma2, nu)
         else:
-            nu = 2 * N_nc  # Degrees of freedom
+            nu = 2 * n_nc  # Degrees of freedom
             p_fa = scipy.stats.chi2.sf(threshold / (sigma2 / 2), nu)
 
         return convert_output(p_fa)
 
     @staticmethod
     def threshold(
-        N_nc: npt.ArrayLike,
+        n_nc: npt.ArrayLike,
         p_fa: npt.ArrayLike,
         sigma2: npt.ArrayLike,
         complex: bool = True,
@@ -255,7 +255,7 @@ class EnergyDetector:
         Computes the threshold $\gamma'$.
 
         Arguments:
-            N_nc: The number of samples $N_{nc}$ to non-coherently integrate.
+            n_nc: The number of samples $N_{nc}$ to non-coherently integrate.
             p_fa: The probability of false alarm $P_{fa}$.
             sigma2: The noise variance $\sigma^2$.
             complex: Indicates whether the signal is complex.
@@ -276,15 +276,15 @@ class EnergyDetector:
             - Steven Kay, *Fundamentals of Statistical Signal Processing: Detection Theory*,
               Equation 5.2.
         """
-        N_nc = verify_arraylike(N_nc, int=True, positive=True)
+        n_nc = verify_arraylike(n_nc, int=True, positive=True)
         p_fa = verify_arraylike(p_fa, float=True, inclusive_min=0, inclusive_max=1)
         sigma2 = verify_arraylike(sigma2, float=True, non_negative=True)
 
         if not complex:
-            nu = N_nc  # Degrees of freedom
+            nu = n_nc  # Degrees of freedom
             gamma_prime = sigma2 * scipy.stats.chi2.isf(p_fa, nu)
         else:
-            nu = 2 * N_nc  # Degrees of freedom
+            nu = 2 * n_nc  # Degrees of freedom
             gamma_prime = sigma2 / 2 * scipy.stats.chi2.isf(p_fa, nu)
 
         return convert_output(gamma_prime)
@@ -318,11 +318,11 @@ class EnergyDetector:
     #         The decision statistic $d$.
     #     """
     #     T = self.test_statistic(x)
-    #     gamma = self.threshold(self.N_nc, self.desired_p_fa, sigma2)
+    #     gamma = self.threshold(self.n_nc, self.desired_p_fa, sigma2)
     #     return T >= gamma
 
     # @property
-    # def N_nc(self) -> int:
+    # def n_nc(self) -> int:
     #     """
     #     The number of samples $N_{nc}$ to non-coherently integrate.
     #     """
