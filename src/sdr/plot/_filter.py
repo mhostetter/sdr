@@ -782,8 +782,8 @@ def group_delay(
 def filter(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
-    N_time: int | None = None,
-    N_freq: int = 1024,
+    n_time: int | None = None,
+    n_freq: int = 1024,
     x_axis: Literal["one-sided", "two-sided", "log"] = "two-sided",
     decades: int = 4,
 ):
@@ -800,9 +800,9 @@ def filter(
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        N_time: The number of samples $N_t$ in the time domain. If `None`, the length of `b` is used
+        n_time: The number of samples $N_t$ in the time domain. If `None`, the length of `b` is used
             for FIR filters and 100 for IIR filters.
-        N_freq: The number of samples $N_f$ in the frequency response.
+        n_freq: The number of samples $N_f$ in the frequency response.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis.
         decades: The number of decades to plot when `x_axis="log"`.
@@ -828,7 +828,7 @@ def filter(
 
             @savefig sdr_plot_filter_2.png
             plt.figure(figsize=(8, 6)); \
-            sdr.plot.filter(iir, N_time=30)
+            sdr.plot.filter(iir, n_time=30)
 
     Group:
         plot-filter
@@ -837,10 +837,10 @@ def filter(
         b, a = _convert_to_taps(filter)
 
         plt.subplot2grid((2, 3), (0, 0), 1, 3)
-        magnitude_response((b, a), sample_rate=sample_rate, N=N_freq, x_axis=x_axis, decades=decades)
+        magnitude_response((b, a), sample_rate=sample_rate, N=n_freq, x_axis=x_axis, decades=decades)
 
         plt.subplot2grid((2, 3), (1, 0), 1, 1)
         zeros_poles((b, a))
 
         plt.subplot2grid((2, 3), (1, 1), 1, 2)
-        impulse_response((b, a), N=N_time)
+        impulse_response((b, a), N=n_time)
