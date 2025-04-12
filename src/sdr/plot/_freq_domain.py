@@ -14,6 +14,7 @@ from typing_extensions import Literal
 from .._helper import export, verify_arraylike, verify_bool, verify_isinstance, verify_literal, verify_scalar
 from ._helper import integer_x_axis, standard_plot, verify_sample_rate
 from ._rc_params import RC_PARAMS
+from ._units import freq_units
 
 
 @export
@@ -152,13 +153,17 @@ def dft(
             X = np.fft.fftshift(X)
             f = np.fft.fftshift(f)
 
+        if sample_rate_provided:
+            units, scalar = freq_units(f)
+            f *= scalar
+
         standard_plot(f, X, ax=ax, y_axis=y_axis, diff=diff, type=type, **kwargs)
 
         if x_axis == "bin":
             integer_x_axis(ax)
             ax.set_xlabel("DFT bin index, $k$")
         elif sample_rate_provided:
-            ax.set_xlabel("Frequency (Hz), $f$")
+            ax.set_xlabel(f"Frequency ({units}), $f$")
         else:
             ax.set_xlabel("Normalized frequency, $f/f_s$")
 
