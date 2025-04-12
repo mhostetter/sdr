@@ -22783,11 +22783,11 @@ You're not viewing the latest version.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># samples/s</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># samples</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># samples</span>
 <span class="n">freq</span> <span class="o">=</span> <span class="mf">0.05</span>  <span class="c1"># Hz</span>
-<span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>  <span class="c1"># Time axis for the input signal</span>
+<span class="n">tx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">sample_rate</span>  <span class="c1"># Time axis for the input signal</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">freq</span> <span class="o">*</span> <span class="n">tx</span><span class="p">)</span>  <span class="c1"># Complex exponential input signal</span>
-<span class="n">x</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Exponential decay</span>
+<span class="n">x</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Exponential decay</span>
 </code></pre></div>
 </div>
 </div>
@@ -22802,7 +22802,7 @@ You're not viewing the latest version.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/e96a66da9e79b6834e98c3c244b6a2df2cba75ff3255221dcb68ecb11d62a700.png" src="../../_images/e96a66da9e79b6834e98c3c244b6a2df2cba75ff3255221dcb68ecb11d62a700.png" />
+<img alt="../../_images/e2e5057829a3ca0945319ebbc6483e2e721ba87d954fdfebeabcec9dc7426e86.png" src="../../_images/e2e5057829a3ca0945319ebbc6483e2e721ba87d954fdfebeabcec9dc7426e86.png" />
 </div>
 </div>
 <h2 id="resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r">Resample the input signal with rate <span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(y[n] = x(n \frac{T_s}{r})\)</span><a class="headerlink" href="#resample-the-input-signal-with-rate-r-y-n-x-n-frac-t-s-r" title="Link to this heading">¶</a></h2>
@@ -22845,7 +22845,7 @@ This is accomplished, for arbitrary <span class="math notranslate nohighlight">\
 Output signal length: 198
 </code></pre></div>
 </div>
-<img alt="../../_images/ebdfa5683b95c9d1dc13b894257a5a6b85f7dbf3ab48a4885787b832d93179ad.png" src="../../_images/ebdfa5683b95c9d1dc13b894257a5a6b85f7dbf3ab48a4885787b832d93179ad.png" />
+<img alt="../../_images/c057a16e6a0c59b2d7f2e7f9cf6e9e0670ff710a0266f759f1058e1f46b013ab.png" src="../../_images/c057a16e6a0c59b2d7f2e7f9cf6e9e0670ff710a0266f759f1058e1f46b013ab.png" />
 </div>
 </div>
 <p>When upsampling by 4, notice there are four output samples for every input sample.</p>
@@ -22860,7 +22860,7 @@ Output signal length: 198
 Output signal length: 396
 </code></pre></div>
 </div>
-<img alt="../../_images/1b1e39b19b11c2139a622a0bdc55b8a064c096456de6951d8c2dcc379c93cca0.png" src="../../_images/1b1e39b19b11c2139a622a0bdc55b8a064c096456de6951d8c2dcc379c93cca0.png" />
+<img alt="../../_images/c2acbe7de366c13d2e895c19cb41378f53031451d8f759659212c0fba5e67c93.png" src="../../_images/c2acbe7de366c13d2e895c19cb41378f53031451d8f759659212c0fba5e67c93.png" />
 </div>
 </div>
 <h2 id="downsample-the-signal-by-an-integer-rate">Downsample the signal by an integer rate<a class="headerlink" href="#downsample-the-signal-by-an-integer-rate" title="Link to this heading">¶</a></h2>
@@ -22876,7 +22876,7 @@ Output signal length: 396
 Output signal length: 50
 </code></pre></div>
 </div>
-<img alt="../../_images/1a24099151d60e8b91f8fea76eb517b5837753685c7feeddebc4147e13267caf.png" src="../../_images/1a24099151d60e8b91f8fea76eb517b5837753685c7feeddebc4147e13267caf.png" />
+<img alt="../../_images/a96bac73e108e02a8cfd4ad0e7b2186281f4dc503b5b059e5f4f5a2d3c8fd12f.png" src="../../_images/a96bac73e108e02a8cfd4ad0e7b2186281f4dc503b5b059e5f4f5a2d3c8fd12f.png" />
 </div>
 </div>
 <p>When downsampling by 4, notice every fourth sample of the input appears at the output.</p>
@@ -22891,7 +22891,7 @@ Output signal length: 50
 Output signal length: 25
 </code></pre></div>
 </div>
-<img alt="../../_images/80fd3cde9202fb1d1bdcc4d0f65b5e8126f165c7eaedbfacdb0c2e195aef92b7.png" src="../../_images/80fd3cde9202fb1d1bdcc4d0f65b5e8126f165c7eaedbfacdb0c2e195aef92b7.png" />
+<img alt="../../_images/9ecd058e508dd53a796e27e9046f5c80e3f22dc734be3a4b7993398795c46255.png" src="../../_images/9ecd058e508dd53a796e27e9046f5c80e3f22dc734be3a4b7993398795c46255.png" />
 </div>
 </div>
 <h2 id="upsample-by-an-irrational-rate">Upsample by an irrational rate<a class="headerlink" href="#upsample-by-an-irrational-rate" title="Link to this heading">¶</a></h2>
@@ -22908,7 +22908,7 @@ However, these samples often do not align with the original input samples.</p>
 Output signal length: 312
 </code></pre></div>
 </div>
-<img alt="../../_images/f5d3e4a77998ab0badf42529485a90b130b5882db5ac4c90410d9a7837572cc0.png" src="../../_images/f5d3e4a77998ab0badf42529485a90b130b5882db5ac4c90410d9a7837572cc0.png" />
+<img alt="../../_images/a3791ef927b3bc7b463cdcb0f2840f383351b9e8942992362ba16552f8295e6a.png" src="../../_images/a3791ef927b3bc7b463cdcb0f2840f383351b9e8942992362ba16552f8295e6a.png" />
 </div>
 </div>
 <h2 id="downsample-by-an-irrational-rate">Downsample by an irrational rate<a class="headerlink" href="#downsample-by-an-irrational-rate" title="Link to this heading">¶</a></h2>
@@ -22925,7 +22925,7 @@ However, these samples often do not align with the original input samples.</p>
 Output signal length: 32
 </code></pre></div>
 </div>
-<img alt="../../_images/b02b8d734cc498529b99797bd233b420af12c567181389975674a3620da17cd6.png" src="../../_images/b02b8d734cc498529b99797bd233b420af12c567181389975674a3620da17cd6.png" />
+<img alt="../../_images/7e993476199ae287e28dafb2b7d086ea987d8181b7af3c505875e4435f5d428b.png" src="../../_images/7e993476199ae287e28dafb2b7d086ea987d8181b7af3c505875e4435f5d428b.png" />
 </div>
 </div>
 
@@ -22948,7 +22948,7 @@ Output signal length: 32
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    Jun 15, 2024
+    Apr 12, 2025
   </span>
 
     

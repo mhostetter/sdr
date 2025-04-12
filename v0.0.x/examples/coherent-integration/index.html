@@ -22747,9 +22747,9 @@ The noise <span class="math notranslate nohighlight">\(w_1[n]\)</span> is i.i.d.
     <span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Noise standard deviation, sigma</span>
     <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sdr</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">snr</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Signal voltage, A</span>
 
-    <span class="n">N</span> <span class="o">=</span> <span class="mi">100_000</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">100_000</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">A</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
     <span class="n">x_h0</span> <span class="o">=</span> <span class="n">w</span>  <span class="c1"># x under the H0 hypothesis</span>
     <span class="n">x_h1</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">w</span>  <span class="c1"># x under the H1 hypothesis</span>
 
@@ -22772,7 +22772,7 @@ The noise <span class="math notranslate nohighlight">\(w_1[n]\)</span> is i.i.d.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/adde2057c6f228bc9bab2bbf028c73d812c8d8c7baab63a09ef7679916232a08.png" src="../../_images/adde2057c6f228bc9bab2bbf028c73d812c8d8c7baab63a09ef7679916232a08.png" />
+<img alt="../../_images/635f2e943b226df314240c85de6db7a89595e2c2ece8182a425c66b50e309366.png" src="../../_images/635f2e943b226df314240c85de6db7a89595e2c2ece8182a425c66b50e309366.png" />
 </div>
 </div>
 <p>The signal <span class="math notranslate nohighlight">\(x_1[n]\)</span> is distributed as follows.</p>
@@ -22808,7 +22808,7 @@ It indicates the condition when signal and noise are present.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b3a292ed3e133096a66971aa65055af11c28e71ad29695c7235ad0d230606fb2.png" src="../../_images/b3a292ed3e133096a66971aa65055af11c28e71ad29695c7235ad0d230606fb2.png" />
+<img alt="../../_images/c5856ef1a4c6a8e4995e358b497dafd8f3adae4b3a794cae63efa8dbcc0992ab.png" src="../../_images/c5856ef1a4c6a8e4995e358b497dafd8f3adae4b3a794cae63efa8dbcc0992ab.png" />
 </div>
 </div>
 <p>Determine the detection performance of <span class="math notranslate nohighlight">\(x_1[n]\)</span>.
@@ -22829,7 +22829,7 @@ If the absolute phase of <span class="math notranslate nohighlight">\(x_1[n]\)</
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ea5294e05ecdfc4d1a754d06711760e4a3949597fd2a565a95fbffb74ccf0bf7.png" src="../../_images/ea5294e05ecdfc4d1a754d06711760e4a3949597fd2a565a95fbffb74ccf0bf7.png" />
+<img alt="../../_images/c4c28f46097080819b9e1b10baf93c87c8078c17ac106f31188fd18b99b808fb.png" src="../../_images/c4c28f46097080819b9e1b10baf93c87c8078c17ac106f31188fd18b99b808fb.png" />
 </div>
 </div>
 <p>The signal power <span class="math notranslate nohighlight">\(z_1[n]\)</span> is distributed as follows.</p>
@@ -22872,7 +22872,7 @@ If the absolute phase of <span class="math notranslate nohighlight">\(x_1[n]\)</
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/eb035422bae1c5c43e148d1a8459c38ba7c31cd5ac2409fad8eada9813c136d0.png" src="../../_images/eb035422bae1c5c43e148d1a8459c38ba7c31cd5ac2409fad8eada9813c136d0.png" />
+<img alt="../../_images/898def37972be5b041cb7f00b4a15060ad6779ec2a04f6a5b6b0ffb718e619f5.png" src="../../_images/898def37972be5b041cb7f00b4a15060ad6779ec2a04f6a5b6b0ffb718e619f5.png" />
 </div>
 </div>
 <p>Measure the probability of detection and probability of false alarm.
@@ -22909,7 +22909,7 @@ Probability of false alarm: 1.00e-03 theory, 1.05e-03 measured
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f2ee3bae2130476a5726303b2b8d196ca384147d1ac605b1f06abf1a113ccfc5.png" src="../../_images/f2ee3bae2130476a5726303b2b8d196ca384147d1ac605b1f06abf1a113ccfc5.png" />
+<img alt="../../_images/85d74030c40905f1bd1070de54e0f2bbd6f5baa5f906e14192b7d89d2182703b.png" src="../../_images/85d74030c40905f1bd1070de54e0f2bbd6f5baa5f906e14192b7d89d2182703b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -22933,7 +22933,7 @@ Probability of false alarm: 1.00e-03 theory, 1.05e-03 measured
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ca47fee15929de7f6885dfaacd6cad6e40f4f823bab88525b8e28f1b3515ea71.png" src="../../_images/ca47fee15929de7f6885dfaacd6cad6e40f4f823bab88525b8e28f1b3515ea71.png" />
+<img alt="../../_images/ec2bb9f8afd0fbaed430f9e77fe401e426dcda8382bd23ab8e806e6c1cf90880.png" src="../../_images/ec2bb9f8afd0fbaed430f9e77fe401e426dcda8382bd23ab8e806e6c1cf90880.png" />
 </div>
 </div>
 <p>Coherently integrate <span class="math notranslate nohighlight">\(N_C\)</span> contiguous samples from the signal <span class="math notranslate nohighlight">\(x_2[n]\)</span>.</p>
@@ -22953,7 +22953,7 @@ Probability of false alarm: 1.00e-03 theory, 1.05e-03 measured
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/33601e16a2ae3478b55e8e275c77363ca7d67dc34cf423e2495fc8e4f093a3fb.png" src="../../_images/33601e16a2ae3478b55e8e275c77363ca7d67dc34cf423e2495fc8e4f093a3fb.png" />
+<img alt="../../_images/150a05d9b6b24e86e3d5718c54d1d466461db6cc3c0b893fcfc012540c423977.png" src="../../_images/150a05d9b6b24e86e3d5718c54d1d466461db6cc3c0b893fcfc012540c423977.png" />
 </div>
 </div>
 <p>The coherently integrated signal <span class="math notranslate nohighlight">\(y_2[n]\)</span> is distributed as follows.</p>
@@ -22985,7 +22985,7 @@ Probability of false alarm: 1.00e-03 theory, 1.05e-03 measured
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/be54b1dec0889db3af4521007471879e92563189da66dcca54cce9c379f34dca.png" src="../../_images/be54b1dec0889db3af4521007471879e92563189da66dcca54cce9c379f34dca.png" />
+<img alt="../../_images/01acda86430d6584e370df40fda3606c04c1664abfee46e5672572cf6e0bc209.png" src="../../_images/01acda86430d6584e370df40fda3606c04c1664abfee46e5672572cf6e0bc209.png" />
 </div>
 </div>
 <p>Similarly, determine the detection performance of <span class="math notranslate nohighlight">\(y_2[n]\)</span>.
@@ -23006,7 +23006,7 @@ If the phase of <span class="math notranslate nohighlight">\(y_2[n]\)</span> is 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/bcebc992f53787c99cbc74170fa97604d21501454fc30321b018043baa6a977d.png" src="../../_images/bcebc992f53787c99cbc74170fa97604d21501454fc30321b018043baa6a977d.png" />
+<img alt="../../_images/40f8cd48f451a1825290d9d9d5c3995b1fa9f9d188574ccf0538f9d486043805.png" src="../../_images/40f8cd48f451a1825290d9d9d5c3995b1fa9f9d188574ccf0538f9d486043805.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -23036,7 +23036,7 @@ If the phase of <span class="math notranslate nohighlight">\(y_2[n]\)</span> is 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/06071c2011077706804e5406e682d6793e364b7368a1014e897171b575f81800.png" src="../../_images/06071c2011077706804e5406e682d6793e364b7368a1014e897171b575f81800.png" />
+<img alt="../../_images/db0d67c3e4acf61a3071e9bd56592e68a182608a31f8a85392f04283a412bc85.png" src="../../_images/db0d67c3e4acf61a3071e9bd56592e68a182608a31f8a85392f04283a412bc85.png" />
 </div>
 </div>
 <p>Measure the probability of detection and probability of false alarm.
@@ -23079,7 +23079,7 @@ Probability of false alarm: 1.00e-03 theory, 1.05e-03 measured
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    Jun 15, 2024
+    Apr 12, 2025
   </span>
 
     

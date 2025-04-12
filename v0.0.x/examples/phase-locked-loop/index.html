@@ -22842,7 +22842,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7fba6739c450&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>&lt;sdr.LoopFilter object at 0x7fe11c44f890&gt;
 </code></pre></div>
 </div>
 </div>
@@ -22856,16 +22856,16 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f474c88005fe6233b6446e7e9ae226127943cb1d183721c885766f959aba85ac.png" src="../../_images/f474c88005fe6233b6446e7e9ae226127943cb1d183721c885766f959aba85ac.png" />
+<img alt="../../_images/00c5cfa3eb2ecafd175d3ba85ec107398e9c8a4bf55443ad33d7db385ea3c46c.png" src="../../_images/00c5cfa3eb2ecafd175d3ba85ec107398e9c8a4bf55443ad33d7db385ea3c46c.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-phase-domain">Implement a PLL in the phase domain<a class="headerlink" href="#implement-a-pll-in-the-phase-domain" title="Link to this heading">¶</a></h2>
 <p>This section implements Example C.2.1 from <em>Digital Communications: A Discrete-Time Approach</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">N</span> <span class="o">=</span> <span class="mi">75</span>  <span class="c1"># samples</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="mi">75</span>  <span class="c1"># samples</span>
 <span class="n">theta_0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">10</span>  <span class="c1"># radians/sample</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">theta_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>  <span class="c1"># Input phase signal, radians</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">theta_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>  <span class="c1"># Input phase signal, radians</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># Output phase signal, radians</span>
 <span class="n">phase_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># Measured phase error, radians</span>
 <span class="n">freq_estimate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Estimated frequency, radians/sample</span>
@@ -22879,7 +22879,7 @@ z^-1 = Unit delay
 <span class="c1"># offset of theta_0 radians.</span>
 <span class="n">nco</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">NCO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">increment</span><span class="o">=</span><span class="n">theta_0</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="c1"># Process the variable phase increment through the NCO</span>
     <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nco</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span>
 
@@ -22892,7 +22892,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_6147/3044107145.py:25: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_10104/1213137600.py:25: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   freq_estimate[i + 1] = loop_filter(phase_error[i])
 </code></pre></div>
 </div>
@@ -22919,7 +22919,7 @@ z^-1 = Unit delay
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0691dcf9c9745f26bbea2c3c4fec2bbca5efdee40d778cc7f7e927d9271698f9.png" src="../../_images/0691dcf9c9745f26bbea2c3c4fec2bbca5efdee40d778cc7f7e927d9271698f9.png" />
+<img alt="../../_images/0937f45caceda16fa55e1e97c9515ba5f81ef8d5e4091b976ec6daa30b14ebe3.png" src="../../_images/0937f45caceda16fa55e1e97c9515ba5f81ef8d5e4091b976ec6daa30b14ebe3.png" />
 </div>
 </div>
 <h2 id="implement-a-pll-in-the-time-domain">Implement a PLL in the time domain<a class="headerlink" href="#implement-a-pll-in-the-time-domain" title="Link to this heading">¶</a></h2>
@@ -22927,9 +22927,9 @@ z^-1 = Unit delay
 but using time-domain signals.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">N</span> <span class="o">=</span> <span class="mi">75</span>  <span class="c1"># samples</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="mi">75</span>  <span class="c1"># samples</span>
 <span class="n">theta_0</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">10</span>  <span class="c1"># radians/sample</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>  <span class="c1"># Input signal</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">theta_0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>  <span class="c1"># Input signal</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>  <span class="c1"># Output signal</span>
 <span class="n">phase_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 <span class="n">freq_estimate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -22946,7 +22946,7 @@ but using time-domain signals.</p>
 <span class="c1"># noise bandwidth of 0.05 and a damping factor of 1 (critically damped)</span>
 <span class="n">loop_filter</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LoopFilter</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">K0</span><span class="o">=</span><span class="n">nco</span><span class="o">.</span><span class="n">gain</span><span class="p">,</span> <span class="n">Kp</span><span class="o">=</span><span class="n">ped</span><span class="o">.</span><span class="n">gain</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="c1"># Process the variable phase increment through the DDS</span>
     <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nco</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
@@ -22959,7 +22959,9 @@ but using time-domain signals.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_6147/1093092892.py:28: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_10104/1466992016.py:25: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  phase_error[i] = ped(x[i], y[i])
+/tmp/ipykernel_10104/1466992016.py:28: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   freq_estimate[i + 1] = loop_filter(phase_error[i])
 </code></pre></div>
 </div>
@@ -22992,15 +22994,15 @@ but using time-domain signals.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/5a6ef9a518b39698ba569fe34879d87db8c8c974c050b520c44684f62d023d43.png" src="../../_images/5a6ef9a518b39698ba569fe34879d87db8c8c974c050b520c44684f62d023d43.png" />
+<img alt="../../_images/18878f8455a997ffe3faea958fb5fd2ad85910d277f224238aaad7704b506f42.png" src="../../_images/18878f8455a997ffe3faea958fb5fd2ad85910d277f224238aaad7704b506f42.png" />
 </div>
 </div>
 <p>This section implements Example 7.2.3 from <em>Digital Communications: A Discrete-Time Approach</em>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">N</span> <span class="o">=</span> <span class="mi">250</span>  <span class="c1"># symbols</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="mi">250</span>  <span class="c1"># symbols</span>
 <span class="n">qpsk</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">PSK</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">phase_offset</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>  <span class="c1"># QPSK complex symbols</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">qpsk</span><span class="o">.</span><span class="n">map_symbols</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>  <span class="c1"># QPSK complex symbols</span>
 <span class="n">a</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># Rotate symbols by pi/4 radians</span>
 <span class="n">lo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>  <span class="c1"># Local oscillator</span>
 <span class="n">a_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>  <span class="c1"># De-rotated symbols</span>
@@ -23018,7 +23020,7 @@ but using time-domain signals.</p>
 <span class="c1"># noise bandwidth of 0.05 and a damping factor of 1 (critically damped)</span>
 <span class="n">loop_filter</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">LoopFilter</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">K0</span><span class="o">=</span><span class="n">nco</span><span class="o">.</span><span class="n">gain</span><span class="p">,</span> <span class="n">Kp</span><span class="o">=</span><span class="n">ped</span><span class="o">.</span><span class="n">gain</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="c1"># Process the variable phase increment through the DDS</span>
     <span class="n">lo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nco</span><span class="p">(</span><span class="n">freq_estimate</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
@@ -23037,7 +23039,9 @@ but using time-domain signals.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_6147/152932338.py:35: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><code>/tmp/ipykernel_10104/3267725122.py:32: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  phase_error[i] = ped(a_tilde[i], a_hat)
+/tmp/ipykernel_10104/3267725122.py:35: DeprecationWarning: Conversion of an array with ndim &gt; 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
   freq_estimate[i + 1] = loop_filter(phase_error[i])
 </code></pre></div>
 </div>
@@ -23071,7 +23075,7 @@ but using time-domain signals.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ed54bb13c050ca880827d6b62d481f2bbdd65aac4dec637754886e7bbddb5a3a.png" src="../../_images/ed54bb13c050ca880827d6b62d481f2bbdd65aac4dec637754886e7bbddb5a3a.png" />
+<img alt="../../_images/6e2e3e5f1ad7708ee94ea590ce230bbe20bc63ff456fe394cd5ec4d4d400f129.png" src="../../_images/6e2e3e5f1ad7708ee94ea590ce230bbe20bc63ff456fe394cd5ec4d4d400f129.png" />
 </div>
 </div>
 <h2 id="analyze-pll-closed-loop-performance">Analyze PLL closed-loop performance<a class="headerlink" href="#analyze-pll-closed-loop-performance" title="Link to this heading">¶</a></h2>
@@ -23107,14 +23111,14 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">zeta</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="mi">2</span><span class="p">]:</span>
     <span class="n">pll</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ClosedLoopPLL</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">zeta</span><span class="p">)</span>
-    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;plot&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\zeta = </span><span class="si">{</span><span class="n">zeta</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;plot&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\zeta = </span><span class="si">{</span><span class="n">zeta</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Step response of the closed-loop PLL across damping factor&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/640e4b120ff80a4cb3f87ea80f0c62dbbb716a1b6e77c9f65d35c7203e05f748.png" src="../../_images/640e4b120ff80a4cb3f87ea80f0c62dbbb716a1b6e77c9f65d35c7203e05f748.png" />
+<img alt="../../_images/958c23d81cc5c658715fdf4ea0d453f05fad61689c57c8cb76955c07f11770e3.png" src="../../_images/958c23d81cc5c658715fdf4ea0d453f05fad61689c57c8cb76955c07f11770e3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -23132,7 +23136,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/c033f9e9cc39fd341ccac8f35bba9a0b35a2623bf7dcd26fcb77fb54e92b9276.png" src="../../_images/c033f9e9cc39fd341ccac8f35bba9a0b35a2623bf7dcd26fcb77fb54e92b9276.png" />
+<img alt="../../_images/1dae4838e5ef08d7effc5791468f55096f2d4cad01a804f4cf76bd8b9a4bb5a8.png" src="../../_images/1dae4838e5ef08d7effc5791468f55096f2d4cad01a804f4cf76bd8b9a4bb5a8.png" />
 </div>
 </div>
 <h3 id="compare-step-and-frequency-response-across-b-n-t">Compare step and frequency response across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-step-and-frequency-response-across-b-n-t" title="Link to this heading">¶</a></h3>
@@ -23141,14 +23145,14 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">BnT</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]:</span>
     <span class="n">pll</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">ClosedLoopPLL</span><span class="p">(</span><span class="n">BnT</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;plot&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$B_nT = </span><span class="si">{</span><span class="n">BnT</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+    <span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">step_response</span><span class="p">(</span><span class="n">pll</span><span class="o">.</span><span class="n">iir</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;plot&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$B_nT = </span><span class="si">{</span><span class="n">BnT</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Step response of the closed-loop PLL across normalized noise bandwidth&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9d10c223fe1a80c2b715aa7232f538f12a9d5db0533637163388fb3b23f64c55.png" src="../../_images/9d10c223fe1a80c2b715aa7232f538f12a9d5db0533637163388fb3b23f64c55.png" />
+<img alt="../../_images/571b09818020a0892f39b86c9d4afb9789266f277b762aab2822a769fba2dc25.png" src="../../_images/571b09818020a0892f39b86c9d4afb9789266f277b762aab2822a769fba2dc25.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -23164,7 +23168,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/01f27a0edb44e91408b49e9b09d4b991145392a241ef03302ea1c34f7ebe1259.png" src="../../_images/01f27a0edb44e91408b49e9b09d4b991145392a241ef03302ea1c34f7ebe1259.png" />
+<img alt="../../_images/5721beb42adffe393665236fb3b5b4901602cee16b51ac2f5ff62ae1a4b21856.png" src="../../_images/5721beb42adffe393665236fb3b5b4901602cee16b51ac2f5ff62ae1a4b21856.png" />
 </div>
 </div>
 <h3 id="compare-lock-time-across-b-n-t">Compare lock time across <span class="math notranslate nohighlight">\(B_n T\)</span><a class="headerlink" href="#compare-lock-time-across-b-n-t" title="Link to this heading">¶</a></h3>
@@ -23186,7 +23190,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/3119b3b0789aba7f8f98ad94b959cfbce129b8d33c3744a8c19c6b44e91da1c3.png" src="../../_images/3119b3b0789aba7f8f98ad94b959cfbce129b8d33c3744a8c19c6b44e91da1c3.png" />
+<img alt="../../_images/c37a1359356d417485bb5e3aec52d4875fcb47be12defb8e3a2e68ec78ff8cf3.png" src="../../_images/c37a1359356d417485bb5e3aec52d4875fcb47be12defb8e3a2e68ec78ff8cf3.png" />
 </div>
 </div>
 
@@ -23209,7 +23213,7 @@ H_{PLL}(z) = \frac{K_p K_0 (K_1 + K_2) z^{-1} - K_p K_0 K_1 z^{-2}}
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    Jun 15, 2024
+    Apr 12, 2025
   </span>
 
     
