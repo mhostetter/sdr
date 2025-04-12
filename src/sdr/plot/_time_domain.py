@@ -24,9 +24,8 @@ from .._helper import (
     verify_scalar,
     verify_specified,
 )
-from ._helper import integer_x_axis, real_or_complex_plot, verify_sample_rate
+from ._helper import real_or_complex_plot, time_x_axis, verify_sample_rate
 from ._rc_params import RC_PARAMS
-from ._units import time_units
 
 
 @overload
@@ -151,16 +150,8 @@ def time_domain(  # noqa: D417
             else:
                 t = np.arange(x.size) / sample_rate + offset
 
-        if sample_rate_provided:
-            units, scalar = time_units(t)
-            t *= scalar
-
         real_or_complex_plot(t, x, ax=ax, diff=diff, **kwargs)
-        if sample_rate_provided:
-            ax.set_xlabel(f"Time ({units})")
-        else:
-            integer_x_axis(ax)
-            ax.set_xlabel("Sample, $n$")
+        time_x_axis(ax, sample_rate_provided)
         ax.set_ylabel("Amplitude")
 
 
@@ -247,9 +238,6 @@ def raster(
             x_strided = x
 
         t = np.arange(length) / sample_rate
-        if sample_rate_provided:
-            units, scalar = time_units(t)
-            t *= scalar
 
         if persistence:
             default_kwargs = {
@@ -305,11 +293,7 @@ def raster(
             if colorbar and color == "index":
                 plt.colorbar(line_collection, label="Raster Index", pad=0.05)
 
-        if sample_rate_provided:
-            ax.set_xlabel(f"Time ({units})")
-        else:
-            integer_x_axis(ax)
-            ax.set_xlabel("Sample, $n$")
+        time_x_axis(ax, sample_rate_provided)
         ax.set_ylabel("Amplitude")
 
 
@@ -394,10 +378,6 @@ def correlation(
         else:
             t = np.arange(-corr.size // 2 + 1, corr.size // 2 + 1)  # Lags
 
-        if sample_rate_provided:
-            units, scalar = time_units(t)
-            t *= scalar
-
         if x is y:
             equation = r"r_{xx}[n]"
             if mode == "circular":
@@ -424,8 +404,8 @@ def correlation(
             ax.set_ylabel(rf"Correlation (dB), $\left| {equation} \right|^2$")
 
         real_or_complex_plot(t, corr, ax=ax, diff=diff, **kwargs)
+        units = time_x_axis(ax, sample_rate_provided)
         if sample_rate_provided:
             ax.set_xlabel(rf"Lag ({units}), $\Delta t$")
         else:
-            integer_x_axis(ax)
             ax.set_xlabel(r"Lag (samples), $\Delta n$")
