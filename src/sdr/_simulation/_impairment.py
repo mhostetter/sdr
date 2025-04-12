@@ -436,9 +436,9 @@ def clock_error(
             sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \
             sdr.plot.dtft(z, sample_rate=sample_rate, label="Removed Tx clock error"); \
-            plt.axvline(freq / 1e3, color="k", linestyle="--"); \
-            plt.axvline((freq + freq_offset) / 1e3, color="k", linestyle="--"); \
-            plt.xlim(80, 140);
+            plt.axvline(freq, color="k", linestyle="--"); \
+            plt.axvline(freq + freq_offset, color="k", linestyle="--"); \
+            plt.xlim(80e3, 140e3);
 
         This example demonstrates the effect of clock error on a complex baseband signal. The signal has a carrier
         frequency of 1 MHz and sample rate of 2 MS/s. A frequency offset of 100 kHz is desired, corresponding to a
@@ -476,9 +476,9 @@ def clock_error(
             sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \
             sdr.plot.dtft(z, sample_rate=sample_rate, label="Removed Tx clock error"); \
-            plt.axvline(0 / 1e3, color="k", linestyle="--"); \
-            plt.axvline(freq_offset / 1e3, color="k", linestyle="--"); \
-            plt.xlim(-20, 120);
+            plt.axvline(0, color="k", linestyle="--"); \
+            plt.axvline(freq_offset, color="k", linestyle="--"); \
+            plt.xlim(-20e3, 120e3);
 
     Group:
         simulation-impairments

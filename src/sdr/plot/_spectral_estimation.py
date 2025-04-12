@@ -12,9 +12,8 @@ from typing_extensions import Literal
 
 from .._conversion import db
 from .._helper import export, verify_arraylike, verify_isinstance, verify_literal, verify_scalar
-from ._helper import integer_x_axis, verify_sample_rate
+from ._helper import freq_x_axis, freq_y_axis, time_x_axis, verify_sample_rate
 from ._rc_params import RC_PARAMS
-from ._units import freq_units, time_units
 
 
 @export
@@ -99,10 +98,6 @@ def periodogram(
             f = np.fft.fftshift(f)
             Pxx = np.fft.fftshift(Pxx)
 
-        if sample_rate_provided:
-            units, scalar = freq_units(f)
-            f *= scalar
-
         if x_axis == "log":
             ax.semilogx(f, Pxx, **kwargs)
         else:
@@ -111,17 +106,11 @@ def periodogram(
         ax.grid(True, which="both")
         if "label" in kwargs:
             ax.legend()
-
-        if sample_rate_provided:
-            ax.set_xlabel(f"Frequency ({units}), $f$")
-        else:
-            ax.set_xlabel("Normalized frequency, $f / f_s$")
-
+        freq_x_axis(ax, sample_rate_provided)
         if y_axis == "log":
             ax.set_ylabel("Power density (dB/Hz)")
         else:
             ax.set_ylabel("Power density (W/Hz)")
-
         ax.set_title("Power spectral density")
 
 
@@ -208,12 +197,6 @@ def spectrogram(
             f = np.fft.fftshift(f)
             Sxx = np.fft.fftshift(Sxx, axes=0)
 
-        if sample_rate_provided:
-            f_units, scalar = freq_units(f)
-            f *= scalar
-            t_units, scalar = time_units(t)
-            t *= scalar
-
         default_kwargs = {
             "vmin": np.percentile(Sxx, 10),
             "vmax": np.percentile(Sxx, 100),
@@ -222,11 +205,7 @@ def spectrogram(
         kwargs = {**default_kwargs, **kwargs}
 
         ax.pcolormesh(t, f, Sxx, **kwargs)
-        if sample_rate_provided:
-            ax.set_xlabel(f"Time ({t_units}), $t$")
-            ax.set_ylabel(f"Frequency ({f_units}), $f$")
-        else:
-            integer_x_axis(ax)
-            ax.set_xlabel("Samples, $n$")
-            ax.set_ylabel("Normalized frequency, $f / f_s$")
+
+        time_x_axis(ax, sample_rate_provided)
+        freq_y_axis(ax, sample_rate_provided)
         ax.set_title("Spectrogram")
