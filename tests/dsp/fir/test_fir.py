@@ -208,7 +208,7 @@ def test_group_delay():
     )
 
     fir = sdr.FIR(b)
-    f, phi = fir.group_delay(N=omega_truth.size)
+    f, phi = fir.group_delay(n=omega_truth.size)
     omega = 2 * np.pi * f
 
     # Convert to 0 to 2*pi

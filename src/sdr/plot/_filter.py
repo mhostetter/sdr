@@ -39,7 +39,7 @@ def _convert_to_taps(
 @export
 def impulse_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    N: int | None = None,
+    n: int | None = None,
     offset: float = 0.0,
     ax: plt.Axes | None = None,
     type: Literal["plot", "stem"] = "stem",
@@ -58,7 +58,7 @@ def impulse_response(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
+        n: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         offset: The x-axis offset to apply to the first sample. Can be useful for comparing the impulse
             response of filters with different lengths.
@@ -87,13 +87,13 @@ def impulse_response(
 
             @savefig sdr_plot_impulse_response_2.png
             plt.figure(); \
-            sdr.plot.impulse_response(iir, N=30)
+            sdr.plot.impulse_response(iir, n=30)
 
     Group:
         plot-filter
     """
     b, a = _convert_to_taps(filter)
-    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(n, optional=True, int=True, positive=True)
     verify_scalar(offset, float=True)
     verify_isinstance(ax, plt.Axes, optional=True)
     verify_literal(type, ["plot", "stem"])
@@ -102,14 +102,14 @@ def impulse_response(
         if ax is None:
             ax = plt.gca()
 
-        if N is None:
+        if n is None:
             if a.size == 1 and a[0] == 1:
-                N = b.size  # FIR filter
+                n = b.size  # FIR filter
             else:
-                N = 100  # IIR filter
+                n = 100  # IIR filter
 
         # Delta impulse function
-        d = np.zeros(N, dtype=float)
+        d = np.zeros(n, dtype=float)
         d[0] = 1
 
         # Filter the impulse
@@ -127,7 +127,7 @@ def impulse_response(
 @export
 def step_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
-    N: int | None = None,
+    n: int | None = None,
     ax: plt.Axes | None = None,
     type: Literal["plot", "stem"] = "stem",
     **kwargs,
@@ -145,7 +145,7 @@ def step_response(
             - `tuple[npt.ArrayLike, npt.ArrayLike]`: The feedforward coefficients $b_i$ and
               feedback coefficients $a_j$.
 
-        N: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
+        n: The number of samples $N$ to plot. If `None`, the length of `b` is used for FIR filters and
             100 for IIR filters.
         ax: The axis to plot on. If `None`, the current axis is used.
         type: The type of plot to use.
@@ -172,13 +172,13 @@ def step_response(
 
             @savefig sdr_plot_step_response_2.png
             plt.figure(); \
-            sdr.plot.step_response(iir, N=30)
+            sdr.plot.step_response(iir, n=30)
 
     Group:
         plot-filter
     """
     b, a = _convert_to_taps(filter)
-    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(n, optional=True, int=True, positive=True)
     verify_isinstance(ax, plt.Axes, optional=True)
     verify_literal(type, ["plot", "stem"])
 
@@ -186,14 +186,14 @@ def step_response(
         if ax is None:
             ax = plt.gca()
 
-        if N is None:
+        if n is None:
             if a.size == 1 and a[0] == 1:
-                N = b.size  # FIR filter
+                n = b.size  # FIR filter
             else:
-                N = 100  # IIR filter
+                n = 100  # IIR filter
 
         # Unit step function
-        u = np.ones(N, dtype=float)
+        u = np.ones(n, dtype=float)
 
         # Filter the impulse
         zi = scipy.signal.lfiltic(b, a, y=[], x=[])
@@ -285,7 +285,7 @@ def zeros_poles(
 def magnitude_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
-    N: int = 1024,
+    n: int = 1024,
     ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     y_axis: Literal["linear", "log"] = "log",
@@ -305,7 +305,7 @@ def magnitude_response(
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        N: The number of samples $N$ in the frequency response.
+        n: The number of samples $N$ in the frequency response.
         ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
@@ -354,7 +354,7 @@ def magnitude_response(
     """
     b, a = _convert_to_taps(filter)
     sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
-    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(n, optional=True, int=True, positive=True)
     verify_isinstance(ax, plt.Axes, optional=True)
     verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
     verify_literal(y_axis, ["linear", "log"])
@@ -369,10 +369,10 @@ def magnitude_response(
 
         with np.errstate(divide="ignore", invalid="ignore"):
             if x_axis == "log":
-                f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+                f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), n)
                 f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
             else:
-                f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+                f, H = scipy.signal.freqz(b, a, worN=n, whole=x_axis == "two-sided", fs=sample_rate)
 
         if x_axis == "two-sided":
             f -= sample_rate / 2
@@ -413,7 +413,7 @@ def magnitude_response(
 def phase_response(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
-    N: int = 1024,
+    n: int = 1024,
     unwrap: bool = True,
     ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
@@ -433,7 +433,7 @@ def phase_response(
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        N: The number of samples $N$ in the phase response.
+        n: The number of samples $N$ in the phase response.
         unwrap: Indicates whether to unwrap the phase response.
         ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
@@ -482,7 +482,7 @@ def phase_response(
     """
     b, a = _convert_to_taps(filter)
     sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
-    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(n, optional=True, int=True, positive=True)
     verify_bool(unwrap)
     verify_isinstance(ax, plt.Axes, optional=True)
     verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
@@ -496,10 +496,10 @@ def phase_response(
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
         if x_axis == "log":
-            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), n)
             f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
         else:
-            f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+            f, H = scipy.signal.freqz(b, a, worN=n, whole=x_axis == "two-sided", fs=sample_rate)
 
         if x_axis == "two-sided":
             f -= sample_rate / 2
@@ -538,7 +538,7 @@ def phase_response(
 def phase_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
-    N: int = 1024,
+    n: int = 1024,
     ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
@@ -557,7 +557,7 @@ def phase_delay(
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        N: The number of samples $N$ in the phase delay.
+        n: The number of samples $N$ in the phase delay.
         ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
@@ -605,7 +605,7 @@ def phase_delay(
     """
     b, a = _convert_to_taps(filter)
     sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
-    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(n, optional=True, int=True, positive=True)
     verify_isinstance(ax, plt.Axes, optional=True)
     verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
     verify_scalar(decades, int=True, positive=True)
@@ -618,10 +618,10 @@ def phase_delay(
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
         if x_axis == "log":
-            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), n)
             f, H = scipy.signal.freqz(b, a, worN=f, whole=False, fs=sample_rate)
         else:
-            f, H = scipy.signal.freqz(b, a, worN=N, whole=x_axis == "two-sided", fs=sample_rate)
+            f, H = scipy.signal.freqz(b, a, worN=n, whole=x_axis == "two-sided", fs=sample_rate)
 
         if x_axis == "two-sided":
             f -= sample_rate / 2
@@ -662,7 +662,7 @@ def phase_delay(
 def group_delay(
     filter: FIR | IIR | npt.ArrayLike | tuple[npt.ArrayLike, npt.ArrayLike],
     sample_rate: float | None = None,
-    N: int = 1024,
+    n: int = 1024,
     ax: plt.Axes | None = None,
     x_axis: Literal["auto", "one-sided", "two-sided", "log"] = "auto",
     decades: int = 4,
@@ -681,7 +681,7 @@ def group_delay(
 
         sample_rate: The sample rate $f_s$ of the signal in samples/s. If `None`, the x-axis will
             be labeled as "Normalized frequency".
-        N: The number of samples $N$ in the frequency response.
+        n: The number of samples $N$ in the frequency response.
         ax: The axis to plot on. If `None`, the current axis is used.
         x_axis: The x-axis scaling. Options are to display a one-sided spectrum, a two-sided spectrum, or
             one-sided spectrum with a logarithmic frequency axis. The default is `"auto"` which selects `"one-sided"`
@@ -729,7 +729,7 @@ def group_delay(
     """
     b, a = _convert_to_taps(filter)
     sample_rate, sample_rate_provided = verify_sample_rate(sample_rate)
-    verify_scalar(N, optional=True, int=True, positive=True)
+    verify_scalar(n, optional=True, int=True, positive=True)
     verify_isinstance(ax, plt.Axes, optional=True)
     verify_literal(x_axis, ["auto", "one-sided", "two-sided", "log"])
     verify_scalar(decades, int=True, positive=True)
@@ -742,10 +742,10 @@ def group_delay(
             x_axis = "one-sided" if np.isrealobj(b) and np.isrealobj(a) else "two-sided"
 
         if x_axis == "log":
-            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), N)
+            f = np.logspace(np.log10(sample_rate / 2 / 10**decades), np.log10(sample_rate / 2), n)
             f, tau_g = scipy.signal.group_delay((b, a), w=f, whole=False, fs=sample_rate)
         else:
-            f, tau_g = scipy.signal.group_delay((b, a), w=N, whole=x_axis == "two-sided", fs=sample_rate)
+            f, tau_g = scipy.signal.group_delay((b, a), w=n, whole=x_axis == "two-sided", fs=sample_rate)
 
         if x_axis == "two-sided":
             f -= sample_rate / 2
@@ -837,10 +837,10 @@ def filter(
         b, a = _convert_to_taps(filter)
 
         plt.subplot2grid((2, 3), (0, 0), 1, 3)
-        magnitude_response((b, a), sample_rate=sample_rate, N=n_freq, x_axis=x_axis, decades=decades)
+        magnitude_response((b, a), sample_rate=sample_rate, n=n_freq, x_axis=x_axis, decades=decades)
 
         plt.subplot2grid((2, 3), (1, 0), 1, 1)
         zeros_poles((b, a))
 
         plt.subplot2grid((2, 3), (1, 1), 1, 2)
-        impulse_response((b, a), N=n_time)
+        impulse_response((b, a), n=n_time)

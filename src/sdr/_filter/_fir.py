@@ -204,14 +204,14 @@ class FIR:
     # Methods
     ##############################################################################
 
-    def impulse_response(self, N: int | None = None) -> npt.NDArray:
+    def impulse_response(self, n: int | None = None) -> npt.NDArray:
         r"""
         Returns the impulse response $h[n]$ of the FIR filter.
 
         The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
         Arguments:
-            N: The number of samples to return. The default is the filter length.
+            n: The number of samples to return. The default is the filter length.
 
         Returns:
             The impulse response of the IIR filter $h[n]$.
@@ -222,26 +222,26 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        verify_scalar(N, optional=True, int=True, inclusive_min=self.taps.size)
-        if N is None:
-            N = self.taps.size
+        verify_scalar(n, optional=True, int=True, inclusive_min=self.taps.size)
+        if n is None:
+            n = self.taps.size
 
         # Delta impulse function
-        d = np.zeros(N - self.taps.size + 1, dtype=float)
+        d = np.zeros(n - self.taps.size + 1, dtype=float)
         d[0] = 1
 
         h = scipy.signal.convolve(d, self.taps, mode="full")
 
         return h
 
-    def step_response(self, N: int | None = None) -> npt.NDArray:
+    def step_response(self, n: int | None = None) -> npt.NDArray:
         """
         Returns the step response $s[n]$ of the FIR filter.
 
         The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
         Arguments:
-            N: The number of samples to return. The default is the filter length.
+            n: The number of samples to return. The default is the filter length.
 
         Returns:
             The step response of the FIR filter $s[n]$.
@@ -252,12 +252,12 @@ class FIR:
         Examples:
             See the :ref:`fir-filters` example.
         """
-        verify_scalar(N, optional=True, int=True, inclusive_min=self.taps.size)
-        if N is None:
-            N = self.taps.size
+        verify_scalar(n, optional=True, int=True, inclusive_min=self.taps.size)
+        if n is None:
+            n = self.taps.size
 
         # Unit step function
-        u = np.ones(N - self.taps.size + 1, dtype=float)
+        u = np.ones(n - self.taps.size + 1, dtype=float)
 
         s = scipy.signal.convolve(u, self.taps, mode="full")
 
@@ -357,13 +357,13 @@ class FIR:
         else:
             return H
 
-    def group_delay(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
+    def group_delay(self, sample_rate: float = 1.0, n: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
         Returns the group delay $\tau_g(\omega)$ of the FIR filter.
 
         Arguments:
             sample_rate: The sample rate $f_s$ of the filter in samples/s.
-            N: The number of samples in the group delay.
+            n: The number of samples in the group delay.
 
         Returns:
             - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
@@ -376,9 +376,9 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         verify_scalar(sample_rate, float=True, positive=True)
-        verify_scalar(N, int=True, positive=True)
+        verify_scalar(n, int=True, positive=True)
 
-        f, gd = scipy.signal.group_delay((self.taps, 1), w=N, whole=True, fs=sample_rate)
+        f, gd = scipy.signal.group_delay((self.taps, 1), w=n, whole=True, fs=sample_rate)
 
         f[f >= 0.5 * sample_rate] -= sample_rate  # Wrap frequencies from [0, 1) to [-0.5, 0.5)
         f = np.fft.fftshift(f)
@@ -386,13 +386,13 @@ class FIR:
 
         return f, gd
 
-    def phase_delay(self, sample_rate: float = 1.0, N: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
+    def phase_delay(self, sample_rate: float = 1.0, n: int = 1024) -> tuple[npt.NDArray, npt.NDArray]:
         r"""
         Returns the phase delay $\tau_{\phi}(\omega)$ of the FIR filter.
 
         Arguments:
             sample_rate: The sample rate $f_s$ of the filter in samples/s.
-            N: The number of samples in the phase delay.
+            n: The number of samples in the phase delay.
 
         Returns:
             - The frequencies $f$ from $-f_s/2$ to $f_s/2$ in Hz.
@@ -405,9 +405,9 @@ class FIR:
             See the :ref:`fir-filters` example.
         """
         verify_scalar(sample_rate, float=True, positive=True)
-        verify_scalar(N, int=True, positive=True)
+        verify_scalar(n, int=True, positive=True)
 
-        f, H = scipy.signal.freqz(self.taps, 1, worN=N, whole=True, fs=sample_rate)
+        f, H = scipy.signal.freqz(self.taps, 1, worN=n, whole=True, fs=sample_rate)
 
         f -= sample_rate / 2
         H = np.fft.fftshift(H)
