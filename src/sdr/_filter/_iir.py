@@ -194,14 +194,14 @@ class IIR:
     # Methods
     ##############################################################################
 
-    def impulse_response(self, N: int = 100) -> npt.NDArray:
+    def impulse_response(self, n: int = 100) -> npt.NDArray:
         r"""
         Returns the impulse response $h[n]$ of the IIR filter.
 
         The impulse response $h[n]$ is the filter output when the input is an impulse $\delta[n]$.
 
         Arguments:
-            N: The number of samples to return.
+            n: The number of samples to return.
 
         Returns:
             The impulse response of the IIR filter $h[n]$.
@@ -212,10 +212,10 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        verify_scalar(N, int=True, positive=True)
+        verify_scalar(n, int=True, positive=True)
 
         # Delta impulse function
-        d = np.zeros(N, dtype=float)
+        d = np.zeros(n, dtype=float)
         d[0] = 1
 
         zi = self._state
@@ -224,14 +224,14 @@ class IIR:
 
         return h
 
-    def step_response(self, N: int = 100) -> npt.NDArray:
+    def step_response(self, n: int = 100) -> npt.NDArray:
         """
         Returns the step response $s[n]$ of the IIR filter.
 
         The step response $s[n]$ is the filter output when the input is a unit step $u[n]$.
 
         Arguments:
-            N: The number of samples to return.
+            n: The number of samples to return.
 
         Returns:
             The step response of the IIR filter $s[n]$.
@@ -242,10 +242,10 @@ class IIR:
         Examples:
             See the :ref:`iir-filters` example.
         """
-        verify_scalar(N, int=True, positive=True)
+        verify_scalar(n, int=True, positive=True)
 
         # Unit step function
-        u = np.ones(N, dtype=float)
+        u = np.ones(n, dtype=float)
 
         state = self._state
         s = self(u)

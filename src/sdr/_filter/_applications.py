@@ -39,8 +39,8 @@ class MovingAverager(FIR):
 
             @savefig sdr_MovingAverager_1.png
             plt.figure(); \
-            sdr.plot.step_response(fir, N=100, label="Moving Averager"); \
-            sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
+            sdr.plot.step_response(fir, n=100, label="Moving Averager"); \
+            sdr.plot.step_response(iir, n=100, label="Leaky Integrator");
 
         Compare the magnitude responses.
 
@@ -373,8 +373,8 @@ class LeakyIntegrator(IIR):
 
             @savefig sdr_LeakyIntegrator_1.png
             plt.figure(); \
-            sdr.plot.step_response(fir, N=100, label="Moving Averager"); \
-            sdr.plot.step_response(iir, N=100, label="Leaky Integrator");
+            sdr.plot.step_response(fir, n=100, label="Moving Averager"); \
+            sdr.plot.step_response(iir, n=100, label="Leaky Integrator");
 
         Compare the magnitude responses.
 
