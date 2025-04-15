@@ -377,16 +377,16 @@ def clock_error(
                 This can become noticeable at high clock errors, e.g. 1,000 ppm or more. It is not advised to use
                 this function with complex low-IF signals.
 
-        error: The fractional clock error $\epsilon$, which is unitless, with 0 representing no clock error. For example,
-            1e-6 represents 1 ppm of clock error.
+        error: The fractional clock error $\epsilon$, which is unitless, with 0 representing no clock error.
+            For example, 1e-6 represents 1 ppm of clock error.
 
-            The fractional clock error can be calculated from frequency offset $\Delta f$ and
+            The fractional clock error can be calculated from frequency offset $\Delta f = f_{c,\text{new}} - f_c$ and
             carrier frequency $f_c$ as $\epsilon = \Delta f / f_c$. For example, a 1 kHz frequency error applied to a
             signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.
 
-            The fractional clock error can also be calculated from sample rate offset $\Delta f_s$ and
-            sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$. For example, a 10 Hz sample rate error applied to a
-            signal with a 1 MHz sample rate is 1e-5 or 10 ppm.
+            The fractional clock error can also be calculated from sample rate offset $\Delta f_s = f_s - f_{s,\text{new}}$
+            and sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$. For example, a -10 S/s sample rate error applied
+            to a signal with a 10 MS/s sample rate is -1e-6 or -1 ppm.
 
             The fractional clock error can also be calculated from relative velocity $\Delta v$ and speed of light
             $c$ as $\epsilon = \Delta v / c$. For example, a 60 mph (or 26.82 m/s) relative velocity between the
@@ -442,10 +442,9 @@ def clock_error(
 
         This example demonstrates the effect of clock error on a complex baseband signal. The signal has a carrier
         frequency of 1 MHz and sample rate of 2 MS/s. A frequency offset of 100 kHz is desired, corresponding to a
-        clock error of 0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice
-        that the transmitted signal is compressed in time, but not shifted in frequency. Notice that the transmitted
-        signal is compressed in time and shifted in frequency. Also notice that the corrected received signal
-        matches the original.
+        clock error of 0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice that
+        the transmitted signal is compressed in time and shifted in frequency. Also notice that the corrected received
+        signal matches the original.
 
         .. ipython:: python
 
