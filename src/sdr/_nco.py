@@ -197,12 +197,32 @@ class NCO:
 
         return convert_output(y, squeeze=True)
 
-    def step(self, N: int) -> npt.NDArray[np.complex128]:
+    @overload
+    def step(
+        self,
+        n: int,
+        output: Literal["phase", "sine", "cosine"] = "complex-exp",
+    ) -> npt.NDArray[np.float64]: ...
+
+    @overload
+    def step(
+        self,
+        n: int,
+        output: Literal["complex-exp"] = "complex-exp",
+    ) -> npt.NDArray[np.complex128]: ...
+
+    def step(
+        self,
+        n: int,
+        output: Any = "complex-exp",
+    ) -> Any:
         """
         Steps the NCO forward by $N$ samples.
 
         Arguments:
-            N: The number of samples $N$ to step the NCO forward.
+            n: The number of samples $N$ to step the NCO forward.
+            output: The format of the output signal $y[n]$. Options are the accumulated phase, sine, cosine, or
+                complex exponential.
 
         Returns:
             The output complex signal $y[n]$.
@@ -210,10 +230,10 @@ class NCO:
         Examples:
             See the :ref:`phase-locked-loop` example.
         """
-        verify_scalar(N, int=True, positive=True)
+        verify_scalar(n, int=True, positive=True)
 
-        x = np.zeros(N)
-        y = self(x)
+        x = np.zeros(n)
+        y = self(x, output=output)
 
         return y
 
