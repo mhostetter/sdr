@@ -233,7 +233,7 @@ class FarrowResampler:
             # Compute the fractional sample indices for each output sample
             frac_idxs = np.arange(
                 self._delay,  # Account for filter delay
-                self._delay + x.size - 1,
+                self._delay + x.size,
                 1 / rate,
             )
 
