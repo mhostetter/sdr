@@ -95,7 +95,7 @@ class LinearModulation:
                     alpha = 0.2
                 self._pulse_shape = root_raised_cosine(alpha, span, self.sps)
         else:
-            self._pulse_shape = verify_arraylike(pulse_shape, float=True, ndim=1)  # Pulse shape
+            self._pulse_shape = verify_arraylike(pulse_shape, complex=True, ndim=1)  # Pulse shape
 
         self._tx_filter = Interpolator(self.sps, self.pulse_shape)  # Transmit pulse shaping filter
         self._rx_filter = Decimator(self.sps, self.pulse_shape[::-1].conj())  # Receive matched filter
