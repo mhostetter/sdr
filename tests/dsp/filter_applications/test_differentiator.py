@@ -58,5 +58,5 @@ def test_20_kaiser():
 def test_central_difference():
     fir = sdr.Differentiator(2, window=None)
     h = fir.taps
-    h_truth = np.array([1, 0, -1])
+    h_truth = np.array([1, 0, -1]) / 2
     assert np.allclose(h, h_truth)
