@@ -192,13 +192,17 @@ class Differentiator(FIR):
         verify_scalar(order, int=True, positive=True, even=True)
         verify_bool(streaming)
 
-        n = np.arange(-order // 2, order // 2 + 1)  # Sample index centered about 0
-        with np.errstate(divide="ignore"):
-            h = (-1.0) ** n / n  # Impulse response
-        h[order // 2] = 0
+        if order == 2:
+            # Special case for order 2
+            h = np.array([1, 0, -1]) / 2
+        else:
+            n = np.arange(-order // 2, order // 2 + 1)  # Sample index centered about 0
+            with np.errstate(divide="ignore"):
+                h = (-1.0) ** n / n  # Impulse response
+            h[order // 2] = 0
 
-        if window is not None:
-            h *= scipy.signal.windows.get_window(window, order + 1, fftbins=False)
+            if window is not None:
+                h *= scipy.signal.windows.get_window(window, order + 1, fftbins=False)
 
         super().__init__(h, streaming=streaming)
 
