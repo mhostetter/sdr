@@ -105,7 +105,7 @@ class ReplicaCorrelator:
         Examples:
             .. ipython:: python
 
-                @savefig sdr_ReplicaCorrelator_roc_1.png
+                @savefig sdr_ReplicaCorrelator_roc_1.svg
                 plt.figure(); \
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(-10), label="ENR = -10 dB"); \
                 sdr.plot.roc(*sdr.ReplicaCorrelator.roc(-5), label="ENR = -5 dB"); \
@@ -159,7 +159,7 @@ class ReplicaCorrelator:
 
                 enr = np.linspace(0, 20, 101)
 
-                @savefig sdr_ReplicaCorrelator_p_d_1.png
+                @savefig sdr_ReplicaCorrelator_p_d_1.svg
                 plt.figure(); \
                 sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-1), label="$P_{fa} = 10^{-1}$"); \
                 sdr.plot.p_d(enr, sdr.ReplicaCorrelator.p_d(enr, 1e-2), label="$P_{fa} = 10^{-2}$"); \

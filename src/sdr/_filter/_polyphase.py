@@ -565,7 +565,7 @@ class Interpolator(PolyphaseFIR):
             fir = sdr.Interpolator(7); fir
             y = fir(x)
 
-            @savefig sdr_Interpolator_1.png
+            @savefig sdr_Interpolator_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Interpolated"); \
@@ -584,7 +584,7 @@ class Interpolator(PolyphaseFIR):
             y4 = fir(x[30:40]); \
             y5 = fir.flush()
 
-            @savefig sdr_Interpolator_2.png
+            @savefig sdr_Interpolator_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Interpolated $y_1[n]$"); \
@@ -601,7 +601,7 @@ class Interpolator(PolyphaseFIR):
             fir = sdr.Interpolator(7, "linear"); fir
             y = fir(x)
 
-            @savefig sdr_Interpolator_3.png
+            @savefig sdr_Interpolator_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Interpolated"); \
@@ -615,7 +615,7 @@ class Interpolator(PolyphaseFIR):
             fir = sdr.Interpolator(7, "zoh"); fir
             y = fir(x, mode="full")
 
-            @savefig sdr_Interpolator_4.png
+            @savefig sdr_Interpolator_4.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, offset=-fir.delay/fir.rate, marker=".", label="Interpolated"); \
@@ -770,7 +770,7 @@ class Decimator(PolyphaseFIR):
             fir = sdr.Decimator(7); fir
             y = fir(x)
 
-            @savefig sdr_Decimator_1.png
+            @savefig sdr_Decimator_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker="o", label="Decimated"); \
@@ -789,7 +789,7 @@ class Decimator(PolyphaseFIR):
             y4 = fir(x[210:280]); \
             y5 = fir.flush()
 
-            @savefig sdr_Decimator_2.png
+            @savefig sdr_Decimator_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker="o", label="Decimated $y_1[n]$"); \
@@ -941,7 +941,7 @@ class Resampler(PolyphaseFIR):
             fir = sdr.Resampler(7, 3); fir
             y = fir(x)
 
-            @savefig sdr_Resampler_1.png
+            @savefig sdr_Resampler_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Resampled"); \
@@ -960,7 +960,7 @@ class Resampler(PolyphaseFIR):
             y4 = fir(x[30:40]); \
             y5 = fir.flush()
 
-            @savefig sdr_Resampler_2.png
+            @savefig sdr_Resampler_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Resampled $y_1[n]$"); \
@@ -977,7 +977,7 @@ class Resampler(PolyphaseFIR):
             fir = sdr.Resampler(5, 7); fir
             y = fir(x)
 
-            @savefig sdr_Resampler_3.png
+            @savefig sdr_Resampler_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker="o", label="Resampled"); \
@@ -1170,7 +1170,7 @@ class Channelizer(PolyphaseFIR):
                     f_start -= 1
                     f_stop -= 1
                 plt.fill_betweenx([0, 80], f_start, f_stop, alpha=0.2, label=f"Channel {i}")
-            @savefig sdr_Channelizer_1.png
+            @savefig sdr_Channelizer_1.svg
             plt.xticks(np.arange(-0.5, 0.6, 0.1)); \
             plt.legend(); \
             plt.title("Input signals spread across 10 channels");
@@ -1187,7 +1187,7 @@ class Channelizer(PolyphaseFIR):
             plt.figure();
             for i in range(C):
                 sdr.plot.periodogram(Y[i, :], fft=1024, label=f"Channel {i}")
-            @savefig sdr_Channelizer_2.png
+            @savefig sdr_Channelizer_2.svg
             plt.xticks(np.arange(-0.5, 0.6, 0.1)); \
             plt.title("Output signals from 10 channels");
 

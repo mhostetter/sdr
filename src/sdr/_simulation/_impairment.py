@@ -66,7 +66,7 @@ def awgn(
             x = np.sin(2 * np.pi * 5 * np.arange(100) / 100); \
             y = sdr.awgn(x, snr=10)
 
-            @savefig sdr_awgn_1.png
+            @savefig sdr_awgn_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, label="$x[n]$"); \
             sdr.plot.time_domain(y, label="$y[n]$"); \
@@ -82,7 +82,7 @@ def awgn(
             x = psk.map_symbols(s); \
             y = sdr.awgn(x, snr=10)
 
-            @savefig sdr_awgn_2.png
+            @savefig sdr_awgn_2.svg
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
@@ -148,7 +148,7 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.
             y1 = sdr.iq_imbalance(x, 5, 0); \
             y2 = sdr.iq_imbalance(x, -5, 0)
 
-            @savefig sdr_iq_imbalance_1.png
+            @savefig sdr_iq_imbalance_1.svg
             plt.figure(); \
             plt.subplot(1, 2, 1); \
             sdr.plot.constellation(x, label="$x[n]$"); \
@@ -167,7 +167,7 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.
             y1 = sdr.iq_imbalance(x, 0, 20); \
             y2 = sdr.iq_imbalance(x, 0, -20)
 
-            @savefig sdr_iq_imbalance_2.png
+            @savefig sdr_iq_imbalance_2.svg
             plt.figure(); \
             plt.subplot(1, 2, 1); \
             sdr.plot.constellation(x, label="$x[n]$"); \
@@ -237,7 +237,7 @@ def sample_rate_offset(
 
             y = sdr.sample_rate_offset(x, 10e-6)
 
-            @savefig sdr_sample_rate_offset_1.png
+            @savefig sdr_sample_rate_offset_1.svg
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
@@ -249,7 +249,7 @@ def sample_rate_offset(
 
             y = sdr.sample_rate_offset(x, 100e-6)
 
-            @savefig sdr_sample_rate_offset_2.png
+            @savefig sdr_sample_rate_offset_2.svg
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
@@ -308,7 +308,7 @@ def frequency_offset(
             freq = 1 / 100
             y = sdr.frequency_offset(x, freq)
 
-            @savefig sdr_frequency_offset_1.png
+            @savefig sdr_frequency_offset_1.svg
             plt.figure(); \
             sdr.plot.time_domain(np.unwrap(np.angle(x)) / (2 * np.pi), label="$x[n]$"); \
             sdr.plot.time_domain(np.unwrap(np.angle(y)) / (2 * np.pi), label="$y[n]$"); \
@@ -323,7 +323,7 @@ def frequency_offset(
             freq_rate = 2 / 100**2
             y = sdr.frequency_offset(x, freq, freq_rate)
 
-            @savefig sdr_frequency_offset_2.png
+            @savefig sdr_frequency_offset_2.svg
             plt.figure(); \
             sdr.plot.time_domain(np.unwrap(np.angle(x)) / (2 * np.pi), label="$x[n]$"); \
             sdr.plot.time_domain(np.unwrap(np.angle(y)) / (2 * np.pi), label="$y[n]$"); \
@@ -423,7 +423,7 @@ def clock_error(
             print("Clock error:", error); \
             z = sdr.clock_error(y, error)
 
-            @savefig sdr_clock_error_1.png
+            @savefig sdr_clock_error_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x - 0, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.time_domain(y - 3, sample_rate=sample_rate, label="Added Tx clock error"); \
@@ -431,7 +431,7 @@ def clock_error(
             plt.legend(loc="lower left"); \
             plt.title("Real passband signals with and without clock error");
 
-            @savefig sdr_clock_error_2.png
+            @savefig sdr_clock_error_2.svg
             plt.figure(); \
             sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \
@@ -462,7 +462,7 @@ def clock_error(
             print("Clock error:", error); \
             z = sdr.clock_error(y, error, 0, center_freq, sample_rate=sample_rate)
 
-            @savefig sdr_clock_error_3.png
+            @savefig sdr_clock_error_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x - 0 - 0j, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.time_domain(y - 3 - 3j, sample_rate=sample_rate, label="Added Tx clock error"); \
@@ -470,7 +470,7 @@ def clock_error(
             plt.legend(loc="lower left"); \
             plt.title("Complex baseband signals with and without clock error");
 
-            @savefig sdr_clock_error_4.png
+            @savefig sdr_clock_error_4.svg
             plt.figure(); \
             sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \

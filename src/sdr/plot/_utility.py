@@ -69,12 +69,12 @@ def stem(  # noqa: D417
 
             rrc = sdr.raised_cosine(0.1, 8, 10)
 
-            @savefig sdr_plot_stem_1.png
+            @savefig sdr_plot_stem_1.svg
             plt.figure(); \
             plt.stem(rrc); \
             plt.title("matplotlib.pyplot.stem()");
 
-            @savefig sdr_plot_stem_2.png
+            @savefig sdr_plot_stem_2.svg
             plt.figure(); \
             sdr.plot.stem(rrc); \
             plt.title("sdr.plot.stem()");
@@ -85,13 +85,13 @@ def stem(  # noqa: D417
 
             gaussian = sdr.gaussian(0.1, 8, 10)
 
-            @savefig sdr_plot_stem_3.png
+            @savefig sdr_plot_stem_3.svg
             plt.figure(); \
             plt.stem(rrc); \
             plt.stem(gaussian); \
             plt.title("matplotlib.pyplot.stem()");
 
-            @savefig sdr_plot_stem_4.png
+            @savefig sdr_plot_stem_4.svg
             plt.figure(); \
             sdr.plot.stem(rrc); \
             sdr.plot.stem(gaussian); \

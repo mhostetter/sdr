@@ -56,7 +56,7 @@ class AGC:
 
             x += 0.001 * (np.random.randn(x.size) + 1j * np.random.randn(x.size))
 
-            @savefig sdr_AGC_1.png
+            @savefig sdr_AGC_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x); \
             plt.title("Input signal");
@@ -70,7 +70,7 @@ class AGC:
             agc = sdr.AGC(0.5, 0.01)
             y = agc(x)
 
-            @savefig sdr_AGC_2.png
+            @savefig sdr_AGC_2.svg
             plt.figure(); \
             sdr.plot.time_domain(y); \
             plt.ylim(-1.5, 1.5); \

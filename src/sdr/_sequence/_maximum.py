@@ -106,7 +106,7 @@ def m_sequence(
 
             x = sdr.m_sequence(6, output="bipolar")
 
-            @savefig sdr_m_sequence_1.png
+            @savefig sdr_m_sequence_1.svg
             plt.figure(); \
             sdr.plot.correlation(x, x, mode="circular"); \
             plt.ylim(0, 63);
@@ -119,7 +119,7 @@ def m_sequence(
             x = sdr.m_sequence(6, index=1, output="bipolar")
             y = sdr.m_sequence(6, index=30, output="bipolar")
 
-            @savefig sdr_m_sequence_2.png
+            @savefig sdr_m_sequence_2.svg
             plt.figure(); \
             sdr.plot.correlation(x, y, mode="circular"); \
             plt.ylim(0, 63);

@@ -47,7 +47,7 @@ def bsc_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
             p = np.linspace(0, 1, 100); \
             C = sdr.bsc_capacity(p)
 
-            @savefig sdr_bsc_capacity_1.png
+            @savefig sdr_bsc_capacity_1.svg
             plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Transition probability, $p$"); \
@@ -91,7 +91,7 @@ def bec_capacity(p: npt.ArrayLike) -> npt.NDArray[np.float64]:
             p = np.linspace(0, 1, 100); \
             C = sdr.bec_capacity(p)
 
-            @savefig sdr_bec_capacity_1.png
+            @savefig sdr_bec_capacity_1.svg
             plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Erasure probability, $p$"); \
@@ -148,7 +148,7 @@ def awgn_capacity(snr: npt.ArrayLike, bandwidth: float | None = None) -> npt.NDA
             snr = np.linspace(-30, 60, 101); \
             C = sdr.awgn_capacity(snr)
 
-            @savefig sdr_awgn_capacity_1.png
+            @savefig sdr_awgn_capacity_1.svg
             plt.figure(); \
             plt.semilogy(snr, C); \
             plt.axvline(sdr.shannon_limit_snr(2), color='k', linestyle='--'); \
@@ -260,7 +260,7 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
             C_ub = np.log2(2) - np.log2(1 + np.exp(-sdr.linear(snr)))
             C = sdr.biawgn_capacity(snr)
 
-            @savefig sdr_biawgn_capacity_1.png
+            @savefig sdr_biawgn_capacity_1.svg
             plt.figure(); \
             plt.plot(snr, C_ub, linestyle="--", label="$C_{ub}$"); \
             plt.plot(snr, C, label="$C$"); \
@@ -276,7 +276,7 @@ def biawgn_capacity(snr: npt.ArrayLike) -> npt.NDArray[np.float64]:
             C_hard = sdr.bsc_capacity(p)
             C_soft = sdr.biawgn_capacity(snr)
 
-            @savefig sdr_biawgn_capacity_2.png
+            @savefig sdr_biawgn_capacity_2.svg
             plt.figure(); \
             plt.plot(snr, C_hard, label="BSC (hard)"); \
             plt.plot(snr, C_soft, label="BI-AWGN (soft)"); \
@@ -367,7 +367,7 @@ def shannon_limit_ebn0(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
             rho = np.logspace(-2, 1, 101)
             ebn0 = sdr.shannon_limit_ebn0(rho)
 
-            @savefig sdr_shannon_limit_ebn0_1.png
+            @savefig sdr_shannon_limit_ebn0_1.svg
             plt.figure(); \
             plt.semilogy(ebn0, rho); \
             plt.xlabel("Bit energy-to-noise PSD ratio (dB), $E_b/N_0$"); \
@@ -425,7 +425,7 @@ def shannon_limit_snr(rho: npt.ArrayLike) -> npt.NDArray[np.float64]:
             snr = np.linspace(-30, 60, 101); \
             C = sdr.awgn_capacity(snr)
 
-            @savefig sdr_shannon_limit_snr_1.png
+            @savefig sdr_shannon_limit_snr_1.svg
             plt.figure(); \
             plt.semilogy(snr, C); \
             plt.axvline(sdr.shannon_limit_snr(2), color='k', linestyle='--'); \

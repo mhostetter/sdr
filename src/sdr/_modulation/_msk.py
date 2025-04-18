@@ -45,7 +45,7 @@ class MSK(OQPSK):
 
             msk = sdr.MSK(); msk
 
-            @savefig sdr_MSK_1.png
+            @savefig sdr_MSK_1.svg
             plt.figure(); \
             sdr.plot.symbol_map(msk);
 
@@ -57,7 +57,7 @@ class MSK(OQPSK):
             symbols = sdr.pack(bits, msk.bps); symbols[0:4]
             complex_symbols = msk.map_symbols(symbols); complex_symbols[0:4]
 
-            @savefig sdr_MSK_2.png
+            @savefig sdr_MSK_2.svg
             plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
@@ -67,7 +67,7 @@ class MSK(OQPSK):
 
             tx_samples = msk.modulate(symbols)
 
-            @savefig sdr_MSK_3.png
+            @savefig sdr_MSK_3.svg
             plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*msk.sps]);
 
@@ -75,7 +75,7 @@ class MSK(OQPSK):
 
         .. ipython:: python
 
-            @savefig sdr_MSK_4.png
+            @savefig sdr_MSK_4.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(tx_samples[5*msk.sps : -5*msk.sps], msk.sps); \
             plt.suptitle("Noiseless transmitted signal");
@@ -86,7 +86,7 @@ class MSK(OQPSK):
 
         .. ipython:: python
 
-            @savefig sdr_MSK_5.png
+            @savefig sdr_MSK_5.svg
             plt.figure(); \
             sdr.plot.phase_tree(tx_samples[msk.sps:], msk.sps);
 
@@ -98,7 +98,7 @@ class MSK(OQPSK):
             snr = sdr.ebn0_to_snr(ebn0, bps=msk.bps, sps=msk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_MSK_6.png
+            @savefig sdr_MSK_6.svg
             plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*msk.sps]);
 
@@ -109,7 +109,7 @@ class MSK(OQPSK):
             mf = sdr.FIR(msk.pulse_shape); \
             mf_samples = mf(rx_samples)
 
-            @savefig sdr_MSK_7.png
+            @savefig sdr_MSK_7.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(mf_samples[10*msk.sps : -10*msk.sps], msk.sps); \
             plt.suptitle("Noisy received and matched filtered signal");
@@ -123,7 +123,7 @@ class MSK(OQPSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_MSK_8.png
+            @savefig sdr_MSK_8.svg
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
