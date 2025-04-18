@@ -61,7 +61,7 @@ class PSK(LinearModulation):
 
             qpsk = sdr.PSK(4, phase_offset=45, pulse_shape="srrc"); qpsk
 
-            @savefig sdr_PSK_1.png
+            @savefig sdr_PSK_1.svg
             plt.figure(); \
             sdr.plot.symbol_map(qpsk);
 
@@ -73,7 +73,7 @@ class PSK(LinearModulation):
             symbols = sdr.pack(bits, qpsk.bps); symbols[0:4]
             complex_symbols = qpsk.map_symbols(symbols); complex_symbols[0:4]
 
-            @savefig sdr_PSK_2.png
+            @savefig sdr_PSK_2.svg
             plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
@@ -83,7 +83,7 @@ class PSK(LinearModulation):
 
             tx_samples = qpsk.modulate(symbols)
 
-            @savefig sdr_PSK_3.png
+            @savefig sdr_PSK_3.svg
             plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*qpsk.sps]);
 
@@ -92,7 +92,7 @@ class PSK(LinearModulation):
 
         .. ipython:: python
 
-            @savefig sdr_PSK_4.png
+            @savefig sdr_PSK_4.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(tx_samples[5*qpsk.sps : -5*qpsk.sps], qpsk.sps, persistence=True); \
             plt.suptitle("Noiseless transmitted signal with ISI");
@@ -105,7 +105,7 @@ class PSK(LinearModulation):
             snr = sdr.ebn0_to_snr(ebn0, bps=qpsk.bps, sps=qpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_PSK_5.png
+            @savefig sdr_PSK_5.svg
             plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*qpsk.sps]);
 
@@ -117,7 +117,7 @@ class PSK(LinearModulation):
             mf = sdr.FIR(qpsk.pulse_shape); \
             mf_samples = mf(rx_samples)
 
-            @savefig sdr_PSK_6.png
+            @savefig sdr_PSK_6.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(mf_samples[10*qpsk.sps : -10*qpsk.sps], qpsk.sps, persistence=True); \
             plt.suptitle("Noisy received and matched filtered signal without ISI");
@@ -131,7 +131,7 @@ class PSK(LinearModulation):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_PSK_7.png
+            @savefig sdr_PSK_7.svg
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
@@ -264,7 +264,7 @@ class PSK(LinearModulation):
                 psk16 = sdr.PSK(16); \
                 ebn0 = np.linspace(-2, 10, 100)
 
-                @savefig sdr_psk_ber_1.png
+                @savefig sdr_psk_ber_1.svg
                 plt.figure(); \
                 sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK"); \
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
@@ -276,7 +276,7 @@ class PSK(LinearModulation):
 
             .. ipython:: python
 
-                @savefig sdr_psk_ber_2.png
+                @savefig sdr_psk_ber_2.svg
                 plt.figure(); \
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
                 sdr.plot.ber(ebn0, qpsk.ber(ebn0, diff_encoded=True), label="DE-QPSK"); \
@@ -357,7 +357,7 @@ class PSK(LinearModulation):
                 psk16 = sdr.PSK(16); \
                 esn0 = np.linspace(-2, 10, 100)
 
-                @savefig sdr_psk_ser_1.png
+                @savefig sdr_psk_ser_1.svg
                 plt.figure(); \
                 sdr.plot.ser(esn0, bpsk.ser(esn0), label="BPSK"); \
                 sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
@@ -369,7 +369,7 @@ class PSK(LinearModulation):
 
             .. ipython:: python
 
-                @savefig sdr_psk_ser_2.png
+                @savefig sdr_psk_ser_2.svg
                 plt.figure(); \
                 sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
                 sdr.plot.ser(esn0, qpsk.ser(esn0, diff_encoded=True), label="DE-QPSK"); \
@@ -433,7 +433,7 @@ class PSK(LinearModulation):
                 psk = sdr.PSK(4); \
                 psk.phase_offset
 
-                @savefig sdr_psk_phase_offset_1.png
+                @savefig sdr_psk_phase_offset_1.svg
                 plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map);
 
@@ -444,7 +444,7 @@ class PSK(LinearModulation):
                 psk = sdr.PSK(4, phase_offset=45); \
                 psk.phase_offset
 
-                @savefig sdr_psk_phase_offset_2.png
+                @savefig sdr_psk_phase_offset_2.svg
                 plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map);
         """,
@@ -467,7 +467,7 @@ class PSK(LinearModulation):
                 psk = sdr.PSK(8); \
                 psk.symbol_map
 
-                @savefig sdr_psk_symbol_map_1.png
+                @savefig sdr_psk_symbol_map_1.svg
                 plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
 
@@ -478,7 +478,7 @@ class PSK(LinearModulation):
                 psk = sdr.PSK(8, symbol_labels="bin"); \
                 psk.symbol_map
 
-                @savefig sdr_psk_symbol_map_2.png
+                @savefig sdr_psk_symbol_map_2.svg
                 plt.figure(); \
                 sdr.plot.symbol_map(psk.symbol_map, annotate="bin");
         """,
@@ -532,7 +532,7 @@ class PiMPSK(PSK):
 
             pi4_qpsk = sdr.PiMPSK(4, pulse_shape="srrc"); pi4_qpsk
 
-            @savefig sdr_PiMPSK_1.png
+            @savefig sdr_PiMPSK_1.svg
             plt.figure(); \
             sdr.plot.symbol_map(pi4_qpsk);
 
@@ -544,7 +544,7 @@ class PiMPSK(PSK):
             symbols = sdr.pack(bits, pi4_qpsk.bps); symbols[0:4]
             complex_symbols = pi4_qpsk.map_symbols(symbols); complex_symbols[0:4]
 
-            @savefig sdr_PiMPSK_2.png
+            @savefig sdr_PiMPSK_2.svg
             plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
@@ -554,7 +554,7 @@ class PiMPSK(PSK):
 
             tx_samples = pi4_qpsk.modulate(symbols)
 
-            @savefig sdr_PiMPSK_3.png
+            @savefig sdr_PiMPSK_3.svg
             plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*pi4_qpsk.sps]);
 
@@ -563,7 +563,7 @@ class PiMPSK(PSK):
 
         .. ipython:: python
 
-            @savefig sdr_PiMPSK_4.png
+            @savefig sdr_PiMPSK_4.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(tx_samples[5*pi4_qpsk.sps : -5*pi4_qpsk.sps], pi4_qpsk.sps, persistence=True); \
             plt.suptitle("Noiseless transmitted signal with ISI");
@@ -576,7 +576,7 @@ class PiMPSK(PSK):
             snr = sdr.ebn0_to_snr(ebn0, bps=pi4_qpsk.bps, sps=pi4_qpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_PiMPSK_5.png
+            @savefig sdr_PiMPSK_5.svg
             plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*pi4_qpsk.sps]);
 
@@ -588,7 +588,7 @@ class PiMPSK(PSK):
             mf = sdr.FIR(pi4_qpsk.pulse_shape); \
             mf_samples = mf(rx_samples)
 
-            @savefig sdr_PiMPSK_6.png
+            @savefig sdr_PiMPSK_6.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(mf_samples[10*pi4_qpsk.sps : -10*pi4_qpsk.sps], pi4_qpsk.sps, persistence=True); \
             plt.suptitle("Noisy received and matched filtered signal without ISI");
@@ -602,7 +602,7 @@ class PiMPSK(PSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_PiMPSK_7.png
+            @savefig sdr_PiMPSK_7.svg
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 
@@ -725,7 +725,7 @@ class OQPSK(PSK):
 
             oqpsk = sdr.OQPSK(pulse_shape="srrc"); oqpsk
 
-            @savefig sdr_OQPSK_1.png
+            @savefig sdr_OQPSK_1.svg
             plt.figure(); \
             sdr.plot.symbol_map(oqpsk);
 
@@ -737,7 +737,7 @@ class OQPSK(PSK):
             symbols = sdr.pack(bits, oqpsk.bps); symbols[0:4]
             complex_symbols = oqpsk.map_symbols(symbols); complex_symbols[0:4]
 
-            @savefig sdr_OQPSK_2.png
+            @savefig sdr_OQPSK_2.svg
             plt.figure(); \
             sdr.plot.constellation(complex_symbols, linestyle="-");
 
@@ -747,7 +747,7 @@ class OQPSK(PSK):
 
             tx_samples = oqpsk.modulate(symbols)
 
-            @savefig sdr_OQPSK_3.png
+            @savefig sdr_OQPSK_3.svg
             plt.figure(); \
             sdr.plot.time_domain(tx_samples[0:50*oqpsk.sps]);
 
@@ -756,7 +756,7 @@ class OQPSK(PSK):
 
         .. ipython:: python
 
-            @savefig sdr_OQPSK_4.png
+            @savefig sdr_OQPSK_4.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(tx_samples[5*oqpsk.sps : -5*oqpsk.sps], oqpsk.sps, persistence=True); \
             plt.suptitle("Noiseless transmitted signal with ISI");
@@ -769,7 +769,7 @@ class OQPSK(PSK):
             snr = sdr.ebn0_to_snr(ebn0, bps=oqpsk.bps, sps=oqpsk.sps); \
             rx_samples = sdr.awgn(tx_samples, snr=snr)
 
-            @savefig sdr_OQPSK_5.png
+            @savefig sdr_OQPSK_5.svg
             plt.figure(); \
             sdr.plot.time_domain(rx_samples[0:50*oqpsk.sps]);
 
@@ -781,7 +781,7 @@ class OQPSK(PSK):
             mf = sdr.FIR(oqpsk.pulse_shape); \
             mf_samples = mf(rx_samples)
 
-            @savefig sdr_OQPSK_6.png
+            @savefig sdr_OQPSK_6.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(mf_samples[10*oqpsk.sps : -10*oqpsk.sps], oqpsk.sps, persistence=True); \
             plt.suptitle("Noisy received and matched filtered signal without ISI");
@@ -795,7 +795,7 @@ class OQPSK(PSK):
             # The symbol decisions are error-free
             np.array_equal(symbols, rx_symbols)
 
-            @savefig sdr_OQPSK_7.png
+            @savefig sdr_OQPSK_7.svg
             plt.figure(); \
             sdr.plot.constellation(rx_complex_symbols);
 

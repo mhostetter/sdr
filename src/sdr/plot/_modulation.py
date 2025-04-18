@@ -63,7 +63,7 @@ def constellation(
             x = qpsk.map_symbols(s); \
             x_hat = sdr.awgn(x, 6);
 
-            @savefig sdr_plot_constellation_1.png
+            @savefig sdr_plot_constellation_1.svg
             plt.figure(); \
             sdr.plot.constellation(x_hat[0:1_000])
 
@@ -71,7 +71,7 @@ def constellation(
 
         .. ipython:: python
 
-            @savefig sdr_plot_constellation_2.png
+            @savefig sdr_plot_constellation_2.svg
             plt.figure(); \
             sdr.plot.constellation(x_hat, persistence=True)
 
@@ -167,7 +167,7 @@ def symbol_map(
 
             qpsk = sdr.PSK(4, phase_offset=45)
 
-            @savefig sdr_plot_symbol_map_1.png
+            @savefig sdr_plot_symbol_map_1.svg
             plt.figure(); \
             sdr.plot.symbol_map(qpsk.symbol_map)
 
@@ -286,7 +286,7 @@ def eye(
             s = np.random.randint(0, psk.order, 1_000); \
             tx_samples = psk.modulate(s)
 
-            @savefig sdr_plot_eye_1.png
+            @savefig sdr_plot_eye_1.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(tx_samples[4*sps : -4*sps], sps); \
             plt.suptitle("Transmitted QPSK symbols with SRRC pulse shape");
@@ -296,7 +296,7 @@ def eye(
 
         .. ipython:: python
 
-            @savefig sdr_plot_eye_2.png
+            @savefig sdr_plot_eye_2.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(tx_samples[4*sps : -4*sps], sps, persistence=True); \
             plt.suptitle("Transmitted QPSK symbols with SRRC pulse shape");
@@ -310,7 +310,7 @@ def eye(
             mf = sdr.FIR(psk.pulse_shape); \
             rx_samples = mf(tx_samples, mode="same")
 
-            @savefig sdr_plot_eye_3.png
+            @savefig sdr_plot_eye_3.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.eye(rx_samples[4*sps : -4*sps], sps, persistence=True); \
             plt.suptitle("Received and matched filtered QPSK symbols");
@@ -398,7 +398,7 @@ def phase_tree(
 
         .. ipython:: python
 
-            @savefig sdr_plot_phase_tree_1.png
+            @savefig sdr_plot_phase_tree_1.svg
             plt.figure(); \
             sdr.plot.phase_tree(x, msk.sps)
 
@@ -478,7 +478,7 @@ def ber(
             psk16 = sdr.PSK(16); \
             ebn0 = np.linspace(-2, 10, 100)
 
-            @savefig sdr_plot_ber_1.png
+            @savefig sdr_plot_ber_1.svg
             plt.figure(); \
             sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK"); \
             sdr.plot.ber(ebn0, qpsk.ber(ebn0), label="QPSK"); \
@@ -536,7 +536,7 @@ def ser(
             psk16 = sdr.PSK(16); \
             esn0 = np.linspace(-2, 10, 100)
 
-            @savefig sdr_psk_ser_1.png
+            @savefig sdr_psk_ser_1.svg
             plt.figure(); \
             sdr.plot.ser(esn0, bpsk.ser(esn0), label="BPSK"); \
             sdr.plot.ser(esn0, qpsk.ser(esn0), label="QPSK"); \
@@ -588,7 +588,7 @@ def shannon_limit_ebn0(
             bpsk = sdr.PSK(2)
             ebn0 = np.linspace(-2, 10, 201)
 
-            @savefig sdr_plot_shannon_limit_ebn0_1.png
+            @savefig sdr_plot_shannon_limit_ebn0_1.svg
             plt.figure(); \
             sdr.plot.ber(ebn0, bpsk.ber(ebn0), label="BPSK theoretical"); \
             plt.ylim(1e-6, 1e0); \

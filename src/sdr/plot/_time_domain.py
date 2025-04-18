@@ -92,7 +92,7 @@ def time_domain(  # noqa: D417
             qpsk = sdr.PSK(4, phase_offset=45, sps=10, pulse_shape="srrc"); \
             pulse_shape = qpsk.pulse_shape
 
-            @savefig sdr_plot_time_domain_1.png
+            @savefig sdr_plot_time_domain_1.svg
             plt.figure(); \
             sdr.plot.time_domain(pulse_shape, centered=True); \
             plt.title("SRRC pulse shape");
@@ -104,7 +104,7 @@ def time_domain(  # noqa: D417
             symbols = np.random.randint(0, 4, 50); \
             x = qpsk.modulate(symbols)
 
-            @savefig sdr_plot_time_domain_2.png
+            @savefig sdr_plot_time_domain_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=10e3); \
             plt.title("SRRC pulse-shaped QPSK");
@@ -116,7 +116,7 @@ def time_domain(  # noqa: D417
             t = np.array([0, 1, 2, 3, 5, 8, 13, 21, 34, 55]); \
             x = np.random.randn(t.size)
 
-            @savefig sdr_plot_time_domain_3.png
+            @savefig sdr_plot_time_domain_3.svg
             plt.figure(); \
             sdr.plot.time_domain(t, x, marker="."); \
             plt.title("Non-uniformly sampled data");
@@ -334,7 +334,7 @@ def correlation(
 
             x = sdr.m_sequence(6, output="bipolar")
 
-            @savefig sdr_plot_correlation_1.png
+            @savefig sdr_plot_correlation_1.svg
             plt.figure(); \
             sdr.plot.correlation(x, x, mode="full");
 
@@ -342,7 +342,7 @@ def correlation(
 
         .. ipython:: python
 
-            @savefig sdr_plot_correlation_2.png
+            @savefig sdr_plot_correlation_2.svg
             plt.figure(); \
             sdr.plot.correlation(x, x, mode="circular");
 

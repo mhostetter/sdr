@@ -6,5 +6,6 @@ sphinx-design  == 0.6.1
 sphinx-last-updated-by-git == 0.3.8
 sphinx-math-dollar == 1.2.1
 ipykernel == 6.29.5
+ipympl
 myst-nb == 1.2.0
 pickleshare == 0.7.5  # Needed by ipykernel

@@ -104,7 +104,7 @@ class EnergyDetector:
 
             .. ipython:: python
 
-                @savefig sdr_EnergyDetector_roc_1.png
+                @savefig sdr_EnergyDetector_roc_1.svg
                 plt.figure(); \
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-20, 1), label=f"SNR = -20 dB"); \
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-10, 1), label=f"SNR = -10 dB"); \
@@ -116,7 +116,7 @@ class EnergyDetector:
 
             .. ipython:: python
 
-                @savefig sdr_EnergyDetector_roc_2.png
+                @savefig sdr_EnergyDetector_roc_2.svg
                 plt.figure(); \
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-10, 1), label=f"N = 1"); \
                 sdr.plot.roc(*sdr.EnergyDetector.roc(-10, 10), label=f"N = 10"); \
@@ -175,7 +175,7 @@ class EnergyDetector:
 
                 snr = np.linspace(-20, 10, 101)
 
-                @savefig sdr_EnergyDetector_p_d_1.png
+                @savefig sdr_EnergyDetector_p_d_1.svg
                 plt.figure(); \
                 sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-1), label="$P_{fa} = 10^{-1}$"); \
                 sdr.plot.p_d(snr, sdr.EnergyDetector.p_d(snr, 25, 1e-2), label="$P_{fa} = 10^{-2}$"); \

@@ -62,7 +62,7 @@ def free_space_path_loss(
             d = np.linspace(0, 1_000, 1000)  # m
             fspl = sdr.free_space_path_loss(d, 1e9)  # dB
 
-            @savefig sdr_fspl_1.png
+            @savefig sdr_fspl_1.svg
             plt.figure(); \
             plt.plot(d, fspl); \
             plt.xlabel('Distance (m)'); \
@@ -95,7 +95,7 @@ def free_space_path_loss(
             # 1-meter diameter parabolic dish antenna gain in dBi
             par = sdr.parabolic_antenna(freq, 1)[0]
 
-            @savefig sdr_fspl_2.png
+            @savefig sdr_fspl_2.svg
             plt.figure(); \
             plt.plot(freq / 1e9, fspl - iso - iso, label="Isotropic -> Isotropic"); \
             plt.plot(freq / 1e9, fspl - iso - par, label="Isotropic -> Parabolic"); \

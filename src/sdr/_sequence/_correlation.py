@@ -67,7 +67,7 @@ def barker_code(length: Any, output: Any = "binary") -> Any:
 
             x = sdr.barker_code(13, output="bipolar")
 
-            @savefig sdr_barker_code_1.png
+            @savefig sdr_barker_code_1.svg
             plt.figure(); \
             sdr.plot.correlation(x, x, mode="circular");
 
@@ -160,7 +160,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
             x2 = sdr.hadamard_code(32, 18, output="bipolar"); \
             x3 = sdr.hadamard_code(32, 27, output="bipolar");
 
-            @savefig sdr_hadamard_code_1.png
+            @savefig sdr_hadamard_code_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x1 + 3); \
             sdr.plot.time_domain(x2 + 0); \
@@ -171,7 +171,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            @savefig sdr_hadamard_code_2.png
+            @savefig sdr_hadamard_code_2.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x1, mode="circular"); \
             sdr.plot.correlation(x2, x2, mode="circular"); \
@@ -184,7 +184,7 @@ def hadamard_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            @savefig sdr_hadamard_code_3.png
+            @savefig sdr_hadamard_code_3.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x2, mode="circular"); \
             sdr.plot.correlation(x1, x3, mode="circular"); \
@@ -267,7 +267,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
             x2 = sdr.walsh_code(32, 14, output="bipolar"); \
             x3 = sdr.walsh_code(32, 18, output="bipolar");
 
-            @savefig sdr_walsh_code_1.png
+            @savefig sdr_walsh_code_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x1 + 3); \
             sdr.plot.time_domain(x2 + 0); \
@@ -278,7 +278,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            @savefig sdr_walsh_code_2.png
+            @savefig sdr_walsh_code_2.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x1, mode="circular"); \
             sdr.plot.correlation(x2, x2, mode="circular"); \
@@ -291,7 +291,7 @@ def walsh_code(length: Any, index: Any, output: Any = "binary") -> Any:
 
         .. ipython:: python
 
-            @savefig sdr_walsh_code_3.png
+            @savefig sdr_walsh_code_3.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x2, mode="circular"); \
             sdr.plot.correlation(x1, x3, mode="circular"); \
@@ -433,7 +433,7 @@ def gold_code(
             x2 = sdr.gold_code(63, 1, output="bipolar"); \
             x3 = sdr.gold_code(63, 2, output="bipolar");
 
-            @savefig sdr_gold_code_1.png
+            @savefig sdr_gold_code_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x1 + 3); \
             sdr.plot.time_domain(x2 + 0); \
@@ -443,7 +443,7 @@ def gold_code(
 
         .. ipython:: python
 
-            @savefig sdr_gold_code_2.png
+            @savefig sdr_gold_code_2.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x1, mode="circular"); \
             sdr.plot.correlation(x2, x2, mode="circular"); \
@@ -454,7 +454,7 @@ def gold_code(
 
         .. ipython:: python
 
-            @savefig sdr_gold_code_3.png
+            @savefig sdr_gold_code_3.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x2, mode="circular"); \
             sdr.plot.correlation(x1, x3, mode="circular"); \
@@ -566,7 +566,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
             x2 = sdr.kasami_code(63, 1, output="bipolar"); \
             x3 = sdr.kasami_code(63, 2, output="bipolar");
 
-            @savefig sdr_kasami_code_1.png
+            @savefig sdr_kasami_code_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x1 + 3); \
             sdr.plot.time_domain(x2 + 0); \
@@ -576,7 +576,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
 
         .. ipython:: python
 
-            @savefig sdr_kasami_code_2.png
+            @savefig sdr_kasami_code_2.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x1, mode="circular"); \
             sdr.plot.correlation(x2, x2, mode="circular"); \
@@ -587,7 +587,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
 
         .. ipython:: python
 
-            @savefig sdr_kasami_code_3.png
+            @savefig sdr_kasami_code_3.svg
             plt.figure(); \
             sdr.plot.correlation(x1, x2, mode="circular"); \
             sdr.plot.correlation(x1, x3, mode="circular"); \
@@ -716,7 +716,7 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
             N = 139
             x3 = sdr.zadoff_chu_sequence(N, 3)
 
-            @savefig sdr_zadoff_chu_1.png
+            @savefig sdr_zadoff_chu_1.svg
             plt.figure(); \
             sdr.plot.constellation(x3, linestyle="-", linewidth=0.5); \
             plt.title(f"Root-3 Zadoff-Chu sequence of length {N}");
@@ -725,7 +725,7 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
 
         .. ipython:: python
 
-            @savefig sdr_zadoff_chu_2.png
+            @savefig sdr_zadoff_chu_2.svg
             plt.figure(); \
             sdr.plot.correlation(x3, x3, mode="circular"); \
             plt.ylim(0, N);
@@ -736,7 +736,7 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
 
             x5 = sdr.zadoff_chu_sequence(N, 5)
 
-            @savefig sdr_zadoff_chu_3.png
+            @savefig sdr_zadoff_chu_3.svg
             plt.figure(); \
             sdr.plot.constellation(x5, linestyle="-", linewidth=0.5); \
             plt.title(f"Root-5 Zadoff-Chu sequence of length {N}");
@@ -746,7 +746,7 @@ def zadoff_chu_sequence(length: int, root: int, shift: int = 0) -> npt.NDArray[n
 
         .. ipython:: python
 
-            @savefig sdr_zadoff_chu_4.png
+            @savefig sdr_zadoff_chu_4.svg
             plt.figure(); \
             sdr.plot.correlation(x3, x5, mode="circular"); \
             plt.ylim(0, N);

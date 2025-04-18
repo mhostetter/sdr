@@ -99,11 +99,11 @@ def lowpass_fir(
 
             h_hamming = sdr.lowpass_fir(100, 0.2, window="hamming")
 
-            @savefig sdr_lowpass_fir_1.png
+            @savefig sdr_lowpass_fir_1.svg
             plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
-            @savefig sdr_lowpass_fir_2.png
+            @savefig sdr_lowpass_fir_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
@@ -117,7 +117,7 @@ def lowpass_fir(
             h_chebyshev = sdr.lowpass_fir(100, 0.2, window=("chebwin", 60)); \
             h_kaiser = sdr.lowpass_fir(100, 0.2, window=("kaiser", 0.5))
 
-            @savefig sdr_lowpass_fir_3.png
+            @savefig sdr_lowpass_fir_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
@@ -169,11 +169,11 @@ def highpass_fir(
 
             h_hamming = sdr.highpass_fir(100, 0.7, window="hamming")
 
-            @savefig sdr_highpass_fir_1.png
+            @savefig sdr_highpass_fir_1.svg
             plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
-            @savefig sdr_highpass_fir_2.png
+            @savefig sdr_highpass_fir_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
@@ -187,7 +187,7 @@ def highpass_fir(
             h_chebyshev = sdr.highpass_fir(100, 0.7, window=("chebwin", 60)); \
             h_kaiser = sdr.highpass_fir(100, 0.7, window=("kaiser", 0.5))
 
-            @savefig sdr_highpass_fir_3.png
+            @savefig sdr_highpass_fir_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
@@ -242,11 +242,11 @@ def bandpass_fir(
 
             h_hamming = sdr.bandpass_fir(100, 0.4, 0.1, window="hamming")
 
-            @savefig sdr_bandpass_fir_1.png
+            @savefig sdr_bandpass_fir_1.svg
             plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
-            @savefig sdr_bandpass_fir_2.png
+            @savefig sdr_bandpass_fir_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
@@ -260,7 +260,7 @@ def bandpass_fir(
             h_chebyshev = sdr.bandpass_fir(100, 0.4, 0.1, window=("chebwin", 60)); \
             h_kaiser = sdr.bandpass_fir(100, 0.4, 0.1, window=("kaiser", 0.5))
 
-            @savefig sdr_bandpass_fir_3.png
+            @savefig sdr_bandpass_fir_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \
@@ -316,11 +316,11 @@ def bandstop_fir(
 
             h_hamming = sdr.bandstop_fir(100, 0.4, 0.75, window="hamming")
 
-            @savefig sdr_bandstop_fir_1.png
+            @savefig sdr_bandstop_fir_1.svg
             plt.figure(); \
             sdr.plot.impulse_response(h_hamming);
 
-            @savefig sdr_bandstop_fir_2.png
+            @savefig sdr_bandstop_fir_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming);
 
@@ -334,7 +334,7 @@ def bandstop_fir(
             h_chebyshev = sdr.bandstop_fir(100, 0.4, 0.75, window=("chebwin", 60)); \
             h_kaiser = sdr.bandstop_fir(100, 0.4, 0.75, window=("kaiser", 0.5))
 
-            @savefig sdr_bandstop_fir_3.png
+            @savefig sdr_bandstop_fir_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_hamming, label="Hamming"); \
             sdr.plot.magnitude_response(h_hann, label="Hann"); \

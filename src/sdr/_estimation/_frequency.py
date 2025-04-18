@@ -80,7 +80,7 @@ def foa_crlb(
             snr = 10
             bandwidth = np.logspace(5, 8, 101)
 
-            @savefig sdr_foa_crlb_1.png
+            @savefig sdr_foa_crlb_1.svg
             plt.figure(); \
             plt.loglog(bandwidth, sdr.foa_crlb(snr, 1e-6, bandwidth), label="1 μs"); \
             plt.loglog(bandwidth, sdr.foa_crlb(snr, 1e-5, bandwidth), label="10 μs"); \
@@ -172,7 +172,7 @@ def fdoa_crlb(
             snr = 10
             bandwidth = np.logspace(5, 8, 101)
 
-            @savefig sdr_fdoa_crlb_1.png
+            @savefig sdr_fdoa_crlb_1.svg
             plt.figure(); \
             plt.loglog(bandwidth, sdr.fdoa_crlb(snr, snr, 1e-6, bandwidth), label="1 μs"); \
             plt.loglog(bandwidth, sdr.fdoa_crlb(snr, snr, 1e-5, bandwidth), label="10 μs"); \

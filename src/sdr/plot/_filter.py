@@ -72,7 +72,7 @@ def impulse_response(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_impulse_response_1.png
+            @savefig sdr_plot_impulse_response_1.svg
             plt.figure(); \
             sdr.plot.impulse_response(h_srrc)
 
@@ -84,7 +84,7 @@ def impulse_response(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_impulse_response_2.png
+            @savefig sdr_plot_impulse_response_2.svg
             plt.figure(); \
             sdr.plot.impulse_response(iir, n=30)
 
@@ -156,7 +156,7 @@ def step_response(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_step_response_1.png
+            @savefig sdr_plot_step_response_1.svg
             plt.figure(); \
             sdr.plot.step_response(h_srrc)
 
@@ -168,7 +168,7 @@ def step_response(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_step_response_2.png
+            @savefig sdr_plot_step_response_2.svg
             plt.figure(); \
             sdr.plot.step_response(iir, n=30)
 
@@ -231,7 +231,7 @@ def zeros_poles(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_zeros_poles_1.png
+            @savefig sdr_plot_zeros_poles_1.svg
             plt.figure(); \
             sdr.plot.zeros_poles(h_srrc)
 
@@ -243,7 +243,7 @@ def zeros_poles(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_zeros_poles_2.png
+            @savefig sdr_plot_zeros_poles_2.svg
             plt.figure(); \
             sdr.plot.zeros_poles(iir)
 
@@ -318,7 +318,7 @@ def magnitude_response(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_magnitude_response_1.png
+            @savefig sdr_plot_magnitude_response_1.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_srrc)
 
@@ -330,19 +330,19 @@ def magnitude_response(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_magnitude_response_2.png
+            @savefig sdr_plot_magnitude_response_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(iir)
 
         .. ipython:: python
 
-            @savefig sdr_plot_magnitude_response_3.png
+            @savefig sdr_plot_magnitude_response_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
-            @savefig sdr_plot_magnitude_response_4.png
+            @savefig sdr_plot_magnitude_response_4.svg
             plt.figure(); \
             sdr.plot.magnitude_response(iir, x_axis="log", decades=3)
 
@@ -436,7 +436,7 @@ def phase_response(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_phase_response_1.png
+            @savefig sdr_plot_phase_response_1.svg
             plt.figure(); \
             sdr.plot.phase_response(h_srrc)
 
@@ -448,19 +448,19 @@ def phase_response(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_phase_response_2.png
+            @savefig sdr_plot_phase_response_2.svg
             plt.figure(); \
             sdr.plot.phase_response(iir)
 
         .. ipython:: python
 
-            @savefig sdr_plot_phase_response_3.png
+            @savefig sdr_plot_phase_response_3.svg
             plt.figure(); \
             sdr.plot.phase_response(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
-            @savefig sdr_plot_phase_response_4.png
+            @savefig sdr_plot_phase_response_4.svg
             plt.figure(); \
             sdr.plot.phase_response(iir, x_axis="log", decades=3)
 
@@ -552,7 +552,7 @@ def phase_delay(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_phase_delay_1.png
+            @savefig sdr_plot_phase_delay_1.svg
             plt.figure(); \
             sdr.plot.phase_delay(h_srrc)
 
@@ -564,19 +564,19 @@ def phase_delay(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_phase_delay_2.png
+            @savefig sdr_plot_phase_delay_2.svg
             plt.figure(); \
             sdr.plot.phase_delay(iir)
 
         .. ipython:: python
 
-            @savefig sdr_plot_phase_delay_3.png
+            @savefig sdr_plot_phase_delay_3.svg
             plt.figure(); \
             sdr.plot.phase_delay(h_srrc, x_axis="two-sided")
 
         .. ipython:: python
 
-            @savefig sdr_plot_phase_delay_4.png
+            @savefig sdr_plot_phase_delay_4.svg
             plt.figure(); \
             sdr.plot.phase_delay(iir, x_axis="log", decades=3)
 
@@ -672,7 +672,7 @@ def group_delay(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_group_delay_1.png
+            @savefig sdr_plot_group_delay_1.svg
             plt.figure(); \
             sdr.plot.group_delay(h_srrc);
 
@@ -684,19 +684,19 @@ def group_delay(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_group_delay_2.png
+            @savefig sdr_plot_group_delay_2.svg
             plt.figure(); \
             sdr.plot.group_delay(iir)
 
         .. ipython:: python
 
-            @savefig sdr_plot_group_delay_3.png
+            @savefig sdr_plot_group_delay_3.svg
             plt.figure(); \
             sdr.plot.group_delay(h_srrc, x_axis="two-sided");
 
         .. ipython:: python
 
-            @savefig sdr_plot_group_delay_4.png
+            @savefig sdr_plot_group_delay_4.svg
             plt.figure(); \
             sdr.plot.group_delay(iir, x_axis="log", decades=3)
 
@@ -784,7 +784,7 @@ def filter(
 
             h_srrc = sdr.root_raised_cosine(0.5, 10, 10)
 
-            @savefig sdr_plot_filter_1.png
+            @savefig sdr_plot_filter_1.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.filter(h_srrc)
 
@@ -796,7 +796,7 @@ def filter(
             pole = 0.8 * np.exp(1j * np.pi / 8); \
             iir = sdr.IIR.ZerosPoles([zero], [pole, pole.conj()])
 
-            @savefig sdr_plot_filter_2.png
+            @savefig sdr_plot_filter_2.svg
             plt.figure(figsize=(8, 6)); \
             sdr.plot.filter(iir, n_time=30)
 
