@@ -37,7 +37,7 @@ class MovingAverager(FIR):
 
         .. ipython:: python
 
-            @savefig sdr_MovingAverager_1.png
+            @savefig sdr_MovingAverager_1.svg
             plt.figure(); \
             sdr.plot.step_response(fir, n=100, label="Moving Averager"); \
             sdr.plot.step_response(iir, n=100, label="Leaky Integrator");
@@ -46,7 +46,7 @@ class MovingAverager(FIR):
 
         .. ipython:: python
 
-            @savefig sdr_MovingAverager_2.png
+            @savefig sdr_MovingAverager_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(fir, label="Moving Averager"); \
             sdr.plot.magnitude_response(iir, label="Leaky Integrator"); \
@@ -60,7 +60,7 @@ class MovingAverager(FIR):
             y_fir = fir(x); \
             y_iir = iir(x)
 
-            @savefig sdr_MovingAverager_3.png
+            @savefig sdr_MovingAverager_3.svg
             plt.figure(); \
             sdr.plot.time_domain(y_fir, label="Moving Averager"); \
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");
@@ -122,7 +122,7 @@ class Differentiator(FIR):
             x = sdr.gaussian(0.3, 5, 10); \
             y = fir(x, "same")
 
-            @savefig sdr_Differentiator_1.png
+            @savefig sdr_Differentiator_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y, label="Derivative"); \
@@ -135,7 +135,7 @@ class Differentiator(FIR):
             x = sdr.root_raised_cosine(0.1, 8, 10); \
             y = fir(x, "same")
 
-            @savefig sdr_Differentiator_2.png
+            @savefig sdr_Differentiator_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y, label="Derivative"); \
@@ -152,7 +152,7 @@ class Differentiator(FIR):
             fir_40 = sdr.Differentiator(40); \
             fir_80 = sdr.Differentiator(80)
 
-            @savefig sdr_Differentiator_3.png
+            @savefig sdr_Differentiator_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(fir_2, y_axis="linear", label="N=2"); \
             sdr.plot.magnitude_response(fir_6, y_axis="linear", label="N=6"); \
@@ -251,7 +251,7 @@ class Integrator(IIR):
             y_trap = iir_trap(x); \
             y_forw = iir_forw(x)
 
-            @savefig sdr_Integrator_1.png
+            @savefig sdr_Integrator_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y_back, label="Integral (backward)"); \
@@ -268,7 +268,7 @@ class Integrator(IIR):
             y_trap = iir_trap(x); \
             y_forw = iir_forw(x)
 
-            @savefig sdr_Integrator_2.png
+            @savefig sdr_Integrator_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, label="Input"); \
             sdr.plot.time_domain(y_back, label="Integral (backward)"); \
@@ -286,7 +286,7 @@ class Integrator(IIR):
 
         .. ipython:: python
 
-            @savefig sdr_Integrator_3.png
+            @savefig sdr_Integrator_3.svg
             plt.figure(); \
             sdr.plot.magnitude_response(iir_back, label="Backward"); \
             sdr.plot.magnitude_response(iir_trap, label="Trapezoidal"); \
@@ -375,7 +375,7 @@ class LeakyIntegrator(IIR):
 
         .. ipython:: python
 
-            @savefig sdr_LeakyIntegrator_1.png
+            @savefig sdr_LeakyIntegrator_1.svg
             plt.figure(); \
             sdr.plot.step_response(fir, n=100, label="Moving Averager"); \
             sdr.plot.step_response(iir, n=100, label="Leaky Integrator");
@@ -384,7 +384,7 @@ class LeakyIntegrator(IIR):
 
         .. ipython:: python
 
-            @savefig sdr_LeakyIntegrator_2.png
+            @savefig sdr_LeakyIntegrator_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(fir, label="Moving Averager"); \
             sdr.plot.magnitude_response(iir, label="Leaky Integrator"); \
@@ -398,7 +398,7 @@ class LeakyIntegrator(IIR):
             y_fir = fir(x); \
             y_iir = iir(x)
 
-            @savefig sdr_LeakyIntegrator_3.png
+            @savefig sdr_LeakyIntegrator_3.svg
             plt.figure(); \
             sdr.plot.time_domain(y_fir, label="Moving Averager"); \
             sdr.plot.time_domain(y_iir, label="Leaky Integrator");

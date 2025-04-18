@@ -60,7 +60,7 @@ def coherent_gain(time_bandwidth: npt.ArrayLike) -> npt.NDArray[np.float64]:
 
             n_c = np.logspace(0, 3, 1001)
 
-            @savefig sdr_coherent_gain_1.png
+            @savefig sdr_coherent_gain_1.svg
             plt.figure(); \
             plt.semilogx(n_c, sdr.coherent_gain(n_c)); \
             plt.xlabel("Number of samples, $N_c$"); \
@@ -151,7 +151,7 @@ def coherent_gain_loss(
 
             f = np.linspace(0, 2e3, 1001)
 
-            @savefig sdr_coherent_gain_loss_1.png
+            @savefig sdr_coherent_gain_loss_1.svg
             plt.figure(); \
             plt.plot(f, sdr.coherent_gain_loss(0.5e-3, f), label="0.5 ms"); \
             plt.plot(f, sdr.coherent_gain_loss(1e-3, f), label="1 ms"); \
@@ -168,7 +168,7 @@ def coherent_gain_loss(
 
             t = np.linspace(0, 1e-2, 1001)
 
-            @savefig sdr_coherent_gain_loss_2.png
+            @savefig sdr_coherent_gain_loss_2.svg
             plt.figure(); \
             plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 100), label="100 Hz"); \
             plt.plot(t * 1e3, sdr.coherent_gain_loss(t, 200), label="200 Hz"); \
@@ -230,7 +230,7 @@ def max_integration_time(
 
             f = np.linspace(0, 1e3, 1001)
 
-            @savefig sdr_max_integration_time_1.png
+            @savefig sdr_max_integration_time_1.svg
             plt.figure(); \
             plt.plot(f, sdr.max_integration_time(0.1, f) * 1e3, label="0.1 dB"); \
             plt.plot(f, sdr.max_integration_time(1, f) * 1e3, label="1 dB"); \
@@ -247,7 +247,7 @@ def max_integration_time(
 
             cgl = np.linspace(0, 10, 1001)
 
-            @savefig sdr_max_integration_time_2.png
+            @savefig sdr_max_integration_time_2.svg
             plt.figure(); \
             plt.plot(cgl, sdr.max_integration_time(cgl, 50) * 1e3, label="50 Hz"); \
             plt.plot(cgl, sdr.max_integration_time(cgl, 100) * 1e3, label="100 Hz"); \
@@ -319,7 +319,7 @@ def max_frequency_offset(
 
             t = np.linspace(0, 10e-3, 1001)
 
-            @savefig sdr_max_frequency_offset_1.png
+            @savefig sdr_max_frequency_offset_1.svg
             plt.figure(); \
             plt.plot(t * 1e3, sdr.max_frequency_offset(0.1, t), label="0.1 dB"); \
             plt.plot(t * 1e3, sdr.max_frequency_offset(1, t), label="1 dB"); \
@@ -336,7 +336,7 @@ def max_frequency_offset(
 
             cgl = np.linspace(0, 10, 1001)
 
-            @savefig sdr_max_frequency_offset_2.png
+            @savefig sdr_max_frequency_offset_2.svg
             plt.figure(); \
             plt.plot(cgl, sdr.max_frequency_offset(cgl, 0.5e-3), label="0.5 ms"); \
             plt.plot(cgl, sdr.max_frequency_offset(cgl, 1e-3), label="1 ms"); \

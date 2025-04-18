@@ -85,7 +85,7 @@ def non_coherent_gain(
             plt.semilogx(n, sdr.coherent_gain(n), color="k");
             for snr in np.arange(-30, 40, 10):
                 plt.semilogx(n, sdr.non_coherent_gain(n, snr, snr_ref="input"), label=f"{snr} dB")
-            @savefig sdr_non_coherent_gain_1.png
+            @savefig sdr_non_coherent_gain_1.svg
             plt.legend(title="Input SNR", loc="upper left"); \
             plt.xlabel("Number of samples, $N_{nc}$"); \
             plt.ylabel("Non-coherent gain, $G_{nc}$"); \
@@ -96,7 +96,7 @@ def non_coherent_gain(
 
         .. ipython:: python
 
-            @savefig sdr_non_coherent_gain_2.png
+            @savefig sdr_non_coherent_gain_2.svg
             plt.figure(); \
             snr = np.linspace(-20, 10, 21); \
             plt.plot(snr, sdr.non_coherent_gain(10, snr, p_fa=1e-6, detector="linear"), label="Linear"); \
@@ -118,7 +118,7 @@ def non_coherent_gain(
             for p_fa in [1e-14, 1e-12, 1e-10, 1e-8, 1e-6, 1e-4, 1e-2]:
                 g_nc = sdr.non_coherent_gain(n_nc, snr, p_fa)
                 plt.plot(snr, g_nc, label=f"{p_fa:1.0e}")
-            @savefig sdr_non_coherent_gain_3.png
+            @savefig sdr_non_coherent_gain_3.svg
             plt.legend(title="$P_{fa}$"); \
             plt.ylim(0, 10); \
             plt.xlabel("Input signal-to-noise ratio (dB)"); \

@@ -270,7 +270,7 @@ class BinarySymmetricChannel(Channel):
             p = np.linspace(0, 1, 101); \
             C = sdr.BinarySymmetricChannel.capacities(p)
 
-            @savefig sdr_BinarySymmetricChannel_1.png
+            @savefig sdr_BinarySymmetricChannel_1.svg
             plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Transition probability, $p$"); \
@@ -401,7 +401,7 @@ class BinaryErasureChannel(Channel):
             p = np.linspace(0, 1, 101); \
             C = sdr.BinaryErasureChannel.capacities(p)
 
-            @savefig sdr_BinaryErasureChannel_1.png
+            @savefig sdr_BinaryErasureChannel_1.svg
             plt.figure(); \
             plt.plot(p, C); \
             plt.xlabel("Erasure probability, $p$"); \

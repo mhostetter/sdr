@@ -263,7 +263,7 @@ class FarrowResampler:
             farrow1 = sdr.FarrowResampler(1)
             y1 = farrow1(x, rate)
 
-            @savefig sdr_FarrowResampler_1.png
+            @savefig sdr_FarrowResampler_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=rate, marker=".", label="Output"); \
@@ -276,7 +276,7 @@ class FarrowResampler:
             farrow2 = sdr.FarrowResampler(2)
             y2 = farrow2(x, rate)
 
-            @savefig sdr_FarrowResampler_2.png
+            @savefig sdr_FarrowResampler_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y2, sample_rate=rate, marker=".", label="Output"); \
@@ -289,7 +289,7 @@ class FarrowResampler:
             farrow3 = sdr.FarrowResampler(3)
             y3 = farrow3(x, rate)
 
-            @savefig sdr_FarrowResampler_3.png
+            @savefig sdr_FarrowResampler_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y3, sample_rate=rate, marker=".", label="Output"); \
@@ -302,7 +302,7 @@ class FarrowResampler:
             farrow4 = sdr.FarrowResampler(4)
             y4 = farrow4(x, rate)
 
-            @savefig sdr_FarrowResampler_4.png
+            @savefig sdr_FarrowResampler_4.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y4, sample_rate=rate, marker=".", label="Output"); \
@@ -312,7 +312,7 @@ class FarrowResampler:
 
         .. ipython:: python
 
-            @savefig sdr_FarrowResampler_5.png
+            @savefig sdr_FarrowResampler_5.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=rate, marker=".", label="Linear"); \
@@ -337,7 +337,7 @@ class FarrowResampler:
             y5 = farrow4.flush(rate); \
             y = np.concatenate((y1, y2, y3, y4, y5))
 
-            @savefig sdr_FarrowResampler_6.png
+            @savefig sdr_FarrowResampler_6.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=1, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=rate, offset=-farrow4.delay, marker=".", label="Quartic concatenated"); \

@@ -52,16 +52,16 @@ def fractional_delay_fir(
 
             h_8 = sdr.fractional_delay_fir(8, 0.25)
 
-            @savefig sdr_fractional_delay_fir_1.png
+            @savefig sdr_fractional_delay_fir_1.svg
             plt.figure(); \
             sdr.plot.impulse_response(h_8);
 
-            @savefig sdr_fractional_delay_fir_2.png
+            @savefig sdr_fractional_delay_fir_2.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_8); \
             plt.ylim(-4, 1);
 
-            @savefig sdr_fractional_delay_fir_3.png
+            @savefig sdr_fractional_delay_fir_3.svg
             plt.figure(); \
             sdr.plot.group_delay(h_8);
 
@@ -73,7 +73,7 @@ def fractional_delay_fir(
             h_32 = sdr.fractional_delay_fir(32, 0.25); \
             h_64 = sdr.fractional_delay_fir(64, 0.25)
 
-            @savefig sdr_fractional_delay_fir_4.png
+            @savefig sdr_fractional_delay_fir_4.svg
             plt.figure(); \
             sdr.plot.magnitude_response(h_8, label="Length 8"); \
             sdr.plot.magnitude_response(h_16, label="Length 16"); \
@@ -81,7 +81,7 @@ def fractional_delay_fir(
             sdr.plot.magnitude_response(h_64, label="Length 64"); \
             plt.ylim(-4, 1);
 
-            @savefig sdr_fractional_delay_fir_5.png
+            @savefig sdr_fractional_delay_fir_5.svg
             plt.figure(); \
             sdr.plot.group_delay(h_8, label="Length 8"); \
             sdr.plot.group_delay(h_16, label="Length 16"); \
@@ -130,7 +130,7 @@ class FractionalDelay(FIR):
             for length in [4, 8, 16, 32, 64, 128]:
                 fir = sdr.FractionalDelay(length, 0.21719)
                 sdr.plot.magnitude_response(fir, label=f"$L = {length}$")
-            @savefig sdr_FractionalDelay_1.png
+            @savefig sdr_FractionalDelay_1.svg
             plt.legend(loc="lower left");
 
         Design filters with length $L = 8$ and various fractional delays.
@@ -144,7 +144,7 @@ class FractionalDelay(FIR):
             for delay in np.arange(0.1, 1, 0.1):
                 fir = sdr.FractionalDelay(8, delay)
                 sdr.plot.magnitude_response(fir, label=f"$\Delta n = {delay:0.1f}$")
-            @savefig sdr_FractionalDelay_2.png
+            @savefig sdr_FractionalDelay_2.svg
             plt.ylim(-10, 1); \
             plt.legend(loc="lower left");
 
@@ -158,7 +158,7 @@ class FractionalDelay(FIR):
             for delay in np.arange(0.1, 1, 0.1):
                 fir = sdr.FractionalDelay(8, delay)
                 sdr.plot.group_delay(fir, label=f"$\Delta n = {delay:0.1f}$")
-            @savefig sdr_FractionalDelay_3.png
+            @savefig sdr_FractionalDelay_3.svg
             plt.legend(loc="lower left");
 
     Group:

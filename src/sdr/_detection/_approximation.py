@@ -66,7 +66,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
             p_d = 0.9; \
             p_fa = np.logspace(-12, -1, 21)
 
-            @savefig sdr_albersheim_1.png
+            @savefig sdr_albersheim_1.svg
             plt.figure(); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=1), linestyle="--"); \
             plt.semilogx(p_fa, sdr.albersheim(p_d, p_fa, n_nc=2), linestyle="--"); \
@@ -105,7 +105,7 @@ def albersheim(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike = 1)
             for p_d in [0.5, 0.8, 0.95]:
                 g_nc = sdr.albersheim(p_d, p_fa, 1) - sdr.albersheim(p_d, p_fa, n)
                 ax[1].semilogx(n, g_nc, linestyle="--", label=p_d)
-            @savefig sdr_albersheim_2.png
+            @savefig sdr_albersheim_2.svg
             ax[1].semilogx(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
             ax[1].legend(title="$P_d$"); \
             ax[1].set_xlabel("Number of samples, $N_{nc}$"); \
@@ -180,7 +180,7 @@ def peebles(p_d: npt.ArrayLike, p_fa: npt.ArrayLike, n_nc: npt.ArrayLike) -> npt
             ax[0].set_title("Theoretical");
             for p_d in [0.5, 0.8, 0.95]:
                 ax[1].semilogx(n, sdr.peebles(p_d, p_fa, n), linestyle="--", label=p_d)
-            @savefig sdr_peebles_1.png
+            @savefig sdr_peebles_1.svg
             ax[1].semilogx(n, sdr.coherent_gain(n), color="k", label="Coherent"); \
             ax[1].legend(title="$P_d$"); \
             ax[1].set_xlabel("Number of samples, $N_{nc}$"); \
@@ -271,7 +271,7 @@ def shnidman(
                 ax[i].set_xlabel("Probability of false alarm, $P_{fa}$")
                 ax[i].set_ylabel("Minimum required input SNR (dB), $\gamma$")
                 ax[i].set_title(f"$N_{{nc}} = {n_nc}$")
-            @savefig sdr_shnidman_1.png
+            @savefig sdr_shnidman_1.svg
             fig.suptitle("Minimum required SNR across Swerling target models");
 
     Group:

@@ -58,7 +58,7 @@ class NCO:
             nco = sdr.NCO(increment=2 * np.pi / 20, offset=np.pi); \
             y = nco.step(100)
 
-            @savefig sdr_NCO_1.png
+            @savefig sdr_NCO_1.svg
             plt.figure(); \
             sdr.plot.time_domain(y, marker="."); \
             plt.title("Constant frequency NCO");
@@ -73,7 +73,7 @@ class NCO:
             freq = np.repeat(freq, 20); \
             y = nco(freq=freq)
 
-            @savefig sdr_NCO_2.png
+            @savefig sdr_NCO_2.svg
             plt.figure(); \
             sdr.plot.time_domain(y, marker="."); \
             plt.title("NCO implementing CP-FSK modulation");
@@ -88,7 +88,7 @@ class NCO:
             phase = np.repeat(phase, 20); \
             y = nco(phase=phase)
 
-            @savefig sdr_NCO_3.png
+            @savefig sdr_NCO_3.svg
             plt.figure(); \
             sdr.plot.time_domain(y, marker="."); \
             plt.title("NCO implementing BPSK modulation");

@@ -79,7 +79,7 @@ def dft(
             f = 1.5 / n  # cycles/sample
             x = sdr.sinusoid(n, freq=f)
 
-            @savefig sdr_plot_dft_1.png
+            @savefig sdr_plot_dft_1.svg
             plt.figure(); \
             sdr.plot.dft(x, x_axis="bin", type="stem");
 
@@ -90,7 +90,7 @@ def dft(
 
         .. ipython:: python
 
-            @savefig sdr_plot_dft_2.png
+            @savefig sdr_plot_dft_2.svg
             plt.figure(); \
             sdr.plot.dtft(x, color="k", label="DTFT"); \
             sdr.plot.dft(x, oversample=4, type="stem", label="4x oversampled DFT"); \
@@ -102,7 +102,7 @@ def dft(
 
         .. ipython:: python
 
-            @savefig sdr_plot_dft_3.png
+            @savefig sdr_plot_dft_3.svg
             plt.figure(); \
             sdr.plot.dtft(x, window="hamming", color="k", label="DTFT"); \
             sdr.plot.dft(x, oversample=4, window="hamming", type="stem", label="4x oversampled DFT"); \
@@ -219,7 +219,7 @@ def dtft(
             f = 0 / n  # cycles/sample
             x = sdr.sinusoid(n, freq=f)
 
-            @savefig sdr_plot_dtft_1.png
+            @savefig sdr_plot_dtft_1.svg
             plt.figure(); \
             sdr.plot.dtft(x);
 
@@ -228,7 +228,7 @@ def dtft(
 
         .. ipython:: python
 
-            @savefig sdr_plot_dtft_2.png
+            @savefig sdr_plot_dtft_2.svg
             plt.figure(); \
             sdr.plot.dtft(x, label="DTFT"); \
             sdr.plot.dft(x, oversample=4, type="stem", label="4x oversampled DFT"); \

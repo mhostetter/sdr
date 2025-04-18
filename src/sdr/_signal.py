@@ -47,7 +47,7 @@ def sinusoid(
             N = 100; \
             lo = sdr.sinusoid(N / sample_rate, freq=10, phase=45, sample_rate=sample_rate)
 
-            @savefig sdr_sinusoid_1.png
+            @savefig sdr_sinusoid_1.svg
             plt.figure(); \
             sdr.plot.time_domain(lo, sample_rate=sample_rate); \
             plt.title(r"Complex exponential with $f=10$ Hz and $\phi=45$ degrees");
@@ -58,7 +58,7 @@ def sinusoid(
 
             lo = sdr.sinusoid(N / sample_rate, freq=10, phase=45, sample_rate=sample_rate, complex=False)
 
-            @savefig sdr_sinusoid_2.png
+            @savefig sdr_sinusoid_2.svg
             plt.figure(); \
             sdr.plot.time_domain(lo, sample_rate=sample_rate); \
             plt.title(r"Real sinusoid with $f=10$ Hz and $\phi=45$ degrees");
@@ -114,7 +114,7 @@ def mix(
             sample_rate = 1e3; \
             x = sdr.sinusoid(100 / sample_rate, freq=10, phase=45, sample_rate=sample_rate)
 
-            @savefig sdr_mix_1.png
+            @savefig sdr_mix_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=sample_rate); \
             plt.title(r"Complex exponential with $f=10$ Hz and $\phi=45$ degrees");
@@ -125,7 +125,7 @@ def mix(
 
             y = sdr.mix(x, freq=-10, phase=-45, sample_rate=sample_rate)
 
-            @savefig sdr_mix_2.png
+            @savefig sdr_mix_2.svg
             plt.figure(); \
             sdr.plot.time_domain(y, sample_rate=sample_rate); \
             plt.title(r"Baseband signal with $f=0$ Hz and $\phi=0$ degrees");
@@ -174,12 +174,12 @@ def to_complex_baseband(x_r: npt.ArrayLike) -> npt.NDArray[np.complex128]:
             ); \
             x_r = sdr.awgn(x_r, snr=30)
 
-            @savefig sdr_to_complex_baseband_1.png
+            @savefig sdr_to_complex_baseband_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_r[n]$");
 
-            @savefig sdr_to_complex_baseband_2.png
+            @savefig sdr_to_complex_baseband_2.svg
             plt.figure(); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_r[n]$");
@@ -193,12 +193,12 @@ def to_complex_baseband(x_r: npt.ArrayLike) -> npt.NDArray[np.complex128]:
             x_c = sdr.to_complex_baseband(x_r); \
             sample_rate /= 2
 
-            @savefig sdr_to_complex_baseband_3.png
+            @savefig sdr_to_complex_baseband_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_c[n]$");
 
-            @savefig sdr_to_complex_baseband_4.png
+            @savefig sdr_to_complex_baseband_4.svg
             plt.figure(); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_c[n]$");
@@ -253,12 +253,12 @@ def to_real_passband(x_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
             ); \
             x_c = sdr.awgn(x_c, snr=30)
 
-            @savefig sdr_to_real_passband_1.png
+            @savefig sdr_to_real_passband_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x_c[0:50], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_c[n]$");
 
-            @savefig sdr_to_real_passband_2.png
+            @savefig sdr_to_real_passband_2.svg
             plt.figure(); \
             sdr.plot.periodogram(x_c, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_c[n]$");
@@ -272,12 +272,12 @@ def to_real_passband(x_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
             x_r = sdr.to_real_passband(x_c); \
             sample_rate *= 2
 
-            @savefig sdr_to_real_passband_3.png
+            @savefig sdr_to_real_passband_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x_r[0:100], sample_rate=sample_rate); \
             plt.title("Time-domain signal $x_r[n]$");
 
-            @savefig sdr_to_real_passband_4.png
+            @savefig sdr_to_real_passband_4.svg
             plt.figure(); \
             sdr.plot.periodogram(x_r, fft=2048, sample_rate=sample_rate); \
             plt.title("Periodogram of $x_r[n]$");
@@ -328,12 +328,12 @@ def upsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
             x = sdr.sinusoid(20 / sample_rate, freq=15, sample_rate=sample_rate); \
             y = sdr.upsample(x, 4)
 
-            @savefig sdr_upsample_1.png
+            @savefig sdr_upsample_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=sample_rate); \
             plt.title("Input signal $x[n]$");
 
-            @savefig sdr_upsample_2.png
+            @savefig sdr_upsample_2.svg
             plt.figure(); \
             sdr.plot.time_domain(y, sample_rate=sample_rate*4); \
             plt.title("Upsampled signal $y[n]$");
@@ -343,14 +343,14 @@ def upsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
         .. ipython:: python
             :okwarning:
 
-            @savefig sdr_upsample_3.png
+            @savefig sdr_upsample_3.svg
             plt.figure(); \
             sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
             plt.xlim(-sample_rate*2, sample_rate*2); \
             plt.ylim(-100, 0); \
             plt.title("Input signal $x[n]$");
 
-            @savefig sdr_upsample_4.png
+            @savefig sdr_upsample_4.svg
             plt.figure(); \
             sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate*4); \
             plt.xlim(-sample_rate*2, sample_rate*2); \
@@ -398,12 +398,12 @@ def downsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
             x = x1 + x2 + x3
             y = sdr.downsample(x, 4)
 
-            @savefig sdr_downsample_1.png
+            @savefig sdr_downsample_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, sample_rate=sample_rate); \
             plt.title("Input signal $x[n]$");
 
-            @savefig sdr_downsample_2.png
+            @savefig sdr_downsample_2.svg
             plt.figure(); \
             sdr.plot.time_domain(y, sample_rate=sample_rate/4); \
             plt.title("Downsampled signal $y[n]$");
@@ -415,14 +415,14 @@ def downsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
         .. ipython:: python
             :okwarning:
 
-            @savefig sdr_downsample_3.png
+            @savefig sdr_downsample_3.svg
             plt.figure(); \
             sdr.plot.periodogram(x, fft=2048, sample_rate=sample_rate); \
             plt.xlim(-sample_rate/2, sample_rate/2); \
             plt.ylim(-100, 0); \
             plt.title("Input signal $x[n]$");
 
-            @savefig sdr_downsample_4.png
+            @savefig sdr_downsample_4.svg
             plt.figure(); \
             sdr.plot.periodogram(y, fft=2048, sample_rate=sample_rate/4); \
             plt.xlim(-sample_rate/2, sample_rate/2); \

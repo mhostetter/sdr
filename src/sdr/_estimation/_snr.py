@@ -51,7 +51,7 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
 
             snr1 = np.linspace(-60, 60, 101)
 
-            @savefig sdr_composite_snr_1.png
+            @savefig sdr_composite_snr_1.svg
             plt.figure(); \
             plt.plot(snr1, sdr.composite_snr(snr1, snr1)); \
             plt.xlim(-60, 60); \
@@ -71,7 +71,7 @@ def composite_snr(snr1: npt.ArrayLike, snr2: npt.ArrayLike) -> npt.NDArray[np.fl
             plt.figure();
             for snr2 in np.arange(-40, 40 + 10, 10):
                 plt.plot(snr1, sdr.composite_snr(snr1, snr2), label=snr2)
-            @savefig sdr_composite_snr_2.png
+            @savefig sdr_composite_snr_2.svg
             plt.legend(title="SNR of signal 2 (dB), $\gamma_2$"); \
             plt.xlim(-60, 60); \
             plt.ylim(-60, 60); \

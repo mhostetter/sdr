@@ -69,7 +69,7 @@ def evm(
             x = psk.map_symbols(s); \
             x_hat = sdr.awgn(x, 20)
 
-            @savefig sdr_evm_1.png
+            @savefig sdr_evm_1.svg
             plt.figure(); \
             sdr.plot.constellation(x_hat, label=r"$\hat{x}[k]$"); \
             sdr.plot.symbol_map(psk.symbol_map, label=r"Reference"); \
@@ -107,7 +107,7 @@ def evm(
 
             inst_evm = sdr.evm(x_hat, psk.symbol_map, output="all")
 
-            @savefig sdr_evm_2.png
+            @savefig sdr_evm_2.svg
             plt.figure(); \
             plt.hist(inst_evm, bins=20); \
             plt.xlabel("RMS EVM (%)"); \
@@ -230,7 +230,7 @@ def rms_bandwidth(
 
         .. ipython:: python
 
-            @savefig sdr_rms_bandwidth_1.png
+            @savefig sdr_rms_bandwidth_1.svg
             plt.figure(); \
             sdr.plot.periodogram(x_rect, sample_rate=symbol_rate * psk.sps, label="Rectangular"); \
             sdr.plot.periodogram(x_srrc, sample_rate=symbol_rate * psk.sps, label="SRRC");
@@ -329,7 +329,7 @@ def rms_integration_time(
             x_rect = psk.modulate(symbols).real
             sdr.rms_integration_time(x_rect, sample_rate=sample_rate)
 
-            @savefig sdr_rms_integration_time_1.png
+            @savefig sdr_rms_integration_time_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x_rect, sample_rate=sample_rate, label="Rectangular");
 
@@ -342,7 +342,7 @@ def rms_integration_time(
             x_srrc = psk.modulate(symbols).real
             sdr.rms_integration_time(x_srrc, sample_rate=sample_rate)
 
-            @savefig sdr_rms_integration_time_2.png
+            @savefig sdr_rms_integration_time_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x_srrc, sample_rate=sample_rate, label="SRRC");
 
@@ -356,7 +356,7 @@ def rms_integration_time(
             x_srrc_env *= np.sqrt(sdr.energy(x_srrc) / sdr.energy(x_srrc_env))
             sdr.rms_integration_time(x_srrc_env, sample_rate=sample_rate)
 
-            @savefig sdr_rms_integration_time_3.png
+            @savefig sdr_rms_integration_time_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x_srrc, sample_rate=sample_rate, label="SRRC"); \
             sdr.plot.time_domain(x_srrc_env, sample_rate=sample_rate, label="SRRC + Parabolic Envelope");

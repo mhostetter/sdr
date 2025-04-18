@@ -84,7 +84,7 @@ def h0(
             z_h0 = np.real(x_h0); \
             z_h1 = np.real(x_h1)
 
-            @savefig sdr_h0_1.png
+            @savefig sdr_h0_1.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -104,7 +104,7 @@ def h0(
             z_h0 = np.abs(x_h0); \
             z_h1 = np.abs(x_h1)
 
-            @savefig sdr_h0_2.png
+            @savefig sdr_h0_2.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -124,7 +124,7 @@ def h0(
             z_h0 = np.abs(x_h0) ** 2; \
             z_h1 = np.abs(x_h1) ** 2
 
-            @savefig sdr_h0_3.png
+            @savefig sdr_h0_3.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -153,7 +153,7 @@ def h0(
             z_h0 = np.real(x_h0); \
             z_h1 = np.real(x_h1)
 
-            @savefig sdr_h0_4.png
+            @savefig sdr_h0_4.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -173,7 +173,7 @@ def h0(
             z_h0 = np.abs(x_h0); \
             z_h1 = np.abs(x_h1)
 
-            @savefig sdr_h0_5.png
+            @savefig sdr_h0_5.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -193,7 +193,7 @@ def h0(
             z_h0 = np.abs(x_h0) ** 2; \
             z_h1 = np.abs(x_h1) ** 2
 
-            @savefig sdr_h0_6.png
+            @savefig sdr_h0_6.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold, x=np.linspace(0, 15, 1001)); \
             plt.gca().set_prop_cycle(None); \
@@ -312,7 +312,7 @@ def h1(
             z_h0 = np.real(x_h0); \
             z_h1 = np.real(x_h1)
 
-            @savefig sdr_h1_1.png
+            @savefig sdr_h1_1.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -332,7 +332,7 @@ def h1(
             z_h0 = np.abs(x_h0); \
             z_h1 = np.abs(x_h1)
 
-            @savefig sdr_h1_2.png
+            @savefig sdr_h1_2.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -352,7 +352,7 @@ def h1(
             z_h0 = np.abs(x_h0) ** 2; \
             z_h1 = np.abs(x_h1) ** 2
 
-            @savefig sdr_h1_3.png
+            @savefig sdr_h1_3.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -381,7 +381,7 @@ def h1(
             z_h0 = np.real(x_h0); \
             z_h1 = np.real(x_h1)
 
-            @savefig sdr_h1_4.png
+            @savefig sdr_h1_4.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -401,7 +401,7 @@ def h1(
             z_h0 = np.abs(x_h0); \
             z_h1 = np.abs(x_h1)
 
-            @savefig sdr_h1_5.png
+            @savefig sdr_h1_5.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.gca().set_prop_cycle(None); \
@@ -421,7 +421,7 @@ def h1(
             z_h0 = np.abs(x_h0) ** 2; \
             z_h1 = np.abs(x_h1) ** 2
 
-            @savefig sdr_h1_6.png
+            @savefig sdr_h1_6.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold, x=np.linspace(0, 15, 1001)); \
             plt.gca().set_prop_cycle(None); \
@@ -553,7 +553,7 @@ def p_d(
 
             p_d = sdr.p_d(snr, p_fa, detector); p_d
 
-            @savefig sdr_p_d_1.png
+            @savefig sdr_p_d_1.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
             plt.title("Coherent Detector: Probability density functions");
@@ -571,7 +571,7 @@ def p_d(
 
             p_d = sdr.p_d(snr, p_fa, detector); p_d
 
-            @savefig sdr_p_d_2.png
+            @savefig sdr_p_d_2.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
             plt.title("Linear Detector: Probability density functions");
@@ -589,7 +589,7 @@ def p_d(
 
             p_d = sdr.p_d(snr, p_fa, detector); p_d
 
-            @savefig sdr_p_d_3.png
+            @savefig sdr_p_d_3.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, h1=h1, threshold=threshold); \
             plt.title("Square-Law Detector: Probability density functions");
@@ -600,7 +600,7 @@ def p_d(
 
             p_fa = 1e-6  # Probability of false alarm
 
-            @savefig sdr_p_d_4.png
+            @savefig sdr_p_d_4.svg
             plt.figure(); \
             snr = np.linspace(0, 20, 101); \
             sdr.plot.p_d(snr, sdr.p_d(snr, p_fa, "coherent"), label="Coherent"); \
@@ -618,7 +618,7 @@ def p_d(
             for p_fa in [1e-15, 1e-12, 1e-9, 1e-6, 1e-3, 1e-1]:
                 p_d = sdr.p_d(snr, p_fa)
                 sdr.plot.p_d(snr, p_d, label=f"{p_fa:1.0e}")
-            @savefig sdr_p_d_5.png
+            @savefig sdr_p_d_5.svg
             plt.legend(title="$P_{fa}$", loc="upper left"); \
             plt.title("Square-Law Detector: Probability of detection");
 
@@ -631,7 +631,7 @@ def p_d(
             for snr in [-5, 0, 5, 10, 15, 20]:
                 p_d = sdr.p_d(snr, p_fa)
                 sdr.plot.roc(p_fa, p_d, label=f"{snr} dB")
-            @savefig sdr_p_d_6.png
+            @savefig sdr_p_d_6.svg
             plt.legend(title="SNR"); \
             plt.title("Square-Law Detector: Receiver operating characteristic");
 
@@ -712,7 +712,7 @@ def p_fa(
 
             p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
 
-            @savefig sdr_p_fa_1.png
+            @savefig sdr_p_fa_1.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Coherent Detector: Probability density functions");
@@ -727,7 +727,7 @@ def p_fa(
 
             p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
 
-            @savefig sdr_p_fa_2.png
+            @savefig sdr_p_fa_2.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Linear Detector: Probability density functions");
@@ -742,7 +742,7 @@ def p_fa(
 
             p_fa = sdr.p_fa(threshold, sigma2, detector); p_fa
 
-            @savefig sdr_p_fa_3.png
+            @savefig sdr_p_fa_3.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Square-Law Detector: Probability density functions");
@@ -815,7 +815,7 @@ def threshold(
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
 
-            @savefig sdr_threshold_1.png
+            @savefig sdr_threshold_1.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Coherent Detector: Probability density functions");
@@ -830,7 +830,7 @@ def threshold(
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
 
-            @savefig sdr_threshold_2.png
+            @savefig sdr_threshold_2.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Linear Detector: Probability density functions");
@@ -845,7 +845,7 @@ def threshold(
 
             threshold = sdr.threshold(p_fa, sigma2, detector); threshold
 
-            @savefig sdr_threshold_3.png
+            @savefig sdr_threshold_3.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0=h0, threshold=threshold); \
             plt.title("Square-Law Detector: Probability density functions");
@@ -919,7 +919,7 @@ def threshold_factor(
 
             p_fa = np.logspace(-16, -1, 101)  # Probability of false alarm
 
-            @savefig sdr_threshold_factor_1.png
+            @savefig sdr_threshold_factor_1.svg
             plt.figure(); \
             plt.semilogx(p_fa, sdr.threshold_factor(p_fa, detector="coherent"), label="Coherent"); \
             plt.semilogx(p_fa, sdr.threshold_factor(p_fa, detector="linear"), label="Linear"); \
@@ -1011,7 +1011,7 @@ def min_snr(
             p_d = 0.9; \
             p_fa = np.logspace(-12, -1, 21)
 
-            @savefig sdr_min_snr_1.png
+            @savefig sdr_min_snr_1.svg
             plt.figure(); \
             plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=1, detector="square-law"), label=1); \
             plt.semilogx(p_fa, sdr.min_snr(p_d, p_fa, n_nc=2, detector="square-law"), label=2); \

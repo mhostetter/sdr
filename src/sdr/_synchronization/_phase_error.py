@@ -43,7 +43,7 @@ class PED:
             error, da_error = ped.data_aided_error(qpsk); \
             error, dd_error = ped.decision_directed_error(qpsk)
 
-            @savefig sdr_PED_1.png
+            @savefig sdr_PED_1.svg
             plt.figure(); \
             plt.plot(error, da_error, label="Data-aided"); \
             plt.plot(error, dd_error, label="Decision-directed"); \
@@ -168,7 +168,7 @@ class MLPED(PED):
             error, da_error = ped.data_aided_error(qpsk); \
             error, dd_error = ped.decision_directed_error(qpsk)
 
-            @savefig sdr_MLPED_1.png
+            @savefig sdr_MLPED_1.svg
             plt.figure(); \
             plt.plot(error, da_error, label="Data-aided"); \
             plt.plot(error, dd_error, label="Decision-directed"); \

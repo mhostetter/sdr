@@ -80,7 +80,7 @@ def toa_crlb(
             snr = 10
             time = np.logspace(-6, 0, 101)
 
-            @savefig sdr_toa_crlb_1.png
+            @savefig sdr_toa_crlb_1.svg
             plt.figure(); \
             plt.loglog(time, sdr.toa_crlb(snr, time, 1e5), label="100 kHz"); \
             plt.loglog(time, sdr.toa_crlb(snr, time, 1e6), label="1 MHz"); \
@@ -172,7 +172,7 @@ def tdoa_crlb(
             snr = 10
             time = np.logspace(-6, 0, 101)
 
-            @savefig sdr_tdoa_crlb_1.png
+            @savefig sdr_tdoa_crlb_1.svg
             plt.figure(); \
             plt.loglog(time, sdr.tdoa_crlb(snr, snr, time, 1e5), label="100 kHz"); \
             plt.loglog(time, sdr.tdoa_crlb(snr, snr, time, 1e6), label="1 MHz"); \

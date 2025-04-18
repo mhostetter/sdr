@@ -158,7 +158,7 @@ def detector_pdfs(
             h1 = sdr.h1(snr, sigma2, detector); \
             threshold = sdr.threshold(p_fa, sigma2, detector)
 
-            @savefig sdr_plot_detector_pdfs_1.png
+            @savefig sdr_plot_detector_pdfs_1.svg
             plt.figure(); \
             sdr.plot.detector_pdfs(h0, h1, threshold); \
             plt.title("Linear Detector: Probability density functions");
