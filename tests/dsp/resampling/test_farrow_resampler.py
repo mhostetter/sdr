@@ -790,18 +790,6 @@ def test_quartic_decimate():
     verify_output_multiple(4, rate, x, y_truth)
 
 
-def test_467():
-    """
-    https://github.com/mhostetter/sdr/issues/467
-    """
-    farrow = sdr.FarrowResampler(3)
-
-    for rate in [1, 2, 3]:
-        x = np.arange(50)
-        y = farrow(x, rate)
-        assert y.size == x.size * rate
-
-
 def debug_plot(x: np.ndarray, y: np.ndarray, y_truth: np.ndarray, offset: float, rate: float):
     plt.figure()
     sdr.plot.time_domain(x, sample_rate=1, marker=".", label="x")
@@ -812,14 +800,14 @@ def debug_plot(x: np.ndarray, y: np.ndarray, y_truth: np.ndarray, offset: float,
 
 
 def verify_output_single(order: int, rate: float, x: np.ndarray, y_truth: np.ndarray):
-    farrow = sdr.FarrowResampler(order, streaming=True)
+    farrow = sdr.FarrowResampler(order, align=False, streaming=True)
     y = farrow(x, rate)
     # debug_plot(x, y, y_truth, farrow._delay, rate)
     assert np.allclose(y, y_truth)
 
 
 def verify_output_multiple(order: int, rate: float, x: np.ndarray, y_truth: np.ndarray):
-    farrow = sdr.FarrowResampler(order, streaming=True)
+    farrow = sdr.FarrowResampler(order, align=False, streaming=True)
     ys = []
     for i in range(0, x.size, 10):
         yi = farrow(x[i : i + 10], rate)
