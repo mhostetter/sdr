@@ -272,6 +272,18 @@ class FarrowFractionalDelay:
 
         return convert_output(y)
 
+    def __repr__(self) -> str:
+        return f"sdr.{type(self).__name__}({self.order}, streaming={self.streaming})"
+
+    def __str__(self) -> str:
+        string = f"sdr.{type(self).__name__}:"
+        string += f"\n  order: {self.order}"
+        string += f"\n  taps: {self.taps.shape} shape"
+        string += f"\n    {np.array2string(self.taps, prefix='    ')}"
+        string += f"\n  delay: {self.delay}"
+        string += f"\n  streaming: {self.streaming}"
+        return string
+
     ##############################################################################
     # Streaming mode
     ##############################################################################
