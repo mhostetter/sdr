@@ -6,9 +6,35 @@ from __future__ import annotations
 
 import numpy as np
 import numpy.typing as npt
+import scipy.interpolate
 import scipy.signal
 
 from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
+
+
+def _compute_lagrange_basis(order: int) -> tuple[int, npt.NDArray, npt.NDArray]:
+    """
+    Computes the Lagrange basis polynomials for the Farrow filter.
+    """
+    # Support points (e.g., for 4-tap Lagrange interpolation centered at x = 0)
+    # Indices for x[n-1], x[n], x[n+1], x[n+2]
+    delay = order // 2
+    x_points = np.arange(order + 1) - delay
+
+    # Store basis polynomials
+    basis_polys = np.zeros((order + 1, order + 1), dtype=float)
+
+    # Compute all Lagrange basis polynomials l_k(mu)
+    for k in range(x_points.size):
+        y_basis = np.zeros_like(x_points)
+        y_basis[k] = 1  # delta function at position k
+        poly_k = scipy.interpolate.lagrange(x_points, y_basis)
+        basis_polys[k, :] = poly_k.coeffs  # Degree-descending order
+
+    # Compute Farrow coefficients. Convert
+    farrow_coeffs = basis_polys.transpose()
+
+    return delay, basis_polys, farrow_coeffs
 
 
 @export
@@ -16,10 +42,49 @@ class FarrowFractionalDelay:
     r"""
     Implements a piecewise polynomial Farrow fractional delay filter.
 
-    The Farrow fractional delay filter uses a piecewise polynomial to approximate a sinc interpolator. The filter is
-    implemented as a set of FIR filters, where each filter corresponds to a polynomial order of $\mu$.
+    Consider the series of input samples $x[n-D], \ldots, x[n], \ldots, x[n+p-D]$. The goal is to interpolate the
+    value of $x(t)$ at the time $t = n + \mu$. The Lagrange polynomial interpolation is computed as
 
-    $$y[n] = x((m(k) + \mu(k)) T_s) = x[m(k) + \mu(k)]$$
+    $$x(n + \mu) = \sum_{k=0}^{p} x[n + k - D] \cdot \ell_k(\mu) ,$$
+
+    where $D$ is the delay offset (usually so the center tap is at zero) and $\ell_k(\mu)$ is the Lagrange basis
+    polynomial corresponding to tap $k$. Note that $\ell_k(\mu)$ is independent of the data and only depends on the
+    fractional shift $\mu$.
+
+    The $k$-th Lagrange basis polynomial is defined as
+
+    $$\ell_k(\mu) = \prod_{\substack{j=0 \\ j \ne k}}^{p} \frac{\mu - j}{k - j} ,$$
+
+    which is a polynomial of degree $p$ in $\mu$. The Lagrange basis polynomials are 1 at $\mu = k$ and 0 at
+    $\mu = j$ for $j \ne k$.
+
+    It is often desirable to change $\mu$ on the fly, which means that the Lagrange basis polynomials must be
+    recomputed for each new value of $\mu$. Instead, the Farrow structure selects the coefficients of each
+    Lagrange basis polynomial for a given degree of $\mu$ and forms it into a FIR filter
+
+    $$h_m[n] = \{\ell_{0,m}, \ell_{1,m}, \ldots, \ell_{p,m}\} ,$$
+
+    where $h_m[n]$ is the $m$-th FIR filter and $\ell_{k,m}$ is the coefficient of $\mu^m$ in the $k$-th Lagrange
+    basis polynomial.
+
+    The output of the $m$-th FIR filter is $z_m[n] = h_m[n] * x[n]$. The Farrow structure allows the interpolation
+    calculation to be reorganized as
+
+    $$x(n + \mu) = \sum_{k=0}^{p} x[n + k - D] \cdot \ell_k(\mu) = \sum_{k=0}^{p} z_m[n] \cdot \mu^k .$$
+
+    which can be efficiently computed using Horner's method.
+
+    $$x(n + \mu) = \sum_{k=0}^{p} z_m[k] \cdot \mu^k = z_0[n] + \mu \cdot (z_1[n] + \mu \cdot (z_2[n] + \ldots)).$$
+
+    .. note::
+
+        In Michael Rice's book, the Farrow filter is described as a fractional advance. In this implementation, we
+        consider the Farrow filter as a fractional delay.
+
+        $$y_{\text{book}}[k] = x((m_{\text{book}}(k) + \mu_{\text{book}}(k)) T_s) = x[m_{\text{book}}(k) + \mu_{\text{book}}(k)]$$
+        $$m_{\text{book}}(k) = m(k) - 1$$
+        $$\mu_{\text{book}}(k) = 1 - \mu(k)$$
+        $$y[k] = x((m(k) - \mu(k)) T_s) = x[m(k) - \mu(k)]$$
 
     References:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Section 8.4.2.
@@ -27,47 +92,106 @@ class FarrowFractionalDelay:
           <https://wirelesspi.com/fractional-delay-filters-using-the-farrow-structure/>`_
 
     Examples:
-        Examples.
+        Plot the 3rd order Lagrange basis polynomials. Notice that each polynomial is 1 and 0 at the corresponding
+        indices.
+
+        .. ipython:: python
+
+            farrow = sdr.FarrowFractionalDelay(3)
+            mu = np.linspace(0, farrow.order, 1000) - farrow.delay
+
+            plt.figure();
+            for i in range(0, farrow.order + 1):
+                y = np.poly1d(farrow.lagrange_polys[i])(mu)
+                sdr.plot.time_domain(mu, y, label=rf"$\ell_{i}(\mu)$");
+            @savefig sdr_FarrowFractionalDelay_1.svg
+            plt.xlabel("Fractional sample delay, $\mu$"); \
+            plt.title("3rd order Lagrange basis polynomials");
+
+        Suppose a signal $x[n]$ is to be interpolated. The interpolated signal $y[n]$ is calculated by evaluating
+        the Lagrange interpolating polynomial at the fractional sample delay $\mu$ and scaling by the input signal
+        $x[n]$.
+
+        .. ipython:: python
+
+            x = np.array([1, 3, 2, 0])
+
+            y = 0;
+            for i in range(0, farrow.order + 1):
+                y += x[i] * np.poly1d(farrow.lagrange_polys[i])(mu)
+
+            @savefig sdr_FarrowFractionalDelay_2.svg
+            plt.figure(); \
+            sdr.plot.time_domain(x, offset=-farrow.delay, marker=".", linestyle="none", label="Input"); \
+            sdr.plot.time_domain(mu, y, label="Interpolated"); \
+            plt.title("3rd order Lagrange interpolation");
+
+        Compare fractional sample delays for various order Farrow fractional delay filters.
+
+        .. ipython:: python
+
+            sps = 6; \
+            span = 4; \
+            x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
+
+            @savefig sdr_FarrowFractionalDelay_3.svg
+            mu = 0.25; \
+            plt.figure(); \
+            sdr.plot.time_domain(x, marker=".", color="k"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(1)(x, mu=mu), label="Farrow 1"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(2)(x, mu=mu), label="Farrow 2"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(3)(x, mu=mu), label="Farrow 3"); \
+            plt.title(f"Fractional delay {mu} samples");
+
+            @savefig sdr_FarrowFractionalDelay_4.svg
+            mu = 0.5; \
+            plt.figure(); \
+            sdr.plot.time_domain(x, marker=".", color="k"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(1)(x, mu=mu), label="Farrow 1"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(2)(x, mu=mu), label="Farrow 2"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(3)(x, mu=mu), label="Farrow 3"); \
+            plt.title(f"Fractional delay {mu} samples");
+
+            @savefig sdr_FarrowFractionalDelay_5.svg
+            mu = 1; \
+            plt.figure(); \
+            sdr.plot.time_domain(x, marker=".", color="k"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(1)(x, mu=mu), label="Farrow 1"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(2)(x, mu=mu), label="Farrow 2"); \
+            sdr.plot.time_domain(sdr.FarrowFractionalDelay(3)(x, mu=mu), label="Farrow 3"); \
+            plt.title(f"Fractional delay {mu} samples");
 
     Group:
         dsp-arbitrary-resampling
     """
 
-    def __init__(self, order: int = 3, alpha: float = 0.5, streaming: bool = False):
-        self._order = verify_scalar(order, int=True, inclusive_min=1, inclusive_max=3)
+    def __init__(self, order: int, alpha: float = 0.5, align: bool = True, streaming: bool = False):
+        r"""
+        Creates a new Farrow arbitrary fractional delay filter.
+
+        Arguments:
+            order: The order $p$ of the Lagrange interpolating polynomial.
+            alpha: A free design parameter $0 \le \alpha \le 1$ that controls the shape of a 2nd order filter.
+                This ensures that the filter has an even number of taps and is linear phase. The default value
+                is $\alpha = 0.5$, which is a good compromise between performance and fixed-point computational
+                complexity. It was found through simulation that $\alpha = 0.43$ is optimal for BPSK using a
+                square root raised cosine filter with 100% excess bandwidth.
+            align: Indicates whether to remove the filter delay. If `True`, the output signal is aligned with the
+                input signal. If `False`, the output signal is not aligned with the input signal.
+            streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
+                preserved between calls to :meth:`~FarrowResampler.__call__()`.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+        """
+        self._order = verify_scalar(order, int=True, positive=True)
+        self._alpha = verify_scalar(alpha, float=True, inclusive_min=0, inclusive_max=1)
+        self._align = verify_bool(align)
         self._streaming = verify_bool(streaming)
         self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
 
-        if self.order == 1:
-            # Equation 8.63
-            self._delay = 1
-            self._taps = np.array(
-                [
-                    [1, -1],  # b1(i) = h1[-1, 0] for mu^1
-                    [0, 1],  # b0(i) = h1[-1, 0] for mu^0
-                ]
-            )
-        elif self.order == 2:
-            # Table 8.4.1
-            self._delay = 2
-            self._taps = np.array(
-                [
-                    [alpha, -alpha, -alpha, alpha],  # b2(i) = h2[-2, -1, 0, 1] for mu^2
-                    [-alpha, 1 + alpha, alpha - 1, -alpha],  # b1(i) = h2[-2, -1, 0, 1] for mu^3
-                    [0, 0, 1, 0],  # b0(i) = h2[-2, -1, 0, 1] for mu^0
-                ]
-            )
-        elif self.order == 3:
-            # Table 8.4.2
-            self._delay = 2
-            self._taps = np.array(
-                [
-                    [1 / 6, -1 / 2, 1 / 2, -1 / 6],  # b3(i) = h3[-2, -1, 0, 1] for mu^3
-                    [0, 1 / 2, -1, 1 / 2],  # b2(i) = h3[-2, -1, 0, 1] for mu^2
-                    [-1 / 6, 1, -1 / 2, -1 / 3],  # b1(i) = h3[-2, -1, 0, 1] for mu^1
-                    [0, 0, 1, 0],  # b0(i) = h3[-2, -1, 0, 1] for mu^0
-                ]
-            )
+        self._delay, self._lagrange_polys, self._taps = _compute_lagrange_basis(self._order)
+        self._lookahead = self._taps.shape[1] - self._delay - 1
 
         self.reset()
 
@@ -82,68 +206,66 @@ class FarrowFractionalDelay:
         mu: npt.ArrayLike | None = None,
     ) -> npt.NDArray:
         r"""
-        Applies the fractional delay $\mu(k)$ to the input signal $x[n]$ at the given basepoint sample indices $m(k)$.
+        Applies the fractional sample delay $\mu(k)$ to the input signal $x[n]$ at the given basepoint sample
+        indices $m(k)$.
 
-        $$y[n] = x((m(k) + \mu(k)) T_s) = x[m(k) + \mu(k)]$$
+        $$y[k] = x((m(k) - \mu(k)) T_s) = x[m(k) - \mu(k)]$$
 
         Arguments:
             x: The input signal $x[n] = x(n T_s)$.
             m: The basepoint sample indices $m(k)$, which are the integer sample indices of the input signal.
-            mu: The fractional sample delay $0 \le \mu(k) \le 1$, which is the fractional sample delay of the
+            mu: The fractional sample indices $0 \le \mu(k) \le 1$, which is the fractional sample delay of the
                 input signal at input sample $m(k)$.
 
         Returns:
             The resampled signal $y[k]$.
 
+        Notes:
+            If using streaming mode, the filter output is delayed by the filter delay $d$, see
+            :obj:`~FarrowFractionalDelay.delay`.
+
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
-
         if m is None:
-            m = np.arange(0, 0 + x.size)
+            m = np.arange(0, x.size)
         else:
-            m = verify_arraylike(
-                m, int=True, inclusive_min=0, exclusive_max=self.delay + x.size, atleast_1d=True, ndim=1
-            )
-
+            m = verify_arraylike(m, int=True, inclusive_min=0, exclusive_max=x.size, atleast_1d=True, ndim=1)
         if mu is None:
             mu = np.zeros_like(x, dtype=float)
         else:
             mu = verify_arraylike(mu, float=True, inclusive_min=0, inclusive_max=1, atleast_1d=True, ndim=1)
 
-        # m and mu can be scalars or arrays. If they are arrays, they must be the same size.
+        # m and mu can be scalars or arrays. If they are arrays, they must be the same size. This NumPy function
+        # should error if the sizes are not broadcast-able.
         m, mu = np.broadcast_arrays(m, mu)
 
+        # Prepend the pervious state (zeros initially). Then only valid correlation outputs are examined.
+        x = np.concatenate((self._state, x))
+        if not self.streaming:
+            x = np.concatenate((x, np.zeros(self._lookahead, dtype=float)))
+
+        # Compute the FIR filter outputs for the entire input signal
+        z = []
+        for i in range(self.order + 1):
+            zi = scipy.signal.convolve(x, self._taps[i, :], mode="valid")
+            z.append(zi)
+
         if self.streaming:
-            # Prepend previous inputs from last streaming call
-            x_pad = np.concatenate((self._state, x))
-
-            # Compute the FIR filter outputs for the entire input signal
-            ys = []
-            for i in range(self.order + 1):
-                yi = scipy.signal.convolve(x_pad, self._taps[i, :], mode="full")
-                ys.append(yi)
-
-            # Offset the basepoint sample indices by the number of historical samples prepended
-            m += self._state.size
-
-            # Store the previous inputs for the next call to __call__()
-            self._state = x_pad[-(self._taps.shape[1] - 1) :]
-        else:
-            # Compute the FIR filter outputs for the entire input signal
-            ys = []
-            for i in range(self.order + 1):
-                yi = scipy.signal.convolve(x, self._taps[i, :], mode="full")
-                ys.append(yi)
+            self._state = x[-(self.taps.shape[1] - 1) :]
 
         # Interpolate the output samples using the Horner method
-        # The definition of mu looks back from self.delay. So mu is technically and advance. We instead consider
-        # mu as a delay from self.delay - 1. Since the filters are symmetric about mu = 0.5, we can do this.
-        y = ys[0][m + self.delay - 1]
+        y = z[0][m]
         for i in range(1, self.order + 1):
-            y *= 1 - mu
-            y += ys[i][m + self.delay - 1]
+            y *= mu
+            y += z[i][m]
+
+        if self._align and (not self.streaming or self._first_call):
+            # Always remove filter delay in non-streaming mode. In streaming mode, only remove the filter delay
+            # on the first call.
+            y = y[self.delay :]
+            self._first_call = False
 
         return convert_output(y)
 
@@ -157,7 +279,7 @@ class FarrowFractionalDelay:
 
         Arguments:
             state: The filter state to reset to. The state vector should equal the previous `self.taps.shape[1] - 1`
-                inputs. If `None`, the filter state will be set to `[]`.
+                inputs. If `None`, the filter state will be set to zero.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -166,16 +288,35 @@ class FarrowFractionalDelay:
             Streaming mode only
         """
         if state is None:
-            self._state = np.array([])
+            self._state = np.zeros(self._taps.shape[1] - 1, dtype=float)
         else:
             self._state = verify_arraylike(state, complex=True, size=self._taps.shape[1] - 1)
+
+        self._first_call = True
+
+    def flush(self) -> npt.NDArray:
+        """
+        Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
+
+        Returns:
+            The remaining delayed signal $y[k]$.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+
+        Group:
+            Streaming mode only
+        """
+        x = np.zeros(1, dtype=float)  # TODO: Why is this always 1?
+        y = self(x)
+        return y
 
     @property
     def streaming(self) -> bool:
         """
         Indicates whether the filter is in streaming mode.
 
-        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.__call__()`.
+        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowFractionalDelay.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -205,7 +346,7 @@ class FarrowFractionalDelay:
     @property
     def order(self) -> int:
         """
-        The order of the piecewise polynomial.
+        The order $p$ of the Lagrange interpolating polynomial.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -213,13 +354,25 @@ class FarrowFractionalDelay:
         return self._order
 
     @property
+    def lagrange_polys(self) -> npt.NDArray:
+        r"""
+        The Lagrange basis polynomials $\ell_k(\mu)$.
+
+        The Lagrange basis polynomials are in the form of a 2D array with rows
+        $\{\ell_0(\mu), \ell_1(\mu), \ldots, \ell_p(\mu)\}$ and columns $\{\mu^p, \mu^{p-1}, \ldots, \mu^0\}$.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+        """
+        return self._lagrange_polys
+
+    @property
     def taps(self) -> npt.NDArray:
         r"""
         The Farrow filter taps.
 
-        The taps are in the form of a 2D array, where each row corresponds to a polynomial order of $\mu$ and
-        each column corresponds to a tap. The taps are ordered from the highest order polynomial to the
-        lowest order polynomial.
+        The taps are in the form of a 2D array with rows $\{h_0[n], h_1[n], \ldots, h_p[n]\}$, where $h_k[n]$ is the
+        $k$-th FIR filter corresponding to $\mu^k$.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -229,7 +382,7 @@ class FarrowFractionalDelay:
     @property
     def delay(self) -> int:
         r"""
-        The delay $d$ of the Farrow FIR filters in samples.
+        The delay $D$ of the Farrow FIR filters in samples.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
