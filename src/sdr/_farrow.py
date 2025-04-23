@@ -4,6 +4,9 @@ A module containing a Farrow arbitrary resampler.
 
 from __future__ import annotations
 
+from typing import Any, overload
+
+import numba
 import numpy as np
 import numpy.typing as npt
 import scipy.interpolate
@@ -391,7 +394,7 @@ class FarrowFractionalDelay:
 
 
 @export
-class FarrowResampler:
+class FarrowResampler(FarrowFractionalDelay):
     r"""
     Implements a piecewise polynomial Farrow arbitrary resampler.
 
@@ -502,78 +505,63 @@ class FarrowResampler:
         dsp-arbitrary-resampling
     """
 
-    def __init__(self, order: int = 3, streaming: bool = False):
-        """
+    def __init__(self, order: int, alpha: float = 0.5, align: bool = True, streaming: bool = False):
+        r"""
         Creates a new Farrow arbitrary resampler.
 
         Arguments:
-            order: The order of the piecewise polynomial, which must be between 1 and 4.
+            order: The order $p$ of the Lagrange interpolating polynomial.
+            alpha: A free design parameter $0 \le \alpha \le 1$ that controls the shape of a 2nd order filter.
+                This ensures that the filter has an even number of taps and is linear phase. The default value
+                is $\alpha = 0.5$, which is a good compromise between performance and fixed-point computational
+                complexity. It was found through simulation that $\alpha = 0.43$ is optimal for BPSK using a
+                square root raised cosine filter with 100% excess bandwidth.
+            align: Indicates whether to remove the filter delay. If `True`, the output signal is aligned with the
+                input signal. If `False`, the output signal is not aligned with the input signal.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
-        self._order = verify_scalar(order, int=True, inclusive_min=1, inclusive_max=4)
-        self._streaming = verify_bool(streaming)
-        self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
-        self._mu_next: float  # The next fractional sample delay value
-
-        if self.order == 1:
-            self._delay = 1
-            self._taps = np.array(
-                [
-                    [-1, 1],
-                    [1, 0],
-                ]
-            ).T
-        elif self.order == 2:
-            self._delay = 2
-            self._taps = np.array(
-                [
-                    [1 / 2, -1 / 2, 0],
-                    [-1, 0, 1],
-                    [1 / 2, 1 / 2, 0],
-                ]
-            ).T
-        elif self.order == 3:
-            self._delay = 2
-            self._taps = np.array(
-                [
-                    [-1 / 6, 1 / 2, -1 / 3, 0],
-                    [1 / 2, -1, -1 / 2, 1],
-                    [-1 / 2, 1 / 2, 1, 0],
-                    [1 / 6, 0, -1 / 6, 0],
-                ]
-            ).T
-        elif self.order == 4:
-            self._delay = 3
-            self._taps = np.array(
-                [
-                    [1 / 24, -1 / 12, -1 / 24, 1 / 12, 0],
-                    [-1 / 6, 1 / 6, 2 / 3, -2 / 3, 0],
-                    [1 / 4, 0, -5 / 4, 0, 1],
-                    [-1 / 6, -1 / 6, 2 / 3, 2 / 3, 0],
-                    [1 / 24, 1 / 12, -1 / 24, -1 / 12, 0],
-                ]
-            ).T
-
-        self.reset()
+        super().__init__(order, alpha, align, streaming)
 
     ##############################################################################
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, rate: float) -> npt.NDArray:
+    @overload
+    def __call__(
+        self,
+        x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
+        rate: float,
+        n_outputs: int,
+    ) -> tuple[npt.NDArray, int]: ...
+
+    @overload
+    def __call__(
+        self,
+        x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
+        rate: float,
+        n_outputs: None = None,
+    ) -> npt.NDArray: ...
+
+    def __call__(self, x: Any, rate: Any, n_outputs: Any = None) -> Any:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
+
+        $$x[n] = x(n T_s)$$
+        $$y[n] = x(n T_s / r)$$
 
         Arguments:
             x: The input signal $x[n] = x(n T_s)$.
             rate: The resampling rate $r$.
+            n_outputs: The requested number of computed samples in $y[n]$. If specified, the number of processed
+                samples of $x[n]$ is returned.
 
         Returns:
-            The resampled signal $y[n] = x(n T_s / r)$.
+            - The resampled signal $y[n] = x(n T_s / r)$.
+            - The number of processed input samples `n_inputs`. This is only returned if `n_outputs` is provided.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -581,77 +569,45 @@ class FarrowResampler:
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
         verify_scalar(rate, float=True, positive=True)
 
-        if self.streaming:
-            # Prepend previous inputs from last streaming call
-            x_pad = np.concatenate((self._state, x))
+        if n_outputs is None:
+            # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
+            n_inputs = x.size
+            m, mu = process_mu_fixed_inputs(self._m_next, self._mu_next, rate, n_inputs)
 
-            # Compute the FIR filter outputs for the entire input signal
-            ys = []
-            for i in range(self.order + 1):
-                yi = scipy.signal.convolve(x_pad, self._taps[i, :], mode="full")
-                ys.append(yi)
-
-            # Compute the fractional sample indices for each output sample. We want to step from mu_next to
-            # y0.size in steps of 1 / rate.
-            frac_idxs = np.arange(
-                self._mu_next,
-                x_pad.size,
-                1 / rate,
-            )
-
-            # Store the previous inputs and next fractional sample index for the next call to __call__()
-            self._state = x_pad[-(self._taps.shape[1] - 1) :]
-            self._mu_next = (frac_idxs[-1] + 1 / rate) - x_pad.size + (self._taps.shape[1] - 1)
         else:
-            # Compute the FIR filter outputs for the entire input signal
-            ys = []
-            for i in range(self.order + 1):
-                yi = scipy.signal.convolve(x, self._taps[i, :], mode="full")
-                ys.append(yi)
+            verify_scalar(n_outputs, int=True, positive=True)
 
-            # Compute the fractional sample indices for each output sample
-            frac_idxs = np.arange(
-                self._delay,  # Account for filter delay
-                self._delay + x.size,
-                1 / rate,
-            )
+            # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
+            m, mu = process_mu_fixed_outputs(self._m_next, self._mu_next, rate, n_outputs)
+            n_inputs = m[-2] + 1  # The number of inputs required
+            x = x[:n_inputs]  # Reduce the input samples, so we only pass what's needed to the FarrowFractionalDelay
 
-        # Convert the fractional indices to integer indices and fractional indices
-        int_idxs = (frac_idxs // 1.0).astype(int)
-        mu = frac_idxs - int_idxs
-        mu *= -1  # TODO: Why is this the case?
+        if self.streaming:
+            # Save the next m and mu state
+            self._m_next = m[-1] - n_inputs
+            self._mu_next = mu[-1]
 
-        # Interpolate the output samples using the Horner method
-        y = ys[0][int_idxs]
-        for i in range(1, self.order + 1):
-            y += mu * y + ys[i][int_idxs]
+        # Remove the next m and mu from the end of the array
+        m = m[:-1]
+        mu = mu[:-1]
 
-        return convert_output(y)
+        # Pass the computed m's and mu's to the fractional delay Farrow
+        y = super().__call__(x, m, 1 - mu)
+
+        if n_outputs is None:
+            return convert_output(y)
+        else:
+            return convert_output(y), n_inputs
 
     ##############################################################################
     # Streaming mode
     ##############################################################################
 
     def reset(self, state: npt.ArrayLike | None = None):
-        """
-        Resets the filter state and fractional sample index.
-
-        Arguments:
-            state: The filter state to reset to. The state vector should equal the previous three
-                inputs. If `None`, the filter state will be reset to zero.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-
-        Group:
-            Streaming mode only
-        """
-        if state is None:
-            self._state = np.array([])
-        else:
-            self._state = verify_arraylike(state, complex=True, size=self._taps.shape[1] - 1)
+        super().reset(state)
 
         # Initial fractional sample delay accounts for filter delay
+        self._m_next = 0
         self._mu_next = 0
 
     def flush(self, rate: float) -> npt.NDArray:
@@ -677,66 +633,86 @@ class FarrowResampler:
 
         return y
 
-    @property
-    def streaming(self) -> bool:
-        """
-        Indicates whether the filter is in streaming mode.
-
-        In streaming mode, the filter state is preserved between calls to :meth:`~FarrowResampler.__call__()`.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-
-        Group:
-            Streaming mode only
-        """
-        return self._streaming
-
-    @property
-    def state(self) -> npt.NDArray:
-        """
-        The filter state consisting of the previous $N$ inputs.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-
-        Group:
-            Streaming mode only
-        """
-        return self._state
-
     ##############################################################################
     # Properties
     ##############################################################################
 
     @property
-    def order(self) -> int:
-        """
-        The order of the piecewise polynomial.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-        """
-        return self._order
-
-    @property
-    def taps(self) -> npt.NDArray:
-        """
-        The Farrow filter taps.
-
-        Examples:
-            See the :ref:`farrow-arbitrary-resampler` example.
-        """
-        return self._taps
-
-    @property
     def delay(self) -> int:
         r"""
-        The delay $d$ of the Farrow FIR filters in samples.
+        The delay $D$ of the Farrow FIR filters in samples.
 
-        Output sample $d \cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate.
+        Output sample $D \cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._delay
+
+
+@numba.jit
+def process_mu_fixed_inputs(m_next: int, mu_next: float, rate: float, n_inputs: int) -> tuple[npt.NDArray, npt.NDArray]:
+    """
+    Determines a series of basepoint sample indices `m` and fractional sample indices `mu` to achieve a sample rate
+    increase of `rate`.
+    """
+    # Determine how many outputs are required, given the number of inputs requested
+    n_outputs = int(np.ceil((n_inputs + 1) * rate))
+
+    m = np.zeros(n_outputs + 1, dtype=np.int64)  # Basepoint sample indices
+    m[0] = m_next
+
+    mu = np.zeros(n_outputs + 1, dtype=np.float64)  # Fractional sample indices
+    mu[0] = mu_next
+
+    for i in range(1, n_outputs + 1):
+        # Accumulate the fractional sample index by 1 / rate
+        mu[i] = mu[i - 1] + 1 / rate
+
+        # Set the basepoint sample index the same
+        m[i] = m[i - 1]
+
+        # Handle overflows in the fractional part
+        if mu[i] >= 1:
+            overflow = int(mu[i])
+            mu[i] -= overflow  # Reset mu back to [0, 1)
+            m[i] += overflow  # Move the basepoint to the next sample
+
+        if m[i] >= n_inputs:
+            # m[i] is current m_next
+            break
+
+    m = m[: i + 1]
+    mu = mu[: i + 1]
+
+    return m, mu
+
+
+@numba.jit
+def process_mu_fixed_outputs(
+    m_next: int, mu_next: float, rate: float, n_outputs: int
+) -> tuple[npt.NDArray, npt.NDArray]:
+    """
+    Determines a series of basepoint sample indices `m` and fractional sample indices `mu` to achieve a sample rate
+    increase of `rate`.
+    """
+    m = np.zeros(n_outputs + 1, dtype=np.int64)  # Basepoint sample indices
+    m[0] = m_next
+
+    mu = np.zeros(n_outputs + 1, dtype=np.float64)  # Fractional sample indices
+    mu[0] = mu_next
+
+    for i in range(1, n_outputs + 1):
+        # Accumulate the fractional sample index by 1 / rate
+        mu[i] = mu[i - 1] + 1 / rate
+
+        # Set the basepoint sample index the same
+        m[i] = m[i - 1]
+
+        # Handle overflows in the fractional part
+        if mu[i] >= 1:
+            overflow = int(mu[i])
+            mu[i] -= overflow  # Reset mu back to [0, 1)
+            m[i] += overflow  # Move the basepoint to the next sample
+
+    return m, mu
