@@ -348,7 +348,7 @@ class FarrowFractionalDelay:
         Group:
             Streaming mode only
         """
-        x = np.zeros(1, dtype=float)  # TODO: Why is this always 1?
+        x = np.zeros(self.delay, dtype=float)
         y = self(x)
         return y
 
