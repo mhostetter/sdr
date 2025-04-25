@@ -487,10 +487,8 @@ def clock_error(
     verify_scalar(error_rate, float=True)
 
     # Apply time compression using resampling
-    alpha = 1 + error
-    # y = sample_rate_offset(x, 1 / alpha, 0)  # TODO: This doesn't work...
-    farrow = FarrowResampler(3)
-    y = farrow(x, 1 / alpha)
+    sr_offset = -error / (1 + error)
+    y = sample_rate_offset(x, sr_offset, 0)
 
     if np.issubdtype(x.dtype, np.floating):
         verify_not_specified(center_freq)
