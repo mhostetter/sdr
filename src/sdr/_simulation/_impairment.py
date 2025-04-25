@@ -265,7 +265,7 @@ def sample_rate_offset(
 
     # TODO: Is this correct....
     rate = (sample_rate + offset + offset_rate / sample_rate) / sample_rate
-    farrow = FarrowResampler()
+    farrow = FarrowResampler(3)
     y = farrow(x, rate)
 
     return convert_output(y)
@@ -489,7 +489,7 @@ def clock_error(
     # Apply time compression using resampling
     alpha = 1 + error
     # y = sample_rate_offset(x, 1 / alpha, 0)  # TODO: This doesn't work...
-    farrow = FarrowResampler()
+    farrow = FarrowResampler(3)
     y = farrow(x, 1 / alpha)
 
     if np.issubdtype(x.dtype, np.floating):
