@@ -333,8 +333,6 @@ class FarrowFractionalDelay:
         self._m_state = np.zeros(0, dtype=int)
         self._mu_state = np.zeros(0, dtype=float)
 
-        self._first_call = True
-
     def flush(self) -> npt.NDArray:
         """
         Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
