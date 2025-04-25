@@ -11,8 +11,9 @@ import numpy as np
 import numpy.typing as npt
 import scipy.interpolate
 import scipy.signal
+from typing_extensions import Literal
 
-from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
+from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_literal, verify_scalar
 
 
 def _compute_lagrange_basis(order: int) -> tuple[int, npt.NDArray, npt.NDArray]:
@@ -168,7 +169,7 @@ class FarrowFractionalDelay:
         dsp-arbitrary-resampling
     """
 
-    def __init__(self, order: int, alpha: float = 0.5, align: bool = True, streaming: bool = False):
+    def __init__(self, order: int, alpha: float = 0.5, streaming: bool = False):
         r"""
         Creates a new Farrow arbitrary fractional delay filter.
 
@@ -179,8 +180,6 @@ class FarrowFractionalDelay:
                 is $\alpha = 0.5$, which is a good compromise between performance and fixed-point computational
                 complexity. It was found through simulation that $\alpha = 0.43$ is optimal for BPSK using a
                 square root raised cosine filter with 100% excess bandwidth.
-            align: Indicates whether to remove the filter delay. If `True`, the output signal is aligned with the
-                input signal. If `False`, the output signal is not aligned with the input signal.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
@@ -189,7 +188,6 @@ class FarrowFractionalDelay:
         """
         self._order = verify_scalar(order, int=True, positive=True)
         self._alpha = verify_scalar(alpha, float=True, inclusive_min=0, inclusive_max=1)
-        self._align = verify_bool(align)
         self._streaming = verify_bool(streaming)
         self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
 
@@ -207,6 +205,7 @@ class FarrowFractionalDelay:
         x: npt.ArrayLike,
         m: npt.ArrayLike | None = None,
         mu: npt.ArrayLike | None = None,
+        mode: Literal["rate", "full"] = "rate",
     ) -> npt.NDArray:
         r"""
         Applies the fractional sample delay $\mu(k)$ to the input signal $x[n]$ at the given basepoint sample
@@ -219,6 +218,17 @@ class FarrowFractionalDelay:
             m: The basepoint sample indices $m(k)$, which are the integer sample indices of the input signal.
             mu: The fractional sample indices $0 \le \mu(k) \le 1$, which is the fractional sample delay of the
                 input signal at input sample $m(k)$.
+            mode: The non-streaming convolution mode.
+
+                - `"rate"`: The output signal $y[k]$ has length $L \cdot r$, proportional to the resampling rate
+                  $r$. Output sample 0 aligns with input sample 0.
+                - `"full"`: The full convolution is performed. The output signal $y[k]$ has length $(L + N) \cdot r$,
+                  where $N$ is the order of the prototype filter. Output sample :obj:`~FarrowFractionalDelay.delay`
+                  aligns with input sample 0.
+
+                In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
+                only $L \cdot r$ output samples are produced per call. A final call to :meth:`~FarrowFractionalDelay.flush()`
+                is required to flush the filter state.
 
         Returns:
             The resampled signal $y[k]$.
@@ -239,24 +249,47 @@ class FarrowFractionalDelay:
             mu = np.zeros_like(x, dtype=float)
         else:
             mu = verify_arraylike(mu, float=True, inclusive_min=0, inclusive_max=1, atleast_1d=True, ndim=1)
+        verify_literal(mode, ["rate", "full"])
 
         # m and mu can be scalars or arrays. If they are arrays, they must be the same size. This NumPy function
         # should error if the sizes are not broadcast-able.
         m, mu = np.broadcast_arrays(m, mu)
 
-        # Prepend the pervious state (zeros initially). Then only valid correlation outputs are examined.
+        # Prepend the pervious state (zeros initially)
         x = np.concatenate((self._state, x))
-        if not self.streaming:
-            x = np.concatenate((x, np.zeros(self._lookahead, dtype=float)))
+        m = np.concatenate((self._m_state, m))
+        mu = np.concatenate((self._mu_state, mu))
 
         # Compute the FIR filter outputs for the entire input signal
         z = []
         for i in range(self.order + 1):
-            zi = scipy.signal.convolve(x, self._taps[i, :], mode="valid")
+            zi = scipy.signal.convolve(x, self._taps[i, :], mode="full")
             z.append(zi)
 
-        if self.streaming:
-            self._state = x[-(self.taps.shape[1] - 1) :]
+        # Add the filter delay due to historical inputs
+        # NOTE: If non-streaming mode, state is always empty
+        m += self._state.size
+
+        if mode == "rate":
+            # Account for the Farrow filter delay so that the first output sample is aligned with the first input
+            # sample
+            m += self._delay
+
+            if self.streaming:
+                # If in streaming mode, we will repeatedly call this function. A valid output correlates with some
+                # previous inputs and some future inputs. Once we added the delay, some of the m values will be
+                # outside the valid correlation zone. They correspond to correlation outputs with some zeros inputs
+                # (from the "full" convolution). We need to only consider the valid m values during this call and
+                # save the rest for the next call.
+
+                # Save the m values needed to be processed next call. We also subtract from the m values so that
+                # the state is in [-delay, 0) range.
+                self._m_state = m[m >= x.size] - x.size - self._delay
+                self._mu_state = mu[m >= x.size]
+
+                # Keep only the valid m values for this call
+                mu = mu[m < x.size]  # NOTE: Need to resize m last since it is used in the indexing
+                m = m[m < x.size]
 
         # Interpolate the output samples using the Horner method
         y = z[0][m]
@@ -264,11 +297,9 @@ class FarrowFractionalDelay:
             y *= mu
             y += z[i][m]
 
-        if self._align and (not self.streaming or self._first_call):
-            # Always remove filter delay in non-streaming mode. In streaming mode, only remove the filter delay
-            # on the first call.
-            y = y[self.delay :]
-            self._first_call = False
+        if self.streaming:
+            # Save the last several inputs so we can use them in the next call
+            self._state = x[-(self.taps.shape[1] - 1) :]
 
         return convert_output(y)
 
@@ -288,13 +319,9 @@ class FarrowFractionalDelay:
     # Streaming mode
     ##############################################################################
 
-    def reset(self, state: npt.ArrayLike | None = None):
+    def reset(self):
         """
         Resets the filter state.
-
-        Arguments:
-            state: The filter state to reset to. The state vector should equal the previous `self.taps.shape[1] - 1`
-                inputs. If `None`, the filter state will be set to zero.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -302,10 +329,9 @@ class FarrowFractionalDelay:
         Group:
             Streaming mode only
         """
-        if state is None:
-            self._state = np.zeros(self._taps.shape[1] - 1, dtype=float)
-        else:
-            self._state = verify_arraylike(state, complex=True, size=self._taps.shape[1] - 1)
+        self._state = np.zeros(0, dtype=float)
+        self._m_state = np.zeros(0, dtype=int)
+        self._mu_state = np.zeros(0, dtype=float)
 
         self._first_call = True
 
