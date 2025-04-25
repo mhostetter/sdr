@@ -142,13 +142,9 @@ def time_domain(  # noqa: D417
             ax = plt.gca()
 
         if t is None:
+            t = np.arange(x.size) / sample_rate + offset
             if centered:
-                if x.size % 2 == 0:
-                    t = np.arange(-x.size // 2, x.size // 2) / sample_rate
-                else:
-                    t = np.arange(-(x.size - 1) // 2, (x.size + 1) // 2) / sample_rate
-            else:
-                t = np.arange(x.size) / sample_rate + offset
+                t -= (x.size - 1) / 2 / sample_rate
 
         real_or_complex_plot(t, x, ax=ax, diff=diff, **kwargs)
         time_x_axis(ax, sample_rate_provided)
