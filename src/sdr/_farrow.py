@@ -242,10 +242,18 @@ class FarrowFractionalDelay:
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
         if m is None:
+            # Apply mu to each input sample
             m = np.arange(0, x.size)
         else:
-            m = verify_arraylike(m, int=True, inclusive_min=0, exclusive_max=x.size, atleast_1d=True, ndim=1)
+            if not self.streaming:
+                m = verify_arraylike(
+                    m, int=True, inclusive_min=0, exclusive_max=x.size + self._lookahead, atleast_1d=True, ndim=1
+                )
+                # NOTE: We can get away with not verifying this in streaming mode, since if m values are out of bounds,
+                # they will be carried over into the next call.
+
         if mu is None:
+            # If not provided, do not delay the input samples
             mu = np.zeros_like(x, dtype=float)
         else:
             mu = verify_arraylike(mu, float=True, inclusive_min=0, inclusive_max=1, atleast_1d=True, ndim=1)
@@ -273,7 +281,7 @@ class FarrowFractionalDelay:
         if mode == "rate":
             # Account for the Farrow filter delay so that the first output sample is aligned with the first input
             # sample
-            m += self._delay
+            m += self.delay
 
             if self.streaming:
                 # If in streaming mode, we will repeatedly call this function. A valid output correlates with some
@@ -284,7 +292,7 @@ class FarrowFractionalDelay:
 
                 # Save the m values needed to be processed next call. We also subtract from the m values so that
                 # the state is in [-delay, 0) range.
-                self._m_state = m[m >= x.size] - x.size - self._delay
+                self._m_state = m[m >= x.size] - x.size - self.delay
                 self._mu_state = mu[m >= x.size]
 
                 # Keep only the valid m values for this call
@@ -701,25 +709,24 @@ def process_mu_fixed_inputs(m_next: int, mu_next: float, rate: float, n_inputs: 
     mu = np.zeros(n_outputs + 1, dtype=np.float64)  # Fractional sample indices
     mu[0] = mu_next
 
-    for i in range(1, n_outputs + 1):
-        # Accumulate the fractional sample index by 1 / rate
-        mu[i] = mu[i - 1] + 1 / rate
-
-        # Set the basepoint sample index the same
-        m[i] = m[i - 1]
-
-        # Handle overflows in the fractional part
-        if mu[i] >= 1:
-            overflow = int(mu[i])
-            mu[i] -= overflow  # Reset mu back to [0, 1)
-            m[i] += overflow  # Move the basepoint to the next sample
-
+    for i in range(0, n_outputs):
         if m[i] >= n_inputs:
             # m[i] is current m_next
+            m = m[: i + 1]
+            mu = mu[: i + 1]
             break
 
-    m = m[: i + 1]
-    mu = mu[: i + 1]
+        # Accumulate the fractional sample index by 1 / rate
+        mu[i + 1] = mu[i] + 1 / rate
+
+        # Set the basepoint sample index the same
+        m[i + 1] = m[i]
+
+        # Handle overflows in the fractional part
+        if mu[i + 1] >= 1:
+            overflow = int(mu[i + 1])
+            mu[i + 1] -= overflow  # Reset mu back to [0, 1)
+            m[i + 1] += overflow  # Move the basepoint to the next sample
 
     return m, mu
 
@@ -738,17 +745,17 @@ def process_mu_fixed_outputs(
     mu = np.zeros(n_outputs + 1, dtype=np.float64)  # Fractional sample indices
     mu[0] = mu_next
 
-    for i in range(1, n_outputs + 1):
+    for i in range(0, n_outputs):
         # Accumulate the fractional sample index by 1 / rate
-        mu[i] = mu[i - 1] + 1 / rate
+        mu[i + 1] = mu[i] + 1 / rate
 
         # Set the basepoint sample index the same
-        m[i] = m[i - 1]
+        m[i + 1] = m[i]
 
         # Handle overflows in the fractional part
-        if mu[i] >= 1:
-            overflow = int(mu[i])
-            mu[i] -= overflow  # Reset mu back to [0, 1)
-            m[i] += overflow  # Move the basepoint to the next sample
+        if mu[i + 1] >= 1:
+            overflow = int(mu[i + 1])
+            mu[i + 1] -= overflow  # Reset mu back to [0, 1)
+            m[i + 1] += overflow  # Move the basepoint to the next sample
 
     return m, mu
