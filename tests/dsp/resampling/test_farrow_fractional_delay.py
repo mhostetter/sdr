@@ -240,12 +240,12 @@ def compare_streaming_and_non_streaming(order: int, x: npt.NDArray, mu: npt.Arra
 
     # Streaming
     farrow = sdr.FarrowFractionalDelay(order, streaming=True)
-    yy = []
+    y = []
     for i in range(0, len(x), stride):
         yi = farrow(x[i : i + stride], mu=mu[i : i + stride])
-        yy.append(yi)
-    # yy.append(farrow.flush())  # Need to flush the filter state
-    y_s = np.concatenate(yy)
+        y.append(yi)
+    y.append(farrow.flush())  # Need to flush the filter state
+    y_s = np.concatenate(y)
 
     if False:
         plt.figure()
@@ -255,8 +255,7 @@ def compare_streaming_and_non_streaming(order: int, x: npt.NDArray, mu: npt.Arra
         plt.title(f"Farrow Fractional Delay (order={order}, mu={mu[0]})")
         plt.show()
 
-    # NOTE: Streaming has farrow.delay fewer outputs
-    np.testing.assert_allclose(y_ns[: y_ns.size - farrow.delay], y_s, rtol=1e-5)
+    np.testing.assert_allclose(y_ns, y_s, rtol=1e-5)
 
 
 def debug_plot(x: np.ndarray, y: np.ndarray, y_truth: np.ndarray, offset: float):
