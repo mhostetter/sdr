@@ -218,17 +218,25 @@ class FarrowFractionalDelay:
             m: The basepoint sample indices $m(k)$, which are the integer sample indices of the input signal.
             mu: The fractional sample indices $0 \le \mu(k) \le 1$, which is the fractional sample delay of the
                 input signal at input sample $m(k)$.
-            mode: The non-streaming convolution mode.
+            mode: The convolution mode.
 
-                - `"rate"`: The output signal $y[k]$ has length $L \cdot r$, proportional to the resampling rate
-                  $r$. Output sample 0 aligns with input sample 0.
-                - `"full"`: The full convolution is performed. The output signal $y[k]$ has length $(L + N) \cdot r$,
-                  where $N$ is the order of the prototype filter. Output sample :obj:`~FarrowFractionalDelay.delay`
-                  aligns with input sample 0.
+                - `"rate"`: The output signal $y[k]$ is aligned with the input signal, such that $y[0] = x[0 - \mu]$.
 
-                In streaming mode, the `"full"` convolution is performed. However, for each $L$ input samples
-                only $L \cdot r$ output samples are produced per call. A final call to :meth:`~FarrowFractionalDelay.flush()`
-                is required to flush the filter state.
+                    In streaming mode, the first call returns $L - D$ output samples, where $L$ is the length of the
+                    basepoint and fractional sample indices. On subsequent calls, $L$ output samples are produced.
+                    A final call to :meth:`~FarrowFractionalDelay.flush()` is required to flush the filter state
+                    and produce the final $D$ output samples. The final output length is $L_{\text{total}}$.
+
+                    In non-streaming mode, $L$ output samples are produced.
+
+                - `"full"`: The full convolution is performed, and the filter delay $D$ is observed, such that
+                    $y[D] = x[0 - \mu]$.
+
+                    In streaming mode, each call returns $L$ output samples. A final call to
+                    :meth:`~FarrowFractionalDelay.flush()` is required to flush the filter state
+                    and produce the final $D$ output samples. The final output length is $L_{\text{total}} + D$.
+
+                    In non-streaming mode, $L + D$ output samples are produced.
 
         Returns:
             The resampled signal $y[k]$.
@@ -241,6 +249,8 @@ class FarrowFractionalDelay:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
+        verify_literal(mode, ["rate", "full"])
+
         if m is None:
             # Apply mu to each input sample
             m = np.arange(0, x.size)
@@ -257,7 +267,6 @@ class FarrowFractionalDelay:
             mu = np.zeros_like(x, dtype=float)
         else:
             mu = verify_arraylike(mu, float=True, inclusive_min=0, inclusive_max=1, atleast_1d=True, ndim=1)
-        verify_literal(mode, ["rate", "full"])
 
         # m and mu can be scalars or arrays. If they are arrays, they must be the same size. This NumPy function
         # should error if the sizes are not broadcast-able.
@@ -267,6 +276,12 @@ class FarrowFractionalDelay:
         x = np.concatenate((self._state, x))
         m = np.concatenate((self._m_state, m))
         mu = np.concatenate((self._mu_state, mu))
+
+        if not self.streaming and mode == "full":
+            # If performing the full convolution in one shot, we need ,,,
+            x = np.concatenate((x, np.zeros(self.delay, dtype=float)))
+            m = np.concatenate((m, m[-1] + 1 + np.arange(self.delay, dtype=int)))
+            mu = np.concatenate((mu, mu[-1] * np.ones(self.delay, dtype=float)))
 
         # Compute the FIR filter outputs for the entire input signal
         z = []
@@ -341,9 +356,13 @@ class FarrowFractionalDelay:
         self._m_state = np.zeros(0, dtype=int)
         self._mu_state = np.zeros(0, dtype=float)
 
-    def flush(self) -> npt.NDArray:
-        """
+    def flush(self, mu: float = 0.0, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
+        r"""
         Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
+
+        Arguments:
+            mu: The final fractional sample delay $0 \le \mu < 1$.
+            mode: The convolution mode.
 
         Returns:
             The remaining delayed signal $y[k]$.
@@ -355,7 +374,8 @@ class FarrowFractionalDelay:
             Streaming mode only
         """
         x = np.zeros(self.delay, dtype=float)
-        y = self(x)
+        y = self(x, mu=mu, mode=mode)
+
         return y
 
     @property
@@ -429,7 +449,10 @@ class FarrowFractionalDelay:
     @property
     def delay(self) -> int:
         r"""
-        The delay $D$ of the Farrow FIR filters in samples.
+        The delay $D$ of the Farrow FIR filters in samples, which is observed when the convolution mode is set to
+        `"full"`. No delay is observed when the convolution mode is set to `"rate"`.
+
+        Output sample $D$ corresponds to the first input sample.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
@@ -549,7 +572,7 @@ class FarrowResampler(FarrowFractionalDelay):
         dsp-arbitrary-resampling
     """
 
-    def __init__(self, order: int, alpha: float = 0.5, align: bool = True, streaming: bool = False):
+    def __init__(self, order: int, alpha: float = 0.5, streaming: bool = False):
         r"""
         Creates a new Farrow arbitrary resampler.
 
@@ -560,15 +583,13 @@ class FarrowResampler(FarrowFractionalDelay):
                 is $\alpha = 0.5$, which is a good compromise between performance and fixed-point computational
                 complexity. It was found through simulation that $\alpha = 0.43$ is optimal for BPSK using a
                 square root raised cosine filter with 100% excess bandwidth.
-            align: Indicates whether to remove the filter delay. If `True`, the output signal is aligned with the
-                input signal. If `False`, the output signal is not aligned with the input signal.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
                 preserved between calls to :meth:`~FarrowResampler.__call__()`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
-        super().__init__(order, alpha, align, streaming)
+        super().__init__(order, alpha, streaming)
 
     ##############################################################################
     # Special methods
@@ -580,6 +601,7 @@ class FarrowResampler(FarrowFractionalDelay):
         x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
         rate: float,
         n_outputs: int,
+        mode: Literal["rate", "full"] = "rate",
     ) -> tuple[npt.NDArray, int]: ...
 
     @overload
@@ -588,9 +610,10 @@ class FarrowResampler(FarrowFractionalDelay):
         x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
         rate: float,
         n_outputs: None = None,
+        mode: Literal["rate", "full"] = "rate",
     ) -> npt.NDArray: ...
 
-    def __call__(self, x: Any, rate: Any, n_outputs: Any = None) -> Any:
+    def __call__(self, x: Any, rate: Any, n_outputs: Any = None, mode: Any = "rate") -> Any:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
@@ -598,10 +621,30 @@ class FarrowResampler(FarrowFractionalDelay):
         $$y[n] = x(n T_s / r)$$
 
         Arguments:
-            x: The input signal $x[n] = x(n T_s)$.
+            x: The input signal $x[n] = x(n T_s)$ with length $L$.
             rate: The resampling rate $r$.
-            n_outputs: The requested number of computed samples in $y[n]$. If specified, the number of processed
-                samples of $x[n]$ is returned.
+            n_outputs: The requested number of output samples in $y[n]$. If specified, the number of processed
+                input samples of $x[n]$ is returned.
+            mode: The convolution mode.
+
+                - `"rate"`: The output signal $y[k]$ is aligned with the input signal, such that $y[0] = x[0 - \mu]$.
+
+                    In streaming mode, the first call returns $(L - D) \cdot r$ output samples. On subsequent calls,
+                    $L \cdot r$ output samples are produced. A final call to :meth:`~FarrowFractionalDelay.flush()`
+                    is required to flush the filter state and produce the final $D \cdot r$ output samples.
+                    The final output length is $L_{\text{total}} \cdot r$.
+
+                    In non-streaming mode, $L \cdot r$ output samples are produced.
+
+                - `"full"`: The full convolution is performed, and the filter delay $D$ is observed, such that
+                    $y[D \cdot r] = x[0 - \mu]$.
+
+                    In streaming mode, each call returns $L \cdot r$ output samples. A final call to
+                    :meth:`~FarrowFractionalDelay.flush()` is required to flush the filter state
+                    and produce the final $D \cdot r$ output samples. The final output length is
+                    $(L_{\text{total}} + D) \cdot r$.
+
+                    In non-streaming mode, $(L + D) \cdot r$ output samples are produced.
 
         Returns:
             - The resampled signal $y[n] = x(n T_s / r)$.
@@ -612,6 +655,11 @@ class FarrowResampler(FarrowFractionalDelay):
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
         verify_scalar(rate, float=True, positive=True)
+        verify_literal(mode, ["rate", "full"])
+
+        if not self.streaming and mode == "full":
+            # If performing the full convolution in one shot, we need ,,,
+            x = np.concatenate((x, np.zeros(self.delay, dtype=float)))
 
         if n_outputs is None:
             # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
@@ -636,7 +684,7 @@ class FarrowResampler(FarrowFractionalDelay):
         mu = mu[:-1]
 
         # Pass the computed m's and mu's to the fractional delay Farrow
-        y = super().__call__(x, m, 1 - mu)
+        y = super().__call__(x, m, 1 - mu, mode=mode)
 
         if n_outputs is None:
             return convert_output(y)
@@ -647,19 +695,20 @@ class FarrowResampler(FarrowFractionalDelay):
     # Streaming mode
     ##############################################################################
 
-    def reset(self, state: npt.ArrayLike | None = None):
-        super().reset(state)
+    def reset(self):
+        super().reset()
 
         # Initial fractional sample delay accounts for filter delay
-        self._m_next = 0
+        self._m_next = 1
         self._mu_next = 0
 
-    def flush(self, rate: float) -> npt.NDArray:
+    def flush(self, rate: float, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
         """
         Flushes the filter state by passing zeros through the filter. Only useful when using streaming mode.
 
         Arguments:
-            rate: The resampling rate $r$.
+            rate: The final resampling rate $r$.
+            mode: The convolution mode.
 
         Returns:
             The remaining resampled signal $y[n]$.
@@ -672,8 +721,8 @@ class FarrowResampler(FarrowFractionalDelay):
         """
         verify_scalar(rate, float=True, positive=True)
 
-        x = np.zeros_like(self.state)
-        y = self(x, rate)
+        x = np.zeros(self.delay, dtype=float)
+        y = self(x, rate, mode=mode)
 
         return y
 
@@ -684,9 +733,11 @@ class FarrowResampler(FarrowFractionalDelay):
     @property
     def delay(self) -> int:
         r"""
-        The delay $D$ of the Farrow FIR filters in samples.
+        The delay $D$ of the Farrow FIR filters in samples, which is observed when the convolution mode is set to
+        `"full"`. No delay is observed when the convolution mode is set to `"rate"`.
 
-        Output sample $D \cdot r$, corresponds to the first input sample, where $r$ is the current resampling rate.
+        Due the multirate nature of the Farrow resampler, output sample $D \cdot r$ corresponds to the first input
+        sample, where $r$ is the current resampling rate.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
