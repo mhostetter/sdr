@@ -192,7 +192,7 @@ class FarrowFractionalDelay:
         self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
 
         self._delay, self._lagrange_polys, self._taps = _compute_lagrange_basis(self._order)
-        self._lookahead = self._taps.shape[1] - self._delay - 1
+        self._lookahead = self._taps.shape[1] - self.delay - 1  # The number of samples needed before the current input
 
         self.reset()
 
@@ -272,47 +272,43 @@ class FarrowFractionalDelay:
         # should error if the sizes are not broadcast-able.
         m, mu = np.broadcast_arrays(m, mu)
 
+        if self._first_call:
+            if mode == "full":
+                self._m_state = -1 * np.ones(self.delay, dtype=int)  # TODO: Is this right?
+                # self._m_state = np.arange(-self.delay, 0, dtype=int)  # TODO: Is this right?
+                self._mu_state = 0 * np.ones(self.delay, dtype=int)
+
         # Prepend the pervious state (zeros initially)
-        x = np.concatenate((self._state, x))
+        x_pad = np.concatenate((self._state, x))
         m = np.concatenate((self._m_state, m))
         mu = np.concatenate((self._mu_state, mu))
 
-        if not self.streaming and mode == "full":
-            # If performing the full convolution in one shot, we need ,,,
-            x = np.concatenate((x, np.zeros(self.delay, dtype=float)))
-            m = np.concatenate((m, m[-1] + 1 + np.arange(self.delay, dtype=int)))
-            mu = np.concatenate((mu, mu[-1] * np.ones(self.delay, dtype=float)))
-
-        # Compute the FIR filter outputs for the entire input signal
         z = []
         for i in range(self.order + 1):
-            zi = scipy.signal.convolve(x, self._taps[i, :], mode="full")
+            zi = scipy.signal.convolve(x_pad, self._taps[i, :], mode="valid")
             z.append(zi)
 
-        # Add the filter delay due to historical inputs
-        # NOTE: If non-streaming mode, state is always empty
-        m += self._state.size
+        last_m = x.size - (self._state.size - self.delay)
+        if self.order % 2 == 0:
+            last_m -= 1  # TODO: Why is this needed?
 
-        if mode == "rate":
-            # Account for the Farrow filter delay so that the first output sample is aligned with the first input
-            # sample
-            m += self.delay
+        if self.streaming:
+            # If in streaming mode, we will repeatedly call this function. A valid output correlates with some
+            # previous inputs and some future inputs. Once we added the delay, some of the m values will be
+            # outside the valid correlation zone. They correspond to correlation outputs with some zeros inputs
+            # (from the "full" convolution). We need to only consider the valid m values during this call and
+            # save the rest for the next call.
 
-            if self.streaming:
-                # If in streaming mode, we will repeatedly call this function. A valid output correlates with some
-                # previous inputs and some future inputs. Once we added the delay, some of the m values will be
-                # outside the valid correlation zone. They correspond to correlation outputs with some zeros inputs
-                # (from the "full" convolution). We need to only consider the valid m values during this call and
-                # save the rest for the next call.
+            # Save the m values needed to be processed next call. We also subtract from the m values so that
+            # the state is in [-delay, 0) range.
+            self._m_state = m[m > last_m] - x.size
+            self._mu_state = mu[m > last_m]
 
-                # Save the m values needed to be processed next call. We also subtract from the m values so that
-                # the state is in [-delay, 0) range.
-                self._m_state = m[m >= x.size] - x.size - self.delay
-                self._mu_state = mu[m >= x.size]
+        # Keep only the valid m values for this call
+        mu = mu[m <= last_m]
+        m = m[m <= last_m]
 
-                # Keep only the valid m values for this call
-                mu = mu[m < x.size]  # NOTE: Need to resize m last since it is used in the indexing
-                m = m[m < x.size]
+        m += self.delay
 
         # Interpolate the output samples using the Horner method
         y = z[0][m]
@@ -322,7 +318,10 @@ class FarrowFractionalDelay:
 
         if self.streaming:
             # Save the last several inputs so we can use them in the next call
-            self._state = x[-(self.taps.shape[1] - 1) :]
+            self._state = x_pad[-(self._taps.shape[1] - 1) :]
+
+            if self._first_call:
+                self._first_call = False
 
         return convert_output(y)
 
@@ -352,9 +351,11 @@ class FarrowFractionalDelay:
         Group:
             Streaming mode only
         """
-        self._state = np.zeros(0, dtype=float)
+        self._state = np.zeros(self._taps.shape[1] - 1, dtype=float)
         self._m_state = np.zeros(0, dtype=int)
         self._mu_state = np.zeros(0, dtype=float)
+
+        self._first_call = True
 
     def flush(self, mu: float = 0.0, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
         r"""
