@@ -203,35 +203,35 @@ def test_quartic_taps():
 
 @pytest.mark.parametrize("order", [1, 2, 3, 4, 5])
 @pytest.mark.parametrize("mu", [0.0, 0.25, 0.5, 0.75, 1.0])
-def test_modes_constant_mu(order, mu):
+@pytest.mark.parametrize("mode", ["rate", "full"])
+def test_modes_constant_mu(order, mu, mode):
     sps = 10
     span = 4
     x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
 
-    compare_modes(order, x, mu, "rate")
-    compare_modes(order, x, mu, "full")
+    compare_modes(order, x, mu, mode)
 
 
 @pytest.mark.parametrize("order", [1, 2, 3, 4, 5])
-def test_modes_linear_ramp_mu(order):
+@pytest.mark.parametrize("mode", ["rate", "full"])
+def test_modes_linear_ramp_mu(order, mode):
     sps = 10
     span = 4
     x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
     mu = np.linspace(0, 1, x.size)
 
-    compare_modes(order, x, mu, "rate")
-    compare_modes(order, x, mu, "full")
+    compare_modes(order, x, mu, mode)
 
 
 @pytest.mark.parametrize("order", [1, 2, 3, 4, 5])
-def test_modes_random_mu(order):
+@pytest.mark.parametrize("mode", ["rate", "full"])
+def test_modes_random_mu(order, mode):
     sps = 10
     span = 4
     x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
     mu = np.random.default_rng().uniform(0, 1, x.size)
 
-    compare_modes(order, x, mu, "rate", stride=16)
-    compare_modes(order, x, mu, "full", stride=16)
+    compare_modes(order, x, mu, mode, stride=16)
 
 
 def compare_modes(order: int, x: npt.NDArray, mu: npt.ArrayLike, mode: Literal["rate", "full"], stride: int = 10):
