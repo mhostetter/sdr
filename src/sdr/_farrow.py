@@ -4,8 +4,6 @@ A module containing a Farrow arbitrary resampler.
 
 from __future__ import annotations
 
-from typing import Any, overload
-
 import numba
 import numpy as np
 import numpy.typing as npt
@@ -79,16 +77,6 @@ class FarrowFractionalDelay:
     which can be efficiently computed using Horner's method.
 
     $$x(n + \mu) = \sum_{k=0}^{p} z_m[k] \cdot \mu^k = z_0[n] + \mu \cdot (z_1[n] + \mu \cdot (z_2[n] + \ldots)).$$
-
-    .. note::
-
-        In Michael Rice's book, the Farrow filter is described as a fractional advance. In this implementation, we
-        consider the Farrow filter as a fractional delay.
-
-        $$y_{\text{book}}[k] = x((m_{\text{book}}(k) + \mu_{\text{book}}(k)) T_s) = x[m_{\text{book}}(k) + \mu_{\text{book}}(k)]$$
-        $$m_{\text{book}}(k) = m(k) - 1$$
-        $$\mu_{\text{book}}(k) = 1 - \mu(k)$$
-        $$y[k] = x((m(k) - \mu(k)) T_s) = x[m(k) - \mu(k)]$$
 
     References:
         - Michael Rice, *Digital Communications: A Discrete Time Approach*, Section 8.4.2.
@@ -193,6 +181,7 @@ class FarrowFractionalDelay:
 
         self._delay, self._lagrange_polys, self._taps = _compute_lagrange_basis(self._order)
         self._lookahead = self._taps.shape[1] - self.delay - 1  # The number of samples needed before the current input
+        self._n_extra = 1  # Save one extra sample in the state than necessary
 
         self.reset()
 
@@ -255,28 +244,20 @@ class FarrowFractionalDelay:
             # Apply mu to each input sample
             m = np.arange(0, x.size)
         else:
-            if not self.streaming:
-                m = verify_arraylike(
-                    m, int=True, inclusive_min=0, exclusive_max=x.size + self._lookahead, atleast_1d=True, ndim=1
-                )
-                # NOTE: We can get away with not verifying this in streaming mode, since if m values are out of bounds,
-                # they will be carried over into the next call.
+            m_min = -self._n_extra
+            if mode == "rate":
+                m_min -= self._lookahead
+            m = verify_arraylike(m, int=True, inclusive_min=m_min, exclusive_max=x.size, atleast_1d=True, ndim=1)
 
         if mu is None:
             # If not provided, do not delay the input samples
             mu = np.zeros_like(x, dtype=float)
         else:
-            mu = verify_arraylike(mu, float=True, inclusive_min=0, inclusive_max=1, atleast_1d=True, ndim=1)
+            mu = verify_arraylike(mu, float=True, inclusive_min=-1, inclusive_max=1, atleast_1d=True, ndim=1)
 
         # m and mu can be scalars or arrays. If they are arrays, they must be the same size. This NumPy function
         # should error if the sizes are not broadcast-able.
         m, mu = np.broadcast_arrays(m, mu)
-
-        if self._first_call:
-            if mode == "full":
-                self._m_state = -1 * np.ones(self.delay, dtype=int)  # TODO: Is this right?
-                # self._m_state = np.arange(-self.delay, 0, dtype=int)  # TODO: Is this right?
-                self._mu_state = 0 * np.ones(self.delay, dtype=int)
 
         # Prepend the pervious state (zeros initially)
         x_pad = np.concatenate((self._state, x))
@@ -285,12 +266,14 @@ class FarrowFractionalDelay:
 
         z = []
         for i in range(self.order + 1):
-            zi = scipy.signal.convolve(x_pad, self._taps[i, :], mode="valid")
+            zi = scipy.signal.correlate(x_pad, self._taps[i, :], mode="valid")
             z.append(zi)
 
-        last_m = x.size - (self._state.size - self.delay)
-        if self.order % 2 == 0:
-            last_m -= 1  # TODO: Why is this needed?
+        m += self._n_extra
+        if mode == "rate":
+            m += self._lookahead
+
+        last_m = x_pad.size - (self._taps.shape[1] - 1)
 
         if self.streaming:
             # If in streaming mode, we will repeatedly call this function. A valid output correlates with some
@@ -301,14 +284,12 @@ class FarrowFractionalDelay:
 
             # Save the m values needed to be processed next call. We also subtract from the m values so that
             # the state is in [-delay, 0) range.
-            self._m_state = m[m > last_m] - x.size
-            self._mu_state = mu[m > last_m]
+            self._m_state = m[m >= last_m] - x.size - self._lookahead - self._n_extra
+            self._mu_state = mu[m >= last_m]
 
         # Keep only the valid m values for this call
-        mu = mu[m <= last_m]
-        m = m[m <= last_m]
-
-        m += self.delay
+        mu = mu[m < last_m]  # NOTE: Need to modify m last since it's used in the indexing
+        m = m[m < last_m]
 
         # Interpolate the output samples using the Horner method
         y = z[0][m]
@@ -317,11 +298,8 @@ class FarrowFractionalDelay:
             y += z[i][m]
 
         if self.streaming:
-            # Save the last several inputs so we can use them in the next call
-            self._state = x_pad[-(self._taps.shape[1] - 1) :]
-
-            if self._first_call:
-                self._first_call = False
+            self._state = x_pad[-(self._taps.shape[1] - 1 + self._n_extra) :]
+            self._first_call = False
 
         return convert_output(y)
 
@@ -351,7 +329,7 @@ class FarrowFractionalDelay:
         Group:
             Streaming mode only
         """
-        self._state = np.zeros(self._taps.shape[1] - 1, dtype=float)
+        self._state = np.zeros(self._taps.shape[1] - 1 + self._n_extra, dtype=float)
         self._m_state = np.zeros(0, dtype=int)
         self._mu_state = np.zeros(0, dtype=float)
 
@@ -596,25 +574,7 @@ class FarrowResampler(FarrowFractionalDelay):
     # Special methods
     ##############################################################################
 
-    @overload
-    def __call__(
-        self,
-        x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
-        rate: float,
-        n_outputs: int,
-        mode: Literal["rate", "full"] = "rate",
-    ) -> tuple[npt.NDArray, int]: ...
-
-    @overload
-    def __call__(
-        self,
-        x: npt.NDArray,  # TODO: Change to npt.ArrayLike once Sphinx has better overload support
-        rate: float,
-        n_outputs: None = None,
-        mode: Literal["rate", "full"] = "rate",
-    ) -> npt.NDArray: ...
-
-    def __call__(self, x: Any, rate: Any, n_outputs: Any = None, mode: Any = "rate") -> Any:
+    def __call__(self, x: npt.ArrayLike, rate: float, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
@@ -624,8 +584,68 @@ class FarrowResampler(FarrowFractionalDelay):
         Arguments:
             x: The input signal $x[n] = x(n T_s)$ with length $L$.
             rate: The resampling rate $r$.
-            n_outputs: The requested number of output samples in $y[n]$. If specified, the number of processed
-                input samples of $x[n]$ is returned.
+            mode: The convolution mode.
+
+                - `"rate"`: The output signal $y[k]$ is aligned with the input signal, such that $y[0] = x[0 - \mu]$.
+
+                    In streaming mode, the first call returns $(L - D) \cdot r$ output samples. On subsequent calls,
+                    $L \cdot r$ output samples are produced. A final call to :meth:`~FarrowFractionalDelay.flush()`
+                    is required to flush the filter state and produce the final $D \cdot r$ output samples.
+                    The final output length is $L_{\text{total}} \cdot r$.
+
+                    In non-streaming mode, $L \cdot r$ output samples are produced.
+
+                - `"full"`: The full convolution is performed, and the filter delay $D$ is observed, such that
+                    $y[D \cdot r] = x[0 - \mu]$.
+
+                    In streaming mode, each call returns $L \cdot r$ output samples. A final call to
+                    :meth:`~FarrowFractionalDelay.flush()` is required to flush the filter state
+                    and produce the final $D \cdot r$ output samples. The final output length is
+                    $(L_{\text{total}} + D) \cdot r$.
+
+                    In non-streaming mode, $(L + D) \cdot r$ output samples are produced.
+
+        Returns:
+            The resampled signal $y[n] = x(n T_s / r)$.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+        """
+        x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
+        verify_scalar(rate, float=True, positive=True)
+        verify_literal(mode, ["rate", "full"])
+
+        # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
+        n_inputs = x.size
+        m, mu = process_mu_fixed_inputs(self._m_next, self._mu_next, rate, n_inputs)
+
+        if self.streaming:
+            # Save the next m and mu state
+            self._m_next = m[-1] - n_inputs
+            self._mu_next = mu[-1]
+
+        # Remove the next m and mu from the end of the array
+        m = m[:-1]
+        mu = mu[:-1]
+
+        # Pass the computed m's and mu's to the fractional delay Farrow
+        y = super().__call__(x, m, mu, mode=mode)
+
+        return convert_output(y)
+
+    def clock_outputs(
+        self, x: npt.ArrayLike, rate: float, n_outputs: int, mode: Literal["rate", "full"] = "rate"
+    ) -> tuple[npt.NDArray, int]:
+        r"""
+        Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
+
+        $$x[n] = x(n T_s)$$
+        $$y[n] = x(n T_s / r)$$
+
+        Arguments:
+            x: The input signal $x[n] = x(n T_s)$ with length $L$.
+            rate: The resampling rate $r$.
+            n_outputs: The requested number of output samples in $y[n]$.
             mode: The convolution mode.
 
                 - `"rate"`: The output signal $y[k]$ is aligned with the input signal, such that $y[0] = x[0 - \mu]$.
@@ -649,31 +669,27 @@ class FarrowResampler(FarrowFractionalDelay):
 
         Returns:
             - The resampled signal $y[n] = x(n T_s / r)$.
-            - The number of processed input samples `n_inputs`. This is only returned if `n_outputs` is provided.
+            - The number of processed input samples `n_inputs`.
 
         Examples:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
         verify_scalar(rate, float=True, positive=True)
+        verify_scalar(n_outputs, int=True, positive=True)
         verify_literal(mode, ["rate", "full"])
 
-        if not self.streaming and mode == "full":
-            # If performing the full convolution in one shot, we need ,,,
-            x = np.concatenate((x, np.zeros(self.delay, dtype=float)))
+        # We don't want FarrowFractionalDelay to manage m's and mu's for the next call. We want it to process all the
+        # m's and mu's we pass to it. Because of this, we pass an extra "lookahead" samples for the "rate" mode.
+        assert self._m_state.size == 0
 
-        if n_outputs is None:
-            # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
-            n_inputs = x.size
-            m, mu = process_mu_fixed_inputs(self._m_next, self._mu_next, rate, n_inputs)
+        # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
+        m, mu = process_mu_fixed_outputs(self._m_next, self._mu_next, rate, n_outputs)
 
-        else:
-            verify_scalar(n_outputs, int=True, positive=True)
-
-            # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
-            m, mu = process_mu_fixed_outputs(self._m_next, self._mu_next, rate, n_outputs)
-            n_inputs = m[-2] + 1  # The number of inputs required
-            x = x[:n_inputs]  # Reduce the input samples, so we only pass what's needed to the FarrowFractionalDelay
+        n_inputs = m[-2] + 1  # The number of inputs required
+        if mode == "rate":
+            # Pass extra samples on this call so that FarrowFractionalDelay can process all the m's and mu's we provide.
+            n_inputs += self._lookahead
 
         if self.streaming:
             # Save the next m and mu state
@@ -681,16 +697,15 @@ class FarrowResampler(FarrowFractionalDelay):
             self._mu_next = mu[-1]
 
         # Remove the next m and mu from the end of the array
+        assert n_inputs <= x.size
+        x = x[:n_inputs]
         m = m[:-1]
         mu = mu[:-1]
 
         # Pass the computed m's and mu's to the fractional delay Farrow
-        y = super().__call__(x, m, 1 - mu, mode=mode)
+        y = super().__call__(x, m, mu, mode=mode)
 
-        if n_outputs is None:
-            return convert_output(y)
-        else:
-            return convert_output(y), n_inputs
+        return convert_output(y), n_inputs
 
     ##############################################################################
     # Streaming mode
@@ -700,7 +715,7 @@ class FarrowResampler(FarrowFractionalDelay):
         super().reset()
 
         # Initial fractional sample delay accounts for filter delay
-        self._m_next = 1
+        self._m_next = 0
         self._mu_next = 0
 
     def flush(self, rate: float, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
@@ -762,7 +777,7 @@ def process_mu_fixed_inputs(m_next: int, mu_next: float, rate: float, n_inputs: 
     mu[0] = mu_next
 
     for i in range(0, n_outputs):
-        if m[i] >= n_inputs:
+        if m[i] + mu[i] >= n_inputs:
             # m[i] is current m_next
             m = m[: i + 1]
             mu = mu[: i + 1]
