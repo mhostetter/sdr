@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import numpy.typing as npt
 import pytest
+from typing_extensions import Literal
 
 import sdr
 
@@ -200,14 +201,15 @@ def test_quartic_taps():
 #     verify_output_multiple(1, mu, x, y_truth)
 
 
-@pytest.mark.parametrize("order", [1, 2, 3])
+@pytest.mark.parametrize("order", [1, 2, 3, 4, 5])
 @pytest.mark.parametrize("mu", [0.0, 0.25, 0.5, 0.75, 1.0])
 def test_modes_constant_mu(order, mu):
     sps = 10
     span = 4
     x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
 
-    compare_streaming_and_non_streaming(order, x, mu)
+    compare_modes(order, x, mu, "rate")
+    compare_modes(order, x, mu, "full")
 
 
 @pytest.mark.parametrize("order", [1, 2, 3, 4, 5])
@@ -217,34 +219,35 @@ def test_modes_linear_ramp_mu(order):
     x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
     mu = np.linspace(0, 1, x.size)
 
-    compare_streaming_and_non_streaming(order, x, mu)
+    compare_modes(order, x, mu, "rate")
+    compare_modes(order, x, mu, "full")
 
 
 @pytest.mark.parametrize("order", [1, 2, 3, 4, 5])
 def test_modes_random_mu(order):
     sps = 10
     span = 4
-    # x = np.arange(0, 40, dtype=float)
     x = sdr.root_raised_cosine(0.5, span, sps, norm="power")
     mu = np.random.default_rng().uniform(0, 1, x.size)
 
-    compare_streaming_and_non_streaming(order, x, mu, stride=16)
+    compare_modes(order, x, mu, "rate", stride=16)
+    compare_modes(order, x, mu, "full", stride=16)
 
 
-def compare_streaming_and_non_streaming(order: int, x: npt.NDArray, mu: npt.ArrayLike, stride: int = 10):
+def compare_modes(order: int, x: npt.NDArray, mu: npt.ArrayLike, mode: Literal["rate", "full"], stride: int = 10):
     x, mu = np.broadcast_arrays(x, mu)
 
     # Non-streaming
     farrow = sdr.FarrowFractionalDelay(order, streaming=False)
-    y_ns = farrow(x, mu=mu)
+    y_ns = farrow(x, mu=mu, mode=mode)
 
     # Streaming
     farrow = sdr.FarrowFractionalDelay(order, streaming=True)
     y = []
-    for i in range(0, len(x), stride):
-        yi = farrow(x[i : i + stride], mu=mu[i : i + stride])
+    for i in range(0, x.size, stride):
+        yi = farrow(x[i : i + stride], mu=mu[i : i + stride], mode=mode)
         y.append(yi)
-    y.append(farrow.flush())  # Need to flush the filter state
+    # y.append(farrow.flush(mu[-1], mode=mode))  # Need to flush the filter state
     y_s = np.concatenate(y)
 
     if False:
