@@ -7,72 +7,72 @@ from typing_extensions import Literal
 import sdr
 
 
-def test_linear_taps():
+def test_linear_lagrange_polys():
     """
     MATLAB:
         >> frc = dsp.FarrowRateConverter(PolynomialOrder=1)
         >> getPolynomialCoefficients(frc)
     """
     farrow = sdr.FarrowResampler(1)
-    taps = farrow.taps
-    taps_truth = np.array(
+    lagrange_polys = farrow.lagrange_polys
+    lagrange_polys_truth = np.array(
         [
             [-1, 1],
             [1, 0],
         ]
     ).T
-    assert taps.shape == taps_truth.shape
-    assert np.allclose(taps, taps_truth)
+    assert lagrange_polys.shape == lagrange_polys_truth.shape
+    assert np.allclose(lagrange_polys, lagrange_polys_truth)
 
 
-def test_quadratic_taps():
+def test_quadratic_lagrange_polys():
     """
     MATLAB:
         >> frc = dsp.FarrowRateConverter(PolynomialOrder=2)
         >> getPolynomialCoefficients(frc)
     """
     farrow = sdr.FarrowResampler(2)
-    taps = farrow.taps
-    taps_truth = np.array(
+    lagrange_polys = farrow.lagrange_polys
+    lagrange_polys_truth = np.array(
         [
             [1 / 2, -1 / 2, 0],
             [-1, 0, 1],
             [1 / 2, 1 / 2, 0],
         ]
-    ).T
-    assert taps.shape == taps_truth.shape
-    assert np.allclose(taps, taps_truth)
+    )
+    assert lagrange_polys.shape == lagrange_polys_truth.shape
+    assert np.allclose(lagrange_polys, lagrange_polys_truth)
 
 
-def test_cubic_taps():
+def test_cubic_lagrange_polys():
     """
     MATLAB:
         >> frc = dsp.FarrowRateConverter(PolynomialOrder=3)
         >> getPolynomialCoefficients(frc)
     """
     farrow = sdr.FarrowResampler(3)
-    taps = farrow.taps
-    taps_truth = np.array(
+    lagrange_polys = farrow.lagrange_polys
+    lagrange_polys_truth = np.array(
         [
             [-1 / 6, 1 / 2, -1 / 3, 0],
             [1 / 2, -1, -1 / 2, 1],
             [-1 / 2, 1 / 2, 1, 0],
             [1 / 6, 0, -1 / 6, 0],
         ]
-    ).T
-    assert taps.shape == taps_truth.shape
-    assert np.allclose(taps, taps_truth)
+    )
+    assert lagrange_polys.shape == lagrange_polys_truth.shape
+    assert np.allclose(lagrange_polys, lagrange_polys_truth)
 
 
-def test_quartic_taps():
+def test_quartic_lagrange_polys():
     """
     MATLAB:
         >> frc = dsp.FarrowRateConverter(PolynomialOrder=4)
         >> getPolynomialCoefficients(frc)
     """
     farrow = sdr.FarrowResampler(4)
-    taps = farrow.taps
-    taps_truth = np.array(
+    lagrange_polys = farrow.lagrange_polys
+    lagrange_polys_truth = np.array(
         [
             [1 / 24, -1 / 12, -1 / 24, 1 / 12, 0],
             [-1 / 6, 1 / 6, 2 / 3, -2 / 3, 0],
@@ -80,9 +80,9 @@ def test_quartic_taps():
             [-1 / 6, -1 / 6, 2 / 3, 2 / 3, 0],
             [1 / 24, 1 / 12, -1 / 24, -1 / 12, 0],
         ]
-    ).T
-    assert taps.shape == taps_truth.shape
-    assert np.allclose(taps, taps_truth)
+    )
+    assert lagrange_polys.shape == lagrange_polys_truth.shape
+    assert np.allclose(lagrange_polys, lagrange_polys_truth)
 
 
 def test_linear_interpolate():
