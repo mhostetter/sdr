@@ -180,7 +180,8 @@ class FarrowFractionalDelay:
         self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
 
         self._delay, self._lagrange_polys, self._taps = _compute_lagrange_basis(self._order)
-        self._lookahead = self._taps.shape[1] - self.delay - 1  # The number of samples needed before the current input
+        self._lookahead = self._taps.shape[1] - self._delay - 1  # The number of samples needed before the current input
+        self._delay, self._lookahead = self._lookahead, self._delay  # Switch because correlation not convolution
         self._n_extra = 1  # Save one extra sample in the state than necessary
 
         self.reset()
@@ -246,7 +247,7 @@ class FarrowFractionalDelay:
         else:
             m_min = -self._n_extra
             if mode == "rate":
-                m_min -= self._lookahead
+                m_min -= self.delay
             m = verify_arraylike(m, int=True, inclusive_min=m_min, exclusive_max=x.size, atleast_1d=True, ndim=1)
 
         if mu is None:
@@ -271,7 +272,7 @@ class FarrowFractionalDelay:
 
         m += self._n_extra
         if mode == "rate":
-            m += self._lookahead
+            m += self.delay
 
         last_m = x_pad.size - (self._taps.shape[1] - 1)
 
@@ -284,7 +285,7 @@ class FarrowFractionalDelay:
 
             # Save the m values needed to be processed next call. We also subtract from the m values so that
             # the state is in [-delay, 0) range.
-            self._m_state = m[m >= last_m] - x.size - self._lookahead - self._n_extra
+            self._m_state = m[m >= last_m] - x.size - self.delay - self._n_extra
             self._mu_state = mu[m >= last_m]
 
         # Keep only the valid m values for this call
@@ -689,7 +690,7 @@ class FarrowResampler(FarrowFractionalDelay):
         n_inputs = m[-2] + 1  # The number of inputs required
         if mode == "rate":
             # Pass extra samples on this call so that FarrowFractionalDelay can process all the m's and mu's we provide.
-            n_inputs += self._lookahead
+            n_inputs += self.delay
 
         if self.streaming:
             # Save the next m and mu state
