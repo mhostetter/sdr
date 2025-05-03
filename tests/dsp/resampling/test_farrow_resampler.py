@@ -917,7 +917,7 @@ def verify_output_multiple(order: int, rate: float, x: np.ndarray, y_truth: np.n
     for i in range(0, x.size, 10):
         yi = farrow(x[i : i + 10], rate, mode="full")
         ys.append(yi)
-    # ys.append(farrow.flush(rate, mode="full"))  # Need to flush the filter state
+    # ys.append(farrow.flush())  # Need to flush the filter state
     y = np.concatenate(ys)
     # debug_plot(x, y, y_truth, farrow._delay, rate)
     assert np.allclose(y, y_truth)

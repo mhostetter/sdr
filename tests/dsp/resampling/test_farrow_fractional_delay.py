@@ -247,7 +247,7 @@ def compare_modes(order: int, x: npt.NDArray, mu: npt.ArrayLike, mode: Literal["
     for i in range(0, x.size, stride):
         yi = farrow(x[i : i + stride], mu=mu[i : i + stride], mode=mode)
         y.append(yi)
-    # y.append(farrow.flush(mu[-1], mode=mode))  # Need to flush the filter state
+    # y.append(farrow.flush())  # Need to flush the filter state
     y_s = np.concatenate(y)
 
     if False:
@@ -258,7 +258,7 @@ def compare_modes(order: int, x: npt.NDArray, mu: npt.ArrayLike, mode: Literal["
         plt.title(f"Farrow Fractional Delay (order={order}, mu={mu[0]})")
         plt.show()
 
-    np.testing.assert_allclose(y_ns, y_s, rtol=1e-5)
+    assert np.allclose(y_ns, y_s)
 
 
 def debug_plot(x: np.ndarray, y: np.ndarray, y_truth: np.ndarray, offset: float):
@@ -273,7 +273,7 @@ def debug_plot(x: np.ndarray, y: np.ndarray, y_truth: np.ndarray, offset: float)
 def verify_output_single(order: int, mu: float, x: np.ndarray, y_truth: np.ndarray):
     farrow = sdr.FarrowFractionalDelay(order, streaming=True)
     y = farrow(x, mu=mu)
-    debug_plot(x, y, y_truth, farrow._delay)
+    # debug_plot(x, y, y_truth, farrow._delay)
     assert np.allclose(y, y_truth)
 
 
@@ -284,5 +284,5 @@ def verify_output_multiple(order: int, mu: float, x: np.ndarray, y_truth: np.nda
         yi = farrow(x[i : i + 10], mu=mu)
         ys.append(yi)
     y = np.concatenate(ys)
-    debug_plot(x, y, y_truth, farrow._delay)
-    assert np.allclose(y, y_truth[0 : y.size])
+    # debug_plot(x, y, y_truth, farrow._delay)
+    assert np.allclose(y, y_truth)
