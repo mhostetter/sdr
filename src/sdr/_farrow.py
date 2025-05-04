@@ -292,7 +292,6 @@ class FarrowFractionalDelay:
 
         if self.streaming:
             self._state = x_pad[-(self._taps.shape[1] - 1 + self._n_extra) :]
-            self._first_call = False
 
         return convert_output(y)
 
@@ -326,8 +325,6 @@ class FarrowFractionalDelay:
         self._state = np.zeros(self._taps.shape[1] - 1 + self._n_extra, dtype=float)
         self._m_state = np.zeros(0, dtype=int)
         self._mu_state = np.zeros(0, dtype=float)
-
-        self._first_call = True
 
     @property
     def streaming(self) -> bool:
