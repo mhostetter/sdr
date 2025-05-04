@@ -20,8 +20,8 @@ def _compute_lagrange_basis(order: int) -> tuple[int, npt.NDArray, npt.NDArray]:
     """
     # Support points (e.g., for 4-tap Lagrange interpolation centered at x = 0)
     # Indices for x[n-1], x[n], x[n+1], x[n+2]
-    delay = order // 2
-    x_points = np.arange(order + 1) - delay
+    lookahead = order // 2
+    x_points = np.arange(order + 1) - lookahead
 
     # Store basis polynomials
     basis_polys = np.zeros((order + 1, order + 1), dtype=float)
@@ -36,7 +36,7 @@ def _compute_lagrange_basis(order: int) -> tuple[int, npt.NDArray, npt.NDArray]:
     # Compute Farrow coefficients. Convert
     farrow_coeffs = basis_polys.transpose()
 
-    return delay, basis_polys, farrow_coeffs
+    return lookahead, basis_polys, farrow_coeffs
 
 
 @export
@@ -93,7 +93,7 @@ class FarrowFractionalDelay:
         .. ipython:: python
 
             farrow = sdr.FarrowFractionalDelay(3)
-            mu = np.linspace(0, farrow.order, 1000) - farrow.delay
+            mu = np.linspace(0, farrow.order, 1000) - farrow.lookahead
 
             plt.figure();
             for i in range(0, farrow.order + 1):
@@ -117,7 +117,7 @@ class FarrowFractionalDelay:
 
             @savefig sdr_FarrowFractionalDelay_2.svg
             plt.figure(); \
-            sdr.plot.time_domain(x, offset=-farrow.delay, marker=".", linestyle="none", label="Input"); \
+            sdr.plot.time_domain(x, offset=-farrow.lookahead, marker=".", linestyle="none", label="Input"); \
             sdr.plot.time_domain(mu, y, label="Interpolated"); \
             plt.title("3rd order Lagrange interpolation");
 
@@ -136,7 +136,7 @@ class FarrowFractionalDelay:
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(1)(x, mu=mu), label="Farrow 1"); \
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(2)(x, mu=mu), label="Farrow 2"); \
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(3)(x, mu=mu), label="Farrow 3"); \
-            plt.title(f"Fractional delay {mu} samples");
+            plt.title(f"Fractional advance {mu} samples");
 
             @savefig sdr_FarrowFractionalDelay_4.svg
             mu = 0.5; \
@@ -145,7 +145,7 @@ class FarrowFractionalDelay:
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(1)(x, mu=mu), label="Farrow 1"); \
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(2)(x, mu=mu), label="Farrow 2"); \
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(3)(x, mu=mu), label="Farrow 3"); \
-            plt.title(f"Fractional delay {mu} samples");
+            plt.title(f"Fractional advance {mu} samples");
 
             @savefig sdr_FarrowFractionalDelay_5.svg
             mu = 1; \
@@ -154,7 +154,7 @@ class FarrowFractionalDelay:
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(1)(x, mu=mu), label="Farrow 1"); \
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(2)(x, mu=mu), label="Farrow 2"); \
             sdr.plot.time_domain(sdr.FarrowFractionalDelay(3)(x, mu=mu), label="Farrow 3"); \
-            plt.title(f"Fractional delay {mu} samples");
+            plt.title(f"Fractional advance {mu} samples");
 
     Group:
         dsp-arbitrary-resampling
@@ -182,9 +182,8 @@ class FarrowFractionalDelay:
         self._streaming = verify_bool(streaming)
         self._state: npt.NDArray  # FIR filter state. Will be updated in reset().
 
-        self._delay, self._lagrange_polys, self._taps = _compute_lagrange_basis(self._order)
-        self._lookahead = self._taps.shape[1] - self._delay - 1  # The number of samples needed before the current input
-        self._delay, self._lookahead = self._lookahead, self._delay  # Switch because correlation not convolution
+        self._lookahead, self._lagrange_polys, self._taps = _compute_lagrange_basis(self._order)
+        self._delay = self._taps.shape[1] - self._lookahead - 1  # The number of samples needed before the current input
         self._n_extra = 1  # Save one extra sample in the state than necessary
 
         self.reset()
@@ -306,6 +305,7 @@ class FarrowFractionalDelay:
         string += f"\n  taps: {self.taps.shape} shape"
         string += f"\n    {np.array2string(self.taps, prefix='    ')}"
         string += f"\n  delay: {self.delay}"
+        string += f"\n  lookahead: {self.lookahead}"
         string += f"\n  streaming: {self.streaming}"
         return string
 
@@ -409,6 +409,16 @@ class FarrowFractionalDelay:
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         return self._delay
+
+    @property
+    def lookahead(self) -> int:
+        r"""
+        The number of samples needed before the current input sample.
+
+        Examples:
+            See the :ref:`farrow-arbitrary-resampler` example.
+        """
+        return self._lookahead
 
 
 @export
