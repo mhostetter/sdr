@@ -20,88 +20,6 @@ from ._design_multirate import (
 from ._fir import FIR
 
 
-def _polyphase_input_hold(
-    x: npt.NDArray,
-    state: npt.NDArray,
-    H: npt.NDArray,
-    mode: Literal["rate", "full"],
-    streaming: bool,
-) -> tuple[npt.NDArray, npt.NDArray]:
-    B, M = H.shape  # Number of polyphase branches, polyphase filter length
-    dtype = np.result_type(x, H)
-
-    if streaming:
-        x_pad = np.concatenate((state, x))  # Prepend previous inputs from last __call__() call
-
-        Y = np.zeros((B, x.size), dtype=dtype)
-        for i in range(B):
-            Y[i] = scipy.signal.convolve(x_pad, H[i], mode="valid")
-
-        state = x_pad[-(M - 1) :]
-    else:
-        if mode == "full":
-            Y = np.zeros((B, x.size + M - 1), dtype=dtype)
-            for i in range(B):
-                Y[i] = scipy.signal.convolve(x, H[i], mode="full")
-        elif mode == "rate":
-            Y = np.zeros((B, x.size), dtype=dtype)
-            for i in range(B):
-                corr = scipy.signal.convolve(x, H[i], mode="full")
-                Y[i] = corr[M // 2 : M // 2 + x.size]
-        else:
-            raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
-
-    return Y, state
-
-
-def _polyphase_input_commutate(
-    x: npt.NDArray,
-    state: npt.NDArray,
-    H: npt.NDArray,
-    mode: Literal["rate", "full"],
-    bottom_to_top: bool,
-    streaming: bool,
-) -> tuple[npt.NDArray, npt.NDArray]:
-    B, M = H.shape  # Number of polyphase branches, polyphase filter length
-    dtype = np.result_type(x, H)
-
-    if streaming:
-        x_pad = np.concatenate((state, x))  # Prepend previous inputs from last __call__() call
-        X_cols = x_pad.size // B
-        X_pad = x_pad[0 : X_cols * B].reshape(X_cols, B).T  # Commutate across polyphase filters
-        if bottom_to_top:
-            X_pad = np.flipud(X_pad)  # Commutate from bottom to top
-
-        Y = np.zeros((B, X_cols - M + 1), dtype=dtype)
-        for i in range(B):
-            Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="valid")
-
-        state = x_pad[-(B * M - 1) :]
-    else:
-        # Prepend zeros to so the first sample is alone in the first commutated column
-        x_pad = np.insert(x, 0, np.zeros(B - 1))
-        # Append zeros to input signal to distribute evenly across the B branches
-        x_pad = np.append(x_pad, np.zeros(B - (x_pad.size % B), dtype=dtype))
-        X_cols = x_pad.size // B
-        X_pad = x_pad.reshape(X_cols, B).T  # Commutate across polyphase filters
-        if bottom_to_top:
-            X_pad = np.flipud(X_pad)  # Commutate from bottom to top
-
-        if mode == "full":
-            Y = np.zeros((B, X_cols + M - 1), dtype=dtype)
-            for i in range(B):
-                Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="full")
-        elif mode == "rate":
-            Y = np.zeros((B, X_cols), dtype=dtype)
-            for i in range(B):
-                corr = scipy.signal.convolve(X_pad[i], H[i], mode="full")
-                Y[i] = corr[M // 2 : M // 2 + X_cols]
-        else:
-            raise ValueError(f"Argument 'mode' must be 'rate' or 'full', not {mode!r}.")
-
-    return Y, state
-
-
 @export
 class PolyphaseFIR(FIR):
     r"""
@@ -319,13 +237,11 @@ class PolyphaseFIR(FIR):
         verify_literal(mode, ["rate", "full"])
 
         if self.input == "hold":
-            Y, self._state = _polyphase_input_hold(x, self._state, self.polyphase_taps, mode, self.streaming)
+            Y = self._polyphase_input_hold(x, mode)
         elif self.input == "top-to-bottom":
-            Y, self._state = _polyphase_input_commutate(
-                x, self._state, self.polyphase_taps, mode, False, self.streaming
-            )
+            Y = self._polyphase_input_commutate(x, mode, False)
         elif self.input == "bottom-to-top":
-            Y, self._state = _polyphase_input_commutate(x, self._state, self.polyphase_taps, mode, True, self.streaming)
+            Y = self._polyphase_input_commutate(x, mode, True)
 
         if self.output == "sum":
             y = np.sum(Y, axis=0)
@@ -337,6 +253,73 @@ class PolyphaseFIR(FIR):
             y = Y
 
         return convert_output(y)
+
+    def _polyphase_input_hold(self, x: npt.NDArray, mode: Literal["rate", "full"]) -> npt.NDArray:
+        H = self.polyphase_taps
+        B, M = H.shape  # Number of polyphase branches, polyphase filter length
+        dtype = np.result_type(x, H)
+
+        if self.streaming:
+            x_pad = np.concatenate((self._state, x))  # Prepend previous inputs from last __call__() call
+
+            Y = np.zeros((B, x.size), dtype=dtype)
+            for i in range(B):
+                Y[i] = scipy.signal.convolve(x_pad, H[i], mode="valid")
+
+            self._state = x_pad[-(M - 1) :]
+        else:
+            if mode == "full":
+                Y = np.zeros((B, x.size + M - 1), dtype=dtype)
+                for i in range(B):
+                    Y[i] = scipy.signal.convolve(x, H[i], mode="full")
+            elif mode == "rate":
+                Y = np.zeros((B, x.size), dtype=dtype)
+                for i in range(B):
+                    corr = scipy.signal.convolve(x, H[i], mode="full")
+                    Y[i] = corr[M // 2 : M // 2 + x.size]
+
+        return Y
+
+    def _polyphase_input_commutate(
+        self, x: npt.NDArray, mode: Literal["rate", "full"], bottom_to_top: bool
+    ) -> npt.NDArray:
+        H = self.polyphase_taps
+        B, M = H.shape  # Number of polyphase branches, polyphase filter length
+        dtype = np.result_type(x, H)
+
+        if self.streaming:
+            x_pad = np.concatenate((self._state, x))  # Prepend previous inputs from last __call__() call
+            X_cols = x_pad.size // B
+            X_pad = x_pad[0 : X_cols * B].reshape(X_cols, B).T  # Commutate across polyphase filters
+            if bottom_to_top:
+                X_pad = np.flipud(X_pad)  # Commutate from bottom to top
+
+            Y = np.zeros((B, X_cols - M + 1), dtype=dtype)
+            for i in range(B):
+                Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="valid")
+
+            self._state = x_pad[-(B * M - 1) :]
+        else:
+            # Prepend zeros to so the first sample is alone in the first commutated column
+            x_pad = np.insert(x, 0, np.zeros(B - 1))
+            # Append zeros to input signal to distribute evenly across the B branches
+            x_pad = np.append(x_pad, np.zeros(B - (x_pad.size % B), dtype=dtype))
+            X_cols = x_pad.size // B
+            X_pad = x_pad.reshape(X_cols, B).T  # Commutate across polyphase filters
+            if bottom_to_top:
+                X_pad = np.flipud(X_pad)  # Commutate from bottom to top
+
+            if mode == "full":
+                Y = np.zeros((B, X_cols + M - 1), dtype=dtype)
+                for i in range(B):
+                    Y[i] = scipy.signal.convolve(X_pad[i], H[i], mode="full")
+            elif mode == "rate":
+                Y = np.zeros((B, X_cols), dtype=dtype)
+                for i in range(B):
+                    corr = scipy.signal.convolve(X_pad[i], H[i], mode="full")
+                    Y[i] = corr[M // 2 : M // 2 + X_cols]
+
+        return Y
 
     def __repr__(self) -> str:
         h_str = np.array2string(self.taps, max_line_width=int(1e6), separator=", ", suppress_small=True)
