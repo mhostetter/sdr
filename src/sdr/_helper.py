@@ -146,6 +146,9 @@ def verify_scalar(
     if convert_numpy:
         x = convert_to_scalar(x)
 
+    if isinstance(x, np.ndarray) and x.ndim > 0:
+        raise TypeError(f"Argument {_argument_names()[0]!r} must be a scalar, not an array.")
+
     if int:
         if not (isinstance(x, builtins.int) or (accept_numpy and np.issubdtype(x, np.integer))):
             raise TypeError(f"Argument {_argument_names()[0]!r} must be an int, not {type(x)}.")
