@@ -23345,38 +23345,35 @@ You're not viewing the latest version.
 <dl class="field-list simple">
 <dt class="field-odd" id="parameters">Parameters<span class="colon">:</span><a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></dt>
 <dd class="field-odd"><dl class="simple api-field highlight">
-<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to which the clock error is applied.</p>
-<div class="warning collapsible admonition">
-<p class="admonition-title">Warning</p>
-<p>The signal must be a real passband signal or a complex baseband signal (with 0 Hz baseband frequency).</p>
-<p>If the signal is a real passband signal, time will be compressed resulting in a carrier frequency
-change. If the signal is a complex baseband signal, time will similarly be compressed. However,
-the zero-IF baseband signal will not observe a frequency shift, since it was always mixed to baseband.
-Therefore, there is a subsequent frequency shift corresponding to the expected frequency shift at
-passband.</p>
-<p>If a complex low-IF signal is provided, the IF frequency will be shifted during time compression.
-This can become noticeable at high clock errors, e.g. 1,000 ppm or more. It is not advised to use
-this function with complex low-IF signals.</p>
-</div>
-</p>
+<dt id="p-x"><span class="n sig-name">x</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-x" title="Permalink to this definition">¶</a></dt><dd><p>The time-domain signal <span class="math notranslate nohighlight">\(x[n]\)</span> to which the clock error is applied.</p>
 </dd>
 <dt id="p-error"><span class="n sig-name">error</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype">ArrayLike</span></span><a class="headerlink" href="#p-error" title="Permalink to this definition">¶</a></dt><dd><p><p>The fractional clock error <span class="math notranslate nohighlight">\(\epsilon\)</span>, which is unitless, with 0 representing no clock error.
 For example, 1e-6 represents 1 ppm of clock error.</p>
-<p>The fractional clock error can be calculated from frequency offset <span class="math notranslate nohighlight">\(\Delta f = f_{c,\text{new}} - f_c\)</span> and
-carrier frequency <span class="math notranslate nohighlight">\(f_c\)</span> as <span class="math notranslate nohighlight">\(\epsilon = \Delta f / f_c\)</span>. For example, a 1 kHz frequency error applied to a
-signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.</p>
-<p>The fractional clock error can also be calculated from sample rate offset <span class="math notranslate nohighlight">\(\Delta f_s = f_s - f_{s,\text{new}}\)</span>
-and sample rate <span class="math notranslate nohighlight">\(f_s\)</span> as <span class="math notranslate nohighlight">\(\epsilon = \Delta f_s / f_s\)</span>. For example, a -10 S/s sample rate error applied
-to a signal with a 10 MS/s sample rate is -1e-6 or -1 ppm.</p>
+<p>The fractional clock error can be calculated from a transmitter frequency offset <span class="math notranslate nohighlight">\(\Delta f = f_{c,\text{new}} - f_c\)</span>
+and carrier frequency <span class="math notranslate nohighlight">\(f_c\)</span> as <span class="math notranslate nohighlight">\(\epsilon = \Delta f / f_c\)</span>. For example, a 1 kHz transmitter frequency
+error applied to a signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.</p>
+<p>The fractional clock error can also be calculated from transmitter sample rate offset <span class="math notranslate nohighlight">\(\Delta f_s = f_s - f_{s,\text{new}}\)</span>
+and sample rate <span class="math notranslate nohighlight">\(f_s\)</span> as <span class="math notranslate nohighlight">\(\epsilon = \Delta f_s / f_s\)</span>. For example, a -10 S/s transmitter sample rate
+error applied to a signal with a 10 MS/s sample rate is -1e-6 or -1 ppm.</p>
 <p>The fractional clock error can also be calculated from relative velocity <span class="math notranslate nohighlight">\(\Delta v\)</span> and speed of light
 <span class="math notranslate nohighlight">\(c\)</span> as <span class="math notranslate nohighlight">\(\epsilon = \Delta v / c\)</span>. For example, a 60 mph (or 26.82 m/s) relative velocity between the
-transmitter and receiver is 8.946e-8 or 8.9 ppb.</p>
+transmitter and receiver (they are moving toward each other) is 8.946e-8 or 8.9 ppb.</p>
+<div class="note collapsible admonition">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>For positive transmitter clock error <span class="math notranslate nohighlight">\(\epsilon\)</span>, pass <span class="math notranslate nohighlight">\(\epsilon\)</span> for error.</p></li>
+<li><p>For positive relative velocity <span class="math notranslate nohighlight">\(\Delta v\)</span> between the transmitter and receiver (they are moving
+toward each other), pass <span class="math notranslate nohighlight">\(\Delta v / c\)</span> for error.</p></li>
+<li><p>For positive receiver clock error <span class="math notranslate nohighlight">\(\epsilon\)</span>, pass <span class="math notranslate nohighlight">\(-\epsilon / (1 + \epsilon)\)</span>
+for error. This is because the error effect in this function is applied to the transmitted signal.</p></li>
+</ul>
+</div>
 </p>
 </dd>
 <dt id="p-error_rate"><span class="n sig-name">error_rate</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="mf">0.0</span></code><a class="headerlink" href="#p-error_rate" title="Permalink to this definition">¶</a></dt><dd><p>The clock error <span class="math notranslate nohighlight">\(\Delta \epsilon / \Delta t\)</span> in 1/s.</p>
 </dd>
-<dt id="p-center_freq"><span class="n sig-name">center_freq</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a><span class="w"> </span><span class="p">|</span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)">None</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-center_freq" title="Permalink to this definition">¶</a></dt><dd><p>The center frequency <span class="math notranslate nohighlight">\(f_c\)</span> of the complex baseband signal in Hz. 0 Hz baseband frequency must
-correspond to the signal’s carrier frequency. If <span class="math notranslate nohighlight">\(x[n]\)</span> is complex, this must be provided.</p>
+<dt id="p-center_freq"><span class="n sig-name">center_freq</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a><span class="w"> </span><span class="p">|</span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)">None</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-center_freq" title="Permalink to this definition">¶</a></dt><dd><p>The center frequency <span class="math notranslate nohighlight">\(f_c\)</span> of the complex baseband signal in Hz. If <span class="math notranslate nohighlight">\(x[n]\)</span> is complex,
+this must be provided.</p>
 </dd>
 <dt id="p-sample_rate"><span class="n sig-name">sample_rate</span><span class="p">:</span><span class="w"> </span><span class="n"><span class="desctype"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a><span class="w"> </span><span class="p">|</span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)">None</a></span></span><span class="w"> </span><span class="o">=</span><span class="w"> </span><code class="code python default_value docutils literal highlight highlight-python"><span class="kc">None</span></code><a class="headerlink" href="#p-sample_rate" title="Permalink to this definition">¶</a></dt><dd><p>The sample rate <span class="math notranslate nohighlight">\(f_s\)</span> in samples/s. If <span class="math notranslate nohighlight">\(x[n]\)</span> is complex, this must be provided.</p>
 </dd>
@@ -23433,27 +23430,28 @@ matches the original.</p>
 <img alt="../../_images/sdr_clock_error_2.svg" src="../../_images/sdr_clock_error_2.svg" />
 <p>This example demonstrates the effect of clock error on a complex baseband signal. The signal has a carrier
 frequency of 1 MHz and sample rate of 2 MS/s. A frequency offset of 100 kHz is desired, corresponding to a
-clock error of 0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice that
+clock error of ~0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice that
 the transmitted signal is compressed in time and shifted in frequency. Also notice that the corrected received
 signal matches the original.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [6]: </span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mf">2e6</span><span class="p">;</span> \
 <span class="gp">   ...: </span><span class="n">center_freq</span> <span class="o">=</span> <span class="mf">1e6</span><span class="p">;</span> \
+<span class="gp">   ...: </span><span class="n">freq</span> <span class="o">=</span> <span class="mf">10e3</span><span class="p">;</span> \
 <span class="gp">   ...: </span><span class="n">duration</span> <span class="o">=</span> <span class="mf">1000e-6</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+<span class="gp">   ...: </span><span class="n">x</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sinusoid</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [7]: </span><span class="n">freq_offset</span> <span class="o">=</span> <span class="mf">100e3</span><span class="p">;</span> \
-<span class="gp">   ...: </span><span class="n">error</span> <span class="o">=</span> <span class="n">freq_offset</span> <span class="o">/</span> <span class="n">center_freq</span><span class="p">;</span> \
+<span class="gp">   ...: </span><span class="n">error</span> <span class="o">=</span> <span class="n">freq_offset</span> <span class="o">/</span> <span class="p">(</span><span class="n">center_freq</span> <span class="o">+</span> <span class="n">freq</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clock error:&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">clock_error</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">center_freq</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
 <span class="gp">   ...: </span>
-<span class="go">Clock error: 0.1</span>
+<span class="go">Clock error: 0.09900990099009901</span>
 
 <span class="gp">In [8]: </span><span class="n">error</span> <span class="o">=</span> <span class="o">-</span><span class="n">error</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">error</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Clock error:&quot;</span><span class="p">,</span> <span class="n">error</span><span class="p">);</span> \
 <span class="gp">   ...: </span><span class="n">z</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">clock_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">center_freq</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
 <span class="gp">   ...: </span>
-<span class="go">Clock error: -0.09090909090909091</span>
+<span class="go">Clock error: -0.09009009009009009</span>
 
 <span class="gp">In [9]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
 <span class="gp">   ...: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">time_domain</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">0</span> <span class="o">-</span> <span class="mi">0</span><span class="n">j</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;No clock error&quot;</span><span class="p">);</span> \
@@ -23467,8 +23465,8 @@ signal matches the original.</p>
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">dtft</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;No clock error&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">dtft</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Added Tx clock error&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">sdr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">dtft</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Removed Tx clock error&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
-<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">freq_offset</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">freq</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
+<span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">freq</span> <span class="o">+</span> <span class="n">freq_offset</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">);</span> \
 <span class="gp">   ....: </span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">20e3</span><span class="p">,</span> <span class="mf">120e3</span><span class="p">);</span>
 <span class="gp">   ....: </span>
 </code></pre></div>
