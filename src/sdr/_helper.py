@@ -269,6 +269,7 @@ def verify_arraylike(
     atleast_3d: bool = False,
     ndim: int | None = None,
     size: int | None = None,
+    sizes: tuple | list | None = None,
     size_multiple: int | None = None,
     shape: tuple[int, ...] | None = None,
 ) -> npt.NDArray:
@@ -335,6 +336,9 @@ def verify_arraylike(
     if size is not None:
         if not x.size == size:
             raise ValueError(f"Argument {_argument_names()[0]!r} must have {size} elements, not {x.size}.")
+    if sizes is not None:
+        if not x.size in sizes:
+            raise ValueError(f"Argument {_argument_names()[0]!r} must have on of {sizes} elements, not {x.size}.")
     if size_multiple is not None:
         if not x.size % size_multiple == 0:
             raise ValueError(
