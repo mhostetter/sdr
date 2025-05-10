@@ -200,7 +200,7 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.
 def sample_rate_offset(
     x: npt.ArrayLike,
     offset: npt.ArrayLike,
-    offset_rate: npt.ArrayLike = 0.0,
+    offset_rate: float = 0.0,
     sample_rate: float = 1.0,
 ) -> npt.NDArray:
     r"""
@@ -208,9 +208,10 @@ def sample_rate_offset(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the sample rate offset is applied.
-        offset: The sample rate offset $\Delta f_s = f_{s,\text{new}} - f_{s}$ in samples/s.
+        offset: The sample rate offset $\Delta f_s = f_{s,\text{new}} - f_{s}$ in samples/s. The offset can be a scalar
+            or an array of the same size as $x[n]$.
         offset_rate: The sample rate offset rate $\Delta^2 f_s / \Delta t$ in samples/s^2.
-        sample_rate: The sample rate $f_s$ in samples/s.
+        sample_rate: The current sample rate $f_s$ in samples/s.
 
     Returns:
         The signal $x[n]$ with sample rate offset applied.
@@ -219,10 +220,43 @@ def sample_rate_offset(
         The sample rate offset is applied using a Farrow resampler. The resampling rate is calculated as follows.
 
         $$
-        \text{rate} = \frac{f_s + \Delta f_s + \frac{\Delta f_s}{f_s}}{f_s}
+        \text{rate} = \frac{f_{s,\text{new}}}{f_s} = \frac{f_s + \Delta f_s + \frac{\Delta f_s}{\Delta t}}{f_s}
         $$
 
     Examples:
+        Consider a reference signal of slope 1. The value of the signal is equivalent to the input sample number.
+        Then resample this signal with various constant sample rate offsets.
+
+        .. ipython:: python
+
+            x = np.arange(0, 20)
+
+            @savefig sdr_sample_rate_offset_1.svg
+            plt.figure(); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0), marker=".", label=0); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, -0.2), marker=".", label=-0.2); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0.2), marker=".", label=0.2); \
+            plt.xlabel("Output sample, $n$"); \
+            plt.ylabel("Input sample, $n$"); \
+            plt.legend(title="Offset"); \
+            plt.title("Constant sample rate offset");
+
+        The same can be done with a constant sample rate offset rate.
+
+        .. ipython:: python
+
+            @savefig sdr_sample_rate_offset_2.svg
+            plt.figure(); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0), marker=".", label=0); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0.2, offset_rate=0 / x.size), marker=".", label="0.2 + 0/n"); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0.2, offset_rate=-0.2 / x.size), marker=".", label="0.2 + -0.2/n"); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0.2, offset_rate=-0.4 / x.size), marker=".", label="0.2 + -0.4/n"); \
+            sdr.plot.time_domain(sdr.sample_rate_offset(x, 0.2, offset_rate=-0.8 / x.size), marker=".", label="0.2 + -0.8/n"); \
+            plt.xlabel("Output sample, $n$"); \
+            plt.ylabel("Input sample, $n$"); \
+            plt.legend(title="Offset"); \
+            plt.title("Constant sample rate offset rate");
+
         Create a QPSK reference signal.
 
         .. ipython:: python
@@ -237,7 +271,7 @@ def sample_rate_offset(
 
             y = sdr.sample_rate_offset(x, 10e-6)
 
-            @savefig sdr_sample_rate_offset_1.svg
+            @savefig sdr_sample_rate_offset_3.svg
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
@@ -249,7 +283,7 @@ def sample_rate_offset(
 
             y = sdr.sample_rate_offset(x, 100e-6)
 
-            @savefig sdr_sample_rate_offset_2.svg
+            @savefig sdr_sample_rate_offset_4.svg
             plt.figure(); \
             sdr.plot.constellation(x, label="$x[n]$", zorder=2); \
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
@@ -259,14 +293,14 @@ def sample_rate_offset(
         simulation-impairments
     """
     x = verify_arraylike(x, complex=True, ndim=1)
-    offset = verify_arraylike(offset, float=True)
-    offset_rate = verify_arraylike(offset_rate, float=True)
+    offset = verify_arraylike(offset, float=True, atleast_1d=True, sizes=[1, x.size])
+    verify_scalar(offset_rate, float=True)
     verify_scalar(sample_rate, float=True, positive=True)
 
-    # TODO: Is this correct....
-    rate = (sample_rate + offset + offset_rate / sample_rate) / sample_rate
     farrow = FarrowResampler(3)
-    y = farrow(x, rate)
+    t = np.arange(0, x.size) / sample_rate  # Time vector in seconds
+    rate = (sample_rate + offset + offset_rate * t) / sample_rate
+    y = farrow(x, rate, mode="rate")
 
     return convert_output(y)
 
