@@ -309,8 +309,8 @@ def sample_rate_offset(
 def frequency_offset(
     x: npt.ArrayLike,
     offset: npt.ArrayLike,
-    offset_rate: npt.ArrayLike = 0.0,
-    phase: npt.ArrayLike = 0.0,
+    offset_rate: float = 0.0,
+    phase: float = 0.0,
     sample_rate: float = 1.0,
 ) -> npt.NDArray:
     r"""
@@ -326,6 +326,16 @@ def frequency_offset(
 
     Returns:
         The signal $x[n]$ with frequency offset applied.
+
+    Notes:
+        The frequency offset is applied by multiplying the signal by a local oscillator. The local oscillator is
+        calculated as follows.
+
+        $$
+        f = \Delta f[n] + \frac{\Delta^2 f[n]}{\Delta t} t \\
+        \text{lo}[n] = \exp \left( j \left[ 2 \pi f t + \phi \right] \right) \\
+        y[n] = x[n] \cdot \text{lo}[n]
+        $$
 
     Examples:
         Create a reference signal with a constant frequency of 1 cycle per 100 samples.
@@ -368,12 +378,12 @@ def frequency_offset(
         simulation-impairments
     """
     x = verify_arraylike(x, complex=True, ndim=1)
-    offset = verify_arraylike(offset, float=True)
-    offset_rate = verify_arraylike(offset_rate, float=True)
-    phase = verify_arraylike(phase, float=True)
+    offset = verify_arraylike(offset, float=True, atleast_1d=True, sizes=[1, x.size])
+    verify_scalar(offset_rate, float=True)
+    verify_scalar(phase, float=True)
     verify_scalar(sample_rate, float=True, positive=True)
 
-    t = np.arange(x.size) / sample_rate  # Time vector in seconds
+    t = np.arange(0, x.size) / sample_rate  # Time vector in seconds
     f = offset + offset_rate * t  # Frequency vector in Hz
     lo = np.exp(1j * (2 * np.pi * f * t + np.deg2rad(phase)))  # Local oscillator
     y = x * lo  # Apply frequency offset
