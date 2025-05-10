@@ -574,7 +574,7 @@ class FarrowResampler(FarrowFractionalDelay):
     # Special methods
     ##############################################################################
 
-    def __call__(self, x: npt.ArrayLike, rate: float, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
+    def __call__(self, x: npt.ArrayLike, rate: npt.ArrayLike, mode: Literal["rate", "full"] = "rate") -> npt.NDArray:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
 
@@ -583,7 +583,8 @@ class FarrowResampler(FarrowFractionalDelay):
 
         Arguments:
             x: The input signal $x[n] = x(n T_s)$ with length $L$.
-            rate: The resampling rate $r$.
+            rate: The resampling rate $r$. The rate can either be a scalar or an array of the same size as
+                the input signal $x[n]$.
             mode: The convolution mode.
 
                 - `"rate"`: The output signal $y[k]$ is aligned with the input signal, such that $y[n] = x[n / r]$.
@@ -605,16 +606,17 @@ class FarrowResampler(FarrowFractionalDelay):
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
-        verify_scalar(rate, float=True, positive=True)
+        rate = verify_arraylike(rate, float=True, positive=True, atleast_1d=True, sizes=[1, x.size])
+        x, rate = np.broadcast_arrays(x, rate)
         verify_literal(mode, ["rate", "full"])
 
         # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
-        n_inputs = x.size
-        m, mu = process_mu_fixed_inputs(self._m_next, self._mu_next, rate, n_inputs)
+        m_max = x.size
+        m, mu = process_mu_fixed_inputs(self._m_next, self._mu_next, rate, m_max)
 
         if self.streaming:
             # Save the next m and mu state
-            self._m_next = m[-1] - n_inputs
+            self._m_next = m[-1] - m_max
             self._mu_next = mu[-1]
 
         # Remove the next m and mu from the end of the array
@@ -627,7 +629,7 @@ class FarrowResampler(FarrowFractionalDelay):
         return convert_output(y)
 
     def clock_outputs(
-        self, x: npt.ArrayLike, rate: float, n_outputs: int, mode: Literal["rate", "full"] = "rate"
+        self, x: npt.ArrayLike, rate: npt.ArrayLike, n_outputs: int, mode: Literal["rate", "full"] = "rate"
     ) -> tuple[npt.NDArray, int]:
         r"""
         Resamples the input signal $x[n]$ by the given arbitrary rate $r$.
@@ -637,7 +639,8 @@ class FarrowResampler(FarrowFractionalDelay):
 
         Arguments:
             x: The input signal $x[n] = x(n T_s)$ with length $L$.
-            rate: The resampling rate $r$.
+            rate: The resampling rate $r$. The rate can either be a scalar or an array of the same size as
+                the input signal $x[n]$.
             n_outputs: The requested number of output samples in $y[n]$.
             mode: The convolution mode.
 
@@ -653,7 +656,8 @@ class FarrowResampler(FarrowFractionalDelay):
             See the :ref:`farrow-arbitrary-resampler` example.
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
-        verify_scalar(rate, float=True, positive=True)
+        rate = verify_arraylike(rate, float=True, positive=True, atleast_1d=True, sizes=[1, x.size])
+        x, rate = np.broadcast_arrays(x, rate)
         verify_scalar(n_outputs, int=True, positive=True)
         verify_literal(mode, ["rate", "full"])
 
@@ -716,13 +720,15 @@ class FarrowResampler(FarrowFractionalDelay):
 
 
 @numba.jit
-def process_mu_fixed_inputs(m_next: int, mu_next: float, rate: float, n_inputs: int) -> tuple[npt.NDArray, npt.NDArray]:
+def process_mu_fixed_inputs(
+    m_next: int, mu_next: float, rate: npt.NDArray, m_max: int
+) -> tuple[npt.NDArray, npt.NDArray]:
     """
     Determines a series of basepoint sample indices `m` and fractional sample indices `mu` to achieve a sample rate
     increase of `rate`.
     """
     # Determine how many outputs are required, given the number of inputs requested
-    n_outputs = int(np.ceil((n_inputs + 1) * rate))
+    n_outputs = int(np.ceil((m_max - m_next) * np.max(rate)))
 
     m = np.zeros(n_outputs + 1, dtype=np.int64)  # Basepoint sample indices
     m[0] = m_next
@@ -731,14 +737,14 @@ def process_mu_fixed_inputs(m_next: int, mu_next: float, rate: float, n_inputs: 
     mu[0] = mu_next
 
     for i in range(0, n_outputs):
-        if m[i] + mu[i] >= n_inputs:
+        if m[i] >= m_max:
             # m[i] is current m_next
             m = m[: i + 1]
             mu = mu[: i + 1]
             break
 
         # Accumulate the fractional sample index by 1 / rate
-        mu[i + 1] = mu[i] + 1 / rate
+        mu[i + 1] = mu[i] + 1 / rate[m[i]]
 
         # Set the basepoint sample index the same
         m[i + 1] = m[i]
@@ -754,7 +760,7 @@ def process_mu_fixed_inputs(m_next: int, mu_next: float, rate: float, n_inputs: 
 
 @numba.jit
 def process_mu_fixed_outputs(
-    m_next: int, mu_next: float, rate: float, n_outputs: int
+    m_next: int, mu_next: float, rate: npt.NDArray, n_outputs: int
 ) -> tuple[npt.NDArray, npt.NDArray]:
     """
     Determines a series of basepoint sample indices `m` and fractional sample indices `mu` to achieve a sample rate
@@ -768,7 +774,7 @@ def process_mu_fixed_outputs(
 
     for i in range(0, n_outputs):
         # Accumulate the fractional sample index by 1 / rate
-        mu[i + 1] = mu[i] + 1 / rate
+        mu[i + 1] = mu[i] + 1 / rate[m[i]]
 
         # Set the basepoint sample index the same
         m[i + 1] = m[i]
