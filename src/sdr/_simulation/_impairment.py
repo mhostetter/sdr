@@ -406,39 +406,32 @@ def clock_error(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the clock error is applied.
-
-            .. warning::
-
-                The signal must be a real passband signal or a complex baseband signal (with 0 Hz baseband frequency).
-
-                If the signal is a real passband signal, time will be compressed resulting in a carrier frequency
-                change. If the signal is a complex baseband signal, time will similarly be compressed. However,
-                the zero-IF baseband signal will not observe a frequency shift, since it was always mixed to baseband.
-                Therefore, there is a subsequent frequency shift corresponding to the expected frequency shift at
-                passband.
-
-                If a complex low-IF signal is provided, the IF frequency will be shifted during time compression.
-                This can become noticeable at high clock errors, e.g. 1,000 ppm or more. It is not advised to use
-                this function with complex low-IF signals.
-
         error: The fractional clock error $\epsilon$, which is unitless, with 0 representing no clock error.
             For example, 1e-6 represents 1 ppm of clock error.
 
-            The fractional clock error can be calculated from frequency offset $\Delta f = f_{c,\text{new}} - f_c$ and
-            carrier frequency $f_c$ as $\epsilon = \Delta f / f_c$. For example, a 1 kHz frequency error applied to a
-            signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.
+            The fractional clock error can be calculated from a transmitter frequency offset $\Delta f = f_{c,\text{new}} - f_c$
+            and carrier frequency $f_c$ as $\epsilon = \Delta f / f_c$. For example, a 1 kHz transmitter frequency
+            error applied to a signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.
 
-            The fractional clock error can also be calculated from sample rate offset $\Delta f_s = f_s - f_{s,\text{new}}$
-            and sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$. For example, a -10 S/s sample rate error applied
-            to a signal with a 10 MS/s sample rate is -1e-6 or -1 ppm.
+            The fractional clock error can also be calculated from transmitter sample rate offset $\Delta f_s = f_s - f_{s,\text{new}}$
+            and sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$. For example, a -10 S/s transmitter sample rate
+            error applied to a signal with a 10 MS/s sample rate is -1e-6 or -1 ppm.
 
             The fractional clock error can also be calculated from relative velocity $\Delta v$ and speed of light
             $c$ as $\epsilon = \Delta v / c$. For example, a 60 mph (or 26.82 m/s) relative velocity between the
-            transmitter and receiver is 8.946e-8 or 8.9 ppb.
+            transmitter and receiver (they are moving toward each other) is 8.946e-8 or 8.9 ppb.
+
+            .. note::
+
+                - For positive transmitter clock error $\epsilon$, pass $\epsilon$ for error.
+                - For positive relative velocity $\Delta v$ between the transmitter and receiver (they are moving
+                  toward each other), pass $\Delta v / c$ for error.
+                - For positive receiver clock error $\epsilon$, pass $-\epsilon / (1 + \epsilon)$
+                  for error. This is because the error effect in this function is applied to the transmitted signal.
 
         error_rate: The clock error $\Delta \epsilon / \Delta t$ in 1/s.
-        center_freq: The center frequency $f_c$ of the complex baseband signal in Hz. 0 Hz baseband frequency must
-            correspond to the signal's carrier frequency. If $x[n]$ is complex, this must be provided.
+        center_freq: The center frequency $f_c$ of the complex baseband signal in Hz. If $x[n]$ is complex,
+            this must be provided.
         sample_rate: The sample rate $f_s$ in samples/s. If $x[n]$ is complex, this must be provided.
 
     Returns:
@@ -486,7 +479,7 @@ def clock_error(
 
         This example demonstrates the effect of clock error on a complex baseband signal. The signal has a carrier
         frequency of 1 MHz and sample rate of 2 MS/s. A frequency offset of 100 kHz is desired, corresponding to a
-        clock error of 0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice that
+        clock error of ~0.1. The clock error is added to the transmitter, and then removed at the receiver. Notice that
         the transmitted signal is compressed in time and shifted in frequency. Also notice that the corrected received
         signal matches the original.
 
@@ -494,11 +487,12 @@ def clock_error(
 
             sample_rate = 2e6; \
             center_freq = 1e6; \
+            freq = 10e3; \
             duration = 1000e-6; \
-            x = sdr.sinusoid(duration, 0, sample_rate=sample_rate)
+            x = sdr.sinusoid(duration, freq, sample_rate=sample_rate)
 
             freq_offset = 100e3; \
-            error = freq_offset / center_freq; \
+            error = freq_offset / (center_freq + freq); \
             print("Clock error:", error); \
             y = sdr.clock_error(x, error, 0, center_freq, sample_rate=sample_rate)
 
@@ -519,8 +513,8 @@ def clock_error(
             sdr.plot.dtft(x, sample_rate=sample_rate, label="No clock error"); \
             sdr.plot.dtft(y, sample_rate=sample_rate, label="Added Tx clock error"); \
             sdr.plot.dtft(z, sample_rate=sample_rate, label="Removed Tx clock error"); \
-            plt.axvline(0, color="k", linestyle="--"); \
-            plt.axvline(freq_offset, color="k", linestyle="--"); \
+            plt.axvline(freq, color="k", linestyle="--"); \
+            plt.axvline(freq + freq_offset, color="k", linestyle="--"); \
             plt.xlim(-20e3, 120e3);
 
     Group:
@@ -530,9 +524,14 @@ def clock_error(
     error = verify_arraylike(error, float=True)
     verify_scalar(error_rate, float=True)
 
-    # Apply time compression using resampling
-    sr_offset = -error / (1 + error)
-    y = sample_rate_offset(x, sr_offset, 0)
+    # Apply time compression using resampling. If the error is positive, then the transmitted signal is compressed in
+    # time. To create that effect on the perfect input signal, we suppose that the input signal was sampled at the
+    # faster rate (transmitter rate) and then we resample it at our desired rate (receiver rate), which is -error
+    # from 1 + error. All the values here are normalized to the sample rate. We don't use the sample rate, because
+    # None can be passed in.
+    sr_offset = -error  # Normalized samples/s
+    sr_offset_rate = -error_rate  # Normalized samples/s^2
+    y = sample_rate_offset(x, sr_offset, sr_offset_rate, sample_rate=1 + error)
 
     if np.issubdtype(x.dtype, np.floating):
         verify_not_specified(center_freq)
@@ -540,8 +539,8 @@ def clock_error(
         # The carrier frequency was already shifted by the time compression
         z = y
     else:
-        verify_scalar(center_freq, float=True, positive=True)
         verify_scalar(sample_rate, float=True, positive=True)
+        verify_scalar(center_freq, float=True, inclusive_min=sample_rate / 2)
 
         # Apply frequency shift that would be observed at passband
         freq_offset = error * center_freq  # Hz
