@@ -14,31 +14,6 @@ from typing_extensions import Literal
 from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_literal, verify_scalar
 
 
-def _compute_lagrange_basis(order: int) -> tuple[int, npt.NDArray, npt.NDArray]:
-    """
-    Computes the Lagrange basis polynomials for the Farrow filter.
-    """
-    # Support points (e.g., for 4-tap Lagrange interpolation centered at x = 0)
-    # Indices for x[n-1], x[n], x[n+1], x[n+2]
-    lookahead = order // 2
-    x_points = np.arange(order + 1) - lookahead
-
-    # Store basis polynomials
-    basis_polys = np.zeros((order + 1, order + 1), dtype=float)
-
-    # Compute all Lagrange basis polynomials l_k(mu)
-    for k in range(x_points.size):
-        y_basis = np.zeros_like(x_points)
-        y_basis[k] = 1  # delta function at position k
-        poly_k = scipy.interpolate.lagrange(x_points, y_basis)
-        basis_polys[k, :] = poly_k.coeffs  # Degree-descending order
-
-    # Compute Farrow coefficients. Convert
-    farrow_coeffs = basis_polys.transpose()
-
-    return lookahead, basis_polys, farrow_coeffs
-
-
 @export
 class FarrowFractionalDelay:
     r"""
@@ -607,12 +582,15 @@ class FarrowResampler(FarrowFractionalDelay):
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
         rate = verify_arraylike(rate, float=True, positive=True, atleast_1d=True, sizes=[1, x.size])
-        x, rate = np.broadcast_arrays(x, rate)
         verify_literal(mode, ["rate", "full"])
+
+        x, rate = np.broadcast_arrays(x, rate)
+        x.setflags(write=False)
+        rate.setflags(write=False)
 
         # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
         m_max = x.size
-        m, mu = process_mu_fixed_inputs(self._m_next, self._mu_next, rate, m_max)
+        m, mu = _process_mu_fixed_inputs(self._m_next, self._mu_next, rate, m_max)
 
         if self.streaming:
             # Save the next m and mu state
@@ -657,7 +635,6 @@ class FarrowResampler(FarrowFractionalDelay):
         """
         x = verify_arraylike(x, complex=True, atleast_1d=True, ndim=1)
         rate = verify_arraylike(rate, float=True, positive=True, atleast_1d=True, sizes=[1, x.size])
-        x, rate = np.broadcast_arrays(x, rate)
         verify_scalar(n_outputs, int=True, positive=True)
         verify_literal(mode, ["rate", "full"])
 
@@ -665,8 +642,12 @@ class FarrowResampler(FarrowFractionalDelay):
         # m's and mu's we pass to it. Because of this, we pass an extra "lookahead" samples for the "rate" mode.
         assert self._m_state.size == 0
 
+        x, rate = np.broadcast_arrays(x, rate)
+        x.setflags(write=False)
+        rate.setflags(write=False)
+
         # NOTE: This function will return 1 more m and mu value. That extra value is the next state.
-        m, mu = process_mu_fixed_outputs(self._m_next, self._mu_next, rate, n_outputs)
+        m, mu = _process_mu_fixed_outputs(self._m_next, self._mu_next, rate, n_outputs)
 
         n_inputs = m[-2] + 1  # The number of inputs required
         if mode == "rate":
@@ -719,8 +700,33 @@ class FarrowResampler(FarrowFractionalDelay):
         return super().delay
 
 
-@numba.jit
-def process_mu_fixed_inputs(
+def _compute_lagrange_basis(order: int) -> tuple[int, npt.NDArray, npt.NDArray]:
+    """
+    Computes the Lagrange basis polynomials for the Farrow filter.
+    """
+    # Support points (e.g., for 4-tap Lagrange interpolation centered at x = 0)
+    # Indices for x[n-1], x[n], x[n+1], x[n+2]
+    lookahead = order // 2
+    x_points = np.arange(order + 1) - lookahead
+
+    # Store basis polynomials
+    basis_polys = np.zeros((order + 1, order + 1), dtype=float)
+
+    # Compute all Lagrange basis polynomials l_k(mu)
+    for k in range(x_points.size):
+        y_basis = np.zeros_like(x_points)
+        y_basis[k] = 1  # delta function at position k
+        poly_k = scipy.interpolate.lagrange(x_points, y_basis)
+        basis_polys[k, :] = poly_k.coeffs  # Degree-descending order
+
+    # Compute Farrow coefficients. Convert
+    farrow_coeffs = basis_polys.transpose()
+
+    return lookahead, basis_polys, farrow_coeffs
+
+
+@numba.jit(nopython=True, cache=True)
+def _process_mu_fixed_inputs(
     m_next: int, mu_next: float, rate: npt.NDArray, m_max: int
 ) -> tuple[npt.NDArray, npt.NDArray]:
     """
@@ -758,8 +764,8 @@ def process_mu_fixed_inputs(
     return m, mu
 
 
-@numba.jit
-def process_mu_fixed_outputs(
+@numba.jit(nopython=True, cache=True)
+def _process_mu_fixed_outputs(
     m_next: int, mu_next: float, rate: npt.NDArray, n_outputs: int
 ) -> tuple[npt.NDArray, npt.NDArray]:
     """
