@@ -4,6 +4,25 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.29
+
+*Released May 10, 2025*
+
+### Changes
+
+- Added fractional delay/advance filter in `sdr.FarrowFractionalDelay`.
+- Added support for arbitrary degree Lagrange interpolating polynomials in Farrow filters.
+- Added a `mode` kwarg to the Farrow filters. This allows the output to be aligned to the input or experience the
+  full filter output with group delay.
+- Added time-varying offsets and errors in `sdr.sample_rate_offset()`, `sdr.frequency_offset()`, and `sdr.clock_error()`.
+- Added `output` kwarg to `NCO.step()`.
+- Fixed bug in `sdr.Differentiator` with order 2.
+- Improved documentation for `sdr.clock_error()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.28
 
 *Released April 12, 2025*
