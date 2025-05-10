@@ -23,7 +23,7 @@ def real_or_complex_plot(
         if label is None:
             label, label2 = "real", "imag"
         else:
-            label, label2 = label + " (real)", label + " (imag)"
+            label, label2 = str(label) + " (real)", str(label) + " (imag)"
 
         if diff == "color":
             ax.plot(x, y.real, label=label, **kwargs)
