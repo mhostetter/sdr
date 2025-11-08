@@ -864,7 +864,7 @@ class Decimator(PolyphaseFIR):
 
 
 @export
-class Resampler(PolyphaseFIR):
+class RationalResampler(PolyphaseFIR):
     r"""
     Implements a polyphase rational resampling FIR filter.
 
@@ -921,10 +921,10 @@ class Resampler(PolyphaseFIR):
 
         .. ipython:: python
 
-            fir = sdr.Resampler(7, 3); fir
+            fir = sdr.RationalResampler(7, 3); fir
             y = fir(x)
 
-            @savefig sdr_Resampler_1.svg
+            @savefig sdr_RationalResampler_1.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker=".", label="Resampled"); \
@@ -935,7 +935,7 @@ class Resampler(PolyphaseFIR):
 
         .. ipython:: python
 
-            fir = sdr.Resampler(7, 3, streaming=True); fir
+            fir = sdr.RationalResampler(7, 3, streaming=True); fir
 
             y1 = fir(x[0:10]); \
             y2 = fir(x[10:20]); \
@@ -943,7 +943,7 @@ class Resampler(PolyphaseFIR):
             y4 = fir(x[30:40]); \
             y5 = fir.flush()
 
-            @savefig sdr_Resampler_2.svg
+            @savefig sdr_RationalResampler_2.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker="o", label="Input"); \
             sdr.plot.time_domain(y1, sample_rate=fir.rate, offset=-fir.delay/fir.rate + 0, marker=".", label="Resampled $y_1[n]$"); \
@@ -957,10 +957,10 @@ class Resampler(PolyphaseFIR):
 
         .. ipython:: python
 
-            fir = sdr.Resampler(5, 7); fir
+            fir = sdr.RationalResampler(5, 7); fir
             y = fir(x)
 
-            @savefig sdr_Resampler_3.svg
+            @savefig sdr_RationalResampler_3.svg
             plt.figure(); \
             sdr.plot.time_domain(x, marker=".", label="Input"); \
             sdr.plot.time_domain(y, sample_rate=fir.rate, marker="o", label="Resampled"); \
@@ -1003,7 +1003,7 @@ class Resampler(PolyphaseFIR):
                 Only used when `taps="kaiser"`.
             atten: The stopband attenuation $A_{\text{stop}}$ in dB. Only used when `taps="kaiser"`.
             streaming: Indicates whether to use streaming mode. In streaming mode, previous inputs are
-                preserved between calls to :meth:`~Resampler.__call__()`.
+                preserved between calls to :meth:`~RationalResampler.__call__()`.
         """
         verify_scalar(interpolation, int=True, positive=True)
         verify_scalar(decimation, int=True, positive=True)
