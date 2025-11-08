@@ -207,12 +207,12 @@ def detector_pdfs(
 
         if h0 is not None:
             ax.plot(x, h0.pdf(x), label=r"$\mathcal{H}_0$: Noise", **kwargs)
-            if shade and threshold:
+            if shade and threshold is not None:
                 h0_color = ax.lines[-1].get_color()
                 ax.fill_between(x, 0, h0.pdf(x), where=(x >= threshold), interpolate=True, color=h0_color, alpha=0.1)
         if h1 is not None:
             ax.plot(x, h1.pdf(x), label=r"$\mathcal{H}_1$: Signal + Noise", **kwargs)
-            if shade and threshold:
+            if shade and threshold is not None:
                 h1_color = ax.lines[-1].get_color()
                 ax.fill_between(x, 0, h1.pdf(x), where=(x >= threshold), interpolate=True, color=h1_color, alpha=0.1)
         if threshold is not None:
