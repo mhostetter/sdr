@@ -112,11 +112,111 @@ def roc(
 
 
 @export
+def pdf(
+    rv: scipy.stats.rv_continuous,
+    threshold: float | None = None,
+    annotate: Literal["p_d", "p_fa", "p_m", "p_c", None] = None,
+    x: npt.NDArray[np.float64] | None = None,
+    points: int = 1001,
+    p: float = 1e-6,
+    ax: plt.Axes | None = None,
+    **kwargs,
+):
+    r"""
+    Plots the probability density function (PDF) of a statistical distribution.
+
+    Arguments:
+        rv: The statistical distribution.
+        threshold: The detection threshold $\gamma$.
+        annotate: Indicates whether to shade and annotate the plot with the probability of detection $P_d$,
+            false alarm $P_{fa}$, missed detection $P_m$, or correct rejection $P_c$.
+        x: The x-axis values to use for the plot. If not provided, it will be generated automatically.
+        points: The number of points to use for the x-axis.
+        p: The probability of the tail to plot. The smaller the value, the longer the x-axis.
+        ax: The axis to plot on. If `None`, the current axis is used.
+        kwargs: Additional keyword arguments to pass to :func:`matplotlib.pyplot.plot`.
+
+    See Also:
+        sdr.plot.detector_pdfs, sdr.h0, sdr.h1, sdr.threshold
+
+    Example:
+        .. ipython:: python
+
+            rv = scipy.stats.rayleigh(scale=1); \
+            threshold = 2
+
+            @savefig sdr_plot_pdf_1.svg
+            plt.figure(); \
+            sdr.plot.pdf(rv, threshold=threshold, annotate="p_d");
+
+    Group:
+        plot-detection
+    """
+    # verify_isinstance(rv, scipy.stats.rv_continuous, optional=True)  # TODO: Need a better stats check
+    verify_scalar(threshold, optional=True, float=True)
+    verify_literal(annotate, ["p_d", "p_fa", "p_m", "p_c", None])
+    verify_arraylike(x, optional=True, float=True, ndim=1)
+    verify_scalar(points, int=True, positive=True)
+    verify_scalar(p, float=True, positive=True)
+    verify_isinstance(ax, plt.Axes, optional=True)
+
+    with plt.rc_context(RC_PARAMS):
+        if ax is None:
+            ax = plt.gca()
+
+        default_kwargs = {}
+        kwargs = {**default_kwargs, **kwargs}
+
+        if x is None:
+            x_min = [rv.ppf(p)]
+            x_max = [rv.isf(p)]
+            if threshold is not None:
+                x_min.append(threshold)
+                x_max.append(threshold)
+            x_min = np.nanmin(x_min)
+            x_max = np.nanmax(x_max)
+
+            x = np.linspace(x_min, x_max, points)
+
+        ax.plot(x, rv.pdf(x), **kwargs)
+        rv_color = ax.lines[-1].get_color()
+        if threshold is not None:
+            ax.axvline(threshold, color="k", linestyle="--")
+            if annotate is not None:
+                if annotate in ["p_d", "p_fa"]:
+                    ax.fill_between(
+                        x, 0, rv.pdf(x), where=(x >= threshold), interpolate=True, color=rv_color, alpha=0.1
+                    )
+                    p_x = rv.sf(threshold)  # Right tail
+                    threshold_half = rv.isf(p_x / 2)
+                else:
+                    ax.fill_between(
+                        x, 0, rv.pdf(x), where=(x <= threshold), interpolate=True, color=rv_color, alpha=0.1
+                    )
+                    p_x = rv.cdf(threshold)  # Left tail
+                    threshold_half = rv.ppf(p_x / 2)
+                ax.text(
+                    threshold_half,
+                    rv.pdf(threshold_half) / 2,
+                    rf"$P_{{{annotate.split('_')[1]}}} = $ {p_x:1.2e}",
+                    color=rv_color,
+                    ha="center",
+                    va="center",
+                )
+
+        if "label" in kwargs:
+            ax.legend()
+
+        ax.set_xlabel("Random variable, $X$")
+        ax.set_ylabel("Probability density, $f_X(x)$")
+        ax.set_title("Probability density function (PDF)")
+
+
+@export
 def detector_pdfs(
     h0: scipy.stats.rv_continuous | None = None,
     h1: scipy.stats.rv_continuous | None = None,
     threshold: float | None = None,
-    shade: bool = True,
     annotate: bool = True,
     x: npt.NDArray[np.float64] | None = None,
     points: int = 1001,
@@ -132,8 +232,8 @@ def detector_pdfs(
         h0: The statistical distribution under $\mathcal{H}_0$.
         h1: The statistical distribution under $\mathcal{H}_1$.
         threshold: The detection threshold $\gamma$.
-        shade: Indicates whether to shade the tails of the PDFs.
-        annotate: Indicates whether to annotate the plot with the probabilities of false alarm and detection.
+        annotate: Indicates whether to shade and annotate the plot with the probability of detection $P_d$ and
+            false alarm $P_{fa}$.
         x: The x-axis values to use for the plot. If not provided, it will be generated automatically.
         points: The number of points to use for the x-axis.
         p_h0: The probability of the $\mathcal{H}_0$ tails to plot. The smaller the value, the longer the x-axis.
@@ -169,7 +269,6 @@ def detector_pdfs(
     # verify_isinstance(h0, scipy.stats.rv_continuous, optional=True)  # TODO: Need a better stats check
     # verify_isinstance(h1, scipy.stats.rv_continuous, optional=True)  # TODO: Need a better stats check
     verify_scalar(threshold, optional=True, float=True)
-    verify_bool(shade)
     verify_bool(annotate)
     verify_arraylike(x, optional=True, float=True, ndim=1)
     verify_scalar(points, int=True, positive=True)
@@ -181,67 +280,30 @@ def detector_pdfs(
         if ax is None:
             ax = plt.gca()
 
-        default_kwargs = {}
-        kwargs = {**default_kwargs, **kwargs}
-
-        if x is None:
-            x_min = []
-            if h0 is not None:
-                x_min.append(h0.ppf(p_h0))
-            if h1 is not None:
-                x_min.append(h1.ppf(p_h1))
-            if threshold is not None:
-                x_min.append(threshold)
-            x_min = np.nanmin(x_min)
-
-            x_max = []
-            if h0 is not None:
-                x_max.append(h0.isf(p_h0))
-            if h1 is not None:
-                x_max.append(h1.isf(p_h1))
-            if threshold is not None:
-                x_max.append(threshold)
-            x_max = np.nanmax(x_max)
-
-            x = np.linspace(x_min, x_max, points)
-
         if h0 is not None:
-            ax.plot(x, h0.pdf(x), label=r"$\mathcal{H}_0$: Noise", **kwargs)
-            if shade and threshold is not None:
-                h0_color = ax.lines[-1].get_color()
-                ax.fill_between(x, 0, h0.pdf(x), where=(x >= threshold), interpolate=True, color=h0_color, alpha=0.1)
+            pdf(
+                h0,
+                threshold=threshold,
+                annotate="p_fa" if annotate else None,
+                x=x,
+                points=points,
+                p=p_h0,
+                ax=ax,
+                label=r"$\mathcal{H}_0$: Noise",
+                **kwargs,
+            )
         if h1 is not None:
-            ax.plot(x, h1.pdf(x), label=r"$\mathcal{H}_1$: Signal + Noise", **kwargs)
-            if shade and threshold is not None:
-                h1_color = ax.lines[-1].get_color()
-                ax.fill_between(x, 0, h1.pdf(x), where=(x >= threshold), interpolate=True, color=h1_color, alpha=0.1)
-        if threshold is not None:
-            ax.axvline(threshold, color="k", linestyle="--", label="Threshold")
-
-        if annotate:
-            if h0 is not None and threshold is not None:
-                p_fa = h0.sf(threshold)
-                threshold_half = h0.isf(p_fa / 2)
-                ax.text(
-                    threshold_half,
-                    h0.pdf(threshold_half) / 2,
-                    rf"$P_{{fa}} = $ {p_fa:1.2e}",
-                    color=h0_color,
-                    ha="center",
-                    va="center",
-                )
-
-            if h1 is not None and threshold is not None:
-                p_d = h1.sf(threshold)
-                threshold_half = h1.isf(p_d / 2)
-                ax.text(
-                    threshold_half,
-                    h1.pdf(threshold_half) / 2,
-                    rf"$P_{{d}} = $ {p_d:1.2e}",
-                    color=h1_color,
-                    ha="center",
-                    va="center",
-                )
+            pdf(
+                h1,
+                threshold=threshold,
+                annotate="p_d" if annotate else None,
+                x=x,
+                points=points,
+                p=p_h1,
+                ax=ax,
+                label=r"$\mathcal{H}_1$: Signal + Noise",
+                **kwargs,
+            )
 
         ax.legend()
         ax.set_xlabel("Test statistic, $T(x)$")
