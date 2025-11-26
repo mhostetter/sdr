@@ -104,8 +104,11 @@ ignore = [
     "D205",    # blank-line-after-summary
     "D212",    # multi-line-summary-first-line
     "E501",    # line-too-long
+    "E702",    # multiple-statements-on-one-line
+    "E703",    # statement-ends-with-semicolon
     "E713",    # not-in-test
     "E714",    # not-is-test
+    "PLC0415", # import-should-be-at-the-top-of-the-file
     "PLR2004", # magic-value-comparison
     "PLR0913", # too-many-arguments
     "PLR5501", # collapsible-else-if
