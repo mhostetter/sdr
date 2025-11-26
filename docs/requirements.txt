@@ -9,3 +9,4 @@ ipykernel == 6.29.5
 ipympl
 myst-nb == 1.2.0
 pickleshare == 0.7.5  # Needed by ipykernel
+packaging  # For version parsing in docs build
