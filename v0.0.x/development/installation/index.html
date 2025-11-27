@@ -23277,18 +23277,6 @@ This allows changes in the current directory to be immediately seen upon the nex
 <h2 id="install-the-dev-dependencies">Install the <code class="code highlight python docutils literal highlight-python"><span class="n">dev</span></code> dependencies<a class="headerlink" href="#install-the-dev-dependencies" title="Link to this heading">¶</a></h2>
 <p>The development dependencies include packages for linting and unit testing.
 These dependencies are stored in <code class="code highlight python docutils literal highlight-python"><span class="n">requirements</span><span class="o">-</span><span class="n">dev</span><span class="o">.</span><span class="n">txt</span></code>.</p>
-<div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption highlight"><span class="filename"><span class="caption-text">
-</span>requirements-dev.txt<a class="headerlink" href="#id1" title="Permalink to this code">¶</a></span></div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span class="n">ruff</span> <span class="o">==</span> <span class="mf">0.9.2</span>
-<span class="n">pre</span><span class="o">-</span><span class="n">commit</span>
-<span class="n">pytest</span>
-<span class="n">pytest</span><span class="o">-</span><span class="n">cov</span><span class="p">[</span><span class="n">toml</span><span class="p">]</span>
-<span class="n">pytest</span><span class="o">-</span><span class="n">xdist</span>
-<span class="n">pytest</span><span class="o">-</span><span class="n">benchmark</span> <span class="o">&gt;=</span> <span class="mf">4.0.0</span>
-</code></pre></div>
-</div>
-</div>
 <p>Install the development dependencies by passing <code class="code highlight python docutils literal highlight-python"><span class="o">-</span><span class="n">r</span></code> to <code class="code highlight python docutils literal highlight-python"><span class="n">pip</span> <span class="n">install</span></code>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span class="gp">$ </span>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
 </code></pre></div>
@@ -23313,7 +23301,7 @@ These dependencies are stored in <code class="code highlight python docutils lit
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    Jan 21, 2025
+    Aug 06, 2023
   </span>
 
     
