@@ -4,6 +4,25 @@ tocdepth: 2
 
 # v0.0
 
+## v0.0.30
+
+*Released May 3, 2026*
+
+### Changes
+
+- Pinned `galois` version to 0.4.11.
+- Added support for Python 3.14.
+- Added `sdr.plot.pdf()`.
+- Added support for 2D arrays for `Interleaver` and `BlockInterleaver`.
+- Renamed `Resampler` to `RationalResampler`.
+- Made minor improvements to `iq_imbalance()` and `sinusoid()`.
+- Fixed error conventions and consistency in `sample_rate_offset()`, `frequency_offset()`, and `clock_error()`.
+- Fixed minor bug in `sdr.plot.detector_pdfs()`.
+
+### Contributors
+
+- Matt Hostetter ([@mhostetter](https://github.com/mhostetter))
+
 ## v0.0.29
 
 *Released May 10, 2025*
