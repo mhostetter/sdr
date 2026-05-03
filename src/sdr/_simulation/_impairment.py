@@ -298,6 +298,7 @@ def sample_rate_offset(
     verify_scalar(sample_rate, float=True, positive=True)
 
     farrow = FarrowResampler(3)
+    x = np.append(x, np.zeros(farrow.delay, dtype=x.dtype))  # Pad the input to avoid edge effects from resampling
     t = np.arange(0, x.size) / sample_rate  # Time vector in seconds
     rate = (sample_rate + offset + offset_rate * t) / sample_rate
     y = farrow(x, rate, mode="rate")
