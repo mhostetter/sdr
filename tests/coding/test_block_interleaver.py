@@ -1,23 +1,76 @@
 import numpy as np
+import pytest
 
 import sdr
 
 
-def test_simple():
+def test_block_interleaver_map():
     interleaver = sdr.BlockInterleaver(3, 4)
+
+    np.testing.assert_array_equal(interleaver.map, [0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7, 11])
+    np.testing.assert_array_equal(interleaver.inverse_map, [0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11])
     assert len(interleaver) == 12
 
-    map = np.array([0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7, 11])
-    assert np.array_equal(interleaver.map, map)
 
-    inverse_map = np.array([0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11])
-    assert np.array_equal(interleaver.inverse_map, inverse_map)
+def test_block_interleaver_interleave():
+    interleaver = sdr.BlockInterleaver(3, 4)
 
-    x_truth = np.arange(24)
-    y_truth = np.array([0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11, 12, 15, 18, 21, 13, 16, 19, 22, 14, 17, 20, 23])
+    x = np.arange(12)
+    y = interleaver.interleave(x)
 
-    y = interleaver.interleave(x_truth)
-    assert np.array_equal(y, y_truth)
+    np.testing.assert_array_equal(y, [0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11])
 
+
+def test_block_interleaver_deinterleave():
+    interleaver = sdr.BlockInterleaver(3, 4)
+
+    y = np.array([0, 3, 6, 9, 1, 4, 7, 10, 2, 5, 8, 11])
     x = interleaver.deinterleave(y)
-    assert np.array_equal(x, x_truth)
+
+    np.testing.assert_array_equal(x, np.arange(12))
+
+
+def test_block_interleaver_round_trip():
+    interleaver = sdr.BlockInterleaver(3, 4)
+
+    x = np.arange(24)
+    y = interleaver.interleave(x)
+    z = interleaver.deinterleave(y)
+
+    np.testing.assert_array_equal(z, x)
+
+
+def test_block_interleaver_multiple_blocks():
+    interleaver = sdr.BlockInterleaver(2, 3)
+
+    x = np.arange(12)
+    y = interleaver.interleave(x)
+
+    np.testing.assert_array_equal(y, [0, 2, 4, 1, 3, 5, 6, 8, 10, 7, 9, 11])
+    np.testing.assert_array_equal(interleaver.deinterleave(y), x)
+
+
+def test_block_interleaver_rejects_invalid_rows():
+    with pytest.raises(ValueError):
+        sdr.BlockInterleaver(0, 4)
+
+    with pytest.raises(ValueError):
+        sdr.BlockInterleaver(-1, 4)
+
+
+def test_block_interleaver_rejects_invalid_cols():
+    with pytest.raises(ValueError):
+        sdr.BlockInterleaver(3, 0)
+
+    with pytest.raises(ValueError):
+        sdr.BlockInterleaver(3, -1)
+
+
+def test_block_interleaver_rejects_length_not_multiple():
+    interleaver = sdr.BlockInterleaver(3, 4)
+
+    with pytest.raises(ValueError):
+        interleaver.interleave(np.arange(13))
+
+    with pytest.raises(ValueError):
+        interleaver.deinterleave(np.arange(13))
