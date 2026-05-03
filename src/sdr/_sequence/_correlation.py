@@ -606,7 +606,7 @@ def kasami_code(length: Any, index: Any = 0, poly: Any = None, output: Any = "bi
     if poly is None:
         c = galois.primitive_poly(2, n)
     else:
-        c = Poly._PolyLike(poly, field=galois.GF(2))
+        c = Poly.Like(poly, field=galois.GF(2))
 
     if isinstance(index, int):
         code = _kasami_small_set(n, c, index)

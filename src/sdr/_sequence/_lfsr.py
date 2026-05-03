@@ -190,9 +190,9 @@ class FLFSR:
         """
         verify_only_one_specified(characteristic_poly, feedback_poly)
         if characteristic_poly is not None:
-            characteristic_poly = Poly._PolyLike(characteristic_poly)
+            characteristic_poly = Poly.Like(characteristic_poly)
         elif feedback_poly is not None:
-            characteristic_poly = Poly._PolyLike(feedback_poly).reverse()
+            characteristic_poly = Poly.Like(feedback_poly).reverse()
 
         verify_isinstance(characteristic_poly, Poly)
         if not characteristic_poly.coeffs[0] == 1:
@@ -924,9 +924,9 @@ class GLFSR:
         """
         verify_only_one_specified(characteristic_poly, feedback_poly)
         if characteristic_poly is not None:
-            characteristic_poly = Poly._PolyLike(characteristic_poly)
+            characteristic_poly = Poly.Like(characteristic_poly)
         elif feedback_poly is not None:
-            characteristic_poly = Poly._PolyLike(feedback_poly).reverse()
+            characteristic_poly = Poly.Like(feedback_poly).reverse()
 
         verify_isinstance(characteristic_poly, Poly)
         if not characteristic_poly.coeffs[0] == 1:

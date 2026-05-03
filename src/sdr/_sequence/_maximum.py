@@ -134,7 +134,7 @@ def m_sequence(
     elif isinstance(poly, Poly):
         pass
     else:
-        poly = Poly._PolyLike(poly, field=galois.GF(2))
+        poly = Poly.Like(poly, field=galois.GF(2))
     if not poly.degree == degree:
         raise ValueError(f"Argument 'poly' must be a polynomial of degree {degree}, not {poly.degree}.")
     if not poly.is_primitive():
@@ -258,7 +258,7 @@ def preferred_pairs(
                 yield poly1, poly2
     else:
         # Find all combinations of the first polynomial with all primitive polynomials of degree m
-        poly1 = Poly._PolyLike(poly, field=galois.GF(2))
+        poly1 = Poly.Like(poly, field=galois.GF(2))
         if not poly1.degree == degree:
             raise ValueError(f"Argument 'poly1' must be a polynomial of degree {degree}, not {poly1.degree}.")
         if not poly1.is_primitive():
@@ -332,8 +332,8 @@ def is_preferred_pair(
     Group:
         sequences-maximum-length
     """
-    poly1 = Poly._PolyLike(poly1, field=galois.GF(2))
-    poly2 = Poly._PolyLike(poly2, field=galois.GF(2))
+    poly1 = Poly.Like(poly1, field=galois.GF(2))
+    poly2 = Poly.Like(poly2, field=galois.GF(2))
 
     verify_condition(poly1.degree == poly2.degree)
     verify_condition(poly1.is_primitive())
