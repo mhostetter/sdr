@@ -32,11 +32,25 @@ def sinusoid(
         sample_rate: The sample rate $f_s$ of the signal.
         complex: Indicates whether to generate a complex exponential or real sinusoid.
 
-            - `True`: $\exp \left[ j \left( 2 \pi f t + \phi \right) \right]$
-            - `False`: $\cos \left( 2 \pi f t + \phi \right)$
+            - `True`: $\exp(j\theta(t))$
+            - `False`: $\cos(\theta(t))$
 
     Returns:
         The sinusoid $x[n]$.
+
+    Notes:
+        The instantaneous frequency is
+
+        $$
+        f(t) = f + \frac{df}{dt} t
+        $$
+
+        The phase is the time integral of the instantaneous frequency plus the initial phase.
+
+        $$
+        \theta(t) = 2 \pi \int_0^t f(\tau)\,d\tau + \phi
+        = 2 \pi \left(f t + \frac{1}{2}\frac{df}{dt}t^2\right) + \phi
+        $$
 
     Examples:
         Create a complex exponential with a frequency of 10 Hz and phase of 45 degrees.
@@ -66,17 +80,21 @@ def sinusoid(
     Group:
         dsp-signal-manipulation
     """
-    verify_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
-    verify_scalar(phase, float=True)
+    verify_scalar(duration, float=True, non_negative=True)
     verify_scalar(sample_rate, float=True, positive=True)
+    verify_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
+    verify_scalar(freq_rate, float=True)
+    verify_scalar(phase, float=True)
     verify_bool(complex)
 
     n = int(duration * sample_rate)  # Number of samples
     t = np.arange(n) / sample_rate  # Time vector in seconds
+
+    phase_rad = 2 * np.pi * (freq * t + 0.5 * freq_rate * t**2) + np.deg2rad(phase)
     if complex:
-        lo = np.exp(1j * (2 * np.pi * (freq + freq_rate * t) * t + np.deg2rad(phase)))
+        lo = np.exp(1j * phase_rad)
     else:
-        lo = np.cos(2 * np.pi * (freq + freq_rate * t) * t + np.deg2rad(phase))
+        lo = np.cos(phase_rad)
 
     return convert_output(lo)
 
