@@ -87,7 +87,7 @@ def sinusoid(
     verify_scalar(phase, float=True)
     verify_bool(complex)
 
-    n = int(duration * sample_rate)  # Number of samples
+    n = int(np.round(duration * sample_rate))  # Number of samples
     t = np.arange(n) / sample_rate  # Time vector in seconds
 
     phase_rad = 2 * np.pi * (freq * t + 0.5 * freq_rate * t**2) + np.deg2rad(phase)
