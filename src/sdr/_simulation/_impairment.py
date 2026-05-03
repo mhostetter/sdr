@@ -222,7 +222,12 @@ def sample_rate_offset(
         The sample rate offset is applied using a Farrow resampler. The resampling rate is calculated as follows.
 
         $$
-        \text{rate} = \frac{f_{s,\text{new}}}{f_s} = \frac{f_s + \Delta f_s + \frac{\Delta f_s}{\Delta t}}{f_s}
+        \Delta f_s(t) = \Delta f_s + \frac{\Delta f_s}{\Delta t} t
+        $$
+
+        $$
+        \text{rate}(t) = \frac{f_{s,\text{new}}(t)}{f_s}
+        = \frac{f_s + \Delta f_s(t)}{f_s}
         $$
 
     Examples:
@@ -267,7 +272,8 @@ def sample_rate_offset(
             s = np.random.randint(0, psk.order, 1_000); \
             x = psk.map_symbols(s)
 
-        Add 10 ppm of sample rate offset.
+        Add 10 ppm of sample rate offset. Since the default sample rate is 1 sample/s, this corresponds to an
+        offset of $10^{-5}$ samples/s.
 
         .. ipython:: python
 
@@ -279,7 +285,8 @@ def sample_rate_offset(
             sdr.plot.constellation(y, label="$y[n]$", zorder=1); \
             plt.title("10 ppm sample rate offset");
 
-        Add 100 ppm of sample rate offset.
+        Add 100 ppm of sample rate offset. Since the default sample rate is 1 sample/s, this corresponds to an
+        offset of $10^{-4}$ samples/s.
 
         .. ipython:: python
 
@@ -300,10 +307,20 @@ def sample_rate_offset(
     verify_scalar(sample_rate, float=True, positive=True)
 
     farrow = FarrowResampler(3)
-    x = np.append(x, np.zeros(farrow.delay, dtype=x.dtype))  # Pad the input to avoid edge effects from resampling
-    t = np.arange(0, x.size) / sample_rate  # Time vector in seconds
+
+    n = x.size
+    x_pad = np.append(x, np.zeros(farrow.delay, dtype=x.dtype))
+
+    if offset.size != 1:
+        offset = np.pad(offset, (0, farrow.delay), mode="edge")
+    t = np.arange(0, x_pad.size) / sample_rate
     rate = (sample_rate + offset + offset_rate * t) / sample_rate
-    y = farrow(x, rate, mode="rate")
+
+    y = farrow(x_pad, rate, mode="rate")
+
+    # Trim to the expected number of outputs from the original input duration.
+    n_outputs = int(np.ceil(n * np.max(rate[:n]) - 1e-12))
+    y = y[:n_outputs]
 
     return convert_output(y)
 
@@ -335,8 +352,19 @@ def frequency_offset(
         calculated as follows.
 
         $$
-        f = \Delta f[n] + \frac{\Delta^2 f[n]}{\Delta t} t \\
-        \text{lo}[n] = \exp \left( j \left[ 2 \pi f t + \phi \right] \right) \\
+        \Delta f(t) = \Delta f + \frac{\Delta^2 f}{\Delta t} t
+        $$
+
+        $$
+        \theta(t) = 2 \pi \int_0^t \Delta f(\tau)\,d\tau + \phi
+        = 2 \pi \left(\Delta f t + \frac{1}{2} \frac{\Delta^2 f}{\Delta t} t^2\right) + \phi
+        $$
+
+        $$
+        \text{lo}[n] = e^{j\theta(n/f_s)}
+        $$
+
+        $$
         y[n] = x[n] \cdot \text{lo}[n]
         $$
 
@@ -387,8 +415,8 @@ def frequency_offset(
     verify_scalar(sample_rate, float=True, positive=True)
 
     t = np.arange(0, x.size) / sample_rate  # Time vector in seconds
-    f = offset + offset_rate * t  # Frequency vector in Hz
-    lo = np.exp(1j * (2 * np.pi * f * t + np.deg2rad(phase)))  # Local oscillator
+    phase_rad = 2 * np.pi * (offset * t + 0.5 * offset_rate * t**2) + np.deg2rad(phase)
+    lo = np.exp(1j * phase_rad)  # Local oscillator
     y = x * lo  # Apply frequency offset
 
     return convert_output(y)
@@ -409,16 +437,17 @@ def clock_error(
 
     Arguments:
         x: The time-domain signal $x[n]$ to which the clock error is applied.
-        error: The fractional clock error $\epsilon$, which is unitless, with 0 representing no clock error.
+        error: The scalar fractional clock error $\epsilon$, which is unitless, with 0 representing no clock error.
             For example, 1e-6 represents 1 ppm of clock error.
 
             The fractional clock error can be calculated from a transmitter frequency offset $\Delta f = f_{c,\text{new}} - f_c$
             and carrier frequency $f_c$ as $\epsilon = \Delta f / f_c$. For example, a 1 kHz transmitter frequency
             error applied to a signal with a 1 GHz carrier frequency is 1e-6 or 1 ppm.
 
-            The fractional clock error can also be calculated from transmitter sample rate offset $\Delta f_s = f_s - f_{s,\text{new}}$
-            and sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$. For example, a -10 S/s transmitter sample rate
-            error applied to a signal with a 10 MS/s sample rate is -1e-6 or -1 ppm.
+            The fractional clock error can also be calculated from transmitter sample rate offset
+            $\Delta f_s = f_{s,\text{new}} - f_s$ and sample rate $f_s$ as $\epsilon = \Delta f_s / f_s$.
+            For example, a 10 S/s transmitter sample rate offset applied to a signal with a 10 MS/s sample rate
+            is 1e-6 or 1 ppm.
 
             The fractional clock error can also be calculated from relative velocity $\Delta v$ and speed of light
             $c$ as $\epsilon = \Delta v / c$. For example, a 60 mph (or 26.82 m/s) relative velocity between the
@@ -435,6 +464,13 @@ def clock_error(
         error_rate: The clock error $\Delta \epsilon / \Delta t$ in 1/s.
         center_freq: The center frequency $f_c$ of the complex baseband signal in Hz. If $x[n]$ is complex,
             this must be provided.
+
+            .. note::
+
+                For complex baseband signals, the timing resampling shifts the baseband frequency content, while
+                `center_freq` is used to apply the additional carrier-derived frequency shift. Therefore, a tone at
+                baseband frequency $f_b$ experiences an approximate total frequency shift of $\epsilon(f_c + f_b)$.
+
         sample_rate: The sample rate $f_s$ in samples/s. If $x[n]$ is complex, this must be provided.
 
     Returns:
@@ -442,7 +478,7 @@ def clock_error(
 
     Examples:
         This example demonstrates the effect of clock error on a real passband signal. The signal has a carrier
-        frequency of 100 kHz. A frequency offset of 20 kHz is desired, corresponding to a clock error or 0.2.
+        frequency of 100 kHz. A frequency offset of 20 kHz is desired, corresponding to a clock error of 0.2.
         The clock error is added to the transmitter, and then removed at the receiver. Notice that the transmitted
         signal is compressed in time and shifted in frequency. Also notice that the corrected received signal
         matches the original.
@@ -524,17 +560,18 @@ def clock_error(
         simulation-impairments
     """
     x = verify_arraylike(x, complex=True, ndim=1)
-    error = verify_arraylike(error, float=True)
+    error = verify_scalar(error, float=True)
     verify_scalar(error_rate, float=True)
 
-    # Apply time compression using resampling. If the error is positive, then the transmitted signal is compressed in
-    # time. To create that effect on the perfect input signal, we suppose that the input signal was sampled at the
-    # faster rate (transmitter rate) and then we resample it at our desired rate (receiver rate), which is -error
-    # from 1 + error. All the values here are normalized to the sample rate. We don't use the sample rate, because
-    # None can be passed in.
-    sr_offset = -error  # Normalized samples/s
-    sr_offset_rate = -error_rate  # Normalized samples/s^2
-    y = sample_rate_offset(x, sr_offset, sr_offset_rate, sample_rate=1 + error)
+    # Apply the timing effect of the clock error using resampling. A positive error means the transmitted clock is
+    # faster by a factor of 1 + error, so the observed waveform is compressed in time. The resampling rate needed to
+    # create that effect is 1 / (1 + error), because FarrowResampler evaluates y[k] = x[k / rate].
+    #
+    # Since sample_rate_offset() uses rate(t) = 1 + offset + offset_rate*t when sample_rate=1, convert the clock error
+    # to an equivalent normalized sample-rate offset.
+    sr_offset = 1 / (1 + error) - 1  # Normalized samples/s
+    sr_offset_rate = -error_rate / (1 + error) ** 2  # Normalized samples/s^2, linearized about t = 0
+    y = sample_rate_offset(x, sr_offset, sr_offset_rate)
 
     if np.issubdtype(x.dtype, np.floating):
         verify_not_specified(center_freq)
@@ -543,9 +580,10 @@ def clock_error(
         z = y
     else:
         verify_scalar(sample_rate, float=True, positive=True)
-        verify_scalar(center_freq, float=True, inclusive_min=sample_rate / 2)
+        verify_scalar(center_freq, float=True, positive=True)
 
-        # Apply frequency shift that would be observed at passband
+        # For complex baseband, the timing resampling shifts the baseband frequency component by error * f_bb.
+        # The absolute RF carrier is not present in x[n], so apply the additional carrier-derived shift error * f_c.
         freq_offset = error * center_freq  # Hz
         freq_offset_rate = error_rate * center_freq  # Hz/s
         z = frequency_offset(y, freq_offset, freq_offset_rate, sample_rate=sample_rate)
