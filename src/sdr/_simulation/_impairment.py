@@ -130,11 +130,11 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.
         The signal $x[n]$ with IQ imbalance applied.
 
     Notes:
-        The IQ imbalance is applied as follows.
+        The IQ imbalance is applied by independently scaling and rotating the I and Q axes.
 
         $$g_I = 10^{(A/2)/20} \exp\left(j \frac{-\phi}{2} \frac{\pi}{180}\right)$$
         $$g_Q = 10^{(-A/2)/20} \exp\left(j \frac{\phi}{2} \frac{\pi}{180}\right)$$
-        $$y[n] = g_I \cdot x_I[n] + j \cdot g_Q \cdot x_Q[n]$$
+        $$y[n] = g_I \operatorname{Re}\{x[n]\} + j g_Q \operatorname{Im}\{x[n]\}$$
 
     Examples:
         Positive amplitude imbalance horizontally stretches the constellation, while negative amplitude imbalance
@@ -187,7 +187,9 @@ def iq_imbalance(x: npt.ArrayLike, amplitude: float, phase: float = 0.0) -> npt.
 
     phase = np.deg2rad(phase)
 
-    # TODO: Should the phase be negative for I?
+    # Split the phase imbalance symmetrically between the I and Q axes. With this
+    # convention, positive phase rotates the I axis by -phi/2 and the Q axis by
+    # +phi/2, so Q leads I by phi degrees.
     gain_i = linear(0.5 * amplitude, type="voltage") * np.exp(1j * -0.5 * phase)
     gain_q = linear(-0.5 * amplitude, type="voltage") * np.exp(1j * 0.5 * phase)
 
