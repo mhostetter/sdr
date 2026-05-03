@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.873f183b41f00c04d.min.css?v=ec478d69" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.bce6263fb3090a12c.min.css?v=52e3c156" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=849a4532" />
@@ -23411,11 +23411,25 @@ offset varying from 1 kHz to 2 kHz over 1 ms, the offset rate is 1 kHz / 1 ms or
 <p>The frequency offset is applied by multiplying the signal by a local oscillator. The local oscillator is
 calculated as follows.</p>
 <p><div class="math notranslate nohighlight">
-\[\begin{split}
-f = \Delta f[n] + \frac{\Delta^2 f[n]}{\Delta t} t \\
-\text{lo}[n] = \exp \left( j \left[ 2 \pi f t + \phi \right] \right) \\
+\[
+\Delta f(t) = \Delta f + \frac{\Delta^2 f}{\Delta t} t
+\]</div>
+</p>
+<p><div class="math notranslate nohighlight">
+\[
+\theta(t) = 2 \pi \int_0^t \Delta f(\tau)\,d\tau + \phi
+= 2 \pi \left(\Delta f t + \frac{1}{2} \frac{\Delta^2 f}{\Delta t} t^2\right) + \phi
+\]</div>
+</p>
+<p><div class="math notranslate nohighlight">
+\[
+\text{lo}[n] = e^{j\theta(n/f_s)}
+\]</div>
+</p>
+<p><div class="math notranslate nohighlight">
+\[
 y[n] = x[n] \cdot \text{lo}[n]
-\end{split}\]</div>
+\]</div>
 </p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Create a reference signal with a constant frequency of 1 cycle per 100 samples.</p>

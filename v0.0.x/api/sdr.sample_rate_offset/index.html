@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.873f183b41f00c04d.min.css?v=ec478d69" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.bce6263fb3090a12c.min.css?v=52e3c156" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=849a4532" />
@@ -23385,7 +23385,13 @@ or an array of the same size as <span class="math notranslate nohighlight">\(x[n
 <p>The sample rate offset is applied using a Farrow resampler. The resampling rate is calculated as follows.</p>
 <p><div class="math notranslate nohighlight">
 \[
-\text{rate} = \frac{f_{s,\text{new}}}{f_s} = \frac{f_s + \Delta f_s + \frac{\Delta f_s}{\Delta t}}{f_s}
+\Delta f_s(t) = \Delta f_s + \frac{\Delta f_s}{\Delta t} t
+\]</div>
+</p>
+<p><div class="math notranslate nohighlight">
+\[
+\text{rate}(t) = \frac{f_{s,\text{new}}(t)}{f_s}
+= \frac{f_s + \Delta f_s(t)}{f_s}
 \]</div>
 </p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
@@ -23427,7 +23433,8 @@ Then resample this signal with various constant sample rate offsets.</p>
 <span class="gp">   ...: </span>
 </code></pre></div>
 </div>
-<p>Add 10 ppm of sample rate offset.</p>
+<p>Add 10 ppm of sample rate offset. Since the default sample rate is 1 sample/s, this corresponds to an
+offset of <span class="math notranslate nohighlight">\(10^{-5}\)</span> samples/s.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [5]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sample_rate_offset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">10e-6</span><span class="p">)</span>
 
 <span class="gp">In [6]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \
@@ -23438,7 +23445,8 @@ Then resample this signal with various constant sample rate offsets.</p>
 </code></pre></div>
 </div>
 <img alt="../../_images/sdr_sample_rate_offset_3.svg" src="../../_images/sdr_sample_rate_offset_3.svg" />
-<p>Add 100 ppm of sample rate offset.</p>
+<p>Add 100 ppm of sample rate offset. Since the default sample rate is 1 sample/s, this corresponds to an
+offset of <span class="math notranslate nohighlight">\(10^{-4}\)</span> samples/s.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><code><span class="gp">In [7]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">sdr</span><span class="o">.</span><span class="n">sample_rate_offset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">100e-6</span><span class="p">)</span>
 
 <span class="gp">In [8]: </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span> \

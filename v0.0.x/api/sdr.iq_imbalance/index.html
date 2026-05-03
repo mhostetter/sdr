@@ -42,7 +42,7 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.873f183b41f00c04d.min.css?v=ec478d69" />
+        <link rel="stylesheet" type="text/css" href="../../_static/sphinx_immaterial_theme.bce6263fb3090a12c.min.css?v=52e3c156" />
         <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
         <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
         <link rel="stylesheet" type="text/css" href="../../_static/extra.css?v=849a4532" />
@@ -23357,7 +23357,7 @@ leads the in-phase component.</p>
 </dd>
 </dl>
 <p class="rubric" id="notes">Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></p>
-<p>The IQ imbalance is applied as follows.</p>
+<p>The IQ imbalance is applied by independently scaling and rotating the I and Q axes.</p>
 <p><div class="math notranslate nohighlight">
 \[g_I = 10^{(A/2)/20} \exp\left(j \frac{-\phi}{2} \frac{\pi}{180}\right)\]</div>
 
@@ -23365,7 +23365,7 @@ leads the in-phase component.</p>
 \[g_Q = 10^{(-A/2)/20} \exp\left(j \frac{\phi}{2} \frac{\pi}{180}\right)\]</div>
 
 <div class="math notranslate nohighlight">
-\[y[n] = g_I \cdot x_I[n] + j \cdot g_Q \cdot x_Q[n]\]</div>
+\[y[n] = g_I \operatorname{Re}\{x[n]\} + j g_Q \operatorname{Im}\{x[n]\}\]</div>
 </p>
 <p class="example rubric" id="examples">Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></p>
 <p>Positive amplitude imbalance horizontally stretches the constellation, while negative amplitude imbalance
