@@ -46,7 +46,8 @@ class Interleaver:
                 The $i$-th input element will be placed at the $\pi(i)$-th output position.
         """
         map = verify_arraylike(map, int=True, atleast_1d=True, ndim=1)
-        verify_condition(np.unique(map).size == map.size)
+        verify_condition(map.size > 0)
+        verify_condition(np.array_equal(np.sort(map), np.arange(map.size)))
 
         self._map = map
         self._inverse_map = np.argsort(map)
@@ -67,7 +68,7 @@ class Interleaver:
         Returns:
             The interleaved sequence $y[n]$.
         """
-        x = verify_arraylike(x, ndim=1, size_multiple=len(self))
+        x = verify_arraylike(x, size_multiple=len(self))
 
         y = np.empty_like(x)
         y.reshape((-1, len(self)))[..., self.map] = x.reshape((-1, len(self)))
@@ -84,7 +85,7 @@ class Interleaver:
         Returns:
             The deinterleaved sequence $x[n]$.
         """
-        y = verify_arraylike(y, ndim=1, size_multiple=len(self))
+        y = verify_arraylike(y, size_multiple=len(self))
 
         x = np.empty_like(y)
         x.reshape((-1, len(self)))[..., self.inverse_map] = y.reshape((-1, len(self)))
