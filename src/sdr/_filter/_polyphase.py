@@ -300,8 +300,11 @@ class PolyphaseFIR(FIR):
 
             self._state = x_pad[-(B * M - 1) :]
         else:
-            # Prepend zeros to so the first sample is alone in the first commutated column
-            x_pad = np.insert(x, 0, np.zeros(B - 1))
+            # Only prepend zeros in "full" mode; in "rate" mode they misalign decimation
+            if mode == "full":
+                x_pad = np.insert(x, 0, np.zeros(B - 1))
+            else:
+                x_pad = x
             # Append zeros to input signal to distribute evenly across the B branches
             x_pad = np.append(x_pad, np.zeros(B - (x_pad.size % B), dtype=dtype))
             X_cols = x_pad.size // B
