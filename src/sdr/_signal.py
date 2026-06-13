@@ -1,5 +1,5 @@
 """
-A module containing functions for signal manipulation.
+Signal generation and transformation functions for creating, mixing, and converting baseband/passband signals.
 """
 
 from __future__ import annotations
@@ -8,7 +8,7 @@ import numpy as np
 import numpy.typing as npt
 import scipy.signal
 
-from ._helper import convert_output, export, verify_arraylike, verify_bool, verify_scalar
+from ._helper import normalize_output_type, export, verify_and_validate_arraylike, verify_bool, verify_and_validate_scalar
 
 
 @export
@@ -78,13 +78,13 @@ def sinusoid(
             plt.title(r"Real sinusoid with $f=10$ Hz and $\phi=45$ degrees");
 
     Group:
-        dsp-signal-manipulation
+        dsp-signal-generation
     """
-    verify_scalar(duration, float=True, non_negative=True)
-    verify_scalar(sample_rate, float=True, positive=True)
-    verify_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
-    verify_scalar(freq_rate, float=True)
-    verify_scalar(phase, float=True)
+    verify_and_validate_scalar(duration, float=True, non_negative=True)
+    verify_and_validate_scalar(sample_rate, float=True, positive=True)
+    verify_and_validate_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
+    verify_and_validate_scalar(freq_rate, float=True)
+    verify_and_validate_scalar(phase, float=True)
     verify_bool(complex)
 
     n = int(np.round(duration * sample_rate))  # Number of samples
@@ -96,7 +96,7 @@ def sinusoid(
     else:
         lo = np.cos(phase_rad)
 
-    return convert_output(lo)
+    return normalize_output_type(lo)
 
 
 @export
@@ -149,18 +149,18 @@ def mix(
             plt.title(r"Baseband signal with $f=0$ Hz and $\phi=0$ degrees");
 
     Group:
-        dsp-signal-manipulation
+        dsp-signal-mixing
     """
-    x = verify_arraylike(x, ndim=1)
-    verify_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
-    verify_scalar(phase, float=True)
-    verify_scalar(sample_rate, float=True, positive=True)
+    x = verify_and_validate_arraylike(x, ndim=1)
+    verify_and_validate_scalar(freq, float=True, inclusive_min=-sample_rate / 2, inclusive_max=sample_rate / 2)
+    verify_and_validate_scalar(phase, float=True)
+    verify_and_validate_scalar(sample_rate, float=True, positive=True)
     verify_bool(complex)
 
     lo = sinusoid(x.size / sample_rate, freq=freq, phase=phase, sample_rate=sample_rate, complex=complex)
     y = x * lo
 
-    return convert_output(y)
+    return normalize_output_type(y)
 
 
 @export
@@ -222,9 +222,9 @@ def to_complex_baseband(x_r: npt.ArrayLike) -> npt.NDArray[np.complex128]:
             plt.title("Periodogram of $x_c[n]$");
 
     Group:
-        dsp-signal-manipulation
+        dsp-signal-conversion
     """
-    x_r = verify_arraylike(x_r, float=True, real=True, ndim=1)
+    x_r = verify_and_validate_arraylike(x_r, float=True, real=True, ndim=1)
 
     if x_r.size % 2 == 1:
         # Append one zero for the decimate by 2
@@ -240,7 +240,7 @@ def to_complex_baseband(x_r: npt.ArrayLike) -> npt.NDArray[np.complex128]:
     # spectrum outside +/- fs/4 is zero.
     x_c = x_c[::2]
 
-    return convert_output(x_c)
+    return normalize_output_type(x_c)
 
 
 @export
@@ -301,9 +301,9 @@ def to_real_passband(x_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
             plt.title("Periodogram of $x_r[n]$");
 
     Group:
-        dsp-signal-manipulation
+        dsp-signal-conversion
     """
-    x_c = verify_arraylike(x_c, complex=True, imaginary=True, ndim=1)
+    x_c = verify_and_validate_arraylike(x_c, complex=True, imaginary=True, ndim=1)
 
     # Upsample by 2 to achieve 2*fs sample rate
     x_c = scipy.signal.resample_poly(x_c, 2, 1)
@@ -314,7 +314,7 @@ def to_real_passband(x_c: npt.ArrayLike) -> npt.NDArray[np.float64]:
     # Only preserve the real part, which is complex-conjugate symmetric about 0 Hz.
     x_r = x_c.real
 
-    return convert_output(x_r)
+    return normalize_output_type(x_r)
 
 
 @export
@@ -376,15 +376,15 @@ def upsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
             plt.title("Upsampled signal $y[n]$");
 
     Group:
-        dsp-signal-manipulation
+        dsp-signal-rate-conversion
     """
-    x = verify_arraylike(x, ndim=1)
-    verify_scalar(rate, int=True, positive=True)
+    x = verify_and_validate_arraylike(x, ndim=1)
+    verify_and_validate_scalar(rate, int=True, positive=True)
 
     y = np.zeros(x.size * rate, dtype=x.dtype)
     y[::rate] = x
 
-    return convert_output(y)
+    return normalize_output_type(y)
 
 
 @export
@@ -448,11 +448,11 @@ def downsample(x: npt.ArrayLike, rate: int) -> npt.NDArray:
             plt.title("Downsampled signal $y[n]$");
 
     Group:
-        dsp-signal-manipulation
+        dsp-signal-rate-conversion
     """
-    x = verify_arraylike(x, ndim=1)
-    verify_scalar(rate, int=True, positive=True)
+    x = verify_and_validate_arraylike(x, ndim=1)
+    verify_and_validate_scalar(rate, int=True, positive=True)
 
     y = x[::rate]
 
-    return convert_output(y)
+    return normalize_output_type(y)

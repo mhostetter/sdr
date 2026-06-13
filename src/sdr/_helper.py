@@ -1,5 +1,12 @@
 """
-A module containing various helper functions for the library.
+Input validation, type verification, and output normalization utilities for the SDR library.
+
+This module provides functions for:
+- Extracting caller argument names from the call stack for error messages
+- Verifying and validating scalar and array-like arguments (type-checking and constraint validation)
+- Normalizing output types (e.g., converting NumPy scalars to native Python types)
+- Exporting public API symbols
+- Extending docstrings
 """
 
 from __future__ import annotations
@@ -15,12 +22,12 @@ import numpy.typing as npt
 SPHINX_BUILD = hasattr(builtins, "__sphinx_build__")
 
 
-def _argument_names():
+def _extract_caller_argument_names():
     """
     Finds the source code argument names from the function that called a verification function.
     """
     frame = inspect.currentframe()
-    frame = inspect.getouterframes(frame)[2]  # function() -> verify() -> _argument_name()
+    frame = inspect.getouterframes(frame)[2]  # function() -> verify() -> _extract_caller_argument_names()
     string = inspect.getframeinfo(frame[0]).code_context[0].strip()
     args = string[string.find("(") + 1 : -1].split(",")
     args = [arg.strip() for arg in args]  # Strip leading/trailing whitespace
@@ -33,7 +40,7 @@ def verify_positional_args(args: tuple[Any], limit: int):
     Verify a limited number of positional arguments.
     """
     if len(args) > limit:
-        raise ValueError(f"A max of {limit} positional arguments are acceptable, not {_argument_names()}.")
+        raise ValueError(f"A max of {limit} positional arguments are acceptable, not {_extract_caller_argument_names()}.")
 
     return len(args)
 
@@ -43,7 +50,7 @@ def verify_specified(arg: Any) -> Any:
     Verifies that the argument is not None.
     """
     if arg is None:
-        raise ValueError(f"Argument {_argument_names()[0]!r} must be provided, not {arg}.")
+        raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be provided, not {arg}.")
 
     return arg
 
@@ -53,7 +60,7 @@ def verify_not_specified(arg: Any) -> Any:
     Verifies that the argument is None.
     """
     if arg is not None:
-        raise ValueError(f"Argument {_argument_names()[0]!r} must not be provided, not {arg}.")
+        raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must not be provided, not {arg}.")
 
     return arg
 
@@ -63,7 +70,7 @@ def verify_only_one_specified(*args):
     Verifies that only one of the arguments is not None.
     """
     if sum(arg is not None for arg in args) != 1:
-        raise ValueError(f"Exactly one of the arguments {_argument_names()} must be provided, not {args}.")
+        raise ValueError(f"Exactly one of the arguments {_extract_caller_argument_names()} must be provided, not {args}.")
 
     return args
 
@@ -73,7 +80,7 @@ def verify_at_least_one_specified(*args):
     Verifies that at least one of the arguments is not None.
     """
     if all(arg is None for arg in args):
-        raise ValueError(f"At least one of the arguments {_argument_names()} must be provided, not {args}.")
+        raise ValueError(f"At least one of the arguments {_extract_caller_argument_names()} must be provided, not {args}.")
 
     return args
 
@@ -95,7 +102,7 @@ def verify_isinstance(
         types = tuple(types + [type(None)])
 
     if not isinstance(arg, types):
-        raise TypeError(f"Argument {_argument_names()[0]!r} must be an instance of {types}, not {type(arg)}.")
+        raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an instance of {types}, not {type(arg)}.")
 
     return arg
 
@@ -108,12 +115,12 @@ def verify_literal(
     Verifies that the argument is one of the specified literals.
     """
     if not arg in literals:
-        raise ValueError(f"Argument {_argument_names()[0]!r} must be one of {literals}, not {arg!r}.")
+        raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be one of {literals}, not {arg!r}.")
 
     return arg
 
 
-def verify_scalar(
+def verify_and_validate_scalar(
     x: Any,
     # Data types
     optional: bool = False,
@@ -138,68 +145,68 @@ def verify_scalar(
     convert_numpy: bool = False,
 ) -> Any:
     """
-    Verifies that the argument is a scalar and satisfies the conditions.
+    Verifies that the argument is a scalar and validates it against type and constraint conditions.
     """
     if optional and x is None:
         return x
 
     if convert_numpy:
-        x = convert_to_scalar(x)
+        x = demote_numpy_scalar_to_native(x)
 
     if isinstance(x, np.ndarray) and x.ndim > 0:
-        raise TypeError(f"Argument {_argument_names()[0]!r} must be a scalar, not an array.")
+        raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be a scalar, not an array.")
 
     if int:
         if not (isinstance(x, builtins.int) or (accept_numpy and np.issubdtype(x, np.integer))):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int, not {type(x)}.")
+            raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an int, not {type(x)}.")
     if float:
         if not (isinstance(x, (builtins.int, builtins.float)) or (accept_numpy and np.issubdtype(x, np.floating))):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float, not {type(x)}.")
+            raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an int or float, not {type(x)}.")
     if complex:
         if not (
             isinstance(x, (builtins.int, builtins.float, builtins.complex))
             or (accept_numpy and np.issubdtype(x, np.complexfloating))
         ):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float or complex, not {type(x)}.")
+            raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an int or float or complex, not {type(x)}.")
 
     if real:
         if isinstance(x, builtins.complex):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be real, not complex.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be real, not complex.")
     if imaginary:
         if not isinstance(x, builtins.complex):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be complex, not real.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be complex, not real.")
 
     if negative:
         if x >= 0:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be negative, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be negative, not {x}.")
     if non_negative:
         if x < 0:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be non-negative, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be non-negative, not {x}.")
     if positive:
         if x <= 0:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be positive, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be positive, not {x}.")
     if even:
         if x % 2 != 0:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be even, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be even, not {x}.")
     if odd:
         if x % 2 == 0:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be odd, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be odd, not {x}.")
     if power_of_two:
         if not (x & (x - 1) == 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be a power of two, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be a power of two, not {x}.")
 
     if inclusive_min is not None:
         if x < inclusive_min:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be at least {inclusive_min}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be at least {inclusive_min}, not {x}.")
     if inclusive_max is not None:
         if x > inclusive_max:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be at most {inclusive_max}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be at most {inclusive_max}, not {x}.")
     if exclusive_min is not None:
         if x <= exclusive_min:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be greater than {exclusive_min}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be greater than {exclusive_min}, not {x}.")
     if exclusive_max is not None:
         if x >= exclusive_max:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be less than {exclusive_max}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be less than {exclusive_max}, not {x}.")
 
     return x
 
@@ -214,10 +221,10 @@ def verify_bool(
     Verifies that the argument is a boolean.
     """
     if convert_numpy:
-        x = convert_to_scalar(x)
+        x = demote_numpy_scalar_to_native(x)
 
     if not (isinstance(x, bool) or (accept_numpy and isinstance(x, np.bool_))):
-        raise TypeError(f"Argument {_argument_names()[0]!r} must be a bool, not {type(x)}.")
+        raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be a bool, not {type(x)}.")
 
     return x
 
@@ -231,7 +238,7 @@ def verify_coprime(
     """
     if np.gcd(x, y) != 1:
         raise ValueError(
-            f"Arguments {_argument_names()[0]!r} and {_argument_names()[1]!r} must be coprime, not {x} and {y}."
+            f"Arguments {_extract_caller_argument_names()[0]!r} and {_extract_caller_argument_names()[1]!r} must be coprime, not {x} and {y}."
         )
 
 
@@ -242,10 +249,10 @@ def verify_condition(
     Verifies that the condition is satisfied.
     """
     if not condition:
-        raise ValueError(f"Arguments must satisfy the condition {_argument_names()[0]!r}.")
+        raise ValueError(f"Arguments must satisfy the condition {_extract_caller_argument_names()[0]!r}.")
 
 
-def verify_arraylike(
+def verify_and_validate_arraylike(
     x: npt.ArrayLike | None,
     dtype: npt.DTypeLike | None = None,
     # Data types
@@ -274,7 +281,7 @@ def verify_arraylike(
     shape: tuple[int, ...] | None = None,
 ) -> npt.NDArray:
     """
-    Converts the argument to a NumPy array and verifies the conditions.
+    Converts the argument to a NumPy array, then type-checks and validates it against constraints.
     """
     if optional and x is None:
         return x
@@ -283,46 +290,46 @@ def verify_arraylike(
 
     if int:
         if not np.issubdtype(x.dtype, np.integer):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int, not {x.dtype}.")
+            raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an int, not {x.dtype}.")
     if float:
         if not (np.issubdtype(x.dtype, np.integer) or np.issubdtype(x.dtype, np.floating)):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float, not {x.dtype}.")
+            raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an int or float, not {x.dtype}.")
     if complex:
         if not (
             np.issubdtype(x.dtype, np.integer)
             or np.issubdtype(x.dtype, np.floating)
             or np.issubdtype(x.dtype, np.complexfloating)
         ):
-            raise TypeError(f"Argument {_argument_names()[0]!r} must be an int or float or complex, not {x.dtype}.")
+            raise TypeError(f"Argument {_extract_caller_argument_names()[0]!r} must be an int or float or complex, not {x.dtype}.")
 
     if real:
         if not np.isrealobj(x):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be real, not complex.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be real, not complex.")
     if imaginary:
         if not np.iscomplexobj(x):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be complex, not real.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be complex, not real.")
     if negative:
         if np.any(x >= 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be negative, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be negative, not {x}.")
     if non_negative:
         if np.any(x < 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be non-negative, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be non-negative, not {x}.")
     if positive:
         if np.any(x <= 0):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be positive, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be positive, not {x}.")
 
     if inclusive_min is not None:
         if np.any(x < inclusive_min):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be at least {inclusive_min}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be at least {inclusive_min}, not {x}.")
     if inclusive_max is not None:
         if np.any(x > inclusive_max):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be at most {inclusive_max}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be at most {inclusive_max}, not {x}.")
     if exclusive_min is not None:
         if np.any(x <= exclusive_min):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be greater than {exclusive_min}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be greater than {exclusive_min}, not {x}.")
     if exclusive_max is not None:
         if np.any(x >= exclusive_max):
-            raise ValueError(f"Argument {_argument_names()[0]!r} must be less than {exclusive_max}, not {x}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must be less than {exclusive_max}, not {x}.")
 
     if atleast_1d:
         x = np.atleast_1d(x)
@@ -332,21 +339,21 @@ def verify_arraylike(
         x = np.atleast_3d(x)
     if ndim is not None:
         if not x.ndim == ndim:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have {ndim} dimensions, not {x.ndim}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must have {ndim} dimensions, not {x.ndim}.")
     if size is not None:
         if not x.size == size:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have {size} elements, not {x.size}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must have {size} elements, not {x.size}.")
     if sizes is not None:
         if not x.size in sizes:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have on of {sizes} elements, not {x.size}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must have on of {sizes} elements, not {x.size}.")
     if size_multiple is not None:
         if not x.size % size_multiple == 0:
             raise ValueError(
-                f"Argument {_argument_names()[0]!r} must have a size that is a multiple of {size_multiple}, not {x.size}."
+                f"Argument {_extract_caller_argument_names()[0]!r} must have a size that is a multiple of {size_multiple}, not {x.size}."
             )
     if shape is not None:
         if not x.shape == shape:
-            raise ValueError(f"Argument {_argument_names()[0]!r} must have shape {shape}, not {x.shape}.")
+            raise ValueError(f"Argument {_extract_caller_argument_names()[0]!r} must have shape {shape}, not {x.shape}.")
 
     return x
 
@@ -360,13 +367,13 @@ def verify_same_shape(
     """
     if x.shape != y.shape:
         raise ValueError(
-            f"Arguments {_argument_names()[0]!r} and {_argument_names()[1]!r} must have the same shape, not {x.shape} and {y.shape}."
+            f"Arguments {_extract_caller_argument_names()[0]!r} and {_extract_caller_argument_names()[1]!r} must have the same shape, not {x.shape} and {y.shape}."
         )
 
 
-def convert_to_scalar(x: Any):
+def demote_numpy_scalar_to_native(x: Any):
     """
-    Converts the input to a scalar if possible.
+    Demotes a NumPy scalar (e.g., np.int64, np.float64) to its native Python type (e.g., int, float).
     """
     if np.isscalar(x) and hasattr(x, "item"):
         x = x.item()
@@ -378,17 +385,17 @@ def convert_to_scalar(x: Any):
     return x
 
 
-def convert_output(
+def normalize_output_type(
     x: Any,
     squeeze: bool = False,
 ) -> Any:
     """
-    Converts the output to a native Python type if scalar.
+    Normalizes the output type by optionally squeezing dimensions and demoting NumPy scalars to native Python types.
     """
     if squeeze:
         x = np.squeeze(x)
 
-    x = convert_to_scalar(x)
+    x = demote_numpy_scalar_to_native(x)
 
     return x
 
@@ -437,3 +444,14 @@ def extend_docstring(method, replace=None, docstring=""):
         return obj
 
     return decorator
+
+
+##############################################################################
+# Backward-compatible aliases for renamed functions
+##############################################################################
+
+_argument_names = _extract_caller_argument_names
+verify_scalar = verify_and_validate_scalar
+verify_arraylike = verify_and_validate_arraylike
+convert_output = normalize_output_type
+convert_to_scalar = demote_numpy_scalar_to_native
